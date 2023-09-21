@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Routes } from "react-router-dom";
 import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
 import { CoreLayoutPage } from "./modules/core/pages/core-layout-page";
@@ -11,8 +11,9 @@ export default function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
+        <CoreLayoutPage />
         <Routes>
-          <Route path="/" element={<CoreLayoutPage />} />
+
         </Routes>
       </BrowserRouter>
     </Provider>
