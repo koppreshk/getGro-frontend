@@ -12,6 +12,14 @@ const StyledIconContainer = styled.span<Pick<IIconProps, 'iconSize'>>`
     font-size: ${(props) => `${props.iconSize}px` ?? '24px'};
     color: #fff;
     cursor: pointer;
+
+    /* Rules for using icons as black on a light background. */
+    .material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+    .material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+
+    /* Rules for using icons as white on a dark background. */
+    .material-icons.md-light { color: rgba(255, 255, 255, 1); }
+    .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
 `;
 
 export const Icon = React.memo((props: IIconProps) => {
