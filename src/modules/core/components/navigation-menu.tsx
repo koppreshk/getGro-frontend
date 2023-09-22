@@ -21,7 +21,7 @@ const MenuWrapper = styled.div`
 `;
 
 const PrimaryOptionsWrapper = styled(FlexBox)`
-    padding-top: 40px;
+    padding-top: 15px;
 `;
 
 const primaryOptions = [{
