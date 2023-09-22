@@ -3,6 +3,7 @@ import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
 import { CoreLayoutPage } from "./modules/core/pages/core-layout-page";
 import { ThemeProvider } from "themes";
+import { NotificationProvider } from "lib";
 
 const store = configureStore({
   reducer: {},
@@ -11,14 +12,16 @@ const store = configureStore({
 export default function App() {
   return (
     <Provider store={store}>
-      <BrowserRouter>
-        <ThemeProvider>
-          <CoreLayoutPage />
-          <Routes>
+      <NotificationProvider>
+        <BrowserRouter>
+          <ThemeProvider>
+            <CoreLayoutPage />
+            <Routes>
 
-          </Routes>
-        </ThemeProvider>
-      </BrowserRouter>
+            </Routes>
+          </ThemeProvider>
+        </BrowserRouter>
+      </NotificationProvider>
     </Provider>
   )
 }
