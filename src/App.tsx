@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { CoreLayoutPage } from "./modules/core/pages/core-layout-page";
 import { ThemeProvider, defaultMUITheme } from "themes";
 import { ThemeProvider as MUIthemeProvider } from "@mui/material";
+import { NotificationProvider } from "lib";
 
 const store = configureStore({
   reducer: {},
@@ -13,15 +14,18 @@ export default function App() {
   return (
     <MUIthemeProvider theme={defaultMUITheme}>
       <Provider store={store}>
-        <BrowserRouter>
-          <ThemeProvider>
-            <CoreLayoutPage />
-            <Routes>
+        <NotificationProvider>
+          <BrowserRouter>
+            <ThemeProvider>
+              <CoreLayoutPage />
+              <Routes>
 
-            </Routes>
-          </ThemeProvider>
-        </BrowserRouter>
+              </Routes>
+            </ThemeProvider>
+          </BrowserRouter>
+        </NotificationProvider>
       </Provider>
     </MUIthemeProvider>
+
   )
 }
