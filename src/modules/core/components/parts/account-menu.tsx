@@ -1,37 +1,47 @@
+import React, { useState } from "react";
+import styled from "styled-components"
 import { Avatar, Divider, IconButton, ListItemIcon, Menu, MenuItem } from "@mui/material"
 import { Icon } from "lib/ui-ux"
-import React from "react";
-import { useState } from "react";
-import styled from "styled-components"
 
-const SettingsIcon = styled(Icon)`
+const StyledIcon = styled(Icon)`
     color: grey;
 `;
 
 export const AccountMenu = () => {
-    const [menuVisibility, setMenuVisibility ] = useState(false);
-    const onClick = React.useCallback(() => {
-        setMenuVisibility( (x) => !x);
-    }, [])
+    const [anchor, setAnchor] = useState(null);
+
+    const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchor(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchor(null);
+    }
 
     return (
         <>
-            <IconButton onClick={onClick}>
+            <IconButton onClick={handleOpen}>
                 <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
             </IconButton>
-            <Menu open={menuVisibility}>
+            <Menu open={Boolean(anchor)} onClose={handleClose} anchorEl={anchor} slotProps={{ paper: { sx: { width: '200px' } } }}>
                 <MenuItem >
-                    <Avatar /> Profile
+                    <ListItemIcon>
+                        <StyledIcon className="material-symbols-outlined" iconName="account_circle" />
+                    </ListItemIcon>
+                    User Profile
                 </MenuItem>
                 <MenuItem >
-                    <Avatar /> My account
+                    <ListItemIcon>
+                        <StyledIcon className="material-symbols-outlined" iconName="settings" />
+                    </ListItemIcon>
+                    Settings
                 </MenuItem>
                 <Divider />
                 <MenuItem >
                     <ListItemIcon>
-                    <SettingsIcon className="material-symbols-outlined" iconName="settings" />
+                        <StyledIcon className="material-symbols-outlined" iconName="logout" />
                     </ListItemIcon>
-                    Settings
+                    Logout
                 </MenuItem>
 
             </Menu>
