@@ -1,6 +1,6 @@
 import React from "react"
 import { NavigationMenu } from "../components"
-import { Toolbar } from "../components/top-navigation-menu"
+import { Toolbar } from "../components/toolbar"
 import { DataGrid, FlexBox, columns, defaultData } from "lib/ui-ux"
 import { Routes, Route, Navigate } from "react-router-dom"
 
