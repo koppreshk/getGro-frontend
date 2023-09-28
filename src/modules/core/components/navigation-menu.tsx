@@ -2,7 +2,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useNotifications } from "lib";
 import { FlexBox, Icon } from "lib/ui-ux";
 
 interface IPrimaryOptionProps {
@@ -53,12 +52,7 @@ const IconWrapper = styled(FlexBox) <{ $isOptionsSelected: boolean }>`
 
 export const NavigationMenu = React.memo(() => {
     const [selectedMenu, setMenu] = React.useState('face');
-    const { showNotification } = useNotifications();
-
-    React.useEffect(() => {
-        showNotification({ message: 'Test', type: 'success' })
-    }, [showNotification]);
-
+    
     return (
         <MenuWrapper>
             <PrimaryOptionsWrapper $gap="10px" $flexDirection="column" $justifyContent="center" $alignItems="center">
