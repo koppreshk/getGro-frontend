@@ -23,7 +23,7 @@ export const TableHeader = <T extends object>(props: { header: Header<T, unknown
                     </Typography>
                     {header.column.getIsSorted() !== false
                         ? header.column.getIsSorted() === 'asc' ? <StyledIcon className="material-symbols-outlined" iconName='expand_less' /> : <StyledIcon className="material-symbols-outlined" iconName='expand_more' />
-                        : <StyledIcon className="material-symbols-outlined" iconName='unfold_more' />}
+                        : header.column.getCanSort() ? <StyledIcon className="material-symbols-outlined" iconName='unfold_more' /> : null}
                 </FlexBox>}
         </th>
     )

@@ -88,7 +88,8 @@ const columnHelper = createColumnHelper<Person>()
 export const columns = [
     columnHelper.accessor('firstName', {
         header: 'First Name',
-        cell: info => info.getValue()
+        cell: info => info.getValue(),
+        enableSorting: false
     }),
     columnHelper.accessor('lastName', {
         id: 'lastName',
