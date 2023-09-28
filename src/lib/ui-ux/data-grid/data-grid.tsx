@@ -1,5 +1,11 @@
-import { TableOptions, createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
+import {
+    SortingState, TableOptions, createColumnHelper,
+    getCoreRowModel, getSortedRowModel, useReactTable
+} from '@tanstack/react-table'
+import { useMemo, useState } from 'react'
 import styled from 'styled-components'
+import { TableHeader } from './table-header'
+import { TableBody } from './table-body'
 
 interface IDataGridProps<T> extends Pick<TableOptions<T>, 'data' | 'columns'> {
 
@@ -23,15 +29,15 @@ const Table = styled.table`
     width: 100%;
     border-collapse: collapse;
     table, td, th {
-        border: 1px solid;
         text-align: left;
         padding: 8px;
     }
-    tr:nth-child(even) {
-        background-color: #f2f2f2;
+    tr {
+        border-bottom: 1px solid #e9ebed;
     }
-    tr:hover {
-        background-color: #ddd;
+    tbody > tr:hover {
+        border-bottom-color: #cee2f2;
+        background-color: #1f73b714;
     }
 `;
 
@@ -81,41 +87,48 @@ const columnHelper = createColumnHelper<Person>()
 
 export const columns = [
     columnHelper.accessor('firstName', {
-        cell: info => info.getValue(),
-        footer: info => info.column.id,
+        header: 'First Name',
+        cell: info => info.getValue()
     }),
-    columnHelper.accessor(row => row.lastName, {
+    columnHelper.accessor('lastName', {
         id: 'lastName',
-        cell: info => <i>{info.getValue()}</i>,
-        header: () => <span>Last Name</span>,
-        footer: info => info.column.id,
+        cell: info => info.getValue(),
+        header: 'Last Name'
+    }),
+    columnHelper.accessor(row => `${row.firstName} ${row.lastName}`, {
+        id: 'fullName',
+        cell: info => info.getValue(),
+        header: 'Full Name'
     }),
     columnHelper.accessor('age', {
         header: () => 'Age',
-        cell: info => info.renderValue(),
-        footer: info => info.column.id,
+        cell: info => info.renderValue()
     }),
     columnHelper.accessor('visits', {
-        header: () => <span>Visits</span>,
-        footer: info => info.column.id,
+        header: () => 'Visits'
     }),
     columnHelper.accessor('status', {
-        header: 'Status',
-        footer: info => info.column.id,
+        header: 'Status'
     }),
     columnHelper.accessor('progress', {
-        header: 'Profile Progress',
-        footer: info => info.column.id,
+        header: 'Profile Progress'
     }),
 ];
 
-export function DataGrid<T extends {}>(props: IDataGridProps<T>) {
+export function DataGrid<T extends object>(props: IDataGridProps<T>) {
     const { data, columns } = props
+    const memoizedData = useMemo(() => data, [data]);
+    const [sorting, setSorting] = useState<SortingState>([])
 
     const table = useReactTable({
-        data,
+        data: memoizedData,
         columns,
+        state: {
+            sorting,
+        },
+        onSortingChange: setSorting,
         getCoreRowModel: getCoreRowModel(),
+        getSortedRowModel: getSortedRowModel()
     })
 
     return (
@@ -124,29 +137,12 @@ export function DataGrid<T extends {}>(props: IDataGridProps<T>) {
                 <thead>
                     {table.getHeaderGroups().map(headerGroup => (
                         <tr key={headerGroup.id}>
-                            {headerGroup.headers.map(header => (
-                                <th key={header.id}>
-                                    {header.isPlaceholder
-                                        ? null
-                                        : flexRender(
-                                            header.column.columnDef.header,
-                                            header.getContext()
-                                        )}
-                                </th>
-                            ))}
+                            {headerGroup.headers.map(header => (<TableHeader header={header} key={header.id} />))}
                         </tr>
                     ))}
                 </thead>
                 <tbody>
-                    {table.getRowModel().rows.map(row => (
-                        <tr key={row.id}>
-                            {row.getVisibleCells().map(cell => (
-                                <td key={cell.id}>
-                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                </td>
-                            ))}
-                        </tr>
-                    ))}
+                    {table.getRowModel().rows.map(row => (<TableBody key={row.id} row={row} />))}
                 </tbody>
             </Table>
         </TablWrapper>
