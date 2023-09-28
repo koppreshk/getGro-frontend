@@ -16,7 +16,7 @@ const TopBar = styled(FlexBox)`
 `;
 
 
-export const TopNavigationMenu = () => {
+export const Toolbar = () => {
     return (
         <TopBarWrapper>
             <TopBar $justifyContent="space-between" $alignItems="stretch">
