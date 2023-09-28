@@ -9,7 +9,7 @@ export interface IIconProps {
 }
 
 const StyledIconContainer = styled.span<Pick<IIconProps, 'iconSize'>>`
-    font-size: ${(props) => `${props.iconSize}px` ?? '24px'};
+    font-size: ${(props) => `${props.iconSize ?? 24}px`};
     color: #fff;
     cursor: pointer;
 
