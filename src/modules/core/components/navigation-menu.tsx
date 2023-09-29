@@ -25,22 +25,22 @@ const PrimaryOptionsWrapper = styled(FlexBox)`
 `;
 
 const primaryOptions = [{
-    iconName: 'face',
-    primaryKey: 'face',
-    route: 'route1'
+    iconName: 'home',
+    primaryKey: 'dashboard',
+    route: 'dashboard'
 },
 {
-    iconName: 'menu',
-    primaryKey: 'menu',
-    route: 'route2'
+    iconName: 'task',
+    primaryKey: 'task',
+    route: 'tickets'
+}, {
+    iconName: 'group',
+    primaryKey: 'group',
+    route: 'customers'
 }, {
     iconName: 'settings',
     primaryKey: 'settings',
-    route: 'route3'
-}, {
-    iconName: 'add_circle',
-    primaryKey: 'add_circle',
-    route: 'route4'
+    route: 'settings'
 }];
 
 const IconWrapper = styled(FlexBox) <{ $isOptionsSelected: boolean }>`
@@ -51,7 +51,7 @@ const IconWrapper = styled(FlexBox) <{ $isOptionsSelected: boolean }>`
 `;
 
 export const NavigationMenu = React.memo(() => {
-    const [selectedMenu, setMenu] = React.useState('face');
+    const [selectedMenu, setMenu] = React.useState('dashboard');
     
     return (
         <MenuWrapper>
