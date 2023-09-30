@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import { Typography } from "@mui/material";
 import { Header, flexRender } from "@tanstack/react-table";
-import { FlexBox } from "../flexbox/flexbox";
-import { Icon } from "../icon/icon";
+import { FlexBox, Icon } from "lib/ui-ux";
 
 const StyledIcon = styled(Icon)`
     color: #787f83;
