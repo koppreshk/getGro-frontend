@@ -8,7 +8,7 @@ const StyledIcon = styled(Icon)`
 `;
 
 export const AccountMenu = () => {
-    const [anchor, setAnchor] = useState(null);
+    const [anchor, setAnchor] = useState<unknown>(null);
 
     const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchor(event.currentTarget);
@@ -23,7 +23,7 @@ export const AccountMenu = () => {
             <IconButton onClick={handleOpen}>
                 <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
             </IconButton>
-            <Menu open={Boolean(anchor)} onClose={handleClose} anchorEl={anchor} slotProps={{ paper: { sx: { width: '200px' } } }}>
+            <Menu open={Boolean(anchor)} onClose={handleClose} anchorEl={anchor as Element } slotProps={{ paper: { sx: { width: '200px' } } }}>
                 <MenuItem >
                     <ListItemIcon>
                         <StyledIcon className="material-symbols-outlined" iconName="account_circle" />
