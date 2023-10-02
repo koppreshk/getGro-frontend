@@ -152,17 +152,20 @@ const columnHelper = createColumnHelper<Person>()
 export const columns = [
     columnHelper.accessor('firstName', {
         header: 'First Name',
-        cell: info => info.getValue()
+        cell: info => info.getValue(),
+        minSize: 240
     }),
     columnHelper.accessor('lastName', {
         id: 'lastName',
         cell: info => info.getValue(),
-        header: 'Last Name'
+        header: 'Last Name',
+        minSize: 240
     }),
     columnHelper.accessor(row => `${row.firstName} ${row.lastName}`, {
         id: 'fullName',
         cell: info => info.getValue(),
-        header: 'Full Name'
+        header: 'Full Name',
+        minSize: 240
     }),
     columnHelper.accessor('age', {
         header: () => 'Age',
@@ -172,10 +175,12 @@ export const columns = [
         header: () => 'Visits'
     }),
     columnHelper.accessor('status', {
-        header: 'Status'
+        header: 'Status',
+        minSize: 400
     }),
     columnHelper.accessor('progress', {
-        header: 'Profile Progress'
+        header: 'Profile Progress',
+        minSize: 240
     }),
 ];
 
@@ -192,6 +197,7 @@ export function DataGrid<T extends object>(props: IDataGridProps<T>) {
             sorting,
             pagination
         },
+        columnResizeMode: 'onChange',
         onSortingChange: setSorting,
         onPaginationChange: setPagination,
         getCoreRowModel: getCoreRowModel(),
@@ -201,7 +207,7 @@ export function DataGrid<T extends object>(props: IDataGridProps<T>) {
 
     return (
         <TablWrapper $flexDirection='column' $gap="10px">
-            <Table>
+            <Table style={{ width: table.getCenterTotalSize() }}>
                 <thead>
                     {table.getHeaderGroups().map(headerGroup => (
                         <tr key={headerGroup.id}>

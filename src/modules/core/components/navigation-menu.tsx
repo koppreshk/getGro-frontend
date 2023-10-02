@@ -1,6 +1,6 @@
 
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { FlexBox, Icon } from "lib/ui-ux";
 
@@ -31,11 +31,11 @@ const primaryOptions = [{
 },
 {
     iconName: 'task',
-    primaryKey: 'task',
+    primaryKey: 'tickets',
     route: 'tickets'
 }, {
     iconName: 'group',
-    primaryKey: 'group',
+    primaryKey: 'customers',
     route: 'customers'
 }, {
     iconName: 'settings',
@@ -51,8 +51,9 @@ const IconWrapper = styled(FlexBox) <{ $isOptionsSelected: boolean }>`
 `;
 
 export const NavigationMenu = React.memo(() => {
-    const [selectedMenu, setMenu] = React.useState('dashboard');
-    
+    const { pathname } = useLocation();
+    const [selectedMenu, setMenu] = React.useState(() => pathname.split('/')[1] ?? 'dashboard');
+
     return (
         <MenuWrapper>
             <PrimaryOptionsWrapper $gap="10px" $flexDirection="column" $justifyContent="center" $alignItems="center">

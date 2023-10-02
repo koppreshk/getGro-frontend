@@ -7,10 +7,36 @@ const StyledIcon = styled(Icon)`
     color: #787f83;
 `;
 
+const Resizer = styled.div<{ $isResizing: boolean }>`
+    position: absolute;
+    right: 8px;
+    top: 0;
+    height: 100%;
+    width: 5px;
+    cursor: col-resize;
+    user-select: none;
+    touch-action: none;
+    background: ${({ $isResizing }) => $isResizing ? 'blue' : '#eaeaea'};
+    opacity: ${({ $isResizing }) => $isResizing && '1'};
+`;
+
+const TableHeaderWrapper = styled.th`
+    position: relative;
+    @media (hover: hover) {
+    ${Resizer} {
+        opacity: 1;
+    }
+
+    &:not(:hover) ${Resizer} { 
+        opacity: 0;
+    }
+}
+`;
+
 export const TableHeader = <T extends object>(props: { header: Header<T, unknown> }) => {
     const { header } = props;
     return (
-        <th>
+        <TableHeaderWrapper id="table-column-header" style={{ width: header.getSize() }} colSpan={header.colSpan}>
             {header.isPlaceholder
                 ? null
                 : <FlexBox onClick={header.column.getToggleSortingHandler()} $gap="10px" $alignItems='center'>
@@ -24,6 +50,10 @@ export const TableHeader = <T extends object>(props: { header: Header<T, unknown
                         ? header.column.getIsSorted() === 'asc' ? <StyledIcon className="material-symbols-outlined" iconName='expand_less' /> : <StyledIcon className="material-symbols-outlined" iconName='expand_more' />
                         : header.column.getCanSort() ? <StyledIcon className="material-symbols-outlined" iconName='unfold_more' /> : null}
                 </FlexBox>}
-        </th>
+            {<Resizer {...{
+                onMouseDown: header.getResizeHandler(),
+                onTouchStart: header.getResizeHandler(),
+            }} $isResizing={header.column.getIsResizing()} className="resizer" />}
+        </TableHeaderWrapper>
     )
 }

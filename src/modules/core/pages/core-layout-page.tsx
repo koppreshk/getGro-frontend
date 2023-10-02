@@ -12,7 +12,7 @@ export const CoreLayoutPage = React.memo(() => {
     return (
         <>
             <Toolbar />
-            <FlexBox $width="100%" $height="100%">
+            <FlexBox $width="100%" $height="calc(100% - 65px)">
                 <NavigationMenu />
                 <div style={{ width: 'calc(100% - 64px)' }}>
                     <Routes>
