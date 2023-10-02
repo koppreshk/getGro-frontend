@@ -16,7 +16,7 @@ const Resizer = styled.div<{ $isResizing: boolean }>`
     cursor: col-resize;
     user-select: none;
     touch-action: none;
-    background: ${({ $isResizing }) => $isResizing ? 'blue' : '#eaeaea'};
+    background: ${({ $isResizing }) => $isResizing ? '#eaeaea' : '#eaeaea80'};
     opacity: ${({ $isResizing }) => $isResizing && '1'};
 `;
 
