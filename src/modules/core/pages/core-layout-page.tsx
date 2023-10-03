@@ -18,7 +18,7 @@ export const CoreLayoutPage = React.memo(() => {
                     <Routes>
                         <Route key="root-route" path="/" element={<Navigate to="/dashboard" />} />
                         <Route key="dashboard-route" path="/dashboard" element={<DashboardPage />} />
-                        <Route key="tickets" path="/tickets" element={<TicketsPage />} />
+                        <Route key="tickets" path="/tickets/*" element={<TicketsPage />} />
                         <Route key="customers" path="/customers" element={<CustomersPage />} />
                         <Route key="settings" path="/settings" element={<SettingsPage />} />
                     </Routes>
