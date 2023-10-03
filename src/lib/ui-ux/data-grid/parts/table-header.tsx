@@ -17,7 +17,7 @@ const Resizer = styled.div<{ $isResizing: boolean }>`
     user-select: none;
     touch-action: none;
     background: ${({ $isResizing }) => $isResizing ? '#eaeaea' : '#eaeaea80'};
-    opacity: ${({ $isResizing }) => $isResizing && '1'};
+    opacity: ${({ $isResizing }) => $isResizing && '1 !important'};
 `;
 
 const TableHeaderWrapper = styled.th`
