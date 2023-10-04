@@ -1,6 +1,6 @@
 import React from "react"
 import { DataGrid, FlexBox, columns, defaultData } from "lib/ui-ux"
-import { TicketViews } from "./components"
+import { TicketViews } from "../components"
 import { Navigate, Route, Routes } from "react-router-dom"
 
 export const TicketsPage = React.memo(() => {
