@@ -7,7 +7,9 @@ declare module 'styled-components' {
   export interface DefaultTheme {
     pallete: {
         white: string,
-        black: string
+        black: string,
+        blue: string,
+        powderBlue: string,
     }
   }
 }

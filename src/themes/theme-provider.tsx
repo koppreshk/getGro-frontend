@@ -4,7 +4,9 @@ import { DefaultTheme, ThemeProvider as StyledThemeProvider } from 'styled-compo
 const defaultTheme: DefaultTheme = {
     pallete: {
         white: '#fff',
-        black: '#000'
+        black: '#000',
+        blue: '#1976d2',
+        powderBlue: '#f0f7ff'
     }
 }
 
