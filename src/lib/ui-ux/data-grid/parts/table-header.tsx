@@ -3,6 +3,10 @@ import { Typography } from "@mui/material";
 import { Header, flexRender } from "@tanstack/react-table";
 import { FlexBox, Icon } from "lib/ui-ux";
 
+interface ITableHeaderProps<T> {
+    header: Header<T, unknown>
+}
+
 const StyledIcon = styled(Icon)`
     color: #787f83;
 `;
@@ -22,6 +26,7 @@ const Resizer = styled.div<{ $isResizing: boolean }>`
 
 const TableHeaderWrapper = styled.th`
     position: relative;
+    box-sizing: border-box;
     @media (hover: hover) {
     ${Resizer} {
         opacity: 1;
@@ -33,11 +38,12 @@ const TableHeaderWrapper = styled.th`
 }
 `;
 
-export const TableHeader = <T extends object>(props: { header: Header<T, unknown> }) => {
+export const TableHeader = <T extends object>(props: ITableHeaderProps<T>) => {
     const { header } = props;
+
     return (
-        <TableHeaderWrapper id="table-column-header" style={{ width: header.getSize() }} colSpan={header.colSpan}>
-            {header.isPlaceholder
+        <TableHeaderWrapper id="table-column-header" style={{ minWidth: header.getSize() }} colSpan={header.colSpan}>
+            {!header.column.getCanHide()
                 ? null
                 : <FlexBox onClick={header.column.getToggleSortingHandler()} $gap="10px" $alignItems='center'>
                     <Typography variant='h6'>
@@ -50,10 +56,12 @@ export const TableHeader = <T extends object>(props: { header: Header<T, unknown
                         ? header.column.getIsSorted() === 'asc' ? <StyledIcon className="material-symbols-outlined" iconName='expand_less' /> : <StyledIcon className="material-symbols-outlined" iconName='expand_more' />
                         : header.column.getCanSort() ? <StyledIcon className="material-symbols-outlined" iconName='unfold_more' /> : null}
                 </FlexBox>}
-            {<Resizer {...{
-                onMouseDown: header.getResizeHandler(),
-                onTouchStart: header.getResizeHandler(),
-            }} $isResizing={header.column.getIsResizing()} className="resizer" />}
+            {header.column.getCanResize() ?
+                <Resizer {...{
+                    onMouseDown: header.getResizeHandler(),
+                    onTouchStart: header.getResizeHandler(),
+                }} $isResizing={header.column.getIsResizing()} className="resizer" /> : null
+            }
         </TableHeaderWrapper>
     )
 }

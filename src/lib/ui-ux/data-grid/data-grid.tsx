@@ -1,17 +1,18 @@
+import { useMemo, useState } from 'react'
 import {
     PaginationState,
-    SortingState, TableOptions, createColumnHelper,
+    SortingState, Table, TableOptions, createColumnHelper,
     getCoreRowModel, getPaginationRowModel, getSortedRowModel, useReactTable
 } from '@tanstack/react-table'
-import { useMemo, useState } from 'react'
+import { Checkbox } from '@mui/material'
 import styled from 'styled-components'
 import { TableHeader } from './parts/table-header'
 import { TableBody } from './parts/table-body'
-import { TablePagination } from './parts/table-pagination'
+import { TableControls } from './parts/table-controls'
 import { FlexBox } from '../flexbox/flexbox'
 
-interface IDataGridProps<T> extends Pick<TableOptions<T>, 'data' | 'columns'> {
-
+export interface IDataGridProps<T> extends Pick<TableOptions<T>, 'data' | 'columns'> {
+    onRenderHeader?: (table: Table<T>) => React.ReactNode;
 }
 
 type Person = {
@@ -23,13 +24,18 @@ type Person = {
     progress: number
 }
 
-const TablWrapper = styled(FlexBox)`
+const TableWrapper = styled(FlexBox)`
+    overflow: auto;
     width: 100%;
     height: 100%;
-    overflow: auto;
 `;
 
-const Table = styled.table`
+const DataGridWrapper = styled(FlexBox)`
+    width: 100%;
+    height: 100%;
+`;
+
+const StyledTable = styled.table`
     width: 100%;
     border-collapse: collapse;
     table, td, th {
@@ -150,6 +156,30 @@ export const defaultData: Person[] = [{ "firstName": "Bonny", "lastName": "Jagge
 const columnHelper = createColumnHelper<Person>()
 
 export const columns = [
+    columnHelper.display({
+        id: 'select',
+        header: ({ table }) => (
+            <Checkbox
+                {...{
+                    checked: table.getIsAllPageRowsSelected(),
+                    indeterminate: table.getIsSomePageRowsSelected(),
+                    onChange: table.getToggleAllPageRowsSelectedHandler(),
+                }}
+            />
+        ),
+        cell: ({ row }) => (
+            <Checkbox
+                {...{
+                    checked: row.getIsSelected(),
+                    disabled: !row.getCanSelect(),
+                    indeterminate: row.getIsSomeSelected(),
+                    onChange: row.getToggleSelectedHandler(),
+                }}
+            />
+        ),
+        maxSize: 58,
+        enableResizing: false
+    }),
     columnHelper.accessor('firstName', {
         header: 'First Name',
         cell: info => info.getValue(),
@@ -185,10 +215,10 @@ export const columns = [
 ];
 
 export function DataGrid<T extends object>(props: IDataGridProps<T>) {
-    const { data, columns } = props
+    const { data, columns, onRenderHeader } = props
     const memoizedData = useMemo(() => data, [data]);
     const [sorting, setSorting] = useState<SortingState>([])
-    const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 12 })
+    const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 })
 
     const table = useReactTable({
         data: memoizedData,
@@ -206,20 +236,27 @@ export function DataGrid<T extends object>(props: IDataGridProps<T>) {
     })
 
     return (
-        <TablWrapper $flexDirection='column' $gap="10px">
-            <Table style={{ width: table.getCenterTotalSize() }}>
-                <thead>
-                    {table.getHeaderGroups().map(headerGroup => (
-                        <tr key={headerGroup.id}>
-                            {headerGroup.headers.map(header => (<TableHeader header={header} key={header.id} />))}
-                        </tr>
-                    ))}
-                </thead>
-                <tbody>
-                    {table.getRowModel().rows.map(row => (<TableBody key={row.id} row={row} />))}
-                </tbody>
-            </Table>
-            <TablePagination table={table} />
-        </TablWrapper>
+        <DataGridWrapper $flexDirection='column' $gap="10px">
+            {onRenderHeader !== undefined ? null : <TableControls table={table} />}
+            <TableWrapper>
+                <StyledTable style={{ minWidth: table.getCenterTotalSize() }}>
+                    {
+                        onRenderHeader !== undefined ? onRenderHeader(table) :
+                            (
+                                <thead>
+                                    {table.getHeaderGroups().map(headerGroup => (
+                                        <tr key={headerGroup.id}>
+                                            {headerGroup.headers.map(header => (<TableHeader header={header} key={header.id} />))}
+                                        </tr>
+                                    ))}
+                                </thead>
+                            )
+                    }
+                    <tbody>
+                        {table.getRowModel().rows.map(row => (<TableBody key={row.id} row={row} />))}
+                    </tbody>
+                </StyledTable>
+            </TableWrapper>
+        </DataGridWrapper>
     )
 }
