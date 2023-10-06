@@ -6,7 +6,13 @@ const defaultTheme: DefaultTheme = {
         white: '#fff',
         black: '#000',
         blue: '#1976d2',
-        powderBlue: '#f0f7ff'
+        powderBlue: '#f0f7ff',
+        grayVariant1: '#CACED5',
+        grayVariant2: '#676E7B',
+        grayVariant3: '#667287',
+        grayVariant4: '#CACED5',
+        grayVariant5: '#F1F2F4',
+        grayVariant6: '#F8F9FA',
     }
 }
 
