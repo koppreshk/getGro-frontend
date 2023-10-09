@@ -27,7 +27,7 @@ type Person = {
 const TableWrapper = styled(FlexBox)`
     overflow: auto;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 120px);
 `;
 
 const DataGridWrapper = styled(FlexBox)`

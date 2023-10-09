@@ -52,7 +52,7 @@ const IconWrapper = styled(FlexBox) <{ $isOptionsSelected: boolean }>`
 
 export const NavigationMenu = React.memo(() => {
     const { pathname } = useLocation();
-    const [selectedMenu, setMenu] = React.useState(() => pathname.split('/')[1] ?? 'dashboard');
+    const [selectedMenu, setMenu] = React.useState(() => pathname === '/' ? 'dashboard' : pathname?.split('/')[1] ?? 'dashboard');
 
     return (
         <MenuWrapper>
