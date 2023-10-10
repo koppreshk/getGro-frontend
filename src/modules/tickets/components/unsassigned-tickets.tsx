@@ -1,6 +1,8 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Checkbox } from "@mui/material";
-import { createColumnHelper } from "@tanstack/react-table";
+import { Row, createColumnHelper } from "@tanstack/react-table";
 import { Facebook, Email, WhatsApp, Twitter, LocalPhone, Instagram, Sms } from '@mui/icons-material';
 import TourOutlinedIcon from '@mui/icons-material/TourOutlined';
 import { DataGrid } from "lib/ui-ux"
@@ -118,10 +120,15 @@ export const columns = [
 
 
 export const UnassignedTickets = (props: IUnassignedTicketsProps) => {
+    const navigate = useNavigate();
+
+    const onRowClick = React.useCallback((row: Row<ITicketDetails>) => {
+        navigate(`${row.original.ticketId}`, { replace: true });
+    }, [navigate]);
 
     return (
         <>
-            <DataGrid columns={columns} {...props} />
+            <DataGrid columns={columns} {...props} onRowClick={onRowClick} />
         </>
     )
 }

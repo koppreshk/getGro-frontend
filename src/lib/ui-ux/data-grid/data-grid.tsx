@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import {
     PaginationState,
+    Row,
     SortingState, Table, TableOptions, createColumnHelper,
     getCoreRowModel, getPaginationRowModel, getSortedRowModel, useReactTable
 } from '@tanstack/react-table'
@@ -13,6 +14,7 @@ import { FlexBox } from '../flexbox/flexbox'
 
 export interface IDataGridProps<T> extends Pick<TableOptions<T>, 'data' | 'columns'> {
     onRenderHeader?: (table: Table<T>) => React.ReactNode;
+    onRowClick?: (row: Row<T>) => void;
     isLoading?: boolean;
 }
 
@@ -216,15 +218,15 @@ export const columns = [
 ];
 
 export function DataGrid<T extends object>(props: IDataGridProps<T>) {
-    const { data, columns, isLoading, onRenderHeader } = props
+    const { data, columns, isLoading, onRenderHeader, onRowClick } = props
     const memoizedData = useMemo(() => isLoading ? Array(10).fill({}) : data, [data, isLoading]);
     const memoizedColumns = useMemo(() =>
-            isLoading
-                ? columns.map((column) => ({
-                    ...column,
-                    cell: () => <Skeleton variant="rectangular" />,
-                }))
-                : columns,
+        isLoading
+            ? columns.map((column) => ({
+                ...column,
+                cell: () => <Skeleton variant="rectangular" />,
+            }))
+            : columns,
         [isLoading, columns]
     );
     const [sorting, setSorting] = useState<SortingState>([])
@@ -263,7 +265,7 @@ export function DataGrid<T extends object>(props: IDataGridProps<T>) {
                             )
                     }
                     <tbody>
-                        {table.getRowModel().rows.map(row => (<TableBody key={row.id} row={row} />))}
+                        {table.getRowModel().rows.map(row => (<TableBody key={row.id} row={row} onRowClick={onRowClick} />))}
                     </tbody>
                 </StyledTable>
             </TableWrapper>
