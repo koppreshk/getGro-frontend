@@ -1,7 +1,8 @@
 import React from "react"
 import { DataGrid, FlexBox, columns, defaultData } from "lib/ui-ux"
-import { TabularLayout, TicketViews } from "../components"
+import { TicketViews } from "../components"
 import { Navigate, Route, Routes } from "react-router-dom"
+import { UnassignedTicketsContainer } from "../containers"
 
 export const TicketsPage = React.memo(() => {
     return (
@@ -10,7 +11,7 @@ export const TicketsPage = React.memo(() => {
             <div style={{ width: 'calc(100% - 200px)' }}>
                 <Routes>
                     <Route key="default-view" path="*" element={<Navigate to="/tickets/unassigned" />} />
-                    <Route key="unassigned" path="/unassigned" element={<TabularLayout />} />
+                    <Route key="unassigned" path="/unassigned" element={<UnassignedTicketsContainer />} />
                     <Route key="all-pending" path="/all-pending" element={<DataGrid columns={columns} data={defaultData} />} />
                     <Route key="all-complete" path="/all-complete" element={<DataGrid columns={columns} data={defaultData} />} />
                     <Route key="all-junk" path="/all-junk" element={<DataGrid columns={columns} data={defaultData} />} />

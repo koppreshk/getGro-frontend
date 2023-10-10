@@ -1,9 +1,5 @@
-import styled from "styled-components";
-import { Checkbox } from "@mui/material";
-import { createColumnHelper } from "@tanstack/react-table";
-import { Facebook, Email, WhatsApp, Twitter, LocalPhone, Instagram, Sms } from '@mui/icons-material';
-import TourOutlinedIcon from '@mui/icons-material/TourOutlined';
-import { DataGrid } from "lib/ui-ux"
+import React from "react";
+
 interface ITicketDetails {
     ticketSource: string;
     ticketId: string;
@@ -14,22 +10,7 @@ interface ITicketDetails {
     priority: string;
 }
 
-const StyledFlagIcon = styled(TourOutlinedIcon) <{ $priority: string }>`
-    fill: ${({ $priority }) => {
-        switch ($priority.toLocaleLowerCase()) {
-            case 'critical':
-                return 'red'
-            case 'high':
-                return 'red'
-            case 'low':
-                return 'green'
-            default:
-                return 'blue';
-        }
-    }} !important;
-`;
-
-export const data: ITicketDetails[] = [{ "ticketSource": "Facebook", "ticketId": "6e3afb9c-d83f-4060-80b1-5a3283eb088b", "customerName": "Tilly Moughton", "createdDate": "16/06/2023", "ticketStatus": "assigned", "ticketSubStatus": "Unanswered", "priority": "Low" },
+export const hardcodedData: ITicketDetails[] = [{ "ticketSource": "Facebook", "ticketId": "6e3afb9c-d83f-4060-80b1-5a3283eb088b", "customerName": "Tilly Moughton", "createdDate": "16/06/2023", "ticketStatus": "assigned", "ticketSubStatus": "Unanswered", "priority": "Low" },
 { "ticketSource": "whatsapp", "ticketId": "84301c1f-3d02-451f-a008-e594b3950cfe", "customerName": "Antin Fossord", "createdDate": "08/03/2023", "ticketStatus": "assigned", "ticketSubStatus": "Answered", "priority": "High" },
 { "ticketSource": "twitter", "ticketId": "af0af2cf-ab41-4229-aa63-81ed9f212b16", "customerName": "Karly Kluge", "createdDate": "16/05/2023", "ticketStatus": "unassigned", "ticketSubStatus": "Answered", "priority": "Low" },
 { "ticketSource": "Telephone", "ticketId": "baf4ba79-1096-4a75-942d-40097f223aa2", "customerName": "Marna Lago", "createdDate": "05/04/2023", "ticketStatus": "assigned", "ticketSubStatus": "Customer Replied", "priority": "Medium" },
@@ -130,91 +111,26 @@ export const data: ITicketDetails[] = [{ "ticketSource": "Facebook", "ticketId":
 { "ticketSource": "instagram", "ticketId": "b5706092-848f-48c6-a266-086844f4adfd", "customerName": "Lloyd Train", "createdDate": "31/12/2022", "ticketStatus": "assigned", "ticketSubStatus": "Unattended", "priority": "Low" },
 { "ticketSource": "SMS", "ticketId": "6fb6641a-6a7e-4248-88dd-b0eed5a43095", "customerName": "Thornie Helks", "createdDate": "22/11/2022", "ticketStatus": "unassigned", "ticketSubStatus": "Customer Replied", "priority": "Medium" }]
 
-const columnHelper = createColumnHelper<ITicketDetails>()
+export const useGetUnassignedTickets = () => {
+    const [isLoading, setLoading] = React.useState<boolean | undefined>(false);
+    const [data, setData] = React.useState<ITicketDetails[]>([]);
 
-export const columns = [
-    columnHelper.display({
-        id: 'select',
-        header: ({ table }) => (
-            <Checkbox
-                {...{
-                    checked: table.getIsAllPageRowsSelected(),
-                    indeterminate: table.getIsSomePageRowsSelected(),
-                    onChange: table.getToggleAllPageRowsSelectedHandler(),
-                }}
-            />
-        ),
-        cell: ({ row }) => (
-            <Checkbox
-                {...{
-                    checked: row.getIsSelected(),
-                    disabled: !row.getCanSelect(),
-                    indeterminate: row.getIsSomeSelected(),
-                    onChange: row.getToggleSelectedHandler(),
-                }}
-            />
-        ),
-        maxSize: 58,
-        enableResizing: false
-    }),
-    columnHelper.accessor('ticketId', {
-        header: 'Ticket Id',
-        cell: info => info.getValue(),
-        minSize: 240
-    }),
-    columnHelper.accessor('customerName', {
-        header: 'Customer Name',
-        cell: info => info.getValue(),
-        minSize: 240
-    }),
-    columnHelper.accessor('ticketSource', {
-        id: 'ticketSource',
-        header: 'Source',
-        cell: info => {
-            switch (info.getValue().toLocaleLowerCase()) {
-                case 'facebook':
-                    return <Facebook sx={{ fill: '#3b5998 !important' }} />
-                case 'email':
-                    return <Email sx={{ fill: '#df4b3a !important' }} />
-                case 'whatsapp':
-                    return <WhatsApp sx={{ fill: '#25d366 !important' }} />
-                case 'twitter':
-                    return <Twitter sx={{ fill: '#00acee !important' }} />
-                case 'telephone':
-                    return <LocalPhone sx={{ fill: '#00c2ff !important' }} />
-                case 'instagram':
-                    return <Instagram sx={{ fill: '#d62976 !important' }} />
-                case 'sms':
-                    return <Sms sx={{ fill: '#ffb800 !important' }} />
-                default:
-                    return info.getValue();
-            }
-        },
-        minSize: 240
-    }),
-    columnHelper.accessor('ticketStatus', {
-        header: () => 'Ticket Status',
-        cell: info => info.renderValue(),
-        minSize: 240
-    }),
-    columnHelper.accessor('ticketSubStatus', {
-        header: () => 'Ticket Sub Status',
-        minSize: 240
-    }),
-    columnHelper.accessor('priority', {
-        header: 'Priority',
-        minSize: 240,
-        cell: info => {
-            return <StyledFlagIcon $priority={info.getValue().toLocaleLowerCase()} />
-        },
-    })
-];
+    const getData = async () => {
+        return new Promise<ITicketDetails[]>((res) => {
+            setTimeout(() => {
+                res(hardcodedData)
+            }, 3000)
+        })
+    }
 
+    React.useEffect(() => {
+        setLoading(true);
+        getData()
+            .then((res) => {
+                setData(res);
+                setLoading(false);
+            });
+    }, []);
 
-export const TabularLayout = () => {
-    return (
-        <>
-            <DataGrid columns={columns} data={data} />
-        </>
-    )
+    return { isLoading, data };
 }

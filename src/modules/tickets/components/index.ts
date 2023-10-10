@@ -1,2 +1,2 @@
 export * from './ticket-views';
-export * from './tickets-tabular-layout';
+export * from './unsassigned-tickets';

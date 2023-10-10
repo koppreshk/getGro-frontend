@@ -4,7 +4,7 @@ import {
     SortingState, Table, TableOptions, createColumnHelper,
     getCoreRowModel, getPaginationRowModel, getSortedRowModel, useReactTable
 } from '@tanstack/react-table'
-import { Checkbox } from '@mui/material'
+import { Checkbox, Skeleton } from '@mui/material'
 import styled from 'styled-components'
 import { TableHeader } from './parts/table-header'
 import { TableBody } from './parts/table-body'
@@ -13,6 +13,7 @@ import { FlexBox } from '../flexbox/flexbox'
 
 export interface IDataGridProps<T> extends Pick<TableOptions<T>, 'data' | 'columns'> {
     onRenderHeader?: (table: Table<T>) => React.ReactNode;
+    isLoading?: boolean;
 }
 
 type Person = {
@@ -215,14 +216,23 @@ export const columns = [
 ];
 
 export function DataGrid<T extends object>(props: IDataGridProps<T>) {
-    const { data, columns, onRenderHeader } = props
-    const memoizedData = useMemo(() => data, [data]);
+    const { data, columns, isLoading, onRenderHeader } = props
+    const memoizedData = useMemo(() => isLoading ? Array(10).fill({}) : data, [data, isLoading]);
+    const memoizedColumns = useMemo(() =>
+            isLoading
+                ? columns.map((column) => ({
+                    ...column,
+                    cell: () => <Skeleton variant="rectangular" />,
+                }))
+                : columns,
+        [isLoading, columns]
+    );
     const [sorting, setSorting] = useState<SortingState>([])
     const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 })
 
     const table = useReactTable({
         data: memoizedData,
-        columns,
+        columns: memoizedColumns,
         state: {
             sorting,
             pagination
