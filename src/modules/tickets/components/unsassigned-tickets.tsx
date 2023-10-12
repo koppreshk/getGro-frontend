@@ -1,10 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Checkbox } from "@mui/material";
 import { Row, createColumnHelper } from "@tanstack/react-table";
 import { Facebook, Email, WhatsApp, Twitter, LocalPhone, Instagram, Sms } from '@mui/icons-material';
-import TourOutlinedIcon from '@mui/icons-material/TourOutlined';
 import { DataGrid } from "lib/ui-ux"
 
 interface ITicketDetails {
@@ -21,22 +20,6 @@ interface IUnassignedTicketsProps {
     data: ITicketDetails[];
     isLoading?: boolean;
 }
-
-const StyledFlagIcon = styled(TourOutlinedIcon) <{ $priority: string }>`
-    fill: ${({ $priority }) => {
-        switch ($priority.toLocaleLowerCase()) {
-            case 'critical':
-                return 'red'
-            case 'high':
-                return 'red'
-            case 'low':
-                return 'green'
-            default:
-                return 'blue';
-        }
-    }} !important;
-`;
-
 
 const columnHelper = createColumnHelper<ITicketDetails>()
 
@@ -113,10 +96,54 @@ export const columns = [
         header: 'Priority',
         minSize: 240,
         cell: info => {
-            return <StyledFlagIcon $priority={info.getValue().toLocaleLowerCase()} />
+            return <Priority priority={info.getValue().toLocaleLowerCase()} />
         },
     })
 ];
+
+const PriorityIcon = styled.span<{ $priority: string }>`
+    ${({ $priority }) => {
+        switch ($priority.toLocaleLowerCase()) {
+            case 'high':
+                return css`
+                    background-color: #FFF4E5;
+                    color: #EF6C00;
+                    border: 1px solid #F2CF7D;
+                `;
+            case 'low':
+                return css`
+                    background-color: #E9F5CE;
+                    color: #487307;
+                    border: 1px solid #B9D674;
+                `;
+            case 'medium':
+                return css`
+                    background-color: #D9F5FD;
+                    color: #0D60B7;
+                    border: 1px solid #8DD4F3;
+                `;
+            case 'critical':
+                return css`
+                    background-color: #FFECEE;
+                    color: #BF363F;
+                    border: 1px solid #FFB7BD;
+                `;
+        }
+    }};
+    padding: 0 9px;
+    border-radius: 16px;
+    text-transform: uppercase;
+    height: unset; 
+    font-size: 12px; 
+    font-weight: 600;
+`;
+
+const Priority = (args: { priority: string }) => {
+    const { priority } = args;
+    return (
+        <PriorityIcon $priority={priority} >{priority}</PriorityIcon>
+    )
+}
 
 
 export const UnassignedTickets = (props: IUnassignedTicketsProps) => {
