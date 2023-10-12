@@ -6,7 +6,7 @@ import {
     getCoreRowModel, getPaginationRowModel, getSortedRowModel, useReactTable
 } from '@tanstack/react-table'
 import { Checkbox, Skeleton } from '@mui/material'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { TableHeader } from './parts/table-header'
 import { TableBody } from './parts/table-body'
 import { TableControls } from './parts/table-controls'
@@ -38,8 +38,9 @@ const DataGridWrapper = styled(FlexBox)`
     height: 100%;
 `;
 
-const StyledTable = styled.table`
+const StyledTable = styled.table<{ $showPointerCursor: boolean; $isLoading?: boolean }>`
     width: 100%;
+    height: 100%;
     border-collapse: collapse;
     table, td, th {
         text-align: left;
@@ -49,8 +50,11 @@ const StyledTable = styled.table`
         border-bottom: 1px solid #e9ebed;
     }
     tbody > tr:hover {
-        border-bottom-color: #cee2f2;
-        background-color: #1f73b714;
+        cursor: ${({ $showPointerCursor, $isLoading }) => $showPointerCursor && !$isLoading ? 'pointer' : 'normal'};
+        ${({ $isLoading }) => !$isLoading && css`
+            border-bottom-color: #cee2f2;
+            background-color: #1f73b714;  
+        `}
     }
 `;
 
@@ -251,7 +255,7 @@ export function DataGrid<T extends object>(props: IDataGridProps<T>) {
         <DataGridWrapper $flexDirection='column' $gap="10px">
             {onRenderHeader !== undefined ? null : <TableControls table={table} />}
             <TableWrapper>
-                <StyledTable style={{ minWidth: table.getCenterTotalSize() }}>
+                <StyledTable style={{ minWidth: table.getCenterTotalSize() }} $isLoading={isLoading} $showPointerCursor={onRowClick !== undefined}>
                     {
                         onRenderHeader !== undefined ? onRenderHeader(table) :
                             (
@@ -265,7 +269,7 @@ export function DataGrid<T extends object>(props: IDataGridProps<T>) {
                             )
                     }
                     <tbody>
-                        {table.getRowModel().rows.map(row => (<TableBody key={row.id} row={row} onRowClick={onRowClick} />))}
+                        {table.getRowModel().rows.map(row => (<TableBody key={row.id} row={row} onRowClick={isLoading ? undefined : onRowClick} />))}
                     </tbody>
                 </StyledTable>
             </TableWrapper>
