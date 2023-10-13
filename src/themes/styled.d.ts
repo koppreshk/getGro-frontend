@@ -16,6 +16,10 @@ declare module 'styled-components' {
       grayVariant4: string,
       grayVariant5: string,
       grayVariant6: string,
+    },
+    others: {
+      scrollHandleColor: string;
+      scrollContainerColor: string
     }
   }
 }

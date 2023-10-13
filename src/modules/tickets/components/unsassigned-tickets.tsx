@@ -155,7 +155,7 @@ export const UnassignedTickets = (props: IUnassignedTicketsProps) => {
 
     return (
         <>
-            <DataGrid columns={columns} {...props} onRowClick={onRowClick} />
+            <DataGrid {...props} columns={columns} itemHeight="42px" onRowClick={onRowClick} />
         </>
     )
 }

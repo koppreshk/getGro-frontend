@@ -13,6 +13,10 @@ const defaultTheme: DefaultTheme = {
         grayVariant4: '#CACED5',
         grayVariant5: '#F1F2F4',
         grayVariant6: '#F8F9FA',
+    },
+    others: {
+        scrollContainerColor: '#E4E4E4',
+        scrollHandleColor: '#CECECE'
     }
 }
 

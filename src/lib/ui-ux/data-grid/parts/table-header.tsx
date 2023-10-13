@@ -24,7 +24,7 @@ const Resizer = styled.div<{ $isResizing: boolean }>`
     opacity: ${({ $isResizing }) => $isResizing && '1 !important'};
 `;
 
-const TableHeaderWrapper = styled.th`
+const TableHeaderWrapper = styled.div`
     position: relative;
     box-sizing: border-box;
     @media (hover: hover) {
@@ -42,7 +42,7 @@ export const TableHeader = <T extends object>(props: ITableHeaderProps<T>) => {
     const { header } = props;
 
     return (
-        <TableHeaderWrapper id="table-column-header" style={{ minWidth: header.getSize() }} colSpan={header.colSpan}>
+        <TableHeaderWrapper id="table-column-header" style={{ minWidth: header.getSize(), flex: `${header.getSize()} 0 0` }}>
             {!header.column.getCanHide()
                 ? null
                 : <FlexBox onClick={header.column.getToggleSortingHandler()} $gap="10px" $alignItems='center'>

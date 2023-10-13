@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import React ,{ useMemo, useState } from 'react'
 import {
     PaginationState,
     Row,
@@ -16,6 +16,7 @@ export interface IDataGridProps<T> extends Pick<TableOptions<T>, 'data' | 'colum
     onRenderHeader?: (table: Table<T>) => React.ReactNode;
     onRowClick?: (row: Row<T>) => void;
     isLoading?: boolean;
+    itemHeight?: string;
 }
 
 type Person = {
@@ -38,18 +39,18 @@ const DataGridWrapper = styled(FlexBox)`
     height: 100%;
 `;
 
-const StyledTable = styled.table<{ $showPointerCursor: boolean; $isLoading?: boolean }>`
+const StyledTable = styled.div<{ $showPointerCursor: boolean; $isLoading?: boolean, $itemHeight?: string }>`
     width: 100%;
     height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
     border-collapse: collapse;
-    table, td, th {
-        text-align: left;
-        padding: 8px;
-    }
-    tr {
+    
+    .table-row-group {
         border-bottom: 1px solid #e9ebed;
+        height: ${({ $itemHeight }) => $itemHeight ?? 'auto'};
     }
-    tbody > tr:hover {
+    .table-row-group:hover {
         cursor: ${({ $showPointerCursor, $isLoading }) => $showPointerCursor && !$isLoading ? 'pointer' : 'normal'};
         ${({ $isLoading }) => !$isLoading && css`
             border-bottom-color: #cee2f2;
@@ -222,7 +223,7 @@ export const columns = [
 ];
 
 export function DataGrid<T extends object>(props: IDataGridProps<T>) {
-    const { data, columns, isLoading, onRenderHeader, onRowClick } = props
+    const { data, columns, isLoading, itemHeight, onRenderHeader, onRowClick } = props
     const memoizedData = useMemo(() => isLoading ? Array(10).fill({}) : data, [data, isLoading]);
     const memoizedColumns = useMemo(() =>
         isLoading
@@ -255,22 +256,22 @@ export function DataGrid<T extends object>(props: IDataGridProps<T>) {
         <DataGridWrapper $flexDirection='column' $gap="10px">
             {onRenderHeader !== undefined ? null : <TableControls table={table} />}
             <TableWrapper>
-                <StyledTable style={{ minWidth: table.getCenterTotalSize() }} $isLoading={isLoading} $showPointerCursor={onRowClick !== undefined}>
+                <StyledTable style={{ minWidth: table.getCenterTotalSize() }} $isLoading={isLoading} $showPointerCursor={onRowClick !== undefined} $itemHeight={itemHeight}>
                     {
                         onRenderHeader !== undefined ? onRenderHeader(table) :
                             (
-                                <thead>
+                                <FlexBox $alignItems='center' className='table-header-group'>
                                     {table.getHeaderGroups().map(headerGroup => (
-                                        <tr key={headerGroup.id}>
+                                        <React.Fragment key={headerGroup.id}>
                                             {headerGroup.headers.map(header => (<TableHeader header={header} key={header.id} />))}
-                                        </tr>
+                                        </React.Fragment>
                                     ))}
-                                </thead>
+                                </FlexBox>
                             )
                     }
-                    <tbody>
+                    <FlexBox $flexDirection='column' $height='calc(100% - 42px)' $overflowY='auto'>
                         {table.getRowModel().rows.map(row => (<TableBody key={row.id} row={row} onRowClick={isLoading ? undefined : onRowClick} />))}
-                    </tbody>
+                    </FlexBox>
                 </StyledTable>
             </TableWrapper>
         </DataGridWrapper>
