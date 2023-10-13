@@ -16,7 +16,7 @@ export const TableBody = <T extends object>(props: ITableBodyProps<T>) => {
         <tr onClick={onClick}>
             {row.getVisibleCells().map(cell => (
                 <td key={cell.id}>
-                    <Typography variant='body1' textOverflow={'ellipsis'} overflow="hidden" whiteSpace="nowrap" maxWidth={cell.column.getSize()}>
+                    <Typography variant='body2' textOverflow={'ellipsis'} overflow="hidden" whiteSpace="nowrap" maxWidth={cell.column.getSize()}>
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </Typography>
                 </td>

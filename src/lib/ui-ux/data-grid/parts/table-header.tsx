@@ -46,7 +46,7 @@ export const TableHeader = <T extends object>(props: ITableHeaderProps<T>) => {
             {!header.column.getCanHide()
                 ? null
                 : <FlexBox onClick={header.column.getToggleSortingHandler()} $gap="10px" $alignItems='center'>
-                    <Typography variant='h6'>
+                    <Typography variant='h6' fontSize="14px">
                         {flexRender(
                             header.column.columnDef.header,
                             header.getContext()
