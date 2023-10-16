@@ -50,11 +50,13 @@ export const columns = [
     }),
     columnHelper.accessor('ticketId', {
         header: 'Ticket Id',
+        id: 'ticketId',
         cell: info => info.getValue(),
         minSize: 240
     }),
     columnHelper.accessor('customerName', {
         header: 'Customer Name',
+        id: 'customerName',
         cell: info => info.getValue(),
         minSize: 240
     }),
@@ -85,15 +87,18 @@ export const columns = [
     }),
     columnHelper.accessor('ticketStatus', {
         header: () => 'Ticket Status',
+        id: 'ticketStatus',
         cell: info => info.renderValue(),
         minSize: 240
     }),
     columnHelper.accessor('ticketSubStatus', {
         header: () => 'Ticket Sub Status',
+        id: 'ticketSubStatus',
         minSize: 240
     }),
     columnHelper.accessor('priority', {
         header: 'Priority',
+        id: 'priority',
         minSize: 240,
         cell: info => {
             return <Priority priority={info.getValue().toLocaleLowerCase()} />
