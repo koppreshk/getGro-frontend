@@ -1,11 +1,14 @@
-import React ,{ useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import {
+    ColumnOrderState,
     PaginationState,
     Row,
     SortingState, Table, TableOptions, createColumnHelper,
     getCoreRowModel, getPaginationRowModel, getSortedRowModel, useReactTable
 } from '@tanstack/react-table'
 import { Checkbox, Skeleton } from '@mui/material'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 import styled, { css } from 'styled-components'
 import { TableHeader } from './parts/table-header'
 import { TableBody } from './parts/table-body'
@@ -29,21 +32,22 @@ type Person = {
 }
 
 const TableWrapper = styled(FlexBox)`
-    overflow: auto;
     width: 100%;
-    height: calc(100% - 120px);
+    max-height: calc(100% - 120px);
 `;
+
+const ScrollableDiv = styled.div`
+    height: 100%;
+    overflow: auto;
+`
 
 const DataGridWrapper = styled(FlexBox)`
     width: 100%;
     height: 100%;
 `;
 
-const StyledTable = styled.div<{ $showPointerCursor: boolean; $isLoading?: boolean, $itemHeight?: string }>`
+const StyledTable = styled.table<{ $showPointerCursor: boolean; $isLoading?: boolean, $itemHeight?: string }>`
     width: 100%;
-    height: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
     border-collapse: collapse;
     
     .table-row-group {
@@ -234,6 +238,11 @@ export function DataGrid<T extends object>(props: IDataGridProps<T>) {
             : columns,
         [isLoading, columns]
     );
+
+    const [columnOrder, setColumnOrder] = React.useState<ColumnOrderState>(
+        columns.map(column => column.id as string) //must start out with populated columnOrder so we can splice
+    )
+
     const [sorting, setSorting] = useState<SortingState>([])
     const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 })
 
@@ -242,9 +251,11 @@ export function DataGrid<T extends object>(props: IDataGridProps<T>) {
         columns: memoizedColumns,
         state: {
             sorting,
+            columnOrder,
             pagination
         },
         columnResizeMode: 'onChange',
+        onColumnOrderChange: setColumnOrder,
         onSortingChange: setSorting,
         onPaginationChange: setPagination,
         getCoreRowModel: getCoreRowModel(),
@@ -253,27 +264,31 @@ export function DataGrid<T extends object>(props: IDataGridProps<T>) {
     })
 
     return (
-        <DataGridWrapper $flexDirection='column' $gap="10px">
-            {onRenderHeader !== undefined ? null : <TableControls table={table} />}
-            <TableWrapper>
-                <StyledTable style={{ minWidth: table.getCenterTotalSize() }} $isLoading={isLoading} $showPointerCursor={onRowClick !== undefined} $itemHeight={itemHeight}>
-                    {
-                        onRenderHeader !== undefined ? onRenderHeader(table) :
-                            (
-                                <FlexBox $alignItems='center' className='table-header-group'>
-                                    {table.getHeaderGroups().map(headerGroup => (
-                                        <React.Fragment key={headerGroup.id}>
-                                            {headerGroup.headers.map(header => (<TableHeader header={header} key={header.id} />))}
-                                        </React.Fragment>
-                                    ))}
-                                </FlexBox>
-                            )
-                    }
-                    <FlexBox $flexDirection='column' $height='calc(100% - 42px)' $overflowY='auto'>
-                        {table.getRowModel().rows.map(row => (<TableBody key={row.id} row={row} onRowClick={isLoading ? undefined : onRowClick} />))}
-                    </FlexBox>
-                </StyledTable>
-            </TableWrapper>
-        </DataGridWrapper>
+        <DndProvider backend={HTML5Backend}>
+            <DataGridWrapper $flexDirection='column' $gap="10px">
+                {onRenderHeader !== undefined ? null : <TableControls table={table} />}
+                <ScrollableDiv>
+                    <TableWrapper>
+                        <StyledTable style={{ minWidth: table.getCenterTotalSize() }} $isLoading={isLoading} $showPointerCursor={onRowClick !== undefined} $itemHeight={itemHeight}>
+                            {
+                                onRenderHeader !== undefined ? onRenderHeader(table) :
+                                    (
+                                        <thead className='table-header-group'>
+                                            {table.getHeaderGroups().map(headerGroup => (
+                                                <tr key={headerGroup.id}>
+                                                    {headerGroup.headers.map(header => (<TableHeader header={header} key={header.id} table={table} />))}
+                                                </tr>
+                                            ))}
+                                        </thead>
+                                    )
+                            }
+                            <tbody>
+                                {table.getRowModel().rows.map(row => (<TableBody key={row.id} row={row} onRowClick={isLoading ? undefined : onRowClick} />))}
+                            </tbody>
+                        </StyledTable>
+                    </TableWrapper>
+                </ScrollableDiv>
+            </DataGridWrapper>
+        </DndProvider>
     )
 }
