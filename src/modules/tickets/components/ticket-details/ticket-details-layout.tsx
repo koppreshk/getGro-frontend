@@ -1,11 +1,14 @@
 import { FlexBox } from "lib/ui-ux"
+import { TicketListViewContainer } from "modules/tickets/containers"
 
 export const TicketDetailsLayout = () => {
     return (
         <FlexBox $width="100%" $height="100%">
-            <FlexBox $width="400px" $justifyContent="center" $alignItems="center" style={{border: '1px solid black'}}>List View of tickets</FlexBox>
-            <FlexBox $width="500px" $justifyContent="center" $alignItems="center" style={{border: '1px solid black'}}>Chat History</FlexBox>
-            <FlexBox $width="calc(100% - 906px)" $justifyContent="center" $alignItems="center" style={{border: '1px solid black'}}>Everything else</FlexBox>
+            <FlexBox $width="25%" style={{ borderRight: '1px solid #e9ebed' }}>
+                <TicketListViewContainer />
+            </FlexBox>
+            <FlexBox $width="40%" $justifyContent="center" $alignItems="center" style={{ borderRight: '1px solid #e9ebed' }}>Chat History</FlexBox>
+            <FlexBox $width="35%" $justifyContent="center" $alignItems="center"> Ticket Details</FlexBox>
         </FlexBox>
     )
 } 

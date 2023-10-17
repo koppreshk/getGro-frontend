@@ -7,7 +7,7 @@ import { Facebook, Email, WhatsApp, Twitter, LocalPhone, Instagram, Sms } from '
 import TourOutlinedIcon from '@mui/icons-material/TourOutlined';
 import { DataGrid } from "lib/ui-ux"
 
-interface ITicketDetails {
+export interface ITicketDetails {
     ticketSource: string;
     ticketId: string;
     customerName: string;
