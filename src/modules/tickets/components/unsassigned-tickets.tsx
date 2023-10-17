@@ -46,7 +46,10 @@ export const columns = [
             />
         ),
         maxSize: 58,
-        enableResizing: false
+        enableResizing: false,
+        meta: {
+            disableColReorder: true
+        }
     }),
     columnHelper.accessor('ticketId', {
         header: 'Ticket Id',
