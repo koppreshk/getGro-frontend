@@ -3,7 +3,7 @@ import {
     ColumnOrderState,
     PaginationState,
     Row,
-    SortingState, Table, TableOptions, createColumnHelper,
+    SortingState, TableOptions, createColumnHelper,
     getCoreRowModel, getPaginationRowModel, getSortedRowModel, useReactTable
 } from '@tanstack/react-table'
 import { Checkbox, Skeleton } from '@mui/material'
@@ -16,7 +16,6 @@ import { TableControls } from './parts/table-controls'
 import { FlexBox } from '../flexbox/flexbox'
 
 export interface IDataGridProps<T> extends Pick<TableOptions<T>, 'data' | 'columns'> {
-    onRenderHeader?: (table: Table<T>) => React.ReactNode;
     onRowClick?: (row: Row<T>) => void;
     isLoading?: boolean;
     itemHeight?: string;
@@ -227,7 +226,7 @@ export const columns = [
 ];
 
 export function DataGrid<T extends object>(props: IDataGridProps<T>) {
-    const { data, columns, isLoading, itemHeight, onRenderHeader, onRowClick } = props
+    const { data, columns, isLoading, itemHeight, onRowClick } = props
     const memoizedData = useMemo(() => isLoading ? Array(10).fill({}) : data, [data, isLoading]);
     const memoizedColumns = useMemo(() =>
         isLoading
@@ -266,22 +265,17 @@ export function DataGrid<T extends object>(props: IDataGridProps<T>) {
     return (
         <DndProvider backend={HTML5Backend}>
             <DataGridWrapper $flexDirection='column' $gap="10px">
-                {onRenderHeader !== undefined ? null : <TableControls table={table} />}
+                <TableControls table={table} />
                 <ScrollableDiv>
                     <TableWrapper>
                         <StyledTable style={{ minWidth: table.getCenterTotalSize() }} $isLoading={isLoading} $showPointerCursor={onRowClick !== undefined} $itemHeight={itemHeight}>
-                            {
-                                onRenderHeader !== undefined ? onRenderHeader(table) :
-                                    (
-                                        <thead className='table-header-group'>
-                                            {table.getHeaderGroups().map(headerGroup => (
-                                                <tr key={headerGroup.id}>
-                                                    {headerGroup.headers.map(header => (<TableHeader header={header} key={header.id} table={table} />))}
-                                                </tr>
-                                            ))}
-                                        </thead>
-                                    )
-                            }
+                            <thead className='table-header-group'>
+                                {table.getHeaderGroups().map(headerGroup => (
+                                    <tr key={headerGroup.id}>
+                                        {headerGroup.headers.map(header => (<TableHeader header={header} key={header.id} table={table} />))}
+                                    </tr>
+                                ))}
+                            </thead>
                             <tbody>
                                 {table.getRowModel().rows.map(row => (<TableBody key={row.id} row={row} onRowClick={isLoading ? undefined : onRowClick} />))}
                             </tbody>
