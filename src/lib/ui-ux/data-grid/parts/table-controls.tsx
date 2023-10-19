@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { FlexBox, VerticalSeparator } from "lib/ui-ux";
 import { IconButton, Slider, Typography } from "@mui/material";
 import styled from "styled-components";
@@ -50,26 +51,39 @@ const PaginationWrapper = styled(FlexBox)`
 
 export const TableControls = <T extends object>(props: ITableControlsProps<T>) => {
     const { table } = props;
-    const firstBtnClick = React.useCallback(() => table.setPageIndex(0), [table]);
-    const previousBtnClick = React.useCallback(() => table.previousPage(), [table]);
-    const nextBtnClick = React.useCallback(() => table.nextPage(), [table]);
-    const lasttBtnClick = React.useCallback(() => table.setPageIndex(table.getPageCount() - 1), [table]);
 
-    const onSliderChange = React.useCallback((_event: Event, value: number | number[]) => {
-        table.setPageSize(Number(value))
-    }, [table]);
+    //Below callback has to be removed, since its manual pagination
+    const lasttBtnClick = useCallback(() => table.setPageIndex(table.getPageCount() - 1), [table]);
+    
+    const [itemsPerPage, setItemsPerPage] = useState(10);
+    
+    const onSliderChange = useCallback((_event: Event, value: number | number[]) => {
+        setItemsPerPage(Number(value))
+    }, []);
+    
+    const [currentPage, setCurrentPage] = useState(1);
+    const firstBtnClick = useCallback(() => setCurrentPage(1), []);
+    const onNextPage = useCallback(() => setCurrentPage(currentPage + 1), [currentPage]);
+    const onPrevPage = useCallback(() => setCurrentPage(currentPage - 1), [currentPage]);
+    const [searchParmas, setSearchParmas] = useSearchParams();
+
+    React.useEffect(() => {
+        searchParmas.set('pageNumber', currentPage.toString())
+        searchParmas.set('itemsPerPage', itemsPerPage.toString())
+        setSearchParmas(searchParmas);
+    }, [currentPage, itemsPerPage, searchParmas, setSearchParmas])
 
     return (
         <StyledFlexBox $justifyContent="flex-end" $gap="50px" $alignItems="center" $height="110px">
             <Slider
                 aria-label="Restricted values"
-                defaultValue={table.getState().pagination.pageSize}
+                defaultValue={itemsPerPage}
                 valueLabelFormat={valuetext}
                 getAriaValueText={valuetext}
                 onChange={onSliderChange}
                 step={10}
                 valueLabelDisplay="auto"
-                value={table.getState().pagination.pageSize}
+                value={itemsPerPage}
                 marks={marks}
                 min={10}
                 max={50}
@@ -77,23 +91,23 @@ export const TableControls = <T extends object>(props: ITableControlsProps<T>) =
             />
             <VerticalSeparator />
             <PaginationWrapper $gap="15px" $alignItems='center'>
-                <IconButton aria-label="First" onClick={firstBtnClick} disabled={!table.getCanPreviousPage()} color="primary">
+                <IconButton aria-label="First" onClick={firstBtnClick} disabled={currentPage === 1}  color="primary">
                     <KeyboardDoubleArrowLeftIcon />
                 </IconButton>
-                <IconButton aria-label="Previous" onClick={previousBtnClick} disabled={!table.getCanPreviousPage()} color="primary">
+                <IconButton aria-label="Previous" onClick={onPrevPage} disabled={currentPage === 1} color="primary">
                     <ChevronLeftIcon />
                 </IconButton>
                 <FlexBox $gap="5px" $alignItems='center'>
                     <Typography variant='button'>Page</Typography>
                     <Typography variant='button'>
-                        {table.getState().pagination.pageIndex + 1} of{' '}
-                        {table.getPageCount()}
+                        {currentPage} of{' '}
+                        MANY
                     </Typography>
                 </FlexBox>
-                <IconButton aria-label="Next" onClick={nextBtnClick} disabled={!table.getCanNextPage()} color="primary">
+                <IconButton aria-label="Next" onClick={onNextPage} color="primary">
                     <ChevronRightIcon />
                 </IconButton>
-                <IconButton aria-label="Last" onClick={lasttBtnClick} disabled={!table.getCanNextPage()} color="primary">
+                <IconButton aria-label="Last" onClick={lasttBtnClick} color="primary">
                     <KeyboardDoubleArrowRightIcon />
                 </IconButton>
             </PaginationWrapper>

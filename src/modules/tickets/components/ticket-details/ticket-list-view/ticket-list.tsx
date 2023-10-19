@@ -1,8 +1,8 @@
-import { Avatar, Typography } from "@mui/material"
-import { FlexBox } from "lib/ui-ux"
-import { ITicketDetails } from "../../unsassigned-tickets";
 import styled from "styled-components";
+import { Avatar, Typography } from "@mui/material"
 import { Facebook, Email, WhatsApp, Twitter, LocalPhone, Instagram, Sms } from "@mui/icons-material";
+import { FlexBox } from "lib/ui-ux"
+import { ITicketDetails } from "modules/tickets/apis";
 
 interface ITicketListProps {
     data: ITicketDetails[];
@@ -31,7 +31,7 @@ export const TicketList = (props: ITicketListProps) => {
             customerName={item.customerName}
             priority={item.priority}
             ticketId={item.ticketId}
-            ticketSource={item.ticketSource}
+            source={item.source}
             ticketStatus={item.ticketStatus}
             ticketSubStatus={item.ticketSubStatus}
             key={item.ticketId} />
@@ -42,7 +42,7 @@ export const TicketList = (props: ITicketListProps) => {
     )
 };
 
-const renderTicketSourceIcon = (source: string) => {
+const rendersourceIcon = (source: string) => {
     switch (source.toLocaleLowerCase()) {
         case 'facebook':
             return <Facebook sx={{ fill: '#3b5998 !important' }} />
@@ -63,11 +63,11 @@ const renderTicketSourceIcon = (source: string) => {
     }
 }
 
-interface ITicketDetailsProps extends Pick<ITicketDetails, 'ticketSource' | 'ticketId' | 'customerName' | 'ticketStatus' | 'ticketSubStatus' | 'createdDate' | 'priority'> {
+interface ITicketDetailsProps extends Pick<ITicketDetails, 'source' | 'ticketId' | 'customerName' | 'ticketStatus' | 'ticketSubStatus' | 'createdDate' | 'priority'> {
 }
 
 const TicketDetails = (props: ITicketDetailsProps) => {
-    const { createdDate, customerName, ticketId, ticketSource } = props;
+    const { createdDate, customerName, ticketId, source } = props;
 
     return (
         <TicketWrapper $flexDirection="row">
@@ -82,7 +82,7 @@ const TicketDetails = (props: ITicketDetailsProps) => {
                 <Typography variant="body2">Hellow victoria thak u for contacting...</Typography>
                 <FlexBox $flexDirection="row" $gap="10px" $alignItems="center">
                     <>
-                        {renderTicketSourceIcon(ticketSource)}
+                        {rendersourceIcon(source)}
                     </>
                     <Typography variant="body2">Id: {ticketId}</Typography>
                 </FlexBox>

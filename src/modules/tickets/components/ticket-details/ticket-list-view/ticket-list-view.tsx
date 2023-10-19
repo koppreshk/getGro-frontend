@@ -1,6 +1,6 @@
 import { FlexBox } from "lib/ui-ux"
 import { TicketList, TicketListViewHeader } from "."
-import { ITicketDetails } from "../../unsassigned-tickets";
+import { ITicketDetails } from "modules/tickets/apis";
 
 interface ITicketListViewsProps {
     data: ITicketDetails[];
@@ -9,7 +9,6 @@ interface ITicketListViewsProps {
 
 export const TicketListView = (props: ITicketListViewsProps) => {
     const { data } = props;
-    console.log(data);
 
     return (
         <FlexBox $flexDirection="column" $width="100%" style={{ backgroundColor: '#fff' }}>

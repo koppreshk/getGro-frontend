@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import {
     ColumnOrderState,
-    PaginationState,
     Row,
     SortingState, TableOptions, createColumnHelper,
     getCoreRowModel, getPaginationRowModel, getSortedRowModel, useReactTable
@@ -51,7 +50,7 @@ const StyledTable = styled.table<{ $showPointerCursor: boolean; $isLoading?: boo
     
     .table-row-group {
         border-bottom: 1px solid #e9ebed;
-        height: ${({ $itemHeight }) => $itemHeight ?? 'auto'};
+        height: ${({ $itemHeight }) => $itemHeight ?? '45px'};
     }
     .table-row-group:hover {
         cursor: ${({ $showPointerCursor, $isLoading }) => $showPointerCursor && !$isLoading ? 'pointer' : 'normal'};
@@ -243,20 +242,18 @@ export function DataGrid<T extends object>(props: IDataGridProps<T>) {
     )
 
     const [sorting, setSorting] = useState<SortingState>([])
-    const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 })
 
     const table = useReactTable({
         data: memoizedData,
         columns: memoizedColumns,
         state: {
             sorting,
-            columnOrder,
-            pagination
+            columnOrder
         },
         columnResizeMode: 'onChange',
+        manualPagination: true,
         onColumnOrderChange: setColumnOrder,
         onSortingChange: setSorting,
-        onPaginationChange: setPagination,
         getCoreRowModel: getCoreRowModel(),
         getSortedRowModel: getSortedRowModel(),
         getPaginationRowModel: getPaginationRowModel()

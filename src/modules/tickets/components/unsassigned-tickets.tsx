@@ -5,16 +5,7 @@ import { Checkbox } from "@mui/material";
 import { Row, createColumnHelper } from "@tanstack/react-table";
 import { Facebook, Email, WhatsApp, Twitter, LocalPhone, Instagram, Sms } from '@mui/icons-material';
 import { DataGrid } from "lib/ui-ux"
-
-export interface ITicketDetails {
-    ticketSource: string;
-    ticketId: string;
-    customerName: string;
-    ticketStatus: string;
-    ticketSubStatus: string;
-    createdDate: string;
-    priority: string;
-}
+import { ITicketDetails } from "../apis";
 
 interface IUnassignedTicketsProps {
     data: ITicketDetails[];
@@ -63,8 +54,8 @@ export const columns = [
         cell: info => info.getValue(),
         minSize: 240
     }),
-    columnHelper.accessor('ticketSource', {
-        id: 'ticketSource',
+    columnHelper.accessor('source', {
+        id: 'source',
         header: 'Source',
         cell: info => {
             switch (info.getValue().toLocaleLowerCase()) {
@@ -163,7 +154,7 @@ export const UnassignedTickets = (props: IUnassignedTicketsProps) => {
 
     return (
         <>
-            <DataGrid {...props} columns={columns} itemHeight="42px" onRowClick={onRowClick} />
+            <DataGrid {...props} columns={columns} onRowClick={onRowClick} />
         </>
     )
 }
