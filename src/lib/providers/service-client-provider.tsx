@@ -11,8 +11,6 @@ class ServiceClient {
     }
 
     private fetchData = (endPoint: string, init?: Pick<RequestInit, 'body' | 'method'>, _headers?: HeadersInit) => {
-        console.log(this.restURL);
-
         return fetch(`${this.restURL}${endPoint}`, {
             headers: this.headers,
             body: init?.body,

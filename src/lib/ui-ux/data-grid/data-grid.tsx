@@ -51,7 +51,7 @@ const StyledTable = styled.table<{ $showPointerCursor: boolean; $isLoading?: boo
     
     .table-row-group {
         border-bottom: 1px solid #e9ebed;
-        height: ${({ $itemHeight }) => $itemHeight ?? 'auto'};
+        height: ${({ $itemHeight }) => $itemHeight ?? '45px'};
     }
     .table-row-group:hover {
         cursor: ${({ $showPointerCursor, $isLoading }) => $showPointerCursor && !$isLoading ? 'pointer' : 'normal'};

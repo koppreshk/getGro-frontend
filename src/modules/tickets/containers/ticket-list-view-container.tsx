@@ -1,10 +1,10 @@
 import { Skeleton } from "@mui/material";
-import { useGetUnassignedTickets } from "../apis";
+import { useGetUnassignedTickets1 } from "../apis";
 import { TicketListView } from "../components/ticket-details/ticket-list-view"
 import { FlexBox } from "lib/ui-ux";
 
 export const TicketListViewContainer = () => {
-    const { data, isLoading } = useGetUnassignedTickets();
+    const { data, isLoading } = useGetUnassignedTickets1();
 
     if (isLoading) {
         const skeletonLoading = Array(10).fill({}).map(() =>
