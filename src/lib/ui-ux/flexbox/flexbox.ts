@@ -15,6 +15,7 @@ export interface IFlexBlockBaseProps {
     $maxWidth?: string;
     $maxHeight?: string;
     $width?: string;
+    $padding?: string;
     $height?: string;
     $overflowX?: Property.OverflowX;
     $overflowY?: Property.OverflowY;
@@ -24,6 +25,7 @@ export const FlexBox = styled.div<IFlexBlockBaseProps>`
     display: ${({ $inline }) => ($inline ? 'inline-flex' : 'flex')};
     flex-shrink: 0;
     flex-grow: 0;
+    box-sizing: border-box;
     ${({ $flexDirection }) => $flexDirection && css`flex-direction: ${$flexDirection};`}
     ${({ $flexFlow }) => $flexFlow && css`flex-flow: ${$flexFlow};`}
     ${({ $gap }) => $gap && css`gap: ${$gap};`}
@@ -35,6 +37,7 @@ export const FlexBox = styled.div<IFlexBlockBaseProps>`
     ${({ $justifySelf }) => $justifySelf && css`justify-self: ${$justifySelf};`}
     ${({ $height }) => $height && css`height: ${$height};`}
     ${({ $width }) => $width && css`width: ${$width};`}
+    ${({ $padding }) => $padding && css`padding: ${$padding};`}
     ${({ $maxHeight }) => $maxHeight && css`max-height: ${$maxHeight};`}
     ${({ $maxWidth }) => $maxWidth && css`max-width: ${$maxWidth};`}
     ${({ $overflowX }) => $overflowX && css`overflow-x: ${$overflowX};`}
