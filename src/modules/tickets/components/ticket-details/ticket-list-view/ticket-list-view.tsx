@@ -12,9 +12,9 @@ export const TicketListView = (props: ITicketListViewsProps) => {
     console.log(data);
 
     return (
-        <FlexBox $flexDirection="column" $width="100%">
+        <FlexBox $flexDirection="column" $width="100%" style={{ backgroundColor: '#fff' }}>
             <TicketListViewHeader />
-            <TicketList data={data}/>
+            <TicketList data={data} />
         </FlexBox>
     )
 }

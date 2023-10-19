@@ -16,7 +16,7 @@ const StyledIconButton = (props: IStyledIconButtonProps) => (
 );
 
 
-const HeaderWrapper = styled(FlexBox)`
+export const HeaderWrapper = styled(FlexBox)`
     box-sizing: border-box;
     padding: 15px 10px;
     border-bottom: 1px solid #e9ebed;

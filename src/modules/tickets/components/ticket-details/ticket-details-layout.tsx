@@ -1,14 +1,21 @@
+import styled from "styled-components";
 import { FlexBox } from "lib/ui-ux"
-import { TicketListViewContainer } from "modules/tickets/containers"
+import { TicketConversationContainer, TicketListViewContainer } from "modules/tickets/containers"
+
+const StyledLayoutWrapper = styled(FlexBox)`
+    background-color: ${({ theme }) => theme.pallete.grayVariant5};
+`;
 
 export const TicketDetailsLayout = () => {
     return (
-        <FlexBox $width="100%" $height="100%">
+        <StyledLayoutWrapper $width="100%" $height="100%" $gap="20px">
             <FlexBox $width="25%" style={{ borderRight: '1px solid #e9ebed' }}>
                 <TicketListViewContainer />
             </FlexBox>
-            <FlexBox $width="40%" $justifyContent="center" $alignItems="center" style={{ borderRight: '1px solid #e9ebed' }}>Chat History</FlexBox>
-            <FlexBox $width="35%" $justifyContent="center" $alignItems="center"> Ticket Details</FlexBox>
-        </FlexBox>
+            <FlexBox $width="calc(40% - 20px)" style={{ borderRight: '1px solid #e9ebed' }}>
+                <TicketConversationContainer />
+            </FlexBox>
+            <FlexBox $width="calc(35% - 20px)" $justifyContent="center" $alignItems="center"> Ticket Details</FlexBox>
+        </StyledLayoutWrapper>
     )
 } 
