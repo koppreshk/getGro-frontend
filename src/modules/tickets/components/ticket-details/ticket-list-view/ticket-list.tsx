@@ -3,6 +3,7 @@ import { FlexBox } from "lib/ui-ux"
 import { ITicketDetails } from "../../unsassigned-tickets";
 import styled from "styled-components";
 import { Facebook, Email, WhatsApp, Twitter, LocalPhone, Instagram, Sms } from "@mui/icons-material";
+import { List } from "react-virtualized";
 
 interface ITicketListProps {
     data: ITicketDetails[];
@@ -23,24 +24,6 @@ const TicketDetailsSectionRight = styled(FlexBox)`
     margin-left: 15px;
 `;
 
-export const TicketList = (props: ITicketListProps) => {
-    const { data } = props;
-
-    const ticketViewDetails = data.map((item) => (
-        <TicketDetails createdDate={item.createdDate}
-            customerName={item.customerName}
-            priority={item.priority}
-            ticketId={item.ticketId}
-            ticketSource={item.ticketSource}
-            ticketStatus={item.ticketStatus}
-            ticketSubStatus={item.ticketSubStatus}
-            key={item.ticketId} />
-    ));
-
-    return (
-        <TickListWrapper $flexDirection="column">{ticketViewDetails}</TickListWrapper>
-    )
-};
 
 const renderTicketSourceIcon = (source: string) => {
     switch (source.toLocaleLowerCase()) {
@@ -63,30 +46,81 @@ const renderTicketSourceIcon = (source: string) => {
     }
 }
 
-interface ITicketDetailsProps extends Pick<ITicketDetails, 'ticketSource' | 'ticketId' | 'customerName' | 'ticketStatus' | 'ticketSubStatus' | 'createdDate' | 'priority'> {
+// interface ITicketDetailsProps extends Pick<ITicketDetails, 'ticketSource' | 'ticketId' | 'customerName' | 'ticketStatus' | 'ticketSubStatus' | 'createdDate' | 'priority'> {
+// }
+
+// const TicketDetails = (props: ITicketDetailsProps) => {
+//     const { createdDate, customerName, ticketId, ticketSource } = props;
+
+//     return (
+//         <TicketWrapper $flexDirection="row">
+//             <FlexBox $justifyContent="center" $alignItems="center">
+//                 <Avatar />
+//             </FlexBox>
+//             <TicketDetailsSectionRight $flexDirection="column" $gap="6px">
+//                 <FlexBox $justifyContent="space-between">
+//                     <Typography variant="h6" fontSize="16px">{customerName}</Typography>
+//                     <Typography variant="body2">{createdDate}</Typography>
+//                 </FlexBox>
+//                 <Typography variant="body2">Hellow victoria thak u for contacting...</Typography>
+//                 <FlexBox $flexDirection="row" $gap="10px" $alignItems="center">
+//                     <>
+//                         {renderTicketSourceIcon(ticketSource)}
+//                     </>
+//                     <Typography variant="body2">Id: {ticketId}</Typography>
+//                 </FlexBox>
+//             </TicketDetailsSectionRight>
+//         </TicketWrapper>
+//     )
+// }
+
+interface rowRendereProps {
+    index: number;
+    key: React.Key | null | undefined;
+    style: React.CSSProperties | undefined;
 }
 
-const TicketDetails = (props: ITicketDetailsProps) => {
-    const { createdDate, customerName, ticketId, ticketSource } = props;
+export const TicketList = (props: ITicketListProps) => {
+    const { data } = props;
+
+    const rowRenderer = (props: rowRendereProps) => {
+        const {index, key, style} = props;
+        return (
+            <TicketWrapper $flexDirection="row" key={key} style={style}>
+                <FlexBox $justifyContent="center" $alignItems="center">
+                    <Avatar />
+                </FlexBox>
+                <TicketDetailsSectionRight $flexDirection="column" $gap="6px">
+                    <FlexBox $justifyContent="space-between">
+                        <Typography variant="h6" fontSize="16px">{data[index].customerName}</Typography>
+                        <Typography variant="body2">{data[index].createdDate}</Typography>
+                    </FlexBox>
+                    <Typography variant="body2">Hellow victoria thak u for contacting...</Typography>
+                    <FlexBox $flexDirection="row" $gap="10px" $alignItems="center">
+                        <>
+                            {renderTicketSourceIcon(data[index].ticketSource)}
+                        </>
+                        <Typography variant="body2">Id: {data[index].ticketId}</Typography>
+                    </FlexBox>
+                </TicketDetailsSectionRight>
+            </TicketWrapper>
+        )
+    }
+
+    // const ticketViewDetails = data.map((item) => (
+    //     <TicketDetails createdDate={item.createdDate}
+    //         customerName={item.customerName}
+    //         priority={item.priority}
+    //         ticketId={item.ticketId}
+    //         ticketSource={item.ticketSource}
+    //         ticketStatus={item.ticketStatus}
+    //         ticketSubStatus={item.ticketSubStatus}
+    //         key={item.ticketId} />
+    // ));
 
     return (
-        <TicketWrapper $flexDirection="row">
-            <FlexBox $justifyContent="center" $alignItems="center">
-                <Avatar />
-            </FlexBox>
-            <TicketDetailsSectionRight $flexDirection="column" $gap="6px">
-                <FlexBox $justifyContent="space-between">
-                    <Typography variant="h6" fontSize="16px">{customerName}</Typography>
-                    <Typography variant="body2">{createdDate}</Typography>
-                </FlexBox>
-                <Typography variant="body2">Hellow victoria thak u for contacting...</Typography>
-                <FlexBox $flexDirection="row" $gap="10px" $alignItems="center">
-                    <>
-                        {renderTicketSourceIcon(ticketSource)}
-                    </>
-                    <Typography variant="body2">Id: {ticketId}</Typography>
-                </FlexBox>
-            </TicketDetailsSectionRight>
-        </TicketWrapper>
+        <TickListWrapper $flexDirection="column">
+            <List rowCount={data.length} rowHeight={115} rowRenderer={rowRenderer} height={400} width={450}/>
+        </TickListWrapper>
     )
-}
+};

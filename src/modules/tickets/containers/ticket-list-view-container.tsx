@@ -7,8 +7,8 @@ export const TicketListViewContainer = () => {
     const { data, isLoading } = useGetUnassignedTickets();
 
     if (isLoading) {
-        const skeletonLoading = Array(10).fill({}).map(() =>
-            <FlexBox $gap="10px" $height="100px">
+        const skeletonLoading = Array(10).fill({}).map((i) =>
+            <FlexBox $gap="10px" $height="100px" key={i}>
                 <FlexBox $width="60px" $justifyContent="center" $alignItems="center">
                     <Skeleton variant="circular" width={40} height={40} />
                 </FlexBox>
