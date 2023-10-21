@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { Checkbox } from "@mui/material";
@@ -26,16 +26,21 @@ export const columns = [
                 }}
             />
         ),
-        cell: ({ row }) => (
-            <Checkbox
-                {...{
-                    checked: row.getIsSelected(),
-                    disabled: !row.getCanSelect(),
-                    indeterminate: row.getIsSomeSelected(),
-                    onChange: row.getToggleSelectedHandler(),
-                }}
-            />
-        ),
+        cell: ({ row }) => {
+            const onClick: MouseEventHandler<HTMLButtonElement> = (event) => {
+                event.stopPropagation();
+            }
+            return (
+                <Checkbox onClick={onClick}
+                    {...{
+                        checked: row.getIsSelected(),
+                        disabled: !row.getCanSelect(),
+                        indeterminate: row.getIsSomeSelected(),
+                        onChange: row.getToggleSelectedHandler()
+                    }}
+                />
+            )
+        },
         maxSize: 58,
         enableResizing: false,
         meta: {
