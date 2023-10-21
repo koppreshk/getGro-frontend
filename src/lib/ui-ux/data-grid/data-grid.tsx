@@ -3,7 +3,7 @@ import {
     ColumnOrderState,
     Row,
     SortingState, TableOptions, createColumnHelper,
-    getCoreRowModel, getPaginationRowModel, getSortedRowModel, useReactTable
+    getCoreRowModel, getSortedRowModel, useReactTable
 } from '@tanstack/react-table'
 import { Checkbox, Skeleton } from '@mui/material'
 import { DndProvider } from 'react-dnd'
@@ -255,9 +255,8 @@ export function DataGrid<T extends object>(props: IDataGridProps<T>) {
         onColumnOrderChange: setColumnOrder,
         onSortingChange: setSorting,
         getCoreRowModel: getCoreRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-        getPaginationRowModel: getPaginationRowModel()
-    })
+        getSortedRowModel: getSortedRowModel()
+    });
 
     return (
         <DndProvider backend={HTML5Backend}>
