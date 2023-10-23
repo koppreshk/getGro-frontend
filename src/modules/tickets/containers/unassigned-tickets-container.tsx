@@ -2,11 +2,11 @@ import React from "react";
 import { UnassignedTickets } from "../components";
 import { useGetUnassignedTickets } from "../apis";
 import { toCamelCasedKeysFromUnderScores } from "lib/utils";
-import { useSearchParams } from "react-router-dom";
+import { useAppSelector } from "lib/hooks/store-utils";
 
 export const UnassignedTicketsContainer = React.memo(() => {
-    const [searchParams] = useSearchParams();
-    const { data, isLoading, isFetching, error } = useGetUnassignedTickets({ itemsPerPage: searchParams.get('itemsPerPage') ?? '10', pageNumber: searchParams.get('pageNumber') ?? '1' });
+    const { itemsPerPage, pageNumber } = useAppSelector((state) => state.tickets);
+    const { data, isLoading, isFetching, error } = useGetUnassignedTickets({ itemsPerPage: itemsPerPage.toString() ?? '10', pageNumber: pageNumber.toString() ?? '1' });
 
     if (data || isLoading) {
         const casedData = data?.data ? data?.data.map(item => toCamelCasedKeysFromUnderScores(item)) : [];

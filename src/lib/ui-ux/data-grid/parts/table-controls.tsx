@@ -1,5 +1,4 @@
-import React, { useCallback, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useCallback } from "react";
 import { FlexBox, VerticalSeparator } from "lib/ui-ux";
 import { IconButton, Slider, Typography } from "@mui/material";
 import styled from "styled-components";
@@ -8,6 +7,8 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import { useAppDispatch, useAppSelector } from "lib/hooks";
+import { setPageNumber, setItemsPerPage } from '../../../../modules/tickets/storage/tickets-slice';
 
 interface ITableControlsProps<T> {
     table: Table<T>
@@ -54,24 +55,17 @@ export const TableControls = <T extends object>(props: ITableControlsProps<T>) =
 
     //Below callback has to be removed, since its manual pagination
     const lasttBtnClick = useCallback(() => table.setPageIndex(table.getPageCount() - 1), [table]);
-    
-    const [itemsPerPage, setItemsPerPage] = useState(10);
-    
-    const onSliderChange = useCallback((_event: Event, value: number | number[]) => {
-        setItemsPerPage(Number(value))
-    }, []);
-    
-    const [currentPage, setCurrentPage] = useState(1);
-    const firstBtnClick = useCallback(() => setCurrentPage(1), []);
-    const onNextPage = useCallback(() => setCurrentPage(currentPage + 1), [currentPage]);
-    const onPrevPage = useCallback(() => setCurrentPage(currentPage - 1), [currentPage]);
-    const [searchParmas, setSearchParmas] = useSearchParams();
 
-    React.useEffect(() => {
-        searchParmas.set('pageNumber', currentPage.toString())
-        searchParmas.set('itemsPerPage', itemsPerPage.toString())
-        setSearchParmas(searchParmas);
-    }, [currentPage, itemsPerPage, searchParmas, setSearchParmas])
+    const dispatch = useAppDispatch();
+    const { itemsPerPage, pageNumber } = useAppSelector((state) => state.tickets);
+
+    const onSliderChange = useCallback((_event: Event, value: number | number[]) => {
+        dispatch(setItemsPerPage(Number(value)))
+    }, [dispatch]);
+
+    const firstBtnClick = useCallback(() => dispatch(setPageNumber(1)), [dispatch]);
+    const onNextPage = useCallback(() => dispatch(setPageNumber(pageNumber + 1)), [dispatch, pageNumber]);
+    const onPrevPage = useCallback(() => dispatch(setPageNumber(pageNumber - 1)), [dispatch, pageNumber]);
 
     return (
         <StyledFlexBox $justifyContent="flex-end" $gap="50px" $alignItems="center" $height="110px">
@@ -91,16 +85,16 @@ export const TableControls = <T extends object>(props: ITableControlsProps<T>) =
             />
             <VerticalSeparator />
             <PaginationWrapper $gap="15px" $alignItems='center'>
-                <IconButton aria-label="First" onClick={firstBtnClick} disabled={currentPage === 1}  color="primary">
+                <IconButton aria-label="First" onClick={firstBtnClick} disabled={pageNumber === 1} color="primary">
                     <KeyboardDoubleArrowLeftIcon />
                 </IconButton>
-                <IconButton aria-label="Previous" onClick={onPrevPage} disabled={currentPage === 1} color="primary">
+                <IconButton aria-label="Previous" onClick={onPrevPage} disabled={pageNumber === 1} color="primary">
                     <ChevronLeftIcon />
                 </IconButton>
                 <FlexBox $gap="5px" $alignItems='center'>
                     <Typography variant='button'>Page</Typography>
                     <Typography variant='button'>
-                        {currentPage} of{' '}
+                        {pageNumber} of{' '}
                         MANY
                     </Typography>
                 </FlexBox>

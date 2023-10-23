@@ -6,10 +6,18 @@ import { CoreLayoutPage } from "./modules/core/pages/core-layout-page";
 import { ThemeProvider, defaultMUITheme } from "themes";
 import { ThemeProvider as MUIthemeProvider } from "@mui/material";
 import { NotificationProvider, ServiceClientProvider } from "lib";
+import ticketsReducer from './modules/tickets/storage/tickets-slice';
 
 const store = configureStore({
-  reducer: {},
+  reducer: {
+    tickets: ticketsReducer,
+  },
 })
+
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch
 
 const queryClient = new QueryClient();
 
