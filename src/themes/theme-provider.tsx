@@ -14,6 +14,15 @@ const defaultTheme: DefaultTheme = {
         grayVariant5: '#F1F2F4',
         grayVariant6: '#F8F9FA',
     },
+    channelSpecific: {
+        facebook: '#3b5998',
+        email: '#df4b3a',
+        whatsApp: '#25d366',
+        instagram: '#d62976',
+        twitter: '#00acee',
+        telephone: '#00c2ff',
+        sms: '#ffb800s'
+    },
     others: {
         scrollContainerColor: '#E4E4E4',
         scrollHandleColor: '#CECECE'
