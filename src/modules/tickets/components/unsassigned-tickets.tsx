@@ -1,6 +1,6 @@
 import React, { MouseEventHandler } from "react";
 import { useNavigate } from "react-router-dom";
-import styled, { css } from "styled-components";
+import styled, { css, useTheme } from "styled-components";
 import { Checkbox } from "@mui/material";
 import { Row, createColumnHelper } from "@tanstack/react-table";
 import { Facebook, Email, WhatsApp, Twitter, LocalPhone, Instagram, Sms } from '@mui/icons-material';
@@ -12,98 +12,105 @@ interface IUnassignedTicketsProps {
     isLoading?: boolean;
 }
 
-const columnHelper = createColumnHelper<ITicketDetails>()
+const useColumns = () => {
+    const theme = useTheme();
 
-export const columns = [
-    columnHelper.display({
-        id: 'select',
-        header: ({ table }) => (
-            <Checkbox
-                {...{
-                    checked: table.getIsAllPageRowsSelected(),
-                    indeterminate: table.getIsSomePageRowsSelected(),
-                    onChange: table.getToggleAllPageRowsSelectedHandler(),
-                }}
-            />
-        ),
-        cell: ({ row }) => {
-            const onClick: MouseEventHandler<HTMLButtonElement> = (event) => {
-                event.stopPropagation();
-            }
-            return (
-                <Checkbox onClick={onClick}
+    const columnHelper = createColumnHelper<ITicketDetails>()
+
+    const columns = [
+        columnHelper.display({
+            id: 'select',
+            header: ({ table }) => (
+                <Checkbox
                     {...{
-                        checked: row.getIsSelected(),
-                        disabled: !row.getCanSelect(),
-                        indeterminate: row.getIsSomeSelected(),
-                        onChange: row.getToggleSelectedHandler()
+                        checked: table.getIsAllPageRowsSelected(),
+                        indeterminate: table.getIsSomePageRowsSelected(),
+                        onChange: table.getToggleAllPageRowsSelectedHandler(),
                     }}
                 />
-            )
-        },
-        maxSize: 58,
-        enableResizing: false,
-        meta: {
-            disableColReorder: true
-        }
-    }),
-    columnHelper.accessor('ticketId', {
-        header: 'Ticket Id',
-        id: 'ticketId',
-        cell: info => info.getValue(),
-        minSize: 240
-    }),
-    columnHelper.accessor('customerName', {
-        header: 'Customer Name',
-        id: 'customerName',
-        cell: info => info.getValue(),
-        minSize: 240
-    }),
-    columnHelper.accessor('source', {
-        id: 'source',
-        header: 'Source',
-        cell: info => {
-            switch (info.getValue().toLocaleLowerCase()) {
-                case 'facebook':
-                    return <Facebook sx={{ fill: '#3b5998 !important' }} />
-                case 'email':
-                    return <Email sx={{ fill: '#df4b3a !important' }} />
-                case 'whatsapp':
-                    return <WhatsApp sx={{ fill: '#25d366 !important' }} />
-                case 'twitter':
-                    return <Twitter sx={{ fill: '#00acee !important' }} />
-                case 'telephone':
-                    return <LocalPhone sx={{ fill: '#00c2ff !important' }} />
-                case 'instagram':
-                    return <Instagram sx={{ fill: '#d62976 !important' }} />
-                case 'sms':
-                    return <Sms sx={{ fill: '#ffb800 !important' }} />
-                default:
-                    return info.getValue();
+            ),
+            cell: ({ row }) => {
+                const onClick: MouseEventHandler<HTMLButtonElement> = (event) => {
+                    event.stopPropagation();
+                }
+                return (
+                    <Checkbox onClick={onClick}
+                        {...{
+                            checked: row.getIsSelected(),
+                            disabled: !row.getCanSelect(),
+                            indeterminate: row.getIsSomeSelected(),
+                            onChange: row.getToggleSelectedHandler()
+                        }}
+                    />
+                )
+            },
+            maxSize: 58,
+            enableResizing: false,
+            meta: {
+                disableColReorder: true
             }
-        },
-        minSize: 240
-    }),
-    columnHelper.accessor('ticketStatus', {
-        header: () => 'Ticket Status',
-        id: 'ticketStatus',
-        cell: info => info.renderValue(),
-        minSize: 240
-    }),
-    columnHelper.accessor('ticketSubStatus', {
-        header: () => 'Ticket Sub Status',
-        id: 'ticketSubStatus',
-        minSize: 240
-    }),
-    columnHelper.accessor('priority', {
-        header: 'Priority',
-        id: 'priority',
-        minSize: 240,
-        cell: info => {
-            return <Priority priority={info.getValue().toLocaleLowerCase()} />
-        },
-    })
-];
+        }),
+        columnHelper.accessor('ticketId', {
+            header: 'Ticket Id',
+            id: 'ticketId',
+            cell: info => info.getValue(),
+            minSize: 240
+        }),
+        columnHelper.accessor('customerName', {
+            header: 'Customer Name',
+            id: 'customerName',
+            cell: info => info.getValue(),
+            minSize: 240
+        }),
+        columnHelper.accessor('source', {
+            id: 'source',
+            header: 'Source',
+            cell: info => {
+                switch (info.getValue().toLocaleLowerCase()) {
+                    case 'facebook':
+                        return <Facebook sx={{ fill: theme.channelSpecific.facebook + '!important' }} />
+                    case 'email':
+                        return <Email sx={{ fill: theme.channelSpecific.email + '!important' }} />
+                    case 'whatsapp':
+                        return <WhatsApp sx={{ fill: theme.channelSpecific.whatsApp + '!important' }} />
+                    case 'twitter':
+                        return <Twitter sx={{ fill: theme.channelSpecific.twitter + '!important' }} />
+                    case 'telephone':
+                        return <LocalPhone sx={{ fill: theme.channelSpecific.telephone + '!important' }} />
+                    case 'instagram':
+                        return <Instagram sx={{ fill: theme.channelSpecific.instagram + '!important' }} />
+                    case 'sms':
+                        return <Sms sx={{ fill: theme.channelSpecific.sms + '!important' }} />
+                    default:
+                        return info.getValue();
+                }
+            },
+            minSize: 240
+        }),
+        columnHelper.accessor('ticketStatus', {
+            header: () => 'Ticket Status',
+            id: 'ticketStatus',
+            cell: info => info.renderValue(),
+            minSize: 240
+        }),
+        columnHelper.accessor('ticketSubStatus', {
+            header: () => 'Ticket Sub Status',
+            id: 'ticketSubStatus',
+            minSize: 240
+        }),
+        columnHelper.accessor('priority', {
+            header: 'Priority',
+            id: 'priority',
+            minSize: 240,
+            cell: info => {
+                return <Priority priority={info.getValue().toLocaleLowerCase()} />
+            },
+        })
+    ];
+
+    return columns;
+}
+
 
 const PriorityIcon = styled.span<{ $priority: string }>`
     ${({ $priority }) => {
@@ -152,6 +159,7 @@ const Priority = (args: { priority: string }) => {
 
 export const UnassignedTickets = (props: IUnassignedTicketsProps) => {
     const navigate = useNavigate();
+    const columns = useColumns();
 
     const onRowClick = React.useCallback((row: Row<ITicketDetails>) => {
         navigate(`${row.original.ticketId}`, { replace: true });

@@ -17,6 +17,15 @@ declare module 'styled-components' {
       grayVariant5: string,
       grayVariant6: string,
     },
+    channelSpecific: {
+      facebook: string,
+      email: string,
+      whatsApp: string,
+      instagram: string,
+      twitter: string,
+      telephone: string,
+      sms: string
+  }
     others: {
       scrollHandleColor: string;
       scrollContainerColor: string

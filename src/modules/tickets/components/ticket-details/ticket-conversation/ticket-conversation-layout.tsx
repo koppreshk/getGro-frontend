@@ -5,7 +5,8 @@ import { TicketConversation } from "./ticket-conversation";
 import { ITicketConversation } from "modules/tickets/apis";
 
 export interface ITicketConversationLayoutProps {
-    data: ITicketConversation[];
+    data: ITicketConversation;
+    isLoading?: boolean;
 }
 
 const LayoutWrapper = styled(FlexBox)`
@@ -16,7 +17,7 @@ export const TicketConversationLayout = (props: ITicketConversationLayoutProps) 
     return (
         <LayoutWrapper $width="100%" $flexDirection="column">
             <TicketConversationHeader />
-            <TicketConversation data={props.data} />
+            <TicketConversation data={props.data} isLoading={props.isLoading} />
         </LayoutWrapper>
     )
 }

@@ -13,12 +13,14 @@ const StyledTextArea = styled.textarea<{ $canResize?: boolean }>`
 
 interface ITextAreProps {
     canResize?: boolean;
+    value?: string;
+    onChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
 }
 
 export const TextArea = (props: ITextAreProps) => {
-    const { canResize = false } = props;
+    const { canResize = false, onChange, value } = props;
 
     return (
-        <StyledTextArea $canResize={canResize} />
+        <StyledTextArea $canResize={canResize} onChange={onChange} value={value} />
     )
 }
