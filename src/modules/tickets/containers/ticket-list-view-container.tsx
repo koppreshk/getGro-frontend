@@ -3,9 +3,11 @@ import { TicketListView } from "../components/ticket-details/ticket-list-view"
 import { FlexBox } from "lib/ui-ux";
 import { useGetUnassignedTickets } from "../apis";
 import { toCamelCasedKeysFromUnderScores } from "lib/utils";
+import { useAppSelector } from "lib/hooks";
 
 export const TicketListViewContainer = () => {
-    const { data, isLoading } = useGetUnassignedTickets({itemsPerPage: '200'});
+    const { itemsPerPage, pageNumber } = useAppSelector((state) => state.tickets);
+    const { data, isLoading } = useGetUnassignedTickets({ itemsPerPage: itemsPerPage.toString(), pageNumber: pageNumber.toString() });
 
     if (isLoading) {
         const skeletonLoading = Array(10).fill({}).map(() =>
