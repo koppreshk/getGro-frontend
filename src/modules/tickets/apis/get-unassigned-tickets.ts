@@ -121,37 +121,15 @@ export const hardcodedData: ITicketDetails[] = [{ "source": "Facebook", "ticketI
 { "source": "instagram", "ticketId": "b5706092-848f-48c6-a266-086844f4adfd", "customerName": "Lloyd Train", "createdDate": "31/12/2022", "ticketStatus": "assigned", "ticketSubStatus": "Unattended", "priority": "Low" },
 { "source": "SMS", "ticketId": "6fb6641a-6a7e-4248-88dd-b0eed5a43095", "customerName": "Thornie Helks", "createdDate": "22/11/2022", "ticketStatus": "unassigned", "ticketSubStatus": "Customer Replied", "priority": "Medium" }]
 
-export const useGetUnassignedTickets = (args: { pageNumber: string, itemsPerPage: string }) => {
+export const useGetUnassignedTickets = (args: { pageNumber?: string, itemsPerPage: string }) => {
     const { itemsPerPage, pageNumber } = args;
     const { getData } = useServiceClient();
-    const getUnassignedTicketsData = React.useCallback(() => getData(`${TicketsEndPoint.GET_ALL_TICKETS}?page=${pageNumber}&items_per_page=${itemsPerPage}`).then((res) => res.json()), [getData, itemsPerPage, pageNumber]);
+    const _pageNumber = pageNumber === undefined ? '' : `page=${pageNumber}&`;
+    
+    const getUnassignedTicketsData = React.useCallback(() => getData(`${TicketsEndPoint.GET_ALL_TICKETS}?${_pageNumber}items_per_page=${itemsPerPage}`).then((res) => res.json()), [_pageNumber, getData, itemsPerPage]);
     return useQuery<{ data: ITicketDetails[] }>({
         queryKey: [TicketsQueryKey.GET_ALL_TICKETS, pageNumber, itemsPerPage],
         queryFn: getUnassignedTicketsData,
         keepPreviousData: true
     });
-}
-
-export const useGetUnassignedTickets1 = () => {
-    const [isLoading, setLoading] = React.useState<boolean | undefined>(false);
-    const [data, setData] = React.useState<ITicketDetails[]>([]);
-
-    const getData = async () => {
-        return new Promise<ITicketDetails[]>((res) => {
-            setTimeout(() => {
-                res(hardcodedData)
-            }, 3000)
-        })
-    }
-
-    React.useEffect(() => {
-        setLoading(true);
-        getData()
-            .then((res) => {
-                setData(res);
-                setLoading(false);
-            });
-    }, []);
-
-    return { isLoading, data };
 }

@@ -1,10 +1,13 @@
 import { Skeleton } from "@mui/material";
-import { useGetUnassignedTickets1 } from "../apis";
 import { TicketListView } from "../components/ticket-details/ticket-list-view"
 import { FlexBox } from "lib/ui-ux";
+import { useGetUnassignedTickets } from "../apis";
+import { toCamelCasedKeysFromUnderScores } from "lib/utils";
+import { useAppSelector } from "lib/hooks";
 
 export const TicketListViewContainer = () => {
-    const { data, isLoading } = useGetUnassignedTickets1();
+    const { itemsPerPage, pageNumber } = useAppSelector((state) => state.tickets);
+    const { data, isLoading } = useGetUnassignedTickets({ itemsPerPage: itemsPerPage.toString(), pageNumber: pageNumber.toString() });
 
     if (isLoading) {
         const skeletonLoading = Array(10).fill({}).map(() =>
@@ -26,9 +29,9 @@ export const TicketListViewContainer = () => {
     }
 
     if (data) {
-        console.log('data in container', data);
+        const casedData = data?.data ? data?.data.map(item => toCamelCasedKeysFromUnderScores(item)) : [];
         return (
-            <TicketListView data={data} />
+            <TicketListView data={casedData} />
         )
     }
 

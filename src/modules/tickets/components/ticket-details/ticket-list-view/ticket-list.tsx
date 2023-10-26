@@ -1,4 +1,6 @@
-import styled from "styled-components";
+import React from "react";
+import { useMatch, useNavigate, useParams } from "react-router-dom";
+import styled, { css } from "styled-components";
 import { Avatar, Typography } from "@mui/material"
 import { Facebook, Email, WhatsApp, Twitter, LocalPhone, Instagram, Sms } from "@mui/icons-material";
 import { FlexBox } from "lib/ui-ux"
@@ -10,13 +12,23 @@ interface ITicketListProps {
 }
 
 const TickListWrapper = styled(FlexBox)`
-    height: 100%;
+    height: calc(100% - 65px);
     overflow: auto;
 `;
 
-const TicketWrapper = styled(FlexBox)`
+const TicketWrapper = styled(FlexBox) <{ $isTicketActive: boolean }>`
     padding: 15px 10px 15px 15px;
     border-bottom: 1px solid #e9ebed;
+    cursor: pointer;
+
+    ${({ $isTicketActive }) => $isTicketActive && css`
+        background-color: ${(props) => props.theme.pallete.powderBlue};
+        border-right-width: 4px;
+        border-style: solid;
+        border-color: ${(props) => props.theme.pallete.blue};
+        border-width: 0;
+        border-right-width: thick;
+    `}
 `;
 
 const TicketDetailsSectionRight = styled(FlexBox)`
@@ -68,9 +80,22 @@ interface ITicketDetailsProps extends Pick<ITicketDetails, 'source' | 'ticketId'
 
 const TicketDetails = (props: ITicketDetailsProps) => {
     const { createdDate, customerName, ticketId, source } = props;
+    const params = useParams();
+    const navigate = useNavigate();
+    const match = useMatch(`/tickets/:ticketType/:ticketId`);
+    const isTicketActive = React.useMemo(() => params.ticketId === ticketId, [params.ticketId, ticketId]);
+    const ref = React.useRef<HTMLDivElement>(null);
+
+    React.useEffect(() => {
+        if (params.ticketId === ticketId && ref.current) {
+            ref.current.scrollIntoView({ behavior: "smooth" });
+        }
+    }, [params.ticketId, ticketId]);
+
+    const onTicketClick = React.useCallback(() => navigate(`/tickets/${match?.params.ticketType}/${ticketId}`), [match?.params.ticketType, navigate, ticketId]);
 
     return (
-        <TicketWrapper $flexDirection="row">
+        <TicketWrapper $flexDirection="row" $isTicketActive={isTicketActive} ref={ref} onClick={onTicketClick}>
             <FlexBox $justifyContent="center" $alignItems="center">
                 <Avatar />
             </FlexBox>
