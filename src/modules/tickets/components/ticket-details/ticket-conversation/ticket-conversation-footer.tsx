@@ -2,7 +2,7 @@ import React from "react";
 import { FlexBox, TextArea } from "lib/ui-ux";
 import { Send } from "@mui/icons-material";
 import { Tabs, Tab, Button } from "@mui/material";
-
+import { KeyCodes } from "lib/enums";
 
 interface ITicketConversationFooterProps {
     onSendAction: (newConversation: {
@@ -32,7 +32,7 @@ export const TicketConversationFooter = (props: ITicketConversationFooterProps) 
     }, [onSendAction, textareaValue]);
 
     const onKeyDown: React.KeyboardEventHandler<HTMLTextAreaElement> = React.useCallback((ev) => {
-        if (ev.key === 'Enter' && !ev.shiftKey) {
+        if (ev.key === KeyCodes.EnterKey && !ev.shiftKey) {
             onSendClick();
             ev.preventDefault();
         }
