@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const StyledTextArea = styled.textarea<{ $canResize?: boolean }>`
+const StyledTextArea = styled.textarea<Partial<Omit<ITextAreProps, 'canResize'>> & { $canResize?: boolean }>`
     resize: ${({ $canResize }) => $canResize ? 'unset' : 'none'};
     font-family: inherit;
     font-size: 14px;
@@ -11,16 +11,14 @@ const StyledTextArea = styled.textarea<{ $canResize?: boolean }>`
     box-sizing: border-box;
 `;
 
-interface ITextAreProps {
+interface ITextAreProps extends React.HTMLProps<HTMLTextAreaElement> {
     canResize?: boolean;
-    value?: string;
-    onChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
 }
 
 export const TextArea = (props: ITextAreProps) => {
-    const { canResize = false, onChange, value } = props;
+    const { canResize = false, ...rest } = props;
 
     return (
-        <StyledTextArea $canResize={canResize} onChange={onChange} value={value} />
+        <StyledTextArea $canResize={canResize} {...rest} />
     )
 }
