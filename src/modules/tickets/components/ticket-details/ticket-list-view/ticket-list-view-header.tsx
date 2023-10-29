@@ -4,6 +4,7 @@ import ImportExportIcon from '@mui/icons-material/ImportExport';
 import TuneIcon from '@mui/icons-material/Tune';
 import { Chip, IconButton, Typography } from "@mui/material";
 import styled from "styled-components";
+import { useAppSelector } from "lib/hooks";
 
 interface IStyledIconButtonProps {
     children?: React.ReactNode;
@@ -23,12 +24,14 @@ export const HeaderWrapper = styled(FlexBox)`
 `;
 
 export const TicketListViewHeader = () => {
+    const { itemsPerPage } = useAppSelector((state) => state.tickets);
+
     return (
         <HeaderWrapper $width="100%" $justifyContent="space-between">
             <FlexBox $alignItems="center" $gap="10px">
                 <SortIcon />
                 <Typography variant="h6">Unassigned</Typography>
-                <Chip label={100} size="small" variant="filled" color="primary" />
+                <Chip label={itemsPerPage} size="small" variant="filled" color="primary" />
             </FlexBox>
             <FlexBox $gap="5px">
                 <StyledIconButton>
