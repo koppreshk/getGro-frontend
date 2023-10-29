@@ -6,10 +6,13 @@ import { Row, createColumnHelper } from "@tanstack/react-table";
 import { Facebook, Email, WhatsApp, Twitter, LocalPhone, Instagram, Sms } from '@mui/icons-material';
 import { DataGrid } from "lib/ui-ux"
 import { ITicketDetails } from "../apis";
+import { useAppDispatch } from "lib/hooks";
+import { setTotalPages } from "../storage";
 
 interface IUnassignedTicketsProps {
     data: ITicketDetails[];
     isLoading?: boolean;
+    totalPages: number;
 }
 
 const useColumns = () => {
@@ -160,10 +163,16 @@ const Priority = (args: { priority: string }) => {
 export const UnassignedTickets = (props: IUnassignedTicketsProps) => {
     const navigate = useNavigate();
     const columns = useColumns();
+    const dispatch = useAppDispatch();
 
     const onRowClick = React.useCallback((row: Row<ITicketDetails>) => {
         navigate(`${row.original.ticketId}`, { replace: true });
     }, [navigate]);
+
+
+    React.useEffect(() => {
+        dispatch(setTotalPages(props.totalPages));
+     }, [dispatch, props.totalPages]);
 
     return (
         <>

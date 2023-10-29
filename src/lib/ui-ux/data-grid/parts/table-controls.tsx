@@ -57,7 +57,7 @@ export const TableControls = <T extends object>(props: ITableControlsProps<T>) =
     const lasttBtnClick = useCallback(() => table.setPageIndex(table.getPageCount() - 1), [table]);
 
     const dispatch = useAppDispatch();
-    const { itemsPerPage, pageNumber } = useAppSelector((state) => state.tickets);
+    const { itemsPerPage, pageNumber, totalPages } = useAppSelector((state) => state.tickets);
 
     const onSliderChange = useCallback((_event: Event, value: number | number[]) => {
         dispatch(setItemsPerPage(Number(value)))
@@ -95,7 +95,7 @@ export const TableControls = <T extends object>(props: ITableControlsProps<T>) =
                     <Typography variant='button'>Page</Typography>
                     <Typography variant='button'>
                         {pageNumber} of{' '}
-                        MANY
+                        {totalPages}
                     </Typography>
                 </FlexBox>
                 <IconButton aria-label="Next" onClick={onNextPage} color="primary">
