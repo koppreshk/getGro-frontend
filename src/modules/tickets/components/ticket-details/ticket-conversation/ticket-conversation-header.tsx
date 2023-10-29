@@ -3,7 +3,7 @@ import { Typography } from "@mui/material"
 import { HeaderWrapper } from "../ticket-list-view"
 import { FlexBox } from "lib/ui-ux"
 
-const Platform = styled(Typography) <{ $platform: string }>`
+export const Platform = styled(Typography) <{ $platform: string }>`
    && {
     color: ${({ theme, $platform }) => {
         switch ($platform) {
