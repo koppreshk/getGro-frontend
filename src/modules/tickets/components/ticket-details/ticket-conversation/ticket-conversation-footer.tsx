@@ -2,7 +2,7 @@ import React from "react";
 import { FlexBox, TextArea } from "lib/ui-ux";
 import { Send } from "@mui/icons-material";
 import { Tabs, Tab, Button } from "@mui/material";
-
+import { KeyCodes } from "lib/enums";
 
 interface ITicketConversationFooterProps {
     onSendAction: (newConversation: {
@@ -20,16 +20,23 @@ export const TicketConversationFooter = (props: ITicketConversationFooterProps) 
         setValue(newValue);
     };
 
-    const onTextChange: React.ChangeEventHandler<HTMLTextAreaElement> = (ev) => {
+    const onTextChange: React.ChangeEventHandler<HTMLTextAreaElement> = React.useCallback((ev) => {
         setTextAreaValue(ev.target.value);
-    }
+    }, []);
 
-    const onSendClick = () => {
-        onSendAction({
-            agentQuery: textareaValue
-        });
-        setTextAreaValue('');
-    }
+    const onSendClick = React.useCallback(() => {
+        if (textareaValue.length) {
+            onSendAction({ agentQuery: textareaValue });
+            setTextAreaValue('');
+        }
+    }, [onSendAction, textareaValue]);
+
+    const onKeyDown: React.KeyboardEventHandler<HTMLTextAreaElement> = React.useCallback((ev) => {
+        if (ev.key === KeyCodes.EnterKey && !ev.shiftKey) {
+            onSendClick();
+            ev.preventDefault();
+        }
+    }, [onSendClick]);
 
     return (
         <FlexBox $flexDirection="column">
@@ -37,9 +44,9 @@ export const TicketConversationFooter = (props: ITicketConversationFooterProps) 
                 <Tab label="Reply" id="reply-tab" />
             </Tabs>
             <CustomTabPanel index={0} value={value}>
-                <TextArea onChange={onTextChange} value={textareaValue} />
+                <TextArea onChange={onTextChange} value={textareaValue} onKeyDown={onKeyDown} placeholder="Shift + Enter to add a new line" />
                 <FlexBox $justifyContent="flex-end" $padding="0px 10px">
-                    <Button variant="contained" endIcon={<Send />} onClick={onSendClick}>
+                    <Button variant="contained" endIcon={<Send />} onClick={onSendClick} >
                         Send
                     </Button>
                 </FlexBox>
