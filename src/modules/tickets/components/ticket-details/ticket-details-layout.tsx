@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { FlexBox } from "lib/ui-ux"
 import { TicketConversationContainer, TicketListViewContainer } from "modules/tickets/containers"
-import { TicketDeatilsTabLayout } from "./ticket-details-tab";
+import { TicketDeatilsTabLayout } from "./ticket-details-section";
 
 const StyledLayoutWrapper = styled(FlexBox)`
     background-color: ${({ theme }) => theme.pallete.grayVariant5};

@@ -17,6 +17,9 @@ declare module 'styled-components' {
       grayVariant5: string,
       grayVariant6: string,
     },
+    semantics: {
+      standardBorder: string;
+    }
     channelSpecific: {
       facebook: string,
       email: string,
@@ -25,7 +28,7 @@ declare module 'styled-components' {
       twitter: string,
       telephone: string,
       sms: string
-  }
+    }
     others: {
       scrollHandleColor: string;
       scrollContainerColor: string

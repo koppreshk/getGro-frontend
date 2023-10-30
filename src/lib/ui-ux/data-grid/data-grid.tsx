@@ -49,7 +49,7 @@ const StyledTable = styled.table<{ $showPointerCursor: boolean; $isLoading?: boo
     border-collapse: collapse;
     
     .table-row-group {
-        border-bottom: 1px solid #e9ebed;
+        border-bottom: ${({ theme }) => theme.semantics.standardBorder};
         height: ${({ $itemHeight }) => $itemHeight ?? '45px'};
     }
     .table-row-group:hover {
