@@ -261,7 +261,7 @@ export function DataGrid<T extends object>(props: IDataGridProps<T>) {
     return (
         <DndProvider backend={HTML5Backend}>
             <DataGridWrapper $flexDirection='column' $gap="10px">
-                <TableControls table={table} />
+                <TableControls />
                 <ScrollableDiv>
                     <TableWrapper>
                         <StyledTable style={{ minWidth: table.getCenterTotalSize() }} $isLoading={isLoading} $showPointerCursor={onRowClick !== undefined} $itemHeight={itemHeight}>
