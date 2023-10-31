@@ -18,7 +18,7 @@ const TickListWrapper = styled(FlexBox)`
 
 const TicketWrapper = styled(FlexBox) <{ $isTicketActive: boolean }>`
     padding: 15px 10px 15px 15px;
-    border-bottom: 1px solid #e9ebed;
+    border-bottom: ${({ theme }) => theme.semantics.standardBorder};
     cursor: pointer;
 
     ${({ $isTicketActive }) => $isTicketActive && css`
