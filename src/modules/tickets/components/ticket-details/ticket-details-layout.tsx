@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { FlexBox } from "lib/ui-ux"
 import { TicketConversationContainer, TicketListViewContainer } from "modules/tickets/containers"
+import { TicketDetailsSection } from "./ticket-details-section";
 
 const StyledLayoutWrapper = styled(FlexBox)`
     background-color: ${({ theme }) => theme.pallete.grayVariant5};
@@ -15,7 +16,9 @@ export const TicketDetailsLayout = () => {
             <FlexBox $width="calc(40% - 20px)" style={{ borderRight: '1px solid #e9ebed' }}>
                 <TicketConversationContainer />
             </FlexBox>
-            <FlexBox $width="calc(35% - 20px)" $justifyContent="center" $alignItems="center"> Ticket Details</FlexBox>
+            <FlexBox $width="calc(35% - 20px)" $justifyContent="center" $alignItems="center">
+                <TicketDetailsSection/>
+            </FlexBox>
         </StyledLayoutWrapper>
     )
-} 
+}
