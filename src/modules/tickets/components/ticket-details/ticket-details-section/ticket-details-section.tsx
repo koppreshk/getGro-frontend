@@ -6,6 +6,7 @@ import { Platform } from "../ticket-conversation/ticket-conversation-header";
 import { PersonRemove, PersonSearch } from '@mui/icons-material';
 import { TicetSideMenu } from "./ticket-side-menu";
 import { GridLayout } from "lib/ui-ux";
+import { SearchCustomerFlyout } from ".";
 
 const StyledGridLayout = styled(GridLayout)`  
     background-color: ${({ theme }) => theme.pallete.white};
@@ -29,8 +30,8 @@ export const TicketDeatilsSection = () => {
 const TicketOverview = () => {
     const [showSearchUserFlyout, setShowUserFlyout] = React.useState(false);
     const onSearchUserBtnClick = React.useCallback(() => {
-        setShowUserFlyout(!showSearchUserFlyout);
-    }, [showSearchUserFlyout]);
+        setShowUserFlyout((x) => !x);
+    }, []);
 
     const detach = false;
 
@@ -54,6 +55,7 @@ const TicketOverview = () => {
                     </Tooltip> : null}
             </FlexBox>
             <ContactInfo />
+            <SearchCustomerFlyout showSearchUserFlyout={showSearchUserFlyout} onSearchUserBtnClick={onSearchUserBtnClick}/>
         </FlexBox>
     )
 }
