@@ -14,6 +14,9 @@ const defaultTheme: DefaultTheme = {
         grayVariant5: '#F1F2F4',
         grayVariant6: '#F8F9FA',
     },
+    semantics: {
+        standardBorder: '1px solid #E9EBED'
+    },
     channelSpecific: {
         facebook: '#3b5998',
         email: '#df4b3a',

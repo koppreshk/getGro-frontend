@@ -1,6 +1,5 @@
 import { Box, Button, Drawer, Grid, IconButton, TextField, Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
-import { useState } from "react";
 import styled from "styled-components";
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -18,21 +17,27 @@ const StlyedFlexBox = styled(FlexBox)`
     margin-top: 20px;
 `;
 
-export const TicketDetailsSection = () => {
-    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-    const toggleDrawer = () => {
-        setIsDrawerOpen((x) => !x);
-    };
+interface ISearchCustomerFlyoutProps {
+    onSearchUserBtnClick: () => void;
+    showSearchUserFlyout: boolean;
+}
+export const SearchCustomerFlyout = (props: ISearchCustomerFlyoutProps) => {
+    const { onSearchUserBtnClick, showSearchUserFlyout } = props;
+    // const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+    // const toggleDrawer = () => {
+    //     setIsDrawerOpen((x) => !x);
+    // };
 
     return (
         <>
-            <Button onClick={toggleDrawer}>Open</Button>
-            <Drawer anchor="right" open={isDrawerOpen} onClose={toggleDrawer}>
+            {/* <Button onClick={toggleDrawer}>Open</Button> */}
+            <Drawer anchor="right" open={showSearchUserFlyout} onClose={onSearchUserBtnClick}>
                 <DrawerContent>
                     <HeaderWrapper $width="100%" $justifyContent="space-between">
                         <Typography variant="h6">Search Customer Form</Typography>
-                        <IconButton aria-label="Close" onClick={toggleDrawer}>
+                        <IconButton aria-label="Close" onClick={onSearchUserBtnClick}>
                             <CloseIcon />
                         </IconButton>
                     </HeaderWrapper>
@@ -64,7 +69,6 @@ export const TicketDetailsSection = () => {
                     </Box>
                 </DrawerContent>
             </Drawer>
-            
         </>
     );
 }

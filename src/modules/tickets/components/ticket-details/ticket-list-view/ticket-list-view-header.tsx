@@ -20,7 +20,7 @@ const StyledIconButton = (props: IStyledIconButtonProps) => (
 export const HeaderWrapper = styled(FlexBox)`
     box-sizing: border-box;
     padding: 15px 10px;
-    border-bottom: 1px solid #e9ebed;
+    border-bottom: ${({ theme }) => theme.semantics.standardBorder};
 `;
 
 export const TicketListViewHeader = () => {

@@ -1,17 +1,13 @@
-import { useCallback } from "react";
-import { FlexBox, VerticalSeparator } from "lib/ui-ux";
-import { IconButton, Slider, Typography } from "@mui/material";
 import styled from "styled-components";
-import { Table } from "@tanstack/react-table";
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
-import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import { useCallback } from "react";
+import { IconButton, Slider, Typography } from "@mui/material";
+import { FlexBox, VerticalSeparator } from "lib/ui-ux";
+import { ChevronLeft, ChevronRight, KeyboardDoubleArrowLeft, KeyboardDoubleArrowRight } from '@mui/icons-material';
 import { useAppDispatch, useAppSelector } from "lib/hooks";
 import { setPageNumber, setItemsPerPage } from '../../../../modules/tickets/storage/tickets-slice';
 
-interface ITableControlsProps<T> {
-    table: Table<T>
+interface ITableControlsProps {
+
 }
 
 const StyledFlexBox = styled(FlexBox)`
@@ -50,20 +46,16 @@ const PaginationWrapper = styled(FlexBox)`
     border-radius: 6px;
 `;
 
-export const TableControls = <T extends object>(props: ITableControlsProps<T>) => {
-    const { table } = props;
-
-    //Below callback has to be removed, since its manual pagination
-    const lasttBtnClick = useCallback(() => table.setPageIndex(table.getPageCount() - 1), [table]);
-
+export const TableControls = (_props: ITableControlsProps) => {
     const dispatch = useAppDispatch();
     const { itemsPerPage, pageNumber, totalPages } = useAppSelector((state) => state.tickets);
 
-    const onSliderChange = useCallback((_event: Event, value: number | number[]) => {
+    const onSliderChange = useCallback((_event: Event, value: number | number[]) => {   
         dispatch(setItemsPerPage(Number(value)))
     }, [dispatch]);
 
     const firstBtnClick = useCallback(() => dispatch(setPageNumber(1)), [dispatch]);
+    const lastBtnClick = useCallback(() => dispatch(setPageNumber(totalPages)), [dispatch, totalPages]);
     const onNextPage = useCallback(() => dispatch(setPageNumber(pageNumber + 1)), [dispatch, pageNumber]);
     const onPrevPage = useCallback(() => dispatch(setPageNumber(pageNumber - 1)), [dispatch, pageNumber]);
 
@@ -86,10 +78,10 @@ export const TableControls = <T extends object>(props: ITableControlsProps<T>) =
             <VerticalSeparator />
             <PaginationWrapper $gap="15px" $alignItems='center'>
                 <IconButton aria-label="First" onClick={firstBtnClick} disabled={pageNumber === 1} color="primary">
-                    <KeyboardDoubleArrowLeftIcon />
+                    <KeyboardDoubleArrowLeft />
                 </IconButton>
                 <IconButton aria-label="Previous" onClick={onPrevPage} disabled={pageNumber === 1} color="primary">
-                    <ChevronLeftIcon />
+                    <ChevronLeft />
                 </IconButton>
                 <FlexBox $gap="5px" $alignItems='center'>
                     <Typography variant='button'>Page</Typography>
@@ -98,11 +90,11 @@ export const TableControls = <T extends object>(props: ITableControlsProps<T>) =
                         {totalPages}
                     </Typography>
                 </FlexBox>
-                <IconButton aria-label="Next" onClick={onNextPage} color="primary">
-                    <ChevronRightIcon />
+                <IconButton aria-label="Next" onClick={onNextPage} disabled={pageNumber === totalPages} color="primary">
+                    <ChevronRight />
                 </IconButton>
-                <IconButton aria-label="Last" onClick={lasttBtnClick} color="primary">
-                    <KeyboardDoubleArrowRightIcon />
+                <IconButton aria-label="Last" onClick={lastBtnClick} disabled={pageNumber === totalPages} color="primary">
+                    <KeyboardDoubleArrowRight />
                 </IconButton>
             </PaginationWrapper>
         </StyledFlexBox>

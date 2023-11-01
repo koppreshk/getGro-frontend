@@ -49,7 +49,7 @@ const StyledTable = styled.table<{ $showPointerCursor: boolean; $isLoading?: boo
     border-collapse: collapse;
     
     .table-row-group {
-        border-bottom: 1px solid #e9ebed;
+        border-bottom: ${({ theme }) => theme.semantics.standardBorder};
         height: ${({ $itemHeight }) => $itemHeight ?? '45px'};
     }
     .table-row-group:hover {
@@ -261,7 +261,7 @@ export function DataGrid<T extends object>(props: IDataGridProps<T>) {
     return (
         <DndProvider backend={HTML5Backend}>
             <DataGridWrapper $flexDirection='column' $gap="10px">
-                <TableControls table={table} />
+                <TableControls />
                 <ScrollableDiv>
                     <TableWrapper>
                         <StyledTable style={{ minWidth: table.getCenterTotalSize() }} $isLoading={isLoading} $showPointerCursor={onRowClick !== undefined} $itemHeight={itemHeight}>
