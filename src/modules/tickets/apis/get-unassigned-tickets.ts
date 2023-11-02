@@ -1,6 +1,7 @@
 import React from "react";
 import { useServiceClient } from "lib";
 import { useQuery } from "react-query";
+import { TicketsEndPoint, TicketsQueryKey } from "./api-enums";
 
 export interface ITicketDetails {
     source: string;
@@ -10,14 +11,6 @@ export interface ITicketDetails {
     ticketSubStatus: string;
     createdDate: string;
     priority: string;
-}
-
-enum TicketsEndPoint {
-    GET_ALL_TICKETS = 'fetch_all_tickets'
-}
-
-enum TicketsQueryKey {
-    GET_ALL_TICKETS = 'GET_ALL_TICKETS'
 }
 
 export const useGetUnassignedTickets = (args: { pageNumber?: string, itemsPerPage: string }) => {
