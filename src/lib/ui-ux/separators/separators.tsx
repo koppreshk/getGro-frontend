@@ -7,3 +7,10 @@ export const VerticalSeparator = styled.span`
   box-sizing: border-box;
   background-color:  ${({ theme }) => theme.pallete.grayVariant1};
 `;
+
+export const HorizontalSeparator = styled.div`
+  width: 100%;
+  height: 1px;
+  box-sizing: border-box;
+  background-color:  ${({ theme }) => theme.pallete.grayVariant1};
+`;
