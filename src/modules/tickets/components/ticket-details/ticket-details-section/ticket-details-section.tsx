@@ -28,7 +28,9 @@ export const TicketDeatilsSection = () => {
 
     return (
         <StyledGridLayout $gridTemplateColumns={"auto 56px"} $width="100%">
-            {renderBasedOnSelctedview()}
+            <div>
+                {renderBasedOnSelctedview()}
+            </div>
             <TicetSideMenu onSetMenuOption={onMenuOptionClick} selectedMenuOption={selectedMenuOption} />
         </StyledGridLayout>
     )

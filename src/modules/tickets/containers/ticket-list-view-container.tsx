@@ -2,7 +2,6 @@ import { Skeleton } from "@mui/material";
 import { TicketListView } from "../components/ticket-details/ticket-list-view"
 import { FlexBox } from "lib/ui-ux";
 import { useGetUnassignedTickets } from "../apis";
-import { toCamelCasedKeysFromUnderScores } from "lib/utils";
 import { useAppSelector } from "lib/hooks";
 
 export const TicketListViewContainer = () => {
@@ -29,9 +28,8 @@ export const TicketListViewContainer = () => {
     }
 
     if (data) {
-        const casedData = data?.data ? data?.data.map(item => toCamelCasedKeysFromUnderScores(item)) : [];
         return (
-            <TicketListView data={casedData} />
+            <TicketListView data={data.data} />
         )
     }
 
