@@ -1,9 +1,11 @@
 import React from "react"
 import styled from "styled-components"
+import { ChevronRight, ShoppingBagOutlined } from '@mui/icons-material';
+import { FixedSizeList as List } from 'react-window';
+import AutoSizer from 'react-virtualized-auto-sizer';
 import { IconButton, Tooltip, Typography } from "@mui/material"
 import { FlexBox, HorizontalSeparator } from "lib/ui-ux"
 import { IOrders } from "modules/tickets/apis";
-import { ChevronRight, ShoppingBagOutlined } from '@mui/icons-material';
 
 interface IOrderDetailsProps {
     orderDetails: IOrders[]
@@ -55,18 +57,33 @@ export const OrderDetails = React.memo((props: IOrderDetailsProps) => {
             </FlexBox>
             <HorizontalSeparator />
             <OrderWrappers $height="calc(100% - 93px)" $gap="10px" $flexDirection="column">
-                {orderDetails.map((item) => {
-                    return (
-                        <Order key={item.id} {...item} />
-                    )
-                })}
+                <AutoSizer>
+                    {({ height, width }) => (
+                        <List
+                            width={width}
+                            itemCount={orderDetails.length}
+                            itemSize={120}
+                            height={height}>
+                            {({ index, style }) => (
+                                <Order index={index} style={style} orderDetails={orderDetails} />
+                            )}
+                        </List>
+                    )}
+                </AutoSizer>
             </OrderWrappers>
         </>
     )
 });
 
-const Order = (props: IOrders) => {
-    const { orderNumber, lineItems, fulfillmentStatus, currency } = props;
+interface IOrderViewProps {
+    orderDetails: IOrders[];
+    index: number;
+    style: React.CSSProperties;
+}
+
+const Order = (props: IOrderViewProps) => {
+    const { index, orderDetails } = props;
+    const { orderNumber, lineItems, fulfillmentStatus, currency } = orderDetails[index];
 
     return (
         <StyledOrder $gap="10px">
