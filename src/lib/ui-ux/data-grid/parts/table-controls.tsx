@@ -1,14 +1,10 @@
+import React, { useCallback } from "react";
+import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
-import { useCallback } from "react";
 import { IconButton, Slider, Typography } from "@mui/material";
 import { FlexBox, VerticalSeparator } from "lib/ui-ux";
 import { ChevronLeft, ChevronRight, KeyboardDoubleArrowLeft, KeyboardDoubleArrowRight } from '@mui/icons-material';
-import { useAppDispatch, useAppSelector } from "lib/hooks";
-import { setPageNumber, setItemsPerPage } from '../../../../modules/tickets/storage/tickets-slice';
-
-interface ITableControlsProps {
-
-}
+import { useAppSelector } from "lib/hooks";
 
 const StyledFlexBox = styled(FlexBox)`
     padding: 0px 20px;    
@@ -46,30 +42,54 @@ const PaginationWrapper = styled(FlexBox)`
     border-radius: 6px;
 `;
 
-export const TableControls = (_props: ITableControlsProps) => {
-    const dispatch = useAppDispatch();
-    const { itemsPerPage, pageNumber, totalPages } = useAppSelector((state) => state.tickets);
+export const TableControls = () => {
+    const { totalPages } = useAppSelector((state) => state.tickets);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const pageNumber = Number(searchParams.get('pageNumber')) || 1;
+    const noOfRecords = Number(searchParams.get('noOfRecords')) || 10;
 
-    const onSliderChange = useCallback((_event: Event, value: number | number[]) => {   
-        dispatch(setItemsPerPage(Number(value)))
-    }, [dispatch]);
+    React.useEffect(() => {
+        searchParams.set('noOfRecords', noOfRecords.toString());
+        searchParams.set('pageNumber', pageNumber.toString());
+        setSearchParams(searchParams);
+    }, [noOfRecords, pageNumber, searchParams, setSearchParams])
 
-    const firstBtnClick = useCallback(() => dispatch(setPageNumber(1)), [dispatch]);
-    const lastBtnClick = useCallback(() => dispatch(setPageNumber(totalPages)), [dispatch, totalPages]);
-    const onNextPage = useCallback(() => dispatch(setPageNumber(pageNumber + 1)), [dispatch, pageNumber]);
-    const onPrevPage = useCallback(() => dispatch(setPageNumber(pageNumber - 1)), [dispatch, pageNumber]);
+    const onSliderChange = useCallback((_event: Event, value: number | number[]) => {
+        searchParams.set('noOfRecords', value.toString());
+        setSearchParams(searchParams);
+    }, [searchParams, setSearchParams]);
+
+    const firstBtnClick = useCallback(() => {
+        searchParams.set('pageNumber', '1');
+        setSearchParams(searchParams);
+    }, [searchParams, setSearchParams]);
+
+    const lastBtnClick = useCallback(() => {
+        searchParams.set('pageNumber', totalPages.toString());
+        setSearchParams(searchParams);
+    }, [searchParams, setSearchParams, totalPages]);
+
+    const onNextPage = useCallback(() => {
+        searchParams.set('pageNumber', (pageNumber + 1).toString());
+        setSearchParams(searchParams);
+    }, [pageNumber, searchParams, setSearchParams]);
+
+    const onPrevPage = useCallback(() => {
+        searchParams.set('pageNumber', (pageNumber - 1).toString());
+        setSearchParams(searchParams);
+    }, [pageNumber, searchParams, setSearchParams]);
 
     return (
         <StyledFlexBox $justifyContent="flex-end" $gap="50px" $alignItems="center" $height="110px">
             <Slider
                 aria-label="Restricted values"
-                defaultValue={itemsPerPage}
+                defaultValue={10}
                 valueLabelFormat={valuetext}
                 getAriaValueText={valuetext}
                 onChange={onSliderChange}
                 step={10}
                 valueLabelDisplay="auto"
-                value={itemsPerPage}
+                value={noOfRecords}
                 marks={marks}
                 min={10}
                 max={50}

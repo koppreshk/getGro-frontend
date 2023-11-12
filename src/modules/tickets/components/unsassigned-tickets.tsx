@@ -1,5 +1,5 @@
 import React, { MouseEventHandler } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import styled, { css, useTheme } from "styled-components";
 import { Checkbox } from "@mui/material";
 import { Row, createColumnHelper } from "@tanstack/react-table";
@@ -164,15 +164,18 @@ export const UnassignedTickets = (props: IUnassignedTicketsProps) => {
     const navigate = useNavigate();
     const columns = useColumns();
     const dispatch = useAppDispatch();
+    const [searchParams] = useSearchParams();
+    const noOfRecords = searchParams.get('noOfRecords');
+    const pageNumber = searchParams.get('pageNumber');
 
     const onRowClick = React.useCallback((row: Row<ITicketDetails>) => {
-        navigate(`${row.original.ticketId}`, { replace: true });
-    }, [navigate]);
+        navigate(`${row.original.ticketId}?noOfRecords=${noOfRecords}&pageNumber=${pageNumber}`, { replace: true });
+    }, [navigate, noOfRecords, pageNumber]);
 
 
     React.useEffect(() => {
         dispatch(setTotalPages(props.totalPages));
-     }, [dispatch, props.totalPages]);
+    }, [dispatch, props.totalPages]);
 
     return (
         <>

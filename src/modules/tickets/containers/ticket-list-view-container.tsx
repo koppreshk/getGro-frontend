@@ -1,12 +1,15 @@
+import { useSearchParams } from "react-router-dom";
 import { Skeleton } from "@mui/material";
 import { TicketListView } from "../components/ticket-details/ticket-list-view"
 import { FlexBox } from "lib/ui-ux";
 import { useGetUnassignedTickets } from "../apis";
-import { useAppSelector } from "lib/hooks";
 
 export const TicketListViewContainer = () => {
-    const { itemsPerPage, pageNumber } = useAppSelector((state) => state.tickets);
-    const { data, isLoading } = useGetUnassignedTickets({ itemsPerPage: itemsPerPage.toString(), pageNumber: pageNumber.toString() });
+    const [searchParams] = useSearchParams();
+    const noOfRecords = searchParams.get('noOfRecords');
+    const pageNumber = searchParams.get('pageNumber');
+
+    const { data, isLoading } = useGetUnassignedTickets({ itemsPerPage: noOfRecords ?? '10', pageNumber: pageNumber ?? '1' });
 
     if (isLoading) {
         const skeletonLoading = Array(10).fill({}).map((_item, index) =>
