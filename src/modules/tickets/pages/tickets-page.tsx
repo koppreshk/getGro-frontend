@@ -6,7 +6,6 @@ import { Navigate, Route, Routes, useMatch } from "react-router-dom"
 import { UnassignedTicketsContainer } from "../containers"
 import { TicketDetailsLayout } from "../components/ticket-details"
 import { commonStyles } from "lib/ui-ux/common-styles"
-// import { useServiceClient } from "lib"
 
 const Container = styled(FlexBox)`
     ${commonStyles.sleekScrollStyle};
@@ -14,11 +13,6 @@ const Container = styled(FlexBox)`
 
 export const TicketsPage = React.memo(() => {
     const match = useMatch('/tickets/:type/:ticketId');
-    // const { getData } = useServiceClient();
-
-    // React.useEffect(() => {
-    //     getData('/test_api').then((res) => res)
-    // });
 
     return (
         <>
