@@ -6,7 +6,7 @@ import { Platform } from "../ticket-conversation/ticket-conversation-header";
 import { PersonRemove, PersonSearch } from '@mui/icons-material';
 import { TicetSideMenu } from "./ticket-side-menu";
 import { GridLayout } from "lib/ui-ux";
-import { SearchCustomerFlyout } from ".";
+import { SearchCustomerContainer } from "modules/tickets/containers";
 
 const StyledGridLayout = styled(GridLayout)`  
     background-color: ${({ theme }) => theme.pallete.white};
@@ -28,9 +28,9 @@ export const TicketDeatilsSection = () => {
 }
 
 const TicketOverview = () => {
-    const [showSearchUserFlyout, setShowUserFlyout] = React.useState(false);
+    const [showSearchUserFlyout, setShowSearchUserFlyout] = React.useState(false);
     const onSearchUserBtnClick = React.useCallback(() => {
-        setShowUserFlyout((x) => !x);
+        setShowSearchUserFlyout((x) => !x);
     }, []);
 
     const detach = false;
@@ -42,7 +42,7 @@ const TicketOverview = () => {
                     <Typography variant="h5" fontSize="16px" >Tilly Moughton messaged via</Typography>
                     <Platform variant="body2" $platform={'facebook'}>facebook</Platform>
                 </FlexBox>
-                <Tooltip title="Search User" arrow placement="left">
+                <Tooltip title="Search Customer" arrow placement="left">
                     <IconButton onClick={onSearchUserBtnClick}>
                         <PersonSearch />
                     </IconButton>
@@ -55,7 +55,7 @@ const TicketOverview = () => {
                     </Tooltip> : null}
             </FlexBox>
             <ContactInfo />
-            <SearchCustomerFlyout showSearchUserFlyout={showSearchUserFlyout} onSearchUserBtnClick={onSearchUserBtnClick}/>
+            <SearchCustomerContainer showSearchUserFlyout={showSearchUserFlyout} onSearchUserBtnClick={onSearchUserBtnClick}/>
         </FlexBox>
     )
 }
