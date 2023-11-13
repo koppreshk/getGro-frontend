@@ -1,5 +1,5 @@
 import React from "react";
-import { useMatch, useNavigate, useParams } from "react-router-dom";
+import { createSearchParams, useMatch, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { Avatar, Typography } from "@mui/material"
 import { Facebook, Email, WhatsApp, Twitter, LocalPhone, Instagram, Sms } from "@mui/icons-material";
@@ -85,6 +85,9 @@ const TicketDetails = (props: ITicketDetailsProps) => {
     const match = useMatch(`/tickets/:ticketType/:ticketId`);
     const isTicketActive = React.useMemo(() => params.ticketId === ticketId, [params.ticketId, ticketId]);
     const ref = React.useRef<HTMLDivElement>(null);
+    const [searchParams] = useSearchParams();
+    const noOfRecords = searchParams.get('noOfRecords');
+    const pageNumber = searchParams.get('pageNumber');
 
     React.useEffect(() => {
         if (params.ticketId === ticketId && ref.current) {
@@ -92,7 +95,7 @@ const TicketDetails = (props: ITicketDetailsProps) => {
         }
     }, [params.ticketId, ticketId]);
 
-    const onTicketClick = React.useCallback(() => navigate(`/tickets/${match?.params.ticketType}/${ticketId}`), [match?.params.ticketType, navigate, ticketId]);
+    const onTicketClick = React.useCallback(() => navigate(`/tickets/${match?.params.ticketType}/${ticketId}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`), [match?.params.ticketType, navigate, noOfRecords, pageNumber, ticketId]);
 
     return (
         <TicketWrapper $flexDirection="row" $isTicketActive={isTicketActive} ref={ref} onClick={onTicketClick}>
