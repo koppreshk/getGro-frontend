@@ -23,16 +23,16 @@ export default function useLazyQuery<TData>(
     const finalParams = useMemo(() => apiParams !== undefined ? new URLSearchParams(apiParams).toString() : '', [apiParams]);
     const getOrderDetailsData = useCallback(() => getData(`${apiEndPoint}?${finalParams}`).then((res) => res.json()).catch((err) => err), [apiEndPoint, finalParams, getData]);
 
-    const queryresult = useQuery<TData, unknown, unknown, QueryKey>(queryKey, getOrderDetailsData, {
-        ...(queryOptions || {}),
+    const queryresult = useQuery<TData, unknown, unknown, QueryKey>({
+        queryKey: [queryKey],
+        queryFn: getOrderDetailsData,
+        ...queryOptions,
         enabled,
     });
 
-    useEffect(()=> {
-        if(queryresult.isSuccess) {
-            setEnabled(false);
-        }
-    }, [queryresult.isSuccess]);
+    useEffect(() => {
+        setEnabled(false);
+    }, [apiParams]);
 
     const trigger = useCallback((_apiParams?: Record<string, string>) => {
         if (!enabled) {
