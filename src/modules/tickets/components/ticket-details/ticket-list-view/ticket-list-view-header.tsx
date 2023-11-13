@@ -4,7 +4,7 @@ import ImportExportIcon from '@mui/icons-material/ImportExport';
 import TuneIcon from '@mui/icons-material/Tune';
 import { Chip, IconButton, Typography } from "@mui/material";
 import styled from "styled-components";
-import { useAppSelector } from "lib/hooks";
+import { useSearchParams } from "react-router-dom";
 
 interface IStyledIconButtonProps {
     children?: React.ReactNode;
@@ -24,14 +24,15 @@ export const HeaderWrapper = styled(FlexBox)`
 `;
 
 export const TicketListViewHeader = () => {
-    const { itemsPerPage } = useAppSelector((state) => state.tickets);
+    const [searchParams] = useSearchParams();
+    const noOfRecords = searchParams.get('noOfRecords');
 
     return (
         <HeaderWrapper $width="100%" $justifyContent="space-between">
             <FlexBox $alignItems="center" $gap="10px">
                 <SortIcon />
                 <Typography variant="h6">Unassigned</Typography>
-                <Chip label={itemsPerPage} size="small" variant="filled" color="primary" />
+                <Chip label={noOfRecords} size="small" variant="filled" color="primary" />
             </FlexBox>
             <FlexBox $gap="5px">
                 <StyledIconButton>

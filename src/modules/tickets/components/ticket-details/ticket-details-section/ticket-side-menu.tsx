@@ -21,15 +21,20 @@ const IconWrapper = styled(FlexBox) <{ $isSelected: boolean }>`
     }  
 `;
 
+export enum MenuOptions {
+    CustomerProfile = 'customer-profile',
+    OrderDetails = 'order-details'
+}
+
 const sideMenuOptions = [
     {
         title: 'Customer Profile',
-        id: 'customer-profile',
+        id: MenuOptions.CustomerProfile,
         iconComponent: () => <Person />
     },
     {
         title: 'Order Details',
-        id: 'order-details',
+        id: MenuOptions.OrderDetails,
         iconComponent: () => <ShoppingCart />
     }
 ];
