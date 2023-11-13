@@ -1,7 +1,7 @@
+import React from "react";
 import { useGetCustomerDetails } from "../apis/get-customer-details"
 import { useForm, FormProvider } from "react-hook-form";
 import { SearchCustomerFlyout } from "../components/ticket-details";
-import React, { useState } from "react";
 
 interface ISearchCustomerContainerPRops {
     onSearchUserBtnClick: () => void;
@@ -25,34 +25,22 @@ export const SearchCustomerContainer = (props: ISearchCustomerContainerPRops) =>
         }
     });
 
-    const [formObject, setFormObject] = useState({ email: '', phone: '' })
-    // const [customerData, setCustomerData] = useState(null);
-    // const [isLoading, setIsLoading] = useState(false);
-    console.log('formObject', formObject);
     const { onSearchUserBtnClick, showSearchUserFlyout } = props;
-    const { refetch } = useGetCustomerDetails(formObject);
+    const [getCustomerDetails, { data, isLoading }] = useGetCustomerDetails();
 
     const onformSubmit = React.useCallback(async () => {
         const getformvalues = methods.getValues();
-        setFormObject({ email: getformvalues.email, phone: getformvalues.phoneNumber })
-        try {
-            // setIsLoading(true);
-            const { data } = await refetch();
-            // setCustomerData(data);
-            console.log('Customer data', data);
-        } catch (error) {
-            // Handle errors if necessary
-        } finally {
-            // setIsLoading(false);
-        }
-    }, [methods, refetch])
+        getCustomerDetails({ email: getformvalues.email, phone: getformvalues.phoneNumber })
+    }, [getCustomerDetails, methods])
 
     return (
         <FormProvider {...methods}>
             <SearchCustomerFlyout
                 showSearchUserFlyout={showSearchUserFlyout}
                 onSearchUserBtnClick={onSearchUserBtnClick}
-                onformSubmit={onformSubmit} />
+                onformSubmit={onformSubmit}
+                isLoading={isLoading} data={data as any}
+            />
         </FormProvider>
     )
 

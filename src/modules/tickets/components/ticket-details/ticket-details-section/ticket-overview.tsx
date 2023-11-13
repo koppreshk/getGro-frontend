@@ -3,12 +3,12 @@ import { PersonSearch, PersonRemove } from "@mui/icons-material";
 import { Typography, Tooltip, IconButton, Avatar } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { Platform } from "../ticket-conversation/ticket-conversation-header";
-import { SearchCustomerFlyout } from "./search-customer-flyout";
+import { SearchCustomerContainer } from "modules/tickets/containers";
 
 export const TicketOverview = () => {
-    const [showSearchUserFlyout, setShowUserFlyout] = React.useState(false);
+    const [showSearchUserFlyout, setShowSearchUserFlyout] = React.useState(false);
     const onSearchUserBtnClick = React.useCallback(() => {
-        setShowUserFlyout((x) => !x);
+        setShowSearchUserFlyout((x) => !x);
     }, []);
 
     const detach = false;
@@ -33,7 +33,7 @@ export const TicketOverview = () => {
                     </Tooltip> : null}
             </FlexBox>
             <ContactInfo />
-            <SearchCustomerFlyout showSearchUserFlyout={showSearchUserFlyout} onSearchUserBtnClick={onSearchUserBtnClick} />
+            <SearchCustomerContainer showSearchUserFlyout={showSearchUserFlyout} onSearchUserBtnClick={onSearchUserBtnClick}/>
         </FlexBox>
     )
 }

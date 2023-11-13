@@ -1,10 +1,11 @@
-import { Avatar, Box, Button, Drawer, Grid, IconButton, Typography } from "@mui/material";
-import { FlexBox } from "lib/ui-ux";
+import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
+import { Avatar, Box, Button, CircularProgress, Drawer, Grid, IconButton, Typography } from "@mui/material";
+import { FlexBox } from "lib/ui-ux";
 import CloseIcon from '@mui/icons-material/Close';
 import { TextboxField } from "lib/form-fields";
-import { useFormContext } from "react-hook-form";
 import { commonStyles } from "lib/ui-ux/common-styles";
+import { ICustomerDetails } from "modules/tickets/apis/get-customer-details";
 
 const DrawerContent = styled.div`
     width: 1000px;
@@ -28,6 +29,8 @@ export interface ISearchCustomerFlyoutProps {
     onSearchUserBtnClick: () => void;
     showSearchUserFlyout: boolean;
     onformSubmit: () => void;
+    isLoading: boolean;
+    data: undefined | ICustomerDetails[];
 }
 
 interface ISearchCustomerFormProps extends Pick<ISearchCustomerFlyoutProps, 'onformSubmit'> {
@@ -130,37 +133,28 @@ const CustomerTile = (props: ICustomerTileProps) => {
     )
 }
 
-const customerDataEx = [{ "id": 3569036703964305, "first_name": "Emmanuel", "last_name": "Wickson", "email": "ewickson0@nytimes.com", "phone": "667-212-9298" },
-{ "id": 3562434498912, "first_name": "Jessalin", "last_name": "Kringe", "email": "jkringe1@tiny.cc", "phone": "102-150-0915" },
-{ "id": 3588710636343, "first_name": "Aloisia", "last_name": "Breitler", "email": "abreitler2@bravesites.com", "phone": "516-374-7933" },
-{ "id": 6762296610258, "first_name": "Deina", "last_name": "Bichener", "email": "dbichener3@webmd.com", "phone": "971-656-6522" },
-{ "id": 3577925635144, "first_name": "Durante", "last_name": "Esh", "email": "desh4@etsy.com", "phone": "879-493-2975" },
-{ "id": 3562434498992, "first_name": "Jessalin", "last_name": "Kringe", "email": "jkringe1@tiny.cc", "phone": "102-150-0915" },
-{ "id": 3588710636347, "first_name": "Aloisia", "last_name": "Breitler", "email": "abreitler2@bravesites.com", "phone": "516-374-7933" },
-{ "id": 6762296010258, "first_name": "Deina", "last_name": "Bichener", "email": "dbichener3@webmd.com", "phone": "971-656-6522" },
-{ "id": 3577925635140, "first_name": "Durante", "last_name": "Esh", "email": "desh4@etsy.com", "phone": "879-493-2975" },
-]
+interface ISearchCustomerResultProps extends Pick<ISearchCustomerFlyoutProps, 'data' | 'isLoading'> {
 
-// interface ISearchCustomerResultProps {
-//     customerData: null;
-// }
+}
 
-const SearchCustomerResult = () => {
-    const customerList = customerDataEx.map(data => (
-        <CustomerTile email={data.email}
-            firstName={data.first_name}
-            id={data.id} lastName={data.last_name}
-            phone={data.phone} key={data.id} />));
+const SearchCustomerResult = (props: ISearchCustomerResultProps) => {
+    const { data, isLoading } = props;
+
+    const customerList = data?.map(item => (
+        <CustomerTile email={item.email}
+            firstName={item.first_name}
+            id={item.id} lastName={item.last_name}
+            phone={item.phone} key={item.id} />));
 
     return (
         <SearchCustomerResultWrapper $flexDirection="column" $gap="20px">
-            {customerList}
+            {isLoading ? <CircularProgress /> : customerList}
         </SearchCustomerResultWrapper>
     )
 }
 
 export const SearchCustomerFlyout = (props: ISearchCustomerFlyoutProps) => {
-    const { onSearchUserBtnClick, showSearchUserFlyout, onformSubmit } = props;
+    const { onSearchUserBtnClick, showSearchUserFlyout, onformSubmit, data, isLoading } = props;
 
     return (
         <Drawer anchor="right" open={showSearchUserFlyout} onClose={onSearchUserBtnClick}>
@@ -172,7 +166,7 @@ export const SearchCustomerFlyout = (props: ISearchCustomerFlyoutProps) => {
                     </IconButton>
                 </HeaderWrapper>
                 <SearchCustomerForm onformSubmit={onformSubmit} />
-                <SearchCustomerResult />
+                <SearchCustomerResult data={data} isLoading={isLoading} />
             </DrawerContent>
         </Drawer>
     );

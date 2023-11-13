@@ -1,5 +1,5 @@
 import { useServiceClient } from 'lib';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
     QueryKey,
     useQuery,
@@ -27,6 +27,12 @@ export default function useLazyQuery<TData>(
         ...(queryOptions || {}),
         enabled,
     });
+
+    useEffect(()=> {
+        if(queryresult.isSuccess) {
+            setEnabled(false);
+        }
+    }, [queryresult.isSuccess]);
 
     const trigger = useCallback((_apiParams?: Record<string, string>) => {
         if (!enabled) {

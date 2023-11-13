@@ -1,6 +1,4 @@
-import React from "react";
-import { useServiceClient } from "lib";
-import { useQuery } from "react-query";
+import useLazyQuery from "lib/hooks/react-query-utils";
 
 enum GetCustomerDetailsEndPoint {
     GET_CUSTOMER_DETAILS = 'fetch_user_details'
@@ -18,12 +16,8 @@ export interface ICustomerDetails {
     phone: string;
 }
 
-export const useGetCustomerDetails = (args: { email: string, phone: string }) => {
-    const { email, phone } = args;
-    const { getData } = useServiceClient();
-
-    const getCustomerDetailsData = React.useCallback(() => getData(`${GetCustomerDetailsEndPoint.GET_CUSTOMER_DETAILS}?phone=${phone}&email=${email}`).then(res => res.json()), [email, getData, phone]);
-    return useQuery(
-        GetCustomerDetailsQueryKey.GET_CUSTOMER_DETAILS, getCustomerDetailsData, {enabled: false}
-    )
+export const useGetCustomerDetails = () => {
+    return useLazyQuery<ICustomerDetails[]>({
+        apiEndPoint: GetCustomerDetailsEndPoint.GET_CUSTOMER_DETAILS, queryKey: GetCustomerDetailsQueryKey.GET_CUSTOMER_DETAILS
+    })
 }
