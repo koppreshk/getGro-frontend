@@ -1,12 +1,5 @@
 import useLazyQuery from "lib/hooks/react-query-utils";
-
-enum GetCustomerDetailsEndPoint {
-    GET_CUSTOMER_DETAILS = 'fetch_user_details'
-}
-
-enum GetCustomerDetailsQueryKey {
-    GET_CUSTOMER_DETAILS = 'GET_ALL_TICKETS'
-}
+import { TicketsEndPoint, TicketsQueryKey } from "./api-enums";
 
 export interface ICustomerDetails {
     id: number;
@@ -18,6 +11,6 @@ export interface ICustomerDetails {
 
 export const useGetCustomerDetails = () => {
     return useLazyQuery<ICustomerDetails[]>({
-        apiEndPoint: GetCustomerDetailsEndPoint.GET_CUSTOMER_DETAILS, queryKey: GetCustomerDetailsQueryKey.GET_CUSTOMER_DETAILS
+        apiEndPoint: TicketsEndPoint.GET_CUSTOMER_DETAILS, queryKey: TicketsQueryKey.GET_CUSTOMER_DETAILS
     })
 }
