@@ -41,6 +41,7 @@ const CustomerTile = (props: ICustomerTileProps) => {
     const params = useParams();
     const { email, firstName, id, lastName, phone } = props;
     const dispatch = useAppDispatch();
+
     const linkCustomerCallback = React.useCallback(() => {
         dispatch(setCustomerId(id));
         dispatch(setEmail(email));
