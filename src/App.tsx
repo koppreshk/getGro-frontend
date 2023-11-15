@@ -7,10 +7,12 @@ import { ThemeProvider, defaultMUITheme } from "themes";
 import { ThemeProvider as MUIthemeProvider } from "@mui/material";
 import { NotificationProvider, ServiceClientProvider } from "lib";
 import ticketsReducer from './modules/tickets/storage/tickets-slice';
+import linkedCustomerReducer from "modules/tickets/storage/linked-customer-slice";
 
 const store = configureStore({
   reducer: {
     tickets: ticketsReducer,
+    linkedCustomer: linkedCustomerReducer
   },
 })
 
