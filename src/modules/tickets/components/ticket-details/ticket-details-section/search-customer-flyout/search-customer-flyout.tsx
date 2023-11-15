@@ -39,7 +39,7 @@ export const SearchCustomerFlyout = (props: ISearchCustomerFlyoutProps) => {
                     </IconButton>
                 </HeaderWrapper>
                 <SearchCustomerForm onformSubmit={onformSubmit} />
-                <SearchCustomerResult data={data} isLoading={isLoading} />
+                <SearchCustomerResult data={data} isLoading={isLoading} onSearchUserBtnClick={onSearchUserBtnClick}/>
             </DrawerContent>
         </Drawer>
     );
