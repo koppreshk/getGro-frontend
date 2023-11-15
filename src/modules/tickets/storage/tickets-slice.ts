@@ -1,11 +1,26 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
+interface ILinkedCustomer {
+    customerId?: number,
+    email: string,
+    name: string,
+    phoneNumber: string,
+    ticketId: string
+}
 interface TicketsState {
     totalPages: number;
+    linkedCustomer: ILinkedCustomer;
 }
 
 const initialState: TicketsState = {
     totalPages: 0,
+    linkedCustomer: {
+        customerId: undefined,
+        email: '',
+        name: '',
+        phoneNumber: '',
+        ticketId: ''
+    }
 }
 
 export const ticketsSlice = createSlice({
@@ -15,10 +30,13 @@ export const ticketsSlice = createSlice({
         setTotalPages: (state, action: PayloadAction<number>) => {
             state.totalPages = action.payload
         },
+        setLinkedCustomer: (state, action: PayloadAction<ILinkedCustomer>) => {
+            state.linkedCustomer = action.payload
+        }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { setTotalPages } = ticketsSlice.actions
+export const { setTotalPages, setLinkedCustomer } = ticketsSlice.actions
 
 export default ticketsSlice.reducer

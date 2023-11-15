@@ -229,8 +229,7 @@ export interface IOrderDetails {
     orders: IOrders[]
 }
 
-export const useGetOrderDetails = (args: { customerId?: string }) => {
-    const { customerId = '7021764280539' } = args;
+export const useGetOrderDetails = (customerId?: number) => {
     const { getData } = useServiceClient();
 
     const getOrderDetailsData = React.useCallback(() => getData(`${TicketsEndPoint.GET_USER_ORDERS}?customer_id=${customerId}`).then((res) => res.json()).catch((err) => err), [customerId, getData]);

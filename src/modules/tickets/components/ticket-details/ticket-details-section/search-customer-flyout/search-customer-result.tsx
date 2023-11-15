@@ -4,10 +4,10 @@ import { useParams } from 'react-router';
 import { Avatar, CircularProgress, IconButton, Typography } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useAppDispatch } from "lib/hooks";
-import { setCustomerId, setEmail, setName, setPhoneNumber, setTicketId } from "modules/tickets/storage";
+import { setLinkedCustomer } from "modules/tickets/storage";
 import { commonStyles } from "lib/ui-ux/common-styles";
 import { FlexBox } from 'lib/ui-ux';
-import { ISearchCustomerFlyoutProps } from '.';
+import { ISearchCustomerFlyoutProps } from './search-customer-flyout';
 
 const CustomerTileWrapper = styled(FlexBox)`
     border-radius: 10px;
@@ -43,11 +43,7 @@ const CustomerTile = (props: ICustomerTileProps) => {
     const dispatch = useAppDispatch();
 
     const linkCustomerCallback = React.useCallback(() => {
-        dispatch(setCustomerId(id));
-        dispatch(setEmail(email));
-        dispatch(setName(`${firstName} ${lastName}`));
-        dispatch(setPhoneNumber(phone));
-        dispatch(setTicketId(params.ticketId!));
+        dispatch(setLinkedCustomer({ email, name: `${firstName} ${lastName}`, phoneNumber: phone, ticketId: params.ticketId!, customerId: id }));
     }, [dispatch, email, firstName, id, lastName, params.ticketId, phone]);
 
     return (

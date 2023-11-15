@@ -20,6 +20,7 @@ const StyledOrder = styled(FlexBox)`
     background-color: ${({ theme }) => theme.pallete.white};
     border-radius: 8px;
     height: fit-content;
+    margin-bottom: 10px;
     padding: 10px 12px;
     width: 100%;
     box-sizing: border-box;
@@ -62,7 +63,7 @@ export const OrderDetails = React.memo((props: IOrderDetailsProps) => {
                         <List
                             width={width}
                             itemCount={orderDetails.length}
-                            itemSize={120}
+                            itemSize={130}
                             height={height}>
                             {({ index, style }) => (
                                 <Order index={index} style={style} orderDetails={orderDetails} />
