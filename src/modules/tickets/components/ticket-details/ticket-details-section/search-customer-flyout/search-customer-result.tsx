@@ -8,6 +8,7 @@ import { setLinkedCustomer } from "modules/tickets/storage";
 import { commonStyles } from "lib/ui-ux/common-styles";
 import { FlexBox } from 'lib/ui-ux';
 import { ISearchCustomerFlyoutProps } from './search-customer-flyout';
+import { useNotifications } from 'lib';
 
 const CustomerTileWrapper = styled(FlexBox)`
     border-radius: 10px;
@@ -35,16 +36,21 @@ interface ICustomerTileProps {
     lastName: string;
     email: string;
     phone: string;
+    onSearchUserBtnClick: () => void;
 }
 
 const CustomerTile = (props: ICustomerTileProps) => {
     const params = useParams();
-    const { email, firstName, id, lastName, phone } = props;
+    const { email, firstName, id, lastName, phone, onSearchUserBtnClick } = props;
     const dispatch = useAppDispatch();
+    const {showNotification} = useNotifications();
 
     const linkCustomerCallback = React.useCallback(() => {
         dispatch(setLinkedCustomer({ email, name: `${firstName} ${lastName}`, phoneNumber: phone, ticketId: params.ticketId!, customerId: id }));
-    }, [dispatch, email, firstName, id, lastName, params.ticketId, phone]);
+        showNotification({message: 'Customer linked successfully', type: 'success'});
+        onSearchUserBtnClick()
+
+    }, [dispatch, email, firstName, id, lastName, onSearchUserBtnClick, params.ticketId, phone, showNotification]);
 
     return (
         <CustomerTileWrapper $gap='20px'>
@@ -76,18 +82,18 @@ const CustomerTile = (props: ICustomerTileProps) => {
     )
 }
 
-interface ISearchCustomerResultProps extends Pick<ISearchCustomerFlyoutProps, 'data' | 'isLoading'> {
-
+interface ISearchCustomerResultProps extends Pick<ISearchCustomerFlyoutProps, 'data' | 'isLoading' > {
+    onSearchUserBtnClick: () => void;
 }
 
 export const SearchCustomerResult = (props: ISearchCustomerResultProps) => {
-    const { data, isLoading } = props;
+    const { data, isLoading, onSearchUserBtnClick } = props;
 
     const customerList = data?.map(item => (
         <CustomerTile email={item.email}
             firstName={item.first_name}
             id={item.id} lastName={item.last_name}
-            phone={item.phone} key={item.id} />));
+            phone={item.phone} key={item.id} onSearchUserBtnClick={onSearchUserBtnClick} />));
 
     return (
         <SearchCustomerResultWrapper $flexDirection="column" $gap="20px">
