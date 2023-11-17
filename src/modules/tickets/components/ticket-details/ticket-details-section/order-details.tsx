@@ -4,7 +4,7 @@ import { ChevronRight, ShoppingBagOutlined } from '@mui/icons-material';
 import { FixedSizeList as List } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { IconButton, Tooltip, Typography } from "@mui/material"
-import { FlexBox, HorizontalSeparator } from "lib/ui-ux"
+import { FlexBox } from "lib/ui-ux"
 import { IOrders } from "modules/tickets/apis";
 
 interface IOrderDetailsProps {
@@ -49,14 +49,17 @@ const OrderPLaceholderIconWrapper = styled(FlexBox)`
     border-radius: 8px;
 `;
 
+const OrderDetailsHeader = styled(FlexBox)`
+    border-bottom: ${({ theme }) => theme.semantics.standardBorder};
+`;
+
 export const OrderDetails = React.memo((props: IOrderDetailsProps) => {
     const { orderDetails } = props;
     return (
         <>
-            <FlexBox $padding="10px" $flexDirection="column">
+            <OrderDetailsHeader $padding="15px 10px" $flexDirection="column">
                 <Typography variant="h6">Order Details</Typography>
-            </FlexBox>
-            <HorizontalSeparator />
+            </OrderDetailsHeader>
             <OrderWrappers $height="calc(100% - 93px)" $gap="10px" $flexDirection="column">
                 <AutoSizer>
                     {({ height, width }) => (

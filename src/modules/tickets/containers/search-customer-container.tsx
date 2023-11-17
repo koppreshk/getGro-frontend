@@ -40,6 +40,7 @@ export const SearchCustomerContainer = (props: ISearchCustomerContainerPRops) =>
                 showSearchUserFlyout={showSearchUserFlyout}
                 onSearchUserBtnClick={onSearchUserBtnClick}
                 onformSubmit={onformSubmit}
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 isLoading={isLoading} data={data as any}
             />
         </FormProvider>
