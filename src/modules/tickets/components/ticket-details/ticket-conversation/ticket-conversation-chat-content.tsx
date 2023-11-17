@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import { Avatar, Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { ITicketConversation } from "modules/tickets/apis";
+import { getInitialsByName } from "lib/utils";
 
 const Content = styled(FlexBox) <{ $isCustomerQuery: boolean }>`
     background-color: ${({ theme, $isCustomerQuery }) => $isCustomerQuery ? '#ffefe0' : theme.pallete.white};
@@ -53,11 +54,6 @@ const animateAgent = css`
 const Wrapper = styled(FlexBox) <{ $isCustomerQuery: boolean }>`
     ${({ $isCustomerQuery }) => $isCustomerQuery ? animateClient : animateAgent};
 `;
-
-const getInitialsByName = (name: string) => {
-    const [firstName, lastName] = name.split(' ');
-    return `${firstName[0]}${lastName ? lastName[0] : firstName[1]}`;
-}
 
 interface IChatContentProps extends Pick<ITicketConversation, 'agentName' | 'customerName'> {
     content: {

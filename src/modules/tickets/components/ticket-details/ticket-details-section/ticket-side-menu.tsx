@@ -39,7 +39,7 @@ const useSideMenuOptions = () => {
             iconComponent: () => <Person />
         },
         {
-            title: customerId === undefined ? 'Attach an user to get order details' : 'Order Details',
+            title: customerId === undefined ? 'Link a customer to get order details' : 'Order Details',
             id: MenuOptions.OrderDetails,
             iconComponent: () => <ShoppingCart />,
             disabled: customerId === undefined
