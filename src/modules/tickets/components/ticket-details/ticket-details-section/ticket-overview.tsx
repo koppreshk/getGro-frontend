@@ -1,19 +1,19 @@
 import React from "react";
-import { PersonSearch, PersonRemove } from "@mui/icons-material";
+import { PersonSearch } from "@mui/icons-material";
 import { Typography, Tooltip, IconButton, Avatar } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { Platform } from "../ticket-conversation/ticket-conversation-header";
 import { SearchCustomerContainer } from "modules/tickets/containers";
 import { useAppSelector } from "lib/hooks";
 import { getInitialsByName } from "lib/utils";
+import { UnlinkCustomer } from "./unlink-customer";
 
 export const TicketOverview = () => {
     const [showSearchUserFlyout, setShowSearchUserFlyout] = React.useState(false);
     const onSearchUserBtnClick = React.useCallback(() => {
         setShowSearchUserFlyout((x) => !x);
     }, []);
-
-    const detach = false;
+    const customerId = useAppSelector((state) => state.tickets.linkedCustomer.customerId)
 
     return (
         <FlexBox $gap="30px" $padding="10px" $flexDirection="column">
@@ -22,17 +22,12 @@ export const TicketOverview = () => {
                     <Typography variant="h5" fontSize="16px" >Tilly Moughton messaged via</Typography>
                     <Platform variant="body2" $platform={'facebook'}>facebook</Platform>
                 </FlexBox>
-                <Tooltip title="Search User" arrow placement="left">
-                    <IconButton onClick={onSearchUserBtnClick}>
-                        <PersonSearch />
-                    </IconButton>
-                </Tooltip>
-                {detach ?
-                    <Tooltip title="Detach User">
-                        <IconButton>
-                            <PersonRemove />
+                {customerId ? <UnlinkCustomer /> :
+                    <Tooltip title="Search Customer" arrow placement="left">
+                        <IconButton onClick={onSearchUserBtnClick}>
+                            <PersonSearch />
                         </IconButton>
-                    </Tooltip> : null}
+                    </Tooltip>}
             </FlexBox>
             <ContactInfo />
             <SearchCustomerContainer showSearchUserFlyout={showSearchUserFlyout} onSearchUserBtnClick={onSearchUserBtnClick} />
