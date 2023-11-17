@@ -2,10 +2,10 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 interface ILinkedCustomer {
     customerId?: number,
-    email: string,
-    name: string,
-    phoneNumber: string,
-    ticketId: string
+    email?: string,
+    name?: string,
+    phoneNumber?: string,
+    ticketId?: string
 }
 interface TicketsState {
     totalPages: number;
@@ -16,10 +16,10 @@ const initialState: TicketsState = {
     totalPages: 0,
     linkedCustomer: {
         customerId: undefined,
-        email: '',
-        name: '',
-        phoneNumber: '',
-        ticketId: ''
+        email: undefined,
+        name: undefined,
+        phoneNumber: undefined,
+        ticketId: undefined
     }
 }
 

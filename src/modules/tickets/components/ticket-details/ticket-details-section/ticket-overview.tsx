@@ -4,6 +4,8 @@ import { Typography, Tooltip, IconButton, Avatar } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { Platform } from "../ticket-conversation/ticket-conversation-header";
 import { SearchCustomerContainer } from "modules/tickets/containers";
+import { useAppSelector } from "lib/hooks";
+import { getInitialsByName } from "lib/utils";
 
 export const TicketOverview = () => {
     const [showSearchUserFlyout, setShowSearchUserFlyout] = React.useState(false);
@@ -33,25 +35,30 @@ export const TicketOverview = () => {
                     </Tooltip> : null}
             </FlexBox>
             <ContactInfo />
-            <SearchCustomerContainer showSearchUserFlyout={showSearchUserFlyout} onSearchUserBtnClick={onSearchUserBtnClick}/>
+            <SearchCustomerContainer showSearchUserFlyout={showSearchUserFlyout} onSearchUserBtnClick={onSearchUserBtnClick} />
         </FlexBox>
     )
 }
 
 const ContactInfo = () => {
+    const { email, name, phoneNumber, customerId } = useAppSelector((state) => state.tickets.linkedCustomer);
     return (
         <FlexBox $gap="20px" $flexDirection="column">
             <FlexBox $gap="10px" $alignItems="center">
-                <Avatar>TM</Avatar>
-                <Typography variant="h6" fontSize="16px" >Tilly Moughton</Typography>
+                {name === undefined ? <Avatar /> : <Avatar>{getInitialsByName(name)}</Avatar>}
+                <Typography variant="h6" fontSize="16px" >{name ?? 'NA'}</Typography>
             </FlexBox>
-            <FlexBox $gap="8px" $flexDirection="column">
+            <FlexBox $gap="4px" $flexDirection="column">
                 <Typography variant="body2" fontWeight={'500'}>Email</Typography>
-                <Typography variant="body2" >test@gmail.com</Typography>
+                <Typography variant="body2" >{email === '' || email === undefined ? 'NA' : email}</Typography>
             </FlexBox>
-            <FlexBox $gap="8px" $flexDirection="column">
+            <FlexBox $gap="4px" $flexDirection="column">
                 <Typography variant="body2" fontWeight={'500'}>Phone</Typography>
-                <Typography variant="body2" >9867998789</Typography>
+                <Typography variant="body2" >{phoneNumber ?? 'NA'}</Typography>
+            </FlexBox>
+            <FlexBox $gap="4px" $flexDirection="column">
+                <Typography variant="body2" fontWeight={'500'}>Customer Id</Typography>
+                <Typography variant="body2" >{customerId === undefined ? 'NA' : customerId}</Typography>
             </FlexBox>
         </FlexBox>
     )
