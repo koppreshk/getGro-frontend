@@ -22,7 +22,8 @@ export const SearchCustomerContainer = (props: ISearchCustomerContainerPRops) =>
         defaultValues: {
             email: '',
             phoneNumber: ''
-        }
+        },
+        mode: 'onBlur'
     });
 
     const { onSearchUserBtnClick, showSearchUserFlyout } = props;
