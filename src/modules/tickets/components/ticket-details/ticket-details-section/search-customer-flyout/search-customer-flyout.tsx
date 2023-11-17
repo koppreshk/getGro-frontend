@@ -14,7 +14,7 @@ const DrawerContent = styled.div`
 const HeaderWrapper = styled(FlexBox)`
     box-sizing: border-box;
     padding: 15px 10px 10px 15px;
-    border-bottom: 1px solid #e9ebed;
+    border-bottom: ${({ theme }) => theme.semantics.standardBorder};
     background-color: white;
 `;
 

@@ -4,21 +4,26 @@ import { TicketConversationContainer, TicketListViewContainer } from "modules/ti
 import { TicketDeatilsSection } from "./ticket-details-section/ticket-details-section";
 
 const StyledLayoutWrapper = styled(FlexBox)`
-    background-color: ${({ theme }) => theme.pallete.grayVariant5};
+    background-color: ${({ theme }) => theme.pallete.white};
+`;
+
+const StyledLayouts = styled(FlexBox)`
+    border-right: ${({ theme }) => theme.semantics.standardBorder};
+    border-left: ${({ theme }) => theme.semantics.standardBorder};
 `;
 
 export const TicketDetailsLayout = () => {
     return (
         <StyledLayoutWrapper $width="100%" $height="100%" $gap="20px">
-            <FlexBox $width="25%" style={{ borderRight: '1px solid #e9ebed' }}>
+            <StyledLayouts $width="25%">
                 <TicketListViewContainer />
-            </FlexBox>
-            <FlexBox $width="calc(40% - 20px)" style={{ borderRight: '1px solid #e9ebed' }}>
+            </StyledLayouts>
+            <StyledLayouts $width="calc(40% - 20px)">
                 <TicketConversationContainer />
-            </FlexBox>
-            <FlexBox $width="calc(35% - 20px)">
+            </StyledLayouts>
+            <StyledLayouts $width="calc(35% - 20px)">
                 <TicketDeatilsSection />
-            </FlexBox>
+            </StyledLayouts>
         </StyledLayoutWrapper>
     )
 }

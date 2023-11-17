@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
-import { Avatar, CircularProgress, IconButton, Typography } from '@mui/material';
+import { Avatar, CircularProgress, IconButton, Tooltip, Typography } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useAppDispatch } from "lib/hooks";
 import { setLinkedCustomer } from "modules/tickets/storage";
@@ -43,11 +43,11 @@ const CustomerTile = (props: ICustomerTileProps) => {
     const params = useParams();
     const { email, firstName, id, lastName, phone, onSearchUserBtnClick } = props;
     const dispatch = useAppDispatch();
-    const {showNotification} = useNotifications();
+    const { showNotification } = useNotifications();
 
     const linkCustomerCallback = React.useCallback(() => {
         dispatch(setLinkedCustomer({ email, name: `${firstName} ${lastName}`, phoneNumber: phone, ticketId: params.ticketId!, customerId: id }));
-        showNotification({message: 'Customer linked successfully', type: 'success'});
+        showNotification({ message: 'Customer linked successfully', type: 'success' });
         onSearchUserBtnClick()
 
     }, [dispatch, email, firstName, id, lastName, onSearchUserBtnClick, params.ticketId, phone, showNotification]);
@@ -75,14 +75,16 @@ const CustomerTile = (props: ICustomerTileProps) => {
                     <TextFieldValue variant="body2" >{phone}</TextFieldValue>
                 </FlexBox>
             </FlexBox>
-            <IconButton onClick={linkCustomerCallback}>
-                <PersonAddIcon />
-            </IconButton>
+            <Tooltip title='Link Customer' arrow placement='bottom'>
+                <IconButton onClick={linkCustomerCallback}>
+                    <PersonAddIcon />
+                </IconButton>
+            </Tooltip>
         </CustomerTileWrapper>
     )
 }
 
-interface ISearchCustomerResultProps extends Pick<ISearchCustomerFlyoutProps, 'data' | 'isLoading' > {
+interface ISearchCustomerResultProps extends Pick<ISearchCustomerFlyoutProps, 'data' | 'isLoading'> {
     onSearchUserBtnClick: () => void;
 }
 
@@ -101,7 +103,9 @@ export const SearchCustomerResult = (props: ISearchCustomerResultProps) => {
                 <FlexBox $alignItems="center" $justifyContent="center">
                     <CircularProgress />
                 </FlexBox> :
-                customerList}
+                customerList?.length ? 
+                customerList : 
+                <FlexBox $justifyContent='center'>Oops no customer found! </FlexBox>}
         </SearchCustomerResultWrapper>
     )
 }
