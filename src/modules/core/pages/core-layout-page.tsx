@@ -6,7 +6,7 @@ import { Routes, Route, Navigate } from "react-router-dom"
 import { DashboardPage } from "modules/dashboard/pages"
 import { TicketsPage } from "modules/tickets/pages"
 import { CustomersPage } from "modules/customers/pages"
-import { SettingsPage } from "modules/settings/pages"
+import { ConfigurationsPage } from "modules/configurations/pages"
 
 export const CoreLayoutPage = React.memo(() => {
     return (
@@ -20,7 +20,7 @@ export const CoreLayoutPage = React.memo(() => {
                         <Route key="dashboard-route" path="/dashboard" element={<DashboardPage />} />
                         <Route key="tickets" path="/tickets/*" element={<TicketsPage />} />
                         <Route key="customers" path="/customers" element={<CustomersPage />} />
-                        <Route key="settings" path="/settings" element={<SettingsPage />} />
+                        <Route key="configurations" path="/configurations/*" element={<ConfigurationsPage />} />
                     </Routes>
                 </div>
             </FlexBox>

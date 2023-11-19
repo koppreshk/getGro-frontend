@@ -39,8 +39,8 @@ const primaryOptions = [{
     route: 'customers'
 }, {
     iconName: 'settings',
-    primaryKey: 'settings',
-    route: 'settings'
+    primaryKey: 'configurations',
+    route: 'configurations'
 }];
 
 const IconWrapper = styled(FlexBox) <{ $isOptionsSelected: boolean }>`
