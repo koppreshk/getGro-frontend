@@ -2,6 +2,7 @@ import React from "react"
 import { FlexBox } from "lib/ui-ux"
 import { ModuleSubMenu } from "modules/core"
 import { Navigate, Route, Routes } from "react-router-dom";
+import FacebookLogin, { ReactFacebookFailureResponse, ReactFacebookLoginInfo } from 'react-facebook-login';
 
 export const ConfigurationsPage = React.memo(() => {
 
@@ -23,7 +24,17 @@ export const ConfigurationsPage = React.memo(() => {
 })
 
 const FacebookConfiguration = () => {
+    const responseFacebook = (response: ReactFacebookLoginInfo | ReactFacebookFailureResponse) => {
+        console.log(response);
+    }
+
     return (
-        <span>FacebookConfiguration</span>
+        <>
+            <FacebookLogin
+                appId="2310166352500559"
+                autoLoad={true}
+                fields="name,email,picture"
+                callback={responseFacebook} />
+        </>
     )
 }

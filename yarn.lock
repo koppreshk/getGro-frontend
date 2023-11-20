@@ -1613,6 +1613,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-facebook-login@^4.1.9":
+  version "4.1.9"
+  resolved "https://registry.yarnpkg.com/@types/react-facebook-login/-/react-facebook-login-4.1.9.tgz#d2745a363cc7a9c79ac56cb47560831de049974b"
+  integrity sha512-G58cjLxmDH/Qv5QNXfaY3CQyX/X7LzYAkhCkoTsFz8FRUl4K3vQ19/7flxm9H9v67RUUn8tbiC5skeI9uVTrDg==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-transition-group@^4.4.6":
   version "4.4.6"
   resolved "https://registry.yarnpkg.com/@types/react-transition-group/-/react-transition-group-4.4.6.tgz#18187bcda5281f8e10dfc48f0943e2fdf4f75e2e"
@@ -2850,6 +2857,11 @@ react-dom@^18.2.0:
   dependencies:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
+
+react-facebook-login@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/react-facebook-login/-/react-facebook-login-4.1.1.tgz#005121236a6ac0dee02099976fb1a3265f9d633e"
+  integrity sha512-COnHEHlYGTKipz4963safFAK9PaNTcCiXfPXMS/yxo8El+/AJL5ye8kMJf23lKSSGGPgqFQuInskIHVqGqTvSw==
 
 react-hook-form@^7.47.0:
   version "7.47.0"
