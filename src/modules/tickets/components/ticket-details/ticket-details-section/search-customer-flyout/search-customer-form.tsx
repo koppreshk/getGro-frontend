@@ -4,6 +4,7 @@ import { useFormContext } from "react-hook-form";
 import { ISearchCustomerFlyoutProps } from "..";
 import { FlexBox } from "lib/ui-ux";
 import styled from "styled-components";
+import { emailRegExp } from "lib/utils";
 
 const StlyedFlexBox = styled(FlexBox)`
     margin-top: 20px;
@@ -34,7 +35,7 @@ export const SearchCustomerForm = (props: ISearchCustomerFormProps) => {
                         <TextboxField name="phoneNumber" label="Phone Number" fullWidth />
                     </Grid>
                     <Grid item xs={6}>
-                        <TextboxField name="email" label="Email" type="email" fullWidth />
+                        <TextboxField name="email" label="Email" type="email" fullWidth rules={{validate: (value) => !emailRegExp.test(value) ? 'Please enter a valid email address.' : undefined }}/>
                     </Grid>
                     <Grid item xs={6}>
                         <TextboxField name="customerCode" label="Customer Code" type="text" fullWidth />
@@ -44,7 +45,7 @@ export const SearchCustomerForm = (props: ISearchCustomerFormProps) => {
                     </Grid>
                 </Grid>
                 <StlyedFlexBox $gap='10px' $width="100%" $justifyContent="flex-end">
-                    <Button variant="contained" size="large">Search & Link</Button>
+                    {/* <Button variant="contained" size="large">Search & Link</Button> */}
                     <Button variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onsubmit)}>Search</Button>
                 </StlyedFlexBox>
             </Box>
