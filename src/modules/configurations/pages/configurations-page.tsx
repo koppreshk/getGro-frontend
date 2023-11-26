@@ -1,8 +1,10 @@
-import React from "react"
+import React, { useState } from "react"
 import { FlexBox } from "lib/ui-ux"
 import { ModuleSubMenu } from "modules/core"
 import { Navigate, Route, Routes } from "react-router-dom";
-import FacebookLogin, { ReactFacebookFailureResponse, ReactFacebookLoginInfo } from 'react-facebook-login';
+import FacebookLogin, { ReactFacebookLoginInfo } from 'react-facebook-login';
+import { TextboxField } from "lib/form-fields";
+import { FormProvider, useForm } from "react-hook-form";
 
 export const ConfigurationsPage = React.memo(() => {
 
@@ -24,17 +26,34 @@ export const ConfigurationsPage = React.memo(() => {
 })
 
 const FacebookConfiguration = () => {
-    const responseFacebook = (response: ReactFacebookLoginInfo | ReactFacebookFailureResponse) => {
+    const [data, setData] = useState<ReactFacebookLoginInfo>();
+    const formMethods = useForm({
+        mode: 'onBlur',
+        defaultValues: {
+            facebookAppId: ''
+        }
+    });
+
+    const { watch } = formMethods;
+
+    const responseFacebook = (response: ReactFacebookLoginInfo) => {
         console.log(response);
+        setData(response);
     }
 
     return (
-        <>
-            <FacebookLogin
-                appId="2310166352500559"
-                autoLoad={true}
-                fields="name,email,picture"
-                callback={responseFacebook} />
-        </>
+        <FormProvider {...formMethods}>
+            <FlexBox $gap="10px" $flexDirection="column">
+                <TextboxField name="facebookAppId" label="Facebook App Id" />
+                {watch('facebookAppId').length === 16 ?
+                    <FacebookLogin
+                        appId={watch('facebookAppId')}
+                        fields="name,email,picture"
+                        scope="openid"
+                        callback={responseFacebook}
+                        icon="fa-facebook" /> : null}
+                {data?.picture?.data?.url ? <img src={data?.picture?.data?.url} height={data?.picture?.data?.height} width={data?.picture?.data?.width} /> : null}
+            </FlexBox>
+        </FormProvider>
     )
 }
