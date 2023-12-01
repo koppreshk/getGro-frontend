@@ -4,6 +4,7 @@ import { GridLayout } from "lib/ui-ux";
 import { OrderDetailsContainer } from "modules/tickets/containers";
 import { MenuOptions, TicetSideMenu } from "./ticket-side-menu";
 import { TicketOverview } from "./ticket-overview";
+import { TicketNotes } from "./ticket-notes";
 
 const StyledGridLayout = styled(GridLayout)`  
     background-color: ${({ theme }) => theme.pallete.white};
@@ -22,12 +23,14 @@ export const TicketDeatilsSection = () => {
                 return <TicketOverview />;
             case MenuOptions.OrderDetails:
                 return <OrderDetailsContainer />
+            case MenuOptions.Notes:
+                return <TicketNotes />
             default: return <span>default</span>
         }
     }, [selectedMenuOption]);
 
     return (
-        <StyledGridLayout $gridTemplateColumns={"auto 56px"} $width="100%">
+        <StyledGridLayout $gridTemplateColumns={"calc(100% - 56px) 56px"} $width="100%">
             <div>
                 {renderBasedOnSelctedview()}
             </div>
