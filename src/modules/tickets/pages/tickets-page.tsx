@@ -22,7 +22,6 @@ export const TicketsPage = React.memo(() => {
                     <Routes>
                         <Route key="default-view" path="*" element={<Navigate to="/tickets/unassigned" />} />
                         <Route key="unassigned" path="/unassigned" element={<UnassignedTicketsContainer />} />
-                        <Route key="unassigned-details" path="/unassigned/:ticketId" element={<TicketDetailsLayout />} />
                         <Route key="all-pending" path="/all-pending" element={<UnassignedTicketsContainer />} />
                         <Route key="all-complete" path="/all-complete" element={<UnassignedTicketsContainer />} />
                         <Route key="all-junk" path="/all-junk" element={<UnassignedTicketsContainer />} />
@@ -31,6 +30,16 @@ export const TicketsPage = React.memo(() => {
                         <Route key="completed-by-me" path="/completed-by-me" element={<UnassignedTicketsContainer />} />
                         <Route key="completed-by-team" path="/completed-by-team" element={<UnassignedTicketsContainer />} />
                         <Route key="pending-by-team" path="/pending-by-team" element={<UnassignedTicketsContainer />} />
+
+                        <Route key="unassigned-details" path="/unassigned/:ticketId" element={<TicketDetailsLayout />} />
+                        <Route key="all-pending-details" path="/all-pending/:ticketId" element={<TicketDetailsLayout />} />
+                        <Route key="all-complete-details" path="/all-complete/:ticketId" element={<TicketDetailsLayout />} />
+                        <Route key="assigned-to-me-details" path="/assigned-to-me/:ticketId" element={<TicketDetailsLayout />} />
+                        <Route key="created-by-me-details" path="/created-by-me/:ticketId" element={<TicketDetailsLayout />} />
+                        <Route key="completed-by-me-details" path="/completed-by-me/:ticketId" element={<TicketDetailsLayout />} />
+                        <Route key="completed-by-team-details" path="/completed-by-team/:ticketId" element={<TicketDetailsLayout />} />
+                        <Route key="pending-by-team-details" path="/pending-by-team/:ticketId" element={<TicketDetailsLayout />} />
+                        <Route key="all-junk-details" path="/all-junk/:ticketId" element={<TicketDetailsLayout />} />
                     </Routes>
                 </div>
             </Container>
