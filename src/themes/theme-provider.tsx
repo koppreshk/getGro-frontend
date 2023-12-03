@@ -13,6 +13,7 @@ const defaultTheme: DefaultTheme = {
         grayVariant4: '#CACED5',
         grayVariant5: '#F1F2F4',
         grayVariant6: '#F8F9FA',
+        purple: '#6969ff'
     },
     semantics: {
         standardBorder: '1px solid #E9EBED'

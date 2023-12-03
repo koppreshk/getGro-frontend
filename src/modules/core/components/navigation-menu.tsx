@@ -1,14 +1,17 @@
 
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { FlexBox, Icon } from "lib/ui-ux";
+import styled, { css } from "styled-components";
+import { FlexBox } from "lib/ui-ux";
+import { Tooltip } from "@mui/material";
+import { GroupOutlined, HomeOutlined, SettingsOutlined, TaskOutlined } from "@mui/icons-material";
 
 interface IPrimaryOptionProps {
     item: {
-        iconName: string;
+        iconComponent: () => JSX.Element;
         primaryKey: string;
         route: string;
+        title: string;
     }
     selectedMenu: string;
     onMenuOptionClick: React.Dispatch<React.SetStateAction<string>>;
@@ -16,8 +19,9 @@ interface IPrimaryOptionProps {
 
 const MenuWrapper = styled.div`
     width: 64px;
-    background-color: #001e38;
+    background-color: #ffff;
     height: 100%;
+    border-right: 1px solid #E5EAF2;
 `;
 
 const PrimaryOptionsWrapper = styled(FlexBox)`
@@ -25,29 +29,42 @@ const PrimaryOptionsWrapper = styled(FlexBox)`
 `;
 
 const primaryOptions = [{
-    iconName: 'home',
+    iconComponent: () => <HomeOutlined/>,
     primaryKey: 'dashboard',
-    route: 'dashboard'
+    route: 'dashboard',
+    title: 'Dashboard'
 },
 {
-    iconName: 'task',
+    iconComponent: () => <TaskOutlined sx={{}} width='32px' height='32px'/>,
     primaryKey: 'tickets',
-    route: 'tickets'
+    route: 'tickets',
+    title: 'Tickets'
 }, {
-    iconName: 'group',
+    iconComponent: () => <GroupOutlined/>,
     primaryKey: 'customers',
-    route: 'customers'
+    route: 'customers',
+    title: 'Customers'
 }, {
-    iconName: 'settings',
+    iconComponent: () => <SettingsOutlined/>,
     primaryKey: 'settings',
-    route: 'settings'
+    route: 'settings',
+    title: 'Settings'
 }];
 
 const IconWrapper = styled(FlexBox) <{ $isOptionsSelected: boolean }>`
-    background-color: ${({ $isOptionsSelected }) => $isOptionsSelected ? '#039be5' : 'unset'};
+    ${({ $isOptionsSelected }) => $isOptionsSelected ? css`
+    background-color: #e4f0fd;
+    color: #1976d2;
+    /* background-color: rgba(209, 209, 247, .25);
+    color: #6969ff; */
+    `: css`
+    background-color: unset;
+    color: #787f83;
+    `};
     height: 40px;
     width: 40px;
     border-radius: 6px;
+    cursor: pointer;
 `;
 
 export const NavigationMenu = React.memo(() => {
@@ -71,7 +88,7 @@ export const NavigationMenu = React.memo(() => {
 
 const PrimaryOption = React.memo((props: IPrimaryOptionProps) => {
     const { item, selectedMenu, onMenuOptionClick } = props;
-    const { iconName, primaryKey, route } = item;
+    const { iconComponent, primaryKey, route, title } = item;
     const isOptionsSelected = React.useMemo(() => selectedMenu === primaryKey, [primaryKey, selectedMenu]);
     const navigate = useNavigate();
 
@@ -81,8 +98,10 @@ const PrimaryOption = React.memo((props: IPrimaryOptionProps) => {
     }, [navigate, onMenuOptionClick, primaryKey, route]);
 
     return (
-        <IconWrapper $isOptionsSelected={isOptionsSelected} $alignItems="center" $justifyContent="center">
-            <Icon className="material-symbols-outlined" iconName={iconName} onClick={onClick} />
-        </IconWrapper>
+        <Tooltip title={title} arrow placement="right">
+            <IconWrapper $isOptionsSelected={isOptionsSelected} $alignItems="center" $justifyContent="center" onClick={onClick}>
+                {iconComponent()}
+            </IconWrapper>
+        </Tooltip>
     )
 })
