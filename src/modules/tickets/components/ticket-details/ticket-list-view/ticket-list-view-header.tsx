@@ -4,7 +4,7 @@ import ImportExportIcon from '@mui/icons-material/ImportExport';
 import TuneIcon from '@mui/icons-material/Tune';
 import { Chip, IconButton, Typography } from "@mui/material";
 import styled from "styled-components";
-import { useSearchParams } from "react-router-dom";
+import { useMatch, useSearchParams } from "react-router-dom";
 
 interface IStyledIconButtonProps {
     children?: React.ReactNode;
@@ -25,13 +25,18 @@ export const HeaderWrapper = styled(FlexBox)`
 
 export const TicketListViewHeader = () => {
     const [searchParams] = useSearchParams();
+    const match = useMatch('/tickets/:ticketType/:ticketId')
     const noOfRecords = searchParams.get('noOfRecords');
+    const header = match?.params.ticketType?.split('-').map((item) => {
+        const newString = item.charAt(0).toUpperCase() + item.slice(1);
+        return newString;
+    }).join(' ')
 
     return (
         <HeaderWrapper $width="100%" $justifyContent="space-between">
             <FlexBox $alignItems="center" $gap="10px">
                 <SortIcon />
-                <Typography variant="h6">Unassigned</Typography>
+                <Typography variant="h6">{header}</Typography>
                 <Chip label={noOfRecords} size="small" variant="filled" color="primary" />
             </FlexBox>
             <FlexBox $gap="5px">

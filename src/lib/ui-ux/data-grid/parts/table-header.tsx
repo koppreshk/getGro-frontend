@@ -1,18 +1,14 @@
 import styled from "styled-components";
 import { IconButton, Typography } from "@mui/material";
 import { Column, ColumnOrderState, Header, Table, flexRender } from "@tanstack/react-table";
-import { FlexBox, Icon } from "lib/ui-ux";
+import { FlexBox } from "lib/ui-ux";
 import { useDrag, useDrop } from "react-dnd";
 import DragIndicatorTwoToneIcon from '@mui/icons-material/DragIndicatorTwoTone';
-
+import { ExpandLess, ExpandMore, UnfoldMore } from '@mui/icons-material';
 interface ITableHeaderProps<T> {
     header: Header<T, unknown>;
     table: Table<T>
 }
-
-const StyledIcon = styled(Icon)`
-    color: #787f83;
-`;
 
 const Resizer = styled.div<{ $isResizing: boolean }>`
     position: absolute;
@@ -119,8 +115,8 @@ export const TableHeader = <T extends object>(props: ITableHeaderProps<T>) => {
                             )}
                         </Typography>
                         {header.column.getIsSorted() !== false
-                            ? header.column.getIsSorted() === 'asc' ? <StyledIcon className="material-symbols-outlined" iconName='expand_less' /> : <StyledIcon className="material-symbols-outlined" iconName='expand_more' />
-                            : header.column.getCanSort() ? <StyledIcon className="material-symbols-outlined" iconName='unfold_more' /> : null}
+                            ? header.column.getIsSorted() === 'asc' ? <ExpandLess /> : <ExpandMore />
+                            : header.column.getCanSort() ? <UnfoldMore /> : null}
                     </FlexBox>
                 </FlexBox>
             }

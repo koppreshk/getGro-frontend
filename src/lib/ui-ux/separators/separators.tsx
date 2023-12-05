@@ -8,9 +8,10 @@ export const VerticalSeparator = styled.span`
   background-color:  ${({ theme }) => theme.pallete.grayVariant1};
 `;
 
-export const HorizontalSeparator = styled.div`
+export const HorizontalSeparator = styled.div<{ $margin?: string }>`
   width: 100%;
   height: 1px;
   box-sizing: border-box;
+  margin: ${({ $margin }) => $margin ? $margin : 'unset'};
   background-color:  ${({ theme }) => theme.pallete.grayVariant1};
 `;
