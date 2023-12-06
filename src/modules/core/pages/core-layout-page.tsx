@@ -7,6 +7,7 @@ import { DashboardPage } from "modules/dashboard/pages"
 import { TicketsPage } from "modules/tickets/pages"
 import { CustomersPage } from "modules/customers/pages"
 import { SettingsPage } from "modules/settings/pages"
+import { Login } from "modules/login"
 
 export const CoreLayoutPage = React.memo(() => {
     return (
@@ -16,6 +17,7 @@ export const CoreLayoutPage = React.memo(() => {
                 <NavigationMenu />
                 <div style={{ width: 'calc(100% - 64px)' }}>
                     <Routes>
+                        <Route key="login" path="/login" element={<Login/>}/>
                         <Route key="root-route" path="/" element={<Navigate to="/dashboard" />} />
                         <Route key="dashboard-route" path="/dashboard" element={<DashboardPage />} />
                         <Route key="tickets" path="/tickets/*" element={<TicketsPage />} />
