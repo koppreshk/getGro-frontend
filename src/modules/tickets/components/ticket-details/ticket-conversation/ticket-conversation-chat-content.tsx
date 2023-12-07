@@ -6,7 +6,8 @@ import { ITicketConversation } from "modules/tickets/apis";
 import { getInitialsByName } from "lib/utils";
 
 const Content = styled(FlexBox) <{ $isCustomerQuery: boolean }>`
-    background-color: ${({ theme, $isCustomerQuery }) => $isCustomerQuery ? '#ffefe0' : theme.pallete.white};
+    background-color: ${({ theme, $isCustomerQuery }) => $isCustomerQuery ? theme.pallete.white : '#f3f3fd' };
+    color: ${({ theme, $isCustomerQuery }) => $isCustomerQuery ? 'unset' : theme.pallete.white };
     padding: 10px;
     border-radius: ${({ $isCustomerQuery }) => $isCustomerQuery ? '0px 6px 6px 6px' : '6px 0px 6px 6px'};
 `;
