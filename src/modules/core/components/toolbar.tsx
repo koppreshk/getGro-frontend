@@ -1,7 +1,7 @@
 import { FlexBox } from "lib/ui-ux";
 import styled from "styled-components";
 import { AccountMenu } from "./parts/account-menu";
-import GetGroLogoImg from './../../../assets/png/getgro.io logo.png';
+import GetGroLogoImg from './../../../assets/png/getgro.svg';
 
 const TopBarWrapper = styled.div`
     width: 100%;

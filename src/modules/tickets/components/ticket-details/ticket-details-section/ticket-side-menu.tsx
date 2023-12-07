@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Person, ShoppingCart, Description } from "@mui/icons-material"
+import { Person, ShoppingCart, Description, ArchiveOutlined } from "@mui/icons-material"
 import { Tooltip } from "@mui/material"
 import { FlexBox } from "lib/ui-ux";
 import { useAppSelector } from "lib/hooks";
@@ -27,7 +27,8 @@ const IconWrapper = styled(FlexBox) <{ $isSelected: boolean; $isDisabled?: boole
 export enum MenuOptions {
     CustomerProfile = 'customer-profile',
     OrderDetails = 'order-details',
-    Notes = 'notes'
+    Notes = 'notes',
+    TicketDispose = 'ticket-dispose'
 }
 
 const useSideMenuOptions = () => {
@@ -49,6 +50,11 @@ const useSideMenuOptions = () => {
             title: 'Notes',
             id: MenuOptions.Notes,
             iconComponent: () => <Description />
+        },
+        {
+            title: 'Ticket Dispose',
+            id: MenuOptions.TicketDispose,
+            iconComponent: () => <ArchiveOutlined />
         }
     ];
 }

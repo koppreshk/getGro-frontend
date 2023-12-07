@@ -5,6 +5,7 @@ import { OrderDetailsContainer } from "modules/tickets/containers";
 import { MenuOptions, TicetSideMenu } from "./ticket-side-menu";
 import { TicketOverview } from "./ticket-overview";
 import { TicketNotes } from "./ticket-notes";
+import { TicketDispose } from "./ticket-dispose";
 
 const StyledGridLayout = styled(GridLayout)`  
     background-color: ${({ theme }) => theme.pallete.white};
@@ -25,6 +26,8 @@ export const TicketDeatilsSection = () => {
                 return <OrderDetailsContainer />
             case MenuOptions.Notes:
                 return <TicketNotes />
+            case MenuOptions.TicketDispose:
+                return <TicketDispose />
             default: return <span>default</span>
         }
     }, [selectedMenuOption]);
