@@ -1,14 +1,28 @@
 import { ArrowForwardRounded } from "@mui/icons-material";
-import { Box, Button, Checkbox, FormControlLabel, Grid, Link, TextField, Typography } from "@mui/material";
+import { Box, Button, Checkbox, FormControlLabel, Grid, Link, Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
+import { useAuth } from "./hooks/use-auth";
+import { TextboxField } from "lib/form-fields";
+import { FormProvider, useForm, useFormContext } from "react-hook-form";
 
 const LoginWrapper = styled(FlexBox)`
     
 `;
 
+interface ILoginFields {
+    email: string;
+    password: string;
+}
 const LoginForm = () => {
+    const { login } = useAuth();
+    const { handleSubmit } = useFormContext<ILoginFields>();
+
+    const onSignIn = useCallback((data: ILoginFields) => {
+        login({ password: data.password, userName: data.email })
+    }, [login]);
+
     return (
         <Box sx={{ width: '100%', padding: '50px', boxSizing: 'border-box' }}>
             <form>
@@ -17,13 +31,13 @@ const LoginForm = () => {
                         <Typography variant="h2" sx={{ fontWeight: 500 }}>Login</Typography>
                     </Grid>
                     <Grid item md={12}>
-                        <TextField label="Username / Email" type="text" fullWidth />
+                        <TextboxField name="email" label="Username / Email" type="text" fullWidth rules={{ required: 'Email input required' }} />
                     </Grid>
                     <Grid item md={12}>
-                        <TextField label="Password" type="password" fullWidth />
+                        <TextboxField name="password" label="Password" type="password" fullWidth rules={{ required: 'Password is required' }} />
                     </Grid>
                     <Grid item md={12}>
-                        <Button variant="contained" fullWidth size="large" endIcon={<ArrowForwardRounded />}>Sign in</Button>
+                        <Button onClick={handleSubmit(onSignIn)} variant="contained" fullWidth size="large" endIcon={<ArrowForwardRounded />}>Sign in</Button>
                     </Grid>
                 </Grid>
                 <Grid item md={12}>
@@ -44,13 +58,16 @@ const LoginForm = () => {
 }
 
 export const Login = React.memo(() => {
+    const formValues = useForm();
     return (
         <LoginWrapper $height="100%" $width="100%">
             <FlexBox $width="60%">
 
             </FlexBox>
             <FlexBox $width="40%">
-                <LoginForm />
+                <FormProvider {...formValues}>
+                    <LoginForm />
+                </FormProvider>
             </FlexBox>
         </LoginWrapper>
     )
