@@ -2,11 +2,12 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { CoreLayoutPage } from "./modules/core/pages/core-layout-page";
+import { CoreLayoutBase } from "./modules/core/pages/core-layout-page";
 import { ThemeProvider, defaultMUITheme } from "themes";
 import { ThemeProvider as MUIthemeProvider } from "@mui/material";
 import { NotificationProvider, ServiceClientProvider } from "lib";
 import ticketsReducer from './modules/tickets/storage/tickets-slice';
+import { AuthProvider } from "modules/login/auth-provider-context";
 
 const store = configureStore({
   reducer: {
@@ -30,7 +31,9 @@ export default function App() {
             <NotificationProvider>
               <BrowserRouter>
                 <ThemeProvider>
-                  <CoreLayoutPage />
+                  <AuthProvider>
+                    <CoreLayoutBase />
+                  </AuthProvider>
                 </ThemeProvider>
               </BrowserRouter>
             </NotificationProvider>
