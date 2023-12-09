@@ -6,10 +6,7 @@ import GetGroLogoImg from './../../../assets/png/getgro.io logo.png';
 const TopBarWrapper = styled.div`
     width: 100%;
     background-color: #ffff;
-    border-style: solid;
-    border-color: #E5EAF2;
-    border-width: 0;
-    border-bottom-width: thin;
+    border-bottom: ${({ theme }) => theme.semantics.standardBorder};
 `;
 
 const TopBar = styled(FlexBox)`

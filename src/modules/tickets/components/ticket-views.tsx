@@ -17,14 +17,14 @@ const ViewsWrapper = styled(FlexBox)`
 
 const Wrapper = styled.div<{ $isOptionSelected: boolean }>`
 :hover {
-        background: ${(props) => props.theme.pallete.powderBlue};
+        background: ${(props) => props.theme.pallete.purpleLight};
     }
     ${({ $isOptionSelected }) => $isOptionSelected ? css`
-    background-color: ${(props) => props.theme.pallete.powderBlue};
-    color:  ${(props) => props.theme.pallete.blue};
+    background-color: ${(props) => props.theme.pallete.purpleLight};
+    color:  ${(props) => props.theme.pallete.primaryPurple};
     border-right-width: 4px;
     border-style: solid;
-    border-color: ${(props) => props.theme.pallete.blue};
+    border-color: ${(props) => props.theme.pallete.primaryPurple};
     border-width: 0;
     border-right-width: thick;
   ` : css`

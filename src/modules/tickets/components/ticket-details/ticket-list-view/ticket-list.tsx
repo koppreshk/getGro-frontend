@@ -22,10 +22,10 @@ const TicketWrapper = styled(FlexBox) <{ $isTicketActive: boolean }>`
     cursor: pointer;
 
     ${({ $isTicketActive }) => $isTicketActive && css`
-        background-color: ${(props) => props.theme.pallete.powderBlue};
+        background-color: ${(props) => props.theme.pallete.purpleLight};
         border-left-width: 4px;
         border-style: solid;
-        border-color: ${(props) => props.theme.pallete.blue};
+        border-color: ${(props) => props.theme.pallete.primaryPurple};
         border-width: 0;
         border-left-width: thick;
     `}
