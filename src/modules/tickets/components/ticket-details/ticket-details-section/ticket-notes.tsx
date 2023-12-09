@@ -2,17 +2,20 @@ import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { useState } from "react";
 import styled from "styled-components";
 import ReactQuill from "react-quill";
-import { Button, Typography } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import { Save } from "@mui/icons-material";
 
 const InnreHTML = styled.div`
-    height: 75%;
+    height: calc(100% - 265px);
+    overflow: auto;
+    max-height: 580px;
 `;
 
 const EditorContainer = styled.div`
-    width: calc(100% - 77px);
+    width: 100%;
    
     .ql-container {
+        height: 180px;
         max-height: 200px;
         overflow: auto;
     }
@@ -36,12 +39,12 @@ export const TicketNotes = () => {
             <HorizontalSeparator $margin="10px 0px" />
 
             {savedState.length === 0 ?
-                <FlexBox $alignItems="center" $height="75%" $justifyContent="center">No notes present</FlexBox>
+                <FlexBox $alignItems="center" $height="calc(100% - 265px);" $justifyContent="center">No notes present</FlexBox>
                 : null}
 
             <InnreHTML dangerouslySetInnerHTML={{ __html: savedState }} />
 
-            <FlexBox $gap="10px" $width="100%" $alignItems="center">
+            <FlexBox $gap="10px" $width="100%" $alignItems="center" style={{ position: 'relative' }}>
                 <EditorContainer>
                     <ReactQuill
                         theme="snow"
@@ -50,9 +53,9 @@ export const TicketNotes = () => {
                         preserveWhitespace
                         onChange={onChange} />
                 </EditorContainer>
-                <Button variant="contained" endIcon={<Save />} onClick={onSaveClick} size="small" sx={{ height: '40px' }}>
-                    Save
-                </Button>
+                <IconButton aria-label="First" onClick={onSaveClick} color="primary" sx={{position: 'absolute', top: '1px', right: '0px'}}>
+                    <Save />
+                </IconButton>
             </FlexBox>
         </FlexBox>
     )

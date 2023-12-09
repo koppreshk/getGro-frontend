@@ -1,12 +1,7 @@
 import React, { useState } from "react";
-import styled from "styled-components"
 import { Avatar, Divider, IconButton, ListItemIcon, Menu, MenuItem } from "@mui/material"
-import { Icon } from "lib/ui-ux"
 import { useAuth } from "modules/login/hooks/use-auth";
-
-const StyledIcon = styled(Icon)`
-    color: grey;
-`;
+import { AccountCircle, Settings, Logout } from '@mui/icons-material';
 
 export const AccountMenu = () => {
     const [anchor, setAnchor] = useState<unknown>(null);
@@ -32,20 +27,20 @@ export const AccountMenu = () => {
             <Menu open={Boolean(anchor)} onClose={handleClose} anchorEl={anchor as Element} slotProps={{ paper: { sx: { width: '200px' } } }}>
                 <MenuItem >
                     <ListItemIcon>
-                        <StyledIcon className="material-symbols-outlined" iconName="account_circle" />
+                        <AccountCircle />
                     </ListItemIcon>
                     User Profile
                 </MenuItem>
                 <MenuItem >
                     <ListItemIcon>
-                        <StyledIcon className="material-symbols-outlined" iconName="settings" />
+                        <Settings />
                     </ListItemIcon>
                     Settings
                 </MenuItem>
                 <Divider />
                 <MenuItem onClick={onLogout}>
                     <ListItemIcon>
-                        <StyledIcon className="material-symbols-outlined" iconName="logout" />
+                        <Logout />
                     </ListItemIcon>
                     Logout
                 </MenuItem>
