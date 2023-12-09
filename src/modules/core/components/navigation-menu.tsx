@@ -21,7 +21,7 @@ const MenuWrapper = styled.div`
     width: 64px;
     background-color: #ffff;
     height: 100%;
-    border-right: 1px solid #E5EAF2;
+    border-right: ${({ theme }) => theme.semantics.standardBorder};
 `;
 
 const PrimaryOptionsWrapper = styled(FlexBox)`
@@ -29,23 +29,23 @@ const PrimaryOptionsWrapper = styled(FlexBox)`
 `;
 
 const primaryOptions = [{
-    iconComponent: () => <HomeOutlined/>,
+    iconComponent: () => <HomeOutlined />,
     primaryKey: 'dashboard',
     route: 'dashboard',
     title: 'Dashboard'
 },
 {
-    iconComponent: () => <TaskOutlined sx={{}} width='32px' height='32px'/>,
+    iconComponent: () => <TaskOutlined sx={{}} width='32px' height='32px' />,
     primaryKey: 'tickets',
     route: 'tickets',
     title: 'Tickets'
 }, {
-    iconComponent: () => <GroupOutlined/>,
+    iconComponent: () => <GroupOutlined />,
     primaryKey: 'customers',
     route: 'customers',
     title: 'Customers'
 }, {
-    iconComponent: () => <SettingsOutlined/>,
+    iconComponent: () => <SettingsOutlined />,
     primaryKey: 'settings',
     route: 'settings',
     title: 'Settings'
@@ -53,13 +53,13 @@ const primaryOptions = [{
 
 const IconWrapper = styled(FlexBox) <{ $isOptionsSelected: boolean }>`
     ${({ $isOptionsSelected }) => $isOptionsSelected ? css`
-    background-color: #e4f0fd;
-    color: #1976d2;
-    /* background-color: rgba(209, 209, 247, .25);
-    color: #6969ff; */
+    /* background-color: #e4f0fd;
+    color: #1976d2; */
+    background-color: ${({ theme }) => theme.pallete.purpleLight};
+    color: ${({ theme }) => theme.pallete.primaryPurple};
     `: css`
     background-color: unset;
-    color: #787f83;
+    color: ${({ theme }) => theme.pallete.grayNeutral};
     `};
     height: 40px;
     width: 40px;

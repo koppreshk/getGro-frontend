@@ -16,7 +16,9 @@ declare module 'styled-components' {
       grayVariant4: string,
       grayVariant5: string,
       grayVariant6: string,
-      purple: string,
+      primaryPurple: string,
+      purpleLight: string,
+      grayNeutral: string
     },
     semantics: {
       standardBorder: string;

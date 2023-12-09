@@ -1,16 +1,22 @@
 import React, { useState } from "react";
 import { Avatar, Divider, IconButton, ListItemIcon, Menu, MenuItem } from "@mui/material"
+import { useAuth } from "modules/login/hooks/use-auth";
 import { AccountCircle, Settings, Logout } from '@mui/icons-material';
 
 export const AccountMenu = () => {
     const [anchor, setAnchor] = useState<unknown>(null);
-
+    const { logout } = useAuth();
     const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchor(event.currentTarget);
     };
 
     const handleClose = () => {
         setAnchor(null);
+    }
+
+    const onLogout = () => {
+        logout();
+        handleClose()
     }
 
     return (
@@ -32,7 +38,7 @@ export const AccountMenu = () => {
                     Settings
                 </MenuItem>
                 <Divider />
-                <MenuItem >
+                <MenuItem onClick={onLogout}>
                     <ListItemIcon>
                         <Logout />
                     </ListItemIcon>
