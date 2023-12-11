@@ -78,7 +78,7 @@ const useColumns = () => {
                         return <WhatsApp sx={{ fill: theme.channelSpecific.whatsApp + '!important' }} />
                     case 'twitter':
                         return <Twitter sx={{ fill: theme.channelSpecific.twitter + '!important' }} />
-                    case 'telephone':
+                    case 'telephonic':
                         return <LocalPhone sx={{ fill: theme.channelSpecific.telephone + '!important' }} />
                     case 'instagram':
                         return <Instagram sx={{ fill: theme.channelSpecific.instagram + '!important' }} />

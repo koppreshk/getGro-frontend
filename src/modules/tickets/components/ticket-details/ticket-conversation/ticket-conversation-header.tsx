@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Typography } from "@mui/material"
 import { HeaderWrapper } from "../ticket-list-view"
 import { FlexBox } from "lib/ui-ux"
+import { ITicketDetails } from "modules/tickets/apis";
 
 export const Platform = styled(Typography) <{ $platform: string }>`
    && {
@@ -15,7 +16,7 @@ export const Platform = styled(Typography) <{ $platform: string }>`
                 return theme.channelSpecific.whatsApp
             case 'twitter':
                 return theme.channelSpecific.twitter
-            case 'telephone':
+            case 'telephonic':
                 return theme.channelSpecific.telephone
             case 'instagram':
                 return theme.channelSpecific.instagram
@@ -29,13 +30,14 @@ export const Platform = styled(Typography) <{ $platform: string }>`
    }
 `;
 
-export const TicketConversationHeader = () => {
+export const TicketConversationHeader = (props: { ticketDetailsById: ITicketDetails | undefined }) => {
+    const { ticketDetailsById } = props;
     return (
         <HeaderWrapper $width="100%" $flexDirection="column">
             <Typography variant="h6">Conversations</Typography>
             <FlexBox $gap="5px">
-                <Typography variant="body2">with Tilly Moughton via</Typography>
-                <Platform variant="body2" $platform={'facebook'}>facebook</Platform>
+                <Typography variant="body2">with {ticketDetailsById?.customerName ? ticketDetailsById.customerName + ' via' : 'Tilly Moughton via'}</Typography>
+                <Platform variant="body2" $platform={ticketDetailsById?.source.toLocaleLowerCase() ?? ''}>{ticketDetailsById?.source}</Platform>
             </FlexBox>
         </HeaderWrapper>
     )
