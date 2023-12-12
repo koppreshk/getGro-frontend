@@ -36,7 +36,7 @@ export const TicketConversationHeader = (props: { ticketDetailsById: ITicketDeta
         <HeaderWrapper $width="100%" $flexDirection="column">
             <Typography variant="h6">Conversations</Typography>
             <FlexBox $gap="5px">
-                <Typography variant="body2">with {ticketDetailsById?.customerName ? ticketDetailsById.customerName + ' via' : 'Tilly Moughton via'}</Typography>
+                <Typography variant="body2">with {ticketDetailsById?.customerName ? ticketDetailsById.customerName + ' via' : 'Siddarth Menon via'}</Typography>
                 <Platform variant="body2" $platform={ticketDetailsById?.source.toLocaleLowerCase() ?? ''}>{ticketDetailsById?.source}</Platform>
             </FlexBox>
         </HeaderWrapper>

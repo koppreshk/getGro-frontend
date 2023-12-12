@@ -9,8 +9,8 @@ const LayoutWrapper = styled(FlexBox)`
 
 export const EmailConversationLayout = () => {
     return (
-        <LayoutWrapper $flexDirection="column">
-            <Typography variant="h5">Subject goes here</Typography>
+        <LayoutWrapper $flexDirection="column" $gap="10px" $width="100%" $height="calc(100% - 84px);">
+            <Typography variant="h5">Subject: My order is delayed</Typography>
             <EmailConversations />
         </LayoutWrapper>
     )
