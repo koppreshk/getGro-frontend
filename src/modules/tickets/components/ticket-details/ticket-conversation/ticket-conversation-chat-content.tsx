@@ -6,10 +6,13 @@ import { ITicketConversation } from "modules/tickets/apis";
 import { getInitialsByName } from "lib/utils";
 
 const Content = styled(FlexBox) <{ $isCustomerQuery: boolean }>`
-    background-color: ${({ theme, $isCustomerQuery }) => $isCustomerQuery ? theme.pallete.white : '#f3f3fd' };
-    color: ${({ theme, $isCustomerQuery }) => $isCustomerQuery ? 'unset' : theme.pallete.white };
+    background-color: ${({ theme, $isCustomerQuery }) => $isCustomerQuery ? theme.pallete.white : theme.pallete.primaryPurple };
     padding: 10px;
     border-radius: ${({ $isCustomerQuery }) => $isCustomerQuery ? '0px 6px 6px 6px' : '6px 0px 6px 6px'};
+
+    .MuiTypography-body2 {
+        color: ${({ theme, $isCustomerQuery }) => $isCustomerQuery ? 'unset' : theme.pallete.white };
+    }
 `;
 
 const animateClient = css`
@@ -77,7 +80,7 @@ export const TicketConversationChatContent = (props: IChatContentProps) => {
         <Wrapper $gap="10px" $alignItems="center" ref={containerRef} $isCustomerQuery={isCustomerQuery} $flexDirection={isCustomerQuery ? 'row' : 'row-reverse'}>
             <Avatar>{getInitialsByName(isCustomerQuery ? customerName : agentName)}</Avatar>
             <Content $isCustomerQuery={isCustomerQuery} $maxWidth="50%">
-                <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>
+                <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }} >
                     {query}
                 </Typography>
             </Content>

@@ -6,8 +6,6 @@ import { ITicketConversationLayoutProps } from "./ticket-conversation-layout";
 import { TicketConversationFooter } from "./ticket-conversation-footer";
 import { TicketConversationChatContent } from "./ticket-conversation-chat-content";
 
-
-
 const Container = styled(FlexBox)`
 	background: ${() => {
         const dotBg = '#f8f8fc';
