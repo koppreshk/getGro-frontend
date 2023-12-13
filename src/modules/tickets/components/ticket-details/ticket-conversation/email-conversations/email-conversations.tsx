@@ -1,5 +1,6 @@
 import { FlexBox } from "lib/ui-ux";
-import { EmailCard } from "./email-card";
+import { EmailCard, IEmailThreadProps } from "./email-card";
+import { useCallback, useState } from "react";
 
 const emailConversations = [{
     emailHTMLContent: `
@@ -7,7 +8,8 @@ const emailConversations = [{
     `,
     from: 'Siddarth Menon',
     fromEmail: 'siddarth.menon@gmail.com',
-    createdDate: '2023-12-12T08:51:28.132Z'
+    createdDate: '2023-12-12T08:51:28.132Z',
+    threadId: '100'
 }, {
     emailHTMLContent: `<div id=":1pw" class="ii gt adO" jslog="20277; u014N:xr6bB; 1:WyIjdGhyZWFkLWY6MTc4NDk3ODA4NjA2MDUyMzAwMiJd; 4:WyIjbXNnLWE6ci0zODQ3ODgwMDA0OTMxNDA5NzgzIl0.">
     <div id=":1pu" class="a3s aiL ">
@@ -17,13 +19,22 @@ const emailConversations = [{
     </div></div></div></div>`,
     from: 'Koppresh Putpak',
     fromEmail: 'koppresh@gmail.com',
-    createdDate: '2023-10-17T15:45:30.715Z'
+    createdDate: '2023-10-17T15:45:30.715Z',
+    threadId: '101'
 }]
 
 export const EmailConversations = () => {
+    const [emailThreads, setEmailThreads] = useState(emailConversations);
+
+    const onSend = useCallback((args: IEmailThreadProps, linkedThreadId: string) => {
+        const clonedEmailThreads = emailThreads.slice()
+        clonedEmailThreads.splice(emailThreads.findIndex((item) => item.threadId === linkedThreadId) + 1, 0, args)
+        setEmailThreads(clonedEmailThreads);
+    }, [emailThreads])
+
     return (
         <FlexBox $width="100%" $height="calc(100% - 32px)" $flexDirection="column" $gap="20px" $overflowY="auto">
-            {emailConversations.map((singleEmail, index) => <EmailCard key={index} emailProps={singleEmail} />)}
+            {emailThreads.map((singleEmail, index) => <EmailCard key={index} emailProps={singleEmail} onSend={onSend} />)}
         </FlexBox>
     )
 }
