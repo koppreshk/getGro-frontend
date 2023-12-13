@@ -2,7 +2,7 @@ import React from "react"
 import { NavigationMenu } from "../components"
 import { Toolbar } from "../components/toolbar"
 import { FlexBox } from "lib/ui-ux"
-import { Routes, Route, useNavigate } from "react-router-dom"
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom"
 import { DashboardPage } from "modules/dashboard/pages"
 import { TicketsPage } from "modules/tickets/pages"
 import { CustomersPage } from "modules/customers/pages"
@@ -46,13 +46,14 @@ const CoreLayoutPage = React.memo(() => {
 export const CoreLayoutBase = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
 
     React.useEffect(() => {
         if (!user) {
             navigate('/login', { replace: true })
         }
         else {
-            navigate('/dashboard', { replace: true })
+            navigate(location.pathname ?? '/dashboard', { replace: true })
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
