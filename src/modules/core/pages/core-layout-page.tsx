@@ -51,6 +51,9 @@ export const CoreLayoutBase = () => {
         if (!user) {
             navigate('/login', { replace: true })
         }
+        else {
+            navigate('/dashboard', { replace: true })
+        }
     }, [navigate, user])
 
     return (
