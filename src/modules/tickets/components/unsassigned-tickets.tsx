@@ -8,6 +8,7 @@ import { DataGrid } from "lib/ui-ux"
 import { ITicketDetails } from "../apis";
 import { useAppDispatch } from "lib/hooks";
 import { setTotalPages } from "../storage";
+import { getFormattedDate } from "lib/utils";
 
 interface IUnassignedTicketsProps {
     data: ITicketDetails[];
@@ -94,6 +95,12 @@ const useColumns = () => {
             header: () => 'Ticket Status',
             id: 'ticketStatus',
             cell: info => info.renderValue(),
+            minSize: 240
+        }),
+        columnHelper.accessor('createdAt', {
+            header: () => 'Created At',
+            id: 'createdDate',
+            cell: info => getFormattedDate(info.getValue()!),
             minSize: 240
         }),
         columnHelper.accessor('ticketSubStatus', {

@@ -32,6 +32,7 @@
     "styled-components": "^6.0.8"
   },
   "devDependencies": {
+    "@types/luxon": "^3.3.7",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@types/react-window": "^1.8.7",

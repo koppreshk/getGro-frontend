@@ -10,7 +10,7 @@ export interface ITicketDetails {
     customerName: string;
     ticketStatus: string;
     ticketSubStatus: string;
-    createdDate: string;
+    createdAt: string;
     priority: string;
 }
 
