@@ -54,7 +54,8 @@ export const CoreLayoutBase = () => {
         else {
             navigate('/dashboard', { replace: true })
         }
-    }, [navigate, user])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <Routes>
