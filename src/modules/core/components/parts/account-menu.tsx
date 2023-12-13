@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Avatar, Divider, IconButton, ListItemIcon, Menu, MenuItem } from "@mui/material"
-import { useAuth } from "modules/login/hooks/use-auth";
 import { AccountCircle, Settings, Logout } from '@mui/icons-material';
+import { useAuth } from "modules/login";
+import { getInitialsByName } from "lib/utils";
 
 export const AccountMenu = () => {
     const [anchor, setAnchor] = useState<unknown>(null);
-    const { logout } = useAuth();
+    const { logout, user } = useAuth();
     const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchor(event.currentTarget);
     };
@@ -22,7 +23,7 @@ export const AccountMenu = () => {
     return (
         <>
             <IconButton onClick={handleOpen}>
-                <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+                <Avatar sx={{ width: 32, height: 32 }}>{getInitialsByName(user?.userName || 'M')}</Avatar>
             </IconButton>
             <Menu open={Boolean(anchor)} onClose={handleClose} anchorEl={anchor as Element} slotProps={{ paper: { sx: { width: '200px' } } }}>
                 <MenuItem >

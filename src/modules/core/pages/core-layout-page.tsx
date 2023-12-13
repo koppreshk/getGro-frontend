@@ -8,8 +8,7 @@ import { TicketsPage } from "modules/tickets/pages"
 import { CustomersPage } from "modules/customers/pages"
 import { SettingsPage } from "modules/settings/pages"
 import { ProtectedRoute } from "modules/login/protected-route"
-import { Login } from "modules/login"
-import { useAuth } from "modules/login/hooks/use-auth"
+import { Login, useAuth } from "modules/login"
 
 const CoreLayoutPage = React.memo(() => {
     return (

@@ -17,7 +17,7 @@ export const Platform = styled(Typography) <{ $platform: string }>`
             case 'twitter':
                 return theme.channelSpecific.twitter
             case 'telephonic':
-                return theme.channelSpecific.telephone
+                return theme.channelSpecific.telephonic
             case 'instagram':
                 return theme.channelSpecific.instagram
             case 'sms':

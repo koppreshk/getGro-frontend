@@ -29,7 +29,7 @@ declare module 'styled-components' {
       whatsApp: string,
       instagram: string,
       twitter: string,
-      telephone: string,
+      telephonic: string,
       sms: string
     }
     others: {

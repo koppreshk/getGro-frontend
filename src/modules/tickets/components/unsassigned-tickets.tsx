@@ -8,6 +8,7 @@ import { DataGrid } from "lib/ui-ux"
 import { ITicketDetails } from "../apis";
 import { useAppDispatch } from "lib/hooks";
 import { setTotalPages } from "../storage";
+import { getFormattedDate } from "lib/utils";
 
 interface IUnassignedTicketsProps {
     data: ITicketDetails[];
@@ -79,7 +80,7 @@ const useColumns = () => {
                     case 'twitter':
                         return <Twitter sx={{ fill: theme.channelSpecific.twitter + '!important' }} />
                     case 'telephonic':
-                        return <LocalPhone sx={{ fill: theme.channelSpecific.telephone + '!important' }} />
+                        return <LocalPhone sx={{ fill: theme.channelSpecific.telephonic + '!important' }} />
                     case 'instagram':
                         return <Instagram sx={{ fill: theme.channelSpecific.instagram + '!important' }} />
                     case 'sms':
@@ -94,6 +95,12 @@ const useColumns = () => {
             header: () => 'Ticket Status',
             id: 'ticketStatus',
             cell: info => info.renderValue(),
+            minSize: 240
+        }),
+        columnHelper.accessor('createdAt', {
+            header: () => 'Created At',
+            id: 'createdAt',
+            cell: info => getFormattedDate(info.getValue()!),
             minSize: 240
         }),
         columnHelper.accessor('ticketSubStatus', {

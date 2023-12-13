@@ -2,7 +2,13 @@ import { createContext, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "./hooks/use-local-storage";
 
-export const AuthContext = createContext({
+type User = {
+    user: null | { userName: string, password: string }
+    login: (_data: { userName: string, password: string }) => Promise<any>,
+    logout: () => void
+};
+
+export const AuthContext = createContext<User>({
     user: null,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     login: (_data: { userName: string, password: string }) => new Promise((res) => res('')),
