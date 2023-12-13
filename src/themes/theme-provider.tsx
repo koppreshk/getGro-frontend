@@ -26,7 +26,7 @@ const defaultTheme: DefaultTheme = {
         whatsApp: '#25d366',
         instagram: '#d62976',
         twitter: '#00acee',
-        telephone: '#00c2ff',
+        telephonic: '#00c2ff',
         sms: '#ffb800s'
     },
     others: {

@@ -5,6 +5,7 @@ import { Avatar, Typography } from "@mui/material"
 import { Facebook, Email, WhatsApp, Twitter, LocalPhone, Instagram, Sms } from "@mui/icons-material";
 import { FlexBox } from "lib/ui-ux"
 import { ITicketDetails } from "modules/tickets/apis";
+import { getFormattedDate } from "lib/utils";
 
 interface ITicketListProps {
     data: ITicketDetails[];
@@ -39,7 +40,7 @@ export const TicketList = (props: ITicketListProps) => {
     const { data } = props;
 
     const ticketViewDetails = data.map((item) => (
-        <TicketDetails createdDate={item.createdDate}
+        <TicketDetails createdAt={item.createdAt}
             customerName={item.customerName}
             priority={item.priority}
             ticketId={item.ticketId}
@@ -64,7 +65,7 @@ const rendersourceIcon = (source: string) => {
             return <WhatsApp sx={{ fill: '#25d366 !important' }} />
         case 'twitter':
             return <Twitter sx={{ fill: '#00acee !important' }} />
-        case 'telephone':
+        case 'telephonic':
             return <LocalPhone sx={{ fill: '#00c2ff !important' }} />
         case 'instagram':
             return <Instagram sx={{ fill: '#d62976 !important' }} />
@@ -75,11 +76,11 @@ const rendersourceIcon = (source: string) => {
     }
 }
 
-interface ITicketDetailsProps extends Pick<ITicketDetails, 'source' | 'ticketId' | 'customerName' | 'ticketStatus' | 'ticketSubStatus' | 'createdDate' | 'priority'> {
+interface ITicketDetailsProps extends Pick<ITicketDetails, 'source' | 'ticketId' | 'customerName' | 'ticketStatus' | 'ticketSubStatus' | 'createdAt' | 'priority'> {
 }
 
 const TicketDetails = (props: ITicketDetailsProps) => {
-    const { createdDate, customerName, ticketId, source } = props;
+    const { createdAt, customerName, ticketId, source } = props;
     const params = useParams();
     const navigate = useNavigate();
     const match = useMatch(`/tickets/:ticketType/:ticketId`);
@@ -105,9 +106,9 @@ const TicketDetails = (props: ITicketDetailsProps) => {
             <TicketDetailsSectionRight $flexDirection="column" $gap="6px">
                 <FlexBox $justifyContent="space-between">
                     <Typography variant="h6" fontSize="16px">{customerName}</Typography>
-                    <Typography variant="body2">{createdDate}</Typography>
+                    <Typography variant="body2">{getFormattedDate(createdAt)}</Typography>
                 </FlexBox>
-                <Typography variant="body2">Hellow victoria thak u for contacting...</Typography>
+                <Typography variant="body2">Hellow victoria thank you for contacting...</Typography>
                 <FlexBox $flexDirection="row" $gap="10px" $alignItems="center">
                     <>
                         {rendersourceIcon(source)}
