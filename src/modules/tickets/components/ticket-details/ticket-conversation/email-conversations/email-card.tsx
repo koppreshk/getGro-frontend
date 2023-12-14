@@ -32,7 +32,7 @@ const SubTextValue = styled(Typography)`
 
 const EditorContainer = styled(FlexBox)`
     .quill {
-        width: inherit;
+        width: calc(100% - 50px);
         display: flex;
         flex-direction: column;
     }
