@@ -1,5 +1,5 @@
 import { ArrowForwardRounded } from "@mui/icons-material";
-import { Box, Button, Checkbox, FormControlLabel, Grid, Link, Typography } from "@mui/material";
+import { Box, Button, FormControlLabel, Grid, Link, Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import React, { useCallback } from "react";
 import styled from "styled-components";
@@ -8,9 +8,11 @@ import { TextboxField } from "lib/form-fields";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import LoginImage from '../../assets/png/getgro-login-illus.png';
 import GetGroLogoImg from '../../assets/png/getGroLogoWname.png';
+import { CheckboxField } from "lib/form-fields/checkbox-field";
 
 interface ILoginFields {
     email: string;
+    rememberMe: boolean;
     password: string;
 }
 
@@ -38,7 +40,7 @@ const LoginForm = () => {
     const { handleSubmit } = useFormContext<ILoginFields>();
 
     const onSignIn = useCallback((data: ILoginFields) => {
-        login({ password: data.password, userName: data.email })
+        login({ password: data.password, userName: data.email, rememberMe: data.rememberMe })
     }, [login]);
 
     return (
@@ -66,7 +68,7 @@ const LoginForm = () => {
                     <FlexBox $justifyContent="space-between" $alignItems="center">
                         <FormControlLabel
                             value="end"
-                            control={<Checkbox />}
+                            control={<CheckboxField name="rememberMe" />}
                             label="Remember me"
                             labelPlacement="end"
                         />
@@ -80,7 +82,13 @@ const LoginForm = () => {
 }
 
 export const Login = React.memo(() => {
-    const formValues = useForm();
+    const formValues = useForm<ILoginFields>({
+        defaultValues: {
+            email: '',
+            password: '',
+            rememberMe: false
+        }
+    });
     return (
         <FlexBox $height="100%" $width="100%">
 

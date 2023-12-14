@@ -1,17 +1,17 @@
 import { createContext, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { useLocalStorage } from "./hooks/use-local-storage";
+import { clearCookies, useCookieStorage } from "./hooks/use-cookie-storage";
 
 type User = {
     user: null | { userName: string, password: string }
-    login: (_data: { userName: string, password: string }) => Promise<any>,
+    login: (_data: { userName: string, password: string, rememberMe?: boolean }) => Promise<any>,
     logout: () => void
 };
 
 export const AuthContext = createContext<User>({
     user: null,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    login: (_data: { userName: string, password: string }) => new Promise((res) => res('')),
+    login: (_data: { userName: string, password: string, rememberMe?: boolean }) => new Promise((res) => res('')),
     logout: () => { }
 });
 
@@ -21,20 +21,20 @@ interface IAuthProviderProps {
 
 export const AuthProvider = (props: IAuthProviderProps) => {
     const { children } = props;
-    const [user, setUser] = useLocalStorage("user", null);
+    const [user, setUser] = useCookieStorage("GET_GRO_AUTH", null);
     const navigate = useNavigate();
 
     // call this function when you want to authenticate the user
-    const login = useCallback(async (data: { userName: string, password: string }) => {
-        setUser(data);
+    const login = useCallback(async (data: { userName: string, password: string, rememberMe?: boolean }) => {
+        setUser(data, 14, data.rememberMe);
         navigate("/dashboard", { replace: true });
     }, [navigate, setUser]);
 
     // call this function to sign out logged in user
     const logout = useCallback(() => {
-        setUser(null);
+        clearCookies();
         navigate("/login", { replace: true });
-    }, [navigate, setUser]);
+    }, [navigate]);
 
     const value = useMemo(() => ({
         user,
