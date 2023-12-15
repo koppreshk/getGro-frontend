@@ -24,7 +24,7 @@ const HomePage = React.memo(() => {
     )
 })
 
-export const CoreLayoutBase = () => {
+export const CoreLayout = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
@@ -34,7 +34,7 @@ export const CoreLayoutBase = () => {
             navigate('/login')
         }
         else {
-            navigate(location.pathname + location.search ?? '/dashboard')
+            navigate(location.pathname === '/' ? '/dashboard' : location.pathname + location.search)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])

@@ -2,7 +2,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { CoreLayoutBase } from "./modules/core/pages/core-layout-page";
+import { CoreLayout } from "./modules/core/pages/core-layout-page";
 import { ThemeProvider, defaultMUITheme } from "themes";
 import { ThemeProvider as MUIthemeProvider } from "@mui/material";
 import { NotificationProvider, ServiceClientProvider } from "lib";
@@ -32,7 +32,7 @@ export default function App() {
               <BrowserRouter>
                 <ThemeProvider>
                   <AuthProvider>
-                    <CoreLayoutBase />
+                    <CoreLayout />
                   </AuthProvider>
                 </ThemeProvider>
               </BrowserRouter>
