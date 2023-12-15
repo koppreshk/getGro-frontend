@@ -2,7 +2,7 @@ import React from "react"
 import { NavigationMenu } from "../components"
 import { Toolbar } from "../components/toolbar"
 import { FlexBox } from "lib/ui-ux"
-import { Routes, Route, useNavigate, useLocation, Outlet } from "react-router-dom"
+import { Routes, Route, useNavigate, useLocation, Outlet, Navigate } from "react-router-dom"
 import { DashboardPage } from "modules/dashboard/pages"
 import { TicketsPage } from "modules/tickets/pages"
 import { CustomersPage } from "modules/customers/pages"
@@ -30,11 +30,8 @@ export const CoreLayout = () => {
     const location = useLocation();
 
     React.useEffect(() => {
-        if (!user) {
-            navigate('/login')
-        }
-        else {
-            navigate(location.pathname === '/' ? '/dashboard' : location.pathname + location.search)
+        if (user && location.pathname === '/login') {
+            navigate('/dashboard', { replace: true })
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -43,6 +40,10 @@ export const CoreLayout = () => {
         <Routes>
             <Route element={<ProtectedRoute />}>
                 <Route key="root" path="/" element={<HomePage />} >
+                    <Route
+                        key="redirect-route"
+                        path="/"
+                        element={<Navigate to='/dashboard' />} />
                     <Route
                         key="dashboard-route"
                         path="dashboard"
