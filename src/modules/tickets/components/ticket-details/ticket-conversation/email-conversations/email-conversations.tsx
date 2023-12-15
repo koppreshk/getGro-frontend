@@ -1,6 +1,7 @@
 import { FlexBox } from "lib/ui-ux";
 import { EmailCard, IEmailThreadProps } from "./email-card";
 import { useCallback, useState } from "react";
+import styled from "styled-components";
 
 const emailConversations = [{
     emailHTMLContent: `
@@ -8,6 +9,7 @@ const emailConversations = [{
     `,
     from: 'Siddarth Menon',
     fromEmail: 'siddarth.menon@gmail.com',
+    toEmail: 'koppresh@gmail.com',
     createdDate: '2023-12-12T08:51:28.132Z',
     threadId: '100'
 }, {
@@ -19,22 +21,34 @@ const emailConversations = [{
     </div></div></div></div>`,
     from: 'Koppresh Putpak',
     fromEmail: 'koppresh@gmail.com',
+    toEmail: 'siddarth.menon@gmail.com',
     createdDate: '2023-10-17T15:45:30.715Z',
     threadId: '101'
 }]
 
-export const EmailConversations = () => {
+// function strip(html: string) {
+//     const doc = new DOMParser().parseFromString(html, 'text/html');
+//     return doc.body.textContent || "";
+// }
+
+const EmailConversationsContainer = styled(FlexBox)`
+  div:last-child {
+    border-bottom: none;
+  }  
+`;
+
+export const EmailConversations = (props: { subject: string }) => {
     const [emailThreads, setEmailThreads] = useState(emailConversations);
 
-    const onSend = useCallback((args: IEmailThreadProps, linkedThreadId: string) => {
+    const onSend = useCallback((args: Omit<IEmailThreadProps, 'subject'>, linkedThreadId: string) => {
         const clonedEmailThreads = emailThreads.slice()
         clonedEmailThreads.splice(emailThreads.findIndex((item) => item.threadId === linkedThreadId) + 1, 0, args)
         setEmailThreads(clonedEmailThreads);
     }, [emailThreads])
 
     return (
-        <FlexBox $width="100%" $height="calc(100% - 32px)" $flexDirection="column" $gap="20px" $overflowY="auto">
-            {emailThreads.map((singleEmail, index) => <EmailCard key={index} emailProps={singleEmail} onSend={onSend} />)}
-        </FlexBox>
+        <EmailConversationsContainer $width="100%" $height="calc(100% - 32px)" $flexDirection="column" $gap="20px" $overflowY="auto">
+            {emailThreads.map((singleEmail, index) => <EmailCard key={index} emailProps={{ ...singleEmail, subject: props.subject }} onSend={onSend} />)}
+        </EmailConversationsContainer>
     )
 }

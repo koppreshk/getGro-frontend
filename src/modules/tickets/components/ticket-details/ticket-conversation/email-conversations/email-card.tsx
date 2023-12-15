@@ -1,23 +1,26 @@
 import { useCallback, useId, useState } from "react";
-import ReactQuill from "react-quill";
 import styled from "styled-components";
 import { DateTime } from "luxon";
 import { Typography, Avatar, IconButton, Tooltip } from "@mui/material";
-import { Delete, Reply, Send } from '@mui/icons-material/';
-import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
+import { Reply } from '@mui/icons-material/';
+import { FlexBox } from "lib/ui-ux";
 import { getFormattedDate, getInitialsByName } from "lib/utils";
 import { useAuth } from "modules/login";
+import { EditorSection } from "./editor-section";
+import { EmailPopoverMetadata } from "./email-popover-metadata";
 
 export interface IEmailThreadProps {
     emailHTMLContent: string;
     from: string;
     fromEmail: string;
+    toEmail: string;
     createdDate: string;
     threadId: string;
+    subject: string;
 }
 interface IEmailCardProps {
     emailProps: IEmailThreadProps;
-    onSend: (args: IEmailThreadProps, linkedThreadId: string) => void;
+    onSend: (args: Omit<IEmailThreadProps, 'subject'>, linkedThreadId: string) => void;
 }
 
 const InnerHTML = styled.div`
@@ -30,32 +33,18 @@ const SubTextValue = styled(Typography)`
     }
 `;
 
-const EditorContainer = styled(FlexBox)`
-    .quill {
-        width: calc(100% - 50px);
-        display: flex;
-        flex-direction: column;
-    }
-    .quill:hover, :focus {
-            border-radius: 16px;
-            box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-    }
-    .ql-toolbar {
-        border-radius: 16px 16px 0px 0px;
-    }
-    .ql-container {
-        border-radius: 0px 0px 16px 16px;
-        min-height: 180px;
-    }
+const StyledEmailCardContainer = styled.div`
+  border-bottom: 1px solid ${({ theme }) => theme.pallete.grayVariant1};
+  padding-bottom: 20px;
 `;
 
+
 export const EmailCard = (props: IEmailCardProps) => {
-    const { emailProps: { emailHTMLContent, from, fromEmail, createdDate, threadId }, onSend } = props;
+    const { emailProps: { emailHTMLContent, from, fromEmail, createdDate, threadId, subject, toEmail }, onSend } = props;
     const [showEditor, setShowEditor] = useState(false);
     const [editorValue, setEditorValue] = useState('');
     const newThreadId = useId();
     const { user } = useAuth();
-
     const toggleEditorView = useCallback(() => setShowEditor(!showEditor), [showEditor]);
 
     const onEditorValueChange = useCallback((value: string) => {
@@ -63,19 +52,29 @@ export const EmailCard = (props: IEmailCardProps) => {
     }, []);
 
     const onSendClick = useCallback(() => {
-        onSend({ createdDate: DateTime.now().toISO(), emailHTMLContent: editorValue, from: user!.userName!, fromEmail: user!.userName!, threadId: newThreadId }, threadId);
+        onSend({
+            createdDate: DateTime.now().toISO(),
+            emailHTMLContent: editorValue,
+            from: user!.userName!,
+            fromEmail: user!.userName!,
+            threadId: newThreadId,
+            toEmail: fromEmail
+        }, threadId);
         toggleEditorView();
-    }, [editorValue, newThreadId, onSend, threadId, toggleEditorView, user])
+    }, [editorValue, fromEmail, newThreadId, onSend, threadId, toggleEditorView, user])
 
     return (
-        <div>
+        <StyledEmailCardContainer>
             <FlexBox $flexDirection="column" $gap="12px" $justifyContent="center">
                 <FlexBox $justifyContent="space-between" $width="100%">
-                    <FlexBox $gap="10px" $height="40px">
+                    <FlexBox $gap="10px">
                         <Avatar>{getInitialsByName(from)}</Avatar>
                         <FlexBox $flexDirection="column">
                             <Typography variant="h6" fontSize="16px">{from}</Typography>
-                            <SubTextValue fontSize="12px">{fromEmail}</SubTextValue>
+                            <FlexBox $gap="4px" $alignItems="center">
+                                <SubTextValue fontSize="12px">to {toEmail.split('@')[0]}</SubTextValue>
+                                <EmailPopoverMetadata fromEmail={fromEmail} toEmail={toEmail} subject={subject} createdDate={createdDate} />
+                            </FlexBox>
                         </FlexBox>
                     </FlexBox>
                     <FlexBox $gap="10px" $alignItems="center">
@@ -92,42 +91,6 @@ export const EmailCard = (props: IEmailCardProps) => {
                     showEditor ? <EditorSection onCancelClick={toggleEditorView} onSendClick={onSendClick} onChange={onEditorValueChange} from={from} editorValue={editorValue} /> : null
                 }
             </FlexBox >
-            <HorizontalSeparator $margin="20px 0px 0px 0px" />
-        </div>
-    )
-}
-
-interface IEditorSectionProps {
-    from: string;
-    editorValue: string;
-    onCancelClick: () => void;
-    onSendClick: () => void;
-    onChange: (editorValue: string) => void
-}
-
-const EditorSection = (props: IEditorSectionProps) => {
-    const { from, editorValue, onCancelClick, onChange, onSendClick } = props;
-    return (
-        <>
-            <FlexBox $flexDirection="column" $height="auto" style={{ position: 'relative' }}>
-                <EditorContainer $gap="10px" $width="calc(100% - 10px)">
-                    <Avatar>{getInitialsByName(from)}</Avatar>
-                    <ReactQuill
-                        theme="snow"
-                        value={editorValue}
-                        placeholder="Type in here"
-                        preserveWhitespace
-                        onChange={onChange} />
-                </EditorContainer>
-                <FlexBox>
-                    <IconButton onClick={onSendClick} color="primary" sx={{ position: 'absolute', top: '1px', right: '10px' }}>
-                        <Send />
-                    </IconButton>
-                    <IconButton onClick={onCancelClick} sx={{ position: 'absolute', top: '1px', right: '50px' }}>
-                        <Delete />
-                    </IconButton>
-                </FlexBox>
-            </FlexBox>
-        </>
+        </StyledEmailCardContainer>
     )
 }

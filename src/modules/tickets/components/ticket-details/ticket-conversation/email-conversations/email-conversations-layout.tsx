@@ -8,10 +8,11 @@ const LayoutWrapper = styled(FlexBox)`
 `;
 
 export const EmailConversationLayout = () => {
+    const subject = 'My order is delayed';
     return (
         <LayoutWrapper $flexDirection="column" $gap="10px" $width="100%" $height="calc(100% - 84px);">
-            <Typography variant="h5">Subject: My order is delayed</Typography>
-            <EmailConversations />
+            <Typography variant="h5">Subject: {subject}</Typography>
+            <EmailConversations subject={subject} />
         </LayoutWrapper>
     )
 }

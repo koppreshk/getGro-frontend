@@ -53,9 +53,9 @@ export const CoreLayoutBase = () => {
             navigate('/login', { replace: true })
         }
         else {
-            navigate(location.pathname ?? '/dashboard', { replace: true })
+            navigate(location.pathname + location.search ?? '/dashboard', { replace: true })
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
