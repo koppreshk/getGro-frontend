@@ -3,11 +3,12 @@ import styled from "styled-components";
 import { DateTime } from "luxon";
 import { Typography, Avatar, IconButton, Tooltip } from "@mui/material";
 import { Reply } from '@mui/icons-material/';
-import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
+import { FlexBox } from "lib/ui-ux";
 import { getFormattedDate, getInitialsByName } from "lib/utils";
 import { useAuth } from "modules/login";
 import { EditorSection } from "./editor-section";
 import { EmailPopoverMetadata } from "./email-popover-metadata";
+
 export interface IEmailThreadProps {
     emailHTMLContent: string;
     from: string;
@@ -30,6 +31,11 @@ const SubTextValue = styled(Typography)`
     &&{
         color: ${({ theme }) => theme.pallete.grayVariant3}
     }
+`;
+
+const StyledEmailCardContainer = styled.div`
+  border-bottom: 1px solid ${({ theme }) => theme.pallete.grayVariant1};
+  padding-bottom: 20px;
 `;
 
 
@@ -58,10 +64,10 @@ export const EmailCard = (props: IEmailCardProps) => {
     }, [editorValue, fromEmail, newThreadId, onSend, threadId, toggleEditorView, user])
 
     return (
-        <div>
+        <StyledEmailCardContainer>
             <FlexBox $flexDirection="column" $gap="12px" $justifyContent="center">
                 <FlexBox $justifyContent="space-between" $width="100%">
-                    <FlexBox $gap="10px" $height="40px">
+                    <FlexBox $gap="10px">
                         <Avatar>{getInitialsByName(from)}</Avatar>
                         <FlexBox $flexDirection="column">
                             <Typography variant="h6" fontSize="16px">{from}</Typography>
@@ -85,7 +91,6 @@ export const EmailCard = (props: IEmailCardProps) => {
                     showEditor ? <EditorSection onCancelClick={toggleEditorView} onSendClick={onSendClick} onChange={onEditorValueChange} from={from} editorValue={editorValue} /> : null
                 }
             </FlexBox >
-            <HorizontalSeparator $margin="20px 0px 0px 0px" />
-        </div>
+        </StyledEmailCardContainer>
     )
 }

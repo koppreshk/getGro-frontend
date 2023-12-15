@@ -1,6 +1,7 @@
 import { FlexBox } from "lib/ui-ux";
 import { EmailCard, IEmailThreadProps } from "./email-card";
 import { useCallback, useState } from "react";
+import styled from "styled-components";
 
 const emailConversations = [{
     emailHTMLContent: `
@@ -25,6 +26,17 @@ const emailConversations = [{
     threadId: '101'
 }]
 
+// function strip(html: string) {
+//     const doc = new DOMParser().parseFromString(html, 'text/html');
+//     return doc.body.textContent || "";
+// }
+
+const EmailConversationsContainer = styled(FlexBox)`
+  div:last-child {
+    border-bottom: none;
+  }  
+`;
+
 export const EmailConversations = (props: { subject: string }) => {
     const [emailThreads, setEmailThreads] = useState(emailConversations);
 
@@ -35,8 +47,8 @@ export const EmailConversations = (props: { subject: string }) => {
     }, [emailThreads])
 
     return (
-        <FlexBox $width="100%" $height="calc(100% - 32px)" $flexDirection="column" $gap="20px" $overflowY="auto">
+        <EmailConversationsContainer $width="100%" $height="calc(100% - 32px)" $flexDirection="column" $gap="20px" $overflowY="auto">
             {emailThreads.map((singleEmail, index) => <EmailCard key={index} emailProps={{ ...singleEmail, subject: props.subject }} onSend={onSend} />)}
-        </FlexBox>
+        </EmailConversationsContainer>
     )
 }
