@@ -9,6 +9,7 @@ import { CustomersPage } from "modules/customers/pages"
 import { SettingsPage } from "modules/settings/pages"
 import { ProtectedRoute } from "modules/login/protected-route"
 import { Login, useAuth } from "modules/login"
+import { PageNotFound } from "./page-not-found"
 
 const HomePage = React.memo(() => {
     return (
@@ -63,6 +64,7 @@ export const CoreLayout = () => {
                 </Route>
             </Route>
             <Route key="login" path="/login" element={<Login />} />
+            <Route key="not-found" path="*" element={<PageNotFound />} />
         </Routes>
     )
 }
