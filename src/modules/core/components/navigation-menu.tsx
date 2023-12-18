@@ -12,6 +12,7 @@ interface IPrimaryOptionProps {
         primaryKey: string;
         route: string;
         title: string;
+        countValue?: string;
         showCount?: boolean;
     }
     selectedMenu: string;
@@ -29,29 +30,35 @@ const PrimaryOptionsWrapper = styled(FlexBox)`
     padding-top: 15px;
 `;
 
-const primaryOptions = [{
-    iconComponent: () => <HomeOutlined />,
-    primaryKey: 'dashboard',
-    route: 'dashboard',
-    title: 'Dashboard'
-},
-{
-    iconComponent: () => <TaskOutlined sx={{}} width='32px' height='32px' />,
-    showCount: true,
-    primaryKey: 'tickets',
-    route: 'tickets',
-    title: 'Tickets'
-}, {
-    iconComponent: () => <GroupOutlined />,
-    primaryKey: 'customers',
-    route: 'customers',
-    title: 'Customers'
-}, {
-    iconComponent: () => <SettingsOutlined />,
-    primaryKey: 'settings',
-    route: 'settings',
-    title: 'Settings'
-}];
+const usePrimaryOptions = () => {
+    const [searchParams] = useSearchParams();
+    const noOfRecords = searchParams.get('noOfRecords') || '10';
+
+    return [{
+        iconComponent: () => <HomeOutlined />,
+        primaryKey: 'dashboard',
+        route: 'dashboard',
+        title: 'Dashboard'
+    },
+    {
+        iconComponent: () => <TaskOutlined sx={{}} width='32px' height='32px' />,
+        showCount: true,
+        countValue: noOfRecords,
+        primaryKey: 'tickets',
+        route: 'tickets',
+        title: 'Tickets'
+    }, {
+        iconComponent: () => <GroupOutlined />,
+        primaryKey: 'customers',
+        route: 'customers',
+        title: 'Customers'
+    }, {
+        iconComponent: () => <SettingsOutlined />,
+        primaryKey: 'settings',
+        route: 'settings',
+        title: 'Settings'
+    }];
+}
 
 const IconWrapper = styled(FlexBox) <{ $isOptionsSelected: boolean }>`
     ${({ $isOptionsSelected }) => $isOptionsSelected ? css`
@@ -88,6 +95,7 @@ const StyledChip = styled(Chip)`
 export const NavigationMenu = React.memo(() => {
     const { pathname } = useLocation();
     const [selectedMenu, setMenu] = React.useState(() => pathname === '/' ? 'dashboard' : pathname?.split('/')[1] ?? 'dashboard');
+    const primaryOptions = usePrimaryOptions();
 
     return (
         <MenuWrapper>
@@ -106,11 +114,10 @@ export const NavigationMenu = React.memo(() => {
 
 const PrimaryOption = React.memo((props: IPrimaryOptionProps) => {
     const { item, selectedMenu, onMenuOptionClick } = props;
-    const { iconComponent, primaryKey, route, title, showCount } = item;
+    const { iconComponent, primaryKey, route, title, showCount, countValue } = item;
     const isOptionsSelected = React.useMemo(() => selectedMenu === primaryKey, [primaryKey, selectedMenu]);
     const navigate = useNavigate();
-    const [searchParams] = useSearchParams();
-    const noOfRecords = searchParams.get('noOfRecords') || '10';
+
 
     const onClick = React.useCallback(() => {
         onMenuOptionClick(primaryKey);
@@ -121,7 +128,7 @@ const PrimaryOption = React.memo((props: IPrimaryOptionProps) => {
         <Tooltip title={title} arrow placement="right">
             <IconWrapper $isOptionsSelected={isOptionsSelected} $alignItems="center" $justifyContent="center" onClick={onClick}>
                 {iconComponent()}
-                {showCount && isOptionsSelected && <StyledChip label={noOfRecords} size="small" variant="filled" color="primary" />}
+                {showCount && isOptionsSelected && <StyledChip label={countValue} size="small" variant="filled" color="primary" />}
             </IconWrapper>
         </Tooltip>
     )
