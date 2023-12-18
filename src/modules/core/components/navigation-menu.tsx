@@ -79,7 +79,7 @@ const IconWrapper = styled(FlexBox) <{ $isOptionsSelected: boolean }>`
 
 const StyledChip = styled(Chip)`
     position: absolute;
-    top: -5px;
+    top: -10px;
     right: -10px;
     width: 24px;
     height: 24px;
