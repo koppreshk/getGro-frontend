@@ -1,9 +1,9 @@
 
 import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { FlexBox } from "lib/ui-ux";
-import { Tooltip } from "@mui/material";
+import { Chip, Tooltip } from "@mui/material";
 import { GroupOutlined, HomeOutlined, SettingsOutlined, TaskOutlined } from "@mui/icons-material";
 
 interface IPrimaryOptionProps {
@@ -12,6 +12,7 @@ interface IPrimaryOptionProps {
         primaryKey: string;
         route: string;
         title: string;
+        showCount?: boolean;
     }
     selectedMenu: string;
     onMenuOptionClick: React.Dispatch<React.SetStateAction<string>>;
@@ -36,6 +37,7 @@ const primaryOptions = [{
 },
 {
     iconComponent: () => <TaskOutlined sx={{}} width='32px' height='32px' />,
+    showCount: true,
     primaryKey: 'tickets',
     route: 'tickets',
     title: 'Tickets'
@@ -65,6 +67,22 @@ const IconWrapper = styled(FlexBox) <{ $isOptionsSelected: boolean }>`
     width: 40px;
     border-radius: 6px;
     cursor: pointer;
+    position: relative;
+`;
+
+const StyledChip = styled(Chip)`
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    width: 24px;
+    height: 24px;
+    &&{
+        .MuiChip-label {
+                padding: 0;
+            }
+
+    }
+
 `;
 
 export const NavigationMenu = React.memo(() => {
@@ -88,9 +106,11 @@ export const NavigationMenu = React.memo(() => {
 
 const PrimaryOption = React.memo((props: IPrimaryOptionProps) => {
     const { item, selectedMenu, onMenuOptionClick } = props;
-    const { iconComponent, primaryKey, route, title } = item;
+    const { iconComponent, primaryKey, route, title, showCount } = item;
     const isOptionsSelected = React.useMemo(() => selectedMenu === primaryKey, [primaryKey, selectedMenu]);
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const noOfRecords = searchParams.get('noOfRecords') || '10';
 
     const onClick = React.useCallback(() => {
         onMenuOptionClick(primaryKey);
@@ -101,6 +121,7 @@ const PrimaryOption = React.memo((props: IPrimaryOptionProps) => {
         <Tooltip title={title} arrow placement="right">
             <IconWrapper $isOptionsSelected={isOptionsSelected} $alignItems="center" $justifyContent="center" onClick={onClick}>
                 {iconComponent()}
+                {showCount && isOptionsSelected && <StyledChip label={noOfRecords} size="small" variant="filled" color="primary" />}
             </IconWrapper>
         </Tooltip>
     )
