@@ -1,9 +1,9 @@
 
 import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { FlexBox } from "lib/ui-ux";
-import { Tooltip } from "@mui/material";
+import { Chip, Tooltip } from "@mui/material";
 import { GroupOutlined, HomeOutlined, SettingsOutlined, TaskOutlined } from "@mui/icons-material";
 
 interface IPrimaryOptionProps {
@@ -12,6 +12,8 @@ interface IPrimaryOptionProps {
         primaryKey: string;
         route: string;
         title: string;
+        countValue?: string;
+        showCount?: boolean;
     }
     selectedMenu: string;
     onMenuOptionClick: React.Dispatch<React.SetStateAction<string>>;
@@ -28,28 +30,35 @@ const PrimaryOptionsWrapper = styled(FlexBox)`
     padding-top: 15px;
 `;
 
-const primaryOptions = [{
-    iconComponent: () => <HomeOutlined />,
-    primaryKey: 'dashboard',
-    route: 'dashboard',
-    title: 'Dashboard'
-},
-{
-    iconComponent: () => <TaskOutlined sx={{}} width='32px' height='32px' />,
-    primaryKey: 'tickets',
-    route: 'tickets',
-    title: 'Tickets'
-}, {
-    iconComponent: () => <GroupOutlined />,
-    primaryKey: 'customers',
-    route: 'customers',
-    title: 'Customers'
-}, {
-    iconComponent: () => <SettingsOutlined />,
-    primaryKey: 'settings',
-    route: 'settings',
-    title: 'Settings'
-}];
+const usePrimaryOptions = () => {
+    const [searchParams] = useSearchParams();
+    const noOfRecords = searchParams.get('noOfRecords') || '10';
+
+    return [{
+        iconComponent: () => <HomeOutlined />,
+        primaryKey: 'dashboard',
+        route: 'dashboard',
+        title: 'Dashboard'
+    },
+    {
+        iconComponent: () => <TaskOutlined sx={{}} width='32px' height='32px' />,
+        showCount: true,
+        countValue: noOfRecords,
+        primaryKey: 'tickets',
+        route: 'tickets',
+        title: 'Tickets'
+    }, {
+        iconComponent: () => <GroupOutlined />,
+        primaryKey: 'customers',
+        route: 'customers',
+        title: 'Customers'
+    }, {
+        iconComponent: () => <SettingsOutlined />,
+        primaryKey: 'settings',
+        route: 'settings',
+        title: 'Settings'
+    }];
+}
 
 const IconWrapper = styled(FlexBox) <{ $isOptionsSelected: boolean }>`
     ${({ $isOptionsSelected }) => $isOptionsSelected ? css`
@@ -65,11 +74,28 @@ const IconWrapper = styled(FlexBox) <{ $isOptionsSelected: boolean }>`
     width: 40px;
     border-radius: 6px;
     cursor: pointer;
+    position: relative;
+`;
+
+const StyledChip = styled(Chip)`
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    width: 24px;
+    height: 24px;
+    &&{
+        .MuiChip-label {
+                padding: 0;
+            }
+
+    }
+
 `;
 
 export const NavigationMenu = React.memo(() => {
     const { pathname } = useLocation();
     const [selectedMenu, setMenu] = React.useState(() => pathname === '/' ? 'dashboard' : pathname?.split('/')[1] ?? 'dashboard');
+    const primaryOptions = usePrimaryOptions();
 
     return (
         <MenuWrapper>
@@ -88,9 +114,10 @@ export const NavigationMenu = React.memo(() => {
 
 const PrimaryOption = React.memo((props: IPrimaryOptionProps) => {
     const { item, selectedMenu, onMenuOptionClick } = props;
-    const { iconComponent, primaryKey, route, title } = item;
+    const { iconComponent, primaryKey, route, title, showCount, countValue } = item;
     const isOptionsSelected = React.useMemo(() => selectedMenu === primaryKey, [primaryKey, selectedMenu]);
     const navigate = useNavigate();
+
 
     const onClick = React.useCallback(() => {
         onMenuOptionClick(primaryKey);
@@ -101,6 +128,7 @@ const PrimaryOption = React.memo((props: IPrimaryOptionProps) => {
         <Tooltip title={title} arrow placement="right">
             <IconWrapper $isOptionsSelected={isOptionsSelected} $alignItems="center" $justifyContent="center" onClick={onClick}>
                 {iconComponent()}
+                {showCount && isOptionsSelected && <StyledChip label={countValue} size="small" variant="filled" color="primary" />}
             </IconWrapper>
         </Tooltip>
     )
