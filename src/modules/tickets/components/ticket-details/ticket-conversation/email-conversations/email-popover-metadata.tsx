@@ -14,10 +14,12 @@ export const EmailPopoverMetadata = (props: IEmailPopoverMetadataProps) => {
     const open = Boolean(anchorEl);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.stopPropagation();
         setAnchorEl(event.currentTarget);
     };
 
-    const handleClose = () => {
+    const handleClose = (event: any) => {
+        event.stopPropagation();
         setAnchorEl(null);
     };
 
