@@ -24,12 +24,7 @@ const emailConversations = [{
     toEmail: 'siddarth.menon@gmail.com',
     createdDate: '2023-10-17T15:45:30.715Z',
     threadId: '101'
-}]
-
-// function strip(html: string) {
-//     const doc = new DOMParser().parseFromString(html, 'text/html');
-//     return doc.body.textContent || "";
-// }
+}];
 
 const EmailConversationsContainer = styled(FlexBox)`
   div:last-child {
@@ -37,7 +32,7 @@ const EmailConversationsContainer = styled(FlexBox)`
   }  
 `;
 
-export const EmailConversations = (props: { subject: string }) => {
+export const EmailConversations = (props: { subject: string; isCollapsedAll: boolean }) => {
     const [emailThreads, setEmailThreads] = useState(emailConversations);
 
     const onSend = useCallback((args: Omit<IEmailThreadProps, 'subject'>, linkedThreadId: string) => {
@@ -48,7 +43,7 @@ export const EmailConversations = (props: { subject: string }) => {
 
     return (
         <EmailConversationsContainer $width="100%" $height="calc(100% - 32px)" $flexDirection="column" $gap="20px" $overflowY="auto">
-            {emailThreads.map((singleEmail, index) => <EmailCard key={index} emailProps={{ ...singleEmail, subject: props.subject }} onSend={onSend} />)}
+            {emailThreads.map((singleEmail, index) => <EmailCard key={index} emailProps={{ ...singleEmail, subject: props.subject }} onSend={onSend} isCollapsedAll={props.isCollapsedAll} />)}
         </EmailConversationsContainer>
     )
 }

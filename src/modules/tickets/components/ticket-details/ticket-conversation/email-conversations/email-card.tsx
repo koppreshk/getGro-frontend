@@ -1,4 +1,4 @@
-import { useCallback, useId, useState } from "react";
+import { useCallback, useEffect, useId, useState } from "react";
 import styled from "styled-components";
 import { DateTime } from "luxon";
 import { Typography, Avatar, IconButton, Tooltip } from "@mui/material";
@@ -20,6 +20,7 @@ export interface IEmailThreadProps {
 }
 interface IEmailCardProps {
     emailProps: IEmailThreadProps;
+    isCollapsedAll: boolean;
     onSend: (args: Omit<IEmailThreadProps, 'subject'>, linkedThreadId: string) => void;
 }
 
@@ -38,14 +39,34 @@ const StyledEmailCardContainer = styled.div`
   padding-bottom: 20px;
 `;
 
+const StripedEmailContent = styled(Typography)`
+    && {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+`
+
+function strip(html: string) {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.body.textContent || "";
+}
 
 export const EmailCard = (props: IEmailCardProps) => {
-    const { emailProps: { emailHTMLContent, from, fromEmail, createdDate, threadId, subject, toEmail }, onSend } = props;
+    const { emailProps: { emailHTMLContent, from, fromEmail, createdDate, threadId, subject, toEmail }, isCollapsedAll, onSend } = props;
     const [showEditor, setShowEditor] = useState(false);
     const [editorValue, setEditorValue] = useState('');
+    const [isCollpsed, setCardCollapseState] = useState(true);
     const newThreadId = useId();
     const { user } = useAuth();
     const toggleEditorView = useCallback(() => setShowEditor(!showEditor), [showEditor]);
+
+    useEffect(() => setCardCollapseState(isCollapsedAll), [isCollapsedAll])
+
+    const onReplyClick: React.MouseEventHandler<HTMLButtonElement> = (ev) => {
+        ev.stopPropagation();
+        toggleEditorView();
+    }
 
     const onEditorValueChange = useCallback((value: string) => {
         setEditorValue(value);
@@ -61,32 +82,41 @@ export const EmailCard = (props: IEmailCardProps) => {
             toEmail: fromEmail
         }, threadId);
         toggleEditorView();
-    }, [editorValue, fromEmail, newThreadId, onSend, threadId, toggleEditorView, user])
+    }, [editorValue, fromEmail, newThreadId, onSend, threadId, toggleEditorView, user]);
+
+    const onCardClick = () => setCardCollapseState(!isCollpsed);
 
     return (
         <StyledEmailCardContainer>
             <FlexBox $flexDirection="column" $gap="12px" $justifyContent="center">
-                <FlexBox $justifyContent="space-between" $width="100%">
-                    <FlexBox $gap="10px">
+                <FlexBox style={{ cursor: 'pointer' }} $flexDirection="column" $width="100%" onClick={onCardClick}>
+                    <FlexBox $gap="10px" $width="100%">
                         <Avatar>{getInitialsByName(from)}</Avatar>
-                        <FlexBox $flexDirection="column">
-                            <Typography variant="h6" fontSize="16px">{from}</Typography>
-                            <FlexBox $gap="4px" $alignItems="center">
-                                <SubTextValue fontSize="12px">to {toEmail.split('@')[0]}</SubTextValue>
-                                <EmailPopoverMetadata fromEmail={fromEmail} toEmail={toEmail} subject={subject} createdDate={createdDate} />
+                        <FlexBox $flexDirection="column" $width="calc(100% - 50px)">
+                            <FlexBox $justifyContent="space-between">
+                                <Typography variant="h6" fontSize="16px">{from}</Typography>
+                                <FlexBox $gap="10px" $justifyContent="space-between" $alignItems="center">
+                                    <SubTextValue variant="body2">{getFormattedDate(createdDate)}</SubTextValue>
+                                    {!isCollpsed ?
+                                        <Tooltip title="Reply" arrow placement="right">
+                                            <IconButton sx={{ padding: 0 }} onClick={onReplyClick}>
+                                                <Reply />
+                                            </IconButton>
+                                        </Tooltip> : null}
+                                </FlexBox>
                             </FlexBox>
+                            {
+                                isCollpsed
+                                    ? <StripedEmailContent>{strip(emailHTMLContent)}</StripedEmailContent>
+                                    : <FlexBox $gap="4px" $alignItems="center">
+                                        <SubTextValue fontSize="12px">to {toEmail.split('@')[0]}</SubTextValue>
+                                        <EmailPopoverMetadata fromEmail={fromEmail} toEmail={toEmail} subject={subject} createdDate={createdDate} />
+                                    </FlexBox>
+                            }
                         </FlexBox>
                     </FlexBox>
-                    <FlexBox $gap="10px" $alignItems="center">
-                        <SubTextValue variant="body2">{getFormattedDate(createdDate)}</SubTextValue>
-                        <Tooltip title="Reply" arrow placement="right">
-                            <IconButton onClick={toggleEditorView}>
-                                <Reply />
-                            </IconButton>
-                        </Tooltip>
-                    </FlexBox>
                 </FlexBox>
-                <InnerHTML dangerouslySetInnerHTML={{ __html: emailHTMLContent }} />
+                {!isCollpsed && <InnerHTML dangerouslySetInnerHTML={{ __html: emailHTMLContent }} />}
                 {
                     showEditor ? <EditorSection onCancelClick={toggleEditorView} onSendClick={onSendClick} onChange={onEditorValueChange} from={from} editorValue={editorValue} /> : null
                 }
