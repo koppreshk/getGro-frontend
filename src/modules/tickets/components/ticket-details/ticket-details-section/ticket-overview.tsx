@@ -7,8 +7,15 @@ import { SearchCustomerContainer } from "modules/tickets/containers";
 import { useAppSelector } from "lib/hooks";
 import { getInitialsByName } from "lib/utils";
 import { UnlinkCustomer } from "./unlink-customer";
+import { ITicketDetails } from "modules/tickets/apis";
 
-export const TicketOverview = () => {
+interface ITicketOverviewProps {
+    ticketDetails: ITicketDetails;
+}
+
+export const TicketOverview = (props: ITicketOverviewProps) => {
+    const { ticketDetails } = props;
+    const { customerName, source } = ticketDetails;
     const [showSearchUserFlyout, setShowSearchUserFlyout] = React.useState(false);
     const onSearchUserBtnClick = React.useCallback(() => {
         setShowSearchUserFlyout((x) => !x);
@@ -19,11 +26,12 @@ export const TicketOverview = () => {
         <FlexBox $gap="30px" $padding="10px" $flexDirection="column">
             <FlexBox $justifyContent="space-between">
                 <FlexBox $gap="5px" $alignItems="center">
-                    <Typography variant="h5" fontSize="16px" >Tilly Moughton messaged via</Typography>
-                    <Platform variant="body2" $platform={'facebook'}>facebook</Platform>
+                    <Typography variant="h5" fontSize="16px" >{customerName ?? 'Siddarth Menon'} messaged via</Typography>
+                    <Platform variant="body2" $platform={source.toLocaleLowerCase()}>{source}</Platform>
                 </FlexBox>
-                {customerId ? <UnlinkCustomer /> :
-                    <Tooltip title="Search Customer" arrow placement="left">
+                {customerId
+                    ? <UnlinkCustomer />
+                    : <Tooltip title="Search Customer" arrow placement="left">
                         <IconButton onClick={onSearchUserBtnClick}>
                             <PersonSearch />
                         </IconButton>

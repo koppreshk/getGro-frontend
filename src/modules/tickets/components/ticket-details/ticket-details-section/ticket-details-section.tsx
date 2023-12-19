@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { GridLayout } from "lib/ui-ux";
-import { OrderDetailsContainer } from "modules/tickets/containers";
+import { OrderDetailsContainer, TicketOverviewContainer } from "modules/tickets/containers";
 import { MenuOptions, TicetSideMenu } from "./ticket-side-menu";
-import { TicketOverview } from "./ticket-overview";
 import { TicketNotes } from "./ticket-notes";
 import { TicketDispose } from "./ticket-dispose";
 
@@ -21,7 +20,7 @@ export const TicketDeatilsSection = () => {
     const renderBasedOnSelctedview = React.useCallback(() => {
         switch (selectedMenuOption) {
             case MenuOptions.CustomerProfile:
-                return <TicketOverview />;
+                return <TicketOverviewContainer />;
             case MenuOptions.OrderDetails:
                 return <OrderDetailsContainer />
             case MenuOptions.Notes:
