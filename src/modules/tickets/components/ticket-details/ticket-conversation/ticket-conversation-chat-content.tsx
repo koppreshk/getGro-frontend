@@ -13,6 +13,8 @@ const Content = styled(FlexBox) <{ $isCustomerQuery: boolean }>`
     .MuiTypography-body2 {
         color: ${({ theme, $isCustomerQuery }) => $isCustomerQuery ? 'unset' : theme.pallete.white };
     }
+
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
 `;
 
 const animateClient = css`
