@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useId, useState } from "react";
+import { useCallback, useId, useState } from "react";
 import styled from "styled-components";
 import { DateTime } from "luxon";
 import { Typography, Avatar, IconButton, Tooltip } from "@mui/material";
-import { DesktopMacSharp, FunctionsSharp, Reply } from '@mui/icons-material/';
+import { Reply } from '@mui/icons-material/';
 import { FlexBox } from "lib/ui-ux";
 import { getFormattedDate, getInitialsByName } from "lib/utils";
 import { useAuth } from "modules/login";
@@ -16,11 +16,15 @@ export interface IEmailThreadProps {
     toEmail: string;
     createdDate: string;
     threadId: string;
+    isCollapsed: boolean;
     subject: string;
 }
 interface IEmailCardProps {
     emailProps: IEmailThreadProps;
-    isCollapsedAll: boolean;
+    onSingleEmailCollapseHandler: (args: {
+        threadId: string;
+        isCollapsed: boolean;
+    }) => void
     onSend: (args: Omit<IEmailThreadProps, 'subject'>, linkedThreadId: string) => void;
 }
 
@@ -53,15 +57,12 @@ function strip(html: string) {
 }
 
 export const EmailCard = (props: IEmailCardProps) => {
-    const { emailProps: { emailHTMLContent, from, fromEmail, createdDate, threadId, subject, toEmail }, isCollapsedAll, onSend } = props;
+    const { emailProps: { emailHTMLContent, from, fromEmail, createdDate, threadId, subject, toEmail, isCollapsed }, onSingleEmailCollapseHandler, onSend } = props;
     const [showEditor, setShowEditor] = useState(false);
     const [editorValue, setEditorValue] = useState('');
-    const [isCollpsed, setCardCollapseState] = useState(true);
     const newThreadId = useId();
     const { user } = useAuth();
     const toggleEditorView = useCallback(() => setShowEditor(!showEditor), [showEditor]);
-
-    useEffect(() => setCardCollapseState(isCollapsedAll), [isCollapsedAll])
 
     const onReplyClick: React.MouseEventHandler<HTMLButtonElement> = (ev) => {
         ev.stopPropagation();
@@ -79,12 +80,13 @@ export const EmailCard = (props: IEmailCardProps) => {
             from: user!.userName!,
             fromEmail: user!.userName!,
             threadId: newThreadId,
-            toEmail: fromEmail
+            toEmail: fromEmail,
+            isCollapsed: isCollapsed
         }, threadId);
         toggleEditorView();
-    }, [editorValue, fromEmail, newThreadId, onSend, threadId, toggleEditorView, user]);
+    }, [editorValue, fromEmail, isCollapsed, newThreadId, onSend, threadId, toggleEditorView, user]);
 
-    const onCardClick = () => setCardCollapseState(!isCollpsed);
+    const onCardClick = () => onSingleEmailCollapseHandler({ threadId, isCollapsed: !isCollapsed });
 
     return (
         <StyledEmailCardContainer>
@@ -97,7 +99,7 @@ export const EmailCard = (props: IEmailCardProps) => {
                                 <Typography variant="h6">{from}</Typography>
                                 <FlexBox $gap="10px" $justifyContent="space-between" $alignItems="center">
                                     <SubTextValue variant="caption">{getFormattedDate(createdDate)}</SubTextValue>
-                                    {!isCollpsed ?
+                                    {!isCollapsed ?
                                         <Tooltip title="Reply" arrow placement="right">
                                             <IconButton sx={{ padding: 0 }} onClick={onReplyClick}>
                                                 <Reply />
@@ -106,7 +108,7 @@ export const EmailCard = (props: IEmailCardProps) => {
                                 </FlexBox>
                             </FlexBox>
                             {
-                                isCollpsed
+                                isCollapsed
                                     ? <StripedEmailContent variant="body3">{strip(emailHTMLContent)}</StripedEmailContent>
                                     : <FlexBox $gap="4px" $alignItems="center">
                                         <SubTextValue fontSize="12px">to {toEmail.split('@')[0]}</SubTextValue>
@@ -116,7 +118,7 @@ export const EmailCard = (props: IEmailCardProps) => {
                         </FlexBox>
                     </FlexBox>
                 </FlexBox>
-                {!isCollpsed && <InnerHTML dangerouslySetInnerHTML={{ __html: emailHTMLContent }} />}
+                {!isCollapsed && <InnerHTML dangerouslySetInnerHTML={{ __html: emailHTMLContent }} />}
                 {
                     showEditor ? <EditorSection onCancelClick={toggleEditorView} onSendClick={onSendClick} onChange={onEditorValueChange} from={from} editorValue={editorValue} /> : null
                 }

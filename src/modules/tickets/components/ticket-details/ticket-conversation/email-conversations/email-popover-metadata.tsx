@@ -18,7 +18,7 @@ export const EmailPopoverMetadata = (props: IEmailPopoverMetadataProps) => {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleClose = (event: any) => {
+    const handleClose = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
         setAnchorEl(null);
     };

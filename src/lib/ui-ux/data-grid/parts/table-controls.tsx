@@ -37,11 +37,6 @@ function valuetext(value: number) {
     return `${value} Rows`;
 }
 
-const PaginationWrapper = styled(FlexBox)`
-    border: 1px solid ${({ theme }) => theme.pallete.grayVariant4};
-    border-radius: 6px;
-`;
-
 export const TableControls = () => {
     const { totalPages } = useAppSelector((state) => state.tickets);
     const [searchParams, setSearchParams] = useSearchParams();
@@ -96,7 +91,7 @@ export const TableControls = () => {
                 sx={{ width: '200px', marginBottom: 'unset' }}
             />
             <VerticalSeparator />
-            <PaginationWrapper $gap="15px" $alignItems='center'>
+            <FlexBox $gap="15px" $alignItems='center'>
                 <IconButton aria-label="First" onClick={firstBtnClick} disabled={pageNumber === 1} color="primary">
                     <KeyboardDoubleArrowLeft />
                 </IconButton>
@@ -116,7 +111,7 @@ export const TableControls = () => {
                 <IconButton aria-label="Last" onClick={lastBtnClick} disabled={pageNumber === totalPages} color="primary">
                     <KeyboardDoubleArrowRight />
                 </IconButton>
-            </PaginationWrapper>
+            </FlexBox>
         </StyledFlexBox>
     )
 }

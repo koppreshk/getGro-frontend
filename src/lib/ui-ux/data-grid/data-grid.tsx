@@ -13,6 +13,7 @@ import { TableHeader } from './parts/table-header'
 import { TableBody } from './parts/table-body'
 import { TableControls } from './parts/table-controls'
 import { FlexBox } from '../flexbox/flexbox'
+import { ColumnsConfiguration } from './parts/columns-configuration'
 
 export interface IDataGridProps<T> extends Pick<TableOptions<T>, 'data' | 'columns'> {
     onRowClick?: (row: Row<T>) => void;
@@ -33,6 +34,7 @@ const ScrollableDiv = styled.div`
 const DataGridWrapper = styled(FlexBox)`
     width: 100%;
     height: 100%;
+    position: relative;
 `;
 
 const StyledTable = styled.table<{ $showPointerCursor: boolean; $isLoading?: boolean, $itemHeight?: string }>`
@@ -106,6 +108,7 @@ export function DataGrid<T extends object>(props: IDataGridProps<T>) {
                         </StyledTable>
                     </TableWrapper>
                 </ScrollableDiv>
+                <ColumnsConfiguration allColumns={table.getAllLeafColumns()} resetColumnVisibility={table.resetColumnVisibility} />
             </DataGridWrapper>
         </DndProvider>
     )
