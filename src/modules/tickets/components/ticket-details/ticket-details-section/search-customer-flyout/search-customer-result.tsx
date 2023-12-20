@@ -59,19 +59,19 @@ const CustomerTile = (props: ICustomerTileProps) => {
             </FlexBox>
             <FlexBox $width="calc(100% - 120px)">
                 <FlexBox $flexDirection="column" $width="25%">
-                    <Typography variant="h6" fontSize="14px">Name:</Typography>
+                    <Typography variant="h6">Name:</Typography>
                     <TextFieldValue variant="body2" >{firstName} {lastName}</TextFieldValue>
                 </FlexBox>
                 <FlexBox $flexDirection="column" $width="20%">
-                    <Typography variant="h6" fontSize="14px">Customer Id:</Typography>
+                    <Typography variant="h6">Customer Id:</Typography>
                     <TextFieldValue variant="body2" >{id}</TextFieldValue>
                 </FlexBox>
                 <FlexBox $flexDirection="column" $width="30%">
-                    <Typography variant="h6" fontSize="14px">Email:</Typography>
+                    <Typography variant="h6">Email:</Typography>
                     <TextFieldValue variant="body2" >{email}</TextFieldValue>
                 </FlexBox>
                 <FlexBox $flexDirection="column" $width="25%">
-                    <Typography variant="h6" fontSize="14px">Phone Number:</Typography>
+                    <Typography variant="h6">Phone Number:</Typography>
                     <TextFieldValue variant="body2" >{phone}</TextFieldValue>
                 </FlexBox>
             </FlexBox>
@@ -103,9 +103,9 @@ export const SearchCustomerResult = (props: ISearchCustomerResultProps) => {
                 <FlexBox $alignItems="center" $justifyContent="center">
                     <CircularProgress />
                 </FlexBox> :
-                customerList?.length ? 
-                customerList : 
-                <FlexBox $justifyContent='center'>Oops no customer found! </FlexBox>}
+                customerList?.length ?
+                    customerList :
+                    <FlexBox $justifyContent='center'>Oops no customer found! </FlexBox>}
         </SearchCustomerResultWrapper>
     )
 }

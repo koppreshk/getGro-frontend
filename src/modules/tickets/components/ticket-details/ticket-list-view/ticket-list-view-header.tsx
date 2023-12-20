@@ -35,9 +35,9 @@ export const TicketListViewHeader = () => {
     return (
         <HeaderWrapper $width="100%" $justifyContent="space-between">
             <FlexBox $alignItems="center" $gap="10px">
-                <SortIcon />
-                <Typography variant="h6">{header}</Typography>
+                <Typography variant="h5">{header}</Typography>
                 <Chip label={noOfRecords} size="small" variant="filled" color="primary" />
+                <SortIcon />
             </FlexBox>
             <FlexBox $gap="5px">
                 <StyledIconButton>

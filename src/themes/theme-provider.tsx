@@ -15,8 +15,10 @@ const defaultTheme: DefaultTheme = {
         grayVariant5: '#F1F2F4',
         grayVariant6: '#F8F9FA',
         primaryPurple: '#6969ff',
+        primaryPurpleText: '#5d5de2',
         purpleLight: '#f3f3fd',
-        grayNeutral: '#787f83'
+        grayNeutral: '#787f83',
+        defaultTextColor: '#3b4455'
     },
     semantics: {
         standardBorder: '1px solid #E9EBED'

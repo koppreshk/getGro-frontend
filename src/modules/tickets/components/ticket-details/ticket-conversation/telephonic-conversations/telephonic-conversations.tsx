@@ -88,7 +88,7 @@ const TelephonicConversationCard = (props: ITelephonicConversationCardProps) => 
             </FlexBox>
             <FlexBox $flexDirection="column" $gap="5px" $width="88%">
                 <FlexBox $flexDirection="row" $justifyContent="space-between" $alignItems="baseline">
-                    <Typography variant="h6" fontSize="16px">{name}</Typography>
+                    <Typography variant="h6">{name}</Typography>
                     <Typography variant="body2">{date}</Typography>
                 </FlexBox>
                 <FlexBox $flexDirection="column">

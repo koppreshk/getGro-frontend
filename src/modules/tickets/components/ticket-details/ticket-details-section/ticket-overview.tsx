@@ -49,7 +49,7 @@ const ContactInfo = () => {
         <FlexBox $gap="20px" $flexDirection="column">
             <FlexBox $gap="10px" $alignItems="center">
                 {name === undefined ? <Avatar /> : <Avatar>{getInitialsByName(name)}</Avatar>}
-                <Typography variant="h6" fontSize="16px" >{name ?? 'NA'}</Typography>
+                <Typography variant="h6" >{name ?? 'NA'}</Typography>
             </FlexBox>
             <FlexBox $gap="4px" $flexDirection="column">
                 <Typography variant="body2" fontWeight={'500'}>Email</Typography>
