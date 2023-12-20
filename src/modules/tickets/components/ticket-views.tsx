@@ -7,7 +7,6 @@ import styled, { css } from "styled-components"
 const ViewsWrapper = styled(FlexBox)`
     width: 200px;
     height: 100%;
-    background-color: #fff;
     padding: 20px 0px;
     border-style: solid;
     border-color: #E5EAF2;
@@ -16,21 +15,21 @@ const ViewsWrapper = styled(FlexBox)`
 `;
 
 const Wrapper = styled.div<{ $isOptionSelected: boolean }>`
-:hover {
+    :hover {
         background: ${(props) => props.theme.pallete.purpleLight};
     }
     ${({ $isOptionSelected }) => $isOptionSelected ? css`
-    background-color: ${(props) => props.theme.pallete.purpleLight};
-    color:  ${(props) => props.theme.pallete.primaryPurple};
-    border-right-width: 4px;
-    border-style: solid;
-    border-color: ${(props) => props.theme.pallete.primaryPurple};
-    border-width: 0;
-    border-right-width: thick;
-  ` : css`
-  background-color: #fff;
-  color: inherit;
-  `}
+        background-color: ${(props) => props.theme.pallete.purpleLight};
+        color:  ${(props) => props.theme.pallete.primaryPurpleText};
+        border-right-width: 4px;
+        border-style: solid;
+        border-color: ${(props) => props.theme.pallete.primaryPurple};
+        border-width: 0;
+        border-right-width: thick;
+    ` : css`
+        background-color: #fff;
+        color: ${(props) => props.theme.pallete.defaultTextColor};
+    `}
 `;
 
 const OptionWrapper = styled.div`
@@ -116,7 +115,7 @@ const TicketViewOptions = (props: ITicketViewOptionsProps) => {
     return (
         <Wrapper onClick={onLinkClick} $isOptionSelected={isOptionSelected}>
             <OptionWrapper>
-                <Typography variant="h6" fontSize="16px" color="inherit">
+                <Typography variant="h6" color="inherit">
                     {name}
                 </Typography>
             </OptionWrapper>

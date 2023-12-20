@@ -29,4 +29,9 @@ export const commonStyles = {
             background-color: ${props => props.theme.others.scrollHandleColor};
         }
     `,
+    textOverflow: css`
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    `,
 }

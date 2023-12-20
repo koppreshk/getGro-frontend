@@ -97,17 +97,17 @@ const Order = (props: IOrderViewProps) => {
             <FlexBox $width="calc(100% - 82px)">
                 <FlexBox $flexDirection="column" $gap="10px" $width="50%">
                     <FlexBox $flexDirection="column">
-                        <Typography variant="h6" fontSize="14px">Order Number:</Typography>
+                        <Typography variant="h6">Order Number:</Typography>
                         <TextFieldValue variant="body2" >{'#' + orderNumber}</TextFieldValue>
                     </FlexBox>
                     <FlexBox $flexDirection="column">
-                        <Typography variant="h6" fontSize="14px">Item Name:</Typography>
+                        <Typography variant="h6" >Item Name:</Typography>
                         <TextFieldValue variant="body2" >{lineItems[0].name}</TextFieldValue>
                     </FlexBox>
                 </FlexBox>
                 <RelativePositionedFlexBox $flexDirection="column" $gap="10px" $width="50%" >
                     <FlexBox $flexDirection="column">
-                        <Typography variant="h6" fontSize="14px">Price:</Typography>
+                        <Typography variant="h6">Price:</Typography>
                         <span>
                             {currency === 'INR' && <Typography variant="body2" display="inline" >&#x20B9;</Typography>}
                             <TextFieldValue variant="body2" display="inline" >{lineItems[0].priceSet.presentmentMoney.amount}</TextFieldValue>
@@ -119,7 +119,7 @@ const Order = (props: IOrderViewProps) => {
                         </MoreDetailsBtn>
                     </Tooltip>
                     <FlexBox $flexDirection="column">
-                        <Typography variant="h6" fontSize="14px">FulFillment Status:</Typography>
+                        <Typography variant="h6">FulFillment Status:</Typography>
                         <TextFieldValue variant="body2" >{fulfillmentStatus}</TextFieldValue>
                     </FlexBox>
                 </RelativePositionedFlexBox>

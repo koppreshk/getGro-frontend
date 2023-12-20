@@ -2,7 +2,7 @@ import { useCallback, useEffect, useId, useState } from "react";
 import styled from "styled-components";
 import { DateTime } from "luxon";
 import { Typography, Avatar, IconButton, Tooltip } from "@mui/material";
-import { Reply } from '@mui/icons-material/';
+import { DesktopMacSharp, FunctionsSharp, Reply } from '@mui/icons-material/';
 import { FlexBox } from "lib/ui-ux";
 import { getFormattedDate, getInitialsByName } from "lib/utils";
 import { useAuth } from "modules/login";
@@ -94,9 +94,9 @@ export const EmailCard = (props: IEmailCardProps) => {
                         <Avatar>{getInitialsByName(from)}</Avatar>
                         <FlexBox $flexDirection="column" $width="calc(100% - 50px)">
                             <FlexBox $justifyContent="space-between">
-                                <Typography variant="h6" fontSize="16px">{from}</Typography>
+                                <Typography variant="h6">{from}</Typography>
                                 <FlexBox $gap="10px" $justifyContent="space-between" $alignItems="center">
-                                    <SubTextValue variant="body2">{getFormattedDate(createdDate)}</SubTextValue>
+                                    <SubTextValue variant="caption">{getFormattedDate(createdDate)}</SubTextValue>
                                     {!isCollpsed ?
                                         <Tooltip title="Reply" arrow placement="right">
                                             <IconButton sx={{ padding: 0 }} onClick={onReplyClick}>
@@ -107,7 +107,7 @@ export const EmailCard = (props: IEmailCardProps) => {
                             </FlexBox>
                             {
                                 isCollpsed
-                                    ? <StripedEmailContent>{strip(emailHTMLContent)}</StripedEmailContent>
+                                    ? <StripedEmailContent variant="body3">{strip(emailHTMLContent)}</StripedEmailContent>
                                     : <FlexBox $gap="4px" $alignItems="center">
                                         <SubTextValue fontSize="12px">to {toEmail.split('@')[0]}</SubTextValue>
                                         <EmailPopoverMetadata fromEmail={fromEmail} toEmail={toEmail} subject={subject} createdDate={createdDate} />

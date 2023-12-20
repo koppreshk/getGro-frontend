@@ -42,8 +42,8 @@ export const EmailPopoverMetadata = (props: IEmailPopoverMetadataProps) => {
                 <FlexBox $padding="12px" $flexDirection="column" $gap="4px">
                     {popoverData.map((item, index) => (
                         <FlexBox $gap="8px" key={index} $alignItems="center">
-                            <Typography variant="h6" fontSize="16px">{item.name}: </Typography>
-                            <Typography fontSize="14px">{item.value}</Typography>
+                            <Typography variant="h6">{item.name}: </Typography>
+                            <Typography variant="body3">{item.value}</Typography>
                         </FlexBox>
                     ))}
                 </FlexBox>

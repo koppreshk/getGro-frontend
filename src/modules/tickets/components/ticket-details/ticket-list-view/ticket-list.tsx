@@ -34,6 +34,15 @@ const TicketWrapper = styled(FlexBox) <{ $isTicketActive: boolean }>`
 
 const TicketDetailsSectionRight = styled(FlexBox)`
     margin-left: 15px;
+    width: calc(100% - 55px);
+`;
+
+const StyledTypography = styled(Typography)`
+    && {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
 `;
 
 export const TicketList = (props: ITicketListProps) => {
@@ -105,15 +114,15 @@ const TicketDetails = (props: ITicketDetailsProps) => {
             </FlexBox>
             <TicketDetailsSectionRight $flexDirection="column" $gap="6px">
                 <FlexBox $justifyContent="space-between">
-                    <Typography variant="h6" fontSize="16px">{customerName}</Typography>
-                    <Typography variant="body2">{getFormattedDate(createdAt)}</Typography>
+                    <Typography variant="h6">{customerName}</Typography>
+                    <Typography variant="caption">{getFormattedDate(createdAt)}</Typography>
                 </FlexBox>
-                <Typography variant="body2">Hellow victoria thank you for contacting...</Typography>
+                <StyledTypography variant="body2">Hellow victoria thank you for contacting...</StyledTypography>
                 <FlexBox $flexDirection="row" $gap="10px" $alignItems="center">
                     <>
                         {rendersourceIcon(source)}
                     </>
-                    <Typography variant="body2">Id: {ticketId}</Typography>
+                    <StyledTypography variant="body2">Id: {ticketId}</StyledTypography>
                 </FlexBox>
             </TicketDetailsSectionRight>
         </TicketWrapper>
