@@ -101,24 +101,22 @@ export const TableHeader = <T extends object>(props: ITableHeaderProps<T>) => {
 
     return (
         <TableHeaderWrapper id="table-column-header" ref={dropRef} style={{ minWidth: header.getSize(), opacity: options.isDragging ? 0.5 : 1 }}>
-            {!header.column.getCanHide()
-                ? null
-                : <FlexBox onClick={header.column.getToggleSortingHandler()} ref={previewRef}>
-                    {!header.column.columnDef.meta?.disableColReorder ? <DragabbleIcon ref={dragRef}>
-                        <DragIndicatorTwoToneIcon cursor="grab" />
-                    </DragabbleIcon> : null}
-                    <FlexBox $gap="10px" $alignItems='center'>
-                        <Typography variant='h6' fontSize="14px">
-                            {flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                            )}
-                        </Typography>
-                        {header.column.getIsSorted() !== false
-                            ? header.column.getIsSorted() === 'asc' ? <ExpandLess /> : <ExpandMore />
-                            : header.column.getCanSort() ? <UnfoldMore /> : null}
-                    </FlexBox>
+            {<FlexBox onClick={header.column.getToggleSortingHandler()} ref={previewRef}>
+                {!header.column.columnDef.meta?.disableColReorder ? <DragabbleIcon ref={dragRef}>
+                    <DragIndicatorTwoToneIcon cursor="grab" />
+                </DragabbleIcon> : null}
+                <FlexBox $gap="10px" $alignItems='center'>
+                    <Typography variant='h6' fontSize="14px">
+                        {flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                        )}
+                    </Typography>
+                    {header.column.getIsSorted() !== false
+                        ? header.column.getIsSorted() === 'asc' ? <ExpandLess /> : <ExpandMore />
+                        : header.column.getCanSort() ? <UnfoldMore /> : null}
                 </FlexBox>
+            </FlexBox>
             }
             {header.column.getCanResize() ?
                 <Resizer {...{
