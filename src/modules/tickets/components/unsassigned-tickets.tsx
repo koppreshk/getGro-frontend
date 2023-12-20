@@ -50,6 +50,7 @@ const useColumns = () => {
             },
             maxSize: 58,
             enableResizing: false,
+            enableHiding: false,
             meta: {
                 disableColReorder: true
             }
