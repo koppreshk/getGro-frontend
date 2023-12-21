@@ -3,7 +3,7 @@ import React from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { FlexBox } from "lib/ui-ux";
-import { Chip, Tooltip } from "@mui/material";
+import { Badge, Tooltip } from "@mui/material";
 import { GroupOutlined, HomeOutlined, SettingsOutlined, TaskOutlined } from "@mui/icons-material";
 
 interface IPrimaryOptionProps {
@@ -12,8 +12,6 @@ interface IPrimaryOptionProps {
         primaryKey: string;
         route: string;
         title: string;
-        countValue?: string;
-        showCount?: boolean;
     }
     selectedMenu: string;
     onMenuOptionClick: React.Dispatch<React.SetStateAction<string>>;
@@ -41,9 +39,10 @@ const usePrimaryOptions = () => {
         title: 'Dashboard'
     },
     {
-        iconComponent: () => <TaskOutlined sx={{}} width='32px' height='32px' />,
-        showCount: true,
-        countValue: noOfRecords,
+        iconComponent: () => (
+            <Badge color="primary" badgeContent={noOfRecords} max={999}>
+                <TaskOutlined width='32px' height='32px' />
+            </Badge>),
         primaryKey: 'tickets',
         route: 'tickets',
         title: 'Tickets'
@@ -77,21 +76,6 @@ const IconWrapper = styled(FlexBox) <{ $isOptionsSelected: boolean }>`
     position: relative;
 `;
 
-const StyledChip = styled(Chip)`
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    width: 24px;
-    height: 24px;
-    &&{
-        .MuiChip-label {
-                padding: 0;
-            }
-
-    }
-
-`;
-
 export const NavigationMenu = React.memo(() => {
     const { pathname } = useLocation();
     const [selectedMenu, setMenu] = React.useState(() => pathname === '/' ? 'dashboard' : pathname?.split('/')[1] ?? 'dashboard');
@@ -114,7 +98,7 @@ export const NavigationMenu = React.memo(() => {
 
 const PrimaryOption = React.memo((props: IPrimaryOptionProps) => {
     const { item, selectedMenu, onMenuOptionClick } = props;
-    const { iconComponent, primaryKey, route, title, showCount, countValue } = item;
+    const { iconComponent, primaryKey, route, title } = item;
     const isOptionsSelected = React.useMemo(() => selectedMenu === primaryKey, [primaryKey, selectedMenu]);
     const navigate = useNavigate();
 
@@ -128,7 +112,6 @@ const PrimaryOption = React.memo((props: IPrimaryOptionProps) => {
         <Tooltip title={title} arrow placement="right">
             <IconWrapper $isOptionsSelected={isOptionsSelected} $alignItems="center" $justifyContent="center" onClick={onClick}>
                 {iconComponent()}
-                {showCount && isOptionsSelected && <StyledChip label={countValue} size="small" variant="filled" color="primary" />}
             </IconWrapper>
         </Tooltip>
     )
