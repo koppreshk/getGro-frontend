@@ -35,7 +35,7 @@ const options = [Statuses.Active, Statuses.Busy, Statuses.Away, Statuses.DoNotDi
 
 export const AgentStatus = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const [selectedIndex, setSelectedIndex] = useState(1);
+    const [selectedIndex, setSelectedIndex] = useState(0);
 
     const open = Boolean(anchorEl);
 
