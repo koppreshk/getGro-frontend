@@ -1,7 +1,8 @@
+import { useMemo } from "react";
 import { Send, Delete } from "@mui/icons-material";
 import { Avatar, IconButton } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
-import { getInitialsByName } from "lib/utils";
+import { chooseRandomColors, getInitialsByName } from "lib/utils";
 import ReactQuill from "react-quill";
 import styled from "styled-components";
 
@@ -34,11 +35,13 @@ const EditorContainer = styled(FlexBox)`
 
 export const EditorSection = (props: IEditorSectionProps) => {
     const { from, editorValue, onCancelClick, onChange, onSendClick } = props;
+    const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(from)), [from]);
+
     return (
         <>
             <FlexBox $flexDirection="column" $height="auto" style={{ position: 'relative' }}>
                 <EditorContainer $gap="10px" $width="calc(100% - 10px)">
-                    <Avatar>{getInitialsByName(from)}</Avatar>
+                    <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>{getInitialsByName(from)}</Avatar>
                     <ReactQuill
                         theme="snow"
                         value={editorValue}

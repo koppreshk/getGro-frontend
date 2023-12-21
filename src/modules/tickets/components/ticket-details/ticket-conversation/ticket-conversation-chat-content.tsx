@@ -1,17 +1,17 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styled, { css } from "styled-components";
 import { Avatar, Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { ITicketConversation } from "modules/tickets/apis";
-import { getInitialsByName } from "lib/utils";
+import { chooseRandomColors, getInitialsByName } from "lib/utils";
 
 const Content = styled(FlexBox) <{ $isCustomerQuery: boolean }>`
-    background-color: ${({ theme, $isCustomerQuery }) => $isCustomerQuery ? theme.pallete.white : theme.pallete.primaryPurple };
+    background-color: ${({ theme, $isCustomerQuery }) => $isCustomerQuery ? theme.pallete.white : theme.pallete.primaryPurple};
     padding: 10px;
     border-radius: ${({ $isCustomerQuery }) => $isCustomerQuery ? '0px 6px 6px 6px' : '6px 0px 6px 6px'};
 
     .MuiTypography-body2 {
-        color: ${({ theme, $isCustomerQuery }) => $isCustomerQuery ? 'unset' : theme.pallete.white };
+        color: ${({ theme, $isCustomerQuery }) => $isCustomerQuery ? 'unset' : theme.pallete.white};
     }
 
     box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
@@ -73,6 +73,7 @@ export const TicketConversationChatContent = (props: IChatContentProps) => {
     const isCustomerQuery = content.custumerQuery !== undefined;
     const query = content.custumerQuery ? content.custumerQuery : content.agentQuery;
     const containerRef = React.useRef<HTMLDivElement>(null);
+    const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(isCustomerQuery ? customerName : agentName), [agentName, customerName, isCustomerQuery]);
 
     React.useEffect(() => {
         containerRef?.current && containerRef?.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -80,7 +81,7 @@ export const TicketConversationChatContent = (props: IChatContentProps) => {
 
     return (
         <Wrapper $gap="10px" $alignItems="center" ref={containerRef} $isCustomerQuery={isCustomerQuery} $flexDirection={isCustomerQuery ? 'row' : 'row-reverse'}>
-            <Avatar>{getInitialsByName(isCustomerQuery ? customerName : agentName)}</Avatar>
+            <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>{getInitialsByName(isCustomerQuery ? customerName : agentName)}</Avatar>
             <Content $isCustomerQuery={isCustomerQuery} $maxWidth="50%">
                 <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }} >
                     {query}
