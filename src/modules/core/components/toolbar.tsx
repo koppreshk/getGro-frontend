@@ -1,8 +1,7 @@
 import { FlexBox } from "lib/ui-ux";
 import styled from "styled-components";
-import { AccountMenu } from "./parts/account-menu";
 import GetGroLogoImg from './../../../assets/png/getgro.svg';
-import { AgentStatus } from "./parts/agent-status";
+import { AccountMenu, AgentStatus, Notifications } from "./parts";
 
 const TopBarWrapper = styled.div`
     width: 100%;
@@ -27,8 +26,9 @@ export const Toolbar = () => {
                 <FlexBox $alignItems="center">
                     <GetGroLogo src={GetGroLogoImg} />
                 </FlexBox>
-                <FlexBox $justifyContent="flex-end" $gap="10px">
+                <FlexBox $justifyContent="flex-end" $gap="10px" $alignItems="center">
                     <AgentStatus />
+                    <Notifications />
                     <AccountMenu />
                 </FlexBox>
             </TopBar>
