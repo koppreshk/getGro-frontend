@@ -3,8 +3,8 @@ import React from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { FlexBox } from "lib/ui-ux";
-import { Chip, Tooltip } from "@mui/material";
-import { GroupOutlined, HomeOutlined, SettingsOutlined, TaskOutlined } from "@mui/icons-material";
+import { Chip, Popover, Tooltip, Typography } from "@mui/material";
+import { EventOutlined, GroupOutlined, InsertChartOutlined, SettingsOutlined, TaskOutlined } from "@mui/icons-material";
 
 interface IPrimaryOptionProps {
     item: {
@@ -19,7 +19,7 @@ interface IPrimaryOptionProps {
     onMenuOptionClick: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const MenuWrapper = styled.div`
+const MenuWrapper = styled(FlexBox)`
     width: 64px;
     background-color: #ffff;
     height: 100%;
@@ -30,12 +30,16 @@ const PrimaryOptionsWrapper = styled(FlexBox)`
     padding-top: 15px;
 `;
 
+const SecondaryOptionWrapper = styled(FlexBox)`
+    margin-bottom: 20px;
+`;
+
 const usePrimaryOptions = () => {
     const [searchParams] = useSearchParams();
     const noOfRecords = searchParams.get('noOfRecords') || '10';
 
     return [{
-        iconComponent: () => <HomeOutlined />,
+        iconComponent: () => <InsertChartOutlined />,
         primaryKey: 'dashboard',
         route: 'dashboard',
         title: 'Dashboard'
@@ -62,19 +66,26 @@ const usePrimaryOptions = () => {
 
 const IconWrapper = styled(FlexBox) <{ $isOptionsSelected: boolean }>`
     ${({ $isOptionsSelected }) => $isOptionsSelected ? css`
-    /* background-color: #e4f0fd;
-    color: #1976d2; */
-    background-color: ${({ theme }) => theme.pallete.purpleLight};
-    color: ${({ theme }) => theme.pallete.primaryPurple};
+        background-color: ${({ theme }) => theme.pallete.purpleLight};
+        color: ${({ theme }) => theme.pallete.primaryPurple};
     `: css`
-    background-color: unset;
-    color: ${({ theme }) => theme.pallete.grayNeutral};
+        background-color: unset;
+        color: ${({ theme }) => theme.pallete.grayNeutral};
     `};
     height: 40px;
     width: 40px;
     border-radius: 6px;
     cursor: pointer;
     position: relative;
+`;
+
+const SecondaryIconWrapper = styled(FlexBox)`
+    background-color: unset;
+    color: ${({ theme }) => theme.pallete.grayNeutral};
+    height: 40px;
+    width: 40px;
+    border-radius: 6px;
+    cursor: pointer;
 `;
 
 const StyledChip = styled(Chip)`
@@ -87,9 +98,7 @@ const StyledChip = styled(Chip)`
         .MuiChip-label {
                 padding: 0;
             }
-
     }
-
 `;
 
 export const NavigationMenu = React.memo(() => {
@@ -98,7 +107,7 @@ export const NavigationMenu = React.memo(() => {
     const primaryOptions = usePrimaryOptions();
 
     return (
-        <MenuWrapper>
+        <MenuWrapper $flexDirection="column" $justifyContent="space-between">
             <PrimaryOptionsWrapper $gap="10px" $flexDirection="column" $justifyContent="center" $alignItems="center">
                 {primaryOptions.map((item) => (
                     <PrimaryOption
@@ -108,6 +117,9 @@ export const NavigationMenu = React.memo(() => {
                         onMenuOptionClick={setMenu} />
                 ))}
             </PrimaryOptionsWrapper>
+            <SecondaryOptionWrapper $flexDirection="column" $justifyContent="center" $alignItems="center">
+                <SecondaryOption />
+            </SecondaryOptionWrapper>
         </MenuWrapper>
     )
 })
@@ -133,3 +145,50 @@ const PrimaryOption = React.memo((props: IPrimaryOptionProps) => {
         </Tooltip>
     )
 })
+
+const SecondaryOption = React.memo(() => {
+    const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | null>(null);
+
+    const handleClick: React.MouseEventHandler<HTMLDivElement> = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const open = Boolean(anchorEl);
+
+    return (
+        <>
+            <SecondaryIconWrapper onClick={handleClick} $alignItems="center" $justifyContent="center">
+                <Tooltip title="Reminders" arrow placement="right">
+                    <EventOutlined />
+                </Tooltip>
+            </SecondaryIconWrapper>
+            <Popover
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                    vertical: 'center',
+                    horizontal: 'right',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                }}
+            >
+                <ReminderContent />
+            </Popover>
+        </>
+    )
+});
+
+const ReminderContent = () => {
+    return (
+        <FlexBox $height="500px" $width="300px">
+            <Typography variant="h5">Reminder content</Typography>
+        </FlexBox>
+    )
+}
