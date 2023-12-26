@@ -7,15 +7,16 @@ import styled from "styled-components";
 import { useMatch, useSearchParams } from "react-router-dom";
 import React from "react";
 
-interface IStyledIconButtonProps {
-    children?: React.ReactNode;
-}
-
-const StyledIconButton = (props: IStyledIconButtonProps) => (
-    <IconButton color="primary" sx={{ border: '1px solid', borderColor: '#DAE2ED', borderRadius: '12px', ":hover": { bgcolor: "#fafafa" } }} size="small">
-        {props.children}
-    </IconButton>
-);
+const StyledIconButtons = styled(IconButton)`
+    && {
+        border: 1px solid;
+        border-color: #DAE2ED;
+        border-radius: 12px;
+    };
+    & :hover {
+        background-color: #fafafa;
+    }
+`;
 
 
 export const HeaderWrapper = styled(FlexBox)`
@@ -61,13 +62,13 @@ export const TicketListViewHeader = () => {
                     <MenuItem>Source</MenuItem>
                 </Menu>
             </FlexBox>
-            <FlexBox $gap="5px">
-                <StyledIconButton>
+            <FlexBox $gap="5px" $alignItems="center">
+                <StyledIconButtons size="small" color="primary">
                     <PhoneRoundedIcon fontSize="small" />
-                </StyledIconButton>
-                <StyledIconButton>
+                </StyledIconButtons>
+                <StyledIconButtons size="small" color="primary">
                     <MessageRoundedIcon fontSize="small" />
-                </StyledIconButton>
+                </StyledIconButtons>
             </FlexBox>
         </HeaderWrapper>
     )

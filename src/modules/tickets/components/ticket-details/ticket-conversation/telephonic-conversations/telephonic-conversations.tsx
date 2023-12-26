@@ -1,6 +1,7 @@
 import { CallMade, CallMissed, CallReceived } from "@mui/icons-material";
 import { Tooltip, Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux"
+import { capitalizeFirstLetter } from "lib/utils";
 import styled, { useTheme } from "styled-components"
 
 const CardWrapper = styled(FlexBox)`
@@ -78,7 +79,7 @@ const TelephonicConversationCard = (props: ITelephonicConversationCardProps) => 
     const { pallete } = useTheme();
 
     return (
-        <CardWrapper>
+        <CardWrapper $gap="10px">
             <FlexBox $justifyContent="center" $alignItems="center" $width="10%">
                 <Tooltip title={`${callStatus} call`} arrow placement="bottom">
                     <IconWrapper $justifyContent="center" $alignItems="center" $callStatus={callStatus}>
@@ -95,7 +96,7 @@ const TelephonicConversationCard = (props: ITelephonicConversationCardProps) => 
                     <Typography variant="subtitle1" color={pallete.green}>{phoneNumber}</Typography>
                     <FlexBox $flexDirection="row" $justifyContent="space-between">
                         <FlexBox $gap="8px">
-                            <Typography variant="body2">{callStatus} call,</Typography>
+                            <Typography variant="body2">{capitalizeFirstLetter(callStatus)} call,</Typography>
                             <Typography variant="body2">{callDuration}</Typography>
                         </FlexBox>
                         <Typography variant="body2">Call To: {callTo}</Typography>
