@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import ReactQuill from "react-quill";
 import styled from "styled-components";
 import { Avatar, Typography } from "@mui/material";
@@ -64,23 +64,56 @@ export const ForwardEmail = (props: IForwardEmailProps) => {
 
 const ForwardEmailOptions = () => {
     const { watch } = useFormContext();
-    console.log(watch());
-    return (
-        <FlexBox $width="100%">
+    const [showCCTagInput, setCCTagInputDisplay] = useState(false);
+    const [showBCCTagInput, setBCCTagInputDisplay] = useState(false);
+    const { bcc, cc } = watch();
+
+    const onCCTextClick = useCallback(() => {
+        setCCTagInputDisplay((prevValue) => !prevValue);
+    }, [])
+
+    const onBCCTextClick = useCallback(() => {
+        setBCCTagInputDisplay((prevValue) => !prevValue);
+    }, [])
+
+    useEffect(() => {
+        if (cc?.length === 0) {
+            onCCTextClick();
+        }
+    }, [cc?.length, onCCTextClick]);
+
+    useEffect(() => {
+        if (bcc?.length === 0) {
+            onBCCTextClick();
+        }
+    }, [bcc?.length, onBCCTextClick]);
+
+    const renderTagInputs = (args: { name: string, label: string }) => {
+        return (
             <FlexBox $gap="10px" $width="calc(100% - 63px)">
-                <Typography variant="h6">To:</Typography>
+                <Typography variant="h6">{args.label}:</Typography>
                 <TagInputField
-                    name="to"
+                    name={args.name}
                     width="calc(100% - 30px)"
                     type="email"
                     required
                     pattern="/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
                 />
             </FlexBox>
-            <FlexBox $gap="10px">
-                <StyledTypography variant="h6">Cc</StyledTypography>
-                <StyledTypography variant="h6">Bcc</StyledTypography>
+        )
+    }
+
+    return (
+        <FlexBox $width="100%" $flexDirection="column" $gap="10px">
+            <FlexBox $width="100%">
+                {renderTagInputs({ name: 'to', label: 'To' })}
+                <FlexBox $gap="10px">
+                    {!showCCTagInput && <StyledTypography variant="h6" onClick={onCCTextClick}>Cc</StyledTypography>}
+                    {!showBCCTagInput && <StyledTypography variant="h6" onClick={onBCCTextClick}>Bcc</StyledTypography>}
+                </FlexBox>
             </FlexBox>
+            {showCCTagInput && renderTagInputs({ label: 'Cc', name: 'cc' })}
+            {showBCCTagInput && renderTagInputs({ label: 'Bcc', name: 'bcc' })}
         </FlexBox>
     )
 }

@@ -61,6 +61,7 @@ export const TagInput = (props: ITagInputProps) => {
             )}
             <StyledInput
                 autoFocus
+                autoComplete="off"
                 value={value}
                 onChange={_onChange} onKeyDown={_onKeyDown}
                 {...rest}

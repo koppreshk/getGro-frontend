@@ -12,7 +12,8 @@ export const TagInputField = (props: ITagInputFieldProps) => {
     return (
         <>
             <Controller
-                render={({ field: { onChange, value, ...rest } }) => (
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                render={({ field: { onChange, value, ref, ...rest } }) => (
                     <TagInput
                         {...props}
                         {...rest}
