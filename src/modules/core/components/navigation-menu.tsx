@@ -87,19 +87,6 @@ const SecondaryIconWrapper = styled(FlexBox)`
     cursor: pointer;
 `;
 
-const StyledChip = styled(Chip)`
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    width: 24px;
-    height: 24px;
-    &&{
-        .MuiChip-label {
-                padding: 0;
-            }
-    }
-`;
-
 export const NavigationMenu = React.memo(() => {
     const { pathname } = useLocation();
     const [selectedMenu, setMenu] = React.useState(() => pathname === '/' ? 'dashboard' : pathname?.split('/')[1] ?? 'dashboard');
