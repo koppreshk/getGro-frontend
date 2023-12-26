@@ -3,7 +3,7 @@ import React from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { FlexBox } from "lib/ui-ux";
-import { Chip, Popover, Tooltip, Typography, Badge } from "@mui/material";
+import { Popover, Tooltip, Typography, Badge } from "@mui/material";
 import { EventOutlined, GroupOutlined, InsertChartOutlined, SettingsOutlined, TaskOutlined } from "@mui/icons-material";
 
 interface IPrimaryOptionProps {
