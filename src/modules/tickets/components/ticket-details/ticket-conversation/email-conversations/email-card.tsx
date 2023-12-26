@@ -1,10 +1,10 @@
-import { useCallback, useId, useState } from "react";
+import { useCallback, useId, useMemo, useState } from "react";
 import styled from "styled-components";
 import { DateTime } from "luxon";
 import { Typography, Avatar, IconButton, Tooltip } from "@mui/material";
 import { Reply } from '@mui/icons-material/';
 import { FlexBox } from "lib/ui-ux";
-import { getFormattedDate, getInitialsByName } from "lib/utils";
+import { chooseRandomColors, getFormattedDate, getInitialsByName } from "lib/utils";
 import { useAuth } from "modules/login";
 import { EditorSection } from "./editor-section";
 import { EmailPopoverMetadata } from "./email-popover-metadata";
@@ -63,6 +63,7 @@ export const EmailCard = (props: IEmailCardProps) => {
     const newThreadId = useId();
     const { user } = useAuth();
     const toggleEditorView = useCallback(() => setShowEditor(!showEditor), [showEditor]);
+    const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(from)), [from]);
 
     const onReplyClick: React.MouseEventHandler<HTMLButtonElement> = (ev) => {
         ev.stopPropagation();
@@ -93,7 +94,7 @@ export const EmailCard = (props: IEmailCardProps) => {
             <FlexBox $flexDirection="column" $gap="12px" $justifyContent="center">
                 <FlexBox style={{ cursor: 'pointer' }} $flexDirection="column" $width="100%" onClick={onCardClick}>
                     <FlexBox $gap="10px" $width="100%">
-                        <Avatar>{getInitialsByName(from)}</Avatar>
+                        <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>{getInitialsByName(from)}</Avatar>
                         <FlexBox $flexDirection="column" $width="calc(100% - 50px)">
                             <FlexBox $justifyContent="space-between">
                                 <Typography variant="h6">{from}</Typography>
