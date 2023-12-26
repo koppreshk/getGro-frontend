@@ -1,2 +1,3 @@
 export * from './textbox-field';
 export * from './select-field';
+export * from './tag-input-field';

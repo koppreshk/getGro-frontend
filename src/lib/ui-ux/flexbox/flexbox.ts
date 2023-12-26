@@ -5,6 +5,7 @@ export interface IFlexBlockBaseProps {
     $inline?: boolean;
     $flexDirection?: Property.FlexDirection;
     $flexFlow?: Property.FlexFlow;
+    $flexWrap?: Property.FlexWrap;
     $gap?: Property.Gap;
     $alignContent?: Property.AlignContent;
     $alignItems?: Property.AlignItems;
@@ -28,6 +29,7 @@ export const FlexBox = styled.div<IFlexBlockBaseProps>`
     box-sizing: border-box;
     ${({ $flexDirection }) => $flexDirection && css`flex-direction: ${$flexDirection};`}
     ${({ $flexFlow }) => $flexFlow && css`flex-flow: ${$flexFlow};`}
+    ${({ $flexWrap }) => $flexWrap && css`flex-wrap: ${$flexWrap};`}
     ${({ $gap }) => $gap && css`gap: ${$gap};`}
     ${({ $alignContent }) => $alignContent && css`align-content: ${$alignContent};`}
     ${({ $alignItems }) => $alignItems && css`align-items: ${$alignItems};`}

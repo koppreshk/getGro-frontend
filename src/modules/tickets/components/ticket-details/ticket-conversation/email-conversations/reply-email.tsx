@@ -6,7 +6,7 @@ import { chooseRandomColors, getInitialsByName } from "lib/utils";
 import ReactQuill from "react-quill";
 import styled from "styled-components";
 
-interface IEditorSectionProps {
+interface IReplyEmailProps {
     from: string;
     editorValue: string;
     onCancelClick: () => void;
@@ -33,7 +33,7 @@ const EditorContainer = styled(FlexBox)`
     }
 `;
 
-export const EditorSection = (props: IEditorSectionProps) => {
+export const ReplyEmail = (props: IReplyEmailProps) => {
     const { from, editorValue, onCancelClick, onChange, onSendClick } = props;
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(from)), [from]);
 

@@ -2,6 +2,7 @@ import { FlexBox } from "lib/ui-ux";
 import { EmailCard, IEmailThreadProps } from "./email-card";
 import { useCallback } from "react";
 import styled from "styled-components";
+import { FormProvider, useForm } from "react-hook-form";
 
 const EmailConversationsContainer = styled(FlexBox)`
   div:last-child {
@@ -22,6 +23,7 @@ interface IEmailConversationsProps {
 
 export const EmailConversations = (props: IEmailConversationsProps) => {
     const { emailThreads, onSetEmailThreads } = props;
+    const formContext = useForm();
 
     const onSend = useCallback((args: Omit<IEmailThreadProps, 'subject'>, linkedThreadId: string) => {
         const clonedEmailThreads = emailThreads.slice()
@@ -30,8 +32,10 @@ export const EmailConversations = (props: IEmailConversationsProps) => {
     }, [emailThreads, onSetEmailThreads])
 
     return (
-        <EmailConversationsContainer $width="100%" $height="calc(100% - 32px)" $flexDirection="column" $gap="20px" $overflowY="auto">
-            {emailThreads.map((singleEmail, index) => <EmailCard key={index} emailProps={{ ...singleEmail, subject: props.subject }} onSend={onSend} onSingleEmailCollapseHandler={props.onSingleEmailCollapseHandler} />)}
-        </EmailConversationsContainer>
+        <FormProvider {...formContext}>
+            <EmailConversationsContainer $width="100%" $height="calc(100% - 32px)" $flexDirection="column" $gap="20px" $overflowY="auto">
+                {emailThreads.map((singleEmail, index) => <EmailCard key={index} emailProps={{ ...singleEmail, subject: props.subject }} onSend={onSend} onSingleEmailCollapseHandler={props.onSingleEmailCollapseHandler} />)}
+            </EmailConversationsContainer>
+        </FormProvider>
     )
 }
