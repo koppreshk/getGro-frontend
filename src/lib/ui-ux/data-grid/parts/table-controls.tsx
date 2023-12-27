@@ -1,13 +1,20 @@
 import React, { useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
-import { IconButton, Slider, Typography } from "@mui/material";
+import { IconButton, Slider, Tooltip, Typography } from "@mui/material";
 import { FlexBox, VerticalSeparator } from "lib/ui-ux";
-import { ChevronLeft, ChevronRight, KeyboardDoubleArrowLeft, KeyboardDoubleArrowRight } from '@mui/icons-material';
+import { ArchiveOutlined, AssignmentIndOutlined, ChevronLeft, ChevronRight, DeleteOutline, KeyboardDoubleArrowLeft, KeyboardDoubleArrowRight, MarkChatReadOutlined, MarkUnreadChatAltOutlined } from '@mui/icons-material';
 import { useAppSelector } from "lib/hooks";
+import { Table } from "@tanstack/react-table";
 
 const StyledFlexBox = styled(FlexBox)`
-    padding: 0px 20px;    
+    padding: 0px 20px 0 8px;  
+`;
+
+const StyledSlider = styled(Slider)`
+    .MuiSlider-markLabel {
+        font-size: 12px;
+    }
 `;
 
 const marks = [
@@ -37,7 +44,12 @@ function valuetext(value: number) {
     return `${value} Rows`;
 }
 
-export const TableControls = () => {
+interface ITableControlProps<T> {
+    table: Table<T>;
+}
+
+export const TableControls = <T extends object>(props: ITableControlProps<T>) => {
+    const { table } = props;
     const { totalPages } = useAppSelector((state) => state.tickets);
     const [searchParams, setSearchParams] = useSearchParams();
     const pageNumber = Number(searchParams.get('pageNumber')) || 1;
@@ -74,44 +86,97 @@ export const TableControls = () => {
         setSearchParams(searchParams);
     }, [pageNumber, searchParams, setSearchParams]);
 
+    const isTableActionsvisible = table.getIsSomeRowsSelected() || table.getIsAllRowsSelected();
+
     return (
-        <StyledFlexBox $justifyContent="flex-end" $gap="50px" $alignItems="center" $height="110px">
-            <Slider
-                aria-label="Restricted values"
-                defaultValue={10}
-                valueLabelFormat={valuetext}
-                getAriaValueText={valuetext}
-                onChange={onSliderChange}
-                step={10}
-                valueLabelDisplay="auto"
-                value={noOfRecords}
-                marks={marks}
-                min={10}
-                max={50}
-                sx={{ width: '200px', marginBottom: 'unset' }}
-            />
-            <VerticalSeparator />
-            <FlexBox $gap="15px" $alignItems='center'>
-                <IconButton aria-label="First" onClick={firstBtnClick} disabled={pageNumber === 1} color="primary">
-                    <KeyboardDoubleArrowLeft />
-                </IconButton>
-                <IconButton aria-label="Previous" onClick={onPrevPage} disabled={pageNumber === 1} color="primary">
-                    <ChevronLeft />
-                </IconButton>
-                <FlexBox $gap="5px" $alignItems='center'>
-                    <Typography variant='button'>Page</Typography>
-                    <Typography variant='button'>
-                        {pageNumber} of{' '}
-                        {totalPages}
-                    </Typography>
+        <StyledFlexBox $justifyContent="space-between" $height="76px">
+            <FlexBox $alignItems="end">
+                {isTableActionsvisible ? <TableActions /> : <></>}
+            </FlexBox>
+            <FlexBox $gap="30px" $alignItems="center">
+                <StyledSlider
+                    aria-label="Restricted values"
+                    defaultValue={10}
+                    valueLabelFormat={valuetext}
+                    getAriaValueText={valuetext}
+                    onChange={onSliderChange}
+                    step={10}
+                    valueLabelDisplay="auto"
+                    value={noOfRecords}
+                    marks={marks}
+                    min={10}
+                    max={50}
+                    size="small"
+                    sx={{ width: '150px', marginBottom: 'unset' }}
+                />
+                <VerticalSeparator />
+                <FlexBox>
+                    <IconButton aria-label="First" onClick={firstBtnClick} disabled={pageNumber === 1} color="primary">
+                        <KeyboardDoubleArrowLeft fontSize="small" />
+                    </IconButton>
+                    <IconButton aria-label="Previous" onClick={onPrevPage} disabled={pageNumber === 1} color="primary">
+                        <ChevronLeft fontSize="small" />
+                    </IconButton>
+                    <FlexBox $gap="5px" $alignItems='center'>
+                        <Typography variant='body3'>
+                            {pageNumber} of{' '}
+                            {totalPages}
+                        </Typography>
+                    </FlexBox>
+                    <IconButton aria-label="Next" onClick={onNextPage} disabled={pageNumber === totalPages} color="primary">
+                        <ChevronRight fontSize="small" />
+                    </IconButton>
+                    <IconButton aria-label="Last" onClick={lastBtnClick} disabled={pageNumber === totalPages} color="primary">
+                        <KeyboardDoubleArrowRight fontSize="small" />
+                    </IconButton>
                 </FlexBox>
-                <IconButton aria-label="Next" onClick={onNextPage} disabled={pageNumber === totalPages} color="primary">
-                    <ChevronRight />
-                </IconButton>
-                <IconButton aria-label="Last" onClick={lastBtnClick} disabled={pageNumber === totalPages} color="primary">
-                    <KeyboardDoubleArrowRight />
-                </IconButton>
             </FlexBox>
         </StyledFlexBox>
+    )
+}
+
+const TableActions = () => {
+
+    const tableActionOptions = [
+        {
+            title: 'Mark as read',
+            renderIcon: () => <MarkChatReadOutlined fontSize="small" />,
+            addSeperator: false,
+        },
+        {
+            title: 'Mark as unread',
+            renderIcon: () => <MarkUnreadChatAltOutlined fontSize="small" />,
+            addSeperator: true,
+        },
+        {
+            title: 'Assign',
+            renderIcon: () => <AssignmentIndOutlined fontSize="small" />,
+            addSeperator: false,
+        },
+        {
+            title: 'Dispose',
+            renderIcon: () => <ArchiveOutlined fontSize="small" />,
+            addSeperator: true,
+        },
+        {
+            title: 'Delete',
+            renderIcon: () => <DeleteOutline fontSize="small" />,
+            addSeperator: false,
+        }
+    ]
+
+    return (
+        <FlexBox $alignItems='center' $gap='10px'>
+            {tableActionOptions.map((option) => (
+                <>
+                    <Tooltip title={option.title} key={option.title} arrow placement="bottom">
+                        <IconButton>
+                            {option.renderIcon()}
+                        </IconButton>
+                    </Tooltip>
+                    {option.addSeperator ? <VerticalSeparator /> : <></>}
+                </>
+            ))}
+        </FlexBox>
     )
 }

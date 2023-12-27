@@ -12,6 +12,7 @@ export interface ITicketDetails {
     ticketSubStatus: string;
     createdAt: string;
     priority: string;
+    status: boolean;
 }
 
 export const useGetUnassignedTickets = () => {
