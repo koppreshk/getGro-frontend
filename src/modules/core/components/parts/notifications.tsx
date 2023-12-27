@@ -31,26 +31,52 @@ const StyledNotification = styled(FlexBox)`
     border-bottom: ${(props) => props.theme.semantics.standardBorder};
 `;
 
+const StyledIconButton = styled(IconButton) <{ $showAnimation: boolean }>`
+    &&{
+        @keyframes zoomNotification {
+            from {
+                transform: scale3d(1, 1, 1);
+            }
+            10%, 20% {
+                transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
+            }
+            30%, 50%, 70%, 90% {
+                transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+            }
+            40%, 60%, 80% {
+                transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+            }
+            to {
+                transform: scale3d(1, 1, 1);
+            }
+        }
+        animation: ${(props) => props.$showAnimation ? 'zoomNotification 2s infinite' : 'none'};   
+    }
+`;
 
 export const Notifications = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [showAnimation, setShowAnimation] = useState((notifications.length > 0));
+
     const open = Boolean(anchorEl);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
+        setShowAnimation(false);
     };
 
     const handleClose = () => {
         setAnchorEl(null);
+        setShowAnimation(true)
     };
 
     return (
         <>
-            <IconButton onClick={handleClick}>
+            <StyledIconButton onClick={handleClick} $showAnimation={showAnimation}>
                 <Badge badgeContent={notifications.length} color="error">
                     <NotificationsOutlinedIcon />
                 </Badge>
-            </IconButton>
+            </StyledIconButton>
             <Popover
                 open={open}
                 anchorEl={anchorEl}
