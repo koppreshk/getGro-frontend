@@ -20,11 +20,9 @@ export const TableBody = <T extends object>(props: ITableBodyProps<T>) => {
     const { row, onRowClick } = props;
 
     const onClick = React.useCallback(() => onRowClick && onRowClick(row), [onRowClick, row]);
-
-    console.log('row', row);
-
+    const isread = row.original as any;
     return (
-        <StyledTR onClick={onClick} className="table-row-group" $isRead={row.original?.status}>
+        <StyledTR onClick={onClick} className="table-row-group" $isRead={isread.status}>
             {row.getVisibleCells().map(cell => (
                 <td key={cell.id} style={{ width: cell.column.getSize() }}>
                     <Typography variant='body2' textOverflow={'ellipsis'} overflow="hidden" whiteSpace="nowrap" maxWidth={cell.column.getSize()}>
