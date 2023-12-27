@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { FormProvider, useForm } from "react-hook-form";
 
 const EmailConversationsContainer = styled(FlexBox)`
-  div:last-child {
+  .email-card-container:last-child {
     border-bottom: none;
   }  
 `;

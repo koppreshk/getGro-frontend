@@ -57,37 +57,22 @@ function strip(html: string) {
     return doc.body.textContent || "";
 }
 
-const useReplyEmail = () => {
-    const [replyEditorValue, setReplyEditorValue] = useState('');
-    const [showReplyEditor, setShowReplyEditor] = useState(false);
+const useEmailActionHelpers = () => {
+    const [editorValue, setEditorValue] = useState('');
+    const [showEditor, setShowEditor] = useState(false);
 
-    const toggleReplyEditorView = useCallback(() => setShowReplyEditor(!showReplyEditor), [showReplyEditor]);
-    const onReplyEditorValueChange = useCallback((value: string) => setReplyEditorValue(value), []);
+    const toggleEditorView = useCallback((emailContent?: string) => {
+        setShowEditor(!showEditor);
+        setEditorValue(emailContent ?? '');
+    }, [showEditor]);
 
-    return {
-        toggleReplyEditorView,
-        onReplyEditorValueChange,
-        showReplyEditor,
-        replyEditorValue
-    }
-}
-
-const useForwardEmail = () => {
-    const [forwardEditorValue, setForwardEditorValue] = useState('');
-    const [showForwardEditor, setShowForwardEditor] = useState(false);
-
-    const toggleForwardEditorView = useCallback((emailContent?: string) => {
-        setShowForwardEditor(!showForwardEditor);
-        setForwardEditorValue(emailContent ?? '');
-    }, [showForwardEditor]);
-
-    const onForwardEditorValueChange = useCallback((value: string) => setForwardEditorValue(value), []);
+    const onEditorValueChange = useCallback((value: string) => setEditorValue(value), []);
 
     return {
-        showForwardEditor,
-        forwardEditorValue,
-        onForwardEditorValueChange,
-        toggleForwardEditorView
+        showEditor,
+        editorValue,
+        onEditorValueChange,
+        toggleEditorView
     }
 }
 
@@ -96,8 +81,8 @@ export const EmailCard = (props: IEmailCardProps) => {
     const newThreadId = useId();
     const { user } = useAuth();
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(from)), [from]);
-    const { showReplyEditor, replyEditorValue, onReplyEditorValueChange, toggleReplyEditorView } = useReplyEmail();
-    const { showForwardEditor, forwardEditorValue, toggleForwardEditorView, onForwardEditorValueChange } = useForwardEmail();
+    const { showEditor: showReplyEditor, editorValue: replyEditorValue, onEditorValueChange: onReplyEditorValueChange, toggleEditorView: toggleReplyEditorView } = useEmailActionHelpers();
+    const { showEditor, editorValue, toggleEditorView, onEditorValueChange } = useEmailActionHelpers();
 
     const onReplyClick: React.MouseEventHandler<HTMLButtonElement> = useCallback((ev) => {
         ev.stopPropagation();
@@ -106,8 +91,8 @@ export const EmailCard = (props: IEmailCardProps) => {
 
     const onForwardClick: React.MouseEventHandler<HTMLButtonElement> = useCallback((ev) => {
         ev.stopPropagation();
-        toggleForwardEditorView(emailHTMLContent);
-    }, [emailHTMLContent, toggleForwardEditorView])
+        toggleEditorView(emailHTMLContent);
+    }, [emailHTMLContent, toggleEditorView])
 
     const onSendClick = useCallback(() => {
         onSend({
@@ -125,7 +110,7 @@ export const EmailCard = (props: IEmailCardProps) => {
     const onCardClick = () => onSingleEmailCollapseHandler({ threadId, isCollapsed: !isCollapsed });
 
     return (
-        <StyledEmailCardContainer>
+        <StyledEmailCardContainer className="email-card-container">
             <FlexBox $flexDirection="column" $gap="12px" $justifyContent="center">
                 <FlexBox style={{ cursor: 'pointer' }} $flexDirection="column" $width="100%" onClick={onCardClick}>
                     <FlexBox $gap="10px" $width="100%">
@@ -154,7 +139,7 @@ export const EmailCard = (props: IEmailCardProps) => {
                     showReplyEditor ? <ReplyEmail onCancelClick={toggleReplyEditorView} onSendClick={onSendClick} onChange={onReplyEditorValueChange} from={from} editorValue={replyEditorValue} /> : null
                 }
                 {
-                    showForwardEditor ? <ForwardEmail from={from} forwardEditorValue={forwardEditorValue} onForwardEditorValueChange={onForwardEditorValueChange} /> : null
+                    showEditor ? <ForwardEmail from={from} forwardEditorValue={editorValue} onForwardEditorValueChange={onEditorValueChange} onCancelClick={toggleEditorView} /> : null
                 }
             </FlexBox >
         </StyledEmailCardContainer>
