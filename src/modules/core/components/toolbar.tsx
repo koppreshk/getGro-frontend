@@ -1,6 +1,8 @@
+/// <reference types="vite-plugin-svgr/client" />
+
 import { FlexBox } from "lib/ui-ux";
 import styled from "styled-components";
-import GetGroLogoImg from './../../../assets/png/getgro.svg';
+import GetGroLogoImg from './../../../assets/svg/getgro.svg?react';
 import { AccountMenu, AgentStatus, Notifications, AgentStatistics } from "./parts";
 
 const TopBarWrapper = styled.div`
@@ -13,18 +15,12 @@ const TopBar = styled(FlexBox)`
     padding: 8px 16px;
 `;
 
-const GetGroLogo = styled.img`
-    width: 36px;
-    height: 36px;
-    border-radius: 15%;
-`;
-
 export const Toolbar = () => {
     return (
         <TopBarWrapper>
             <TopBar $justifyContent="space-between" $alignItems="stretch">
                 <FlexBox $alignItems="center">
-                    <GetGroLogo src={GetGroLogoImg} />
+                    <GetGroLogoImg />
                 </FlexBox>
                 <FlexBox $justifyContent="flex-end" $gap="10px" $alignItems="center">
                     <AgentStatistics />
