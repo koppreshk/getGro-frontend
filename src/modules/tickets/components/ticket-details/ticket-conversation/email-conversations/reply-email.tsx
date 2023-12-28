@@ -5,6 +5,7 @@ import { FlexBox } from "lib/ui-ux";
 import { chooseRandomColors, getInitialsByName } from "lib/utils";
 import ReactQuill from "react-quill";
 import styled from "styled-components";
+import { RoundedSendButton } from "./forward-email";
 
 interface IReplyEmailProps {
     from: string;
@@ -16,20 +17,28 @@ interface IReplyEmailProps {
 
 const EditorContainer = styled(FlexBox)`
     .quill {
-        width: calc(100% - 50px);
+        width: 100%;
         display: flex;
         flex-direction: column;
     }
-    .quill:hover, :focus {
-            border-radius: 16px;
-            box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-    }
-    .ql-toolbar {
-        border-radius: 16px 16px 0px 0px;
+    .ql-toolbar, .ql-container {
+        border: 0;
+        border-bottom: 1px solid #ccc;
     }
     .ql-container {
-        border-radius: 0px 0px 16px 16px;
         min-height: 180px;
+        border-bottom: 0px;
+    }
+    .ql-editor {
+        padding: 12px 16px;
+    }
+`;
+
+const StyledReplyCardContainer = styled(FlexBox)`
+    border: 1px solid #ccc;
+    border-radius: 16px;
+    &:hover, &:focus-within {
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     }
 `;
 
@@ -38,10 +47,10 @@ export const ReplyEmail = (props: IReplyEmailProps) => {
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(from)), [from]);
 
     return (
-        <>
-            <FlexBox $flexDirection="column" $height="auto" style={{ position: 'relative' }}>
-                <EditorContainer $gap="10px" $width="calc(100% - 10px)">
-                    <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>{getInitialsByName(from)}</Avatar>
+        <FlexBox $gap="10px" >
+            <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>{getInitialsByName(from)}</Avatar>
+            <StyledReplyCardContainer $flexDirection="column" $width="calc(100% - 60px)">
+                <EditorContainer>
                     <ReactQuill
                         theme="snow"
                         value={editorValue}
@@ -49,15 +58,15 @@ export const ReplyEmail = (props: IReplyEmailProps) => {
                         preserveWhitespace
                         onChange={onChange} />
                 </EditorContainer>
-                <FlexBox>
-                    <IconButton onClick={onSendClick} color="primary" sx={{ position: 'absolute', top: '1px', right: '10px' }}>
-                        <Send />
-                    </IconButton>
-                    <IconButton onClick={onCancelClick} sx={{ position: 'absolute', top: '1px', right: '50px' }}>
+                <FlexBox $justifyContent="space-between" $padding="0px 16px 10px">
+                    <RoundedSendButton variant="contained" endIcon={<Send />} onClick={onSendClick} >
+                        Send
+                    </RoundedSendButton>
+                    <IconButton onClick={onCancelClick}>
                         <Delete />
                     </IconButton>
                 </FlexBox>
-            </FlexBox>
-        </>
+            </StyledReplyCardContainer>
+        </FlexBox>
     )
 }

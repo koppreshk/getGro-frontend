@@ -1,8 +1,9 @@
 import React from "react";
 import { FlexBox, TextArea } from "lib/ui-ux";
 import { Send } from "@mui/icons-material";
-import { Tabs, Tab, Button } from "@mui/material";
+import { Tabs, Tab } from "@mui/material";
 import { KeyCodes } from "lib/enums";
+import { RoundedSendButton } from "./email-conversations/forward-email";
 
 interface ITicketConversationFooterProps {
     onSendAction: (newConversation: {
@@ -46,9 +47,9 @@ export const TicketConversationFooter = (props: ITicketConversationFooterProps) 
             <CustomTabPanel index={0} value={value}>
                 <TextArea onChange={onTextChange} value={textareaValue} onKeyDown={onKeyDown} placeholder="Shift + Enter to add a new line" />
                 <FlexBox $justifyContent="flex-end" $padding="0px 10px">
-                    <Button variant="contained" endIcon={<Send />} onClick={onSendClick} >
+                    <RoundedSendButton variant="contained" endIcon={<Send />} onClick={onSendClick} >
                         Send
-                    </Button>
+                    </RoundedSendButton>
                 </FlexBox>
             </CustomTabPanel>
         </FlexBox>
