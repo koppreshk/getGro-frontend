@@ -1,6 +1,6 @@
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
-import { Badge, IconButton, Popover, Typography } from '@mui/material';
-import { FlexBox } from 'lib/ui-ux';
+import { Badge, IconButton, Typography } from '@mui/material';
+import { FlexBox, PopoverWithBeak } from 'lib/ui-ux';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -77,14 +77,10 @@ export const Notifications = () => {
                     <NotificationsOutlinedIcon />
                 </Badge>
             </StyledIconButton>
-            <Popover
+            <PopoverWithBeak
                 open={open}
                 anchorEl={anchorEl}
-                onClose={handleClose}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left'
-                }}>
+                onClose={handleClose}>
                 <NotifiacationsContainer $padding="16px" $flexDirection="column" $gap="8px" $maxWidth='200px'>
                     {notifications.map((item) => (
                         <StyledNotification key={item.value} $flexDirection='column' className='single-notification'>
@@ -92,7 +88,7 @@ export const Notifications = () => {
                         </StyledNotification>
                     ))}
                 </NotifiacationsContainer>
-            </Popover>
+            </PopoverWithBeak>
         </>
 
     );
