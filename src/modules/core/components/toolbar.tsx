@@ -2,7 +2,7 @@
 
 import { FlexBox } from "lib/ui-ux";
 import styled from "styled-components";
-import GetGroLogoImg from './../../../assets/svg/getgro.svg?react';
+import GetGroLogoImg from './../../../assets/svg/inverted-getgro.svg?react';
 import { AccountMenu, AgentStatus, Notifications, AgentStatistics } from "./parts";
 
 const TopBarWrapper = styled.div`
