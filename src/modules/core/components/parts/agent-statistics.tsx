@@ -4,7 +4,7 @@ import { IconButton, Tooltip, Typography } from "@mui/material"
 import { FlexBox, PopoverWithBeak } from "lib/ui-ux"
 import styled from 'styled-components';
 import { useState } from "react";
-import DonutIcon from '../../../../assets/png/donut-chart.svg?react'
+import DonutIcon from '../../../../assets/svg/donut-chart.svg?react'
 
 const StatsContainer = styled(FlexBox)`
     padding: 20px;
