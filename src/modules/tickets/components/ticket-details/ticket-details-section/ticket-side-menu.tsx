@@ -59,12 +59,12 @@ const useSideMenuOptions = () => {
     ];
 }
 
-interface ITicetSideMenuProps {
+interface ITicketSideMenuProps {
     selectedMenuOption: string;
     onSetMenuOption: (id: string) => void;
 }
 
-export const TicetSideMenu = (props: ITicetSideMenuProps) => {
+export const TicketSideMenu = (props: ITicketSideMenuProps) => {
     const { selectedMenuOption, onSetMenuOption } = props;
     const sideMenuOptions = useSideMenuOptions();
 
