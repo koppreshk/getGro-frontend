@@ -1,13 +1,37 @@
 import React from "react";
-import { PersonSearch } from "@mui/icons-material";
+import { AccountCircleOutlined, CalendarToday, ChecklistOutlined, ConfirmationNumberOutlined, Email, PersonSearch, Phone } from "@mui/icons-material";
 import { Typography, Tooltip, IconButton, Avatar } from "@mui/material";
-import { FlexBox } from "lib/ui-ux";
+import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { Platform } from "../ticket-conversation/ticket-conversation-header";
 import { SearchCustomerContainer } from "modules/tickets/containers";
 import { useAppSelector } from "lib/hooks";
 import { getInitialsByName } from "lib/utils";
 import { UnlinkCustomer } from "./unlink-customer";
 import { ITicketDetails } from "modules/tickets/apis";
+import styled from "styled-components";
+import { commonStyles } from "lib/ui-ux/common-styles";
+import { TicketConversation } from "../ticket-conversation/ticket-conversation";
+
+
+const StyledAvatar = styled(Avatar)`
+    && {
+        width: 100px;
+        height: 100px;
+    }
+`;
+
+const TypographyName = styled(Typography)`
+    && {
+        color: ${({ theme }) => theme.semantics.secondaryTextColor}
+    }
+`;
+
+const TypographyValue = styled(Typography)`
+    && {
+        ${commonStyles.textOverflow};
+    }
+`;
+
 
 interface ITicketOverviewProps {
     ticketDetails: ITicketDetails;
@@ -26,7 +50,7 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
         <FlexBox $gap="30px" $padding="10px" $flexDirection="column">
             <FlexBox $justifyContent="space-between">
                 <FlexBox $gap="5px" $alignItems="center">
-                    <Typography variant="h5" fontSize="16px" >{customerName ?? 'Siddarth Menon'} messaged via</Typography>
+                    <Typography variant="h5" >{customerName ?? 'Siddarth Menon'}</Typography><Typography variant="body2"> messaged via</Typography>
                     <Platform variant="body2" $platform={source.toLocaleLowerCase()}>{source}</Platform>
                 </FlexBox>
                 {customerId
@@ -37,32 +61,65 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
                         </IconButton>
                     </Tooltip>}
             </FlexBox>
-            <ContactInfo />
+            <ContactInfo defaultData={ticketDetails} />
             <SearchCustomerContainer showSearchUserFlyout={showSearchUserFlyout} onSearchUserBtnClick={onSearchUserBtnClick} />
         </FlexBox>
     )
 }
 
-const ContactInfo = () => {
+interface IContactInfoProps {
+    defaultData: ITicketDetails;
+}
+
+const ContactInfo = (props: IContactInfoProps) => {
+    const { defaultData: { customerName, ticketStatus, createdAt, ticketId } } = props;
     const { email, name, phoneNumber, customerId } = useAppSelector((state) => state.tickets.linkedCustomer);
     return (
         <FlexBox $gap="20px" $flexDirection="column">
-            <FlexBox $gap="10px" $alignItems="center">
-                {name === undefined ? <Avatar /> : <Avatar>{getInitialsByName(name)}</Avatar>}
-                <Typography variant="h6" >{name ?? 'NA'}</Typography>
+            <FlexBox $gap="10px" $alignItems="center" $flexDirection="column">
+                {name === undefined ? <StyledAvatar /> : <StyledAvatar>{getInitialsByName(name)}</StyledAvatar>}
+                <Typography variant="h4" >{name === '' || name === undefined ? customerName ? customerName : 'NA' : name}</Typography>
             </FlexBox>
-            <FlexBox $gap="4px" $flexDirection="column">
-                <Typography variant="body2" fontWeight={'500'}>Email</Typography>
-                <Typography variant="body2" >{email === '' || email === undefined ? 'NA' : email}</Typography>
+            <HorizontalSeparator />
+            <FlexBox $padding="0 20px" $flexDirection="column" $gap="15px">
+                {contactInfoData('Email', email === '' || email === undefined ? 'NA' : email)}
+                {contactInfoData('Phone', phoneNumber ?? 'NA')}
+                {contactInfoData('Customer Id', customerId === undefined ? 'NA' : customerId)}
+                {contactInfoData('Ticket Id', ticketId)}
+                {contactInfoData('Created At', createdAt)}
+                {contactInfoData('Ticket Status', ticketStatus)}
             </FlexBox>
-            <FlexBox $gap="4px" $flexDirection="column">
-                <Typography variant="body2" fontWeight={'500'}>Phone</Typography>
-                <Typography variant="body2" >{phoneNumber ?? 'NA'}</Typography>
+        </FlexBox>
+    )
+}
+
+const contactInfoData = (name: string, value: string | number) => {
+    const renderIcons = (name: string) => {
+        switch (name) {
+            case 'Email':
+                return <Email fontSize="small" sx={{ fill: '#787f83' }} />;
+            case 'Phone':
+                return <Phone fontSize="small" sx={{ fill: '#787f83' }} />;
+            case 'Customer Id':
+                return <AccountCircleOutlined fontSize="small" sx={{ fill: '#787f83' }} />;
+            case 'Ticket Status':
+                return <ChecklistOutlined fontSize="small" sx={{ fill: '#787f83' }} />;
+            case 'Ticket Id':
+                return <ConfirmationNumberOutlined fontSize="small" sx={{ fill: '#787f83' }} />;
+            case 'Created At':
+                return <CalendarToday fontSize="small" sx={{ fill: '#787f83' }} />;
+            default:
+                return <AccountCircleOutlined fontSize="small" sx={{ fill: '#787f83' }} />;
+        }
+    }
+
+    return (
+        <FlexBox $width="100%" $flexDirection="row">
+            <FlexBox $width="35%" $flexDirection="row" $gap="5px" $alignItems="center">
+                {renderIcons(name)}
+                <TypographyName variant="h6">{name}</TypographyName>
             </FlexBox>
-            <FlexBox $gap="4px" $flexDirection="column">
-                <Typography variant="body2" fontWeight={'500'}>Customer Id</Typography>
-                <Typography variant="body2" >{customerId === undefined ? 'NA' : customerId}</Typography>
-            </FlexBox>
+            <TypographyValue variant="h6" width='65%'>{value}</TypographyValue>
         </FlexBox>
     )
 }

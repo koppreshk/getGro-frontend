@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 export const VerticalSeparator = styled.span`
-  width: 1px;
+  width: 2px;
   height: 30px;
   padding: 10px 0px;
   box-sizing: border-box;
-  background-color:  ${({ theme }) => theme.pallete.grayVariant1};
+  background-color:#E9EBED;
 `;
 
 export const HorizontalSeparator = styled.div<{ $margin?: string }>`
@@ -13,5 +13,5 @@ export const HorizontalSeparator = styled.div<{ $margin?: string }>`
   height: 1px;
   box-sizing: border-box;
   margin: ${({ $margin }) => $margin ? $margin : 'unset'};
-  background-color:  ${({ theme }) => theme.pallete.grayVariant1};
+  background-color:#E9EBED;
 `;

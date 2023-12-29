@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { GridLayout } from "lib/ui-ux";
 import { OrderDetailsContainer, TicketOverviewContainer } from "modules/tickets/containers";
-import { MenuOptions, TicetSideMenu } from "./ticket-side-menu";
+import { MenuOptions, TicketSideMenu } from "./ticket-side-menu";
 import { TicketNotes } from "./ticket-notes";
 import { TicketDispose } from "./ticket-dispose";
 
@@ -10,14 +10,14 @@ const StyledGridLayout = styled(GridLayout)`
     background-color: ${({ theme }) => theme.pallete.white};
 `;
 
-export const TicketDeatilsSection = () => {
+export const TicketDetailsSection = () => {
     const [selectedMenuOption, setSelectedMenuOption] = React.useState<string>(MenuOptions.CustomerProfile);
 
     const onMenuOptionClick = React.useCallback((id: string) => {
         setSelectedMenuOption(id);
     }, []);
 
-    const renderBasedOnSelctedview = React.useCallback(() => {
+    const renderBasedOnSelectedview = React.useCallback(() => {
         switch (selectedMenuOption) {
             case MenuOptions.CustomerProfile:
                 return <TicketOverviewContainer />;
@@ -34,9 +34,9 @@ export const TicketDeatilsSection = () => {
     return (
         <StyledGridLayout $gridTemplateColumns={"calc(100% - 56px) 56px"} $width="100%">
             <div>
-                {renderBasedOnSelctedview()}
+                {renderBasedOnSelectedview()}
             </div>
-            <TicetSideMenu onSetMenuOption={onMenuOptionClick} selectedMenuOption={selectedMenuOption} />
+            <TicketSideMenu onSetMenuOption={onMenuOptionClick} selectedMenuOption={selectedMenuOption} />
         </StyledGridLayout>
     )
 }

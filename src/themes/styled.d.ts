@@ -25,6 +25,7 @@ declare module 'styled-components' {
     },
     semantics: {
       standardBorder: string;
+      secondaryTextColor: string,
     }
     channelSpecific: {
       facebook: string,
