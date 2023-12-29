@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import { AccountCircleOutlined, CalendarToday, ChecklistOutlined, ConfirmationNumberOutlined, Email, PersonSearch, Phone } from "@mui/icons-material";
 import { Typography, Tooltip, IconButton, Avatar } from "@mui/material";
 import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
@@ -8,9 +9,7 @@ import { useAppSelector } from "lib/hooks";
 import { getInitialsByName } from "lib/utils";
 import { UnlinkCustomer } from "./unlink-customer";
 import { ITicketDetails } from "modules/tickets/apis";
-import styled from "styled-components";
 import { commonStyles } from "lib/ui-ux/common-styles";
-import { TicketConversation } from "../ticket-conversation/ticket-conversation";
 
 
 const StyledAvatar = styled(Avatar)`
