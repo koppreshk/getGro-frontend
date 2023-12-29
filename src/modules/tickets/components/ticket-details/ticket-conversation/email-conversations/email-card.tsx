@@ -86,12 +86,14 @@ export const EmailCard = (props: IEmailCardProps) => {
     const onReplyClick: React.MouseEventHandler<HTMLButtonElement> = useCallback((ev) => {
         ev.stopPropagation();
         toggleReplyEditorView();
-    }, [toggleReplyEditorView])
+        showEditor && toggleEditorView();
+    }, [showEditor, toggleEditorView, toggleReplyEditorView])
 
     const onForwardClick: React.MouseEventHandler<HTMLButtonElement> = useCallback((ev) => {
         ev.stopPropagation();
         toggleEditorView(emailHTMLContent);
-    }, [emailHTMLContent, toggleEditorView])
+        showReplyEditor && toggleReplyEditorView();
+    }, [emailHTMLContent, showReplyEditor, toggleEditorView, toggleReplyEditorView])
 
     const onSendReply = useCallback(() => {
         onSend({

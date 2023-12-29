@@ -25,7 +25,7 @@ export const EmailThreadOptions = (props: IEmailThreadOptionsProps) => {
     return (
         <>
             {threadOptions.map((option) => (
-                <Tooltip title={option.title} key={option.title} arrow placement="right">
+                <Tooltip title={option.title} key={option.title} arrow placement="bottom">
                     <IconButton sx={{ padding: 0 }} onClick={option.onClick}>
                         {option.renderIcon()}
                     </IconButton>
