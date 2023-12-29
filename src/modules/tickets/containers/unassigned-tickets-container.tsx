@@ -10,7 +10,6 @@ export const UnassignedTicketsContainer = React.memo(() => {
         const totalTickets = data?.total_pages ?? 0;
         // TODO: temporary, needs to be removed 
         const modifiedTicketsData = ticketsData.map((data, idx) => ({ ...data, status: idx % 3 == 0 }));
-        console.log('modifiedTicketsData', modifiedTicketsData);
 
         return (
             <UnassignedTickets isLoading={isLoading || isFetching} data={modifiedTicketsData} totalPages={totalTickets} />

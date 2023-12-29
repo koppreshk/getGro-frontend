@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { AccountCircleOutlined, CalendarToday, ChecklistOutlined, ConfirmationNumberOutlined, Email, PersonSearch, Phone } from "@mui/icons-material";
+import { AccountCircleOutlined, CalendarToday, ChecklistOutlined, ConfirmationNumberOutlined, Email, ImportExportRounded, PersonSearch, Phone } from "@mui/icons-material";
 import { Typography, Tooltip, IconButton, Avatar } from "@mui/material";
 import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { Platform } from "../ticket-conversation/ticket-conversation-header";
 import { SearchCustomerContainer } from "modules/tickets/containers";
 import { useAppSelector } from "lib/hooks";
-import { getInitialsByName } from "lib/utils";
+import { getFormattedDate, getInitialsByName } from "lib/utils";
 import { UnlinkCustomer } from "./unlink-customer";
 import { ITicketDetails } from "modules/tickets/apis";
 import { commonStyles } from "lib/ui-ux/common-styles";
@@ -49,7 +49,7 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
         <FlexBox $gap="30px" $padding="10px" $flexDirection="column">
             <FlexBox $justifyContent="space-between">
                 <FlexBox $gap="5px" $alignItems="center">
-                    <Typography variant="h5" >{customerName ?? 'Siddarth Menon'}</Typography><Typography variant="body2"> messaged via</Typography>
+                    <Typography variant="h5" >{customerName}</Typography><Typography variant="body2"> messaged via</Typography>
                     <Platform variant="body2" $platform={source.toLocaleLowerCase()}>{source}</Platform>
                 </FlexBox>
                 {customerId
@@ -71,7 +71,7 @@ interface IContactInfoProps {
 }
 
 const ContactInfo = (props: IContactInfoProps) => {
-    const { defaultData: { customerName, ticketStatus, createdAt, ticketId } } = props;
+    const { defaultData: { customerName, ticketStatus, createdAt, ticketId, priority } } = props;
     const { email, name, phoneNumber, customerId } = useAppSelector((state) => state.tickets.linkedCustomer);
     return (
         <FlexBox $gap="20px" $flexDirection="column">
@@ -85,8 +85,9 @@ const ContactInfo = (props: IContactInfoProps) => {
                 {contactInfoData('Phone', phoneNumber ?? 'NA')}
                 {contactInfoData('Customer Id', customerId === undefined ? 'NA' : customerId)}
                 {contactInfoData('Ticket Id', ticketId)}
-                {contactInfoData('Created At', createdAt)}
+                {contactInfoData('Created At', getFormattedDate(createdAt))}
                 {contactInfoData('Ticket Status', ticketStatus)}
+                {contactInfoData('Priority', priority)}
             </FlexBox>
         </FlexBox>
     )
@@ -107,6 +108,8 @@ const contactInfoData = (name: string, value: string | number) => {
                 return <ConfirmationNumberOutlined fontSize="small" sx={{ fill: '#787f83' }} />;
             case 'Created At':
                 return <CalendarToday fontSize="small" sx={{ fill: '#787f83' }} />;
+                case 'Priority':
+                return <ImportExportRounded fontSize="small" sx={{ fill: '#787f83' }} />;
             default:
                 return <AccountCircleOutlined fontSize="small" sx={{ fill: '#787f83' }} />;
         }
