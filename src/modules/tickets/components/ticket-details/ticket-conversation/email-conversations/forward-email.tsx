@@ -6,7 +6,7 @@ import { Delete, Send } from "@mui/icons-material";
 import { Avatar, Button, IconButton, Typography } from "@mui/material";
 import { chooseRandomColors, getInitialsByName } from "lib/utils";
 import { FlexBox } from "lib/ui-ux";
-import { TagInputField } from "lib/form-fields";
+import { FileUploadField, TagInputField } from "lib/form-fields";
 
 interface IForwardEmailProps {
     from: string;
@@ -64,7 +64,8 @@ export const RoundedSendButton = styled(Button)`
 export const ForwardEmail = (props: IForwardEmailProps) => {
     const { forwardEditorValue, from, onForwardEditorValueChange, onCancelClick } = props;
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(from)), [from]);
-
+    const { watch } = useFormContext();
+    console.log('watch: ', watch('attachments'));
     return (
         <FlexBox $gap="10px" >
             <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>{getInitialsByName(from)}</Avatar>
@@ -78,10 +79,14 @@ export const ForwardEmail = (props: IForwardEmailProps) => {
                         preserveWhitespace
                         onChange={onForwardEditorValueChange} />
                 </EditorContainer>
+                {watch('attachments')?.selectedFiles.map((item) => <span key={item.id} onClick={() => watch('attachments').remove(item.id)}>{item.name}</span>)}
                 <FlexBox $justifyContent="space-between" $padding="0px 16px 10px">
-                    <RoundedSendButton variant="contained" endIcon={<Send />}>
-                        Send
-                    </RoundedSendButton>
+                    <FlexBox $gap="5px">
+                        <RoundedSendButton variant="contained" endIcon={<Send />}>
+                            Send
+                        </RoundedSendButton>
+                        <FileUploadField name="attachments" multiple />
+                    </FlexBox>
                     <IconButton onClick={onCancelClick}>
                         <Delete />
                     </IconButton>
