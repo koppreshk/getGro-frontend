@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { memoizeFunction } from "./memoize-utils";
+import { v1 } from 'uuid';
 
 export function isArray(value: any): value is Array<any> {
     return value instanceof Array;
@@ -91,3 +92,5 @@ export const chooseRandomColors = memoizeFunction((_name: string): IInitialsColo
     const idx = Math.floor(Math.random() * COLORCODES.length);
     return COLORCODES[idx];
 }, 500);
+
+export const generateId = () => v1();
