@@ -33,7 +33,7 @@ export const SearchCustomerFlyout = (props: ISearchCustomerFlyoutProps) => {
         <Drawer anchor="right" open={showSearchUserFlyout} onClose={onSearchUserBtnClick}>
             <DrawerContent>
                 <HeaderWrapper $width="100%" $justifyContent="space-between">
-                    <Typography variant="h6">Search Customer Form</Typography>
+                    <Typography variant="h4">Search Customer Form</Typography>
                     <IconButton aria-label="Close" onClick={onSearchUserBtnClick}>
                         <CloseIcon />
                     </IconButton>

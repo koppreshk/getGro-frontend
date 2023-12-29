@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { AccountCircleOutlined, CalendarToday, ChecklistOutlined, ConfirmationNumberOutlined, Email, PersonSearch, Phone } from "@mui/icons-material";
+import { AccountCircleOutlined, CalendarToday, ChecklistOutlined, ConfirmationNumberOutlined, Email, ImportExportRounded, PersonSearch, Phone } from "@mui/icons-material";
 import { Typography, Tooltip, IconButton, Avatar } from "@mui/material";
 import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { Platform } from "../ticket-conversation/ticket-conversation-header";
@@ -108,6 +108,8 @@ const contactInfoData = (name: string, value: string | number) => {
                 return <ConfirmationNumberOutlined fontSize="small" sx={{ fill: '#787f83' }} />;
             case 'Created At':
                 return <CalendarToday fontSize="small" sx={{ fill: '#787f83' }} />;
+                case 'Priority':
+                return <ImportExportRounded fontSize="small" sx={{ fill: '#787f83' }} />;
             default:
                 return <AccountCircleOutlined fontSize="small" sx={{ fill: '#787f83' }} />;
         }
