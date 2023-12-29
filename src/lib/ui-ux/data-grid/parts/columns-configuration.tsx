@@ -14,7 +14,7 @@ const StyledIconButton = styled(IconButton)`
     &&{
         position: absolute;
         right: 0;
-        top: 122px;
+        top: 85px;
         background: ${(props) => props.theme.pallete.white};
     }
 `

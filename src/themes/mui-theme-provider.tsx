@@ -3,11 +3,13 @@ import { createTheme } from "@mui/material";
 declare module "@mui/material/styles" {
   interface TypographyVariants {
     body3: React.CSSProperties;
+    subheading1: React.CSSProperties;
   }
 
   // allow configuration using `createTheme`
     interface TypographyVariantsOptions {
     body3?: React.CSSProperties;
+    subheading1?: React.CSSProperties;
   }
 }
 
@@ -15,6 +17,7 @@ declare module "@mui/material/styles" {
 declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
     body3: true;
+    subheading1: true;
   }
 }
 
@@ -60,6 +63,10 @@ export const defaultMUITheme = createTheme(
       },
       body3: {
         fontSize: 13,
+      },
+      subheading1 : {
+        fontSize: 12,
+        fontWeight: 500
       }
     }
   }

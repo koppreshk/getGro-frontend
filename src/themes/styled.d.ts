@@ -38,7 +38,10 @@ declare module 'styled-components' {
     }
     others: {
       scrollHandleColor: string;
-      scrollContainerColor: string
+      scrollContainerColor: string;
+      sideMenuBg: string;
+      sideMenuIconColor: string;
+      sideMenuActiveColor: string;
     }
   }
 }

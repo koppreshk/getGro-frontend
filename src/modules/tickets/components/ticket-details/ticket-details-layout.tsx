@@ -18,10 +18,10 @@ export const TicketDetailsLayout = () => {
             <StyledLayouts $width="25%">
                 <TicketListViewContainer />
             </StyledLayouts>
-            <StyledLayouts $width="calc(40% - 20px)">
+            <StyledLayouts $width="calc(45% - 20px)">
                 <TicketConversationContainer />
             </StyledLayouts>
-            <StyledLayouts $width="calc(35% - 20px)">
+            <StyledLayouts $width="calc(30% - 20px)">
                 <TicketDetailsSection />
             </StyledLayouts>
         </StyledLayoutWrapper>
