@@ -167,15 +167,15 @@ const TableActions = () => {
 
     return (
         <FlexBox $alignItems='center' $gap='10px'>
-            {tableActionOptions.map((option) => (
-                <>
+            {tableActionOptions.map((option, index) => (
+                <div key={index}>
                     <Tooltip title={option.title} key={option.title} arrow placement="bottom">
                         <IconButton>
                             {option.renderIcon()}
                         </IconButton>
                     </Tooltip>
                     {option.addSeperator ? <VerticalSeparator /> : <></>}
-                </>
+                </div>
             ))}
         </FlexBox>
     )

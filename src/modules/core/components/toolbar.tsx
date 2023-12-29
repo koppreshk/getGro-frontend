@@ -12,7 +12,7 @@ const TopBarWrapper = styled.div`
 `;
 
 const TopBar = styled(FlexBox)`
-    padding: 8px 16px;
+    padding: 8px 6px 8px 16px;
 `;
 
 export const Toolbar = () => {
