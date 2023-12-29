@@ -7,7 +7,7 @@ import { useAppSelector } from "lib/hooks";
 const SideMenuWrapper = styled(FlexBox)`
     padding: 8px;
     box-sizing: border-box;
-    border-left: ${({ theme }) => theme.semantics.standardBorder};
+    background: ${({theme}) => theme.others.sideMenuBg};
 `;
 
 const IconWrapper = styled(FlexBox) <{ $isSelected: boolean; $isDisabled?: boolean }>`
@@ -15,12 +15,12 @@ const IconWrapper = styled(FlexBox) <{ $isSelected: boolean; $isDisabled?: boole
     padding: 8px;
     box-sizing: border-box;
     cursor: pointer;
-    color: #68737d;
-    background-color: ${({ $isSelected }) => $isSelected ? '#1f73b733' : 'unset'};
+    color: ${({theme}) => theme.others.sideMenuIconColor};
+    background-color: ${({ $isSelected, theme }) => $isSelected ? theme.others.sideMenuActiveColor : 'unset'};
     opacity: ${({ $isDisabled }) => $isDisabled ? '0.5' : '1'};
     cursor: ${({ $isDisabled }) => $isDisabled ? 'not-allowed' : 'pointer'};
     &:hover {
-        background-color: ${({ $isSelected }) => $isSelected ? '#1f73b733' : '#1f73b714'};;
+        background-color: ${({ $isSelected, theme }) => $isSelected ? theme.others.sideMenuActiveColor : theme.others.sideMenuActiveColor};
     }  
 `;
 

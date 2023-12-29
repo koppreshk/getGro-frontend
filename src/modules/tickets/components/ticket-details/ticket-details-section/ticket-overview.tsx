@@ -113,12 +113,12 @@ const contactInfoData = (name: string, value: string | number) => {
     }
 
     return (
-        <FlexBox $width="100%" $flexDirection="row">
-            <FlexBox $width="35%" $flexDirection="row" $gap="5px" $alignItems="center">
+        <FlexBox $width="100%" $flexDirection="row" $gap="5px">
+            <FlexBox $width="40%" $flexDirection="row" $gap="5px" $alignItems="center">
                 {renderIcons(name)}
-                <TypographyName variant="h6">{name}</TypographyName>
+                <TypographyName variant="subheading1">{name}</TypographyName>
             </FlexBox>
-            <TypographyValue variant="h6" width='65%'>{value}</TypographyValue>
+            <TypographyValue variant="h6" width='60%'>{value}</TypographyValue>
         </FlexBox>
     )
 }

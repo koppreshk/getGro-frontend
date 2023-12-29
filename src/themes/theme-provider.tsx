@@ -35,7 +35,10 @@ const defaultTheme: DefaultTheme = {
     },
     others: {
         scrollContainerColor: '#E4E4E4',
-        scrollHandleColor: '#CECECE'
+        scrollHandleColor: '#CECECE',
+        sideMenuBg: '#EEF5FF',
+        sideMenuIconColor: '#176B87',
+        sideMenuActiveColor: '#c8dfff',
     }
 }
 
