@@ -1,4 +1,4 @@
-import { FlexBox } from "lib/ui-ux";
+import { FlexBox, IChangeArgs } from "lib/ui-ux";
 import { EmailCard, IEmailThreadProps } from "./email-card";
 import { useCallback } from "react";
 import styled from "styled-components";
@@ -21,9 +21,13 @@ interface IEmailConversationsProps {
     onSetEmailThreads: (args: Omit<IEmailThreadProps, 'subject'>[]) => void
 }
 
+export interface IEmailFormFields {
+    attachments: IChangeArgs
+}
+
 export const EmailConversations = (props: IEmailConversationsProps) => {
     const { emailThreads, onSetEmailThreads } = props;
-    const formContext = useForm();
+    const formContext = useForm<IEmailFormFields>();
 
     const onSend = useCallback((args: Omit<IEmailThreadProps, 'subject'>, linkedThreadId: string) => {
         const clonedEmailThreads = emailThreads.slice()

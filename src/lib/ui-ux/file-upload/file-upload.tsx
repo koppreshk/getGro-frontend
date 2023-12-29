@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { IFileUploadProps, IFileInfo } from './file-upload.types';
 import { getAllFilesInfo, useFileRepository } from './utils';
 import { IconButton } from '@mui/material';
-import { FileUploadOutlined } from '@mui/icons-material';
+import { AttachFileOutlined } from '@mui/icons-material';
 
 const DefaultFileInput = styled.input.attrs({
     type: 'file'
@@ -45,7 +45,7 @@ export const FileUpload = React.memo((props: IFileUploadProps) => {
     return hidden ? null : (
         <>
             <IconButton onClick={_onButtonClick}>
-                <FileUploadOutlined />
+                <AttachFileOutlined />
             </IconButton>
             <DefaultFileInput id={id} type="file" ref={inputRef} accept={accept} multiple={multiple} onChange={_onFileSelect} />
         </>

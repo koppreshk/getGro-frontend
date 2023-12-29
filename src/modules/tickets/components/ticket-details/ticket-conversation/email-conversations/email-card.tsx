@@ -5,10 +5,9 @@ import { Typography, Avatar } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { chooseRandomColors, getFormattedDate, getInitialsByName } from "lib/utils";
 import { useAuth } from "modules/login";
-import { ReplyEmail } from "./reply-email";
 import { EmailPopoverMetadata } from "./email-popover-metadata";
 import { EmailThreadOptions } from "./email-thread-options";
-import { ForwardEmail } from "./forward-email";
+import { EmailEditor } from "./email-editor";
 
 export interface IEmailThreadProps {
     emailHTMLContent: string;
@@ -94,7 +93,7 @@ export const EmailCard = (props: IEmailCardProps) => {
         toggleEditorView(emailHTMLContent);
     }, [emailHTMLContent, toggleEditorView])
 
-    const onSendClick = useCallback(() => {
+    const onSendReply = useCallback(() => {
         onSend({
             createdDate: DateTime.now().toISO(),
             emailHTMLContent: replyEditorValue,
@@ -136,10 +135,24 @@ export const EmailCard = (props: IEmailCardProps) => {
                 </FlexBox>
                 {!isCollapsed && <InnerHTML dangerouslySetInnerHTML={{ __html: emailHTMLContent }} />}
                 {
-                    showReplyEditor ? <ReplyEmail onCancelClick={toggleReplyEditorView} onSendClick={onSendClick} onChange={onReplyEditorValueChange} from={from} editorValue={replyEditorValue} /> : null
+                    showReplyEditor ?
+                        <EmailEditor
+                            from={from}
+                            editorValue={replyEditorValue}
+                            onCancelClick={toggleReplyEditorView}
+                            onSendClick={onSendReply}
+                            onEditorValueChange={onReplyEditorValueChange}
+                        /> : null
                 }
                 {
-                    showEditor ? <ForwardEmail from={from} forwardEditorValue={editorValue} onForwardEditorValueChange={onEditorValueChange} onCancelClick={toggleEditorView} /> : null
+                    showEditor ?
+                        <EmailEditor
+                            from={from}
+                            showEmailHeaderOptions
+                            editorValue={editorValue}
+                            onEditorValueChange={onEditorValueChange}
+                            onCancelClick={toggleEditorView} />
+                        : null
                 }
             </FlexBox >
         </StyledEmailCardContainer>

@@ -3,7 +3,7 @@ import { FlexBox, TextArea } from "lib/ui-ux";
 import { Send } from "@mui/icons-material";
 import { Tabs, Tab } from "@mui/material";
 import { KeyCodes } from "lib/enums";
-import { RoundedSendButton } from "./email-conversations/forward-email";
+import { RoundedSendButton } from "./email-conversations/email-editor";
 
 interface ITicketConversationFooterProps {
     onSendAction: (newConversation: {
