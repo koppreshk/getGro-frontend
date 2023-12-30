@@ -1,5 +1,6 @@
+/* eslint-disable no-useless-escape */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 
 const beginsWithDataRegex = /^data:/;
 const base64MimeTypeRegex = /^data:([\w\/\-\+]+)/;
@@ -41,7 +42,7 @@ function generateURL(content: Blob | string, mimeType: string) {
                 return;
             }
             const reader = new FileReader();
-            reader.onload = function (e) {
+            reader.onload = function (_e) {
                 resolve(this.result as string);
             };
             reader.readAsDataURL(content);
