@@ -8,7 +8,7 @@ import { chooseRandomColors, getInitialsByName } from "lib/utils";
 import { FlexBox } from "lib/ui-ux";
 import { FileUploadField } from "lib/form-fields";
 import { IEmailFormFields } from "./email-conversations";
-import { AttachmentsPreview } from "./attachments-preview";
+import { UploadedAttachmentsPreview } from "./uploaded-attachments-preview";
 import { EmailHeaderOptions } from "./email-header-options";
 
 interface IEmailEditorProps {
@@ -78,14 +78,14 @@ export const EmailEditor = (props: IEmailEditorProps) => {
                         onChange={onEditorValueChange} />
                 </EditorContainer>
                 <FlexBox $gap="8px" $padding="0px 16px" $flexWrap="wrap">
-                    {attachmets?.selectedFiles.map((item) => (<AttachmentsPreview item={item} attachmets={attachmets} />))}
+                    {attachmets?.selectedFiles.map((item) => (<UploadedAttachmentsPreview item={item} attachmets={attachmets} />))}
                 </FlexBox>
                 <FlexBox $justifyContent="space-between" $padding="0px 16px 10px">
                     <FlexBox $gap="5px">
                         <RoundedSendButton variant="contained" endIcon={<Send />} onClick={onSendClick}>
                             Send
                         </RoundedSendButton>
-                        <FileUploadField name="attachments" multiple />
+                        <FileUploadField name="attachments" multiple readMode="readAsDataURL" />
                     </FlexBox>
                     <IconButton onClick={onCancelClick}>
                         <Delete />

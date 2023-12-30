@@ -19,7 +19,8 @@ const emailConversations = [{
     toEmail: 'koppresh@gmail.com',
     createdDate: '2023-12-12T08:51:28.132Z',
     threadId: '100',
-    isCollapsed: true
+    isCollapsed: true,
+    containsAttachment: true
 }, {
     emailHTMLContent: `<div id=":1pw" class="ii gt adO" jslog="20277; u014N:xr6bB; 1:WyIjdGhyZWFkLWY6MTc4NDk3ODA4NjA2MDUyMzAwMiJd; 4:WyIjbXNnLWE6ci0zODQ3ODgwMDA0OTMxNDA5NzgzIl0.">
     <div id=":1pu" class="a3s aiL ">

@@ -8,6 +8,7 @@ import { useAuth } from "modules/login";
 import { EmailPopoverMetadata } from "./email-popover-metadata";
 import { EmailThreadOptions } from "./email-thread-options";
 import { EmailEditor } from "./email-editor";
+import { AttachmentsPreview } from "./attachments-preview";
 
 export interface IEmailThreadProps {
     emailHTMLContent: string;
@@ -17,6 +18,7 @@ export interface IEmailThreadProps {
     createdDate: string;
     threadId: string;
     isCollapsed: boolean;
+    containsAttachment?: boolean;
     subject: string;
 }
 interface IEmailCardProps {
@@ -25,7 +27,7 @@ interface IEmailCardProps {
         threadId: string;
         isCollapsed: boolean;
     }) => void
-    onSend: (args: Omit<IEmailThreadProps, 'subject'>, linkedThreadId: string) => void;
+    onSend: (args: Omit<IEmailThreadProps, 'subject' | 'containsAttachment'>, linkedThreadId: string) => void;
 }
 
 const InnerHTML = styled.div`
@@ -76,7 +78,7 @@ const useEmailActionHelpers = () => {
 }
 
 export const EmailCard = (props: IEmailCardProps) => {
-    const { emailProps: { emailHTMLContent, from, fromEmail, createdDate, threadId, subject, toEmail, isCollapsed }, onSingleEmailCollapseHandler, onSend } = props;
+    const { emailProps: { emailHTMLContent, from, fromEmail, createdDate, threadId, subject, toEmail, isCollapsed, containsAttachment }, onSingleEmailCollapseHandler, onSend } = props;
     const newThreadId = useId();
     const { user } = useAuth();
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(from)), [from]);
@@ -136,6 +138,7 @@ export const EmailCard = (props: IEmailCardProps) => {
                     </FlexBox>
                 </FlexBox>
                 {!isCollapsed && <InnerHTML dangerouslySetInnerHTML={{ __html: emailHTMLContent }} />}
+                {!isCollapsed && containsAttachment && <AttachmentsPreview />}
                 {
                     showReplyEditor ?
                         <EmailEditor
