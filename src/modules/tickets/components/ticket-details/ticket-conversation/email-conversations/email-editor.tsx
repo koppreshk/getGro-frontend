@@ -14,6 +14,7 @@ import { EmailHeaderOptions } from "./email-header-options";
 interface IEmailEditorProps {
     from: string;
     editorValue: string;
+    editorType: 'reply' | 'forward'
     showEmailHeaderOptions?: boolean;
     onCancelClick: () => void;
     onSendClick?: () => void;
@@ -59,16 +60,16 @@ export const RoundedSendButton = styled(Button)`
 `;
 
 export const EmailEditor = (props: IEmailEditorProps) => {
-    const { editorValue, from, showEmailHeaderOptions = false, onEditorValueChange, onCancelClick, onSendClick } = props;
+    const { editorValue, from, showEmailHeaderOptions = false, editorType, onEditorValueChange, onCancelClick, onSendClick } = props;
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(from)), [from]);
     const { watch } = useFormContext<IEmailFormFields>();
-    const attachmets = watch('attachments');
+    const attachmets = watch(`${editorType}.attachments`);
 
     return (
         <FlexBox $gap="10px" >
             <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>{getInitialsByName(from)}</Avatar>
             <StyledForwardCardContainer $flexDirection="column" $gap="10px" $width="calc(100% - 60px)">
-                {showEmailHeaderOptions ? <EmailHeaderOptions /> : null}
+                {showEmailHeaderOptions ? <EmailHeaderOptions editorType={editorType} /> : null}
                 <EditorContainer>
                     <ReactQuill
                         theme="snow"
@@ -85,7 +86,7 @@ export const EmailEditor = (props: IEmailEditorProps) => {
                         <RoundedSendButton variant="contained" endIcon={<Send />} onClick={onSendClick}>
                             Send
                         </RoundedSendButton>
-                        <FileUploadField name="attachments" multiple readMode="readAsDataURL" />
+                        <FileUploadField name={`${editorType}.attachments`} multiple readMode="readAsDataURL" />
                     </FlexBox>
                     <IconButton onClick={onCancelClick}>
                         <Delete />

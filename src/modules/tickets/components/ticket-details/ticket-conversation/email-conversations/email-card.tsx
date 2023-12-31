@@ -143,6 +143,7 @@ export const EmailCard = (props: IEmailCardProps) => {
                     showReplyEditor ?
                         <EmailEditor
                             from={from}
+                            editorType="reply"
                             editorValue={replyEditorValue}
                             onCancelClick={toggleReplyEditorView}
                             onSendClick={onSendReply}
@@ -153,6 +154,7 @@ export const EmailCard = (props: IEmailCardProps) => {
                     showEditor ?
                         <EmailEditor
                             from={from}
+                            editorType="forward"
                             showEmailHeaderOptions
                             editorValue={editorValue}
                             onEditorValueChange={onEditorValueChange}
