@@ -60,7 +60,7 @@ export const RoundedSendButton = styled(Button)`
 `;
 
 export const EmailEditor = (props: IEmailEditorProps) => {
-    const { editorValue, from, showEmailHeaderOptions = false, editorType, onEditorValueChange, onCancelClick, onSendClick } = props;
+    const { editorValue, from, showEmailHeaderOptions = false, editorType, onEditorValueChange } = props;
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(from)), [from]);
     const { watch } = useFormContext<IEmailFormFields>();
     const attachmets = watch(`${editorType}.attachments`);
@@ -81,18 +81,25 @@ export const EmailEditor = (props: IEmailEditorProps) => {
                 <FlexBox $gap="8px" $padding="0px 16px" $flexWrap="wrap">
                     {attachmets?.selectedFiles.map((item) => (<UploadedAttachmentsPreview item={item} attachmets={attachmets} />))}
                 </FlexBox>
-                <FlexBox $justifyContent="space-between" $padding="0px 16px 10px">
-                    <FlexBox $gap="5px">
-                        <RoundedSendButton variant="contained" endIcon={<Send />} onClick={onSendClick}>
-                            Send
-                        </RoundedSendButton>
-                        <FileUploadField name={`${editorType}.attachments`} multiple readMode="readAsDataURL" />
-                    </FlexBox>
-                    <IconButton onClick={onCancelClick}>
-                        <Delete />
-                    </IconButton>
-                </FlexBox>
+                <EmailFooterOptions onCancelClick={props.onCancelClick} onSendClick={props.onSendClick} editorType={editorType} />
             </StyledForwardCardContainer>
+        </FlexBox>
+    )
+}
+
+const EmailFooterOptions = (props: Pick<IEmailEditorProps, 'onSendClick' | 'onCancelClick' | 'editorType'>) => {
+    const { editorType, onCancelClick, onSendClick } = props;
+    return (
+        <FlexBox $justifyContent="space-between" $padding="0px 16px 10px">
+            <FlexBox $gap="5px">
+                <RoundedSendButton variant="contained" endIcon={<Send />} onClick={onSendClick}>
+                    Send
+                </RoundedSendButton>
+                <FileUploadField name={`${editorType}.attachments`} multiple readMode="readAsDataURL" />
+            </FlexBox>
+            <IconButton onClick={onCancelClick}>
+                <Delete />
+            </IconButton>
         </FlexBox>
     )
 }
