@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { IconButton, Tooltip, Typography } from "@mui/material"
 import { FlexBox } from "lib/ui-ux"
 import styled from "styled-components"
 import { EmailConversations } from "./email-conversations";
-import { UnfoldMore, UnfoldLess } from '@mui/icons-material';
+import { UnfoldMore, UnfoldLess, Print } from '@mui/icons-material';
 import { IEmailThreadProps } from "./email-card";
 
 const LayoutWrapper = styled(FlexBox)`
@@ -39,6 +39,22 @@ const emailConversations = [{
 export const EmailConversationLayout = () => {
     const subject = 'My order is delayed';
     const [emailThreads, setEmailThreads] = useState(emailConversations);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const iframeRef = useRef<HTMLIFrameElement>(null);
+
+    const onPrintHandler = () => {
+        if (containerRef.current && iframeRef.current) {
+            const content = containerRef.current;
+            const pri = iframeRef.current.contentWindow;
+            if (pri) {
+                pri.document.open();
+                pri.document.write(content.innerHTML);
+                pri.document.close();
+                pri.focus();
+                pri.print();
+            }
+        }
+    }
 
     const onSetEmailThreads = (args: Omit<IEmailThreadProps, 'subject'>[]) => setEmailThreads(args);
 
@@ -61,29 +77,39 @@ export const EmailConversationLayout = () => {
     const isCollapsedAll = emailThreads.every((item) => item.isCollapsed);
 
     return (
-        <LayoutWrapper $flexDirection="column" $gap="10px" $width="100%" $height="calc(100% - 84px);">
-            <FlexBox $justifyContent="space-between">
-                <Typography variant="h5">Subject: {subject}</Typography>
-                {
-                    isCollapsedAll ?
-                        <Tooltip title={'Expand all'}>
-                            <IconButton onClick={onExpandAll} >
-                                <UnfoldMore />
-                            </IconButton>
-                        </Tooltip> :
-                        <Tooltip title={'Collapse all'}>
-                            <IconButton onClick={onCollapseAll}>
-                                <UnfoldLess />
+        <>
+            <iframe ref={iframeRef} id="ifmcontentstoprint" style={{ display: 'none' }} />
+            <LayoutWrapper ref={containerRef} $flexDirection="column" $gap="10px" $width="100%" $height="calc(100% - 84px);">
+                <FlexBox $justifyContent="space-between">
+                    <Typography variant="h5">Subject: {subject}</Typography>
+                    <FlexBox>
+                        {
+                            isCollapsedAll ?
+                                <Tooltip title={'Expand all'}>
+                                    <IconButton onClick={onExpandAll} >
+                                        <UnfoldMore />
+                                    </IconButton>
+                                </Tooltip> :
+                                <Tooltip title={'Collapse all'}>
+                                    <IconButton onClick={onCollapseAll}>
+                                        <UnfoldLess />
+                                    </IconButton>
+                                </Tooltip>
+                        }
+                        <Tooltip title="Print all">
+                            <IconButton onClick={onPrintHandler}>
+                                <Print />
                             </IconButton>
                         </Tooltip>
-                }
-            </FlexBox>
-            <EmailConversations
-                subject={subject}
-                isCollapsedAll={isCollapsedAll}
-                emailThreads={emailThreads}
-                onSetEmailThreads={onSetEmailThreads}
-                onSingleEmailCollapseHandler={onSingleEmailCollapseHandler} />
-        </LayoutWrapper>
+                    </FlexBox>
+                </FlexBox>
+                <EmailConversations
+                    subject={subject}
+                    isCollapsedAll={isCollapsedAll}
+                    emailThreads={emailThreads}
+                    onSetEmailThreads={onSetEmailThreads}
+                    onSingleEmailCollapseHandler={onSingleEmailCollapseHandler} />
+            </LayoutWrapper>
+        </>
     )
 }
