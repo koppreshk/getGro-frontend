@@ -13,7 +13,8 @@ const StyledTypography = styled(Typography)`
     }
 `;
 
-export const EmailHeaderOptions = () => {
+export const EmailHeaderOptions = (props: { editorType: 'forward' | 'reply' }) => {
+    const { editorType } = props;
     const { watch } = useFormContext();
     const [showCCTagInput, setCCTagInputDisplay] = useState(false);
     const [showBCCTagInput, setBCCTagInputDisplay] = useState(false);
@@ -44,7 +45,7 @@ export const EmailHeaderOptions = () => {
             <FlexBox $gap="10px" $width="calc(100% - 63px)">
                 <Typography variant="h6">{args.label}:</Typography>
                 <TagInputField
-                    name={args.name}
+                    name={`${editorType}.${args.name}`}
                     width="calc(100% - 30px)"
                     type="email"
                     required

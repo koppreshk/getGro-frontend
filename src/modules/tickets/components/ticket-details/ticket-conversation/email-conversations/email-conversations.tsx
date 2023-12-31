@@ -21,9 +21,11 @@ interface IEmailConversationsProps {
     onSetEmailThreads: (args: Omit<IEmailThreadProps, 'subject'>[]) => void
 }
 
-export interface IEmailFormFields {
-    attachments: IChangeArgs
-}
+export type IEmailFormFields = {
+    [key in 'reply' | 'forward']: {
+        attachments: IChangeArgs;
+    };
+};
 
 export const EmailConversations = (props: IEmailConversationsProps) => {
     const { emailThreads, onSetEmailThreads } = props;
