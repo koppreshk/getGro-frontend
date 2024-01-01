@@ -22,9 +22,17 @@ interface IEmailConversationsProps {
 }
 
 export type IEmailFormFields = {
-    [key in 'reply' | 'forward']: {
+    'reply': {
         attachments: IChangeArgs;
+        editor: string;
     };
+    'forward': {
+        attachments: IChangeArgs;
+        editor: string;
+        to: string[];
+        bcc: string[];
+        cc: string[];
+    }
 };
 
 export const EmailConversations = (props: IEmailConversationsProps) => {

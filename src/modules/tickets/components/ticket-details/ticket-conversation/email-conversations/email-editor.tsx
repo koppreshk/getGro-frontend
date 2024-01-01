@@ -1,4 +1,3 @@
-import ReactQuill from "react-quill";
 import { useFormContext } from "react-hook-form";
 import { useMemo } from "react";
 import styled from "styled-components";
@@ -6,39 +5,18 @@ import { Delete, Send } from "@mui/icons-material";
 import { Avatar, Button, IconButton } from "@mui/material";
 import { chooseRandomColors, getInitialsByName } from "lib/utils";
 import { FlexBox } from "lib/ui-ux";
-import { FileUploadField } from "lib/form-fields";
+import { FileUploadField, RichTextEditorField } from "lib/form-fields";
 import { IEmailFormFields } from "./email-conversations";
 import { UploadedAttachmentsPreview } from "./uploaded-attachments-preview";
 import { EmailHeaderOptions } from "./email-header-options";
 
 interface IEmailEditorProps {
     from: string;
-    editorValue: string;
     editorType: 'reply' | 'forward'
     showEmailHeaderOptions?: boolean;
     onCancelClick: () => void;
     onSendClick?: () => void;
-    onEditorValueChange: (value: string) => void;
 }
-
-const EditorContainer = styled(FlexBox)`
-    .quill {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-    .ql-toolbar, .ql-container {
-        border-left: 0;
-        border-right: 0;
-    }
-    .ql-container {
-        min-height: 180px;
-        border-bottom: 0px;
-    }
-    .ql-editor {
-        padding: 12px 16px;
-    }
-`;
 
 const StyledForwardCardContainer = styled(FlexBox)`
     border: 1px solid #ccc;
@@ -60,7 +38,7 @@ export const RoundedSendButton = styled(Button)`
 `;
 
 export const EmailEditor = (props: IEmailEditorProps) => {
-    const { editorValue, from, showEmailHeaderOptions = false, editorType, onEditorValueChange } = props;
+    const { from, showEmailHeaderOptions = false, editorType } = props;
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(from)), [from]);
     const { watch } = useFormContext<IEmailFormFields>();
     const attachmets = watch(`${editorType}.attachments`);
@@ -70,14 +48,7 @@ export const EmailEditor = (props: IEmailEditorProps) => {
             <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>{getInitialsByName(from)}</Avatar>
             <StyledForwardCardContainer $flexDirection="column" $gap="10px" $width="calc(100% - 60px)">
                 {showEmailHeaderOptions ? <EmailHeaderOptions editorType={editorType} /> : null}
-                <EditorContainer>
-                    <ReactQuill
-                        theme="snow"
-                        value={editorValue}
-                        placeholder="Type in here"
-                        preserveWhitespace
-                        onChange={onEditorValueChange} />
-                </EditorContainer>
+                <RichTextEditorField name={`${editorType}.editor`} />
                 <FlexBox $gap="8px" $padding="0px 16px" $flexWrap="wrap">
                     {attachmets?.selectedFiles.map((item) => (<UploadedAttachmentsPreview item={item} attachmets={attachmets} />))}
                 </FlexBox>

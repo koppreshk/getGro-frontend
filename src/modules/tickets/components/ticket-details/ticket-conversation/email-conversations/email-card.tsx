@@ -9,6 +9,8 @@ import { EmailPopoverMetadata } from "./email-popover-metadata";
 import { EmailThreadOptions } from "./email-thread-options";
 import { EmailEditor } from "./email-editor";
 import { AttachmentsPreview } from "./attachments-preview";
+import { useFormContext } from "react-hook-form";
+import { IEmailFormFields } from "./email-conversations";
 
 export interface IEmailThreadProps {
     emailHTMLContent: string;
@@ -59,20 +61,14 @@ function strip(html: string) {
 }
 
 const useEmailActionHelpers = () => {
-    const [editorValue, setEditorValue] = useState('');
     const [showEditor, setShowEditor] = useState(false);
 
-    const toggleEditorView = useCallback((emailContent?: string) => {
+    const toggleEditorView = useCallback(() => {
         setShowEditor(!showEditor);
-        setEditorValue(emailContent ?? '');
     }, [showEditor]);
-
-    const onEditorValueChange = useCallback((value: string) => setEditorValue(value), []);
 
     return {
         showEditor,
-        editorValue,
-        onEditorValueChange,
         toggleEditorView
     }
 }
@@ -82,8 +78,9 @@ export const EmailCard = (props: IEmailCardProps) => {
     const newThreadId = useId();
     const { user } = useAuth();
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(from)), [from]);
-    const { showEditor: showReplyEditor, editorValue: replyEditorValue, onEditorValueChange: onReplyEditorValueChange, toggleEditorView: toggleReplyEditorView } = useEmailActionHelpers();
-    const { showEditor, editorValue, toggleEditorView, onEditorValueChange } = useEmailActionHelpers();
+    const { showEditor: showReplyEditor, toggleEditorView: toggleReplyEditorView } = useEmailActionHelpers();
+    const { showEditor, toggleEditorView } = useEmailActionHelpers();
+    const { handleSubmit, setValue } = useFormContext<IEmailFormFields>();
 
     const onReplyClick: React.MouseEventHandler<HTMLButtonElement> = useCallback((ev) => {
         ev.stopPropagation();
@@ -93,14 +90,15 @@ export const EmailCard = (props: IEmailCardProps) => {
 
     const onForwardClick: React.MouseEventHandler<HTMLButtonElement> = useCallback((ev) => {
         ev.stopPropagation();
-        toggleEditorView(emailHTMLContent);
+        setValue('forward.editor', emailHTMLContent);
+        toggleEditorView();
         showReplyEditor && toggleReplyEditorView();
-    }, [emailHTMLContent, showReplyEditor, toggleEditorView, toggleReplyEditorView])
+    }, [emailHTMLContent, setValue, showReplyEditor, toggleEditorView, toggleReplyEditorView])
 
-    const onSendReply = useCallback(() => {
+    const onSendReply = useCallback((formValues: Pick<IEmailFormFields, 'reply'>) => {
         onSend({
             createdDate: DateTime.now().toISO(),
-            emailHTMLContent: replyEditorValue,
+            emailHTMLContent: formValues.reply.editor,
             from: user!.userName!,
             fromEmail: user!.userName!,
             threadId: newThreadId,
@@ -108,7 +106,7 @@ export const EmailCard = (props: IEmailCardProps) => {
             isCollapsed: isCollapsed
         }, threadId);
         toggleReplyEditorView();
-    }, [replyEditorValue, fromEmail, isCollapsed, newThreadId, onSend, threadId, toggleReplyEditorView, user]);
+    }, [fromEmail, isCollapsed, newThreadId, onSend, threadId, toggleReplyEditorView, user]);
 
     const onCardClick = () => onSingleEmailCollapseHandler({ threadId, isCollapsed: !isCollapsed });
 
@@ -144,10 +142,8 @@ export const EmailCard = (props: IEmailCardProps) => {
                         <EmailEditor
                             from={from}
                             editorType="reply"
-                            editorValue={replyEditorValue}
                             onCancelClick={toggleReplyEditorView}
-                            onSendClick={onSendReply}
-                            onEditorValueChange={onReplyEditorValueChange}
+                            onSendClick={handleSubmit(onSendReply)}
                         /> : null
                 }
                 {
@@ -156,8 +152,6 @@ export const EmailCard = (props: IEmailCardProps) => {
                             from={from}
                             editorType="forward"
                             showEmailHeaderOptions
-                            editorValue={editorValue}
-                            onEditorValueChange={onEditorValueChange}
                             onCancelClick={toggleEditorView} />
                         : null
                 }
