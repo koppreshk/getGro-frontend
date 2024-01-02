@@ -6,3 +6,4 @@ export * from './grid-layout';
 export * from './tag-input';
 export * from './popover/popover-with-beak';
 export * from './file-upload';
+export * from './common';

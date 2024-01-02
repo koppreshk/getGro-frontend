@@ -1,8 +1,8 @@
-import { FlexBox } from "lib/ui-ux"
+import { CustomIconButton, FlexBox } from "lib/ui-ux"
 import SortIcon from '@mui/icons-material/Sort';
 import PhoneRoundedIcon from '@mui/icons-material/PhoneRounded';
 import MessageRoundedIcon from '@mui/icons-material/MessageRounded';
-import { Chip, IconButton, Menu, MenuItem, Tooltip, Typography } from "@mui/material";
+import { Chip, IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import styled from "styled-components";
 import { useMatch, useSearchParams } from "react-router-dom";
 import React from "react";
@@ -51,11 +51,7 @@ export const TicketListViewHeader = () => {
             <FlexBox $alignItems="center" $gap="10px">
                 <Typography variant="h5">{header}</Typography>
                 <Chip label={noOfRecords} size="small" variant="filled" color="primary" />
-                <Tooltip title="Sort">
-                    <IconButton aria-label="Sort" onClick={handleClick}>
-                        <SortIcon />
-                    </IconButton>
-                </Tooltip>
+                <CustomIconButton tooltipProps={{ title: 'Sort' }} iconComponent={<SortIcon />} onClick={handleClick} />
                 <Menu open={open} anchorEl={anchorEl} onClose={handleClose} >
                     <MenuItem>Status</MenuItem>
                     <MenuItem>Due Date</MenuItem>

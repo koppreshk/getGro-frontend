@@ -68,7 +68,7 @@ const EmailFooterOptions = (props: Pick<IEmailEditorProps, 'onSendClick' | 'onCa
                     Send
                 </RoundedSendButton>
                 <FileUploadField name={`${editorType}.attachments`} multiple readMode="readAsDataURL" />
-                <InsertTemplate />
+                <InsertTemplate editorType={editorType} />
             </FlexBox>
             <IconButton onClick={onCancelClick} title="Delete">
                 <Delete />
