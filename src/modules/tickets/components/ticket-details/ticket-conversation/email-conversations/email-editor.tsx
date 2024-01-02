@@ -9,6 +9,7 @@ import { FileUploadField, RichTextEditorField } from "lib/form-fields";
 import { IEmailFormFields } from "./email-conversations";
 import { UploadedAttachmentsPreview } from "./uploaded-attachments-preview";
 import { EmailHeaderOptions } from "./email-header-options";
+import { InsertTemplate } from "./insert-template";
 
 interface IEmailEditorProps {
     from: string;
@@ -63,12 +64,13 @@ const EmailFooterOptions = (props: Pick<IEmailEditorProps, 'onSendClick' | 'onCa
     return (
         <FlexBox $justifyContent="space-between" $padding="0px 16px 10px">
             <FlexBox $gap="5px">
-                <RoundedSendButton variant="contained" endIcon={<Send />} onClick={onSendClick}>
+                <RoundedSendButton variant="contained" endIcon={<Send />} title="Send" onClick={onSendClick}>
                     Send
                 </RoundedSendButton>
                 <FileUploadField name={`${editorType}.attachments`} multiple readMode="readAsDataURL" />
+                <InsertTemplate />
             </FlexBox>
-            <IconButton onClick={onCancelClick}>
+            <IconButton onClick={onCancelClick} title="Delete">
                 <Delete />
             </IconButton>
         </FlexBox>
