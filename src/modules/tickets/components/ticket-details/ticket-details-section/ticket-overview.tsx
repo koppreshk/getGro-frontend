@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { AccountCircleOutlined, CalendarToday, ChecklistOutlined, ConfirmationNumberOutlined, Email, ImportExportRounded, PersonSearch, Phone } from "@mui/icons-material";
-import { Typography, Tooltip, IconButton, Avatar } from "@mui/material";
-import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
+import { Typography, Avatar } from "@mui/material";
+import { CustomIconButton, FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { Platform } from "../ticket-conversation/ticket-conversation-header";
 import { SearchCustomerContainer } from "modules/tickets/containers";
 import { useAppSelector } from "lib/hooks";
@@ -54,11 +54,8 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
                 </FlexBox>
                 {customerId
                     ? <UnlinkCustomer />
-                    : <Tooltip title="Search Customer" arrow placement="left">
-                        <IconButton onClick={onSearchUserBtnClick}>
-                            <PersonSearch />
-                        </IconButton>
-                    </Tooltip>}
+                    : <CustomIconButton tooltipProps={{ title: 'Search Customer', arrow: true, placement: "left" }} iconComponent={<PersonSearch />} onClick={onSearchUserBtnClick} />
+                }
             </FlexBox>
             <ContactInfo defaultData={ticketDetails} />
             <SearchCustomerContainer showSearchUserFlyout={showSearchUserFlyout} onSearchUserBtnClick={onSearchUserBtnClick} />
@@ -108,7 +105,7 @@ const contactInfoData = (name: string, value: string | number) => {
                 return <ConfirmationNumberOutlined fontSize="small" sx={{ fill: '#787f83' }} />;
             case 'Created At':
                 return <CalendarToday fontSize="small" sx={{ fill: '#787f83' }} />;
-                case 'Priority':
+            case 'Priority':
                 return <ImportExportRounded fontSize="small" sx={{ fill: '#787f83' }} />;
             default:
                 return <AccountCircleOutlined fontSize="small" sx={{ fill: '#787f83' }} />;

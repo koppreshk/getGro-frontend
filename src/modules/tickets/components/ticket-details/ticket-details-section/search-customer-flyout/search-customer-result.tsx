@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
-import { Avatar, CircularProgress, IconButton, Tooltip, Typography } from '@mui/material';
+import { Avatar, CircularProgress, Typography } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useAppDispatch } from "lib/hooks";
 import { setLinkedCustomer } from "modules/tickets/storage";
 import { commonStyles } from "lib/ui-ux/common-styles";
-import { FlexBox } from 'lib/ui-ux';
+import { CustomIconButton, FlexBox } from 'lib/ui-ux';
 import { ISearchCustomerFlyoutProps } from './search-customer-flyout';
 import { useNotifications } from 'lib';
 
@@ -75,11 +75,7 @@ const CustomerTile = (props: ICustomerTileProps) => {
                     <TextFieldValue variant="body2" >{phone}</TextFieldValue>
                 </FlexBox>
             </FlexBox>
-            <Tooltip title='Link Customer' arrow placement='bottom'>
-                <IconButton onClick={linkCustomerCallback}>
-                    <PersonAddIcon />
-                </IconButton>
-            </Tooltip>
+            <CustomIconButton tooltipProps={{ title: 'Link Customer', arrow: true, placement: "bottom" }} iconComponent={<PersonAddIcon />} onClick={linkCustomerCallback} />
         </CustomerTileWrapper>
     )
 }

@@ -1,10 +1,9 @@
 import { ChevronLeftOutlined, ChevronRightOutlined, PostAddOutlined } from '@mui/icons-material';
 import InsertCommentOutlinedIcon from '@mui/icons-material/InsertCommentOutlined';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Tooltip, Typography } from '@mui/material';
-import { FlexBox } from 'lib/ui-ux';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Typography } from '@mui/material';
+import { CustomIconButton, FlexBox } from 'lib/ui-ux';
 import { useCallback, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { IEmailFormFields } from './email-conversations';
 
 const templates = [
     {
@@ -77,10 +76,10 @@ const templates = [
     }
 ]
 
-export const InsertTemplate = () => {
+export const InsertTemplate = (props: { editorType: string }) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [selectedTemplateIndex, setTemplateIndex] = useState(0);
-    const { setValue } = useFormContext<IEmailFormFields>();
+    const { setValue } = useFormContext();
     const open = Boolean(anchorEl);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -100,9 +99,9 @@ export const InsertTemplate = () => {
     }
 
     const setEditorValue = useCallback(() => {
-        setValue('reply.editor', templates[selectedTemplateIndex].content);
+        setValue(`${props.editorType}.editor`, templates[selectedTemplateIndex].content);
         handleClose();
-    }, [selectedTemplateIndex, setValue]);
+    }, [props.editorType, selectedTemplateIndex, setValue]);
 
     return (
         <>
@@ -124,16 +123,8 @@ export const InsertTemplate = () => {
                 </DialogContent>
                 <DialogActions sx={{ justifyContent: 'space-between' }}>
                     <FlexBox>
-                        <Tooltip title="Previous template">
-                            <IconButton onClick={onPreviousClick} disabled={selectedTemplateIndex === 0}>
-                                <ChevronLeftOutlined />
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Next template">
-                            <IconButton onClick={onNextClick} disabled={selectedTemplateIndex + 1 === templates.length}>
-                                <ChevronRightOutlined />
-                            </IconButton>
-                        </Tooltip>
+                        <CustomIconButton tooltipProps={{ title: 'Previous template' }} iconComponent={<ChevronLeftOutlined />} onClick={onPreviousClick} disabled={selectedTemplateIndex === 0} />
+                        <CustomIconButton tooltipProps={{ title: 'Next template' }} iconComponent={<ChevronRightOutlined />} onClick={onNextClick} disabled={selectedTemplateIndex + 1 === templates.length} />
                     </FlexBox>
                     <Button variant='contained' endIcon={<PostAddOutlined />} onClick={setEditorValue}>
                         Add Template

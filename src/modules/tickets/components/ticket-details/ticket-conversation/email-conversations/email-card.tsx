@@ -8,7 +8,7 @@ import { useAuth } from "modules/login";
 import { EmailPopoverMetadata } from "./email-popover-metadata";
 import { EmailThreadOptions } from "./email-thread-options";
 import { EmailEditor } from "./email-editor";
-import { AttachmentsPreview } from "./attachments-preview";
+import { DownloadAttachments } from "./download-attachments";
 import { useFormContext } from "react-hook-form";
 import { IEmailFormFields } from "./email-conversations";
 
@@ -136,7 +136,7 @@ export const EmailCard = (props: IEmailCardProps) => {
                     </FlexBox>
                 </FlexBox>
                 {!isCollapsed && <InnerHTML dangerouslySetInnerHTML={{ __html: emailHTMLContent }} />}
-                {!isCollapsed && containsAttachment && <AttachmentsPreview />}
+                {!isCollapsed && containsAttachment && <DownloadAttachments />}
                 {
                     showReplyEditor ?
                         <EmailEditor

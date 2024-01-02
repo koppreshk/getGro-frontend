@@ -1,7 +1,7 @@
 /// <reference types="vite-plugin-svgr/client" />
 
-import { IconButton, Tooltip, Typography } from "@mui/material"
-import { FlexBox, PopoverWithBeak } from "lib/ui-ux"
+import { Typography } from "@mui/material"
+import { CustomIconButton, FlexBox, PopoverWithBeak } from "lib/ui-ux"
 import styled from 'styled-components';
 import { useState } from "react";
 import DonutIcon from '../../../../assets/svg/donut-chart.svg?react'
@@ -60,11 +60,7 @@ export const AgentStatistics = () => {
 
     return (
         <>
-            <Tooltip title={'Quick Stats'}>
-                <IconButton onClick={handleClick}>
-                    <DonutIcon />
-                </IconButton>
-            </Tooltip>
+            <CustomIconButton iconComponent={<DonutIcon />} tooltipProps={{ title: 'Quick Stats' }} onClick={handleClick} />
             <PopoverWithBeak
                 open={open}
                 anchorEl={anchorEl}

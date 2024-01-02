@@ -1,16 +1,17 @@
-import { Checkbox, FormControlLabel, IconButton, Popover, Tooltip, Button } from "@mui/material";
+import styled from "styled-components";
+import { Checkbox, FormControlLabel, Popover, Button } from "@mui/material";
 import { ViewWeekOutlined } from '@mui/icons-material';
 import { useState } from "react";
 import { Column, VisibilityInstance } from "@tanstack/table-core";
 import { FlexBox } from "lib/ui-ux";
 import { convertCamelCaseStringToSpaceSeparated } from "lib/utils";
-import styled from "styled-components";
+import { CustomIconButton } from "../../common/custom-icon-button";
 
 interface IColumnsConfigurationProps<T extends object> extends Pick<VisibilityInstance<T>, 'resetColumnVisibility'> {
     allColumns: Column<T, unknown>[];
 }
 
-const StyledIconButton = styled(IconButton)`
+const StyledIconButton = styled(CustomIconButton)`
     &&{
         position: absolute;
         right: 0;
@@ -35,11 +36,7 @@ export const ColumnsConfiguration = <T extends object>(props: IColumnsConfigurat
 
     return (
         <>
-            <Tooltip title="Show/Hide Columns">
-                <StyledIconButton onClick={handleClick}>
-                    <ViewWeekOutlined />
-                </StyledIconButton>
-            </Tooltip>
+            <StyledIconButton onClick={handleClick} tooltipProps={{ title: "Show/Hide Columns" }} iconComponent={<ViewWeekOutlined />} />
             <Popover
                 open={open}
                 anchorEl={anchorEl}
