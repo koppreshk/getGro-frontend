@@ -27,6 +27,27 @@ const EditorContainer = styled(FlexBox)`
     }
 `;
 
+//Important links for editor resources:
+//https://www.npmjs.com/package/react-quill#default-toolbar-elements
+//https://codepen.io/alexkrolick/pen/gmroPj?editors=0010
+
+const modules = {
+    toolbar: [
+        [{ 'header': [1, 2, 3, 4, 5, 6, 7] }],
+        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+        ['link'],
+        ['clean']
+    ],
+}
+
+const formats = [
+    'header',
+    'bold', 'italic', 'underline', 'strike', 'blockquote',
+    'list', 'bullet', 'indent',
+    'link'
+]
+
 export const RichTextEditorField = (props: IRichTextEditorFieldProps) => {
     const { name, className } = props;
     const { control } = useFormContext();
@@ -43,6 +64,8 @@ export const RichTextEditorField = (props: IRichTextEditorFieldProps) => {
                         value={value}
                         placeholder="Type in here"
                         preserveWhitespace
+                        modules={modules}
+                        formats={formats}
                         onChange={onChange} />
                 </EditorContainer>
             )}
