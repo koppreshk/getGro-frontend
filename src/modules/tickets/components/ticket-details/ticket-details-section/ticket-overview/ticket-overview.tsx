@@ -1,6 +1,6 @@
 import { PersonSearch } from "@mui/icons-material";
-import { Typography, Tooltip, IconButton } from "@mui/material";
-import { FlexBox } from "lib/ui-ux";
+import { Typography } from "@mui/material";
+import { CustomIconButton, FlexBox } from "lib/ui-ux";
 import { Platform } from "../../ticket-conversation/ticket-conversation-header";
 import { SearchCustomerContainer } from "modules/tickets/containers";
 import { useAppSelector } from "lib/hooks";
@@ -31,11 +31,8 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
                 </FlexBox>
                 {customerId
                     ? <UnlinkCustomer />
-                    : <Tooltip title="Search Customer" arrow placement="left">
-                        <IconButton onClick={onSearchUserBtnClick}>
-                            <PersonSearch />
-                        </IconButton>
-                    </Tooltip>}
+                    : <CustomIconButton tooltipProps={{ title: 'Search Customer', arrow: true, placement: "left" }} iconComponent={<PersonSearch />} onClick={onSearchUserBtnClick} />
+                    }
             </FlexBox>
             <ContactInfo defaultData={ticketDetails} />
             <SearchCustomerContainer showSearchUserFlyout={showSearchUserFlyout} onSearchUserBtnClick={onSearchUserBtnClick} />
