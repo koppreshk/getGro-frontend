@@ -5,7 +5,8 @@ import MessageRoundedIcon from '@mui/icons-material/MessageRounded';
 import { Chip, IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import styled from "styled-components";
 import { useMatch, useSearchParams } from "react-router-dom";
-import React from "react";
+import React, { useCallback } from "react";
+import { TelephonicDialer } from "../ticket-conversation/telephonic-conversations";
 
 const StyledIconButtons = styled(IconButton)`
     && {
@@ -46,6 +47,12 @@ export const TicketListViewHeader = () => {
 
     const open = Boolean(anchorEl);
 
+    const [openCallPopUp, setOpenCallPopUp] = React.useState(false);
+
+    const toggleCallBtn = useCallback(() => {
+        setOpenCallPopUp((prevValue) => !prevValue)
+    }, []);
+
     return (
         <HeaderWrapper $width="100%" $justifyContent="space-between">
             <FlexBox $alignItems="center" $gap="10px">
@@ -59,13 +66,14 @@ export const TicketListViewHeader = () => {
                 </Menu>
             </FlexBox>
             <FlexBox $gap="5px" $alignItems="center">
-                <StyledIconButtons size="small" color="primary">
+                <StyledIconButtons size="small" color="primary" onClick={toggleCallBtn}>
                     <PhoneRoundedIcon fontSize="small" />
                 </StyledIconButtons>
                 <StyledIconButtons size="small" color="primary">
                     <MessageRoundedIcon fontSize="small" />
                 </StyledIconButtons>
             </FlexBox>
+            <TelephonicDialer openCallPopUp={openCallPopUp} toggleCallBtn={toggleCallBtn}/>
         </HeaderWrapper>
     )
 }

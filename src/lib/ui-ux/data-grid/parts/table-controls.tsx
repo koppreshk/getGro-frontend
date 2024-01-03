@@ -136,7 +136,6 @@ export const TableControls = <T extends object>(props: ITableControlProps<T>) =>
 }
 
 const TableActions = () => {
-
     const tableActionOptions = [
         {
             title: 'Mark as read',
