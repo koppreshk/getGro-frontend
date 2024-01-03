@@ -1,7 +1,7 @@
 import { CircularProgress } from "@mui/material";
 import { useGetTicketDetailsById } from "../apis";
 import { FlexBox } from "lib/ui-ux";
-import { TicketOverview } from "../components/ticket-details/ticket-details-section/ticket-overview";
+import { TicketOverview } from "../components/ticket-details/ticket-details-section/ticket-overview/ticket-overview";
 
 export const TicketOverviewContainer = () => {
     const { data, isLoading, error } = useGetTicketDetailsById();

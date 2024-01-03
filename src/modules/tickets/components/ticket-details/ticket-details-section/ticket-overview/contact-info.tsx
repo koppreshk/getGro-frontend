@@ -1,16 +1,13 @@
-import React from "react";
-import styled from "styled-components";
-import { AccountCircleOutlined, CalendarToday, ChecklistOutlined, ConfirmationNumberOutlined, Email, ImportExportRounded, PersonSearch, Phone } from "@mui/icons-material";
-import { Typography, Tooltip, IconButton, Avatar } from "@mui/material";
-import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
-import { Platform } from "../ticket-conversation/ticket-conversation-header";
-import { SearchCustomerContainer } from "modules/tickets/containers";
-import { useAppSelector } from "lib/hooks";
+import React, { useCallback } from "react";
 import { getFormattedDate, getInitialsByName } from "lib/utils";
-import { UnlinkCustomer } from "./unlink-customer";
-import { ITicketDetails } from "modules/tickets/apis";
+import { TelephonicDialer } from "../../ticket-conversation/telephonic-conversations";
+import styled from "styled-components";
+import { AccountCircleOutlined, CalendarToday, Call, ChecklistOutlined, ConfirmationNumberOutlined, Email, EmailOutlined, ImportExportRounded, Message, Phone } from "@mui/icons-material";
+import { Typography, Tooltip, Avatar } from "@mui/material";
+import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { commonStyles } from "lib/ui-ux/common-styles";
-
+import { ITicketDetails } from "modules/tickets/apis";
+import { useAppSelector } from "lib/hooks";
 
 const StyledAvatar = styled(Avatar)`
     && {
@@ -31,53 +28,83 @@ const TypographyValue = styled(Typography)`
     }
 `;
 
+const IconWrapper = styled(FlexBox) <{ $isDisabled?: boolean }>`
+    border-radius: 6px;
+    padding: 8px;
+    box-sizing: border-box;
+    color: ${({ theme }) => theme.pallete.primaryPurple};
+    background-color: ${({ theme }) => theme.pallete.purpleLight};
+    opacity: ${({ $isDisabled }) => $isDisabled ? '0.5' : '1'};
+    cursor: ${({ $isDisabled }) => $isDisabled ? 'not-allowed' : 'pointer'};
+    &:hover {
+        background-color: #e7e7ff;
+    }  
+`;
 
-interface ITicketOverviewProps {
-    ticketDetails: ITicketDetails;
+interface IContactInfoActionsProps {
+    email: string | undefined,
+    phoneNumber: string | undefined,
+    toggleCallBtn: () => void,
 }
 
-export const TicketOverview = (props: ITicketOverviewProps) => {
-    const { ticketDetails } = props;
-    const { customerName, source } = ticketDetails;
-    const [showSearchUserFlyout, setShowSearchUserFlyout] = React.useState(false);
-    const onSearchUserBtnClick = React.useCallback(() => {
-        setShowSearchUserFlyout((x) => !x);
-    }, []);
-    const customerId = useAppSelector((state) => state.tickets.linkedCustomer.customerId)
+const ContactInfoActions = (props: IContactInfoActionsProps) => {
+
+    const { email, phoneNumber, toggleCallBtn } = props;
+
+    const contactInfoIcons = [
+        {
+            title: phoneNumber === undefined ? 'Link a customer to make call' : 'Call',
+            renderIcon: () => <Call />,
+            disabled: phoneNumber === undefined,
+            onClick: toggleCallBtn,
+        },
+        {
+            title: phoneNumber === undefined ? 'Link a customer to send message' : 'Message',
+            renderIcon: () => <Message />,
+            disabled: phoneNumber === undefined,
+        },
+        {
+            title: email === undefined ? 'Link a customer to send e-mail' : 'Email',
+            renderIcon: () => <EmailOutlined />,
+            disabled: email === undefined,
+        }
+    ];
 
     return (
-        <FlexBox $gap="30px" $padding="10px" $flexDirection="column">
-            <FlexBox $justifyContent="space-between">
-                <FlexBox $gap="5px" $alignItems="center">
-                    <Typography variant="h5" >{customerName}</Typography><Typography variant="body2"> messaged via</Typography>
-                    <Platform variant="body2" $platform={source.toLocaleLowerCase()}>{source}</Platform>
-                </FlexBox>
-                {customerId
-                    ? <UnlinkCustomer />
-                    : <Tooltip title="Search Customer" arrow placement="left">
-                        <IconButton onClick={onSearchUserBtnClick}>
-                            <PersonSearch />
-                        </IconButton>
-                    </Tooltip>}
-            </FlexBox>
-            <ContactInfo defaultData={ticketDetails} />
-            <SearchCustomerContainer showSearchUserFlyout={showSearchUserFlyout} onSearchUserBtnClick={onSearchUserBtnClick} />
+        <FlexBox $gap="10px">
+            {contactInfoIcons.map((option, index) =>
+                <Tooltip key={index} title={option.title} arrow placement="bottom">
+                    <IconWrapper $isDisabled={option.disabled} onClick={() => !option.disabled && option?.onClick!()}>
+                        {option.renderIcon()}
+                    </IconWrapper>
+                </Tooltip>
+            )}
         </FlexBox>
     )
-}
+};
 
 interface IContactInfoProps {
     defaultData: ITicketDetails;
 }
 
-const ContactInfo = (props: IContactInfoProps) => {
+export const ContactInfo = (props: IContactInfoProps) => {
     const { defaultData: { customerName, ticketStatus, createdAt, ticketId, priority } } = props;
     const { email, name, phoneNumber, customerId } = useAppSelector((state) => state.tickets.linkedCustomer);
+
+    const [openCallPopUp, setOpenCallPopUp] = React.useState(false);
+
+    const toggleCallBtn = useCallback(() => {
+        setOpenCallPopUp((prevValue) => !prevValue)
+    }, []);
+
     return (
         <FlexBox $gap="20px" $flexDirection="column">
             <FlexBox $gap="10px" $alignItems="center" $flexDirection="column">
                 {name === undefined ? <StyledAvatar /> : <StyledAvatar>{getInitialsByName(name)}</StyledAvatar>}
-                <Typography variant="h4" >{name === '' || name === undefined ? customerName ? customerName : 'NA' : name}</Typography>
+                <Typography variant="h4" >{name === '' || name === undefined ? customerName || 'NA' : name}</Typography>
+                <ContactInfoActions email={email}
+                    phoneNumber={phoneNumber} toggleCallBtn={toggleCallBtn}
+                />
             </FlexBox>
             <HorizontalSeparator />
             <FlexBox $padding="0 20px" $flexDirection="column" $gap="15px">
@@ -89,6 +116,8 @@ const ContactInfo = (props: IContactInfoProps) => {
                 {contactInfoData('Ticket Status', ticketStatus)}
                 {contactInfoData('Priority', priority)}
             </FlexBox>
+            {openCallPopUp ? <TelephonicDialer openCallPopUp={openCallPopUp} toggleCallBtn={toggleCallBtn} phoneNumber={phoneNumber} /> : <></>}
+            
         </FlexBox>
     )
 }
@@ -108,7 +137,7 @@ const contactInfoData = (name: string, value: string | number) => {
                 return <ConfirmationNumberOutlined fontSize="small" sx={{ fill: '#787f83' }} />;
             case 'Created At':
                 return <CalendarToday fontSize="small" sx={{ fill: '#787f83' }} />;
-                case 'Priority':
+            case 'Priority':
                 return <ImportExportRounded fontSize="small" sx={{ fill: '#787f83' }} />;
             default:
                 return <AccountCircleOutlined fontSize="small" sx={{ fill: '#787f83' }} />;
