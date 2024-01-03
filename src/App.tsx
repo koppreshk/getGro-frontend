@@ -23,6 +23,8 @@ export type AppDispatch = typeof store.dispatch
 const queryClient = new QueryClient();
 
 export default function App() {
+  console.log(import.meta.env);
+
   return (
     <MUIthemeProvider theme={defaultMUITheme}>
       <QueryClientProvider client={queryClient}>
