@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
-import { IconButton, Tooltip, Typography } from "@mui/material"
-import { FlexBox } from "lib/ui-ux"
+import { Typography } from "@mui/material"
+import { CustomIconButton, FlexBox } from "lib/ui-ux"
 import styled from "styled-components"
 import { EmailConversations } from "./email-conversations";
 import { UnfoldMore, UnfoldLess, Print } from '@mui/icons-material';
@@ -85,22 +85,11 @@ export const EmailConversationLayout = () => {
                     <FlexBox>
                         {
                             isCollapsedAll ?
-                                <Tooltip title={'Expand all'}>
-                                    <IconButton onClick={onExpandAll} >
-                                        <UnfoldMore />
-                                    </IconButton>
-                                </Tooltip> :
-                                <Tooltip title={'Collapse all'}>
-                                    <IconButton onClick={onCollapseAll}>
-                                        <UnfoldLess />
-                                    </IconButton>
-                                </Tooltip>
+                                <CustomIconButton tooltipProps={{ title: 'Expand all' }} iconComponent={<UnfoldMore />} onClick={onExpandAll} />
+                                :
+                                <CustomIconButton tooltipProps={{ title: 'Collapse all' }} iconComponent={<UnfoldLess />} onClick={onCollapseAll} />
                         }
-                        <Tooltip title="Print all">
-                            <IconButton onClick={onPrintHandler}>
-                                <Print />
-                            </IconButton>
-                        </Tooltip>
+                        <CustomIconButton tooltipProps={{ title: 'Print all' }} iconComponent={<Print />} onClick={onPrintHandler} />
                     </FlexBox>
                 </FlexBox>
                 <EmailConversations

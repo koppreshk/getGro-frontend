@@ -1,9 +1,10 @@
 import { useCallback, useState, Fragment } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tooltip, IconButton } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { PersonRemove } from '@mui/icons-material';
 import { useAppDispatch } from 'lib/hooks';
 import { setLinkedCustomer } from 'modules/tickets/storage';
 import { useNotifications } from 'lib';
+import { CustomIconButton } from 'lib/ui-ux';
 
 export const UnlinkCustomer = () => {
     const [open, setOpen] = useState(false);
@@ -32,11 +33,7 @@ export const UnlinkCustomer = () => {
 
     return (
         <Fragment>
-            <Tooltip title="Unlink Customer" arrow placement="left">
-                <IconButton onClick={handleClickOpen}>
-                    <PersonRemove />
-                </IconButton>
-            </Tooltip>
+            <CustomIconButton tooltipProps={{ title: 'Unlink Customer', arrow: true, placement: "left" }} iconComponent={<PersonRemove />} onClick={handleClickOpen} />
             <Dialog
                 open={open}
                 onClose={handleClose}

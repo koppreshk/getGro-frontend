@@ -10,10 +10,12 @@ interface ILinkedCustomer {
 interface TicketsState {
     totalPages: number;
     linkedCustomer: ILinkedCustomer;
+    showHideTicketDetails: boolean;
 }
 
 const initialState: TicketsState = {
     totalPages: 0,
+    showHideTicketDetails: true,
     linkedCustomer: {
         customerId: undefined,
         email: undefined,
@@ -32,11 +34,14 @@ export const ticketsSlice = createSlice({
         },
         setLinkedCustomer: (state, action: PayloadAction<ILinkedCustomer>) => {
             state.linkedCustomer = action.payload
+        },
+        setShowHideTicketDetails: (state) => {
+            state.showHideTicketDetails = !state.showHideTicketDetails
         }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { setTotalPages, setLinkedCustomer } = ticketsSlice.actions
+export const { setTotalPages, setLinkedCustomer, setShowHideTicketDetails } = ticketsSlice.actions
 
 export default ticketsSlice.reducer
