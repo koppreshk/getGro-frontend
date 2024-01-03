@@ -1,17 +1,19 @@
 import React from "react";
 import styled from "styled-components";
-import { GridLayout } from "lib/ui-ux";
+import { FlexBox } from "lib/ui-ux";
 import { OrderDetailsContainer, TicketOverviewContainer } from "modules/tickets/containers";
 import { MenuOptions, TicketSideMenu } from "./ticket-side-menu";
 import { TicketNotes } from "./ticket-notes";
 import { TicketDispose } from "./ticket-dispose";
+import { useAppSelector } from "lib/hooks";
 
-const StyledGridLayout = styled(GridLayout)`  
+const StyledFlexBox = styled(FlexBox)`  
     background-color: ${({ theme }) => theme.pallete.white};
 `;
 
 export const TicketDetailsSection = () => {
     const [selectedMenuOption, setSelectedMenuOption] = React.useState<string>(MenuOptions.CustomerProfile);
+    const showHideTicketDetails = useAppSelector((state) => state.tickets.showHideTicketDetails)
 
     const onMenuOptionClick = React.useCallback((id: string) => {
         setSelectedMenuOption(id);
@@ -32,12 +34,14 @@ export const TicketDetailsSection = () => {
     }, [selectedMenuOption]);
 
     return (
-        <StyledGridLayout $gridTemplateColumns={"calc(100% - 56px) 56px"} $width="100%">
-            <div>
-                {renderBasedOnSelectedview()}
-            </div>
+        <StyledFlexBox $width={'100%'} $justifyContent={'flex-end'}>
+            {showHideTicketDetails ?
+                <div style={{ width: 'calc(100% - 56px)' }}>
+                    {renderBasedOnSelectedview()}
+                </div>
+                : null}
             <TicketSideMenu onSetMenuOption={onMenuOptionClick} selectedMenuOption={selectedMenuOption} />
-        </StyledGridLayout>
+        </StyledFlexBox>
     )
 }
 
