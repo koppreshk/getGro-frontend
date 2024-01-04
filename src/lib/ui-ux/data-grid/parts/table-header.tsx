@@ -100,7 +100,7 @@ export const TableHeader = <T extends object>(props: ITableHeaderProps<T>) => {
     const { dragRef, dropRef, options, previewRef } = useDragAndDrop<T>({ table, header });
 
     return (
-        <TableHeaderWrapper id="table-column-header" ref={dropRef} style={{ minWidth: header.getSize(), opacity: options.isDragging ? 0.5 : 1 }}>
+        <TableHeaderWrapper id="table-column-header" key={header.id} colSpan={header.colSpan} ref={dropRef} style={{ minWidth: header.getSize(), opacity: options.isDragging ? 0.5 : 1 }}>
             {<FlexBox onClick={header.column.getToggleSortingHandler()} ref={previewRef}>
                 {!header.column.columnDef.meta?.disableColReorder ? <DragabbleIcon ref={dragRef}>
                     <DragIndicatorTwoToneIcon cursor="grab" />

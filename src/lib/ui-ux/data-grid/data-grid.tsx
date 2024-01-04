@@ -17,6 +17,7 @@ import { ColumnsConfiguration } from './parts/columns-configuration'
 
 export interface IDataGridProps<T> extends Pick<TableOptions<T>, 'data' | 'columns'> {
     onRowClick?: (row: Row<T>) => void;
+    hideTableControls?: boolean;
     isLoading?: boolean;
     itemHeight?: string;
 }
@@ -55,7 +56,7 @@ const StyledTable = styled.table<{ $showPointerCursor: boolean; $isLoading?: boo
 `;
 
 export function DataGrid<T extends object>(props: IDataGridProps<T>) {
-    const { data, columns, isLoading, itemHeight, onRowClick } = props
+    const { data, columns, isLoading, itemHeight, hideTableControls = false, onRowClick } = props
     const memoizedData = useMemo(() => isLoading ? Array(10).fill({}) : data, [data, isLoading]);
     const memoizedColumns = useMemo(() =>
         isLoading
@@ -93,7 +94,7 @@ export function DataGrid<T extends object>(props: IDataGridProps<T>) {
     return (
         <DndProvider backend={HTML5Backend}>
             <DataGridWrapper $flexDirection='column' $gap="10px">
-                <TableControls table={table}/>
+                {hideTableControls ? null : <TableControls table={table} />}
                 <ScrollableDiv>
                     <TableWrapper>
                         <StyledTable style={{ minWidth: table.getCenterTotalSize() }} $isLoading={isLoading} $showPointerCursor={onRowClick !== undefined} $itemHeight={itemHeight}>
