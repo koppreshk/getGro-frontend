@@ -23,7 +23,6 @@ export const useLoginUser = () => {
                 return res.json();
             })
             .then((finalRes) => {
-                console.log(finalRes);
                 return toCamelCasedKeysFromUnderScores(finalRes) as LoginResult;
             })
     }, []);
