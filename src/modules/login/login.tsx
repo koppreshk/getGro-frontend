@@ -1,5 +1,5 @@
 import { ArrowForwardRounded } from "@mui/icons-material";
-import { Box, Button, FormControlLabel, Grid, Link, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, FormControlLabel, Grid, Link, Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import React, { useCallback } from "react";
 import styled from "styled-components";
@@ -9,6 +9,8 @@ import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import LoginImage from '../../assets/png/getgro-login-illus.png';
 import GetGroLogoImg from '../../assets/png/getGroLogoWname.png';
 import { CheckboxField } from "lib/form-fields/checkbox-field";
+import { useNotifications } from "lib";
+import { LoginResult, useLoginUser } from "./apis";
 
 interface ILoginFields {
     email: string;
@@ -38,10 +40,18 @@ const IllustrationImg = styled.img`
 const LoginForm = () => {
     const { login } = useAuth();
     const { handleSubmit } = useFormContext<ILoginFields>();
+    const { showNotification } = useNotifications();
+    const { isLoading, mutateAsync } = useLoginUser();
 
     const onSignIn = useCallback((data: ILoginFields) => {
-        login({ password: data.password, userName: data.email, rememberMe: data.rememberMe })
-    }, [login]);
+        mutateAsync({ email: data.email, password: data.password })
+            .then((res: LoginResult) => {
+                login({ auth: res.authToken, userName: data.email, rememberMe: data.rememberMe });
+            }).catch((err) => {
+                console.error(err);
+                showNotification({ message: 'Failed to login, please check email or password', type: 'error' })
+            })
+    }, [login, mutateAsync, showNotification]);
 
     return (
         <Box sx={{ width: '100%', padding: '50px', boxSizing: 'border-box' }}>
@@ -61,7 +71,7 @@ const LoginForm = () => {
                         <TextboxField name="password" label="Password" type="password" fullWidth rules={{ required: 'Password is required' }} />
                     </Grid>
                     <Grid item md={12}>
-                        <Button onClick={handleSubmit(onSignIn)} variant="contained" fullWidth size="large" type="submit" endIcon={<ArrowForwardRounded />}>Sign in</Button>
+                        <Button onClick={handleSubmit(onSignIn)} variant="contained" startIcon={isLoading ? <CircularProgress size={30} /> : null} fullWidth size="large" type="submit" endIcon={<ArrowForwardRounded />}>Sign in</Button>
                     </Grid>
                 </Grid>
                 <Grid item md={12} marginTop='20px'>
