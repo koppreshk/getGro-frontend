@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { useAuth } from 'modules/login';
 import React from 'react';
 
 class ServiceClient {
     private restURL: string | undefined;
     private headers = new Headers();
 
-    constructor() {
+    constructor(args: { auth?: string }) {
         this.restURL = import.meta.env.VITE_REST_URL;
         this.headers.append('Content-Type', 'application/json');
+        this.headers.set('Authorization', args!.auth!);
     }
 
     private fetchData = (endPoint: string, init?: Pick<RequestInit, 'body' | 'method'>, _headers?: HeadersInit) => {
@@ -20,8 +22,6 @@ class ServiceClient {
                 return res;
             }
             throw new Error(`Something went wrong! Status Code: ${res.status} Message: ${res.statusText}`);
-        }).catch((err) => {
-            throw new Error(err);
         });
     }
 
@@ -43,8 +43,9 @@ const arg: Pick<ServiceClient, 'getData' | 'postData'> = {
 const ServiceClientContext = React.createContext(arg);
 
 export const ServiceClientProvider = React.memo((props: { children: React.ReactNode }) => {
+    const { user } = useAuth();
     return (
-        <ServiceClientContext.Provider value={new ServiceClient()}>
+        <ServiceClientContext.Provider value={new ServiceClient({ auth: user?.auth })}>
             {props.children}
         </ServiceClientContext.Provider>
     );

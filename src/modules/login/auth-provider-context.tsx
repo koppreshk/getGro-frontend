@@ -3,15 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { clearCookies, useCookieStorage } from "./hooks/use-cookie-storage";
 
 type User = {
-    user: null | { userName: string, password: string }
-    login: (_data: { userName: string, password: string, rememberMe?: boolean }) => void,
+    user: null | { email: string, auth: string }
+    login: (_data: { email: string, auth: string, rememberMe?: boolean }) => void,
     logout: () => void
 };
 
 export const AuthContext = createContext<User>({
     user: null,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    login: (_data: { userName: string, password: string, rememberMe?: boolean }) => { },
+    login: (_data: { email: string, auth: string, rememberMe?: boolean }) => { },
     logout: () => { }
 });
 
@@ -25,7 +25,7 @@ export const AuthProvider = (props: IAuthProviderProps) => {
     const navigate = useNavigate();
 
     // call this function when you want to authenticate the user
-    const login = useCallback((data: { userName: string, password: string, rememberMe?: boolean }) => {
+    const login = useCallback((data: { email: string, auth: string, rememberMe?: boolean }) => {
         setUser(data, 14, data.rememberMe);
         navigate("/dashboard", { replace: true });
     }, [navigate, setUser]);
