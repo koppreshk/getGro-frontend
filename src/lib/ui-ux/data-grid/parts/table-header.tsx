@@ -117,11 +117,13 @@ export const TableHeader = <T extends object>(props: ITableHeaderProps<T>) => {
                             header.getContext()
                         )}
                     </Typography>
-                    <IconButton>
-                        {header.column.getIsSorted() !== false
-                            ? header.column.getIsSorted() === 'asc' ? <ExpandLess /> : <ExpandMore />
-                            : header.column.getCanSort() ? <UnfoldMore /> : null}
-                    </IconButton>
+                    {isGroupedHeader
+                        ? null
+                        : <IconButton>
+                            {header.column.getIsSorted() !== false
+                                ? header.column.getIsSorted() === 'asc' ? <ExpandLess /> : <ExpandMore />
+                                : header.column.getCanSort() ? <UnfoldMore /> : null}
+                        </IconButton>}
                 </FlexBox>
             </FlexBox>
             }

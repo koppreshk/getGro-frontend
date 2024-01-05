@@ -9,7 +9,7 @@ export const DashboardPage = React.memo(() => {
 
     return (
         <FlexBox $width="100%" $height="100%" $padding="15px" $gap="15px" $flexDirection="column">
-            <Typography variant="h3" color={theme.pallete.primaryPurpleText}>Dashboard</Typography>
+            <Typography variant="h3" color={theme.pallete.primaryPurpleText} marginLeft={'16px'}>Dashboard</Typography>
             <DashboardLayout />
         </FlexBox>
     )

@@ -125,6 +125,7 @@ const useColumns = () => {
             meta: {
                 disableColReorder: true
             },
+            enableResizing: false,
             columns: [
                 columnHelper.accessor('agentName', {
                     header: 'Agent Name',
@@ -145,6 +146,7 @@ const useColumns = () => {
             meta: {
                 disableColReorder: true
             },
+            enableResizing: false,
             columns: [
                 columnHelper.accessor('avgFirstResponseTime', {
                     header: 'Avg First Response Time',
@@ -169,6 +171,7 @@ const useColumns = () => {
             meta: {
                 disableColReorder: true
             },
+            enableResizing: false,
             columns: [
                 columnHelper.accessor('activeTime', {
                     header: 'Active Time',

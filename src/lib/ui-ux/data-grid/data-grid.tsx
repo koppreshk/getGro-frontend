@@ -94,6 +94,7 @@ export function DataGrid<T extends object>(props: IDataGridProps<T>) {
         <DndProvider backend={HTML5Backend}>
             <DataGridWrapper $flexDirection='column' $gap="10px">
                 {hideTableControls ? null : <TableControls table={table} />}
+                <ColumnsConfiguration allColumns={table.getAllLeafColumns()} top={hideTableControls ? '-10px' : '88px'} resetColumnVisibility={table.resetColumnVisibility} />
                 <ScrollableDiv>
                     <TableWrapper>
                         <StyledTable style={{ minWidth: table.getCenterTotalSize() }} $isLoading={isLoading} $showPointerCursor={onRowClick !== undefined} $itemHeight={itemHeight}>
@@ -110,7 +111,6 @@ export function DataGrid<T extends object>(props: IDataGridProps<T>) {
                         </StyledTable>
                     </TableWrapper>
                 </ScrollableDiv>
-                <ColumnsConfiguration allColumns={table.getAllLeafColumns()} resetColumnVisibility={table.resetColumnVisibility} />
             </DataGridWrapper>
         </DndProvider>
     )
