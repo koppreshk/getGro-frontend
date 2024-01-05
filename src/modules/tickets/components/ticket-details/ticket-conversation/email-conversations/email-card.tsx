@@ -99,8 +99,8 @@ export const EmailCard = (props: IEmailCardProps) => {
         onSend({
             createdDate: DateTime.now().toISO(),
             emailHTMLContent: formValues.reply.editor,
-            from: user!.userName!,
-            fromEmail: user!.userName!,
+            from: user!.email!,
+            fromEmail: user!.email!,
             threadId: newThreadId,
             toEmail: fromEmail,
             isCollapsed: isCollapsed
