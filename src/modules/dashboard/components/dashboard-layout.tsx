@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Tabs, Tab } from "@mui/material"
 import { DataGrid, FlexBox } from "lib/ui-ux"
 import { createColumnHelper } from "@tanstack/react-table";
+import styled from "styled-components";
 
 interface IAgentPerformanceProductivity {
     agentName: string;
@@ -120,7 +121,10 @@ const useColumns = () => {
     const columns = [
         columnHelper.group({
             id: 'employeeDetails',
-            header: 'Employee Details',
+            header: () => <span style={{ color: '#676E7B' }}>Employee Details</span>,
+            meta: {
+                disableColReorder: true
+            },
             columns: [
                 columnHelper.accessor('agentName', {
                     header: 'Agent Name',
@@ -138,6 +142,9 @@ const useColumns = () => {
         columnHelper.group({
             id: 'allPerformance',
             header: 'All Performance',
+            meta: {
+                disableColReorder: true
+            },
             columns: [
                 columnHelper.accessor('avgFirstResponseTime', {
                     header: 'Avg First Response Time',
@@ -159,6 +166,9 @@ const useColumns = () => {
         columnHelper.group({
             id: 'agentPerformance',
             header: 'Agent Performance',
+            meta: {
+                disableColReorder: true
+            },
             columns: [
                 columnHelper.accessor('activeTime', {
                     header: 'Active Time',
@@ -209,6 +219,12 @@ export const DashboardLayout = () => {
     )
 }
 
+const Container = styled.div`
+    height: calc(100% - 48px);
+    padding: 16px;
+    box-sizing: border-box;
+    max-height: 400px;
+`
 function CustomTabPanel(props: {
     children?: React.ReactNode;
     index: number;
@@ -217,15 +233,14 @@ function CustomTabPanel(props: {
     const { children, value, index } = props;
 
     return (
-        <div
+        <Container
             role="tabpanel"
-            style={{ height: 'calc(100% - 48px)' }}
             hidden={value !== index}
             id={`tabpanel-${index}`}
             aria-labelledby={`tab-${index}`}>
             {value === index && (
                 <>{children}</>
             )}
-        </div>
+        </Container>
     );
 }

@@ -8,11 +8,11 @@ interface ITableBodyProps<T> extends Pick<IDataGridProps<T>, 'onRowClick'> {
     row: Row<T>;
 }
 
-const StyledTR = styled.tr<{ $isRead: boolean }>`
+const StyledTR = styled.tr<{ $isRead?: boolean }>`
     background: ${({ $isRead }) => $isRead ? '#f2f6fc' : '#ffff'};
 
     .MuiTypography-body2 {
-        font-weight: ${({ $isRead }) => !$isRead && '600'};
+        font-weight: ${({ $isRead }) => $isRead === undefined ? '400' : !$isRead && '600'};
     }
 `;
 
