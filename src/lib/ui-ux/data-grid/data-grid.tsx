@@ -20,6 +20,7 @@ export interface IDataGridProps<T> extends Pick<TableOptions<T>, 'data' | 'colum
     hideTableControls?: boolean;
     isLoading?: boolean;
     itemHeight?: string;
+    className?: string;
 }
 
 const TableWrapper = styled(FlexBox)`
@@ -56,7 +57,7 @@ const StyledTable = styled.table<{ $showPointerCursor: boolean; $isLoading?: boo
 `;
 
 export function DataGrid<T extends object>(props: IDataGridProps<T>) {
-    const { data, columns, isLoading, itemHeight, hideTableControls = false, onRowClick } = props
+    const { data, columns, isLoading, itemHeight, hideTableControls = false, className, onRowClick } = props
     const memoizedData = useMemo(() => isLoading ? Array(10).fill({}) : data, [data, isLoading]);
     const memoizedColumns = useMemo(() =>
         isLoading
@@ -92,9 +93,9 @@ export function DataGrid<T extends object>(props: IDataGridProps<T>) {
     // console.log(table.getSelectedRowModel());
     return (
         <DndProvider backend={HTML5Backend}>
-            <DataGridWrapper $flexDirection='column' $gap="10px">
+            <DataGridWrapper $flexDirection='column' $gap="10px" className={className}>
                 {hideTableControls ? null : <TableControls table={table} />}
-                <ColumnsConfiguration allColumns={table.getAllLeafColumns()} top={hideTableControls ? '-10px' : '88px'} resetColumnVisibility={table.resetColumnVisibility} />
+                <ColumnsConfiguration allColumns={table.getAllLeafColumns()} top={hideTableControls ? '-10px' : '86px'} resetColumnVisibility={table.resetColumnVisibility} />
                 <ScrollableDiv>
                     <TableWrapper>
                         <StyledTable style={{ minWidth: table.getCenterTotalSize() }} $isLoading={isLoading} $showPointerCursor={onRowClick !== undefined} $itemHeight={itemHeight}>
