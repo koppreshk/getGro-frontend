@@ -12,12 +12,15 @@ interface IColumnsConfigurationProps<T extends object> extends Pick<VisibilityIn
     top: string
 }
 
-const StyledIconButton = styled(CustomIconButton) <{ $top: string }>`
+const StyledIconButton = styled(CustomIconButton).attrs({
+    className: 'column-configuration-btn'
+}) <{ $top: string }>`
     &&{
         position: absolute;
         right: 0;
         top: ${({ $top }) => $top};
         z-index: 10;
+        border-radius: unset;
         background: ${(props) => props.theme.pallete.white};
     }
 `

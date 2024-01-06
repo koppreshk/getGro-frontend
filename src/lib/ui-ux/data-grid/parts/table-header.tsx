@@ -111,7 +111,7 @@ export const TableHeader = <T extends object>(props: ITableHeaderProps<T>) => {
                     : null
                 }
                 <FlexBox $gap="10px" $alignItems='center' $width={isGroupedHeader ? '100%' : 'auto'}>
-                    <Typography variant='h6' fontSize="14px" width={isGroupedHeader ? '100%' : 'auto'}>
+                    <Typography variant='h6' fontSize="14px" width={isGroupedHeader ? '100%' : 'auto'} textOverflow={'ellipsis'} overflow="hidden" whiteSpace="nowrap" maxWidth={header.column.getSize()}>
                         {flexRender(
                             header.column.columnDef.header,
                             header.getContext()

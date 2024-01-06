@@ -22,6 +22,7 @@ declare module 'styled-components' {
       grayNeutral: string,
       defaultTextColor: string,
       primaryPurpleText: string,
+      genericBackgroundColor: string
     },
     semantics: {
       standardBorder: string;
