@@ -1,4 +1,5 @@
 import { Typography } from "@mui/material";
+import { TicketAccessRights, useAutherization } from "lib/hooks";
 import { FlexBox } from "lib/ui-ux"
 import React from "react";
 import { useMatch, useNavigate } from "react-router-dom";
@@ -38,59 +39,76 @@ const OptionWrapper = styled.div`
   box-sizing: border-box;
 `;
 
-const viewOptions = [
-    {
-        name: 'Unassigned',
-        primaryKey: 'unassigned',
-        route: 'unassigned'
-    },
-    {
-        name: 'All Pending',
-        primaryKey: 'all-pending',
-        route: 'all-pending'
-    },
-    {
-        name: 'All Complete',
-        primaryKey: 'all-complete',
-        route: 'all-complete'
-    },
-    {
-        name: 'All Junk',
-        primaryKey: 'all-junk',
-        route: 'all-junk'
-    },
-    {
-        name: 'Assigned To Me',
-        primaryKey: 'assigned-to-me',
-        route: 'assigned-to-me'
-    },
-    {
-        name: 'Created By Me',
-        primaryKey: 'created-by-me',
-        route: 'created-by-me'
-    },
-    {
-        name: 'Completed By Me',
-        primaryKey: 'completed-by-me',
-        route: 'completed-by-me'
-    },
-    {
-        name: 'Completed By Team',
-        primaryKey: 'completed-by-team',
-        route: 'completed-by-team'
-    },
-    {
-        name: 'Pending By Team',
-        primaryKey: 'pending-by-team',
-        route: 'pending-by-team'
-    },
-]
+const useViewOptions = () => {
+    const authorize = useAutherization();
+
+    return [
+        {
+            name: 'Unassigned',
+            primaryKey: 'unassigned',
+            route: 'unassigned',
+            showOption: authorize(TicketAccessRights.Unassigned)
+        },
+        {
+            name: 'All Pending',
+            primaryKey: 'all-pending',
+            route: 'all-pending',
+            showOption: authorize(TicketAccessRights.AllPending)
+        },
+        {
+            name: 'All Complete',
+            primaryKey: 'all-complete',
+            route: 'all-complete',
+            showOption: authorize(TicketAccessRights.AllComplete)
+        },
+        {
+            name: 'All Junk',
+            primaryKey: 'all-junk',
+            route: 'all-junk',
+            showOption: authorize(TicketAccessRights.AllJunk)
+        },
+        {
+            name: 'Assigned To Me',
+            primaryKey: 'assigned-to-me',
+            route: 'assigned-to-me',
+            showOption: authorize(TicketAccessRights.AssignedToMe)
+        },
+        {
+            name: 'Created By Me',
+            primaryKey: 'created-by-me',
+            route: 'created-by-me',
+            showOption: authorize(TicketAccessRights.CreatedByMe)
+        },
+        {
+            name: 'Completed By Me',
+            primaryKey: 'completed-by-me',
+            route: 'completed-by-me',
+            showOption: authorize(TicketAccessRights.CompletedByMe)
+        },
+        {
+            name: 'Completed By Team',
+            primaryKey: 'completed-by-team',
+            route: 'completed-by-team',
+            showOption: authorize(TicketAccessRights.CompletedByTeam)
+        },
+        {
+            name: 'Pending By Team',
+            primaryKey: 'pending-by-team',
+            route: 'pending-by-team',
+            showOption: authorize(TicketAccessRights.PendingByTeam)
+        },
+    ]
+
+}
 
 export const TicketViews = () => {
+    const viewOptions = useViewOptions();
     return (
         <ViewsWrapper $flexDirection="column">
             {viewOptions.map((item) => (
-                <TicketViewOptions name={item.name} key={item.primaryKey} route={item.route} />
+                <React.Fragment key={item.primaryKey}>
+                    {item.showOption ? <TicketViewOptions name={item.name} route={item.route} /> : null}
+                </React.Fragment>
             ))}
         </ViewsWrapper>
     )

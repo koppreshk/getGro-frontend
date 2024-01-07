@@ -1,17 +1,18 @@
 import { createContext, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { clearCookies, useCookieStorage } from "./hooks/use-cookie-storage";
+import { Roles } from "lib/hooks";
 
 type User = {
-    user: null | { email: string, auth: string }
-    login: (_data: { email: string, auth: string, rememberMe?: boolean }) => void,
+    user: null | { email: string, authToken: string, rememberMe?: boolean, role: Roles }
+    login: (_data: { email: string, authToken: string, rememberMe?: boolean, role: Roles }) => void,
     logout: () => void
 };
 
 export const AuthContext = createContext<User>({
     user: null,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    login: (_data: { email: string, auth: string, rememberMe?: boolean }) => { },
+    login: (_data: { email: string, authToken: string, rememberMe?: boolean }) => { },
     logout: () => { }
 });
 
@@ -25,9 +26,9 @@ export const AuthProvider = (props: IAuthProviderProps) => {
     const navigate = useNavigate();
 
     // call this function when you want to authenticate the user
-    const login = useCallback((data: { email: string, auth: string, rememberMe?: boolean }) => {
+    const login = useCallback((data: { email: string, authToken: string, rememberMe?: boolean, role: Roles }) => {
         setUser(data, 14, data.rememberMe);
-        navigate("/dashboard", { replace: true });
+        navigate(data.role === 'Admin' ? "/dashboard" : '/tickets', { replace: true });
     }, [navigate, setUser]);
 
     // call this function to sign out logged in user

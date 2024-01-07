@@ -4,17 +4,18 @@ import { TicketViews } from "../components"
 import { Navigate, Route, Routes, useMatch } from "react-router-dom"
 import { UnassignedTicketsContainer } from "../containers"
 import { TicketDetailsLayout } from "../components/ticket-details"
+import { useAuth } from "modules/login"
 
 export const TicketsPage = React.memo(() => {
     const match = useMatch('/tickets/:type/:ticketId');
-
+    const { user } = useAuth();
     return (
         <>
             <FlexBox $height="100%">
                 {match?.params?.ticketId ? null : <TicketViews />}
                 <div style={{ width: match?.params?.ticketId ? '100%' : 'calc(100% - 200px)' }}>
                     <Routes>
-                        <Route key="default-view" path="*" element={<Navigate to="/tickets/unassigned" />} />
+                        <Route key="default-view" path="*" element={<Navigate to={user?.role === "Admin" ? "/tickets/unassigned" : "/tickets/assigned-to-me"} />} />
                         <Route key="unassigned" path="/unassigned" element={<UnassignedTicketsContainer />} />
                         <Route key="all-pending" path="/all-pending" element={<UnassignedTicketsContainer />} />
                         <Route key="all-complete" path="/all-complete" element={<UnassignedTicketsContainer />} />

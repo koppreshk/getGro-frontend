@@ -4,7 +4,8 @@ import { useMutation } from "react-query";
 import { toCamelCasedKeysFromUnderScores } from "lib/utils";
 
 export type LoginResult = {
-    authToken: string
+    authToken: string;
+    role: 'Agent' | 'Admin'
 }
 
 export const useLoginUser = () => {
