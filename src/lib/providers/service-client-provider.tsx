@@ -45,7 +45,7 @@ const ServiceClientContext = React.createContext(arg);
 export const ServiceClientProvider = React.memo((props: { children: React.ReactNode }) => {
     const { user } = useAuth();
     return (
-        <ServiceClientContext.Provider value={new ServiceClient({ auth: user?.auth })}>
+        <ServiceClientContext.Provider value={new ServiceClient({ auth: user?.authToken })}>
             {props.children}
         </ServiceClientContext.Provider>
     );

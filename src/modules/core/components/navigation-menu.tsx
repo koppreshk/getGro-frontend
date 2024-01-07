@@ -5,6 +5,7 @@ import styled, { css } from "styled-components";
 import { FlexBox } from "lib/ui-ux";
 import { Popover, Tooltip, Typography, Badge } from "@mui/material";
 import { EventOutlined, GroupOutlined, InsertChartOutlined, SettingsOutlined, TaskOutlined } from "@mui/icons-material";
+import { usePermissions } from "lib/hooks";
 
 interface IPrimaryOptionProps {
     item: {
@@ -35,12 +36,14 @@ const SecondaryOptionWrapper = styled(FlexBox)`
 const usePrimaryOptions = () => {
     const [searchParams] = useSearchParams();
     const noOfRecords = searchParams.get('noOfRecords') || '10';
+    const { isCustomersPageAccessible, isDashboardPageAccessible, isSettingsPageAccessible, isTicketsPageAccessible } = usePermissions();
 
     return [{
         iconComponent: () => <InsertChartOutlined />,
         primaryKey: 'dashboard',
         route: 'dashboard',
-        title: 'Dashboard'
+        title: 'Dashboard',
+        hidden: !isDashboardPageAccessible
     },
     {
         iconComponent: () => (
@@ -49,17 +52,20 @@ const usePrimaryOptions = () => {
             </Badge>),
         primaryKey: 'tickets',
         route: 'tickets',
-        title: 'Tickets'
+        title: 'Tickets',
+        hidden: !isTicketsPageAccessible
     }, {
         iconComponent: () => <GroupOutlined />,
         primaryKey: 'customers',
         route: 'customers',
-        title: 'Customers'
+        title: 'Customers',
+        hidden: !isCustomersPageAccessible
     }, {
         iconComponent: () => <SettingsOutlined />,
         primaryKey: 'settings',
         route: 'settings',
-        title: 'Settings'
+        title: 'Settings',
+        hidden: !isSettingsPageAccessible
     }];
 }
 
@@ -96,11 +102,16 @@ export const NavigationMenu = React.memo(() => {
         <MenuWrapper $flexDirection="column" $justifyContent="space-between">
             <PrimaryOptionsWrapper $gap="10px" $flexDirection="column" $justifyContent="center" $alignItems="center">
                 {primaryOptions.map((item) => (
-                    <PrimaryOption
-                        key={item.primaryKey}
-                        item={item}
-                        selectedMenu={selectedMenu}
-                        onMenuOptionClick={setMenu} />
+                    <React.Fragment key={item.primaryKey}>
+                        {
+                            item.hidden ? null :
+                                <PrimaryOption
+                                    item={item}
+                                    selectedMenu={selectedMenu}
+                                    onMenuOptionClick={setMenu} />
+                        }
+                    </React.Fragment>
+
                 ))}
             </PrimaryOptionsWrapper>
             <SecondaryOptionWrapper $flexDirection="column" $justifyContent="center" $alignItems="center">

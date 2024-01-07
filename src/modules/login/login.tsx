@@ -11,6 +11,7 @@ import GetGroLogoImg from '../../assets/png/getGroLogoWname.png';
 import { CheckboxField } from "lib/form-fields/checkbox-field";
 import { useNotifications } from "lib";
 import { LoginResult, useLoginUser } from "./apis";
+import { Roles } from "lib/hooks";
 
 interface ILoginFields {
     email: string;
@@ -46,7 +47,7 @@ const LoginForm = () => {
     const onSignIn = useCallback((data: ILoginFields) => {
         mutateAsync({ email: data.email, password: data.password })
             .then((res: LoginResult) => {
-                login({ auth: res.authToken, email: data.email, rememberMe: data.rememberMe });
+                login({ authToken: res.authToken, email: data.email, rememberMe: data.rememberMe, role: res.role as Roles });
             }).catch((err) => {
                 console.error(err);
                 showNotification({ message: 'Failed to login, please check email or password', type: 'error' })
