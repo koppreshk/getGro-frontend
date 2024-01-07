@@ -12,6 +12,23 @@ enum AccessRightKeys {
     ViewSettings = 'ViewSettings',
 }
 
+export enum TicketAccessRights {
+    Unassigned = 'unassigned',
+    AllPending = 'all-pending',
+    AllComplete = 'all-complete',
+    AllJunk = 'all-junk',
+    AssignedToMe = 'assigned-to-me',
+    CreatedByMe = 'created-by-me',
+    CompletedByMe = 'completed-by-me',
+    CompletedByTeam = 'completed-by-team',
+    PendingByTeam = 'pending-by-team',
+}
+
+type IAccessRights = {
+    name: AccessRightKeys | TicketAccessRights;
+    mode: Roles[];
+}
+
 const accessRights = [
     {
         name: AccessRightKeys.ViewDashboard,
@@ -27,18 +44,55 @@ const accessRights = [
     },
     {
         name: AccessRightKeys.ViewTickets,
-        mode: [Roles.Admin, Roles.Agent]
-    }
-]
+        mode: [Roles.Admin, Roles.Agent],
+    },
+    {
+        name: TicketAccessRights.Unassigned,
+        mode: [Roles.Admin],
+    },
+    {
+        name: TicketAccessRights.AllPending,
+        mode: [Roles.Admin],
+    },
+    {
+        name: TicketAccessRights.AllComplete,
+        mode: [Roles.Admin],
+    },
+    {
+        name: TicketAccessRights.AllJunk,
+        mode: [Roles.Admin],
+    },
+    {
+        name: TicketAccessRights.AssignedToMe,
+        mode: [Roles.Admin, Roles.Agent],
+    },
+    {
+        name: TicketAccessRights.CreatedByMe,
+        mode: [Roles.Admin, Roles.Agent],
+    },
+    {
+        name: TicketAccessRights.CompletedByMe,
+        mode: [Roles.Admin, Roles.Agent],
+    },
+    {
+        name: TicketAccessRights.CompletedByTeam,
+        mode: [Roles.Admin],
+    },
+    {
+        name: TicketAccessRights.PendingByTeam,
+        mode: [Roles.Admin],
+    },
+] as IAccessRights[]
 
-const useAutherization = () => {
+export const useAutherization = () => {
     const { user } = useAuth();
 
-    const authorize = (name: AccessRightKeys) => {
+    const authorize = (name: AccessRightKeys | TicketAccessRights) => {
         let isAuthorized = false;
         accessRights.forEach((item) => {
             if (item.name === name) {
                 isAuthorized = item.mode.includes(user!.role!);
+                return;
             }
         })
         return isAuthorized;
