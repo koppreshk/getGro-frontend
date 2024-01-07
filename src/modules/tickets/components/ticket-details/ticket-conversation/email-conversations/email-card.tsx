@@ -19,7 +19,8 @@ interface IEmailCardProps {
         messageId: string;
         isCollapsed: boolean;
     }) => void
-    onSend: (args: IEmailConversations, linkedMessageId: string) => void}
+    onSend: (args: IEmailConversations, linkedMessageId: string) => void
+}
 
 const InnerHTML = styled.div`
     padding-left: 50px;
@@ -106,10 +107,10 @@ export const EmailCard = (props: IEmailCardProps) => {
             <FlexBox $flexDirection="column" $gap="12px" $justifyContent="center">
                 <FlexBox style={{ cursor: 'pointer' }} $flexDirection="column" $width="100%" onClick={onCardClick}>
                     <FlexBox $gap="10px" $width="100%">
-                        <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>{getInitialsByName(from)}</Avatar>
+                        <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>{getInitialsByName(from || 'NA')}</Avatar>
                         <FlexBox $flexDirection="column" $width="calc(100% - 50px)">
                             <FlexBox $justifyContent="space-between">
-                                <Typography variant="h6">{from}</Typography>
+                                <Typography variant="h6">{from || 'NA'}</Typography>
                                 <FlexBox $gap="10px" $justifyContent="space-between" $alignItems="center">
                                     <SubTextValue variant="caption">{getFormattedDate(createdAt)}</SubTextValue>
                                     {!isCollapsed ? <EmailThreadOptions onReplyClick={onReplyClick} onForwardClick={onForwardClick} /> : null}
@@ -127,7 +128,7 @@ export const EmailCard = (props: IEmailCardProps) => {
                     </FlexBox>
                 </FlexBox>
                 {!isCollapsed && <InnerHTML dangerouslySetInnerHTML={{ __html: htmlContent }} />}
-                {!isCollapsed && attachments.length && <DownloadAttachments />}
+                {!isCollapsed && attachments.length > 0 && <DownloadAttachments />}
                 {
                     showReplyEditor ?
                         <EmailEditor
