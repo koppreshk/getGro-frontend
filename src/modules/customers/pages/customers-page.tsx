@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { commonStyles } from "lib/ui-ux/common-styles";
 import { CustomerViews } from "../components";
 import { Navigate, Route, Routes } from "react-router-dom";
+import { IndivisualCustomerContainer } from "../containers";
 
 const Container = styled(FlexBox)`
     ${commonStyles.sleekScrollStyle};
@@ -15,10 +16,10 @@ export const CustomersPage = React.memo(() => {
             <CustomerViews />
             <div style={{ width: 'calc(100% - 200px)' }}>
                 <Routes>
-                    <Route key="default" path="*" element={<Navigate to="/customers/indivisual" replace={true} />}/>
-                    <Route key="indivisual" path="/indivisual"/>
-                    <Route key="organzation" path="/organzation"/>
-                    <Route key="channel-partner" path="/channel-partner"/>
+                    <Route key="default" path="*" element={<Navigate to="/customers/indivisual" replace={true} />} />
+                    <Route key="indivisual" path="/indivisual" element={<IndivisualCustomerContainer />} />
+                    <Route key="organzation" path="/organzation" />
+                    <Route key="channel-partner" path="/channel-partner" />
                 </Routes>
             </div>
         </Container>

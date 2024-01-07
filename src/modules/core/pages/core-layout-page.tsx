@@ -61,7 +61,7 @@ export const CoreLayout = () => {
                         element={<TicketsPage />} />
                     <Route
                         key="customers"
-                        path="customers"
+                        path="customers/*"
                         element={<CustomersPage />} />
                     <Route
                         key="settings"

@@ -1,12 +1,5 @@
 import { IndivisualCustomers } from "../components";
 
-export const IndisiualCustomerContainer = () => {
-    const data = customerData;
-    return (
-        <IndivisualCustomers data={data}/> 
-    )
-}
-
 const customerData = [{ "customerId": "5108758664927095", "name": "Melisande Gwin", "zone": "Motala", "customerCode": "5474087749134998", "accountManager": "Yankee Domerq" },
 { "customerId": "5002350356826343", "name": "Olga Kilshall", "zone": "Kristianstad", "customerCode": "4026303625330378", "accountManager": "Trisha Vyvyan" },
 { "customerId": "3552818345090873", "name": "Neel Tregien", "zone": "Dalovice", "customerCode": "0604693001614702", "accountManager": "Amity Grube" },
@@ -107,3 +100,11 @@ const customerData = [{ "customerId": "5108758664927095", "name": "Melisande Gwi
 { "customerId": "4913332521607965", "name": "Saunder Blowes", "zone": "Kraśnik", "customerCode": "3579295910348912", "accountManager": "Dorisa Tortoishell" },
 { "customerId": "3545942685628629", "name": "Mariquilla Tatam", "zone": "Shebekino", "customerCode": "337941436003510", "accountManager": "Lucais Tynan" },
 { "customerId": "30255859112892", "name": "Lida Leake", "zone": "Chinju", "customerCode": "677173846560393037", "accountManager": "Brear Neilan" }]
+
+
+export const IndivisualCustomerContainer = () => {
+    const data = customerData;
+    return (
+        <IndivisualCustomers data={data}/> 
+    )
+}

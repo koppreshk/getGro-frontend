@@ -1,6 +1,5 @@
 import { createColumnHelper } from "@tanstack/react-table";
-import { DataGrid } from "lib/ui-ux";
-
+import { DataGrid, FlexBox } from "lib/ui-ux";
 interface ICustomerData {
     customerId: string;
     name: string;
@@ -51,6 +50,8 @@ export const IndivisualCustomers = (props: IIndivisualCustomersProps) => {
     const { data } = props;
     const columns = useColumns()
     return (
-        <DataGrid columns={columns} data={data} />
+        <FlexBox $padding="10px">
+            <DataGrid columns={columns} data={data} />
+        </FlexBox>
     )
 }
