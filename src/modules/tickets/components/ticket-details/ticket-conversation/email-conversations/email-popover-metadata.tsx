@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { ArrowDropDown } from "@mui/icons-material";
 import { IconButton, Popover, Typography } from "@mui/material";
-import { IEmailThreadProps } from "./email-card";
 import { FlexBox } from "lib/ui-ux";
 import { getFormattedDate } from "lib/utils";
+import { IEmailConversations } from "./email-conversations-layout";
 
-interface IEmailPopoverMetadataProps extends Pick<IEmailThreadProps, 'createdDate' | 'fromEmail' | 'toEmail' | 'subject'> {
-
+interface IEmailPopoverMetadataProps extends Pick<IEmailConversations, 'createdAt' | 'fromEmail' | 'toEmail'> {
+    subject: string
 }
 export const EmailPopoverMetadata = (props: IEmailPopoverMetadataProps) => {
-    const { createdDate, fromEmail, subject, toEmail } = props;
+    const { createdAt, fromEmail, subject, toEmail } = props;
     const [anchorEl, setAnchorEl] = useState<null | HTMLButtonElement>(null);
     const open = Boolean(anchorEl);
 
@@ -24,7 +24,7 @@ export const EmailPopoverMetadata = (props: IEmailPopoverMetadataProps) => {
     };
 
     const popoverData = [{ name: 'From', value: fromEmail }, { name: 'To', value: toEmail },
-    { name: 'Subject', value: subject }, { name: 'Date', value: getFormattedDate(createdDate) }];
+    { name: 'Subject', value: subject }, { name: 'Date', value: getFormattedDate(createdAt) }];
 
     return (
         <div>
