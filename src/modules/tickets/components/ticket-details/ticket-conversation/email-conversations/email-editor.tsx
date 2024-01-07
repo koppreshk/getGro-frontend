@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { useMemo } from "react";
 import styled from "styled-components";
 import { Delete, Send } from "@mui/icons-material";
-import { Avatar, Button, IconButton } from "@mui/material";
+import { Avatar, Button, CircularProgress, IconButton } from "@mui/material";
 import { chooseRandomColors, getInitialsByName } from "lib/utils";
 import { FlexBox } from "lib/ui-ux";
 import { FileUploadField, RichTextEditorField } from "lib/form-fields";
@@ -15,6 +15,7 @@ interface IEmailEditorProps {
     from: string;
     editorType: 'reply' | 'forward'
     showEmailHeaderOptions?: boolean;
+    isMutationLoading?: boolean;
     onCancelClick: () => void;
     onSendClick?: () => void;
 }
@@ -39,7 +40,7 @@ export const RoundedSendButton = styled(Button)`
 `;
 
 export const EmailEditor = (props: IEmailEditorProps) => {
-    const { from, showEmailHeaderOptions = false, editorType } = props;
+    const { from, showEmailHeaderOptions = false, editorType, isMutationLoading } = props;
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(from)), [from]);
     const { watch } = useFormContext<IEmailFormFields>();
     const attachmets = watch(`${editorType}.attachments`);
@@ -53,26 +54,26 @@ export const EmailEditor = (props: IEmailEditorProps) => {
                 <FlexBox $gap="8px" $padding="0px 16px" $flexWrap="wrap">
                     {attachmets?.selectedFiles.map((item) => (<UploadedAttachmentsPreview item={item} attachmets={attachmets} />))}
                 </FlexBox>
-                <EmailFooterOptions onCancelClick={props.onCancelClick} onSendClick={props.onSendClick} editorType={editorType} />
+                <EmailFooterOptions onCancelClick={props.onCancelClick} onSendClick={props.onSendClick} editorType={editorType} isMutationLoading={isMutationLoading} />
             </StyledForwardCardContainer>
         </FlexBox>
     )
 }
 
-const EmailFooterOptions = (props: Pick<IEmailEditorProps, 'onSendClick' | 'onCancelClick' | 'editorType'>) => {
-    const { editorType, onCancelClick, onSendClick } = props;
+const EmailFooterOptions = (props: Pick<IEmailEditorProps, 'onSendClick' | 'onCancelClick' | 'editorType' | 'isMutationLoading'>) => {
+    const { editorType, isMutationLoading, onCancelClick, onSendClick } = props;
     return (
         <FlexBox $justifyContent="space-between" $padding="0px 16px 10px">
             <FlexBox $gap="5px">
-                <RoundedSendButton variant="contained" endIcon={<Send />} title="Send" onClick={onSendClick}>
+                <RoundedSendButton disabled={isMutationLoading} variant="contained" endIcon={isMutationLoading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : <Send />} title="Send" onClick={onSendClick}>
                     Send
                 </RoundedSendButton>
                 <FileUploadField name={`${editorType}.attachments`} multiple readMode="readAsDataURL" />
                 <InsertTemplate editorType={editorType} />
-            </FlexBox>
+            </FlexBox >
             <IconButton onClick={onCancelClick} title="Delete">
                 <Delete />
             </IconButton>
-        </FlexBox>
+        </FlexBox >
     )
 }

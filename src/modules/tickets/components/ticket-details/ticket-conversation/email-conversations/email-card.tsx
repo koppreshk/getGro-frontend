@@ -1,10 +1,8 @@
-import { useCallback, useId, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import styled from "styled-components";
-import { DateTime } from "luxon";
 import { Typography, Avatar } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { chooseRandomColors, getFormattedDate, getInitialsByName } from "lib/utils";
-import { useAuth } from "modules/login";
 import { EmailPopoverMetadata } from "./email-popover-metadata";
 import { EmailThreadOptions } from "./email-thread-options";
 import { EmailEditor } from "./email-editor";
@@ -12,6 +10,7 @@ import { DownloadAttachments } from "./download-attachments";
 import { useFormContext } from "react-hook-form";
 import { IEmailFormFields } from "./email-conversations";
 import { IEmailConversations } from "./email-conversations-layout";
+import { useReplyToEmail } from "modules/tickets/apis";
 
 interface IEmailCardProps {
     emailProps: IEmailConversations & { subject: string; };
@@ -19,7 +18,6 @@ interface IEmailCardProps {
         messageId: string;
         isCollapsed: boolean;
     }) => void
-    onSend: (args: IEmailConversations, linkedMessageId: string) => void
 }
 
 const InnerHTML = styled.div`
@@ -64,13 +62,12 @@ const useEmailActionHelpers = () => {
 }
 
 export const EmailCard = (props: IEmailCardProps) => {
-    const { emailProps: { htmlContent, from, fromEmail, createdAt, messageId, subject, toEmail, isCollapsed, attachments }, onSingleEmailCollapseHandler, onSend } = props;
-    const newmessageId = useId();
-    const { user } = useAuth();
+    const { emailProps: { htmlContent, from, fromEmail, createdAt, messageId, subject, toEmail, isCollapsed, attachments }, onSingleEmailCollapseHandler } = props;
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(from)), [from]);
     const { showEditor: showReplyEditor, toggleEditorView: toggleReplyEditorView } = useEmailActionHelpers();
     const { showEditor, toggleEditorView } = useEmailActionHelpers();
     const { handleSubmit, setValue } = useFormContext<IEmailFormFields>();
+    const { mutateAsync, isLoading: isMutationLoading } = useReplyToEmail();
 
     const onReplyClick: React.MouseEventHandler<HTMLButtonElement> = useCallback((ev) => {
         ev.stopPropagation();
@@ -86,19 +83,11 @@ export const EmailCard = (props: IEmailCardProps) => {
     }, [htmlContent, setValue, showReplyEditor, toggleEditorView, toggleReplyEditorView])
 
     const onSendReply = useCallback((formValues: Pick<IEmailFormFields, 'reply'>) => {
-        onSend({
-            createdAt: DateTime.now().toISO(),
+        mutateAsync({
             htmlContent: formValues.reply.editor,
-            from: user!.email!,
-            fromEmail: user!.email!,
-            messageId: newmessageId,
-            toEmail: fromEmail,
-            isCollapsed: isCollapsed,
-            to: "",
-            attachments: []
-        }, messageId);
-        toggleReplyEditorView();
-    }, [fromEmail, isCollapsed, newmessageId, onSend, messageId, toggleReplyEditorView, user]);
+            messageId
+        }).then(() => toggleReplyEditorView());
+    }, [mutateAsync, messageId, toggleReplyEditorView]);
 
     const onCardClick = () => onSingleEmailCollapseHandler({ messageId, isCollapsed: !isCollapsed });
 
@@ -134,6 +123,7 @@ export const EmailCard = (props: IEmailCardProps) => {
                         <EmailEditor
                             from={from}
                             editorType="reply"
+                            isMutationLoading={isMutationLoading}
                             onCancelClick={toggleReplyEditorView}
                             onSendClick={handleSubmit(onSendReply)}
                         /> : null
