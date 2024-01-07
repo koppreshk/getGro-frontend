@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Typography } from "@mui/material"
 import { CustomIconButton, FlexBox } from "lib/ui-ux"
 import styled from "styled-components"
@@ -23,6 +23,12 @@ export const EmailConversationLayout = (props: { conversationsData: ITicketById 
     const containerRef = useRef<HTMLDivElement>(null);
     const iframeRef = useRef<HTMLIFrameElement>(null);
 
+    useEffect(() => {
+        if (casedConversation.length) {
+            setEmailThreads(casedConversation);
+        }
+    }, [casedConversation.length]);
+
     const onPrintHandler = () => {
         if (containerRef.current && iframeRef.current) {
             const content = containerRef.current;
@@ -36,8 +42,6 @@ export const EmailConversationLayout = (props: { conversationsData: ITicketById 
             }
         }
     }
-
-    const onSetEmailThreads = (args: IEmailConversations[]) => setEmailThreads(args);
 
     const onSingleEmailCollapseHandler = (args: { messageId: string, isCollapsed: boolean }) => {
         const modifiedEmailThreads = emailThreads.slice().map((item) => {
@@ -62,7 +66,7 @@ export const EmailConversationLayout = (props: { conversationsData: ITicketById 
             <iframe ref={iframeRef} id="ifmcontentstoprint" style={{ display: 'none' }} />
             <LayoutWrapper ref={containerRef} $flexDirection="column" $gap="10px" $width="100%" $height="calc(100% - 84px);">
                 <FlexBox $justifyContent="space-between">
-                    <Typography variant="h5">Subject: {subject}</Typography>
+                    <Typography variant="h5">{subject}</Typography>
                     <FlexBox>
                         {
                             isCollapsedAll ?
@@ -77,7 +81,6 @@ export const EmailConversationLayout = (props: { conversationsData: ITicketById 
                     subject={subject}
                     isCollapsedAll={isCollapsedAll}
                     emailThreads={emailThreads}
-                    onSetEmailThreads={onSetEmailThreads}
                     onSingleEmailCollapseHandler={onSingleEmailCollapseHandler} />
             </LayoutWrapper>
         </>

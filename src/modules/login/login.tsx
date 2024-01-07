@@ -71,7 +71,7 @@ const LoginForm = () => {
                         <TextboxField name="password" label="Password" type="password" fullWidth rules={{ required: 'Password is required' }} />
                     </Grid>
                     <Grid item md={12}>
-                        <Button onClick={handleSubmit(onSignIn)} variant="contained" fullWidth size="large" type="submit" endIcon={isLoading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : <ArrowForwardRounded />}>Sign in</Button>
+                        <Button onClick={handleSubmit(onSignIn)} variant="contained" fullWidth size="large" type="submit" disabled={isLoading} endIcon={isLoading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : <ArrowForwardRounded />}>Sign in</Button>
                     </Grid>
                 </Grid>
                 <Grid item md={12} marginTop='20px'>
