@@ -1,13 +1,27 @@
 import React from "react"
 import { FlexBox } from "lib/ui-ux"
-import { Typography } from "@mui/material"
+import styled from "styled-components";
+import { commonStyles } from "lib/ui-ux/common-styles";
+import { CustomerViews } from "../components";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { IndivisualCustomerContainer } from "../containers";
+
+const Container = styled(FlexBox)`
+    ${commonStyles.sleekScrollStyle};
+`;
 
 export const CustomersPage = React.memo(() => {
     return (
-        <FlexBox $width="100%" $height="100%" $justifyContent="center" $alignItems="center">
-            <Typography variant="h2">
-                Customers page coming soon...
-            </Typography>
-        </FlexBox>
+        <Container $height="100%">
+            <CustomerViews />
+            <div style={{ width: 'calc(100% - 200px)' }}>
+                <Routes>
+                    <Route key="default" path="*" element={<Navigate to="/customers/indivisual" replace={true} />} />
+                    <Route key="indivisual" path="/indivisual" element={<IndivisualCustomerContainer />} />
+                    <Route key="organzation" path="/organzation" />
+                    <Route key="channel-partner" path="/channel-partner" />
+                </Routes>
+            </div>
+        </Container>
     )
 })
