@@ -107,10 +107,10 @@ export const EmailCard = (props: IEmailCardProps) => {
             <FlexBox $flexDirection="column" $gap="12px" $justifyContent="center">
                 <FlexBox style={{ cursor: 'pointer' }} $flexDirection="column" $width="100%" onClick={onCardClick}>
                     <FlexBox $gap="10px" $width="100%">
-                        <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>{getInitialsByName(from || 'NA')}</Avatar>
+                        <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>{getInitialsByName(from || fromEmail)}</Avatar>
                         <FlexBox $flexDirection="column" $width="calc(100% - 50px)">
                             <FlexBox $justifyContent="space-between">
-                                <Typography variant="h6">{from || 'NA'}</Typography>
+                                <Typography variant="h6">{from || fromEmail}</Typography>
                                 <FlexBox $gap="10px" $justifyContent="space-between" $alignItems="center">
                                     <SubTextValue variant="caption">{getFormattedDate(createdAt)}</SubTextValue>
                                     {!isCollapsed ? <EmailThreadOptions onReplyClick={onReplyClick} onForwardClick={onForwardClick} /> : null}
