@@ -10,17 +10,23 @@ import { SettingsPage } from "modules/settings/pages"
 import { ProtectedRoute } from "modules/login/protected-route"
 import { Login, useAuth } from "modules/login"
 import { PageNotFound } from "./page-not-found"
+import styled from "styled-components"
+import { commonStyles } from "lib/ui-ux/common-styles"
+
+const PageContainer = styled(FlexBox)`
+    ${commonStyles.sleekScrollStyle};
+`;
 
 const HomePage = React.memo(() => {
     return (
         <>
             <Toolbar />
-            <FlexBox $width="100%" $height="calc(100% - 65px)">
+            <PageContainer $width="100%" $height="calc(100% - 65px)">
                 <NavigationMenu />
                 <div style={{ width: 'calc(100% - 64px)' }}>
                     <Outlet />
                 </div>
-            </FlexBox>
+            </PageContainer>
         </>
     )
 })

@@ -9,18 +9,23 @@ import { CustomIconButton } from "../../common/custom-icon-button";
 
 interface IColumnsConfigurationProps<T extends object> extends Pick<VisibilityInstance<T>, 'resetColumnVisibility'> {
     allColumns: Column<T, unknown>[];
+    top: string
 }
 
-const StyledIconButton = styled(CustomIconButton)`
+const StyledIconButton = styled(CustomIconButton).attrs({
+    className: 'column-configuration-btn'
+}) <{ $top: string }>`
     &&{
         position: absolute;
         right: 0;
-        top: 85px;
+        top: ${({ $top }) => $top};
+        z-index: 10;
+        border-radius: unset;
         background: ${(props) => props.theme.pallete.white};
     }
 `
 export const ColumnsConfiguration = <T extends object>(props: IColumnsConfigurationProps<T>) => {
-    const { allColumns, resetColumnVisibility } = props;
+    const { allColumns, top, resetColumnVisibility } = props;
     const [anchorEl, setAnchorEl] = useState<null | HTMLButtonElement>(null);
     const open = Boolean(anchorEl);
 
@@ -36,7 +41,7 @@ export const ColumnsConfiguration = <T extends object>(props: IColumnsConfigurat
 
     return (
         <>
-            <StyledIconButton onClick={handleClick} tooltipProps={{ title: "Show/Hide Columns" }} iconComponent={<ViewWeekOutlined />} />
+            <StyledIconButton onClick={handleClick} tooltipProps={{ title: "Show/Hide Columns" }} $top={top} iconComponent={<ViewWeekOutlined />} />
             <Popover
                 open={open}
                 anchorEl={anchorEl}

@@ -1,8 +1,8 @@
-import { FlexBox, IChangeArgs } from "lib/ui-ux";
-import { EmailCard, IEmailThreadProps } from "./email-card";
-import { useCallback } from "react";
 import styled from "styled-components";
 import { FormProvider, useForm } from "react-hook-form";
+import { FlexBox, IChangeArgs } from "lib/ui-ux";
+import { EmailCard } from "./email-card";
+import { IEmailConversations } from "./email-conversations-layout";
 
 const EmailConversationsContainer = styled(FlexBox)`
   .email-card-container:last-child {
@@ -13,12 +13,11 @@ const EmailConversationsContainer = styled(FlexBox)`
 interface IEmailConversationsProps {
     subject: string;
     isCollapsedAll: boolean;
-    emailThreads: Omit<IEmailThreadProps, 'subject'>[];
+    emailThreads: IEmailConversations[];
     onSingleEmailCollapseHandler: (args: {
-        threadId: string;
+        messageId: string;
         isCollapsed: boolean;
     }) => void
-    onSetEmailThreads: (args: Omit<IEmailThreadProps, 'subject'>[]) => void
 }
 
 export type IEmailFormFields = {
@@ -36,19 +35,13 @@ export type IEmailFormFields = {
 };
 
 export const EmailConversations = (props: IEmailConversationsProps) => {
-    const { emailThreads, onSetEmailThreads } = props;
+    const { emailThreads } = props;
     const formContext = useForm<IEmailFormFields>();
-
-    const onSend = useCallback((args: Omit<IEmailThreadProps, 'subject'>, linkedThreadId: string) => {
-        const clonedEmailThreads = emailThreads.slice()
-        clonedEmailThreads.splice(emailThreads.findIndex((item) => item.threadId === linkedThreadId) + 1, 0, args)
-        onSetEmailThreads(clonedEmailThreads);
-    }, [emailThreads, onSetEmailThreads])
 
     return (
         <FormProvider {...formContext}>
             <EmailConversationsContainer $width="100%" $height="calc(100% - 32px)" $flexDirection="column" $gap="20px" $overflowY="auto">
-                {emailThreads.map((singleEmail, index) => <EmailCard key={index} emailProps={{ ...singleEmail, subject: props.subject }} onSend={onSend} onSingleEmailCollapseHandler={props.onSingleEmailCollapseHandler} />)}
+                {emailThreads.map((singleEmail, index) => <EmailCard key={index} emailProps={{ ...singleEmail, subject: props.subject }} onSingleEmailCollapseHandler={props.onSingleEmailCollapseHandler} />)}
             </EmailConversationsContainer>
         </FormProvider>
     )
