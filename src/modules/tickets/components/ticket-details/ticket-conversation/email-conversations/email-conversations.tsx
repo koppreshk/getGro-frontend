@@ -1,8 +1,9 @@
 import { FlexBox, IChangeArgs } from "lib/ui-ux";
-import { EmailCard, IEmailThreadProps } from "./email-card";
+import { EmailCard } from "./email-card";
 import { useCallback } from "react";
 import styled from "styled-components";
 import { FormProvider, useForm } from "react-hook-form";
+import { IEmailConversations } from "./email-conversations-layout";
 
 const EmailConversationsContainer = styled(FlexBox)`
   .email-card-container:last-child {
@@ -13,12 +14,12 @@ const EmailConversationsContainer = styled(FlexBox)`
 interface IEmailConversationsProps {
     subject: string;
     isCollapsedAll: boolean;
-    emailThreads: Omit<IEmailThreadProps, 'subject'>[];
+    emailThreads: IEmailConversations[];
     onSingleEmailCollapseHandler: (args: {
-        threadId: string;
+        messageId: string;
         isCollapsed: boolean;
     }) => void
-    onSetEmailThreads: (args: Omit<IEmailThreadProps, 'subject'>[]) => void
+    onSetEmailThreads: (args: IEmailConversations[]) => void
 }
 
 export type IEmailFormFields = {
@@ -39,9 +40,9 @@ export const EmailConversations = (props: IEmailConversationsProps) => {
     const { emailThreads, onSetEmailThreads } = props;
     const formContext = useForm<IEmailFormFields>();
 
-    const onSend = useCallback((args: Omit<IEmailThreadProps, 'subject'>, linkedThreadId: string) => {
+    const onSend = useCallback((args: IEmailConversations, linkedMessageId: string) => {
         const clonedEmailThreads = emailThreads.slice()
-        clonedEmailThreads.splice(emailThreads.findIndex((item) => item.threadId === linkedThreadId) + 1, 0, args)
+        clonedEmailThreads.splice(emailThreads.findIndex((item) => item.messageId === linkedMessageId) + 1, 0, args)
         onSetEmailThreads(clonedEmailThreads);
     }, [emailThreads, onSetEmailThreads])
 

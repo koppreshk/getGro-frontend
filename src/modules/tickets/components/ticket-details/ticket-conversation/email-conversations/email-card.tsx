@@ -11,26 +11,15 @@ import { EmailEditor } from "./email-editor";
 import { DownloadAttachments } from "./download-attachments";
 import { useFormContext } from "react-hook-form";
 import { IEmailFormFields } from "./email-conversations";
+import { IEmailConversations } from "./email-conversations-layout";
 
-export interface IEmailThreadProps {
-    emailHTMLContent: string;
-    from: string;
-    fromEmail: string;
-    toEmail: string;
-    createdDate: string;
-    threadId: string;
-    isCollapsed: boolean;
-    containsAttachment?: boolean;
-    subject: string;
-}
 interface IEmailCardProps {
-    emailProps: IEmailThreadProps;
+    emailProps: IEmailConversations & { subject: string; };
     onSingleEmailCollapseHandler: (args: {
-        threadId: string;
+        messageId: string;
         isCollapsed: boolean;
     }) => void
-    onSend: (args: Omit<IEmailThreadProps, 'subject' | 'containsAttachment'>, linkedThreadId: string) => void;
-}
+    onSend: (args: IEmailConversations, linkedMessageId: string) => void}
 
 const InnerHTML = styled.div`
     padding-left: 50px;
@@ -74,8 +63,8 @@ const useEmailActionHelpers = () => {
 }
 
 export const EmailCard = (props: IEmailCardProps) => {
-    const { emailProps: { emailHTMLContent, from, fromEmail, createdDate, threadId, subject, toEmail, isCollapsed, containsAttachment }, onSingleEmailCollapseHandler, onSend } = props;
-    const newThreadId = useId();
+    const { emailProps: { htmlContent, from, fromEmail, createdAt, messageId, subject, toEmail, isCollapsed, attachments }, onSingleEmailCollapseHandler, onSend } = props;
+    const newmessageId = useId();
     const { user } = useAuth();
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(from)), [from]);
     const { showEditor: showReplyEditor, toggleEditorView: toggleReplyEditorView } = useEmailActionHelpers();
@@ -90,25 +79,27 @@ export const EmailCard = (props: IEmailCardProps) => {
 
     const onForwardClick: React.MouseEventHandler<HTMLButtonElement> = useCallback((ev) => {
         ev.stopPropagation();
-        setValue('forward.editor', emailHTMLContent);
+        setValue('forward.editor', htmlContent);
         toggleEditorView();
         showReplyEditor && toggleReplyEditorView();
-    }, [emailHTMLContent, setValue, showReplyEditor, toggleEditorView, toggleReplyEditorView])
+    }, [htmlContent, setValue, showReplyEditor, toggleEditorView, toggleReplyEditorView])
 
     const onSendReply = useCallback((formValues: Pick<IEmailFormFields, 'reply'>) => {
         onSend({
-            createdDate: DateTime.now().toISO(),
-            emailHTMLContent: formValues.reply.editor,
+            createdAt: DateTime.now().toISO(),
+            htmlContent: formValues.reply.editor,
             from: user!.email!,
             fromEmail: user!.email!,
-            threadId: newThreadId,
+            messageId: newmessageId,
             toEmail: fromEmail,
-            isCollapsed: isCollapsed
-        }, threadId);
+            isCollapsed: isCollapsed,
+            to: "",
+            attachments: []
+        }, messageId);
         toggleReplyEditorView();
-    }, [fromEmail, isCollapsed, newThreadId, onSend, threadId, toggleReplyEditorView, user]);
+    }, [fromEmail, isCollapsed, newmessageId, onSend, messageId, toggleReplyEditorView, user]);
 
-    const onCardClick = () => onSingleEmailCollapseHandler({ threadId, isCollapsed: !isCollapsed });
+    const onCardClick = () => onSingleEmailCollapseHandler({ messageId, isCollapsed: !isCollapsed });
 
     return (
         <StyledEmailCardContainer className="email-card-container">
@@ -120,23 +111,23 @@ export const EmailCard = (props: IEmailCardProps) => {
                             <FlexBox $justifyContent="space-between">
                                 <Typography variant="h6">{from}</Typography>
                                 <FlexBox $gap="10px" $justifyContent="space-between" $alignItems="center">
-                                    <SubTextValue variant="caption">{getFormattedDate(createdDate)}</SubTextValue>
+                                    <SubTextValue variant="caption">{getFormattedDate(createdAt)}</SubTextValue>
                                     {!isCollapsed ? <EmailThreadOptions onReplyClick={onReplyClick} onForwardClick={onForwardClick} /> : null}
                                 </FlexBox>
                             </FlexBox>
                             {
                                 isCollapsed
-                                    ? <StripedEmailContent variant="body3">{strip(emailHTMLContent)}</StripedEmailContent>
+                                    ? <StripedEmailContent variant="body3">{strip(htmlContent)}</StripedEmailContent>
                                     : <FlexBox $gap="4px" $alignItems="center">
                                         <SubTextValue fontSize="12px">to {toEmail.split('@')[0]}</SubTextValue>
-                                        <EmailPopoverMetadata fromEmail={fromEmail} toEmail={toEmail} subject={subject} createdDate={createdDate} />
+                                        <EmailPopoverMetadata fromEmail={fromEmail} toEmail={toEmail} subject={subject} createdAt={createdAt} />
                                     </FlexBox>
                             }
                         </FlexBox>
                     </FlexBox>
                 </FlexBox>
-                {!isCollapsed && <InnerHTML dangerouslySetInnerHTML={{ __html: emailHTMLContent }} />}
-                {!isCollapsed && containsAttachment && <DownloadAttachments />}
+                {!isCollapsed && <InnerHTML dangerouslySetInnerHTML={{ __html: htmlContent }} />}
+                {!isCollapsed && attachments.length && <DownloadAttachments />}
                 {
                     showReplyEditor ?
                         <EmailEditor
