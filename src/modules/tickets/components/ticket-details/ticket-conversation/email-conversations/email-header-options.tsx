@@ -13,6 +13,10 @@ const StyledTypography = styled(Typography)`
     }
 `;
 
+const StyledFlexBox = styled(FlexBox)`
+    border-bottom: 1px solid #ccc;
+`;
+
 export const EmailHeaderOptions = (props: { editorType: 'forward' | 'reply' }) => {
     const { editorType } = props;
     const { watch } = useFormContext();
@@ -56,7 +60,7 @@ export const EmailHeaderOptions = (props: { editorType: 'forward' | 'reply' }) =
     }
 
     return (
-        <FlexBox $width="100%" $flexDirection="column" $gap="10px" $padding="12px 16px">
+        <StyledFlexBox $width="100%" $flexDirection="column" $gap="10px" $padding="12px 16px">
             <FlexBox $width="100%">
                 {renderTagInputs({ name: 'to', label: 'To' })}
                 <FlexBox $gap="10px">
@@ -66,6 +70,6 @@ export const EmailHeaderOptions = (props: { editorType: 'forward' | 'reply' }) =
             </FlexBox>
             {showCCTagInput && renderTagInputs({ label: 'Cc', name: 'cc' })}
             {showBCCTagInput && renderTagInputs({ label: 'Bcc', name: 'bcc' })}
-        </FlexBox>
+        </StyledFlexBox>
     )
 }
