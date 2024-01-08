@@ -1,5 +1,6 @@
+import React from "react";
 import { useFormContext } from "react-hook-form";
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import styled from "styled-components";
 import { Delete, Send } from "@mui/icons-material";
 import { Avatar, Button, CircularProgress, IconButton } from "@mui/material";
@@ -44,11 +45,18 @@ export const EmailEditor = (props: IEmailEditorProps) => {
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(from)), [from]);
     const { watch } = useFormContext<IEmailFormFields>();
     const attachmets = watch(`${editorType}.attachments`);
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    React.useEffect(() => {
+        if (containerRef?.current) {
+            containerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }, []);
 
     return (
         <FlexBox $gap="10px" >
             <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>{getInitialsByName(from)}</Avatar>
-            <StyledForwardCardContainer $flexDirection="column" $gap="10px" $width="calc(100% - 60px)">
+            <StyledForwardCardContainer ref={containerRef} $flexDirection="column" $gap="10px" $width="calc(100% - 60px)">
                 <div>
                     {showEmailHeaderOptions ? <EmailHeaderOptions editorType={editorType} /> : null}
                     <RichTextEditorField name={`${editorType}.editor`} />

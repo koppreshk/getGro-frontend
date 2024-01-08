@@ -11,9 +11,8 @@ export const useReplyToEmail = () => {
     const replyToEmail = React.useCallback((args: { messageId: string, htmlContent: string }) => {
         return postData(`${TicketsEndPoint.REPLY_TO_EMAIL}?body=${args.htmlContent}&message_id=${args.messageId}`)
             .then((res) => res.json())
-            .catch(() => {
-                showNotification({ message: 'Failed to send a reply, try again later', type: 'error' })
-            })
+            .then(() => showNotification({ message: 'Reply Sent', type: 'success' }))
+            .catch(() => showNotification({ message: 'Failed to send a reply, try again later', type: 'error' }))
     }, [postData, showNotification]);
 
     return useMutation({

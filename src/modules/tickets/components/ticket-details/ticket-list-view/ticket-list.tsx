@@ -117,7 +117,6 @@ const TicketDetails = (props: ITicketDetailsProps) => {
                     <Typography variant="h6">{customerName}</Typography>
                     <Typography variant="caption">{getFormattedDate(createdAt)}</Typography>
                 </FlexBox>
-                <StyledTypography variant="body2">Hellow victoria thank you for contacting...</StyledTypography>
                 <FlexBox $flexDirection="row" $gap="10px" $alignItems="center">
                     <>
                         {rendersourceIcon(source)}

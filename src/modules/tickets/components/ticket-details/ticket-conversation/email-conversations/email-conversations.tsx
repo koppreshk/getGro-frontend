@@ -8,7 +8,8 @@ const EmailConversationsContainer = styled(FlexBox)`
   .email-card-container:last-child {
     border-bottom: none;
     margin-bottom: 80px;
-  }  
+  }
+  padding-right: 10px;
 `;
 
 interface IEmailConversationsProps {
@@ -41,7 +42,7 @@ export const EmailConversations = (props: IEmailConversationsProps) => {
 
     return (
         <FormProvider {...formContext}>
-            <EmailConversationsContainer $width="100%" $height="calc(100% - 32px)" $flexDirection="column" $gap="20px" $overflowY="auto">
+            <EmailConversationsContainer $width="100%" $height="calc(100% - 50px)" $flexDirection="column" $gap="20px" $overflowY="auto">
                 {emailThreads.map((singleEmail, index) => <EmailCard key={index} emailProps={{ ...singleEmail, subject: props.subject }} onSingleEmailCollapseHandler={props.onSingleEmailCollapseHandler} />)}
             </EmailConversationsContainer>
         </FormProvider>

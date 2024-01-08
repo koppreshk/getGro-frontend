@@ -1,4 +1,6 @@
 import { FlexBox } from "lib/ui-ux";
+import React from "react";
+import { useEffect } from "react";
 import { Controller, useFormContext } from "react-hook-form"
 import ReactQuill, { ReactQuillProps } from "react-quill";
 import styled from "styled-components";
@@ -53,6 +55,13 @@ const formats = [
 export const RichTextEditorField = (props: IRichTextEditorFieldProps) => {
     const { name, className } = props;
     const { control } = useFormContext();
+    const quillRef: React.LegacyRef<ReactQuill> | undefined = React.createRef();
+
+    useEffect(() => {
+        if (quillRef?.current) {
+            quillRef.current.focus();
+        }
+    }, [quillRef]);
 
     return (
         <Controller
@@ -64,6 +73,7 @@ export const RichTextEditorField = (props: IRichTextEditorFieldProps) => {
                         {...rest}
                         theme="snow"
                         value={value}
+                        ref={quillRef}
                         placeholder="Type in here"
                         preserveWhitespace
                         modules={modules}
