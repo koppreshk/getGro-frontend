@@ -19,6 +19,8 @@ const EditorContainer = styled(FlexBox)`
     .ql-toolbar, .ql-container {
         border-left: 0;
         border-right: 0;
+        border-bottom: 1px solid #cccc;
+        border-top: none;
     }
     .ql-container {
         min-height: 180px;

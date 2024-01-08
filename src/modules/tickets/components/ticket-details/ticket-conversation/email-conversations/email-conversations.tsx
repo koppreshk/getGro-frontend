@@ -7,6 +7,7 @@ import { IEmailConversations } from "./email-conversations-layout";
 const EmailConversationsContainer = styled(FlexBox)`
   .email-card-container:last-child {
     border-bottom: none;
+    margin-bottom: 80px;
   }
   padding-right: 10px;
 `;

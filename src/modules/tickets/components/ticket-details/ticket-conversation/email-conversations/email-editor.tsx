@@ -57,11 +57,13 @@ export const EmailEditor = (props: IEmailEditorProps) => {
         <FlexBox $gap="10px" >
             <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>{getInitialsByName(from)}</Avatar>
             <StyledForwardCardContainer ref={containerRef} $flexDirection="column" $gap="10px" $width="calc(100% - 60px)">
-                {showEmailHeaderOptions ? <EmailHeaderOptions editorType={editorType} /> : null}
-                <RichTextEditorField name={`${editorType}.editor`} />
-                <FlexBox $gap="8px" $padding="0px 16px" $flexWrap="wrap">
-                    {attachmets?.selectedFiles.map((item) => (<UploadedAttachmentsPreview item={item} attachmets={attachmets} />))}
-                </FlexBox>
+                <div>
+                    {showEmailHeaderOptions ? <EmailHeaderOptions editorType={editorType} /> : null}
+                    <RichTextEditorField name={`${editorType}.editor`} />
+                    <FlexBox $gap="8px" $padding="0px 16px" $flexWrap="wrap">
+                        {attachmets?.selectedFiles.map((item) => (<UploadedAttachmentsPreview item={item} attachmets={attachmets} />))}
+                    </FlexBox>
+                </div>
                 <EmailFooterOptions onCancelClick={props.onCancelClick} onSendClick={props.onSendClick} editorType={editorType} isMutationLoading={isMutationLoading} />
             </StyledForwardCardContainer>
         </FlexBox>
