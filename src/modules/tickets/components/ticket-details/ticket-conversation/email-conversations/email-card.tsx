@@ -117,7 +117,7 @@ export const EmailCard = (props: IEmailCardProps) => {
                     </FlexBox>
                 </FlexBox>
                 {!isCollapsed && <InnerHTML dangerouslySetInnerHTML={{ __html: htmlContent }} />}
-                {!isCollapsed && attachments.length > 0 && <DownloadAttachments />}
+                {!isCollapsed && attachments.length > 0 && <DownloadAttachments attachments={attachments} />}
                 {
                     showReplyEditor ?
                         <EmailEditor
@@ -131,7 +131,7 @@ export const EmailCard = (props: IEmailCardProps) => {
                 {
                     showEditor ?
                         <EmailEditor
-                            from={from|| fromEmail}
+                            from={from || fromEmail}
                             editorType="forward"
                             showEmailHeaderOptions
                             onCancelClick={toggleEditorView} />
