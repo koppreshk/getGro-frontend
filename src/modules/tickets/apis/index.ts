@@ -4,3 +4,4 @@ export * from './get-order-details';
 export * from './get-ticket-details-by-id';
 export * from './fetch-ticket-by-id';
 export * from './reply-to-email';
+export * from './fetch-attachment';

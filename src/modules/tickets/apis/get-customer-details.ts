@@ -11,6 +11,7 @@ export interface ICustomerDetails {
 
 export const useGetCustomerDetails = () => {
     return useLazyQuery<ICustomerDetails[]>({
-        apiEndPoint: TicketsEndPoint.GET_CUSTOMER_DETAILS, queryKey: TicketsQueryKey.GET_CUSTOMER_DETAILS
+        apiEndPoint: TicketsEndPoint.GET_CUSTOMER_DETAILS,
+        queryKey: TicketsQueryKey.GET_CUSTOMER_DETAILS
     })
 }

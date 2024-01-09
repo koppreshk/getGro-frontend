@@ -32,7 +32,7 @@ function generateURL(content: Blob | string, mimeType: string) {
     return new Promise<string>(resolve => {
         if (typeof content === 'string') {
             try {
-                content.startsWith('data:') ? resolve(content) : resolve('data:' + mimeType + ';base64,' + window.btoa(content));
+                content.startsWith('data:') ? resolve(content) : resolve('data:' + mimeType + ';base64,' + (content));
             } catch (y) {
                 resolve('data:' + mimeType + ',' + encodeURIComponent(content));
             }

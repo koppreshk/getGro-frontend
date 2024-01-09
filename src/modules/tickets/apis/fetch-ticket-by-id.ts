@@ -4,6 +4,18 @@ import { useParams } from "react-router-dom";
 import { useServiceClient } from "lib";
 import { TicketsEndPoint, TicketsQueryKey } from "./api-enums";
 
+export interface IAttachments {
+    id: string
+    accountId: string | null
+    contentId: string
+    messageIds: string | null
+    object: string | null
+    contentType: string
+    filename: string
+    size: number
+    contentDisposition: string
+}
+
 export interface Conversations {
     messageId: string
     from: string
@@ -12,7 +24,7 @@ export interface Conversations {
     toEmail: string
     createdAt: string
     htmlContent: string
-    attachments: [];
+    attachments: IAttachments[];
 }
 
 export interface ITicketById {
