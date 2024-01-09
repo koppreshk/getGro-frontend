@@ -28,7 +28,6 @@ export const useFetchTicketById = () => {
     const getOrderDetailsData = React.useCallback(() => getData(`${TicketsEndPoint.FETCH_TICKET_BY_ID}?ticket_id=${ticketId}`).then((res) => res.json()).catch((err) => err), [getData, ticketId]);
     return useQuery<ITicketById>({
         queryKey: [TicketsQueryKey.FETCH_TICKET_BY_ID, ticketId],
-        queryFn: getOrderDetailsData,
-        cacheTime: 0
+        queryFn: getOrderDetailsData
     });
 }

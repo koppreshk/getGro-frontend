@@ -1,12 +1,12 @@
 import { CustomIconButton, FlexBox } from "lib/ui-ux"
 import SortIcon from '@mui/icons-material/Sort';
-import PhoneRoundedIcon from '@mui/icons-material/PhoneRounded';
-import MessageRoundedIcon from '@mui/icons-material/MessageRounded';
+import { PhoneRounded, PostAdd } from '@mui/icons-material/';
 import { Chip, IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import styled from "styled-components";
 import { useMatch, useSearchParams } from "react-router-dom";
 import React, { useCallback } from "react";
 import { TelephonicDialer } from "../ticket-conversation/telephonic-conversations";
+import { AddTicket } from "./add-ticket";
 
 const StyledIconButtons = styled(IconButton)`
     && {
@@ -48,9 +48,14 @@ export const TicketListViewHeader = () => {
     const open = Boolean(anchorEl);
 
     const [openCallPopUp, setOpenCallPopUp] = React.useState(false);
+    const [openAddTicketDrawer, setOpenAddTicketDrawer] = React.useState(false);
 
     const toggleCallBtn = useCallback(() => {
         setOpenCallPopUp((prevValue) => !prevValue)
+    }, []);
+
+    const toggleAddTicketDrawer = useCallback(() => {
+        setOpenAddTicketDrawer((prevValue) => !prevValue)
     }, []);
 
     return (
@@ -67,13 +72,14 @@ export const TicketListViewHeader = () => {
             </FlexBox>
             <FlexBox $gap="5px" $alignItems="center">
                 <StyledIconButtons size="small" color="primary" onClick={toggleCallBtn}>
-                    <PhoneRoundedIcon fontSize="small" />
+                    <PhoneRounded fontSize="small" />
                 </StyledIconButtons>
-                <StyledIconButtons size="small" color="primary">
-                    <MessageRoundedIcon fontSize="small" />
+                <StyledIconButtons size="small" color="primary"  onClick={toggleAddTicketDrawer}>
+                    <PostAdd fontSize="small" />
                 </StyledIconButtons>
             </FlexBox>
-            <TelephonicDialer openCallPopUp={openCallPopUp} toggleCallBtn={toggleCallBtn}/>
+            <TelephonicDialer openCallPopUp={openCallPopUp} toggleCallBtn={toggleCallBtn} />
+            <AddTicket openAddTicketDrawer={openAddTicketDrawer} toggleAddTicketDrawer={toggleAddTicketDrawer} />
         </HeaderWrapper>
     )
 }
