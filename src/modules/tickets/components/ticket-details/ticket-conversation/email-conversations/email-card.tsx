@@ -83,9 +83,11 @@ export const EmailCard = (props: IEmailCardProps) => {
     }, [htmlContent, setValue, showReplyEditor, toggleEditorView, toggleReplyEditorView])
 
     const onSendReply = useCallback((formValues: Pick<IEmailFormFields, 'reply'>) => {
+        const attachments = formValues.reply.attachments?.selectedFiles.map((item) => ({ file_name: item.name, file_type: item.type, file_content: (item.content as string).split(',')[1] }));
         mutateAsync({
             htmlContent: formValues.reply.editor,
-            messageId
+            messageId,
+            attachments: attachments
         }).then(() => toggleReplyEditorView());
     }, [mutateAsync, messageId, toggleReplyEditorView]);
 

@@ -17,7 +17,6 @@ const AttachmentPreviewContainer = styled(FlexBox)`
     background-color: ${(props) => props.theme.pallete.grayVariant5};
     border-radius: 6px;
     width: fit-content;
-    margin-left: 50px;
 `;
 
 const fileTypes = {
@@ -44,7 +43,7 @@ export const DownloadAttachments = (props: Pick<IEmailConversations, 'attachment
     const { attachments } = props;
 
     return (
-        <FlexBox $gap="10px">
+        <FlexBox $gap="10px" style={{ marginLeft: '50px' }} $flexWrap="wrap">
             {attachments.map((attachment) => (
                 <AttachmentPreviewContainer $gap="8px" $alignItems="center" key={attachment.id}>
                     <FileType $alignItems="center" $justifyContent="center">

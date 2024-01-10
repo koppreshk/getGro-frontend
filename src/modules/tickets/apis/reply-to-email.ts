@@ -3,13 +3,27 @@ import React from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { TicketsEndPoint, TicketsQueryKey } from "./api-enums";
 
+export interface IReplyToEmailArgs {
+    messageId: string,
+    htmlContent: string
+    attachments?: {
+        file_name: string,
+        file_content: string,
+        file_type: string
+    }[],
+}
+
 export const useReplyToEmail = () => {
     const { postData } = useServiceClient();
     const queryClient = useQueryClient();
     const { showNotification } = useNotifications();
 
-    const replyToEmail = React.useCallback((args: { messageId: string, htmlContent: string }) => {
-        return postData(`${TicketsEndPoint.REPLY_TO_EMAIL}?body=${args.htmlContent}&message_id=${args.messageId}`)
+    const replyToEmail = React.useCallback((args: IReplyToEmailArgs) => {
+        return postData(`${TicketsEndPoint.REPLY_TO_EMAIL}`, {
+            body: args.htmlContent,
+            message_id: args.messageId,
+            attachments: args.attachments
+        })
             .then((res) => res.json())
             .then(() => showNotification({ message: 'Reply Sent', type: 'success' }))
             .catch(() => showNotification({ message: 'Failed to send a reply, try again later', type: 'error' }))
