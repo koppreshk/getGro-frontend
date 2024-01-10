@@ -46,7 +46,6 @@ export const EmailEditor = (props: IEmailEditorProps) => {
     const { watch } = useFormContext<IEmailFormFields>();
     const attachmets = watch(`${editorType}.attachments`);
     const containerRef = useRef<HTMLDivElement>(null);
-
     React.useEffect(() => {
         if (containerRef?.current) {
             containerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });

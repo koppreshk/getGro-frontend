@@ -1,14 +1,14 @@
 import { CustomIconButton, FlexBox } from "lib/ui-ux"
 import SortIcon from '@mui/icons-material/Sort';
 import { PhoneRounded, PostAdd } from '@mui/icons-material/';
-import { Chip, IconButton, Menu, MenuItem, Typography } from "@mui/material";
+import { Chip, Menu, MenuItem, Typography } from "@mui/material";
 import styled from "styled-components";
 import { useMatch, useSearchParams } from "react-router-dom";
 import React, { useCallback } from "react";
 import { TelephonicDialer } from "../ticket-conversation/telephonic-conversations";
 import { AddTicket } from "./add-ticket";
 
-const StyledIconButtons = styled(IconButton)`
+const StyledIconButtons = styled(CustomIconButton)`
     && {
         border: 1px solid;
         border-color: #DAE2ED;
@@ -71,12 +71,8 @@ export const TicketListViewHeader = () => {
                 </Menu>
             </FlexBox>
             <FlexBox $gap="5px" $alignItems="center">
-                <StyledIconButtons size="small" color="primary" onClick={toggleCallBtn}>
-                    <PhoneRounded fontSize="small" />
-                </StyledIconButtons>
-                <StyledIconButtons size="small" color="primary"  onClick={toggleAddTicketDrawer}>
-                    <PostAdd fontSize="small" />
-                </StyledIconButtons>
+                <StyledIconButtons iconComponent={<PhoneRounded fontSize="small" />} size="small" color="primary" onClick={toggleCallBtn} tooltipProps={{ title: 'Make a call' }} />
+                <StyledIconButtons iconComponent={<PostAdd fontSize="small" />} size="small" color="primary" onClick={toggleAddTicketDrawer} tooltipProps={{ title: 'Add Ticket' }} />
             </FlexBox>
             <TelephonicDialer openCallPopUp={openCallPopUp} toggleCallBtn={toggleCallBtn} />
             <AddTicket openAddTicketDrawer={openAddTicketDrawer} toggleAddTicketDrawer={toggleAddTicketDrawer} />

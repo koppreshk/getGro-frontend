@@ -24,11 +24,11 @@ interface IEmailConversationsProps {
 
 export type IEmailFormFields = {
     'reply': {
-        attachments: IChangeArgs;
+        attachments?: IChangeArgs;
         editor: string;
     };
     'forward': {
-        attachments: IChangeArgs;
+        attachments?: IChangeArgs;
         editor: string;
         to: string[];
         bcc: string[];
