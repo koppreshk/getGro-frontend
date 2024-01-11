@@ -4,7 +4,7 @@ import { FlexBox } from "lib/ui-ux";
 import { OrderDetailsContainer, TicketOverviewContainer } from "modules/tickets/containers";
 import { MenuOptions, TicketSideMenu } from "./ticket-side-menu";
 import { TicketNotes } from "./ticket-notes";
-import { TicketDispose } from "./ticket-dispose";
+import { TicketDispose } from "./dispose-ticket/ticket-dispose";
 import { useAppSelector } from "lib/hooks";
 
 const StyledFlexBox = styled(FlexBox)`  
