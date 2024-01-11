@@ -20,7 +20,7 @@ const StyledErrorMessage = styled.div`
 `;
 
 export const SelectField = (props: ITextboxFieldProps) => {
-    const { name, rules, label, menuOptions, ...rest } = props;
+    const { name, rules, label, menuOptions, sx, ...rest } = props;
     const { formState: { errors }, control } = useFormContext();
     const hasError = name in errors;
 
@@ -28,7 +28,7 @@ export const SelectField = (props: ITextboxFieldProps) => {
         <>
             <Controller
                 render={({ field }) => (
-                    <FormControl>
+                    <FormControl sx={sx}>
                         <InputLabel id="demo-select-small-label">{label}</InputLabel>
                         <Select
                             labelId="demo-select-small-label"

@@ -1,8 +1,11 @@
-import { Drawer, Typography } from "@mui/material"
+import { Button, Drawer, Typography } from "@mui/material"
 import { SelectField, TextboxField } from "lib/form-fields";
-import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
+import { CustomIconButton, FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { FormProvider, useForm } from "react-hook-form";
 import styled from "styled-components";
+import { TicketDisposeFolder } from "../ticket-details-section/dispose-ticket/ticket-dispose-folder";
+import { CloseOutlined } from "@mui/icons-material";
+import { DatePicker } from "@mui/x-date-pickers";
 
 interface IAddTicketProps {
     openAddTicketDrawer: boolean;
@@ -31,8 +34,11 @@ export const AddTicket = (props: IAddTicketProps) => {
         <>
             <Drawer anchor="right" open={openAddTicketDrawer} onClose={toggleAddTicketDrawer}>
                 <FormProvider {...formMethods}>
-                    <AddTicketContainer $width="500px" $padding="16px" $flexDirection="column" $gap="10px">
-                        <Typography variant="h5">Add Ticket</Typography>
+                    <AddTicketContainer $width="500px" $height="100%" $padding="16px" $flexDirection="column" $gap="10px">
+                        <FlexBox $width="100%" $justifyContent="space-between" $alignItems="center">
+                            <Typography variant="h5">Add Ticket</Typography>
+                            <CustomIconButton iconComponent={<CloseOutlined />} tooltipProps={{ title: 'Close' }} onClick={toggleAddTicketDrawer} />
+                        </FlexBox>
                         <HorizontalSeparator />
                         <AddTicketForm />
                     </AddTicketContainer>
@@ -42,12 +48,30 @@ export const AddTicket = (props: IAddTicketProps) => {
     )
 }
 
+const queueOptions = [
+    { key: 'twitter', value: 'Twitter' },
+    { key: 'chat', value: 'Chat' },
+    { key: 'support', value: 'Support' },
+    { key: 'call', value: 'Call' },
+    { key: 'email', value: 'Email' },
+    { key: 'whatsapp', value: 'Whatsapp' },
+    { key: 'facebook', value: 'Facebook' },
+    { key: 'instagram', value: 'Instagram' },
+    { key: 'linkedin', value: 'Linkedin' },
+    { key: 'pushBackToQueue', value: 'Push Back To Queue' },
+];
+
+const assignToOptions = [
+    { key: 'ankitTiwari', value: 'Ankit Tiwari' },
+    { key: 'ramesh', value: 'Ramesh' },
+];
+
 const AddTicketForm = () => {
     return (
-        <FlexBox $flexDirection="column" $width="100%" $gap="15px">
+        <FlexBox $flexDirection="column" $width="100%" $gap="15px" $height="calc(100% - 50px)" $padding="5px 0 0 0" $overflowY="auto">
             <FlexBox $width="100%" $gap="10px">
                 <TextboxField name="title" label="Title" sx={{ width: 'calc(50% - 10px)' }} />
-                <SelectField name="priority" label="Priority" sx={{ width: '234px' }} menuOptions={[{ key: 'low', value: 'Low' }, { key: 'medium', value: 'Medium' }, { key: 'high', value: 'High' }]} />
+                <SelectField name="priority" label="Priority" sx={{ width: '50%' }} menuOptions={[{ key: 'low', value: 'Low' }, { key: 'medium', value: 'Medium' }, { key: 'high', value: 'High' }]} />
             </FlexBox>
             <TextboxField
                 name="remarks" label="Remarks"
@@ -56,6 +80,15 @@ const AddTicketForm = () => {
                 rows={4}
                 maxRows={4}
             />
+            <HorizontalSeparator $margin="8px 0px" />
+            <TicketDisposeFolder />
+            <HorizontalSeparator $margin="8px 0px" />
+            <FlexBox $gap="10px">
+                <SelectField name="queue" sx={{ width: '50%' }} label="Queue" menuOptions={queueOptions} />
+                <SelectField name="assignTo" sx={{ width: '50%' }} label="Assign To" menuOptions={assignToOptions} />
+            </FlexBox>
+            <DatePicker />
+            <Button variant="contained">Submit</Button>
         </FlexBox>
     )
 }
