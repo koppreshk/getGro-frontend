@@ -2,9 +2,11 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ThemeProvider as MUIthemeProvider } from "@mui/material";
+import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon'
+import { LocalizationProvider } from "@mui/x-date-pickers";
 import { CoreLayout } from "./modules/core/pages/core-layout-page";
 import { ThemeProvider, defaultMUITheme } from "themes";
-import { ThemeProvider as MUIthemeProvider } from "@mui/material";
 import { NotificationProvider, ServiceClientProvider } from "lib";
 import ticketsReducer from './modules/tickets/storage/tickets-slice';
 import { AuthProvider } from "modules/login/auth-provider-context";
@@ -31,11 +33,13 @@ export default function App() {
           <NotificationProvider>
             <BrowserRouter>
               <ThemeProvider>
-                <AuthProvider>
-                  <ServiceClientProvider>
-                    <CoreLayout />
-                  </ServiceClientProvider>
-                </AuthProvider>
+                <LocalizationProvider dateAdapter={AdapterLuxon}>
+                  <AuthProvider>
+                    <ServiceClientProvider>
+                      <CoreLayout />
+                    </ServiceClientProvider>
+                  </AuthProvider>
+                </LocalizationProvider>
               </ThemeProvider>
             </BrowserRouter>
           </NotificationProvider>
