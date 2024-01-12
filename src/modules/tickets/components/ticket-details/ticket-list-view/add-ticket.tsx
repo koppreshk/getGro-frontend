@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button, Drawer, Typography } from "@mui/material"
 import { SelectField, TextboxField } from "lib/form-fields";
 import { CustomIconButton, FlexBox, HorizontalSeparator } from "lib/ui-ux";
@@ -67,6 +68,23 @@ const assignToOptions = [
 ];
 
 const AddTicketForm = () => {
+    const [parentFolderValue, setParentFolderValue] = useState('');
+    const [childFolderValue, setChildFolderValue] = useState('');
+
+    const parentFolderClick = (name: string) => {
+        setParentFolderValue(name);
+        setChildFolderValue('');
+    };
+
+    const childFolderClick = (name: string) => {
+        setChildFolderValue(name);
+    }
+
+    const onClickClearSelection = () => {
+        setParentFolderValue('');
+        setChildFolderValue('');
+    };
+
     return (
         <FlexBox $flexDirection="column" $width="100%" $gap="15px" $height="calc(100% - 50px)" $padding="5px 0 0 0" $overflowY="auto">
             <FlexBox $width="100%" $gap="10px">
@@ -81,7 +99,12 @@ const AddTicketForm = () => {
                 maxRows={4}
             />
             <HorizontalSeparator $margin="8px 0px" />
-            <TicketDisposeFolder />
+            <TicketDisposeFolder
+                parentFolderValue={parentFolderValue}
+                childFolderValue={childFolderValue}
+                parentFolderClick={parentFolderClick}
+                onClickClearSelection={onClickClearSelection}
+                childFolderClick={childFolderClick} />
             <HorizontalSeparator $margin="8px 0px" />
             <FlexBox $gap="10px">
                 <SelectField name="queue" sx={{ width: '50%' }} label="Queue" menuOptions={queueOptions} />
