@@ -4,8 +4,8 @@ import { FlexBox } from "lib/ui-ux";
 import { OrderDetailsContainer, TicketOverviewContainer } from "modules/tickets/containers";
 import { MenuOptions, TicketSideMenu } from "./ticket-side-menu";
 import { TicketNotes } from "./ticket-notes";
-import { TicketDispose } from "./dispose-ticket/ticket-dispose";
 import { useAppSelector } from "lib/hooks";
+import { TicketDisposeContainer } from "modules/tickets/containers/ticket-dispose-container";
 
 const StyledFlexBox = styled(FlexBox)`  
     background-color: ${({ theme }) => theme.pallete.white};
@@ -28,7 +28,7 @@ export const TicketDetailsSection = () => {
             case MenuOptions.Notes:
                 return <TicketNotes />
             case MenuOptions.TicketDispose:
-                return <TicketDispose />
+                return <TicketDisposeContainer/>
             default: return <span>default</span>
         }
     }, [selectedMenuOption]);

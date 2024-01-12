@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Button, FormControlLabel, Typography } from "@mui/material";
 import { SelectField, TextboxField } from "lib/form-fields";
 import { CheckboxField } from "lib/form-fields/checkbox-field";
@@ -5,7 +6,9 @@ import { FlexBox } from "lib/ui-ux";
 import { FormProvider, useForm } from "react-hook-form"
 import { HeaderWrapper } from "../../ticket-list-view";
 import styled from "styled-components";
-import { TicketDisposeFolder } from ".";
+
+import { IDisposeTicketArgs } from "modules/tickets/apis";
+import { TicketDisposeFolder } from "./ticket-dispose-folder";
 
 const StyledFlexbox = styled(HeaderWrapper)`
     min-height: 72px;
@@ -19,7 +22,7 @@ const menuOptions = [{
     value: 'Pending from Finance'
 }, {
     key: 'resolved',
-    value: 'Rssolved'
+    value: 'Resolved'
 }, {
     key: 'in-progress',
     value: 'In Progress'
@@ -37,25 +40,67 @@ const menuOptions = [{
     value: 'Closed'
 }]
 
-export const TicketDispose = () => {
-    const formValues = useForm();
+interface IDispostionInputField {
+    remarks: string;
+    dispositionType: string;
+    callBackRequired: boolean;
+    parentFolder: string;
+    childFolder: string;
+}
+
+interface ITicketDisposeProps {
+    submitDisposeTicket: (data: IDisposeTicketArgs) => void
+}
+
+export const TicketDispose = (props: ITicketDisposeProps) => {
+    const { submitDisposeTicket } = props;
+    const methods = useForm<IDispostionInputField>();
+
+
+    const [parentFolderValue, setParentFolderValue] = useState('');
+    const [childFolderValue, setChildFolderValue] = useState('');
+
+    const parentFolderClick = (name: string) => {
+        setParentFolderValue(name);
+        setChildFolderValue('');
+    };
+
+    const childFolderClick = (name: string) => {
+        setChildFolderValue(name);
+    }
+
+    const onClickClearSelection = () => {
+        setParentFolderValue('');
+        setChildFolderValue('');
+    };
+
+    const onSubmitDisposeTicket = React.useCallback(() => {
+        const getformvalues = methods.getValues();
+        console.log(getformvalues.dispositionType);
+        submitDisposeTicket({ dispositionType: getformvalues.dispositionType });
+    }, [methods, submitDisposeTicket]);
 
     return (
-        <FormProvider {...formValues}>
+        <FormProvider {...methods}>
             <FlexBox $flexDirection="column">
                 <StyledFlexbox $alignItems="center">
                     <Typography fontWeight="500">Dispose Ticket</Typography>
                 </StyledFlexbox>
                 <FlexBox $flexDirection="column" $padding="15px">
-                    <TicketDisposeFolder />
+                    <TicketDisposeFolder
+                        parentFolderValue={parentFolderValue}
+                        childFolderValue={childFolderValue}
+                        parentFolderClick={parentFolderClick}
+                        onClickClearSelection={onClickClearSelection}
+                        childFolderClick={childFolderClick} />
                     <FlexBox $flexDirection="column" $gap="40px" $padding="40px 0px">
                         <FlexBox $flexDirection="column" $gap="10px">
-                            <TextboxField name="remarks" label="Remarks" />
-                            <SelectField name="disposition-type" label="Disposition Type" menuOptions={menuOptions}  />
-                            <FormControlLabel control={<CheckboxField name="callback" sx={{ width: '40px' }} />} label="is callback required?" />
+                            <TextboxField name="remarks" label="Remarks" multiline rows={4} />
+                            <SelectField name="dispositionType" label="Disposition Type" menuOptions={menuOptions} />
+                            <FormControlLabel control={<CheckboxField name="callBackRequired" sx={{ width: '40px' }} />} label="is callback required?" />
                         </FlexBox>
-                        <Button variant="contained">
-                            Done
+                        <Button variant="contained" onClick={methods.handleSubmit(onSubmitDisposeTicket)}>
+                            Dispose Ticket
                         </Button>
                     </FlexBox>
                 </FlexBox>

@@ -1,8 +1,8 @@
+import { useMemo } from "react";
+import styled from "styled-components";
 import { DeleteOutline, FolderCopyOutlined, NavigateNext } from "@mui/icons-material";
 import { Breadcrumbs, Chip, Typography } from "@mui/material"
 import { CustomIconButton, FlexBox } from "lib/ui-ux"
-import { useMemo, useState } from "react";
-import styled from "styled-components";
 
 interface IDisposeFolderData {
     parentFolder: string;
@@ -76,20 +76,16 @@ const SelectFolder = (props: ISelectFolderProps) => {
     )
 };
 
-export const TicketDisposeFolder = () => {
-    const [parentFolderValue, setParentFolderValue] = useState('');
-    const [childFolderValue, setChildFolderValue] = useState('');
+interface ITicketDisposeFolderProps {
+    parentFolderValue: string;
+    childFolderValue: string;
+    parentFolderClick: (name: string) => void;
+    childFolderClick: (name: string) => void;
+    onClickClearSelection: () => void;
+}
 
-    const parentFolderClick = (name: string) => {
-        setParentFolderValue(name);
-        setChildFolderValue('');
-    };
-
-    const onClickClearSelection = () => {
-        setParentFolderValue('');
-        setChildFolderValue('');
-    };
-
+export const TicketDisposeFolder = (props: ITicketDisposeFolderProps) => {
+    const { childFolderValue, onClickClearSelection, parentFolderClick, parentFolderValue, childFolderClick } = props;
     const getChildFolder = useMemo(() =>
         parentFolderValue.length !== 0 ? disposeFolderData.find((data) => data.name === parentFolderValue)! : {} as IDisposeFolderData, [parentFolderValue]);
 
@@ -101,10 +97,10 @@ export const TicketDisposeFolder = () => {
             <FolderAddress $padding="5px" $justifyContent="space-between" $alignItems="center" $width="100%">
                 <StyledBreadCrumbs separator={<NavigateNext fontSize="small" />}>
                     <FlexBox $alignItems="center">
-                        <FolderCopyOutlined fontSize="small"/>
+                        <FolderCopyOutlined fontSize="small" />
                     </FlexBox>
-                    {parentFolderValue ? <Chip label={parentFolderValue} variant="filled" color="primary" size="small" /> : ''}
-                    {childFolderValue ? <Chip label={childFolderValue} variant="filled" color="primary" size="small" /> : ''}
+                    {parentFolderValue && <Chip label={parentFolderValue} variant="filled" color="primary" size="small" />}
+                    {childFolderValue && <Chip label={childFolderValue} variant="filled" color="primary" size="small" />}
                 </StyledBreadCrumbs>
                 <CustomIconButton
                     onClick={onClickClearSelection}
@@ -122,7 +118,7 @@ export const TicketDisposeFolder = () => {
                 <SelectFolder
                     title="Select Sub Folder"
                     items={getChildFolder?.subFolder}
-                    onItemClick={setChildFolderValue}
+                    onItemClick={childFolderClick}
                 />
             }
         </FlexBox>
