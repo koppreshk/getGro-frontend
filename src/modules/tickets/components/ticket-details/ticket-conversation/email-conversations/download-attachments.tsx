@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux"
 import styled from "styled-components";
 import { IEmailConversations } from "./email-conversations-layout";
-import { DownloadAttachmentsContainer } from "modules/tickets/containers";
+import { DownloadAttachmentsContainer, PreviewFileContainer } from "modules/tickets/containers";
 
 const FileType = styled(FlexBox)`
     width: 40px;
@@ -57,7 +57,10 @@ export const DownloadAttachments = (props: Pick<IEmailConversations, 'attachment
                         sx={{ maxWidth: '120px', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}>
                         {attachment.filename}
                     </Typography>
-                    <DownloadAttachmentsContainer id={attachment.id} />
+                    <FlexBox $alignItems="center">
+                        <PreviewFileContainer id={attachment.id} contentType={attachment.contentType} />
+                        <DownloadAttachmentsContainer id={attachment.id} />
+                    </FlexBox>
                 </AttachmentPreviewContainer>
             ))}
         </FlexBox>

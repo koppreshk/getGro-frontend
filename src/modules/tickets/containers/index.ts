@@ -5,3 +5,4 @@ export * from './search-customer-container';
 export * from './order-details-container';
 export * from './ticket-overview-container'
 export * from './download-attachments-container';
+export * from './preview-file-container';

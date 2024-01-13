@@ -10,12 +10,12 @@ export interface AttachmentResponse {
 
 export type CasedAttachmentResposne = ToCamelCasedKeysFromUnderscores<AttachmentResponse>
 
-export const useFetchAttachments = () => {
+export const useFetchAttachments = (addionalKey: string) => {
     return useLazyQuery<AttachmentResponse>({
         apiEndPoint: TicketsEndPoint.FETCH_ATTACHMENT,
-        queryKey: [TicketsQueryKey.FETCH_ATTACHMENT],
+        queryKey: [TicketsQueryKey.FETCH_ATTACHMENT, addionalKey],
         queryOptions: {
-            cacheTime: 100
+            cacheTime: 0
         }
     });
 }
