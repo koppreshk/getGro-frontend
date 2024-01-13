@@ -35,7 +35,7 @@ const fileTypes = {
     'image/tiff': 'tiff'
 };
 
-const getFileExtension = (contentType: string) => {
+const getFileExtension = (contentType: string): string | undefined => {
     return fileTypes[contentType.toLocaleLowerCase() as keyof typeof fileTypes];
 };
 
@@ -48,7 +48,7 @@ export const DownloadAttachments = (props: Pick<IEmailConversations, 'attachment
                 <AttachmentPreviewContainer $gap="8px" $alignItems="center" key={attachment.id}>
                     <FileType $alignItems="center" $justifyContent="center">
                         <Typography variant="caption" sx={{ color: 'inherit' }}>
-                            {getFileExtension(attachment.contentType).toUpperCase()}
+                            {(getFileExtension(attachment.contentType) || attachment.contentType.split('/')[1]).toUpperCase()}
                         </Typography>
                     </FileType>
                     <Typography
