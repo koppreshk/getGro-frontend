@@ -1,12 +1,13 @@
 import { useEffect } from "react";
-import { CircularProgress, IconButton } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import { CasedAttachmentResposne, IAttachments, useFetchAttachments } from "../apis"
 import { FileDownloadOutlined } from "@mui/icons-material";
 import { saveFile, toCamelCasedKeysFromUnderScores } from "lib/utils";
+import { CustomIconButton } from "lib/ui-ux";
 
 export const DownloadAttachmentsContainer = (props: Pick<IAttachments, 'id'>) => {
     const { id } = props;
-    const [downloadAttachments, { isLoading, data, dataUpdatedAt }] = useFetchAttachments();
+    const [downloadAttachments, { isLoading, data, dataUpdatedAt }] = useFetchAttachments('download');
 
     useEffect(() => {
         if (data) {
@@ -19,15 +20,13 @@ export const DownloadAttachmentsContainer = (props: Pick<IAttachments, 'id'>) =>
         downloadAttachments({ 'attachment_id': id })
     }
 
+    if (isLoading) {
+        return (
+            <CircularProgress size={24} />
+        )
+    }
+
     return (
-        <>
-            {isLoading
-                ?
-                <CircularProgress size={24} />
-                :
-                <IconButton onClick={onDownloadClick}>
-                    <FileDownloadOutlined />
-                </IconButton>}
-        </>
+        <CustomIconButton onClick={onDownloadClick} tooltipProps={{ title: "Download File" }} iconComponent={<FileDownloadOutlined />} />
     )
 }
