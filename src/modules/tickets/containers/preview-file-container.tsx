@@ -25,13 +25,13 @@ export const PreviewFileContainer = (props: Pick<IAttachments, 'id' | 'contentTy
 
     return (
         <>
-            {data ? <PDFViewer open={showFilePreview} onClose={toggleViewer} content={toCamelCasedKeysFromUnderScores(data).fileContent} contentType={contentType} /> : null}
+            {data ? <PreviewFile open={showFilePreview} onClose={toggleViewer} content={toCamelCasedKeysFromUnderScores(data).fileContent} contentType={contentType} /> : null}
             <CustomIconButton onClick={onDownloadClick} tooltipProps={{ title: "Preview File" }} iconComponent={<Panorama />} />
         </>
     )
 }
 
-const PDFViewer = (props: { open: boolean; onClose: () => void; content: string; contentType: string }) => {
+const PreviewFile = (props: { open: boolean; onClose: () => void; content: string; contentType: string }) => {
     const { onClose, open, content, contentType } = props;
     return (
         <Dialog
