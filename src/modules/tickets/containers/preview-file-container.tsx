@@ -7,7 +7,7 @@ import { CustomIconButton } from "lib/ui-ux";
 
 export const PreviewFileContainer = (props: Pick<IAttachments, 'id' | 'contentType'>) => {
     const { id, contentType } = props;
-    const [downloadAttachments, { isLoading, data }] = useFetchAttachments('preview');
+    const [downloadAttachments, { isLoading, data }] = useFetchAttachments(id);
     const [showFilePreview, setFilePreviewDisplay] = useState(false);
 
     const toggleViewer = () => setFilePreviewDisplay((prevValue) => !prevValue);
