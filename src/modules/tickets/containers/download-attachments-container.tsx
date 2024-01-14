@@ -7,7 +7,7 @@ import { CustomIconButton } from "lib/ui-ux";
 
 export const DownloadAttachmentsContainer = (props: Pick<IAttachments, 'id'>) => {
     const { id } = props;
-    const [downloadAttachments, { isLoading, data, dataUpdatedAt }] = useFetchAttachments('download');
+    const [downloadAttachments, { isLoading, data, dataUpdatedAt }] = useFetchAttachments(`${id}-download`);
 
     useEffect(() => {
         if (data) {
