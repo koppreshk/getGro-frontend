@@ -1,17 +1,18 @@
-import React from "react"
+import React, { Suspense, lazy } from "react"
+import styled from "styled-components"
 import { NavigationMenu } from "../components"
 import { Toolbar } from "../components/toolbar"
 import { FlexBox } from "lib/ui-ux"
 import { Routes, Route, useNavigate, useLocation, Outlet, Navigate } from "react-router-dom"
-import { DashboardPage } from "modules/dashboard/pages"
-import { TicketsPage } from "modules/tickets/pages"
-import { CustomersPage } from "modules/customers/pages"
-import { SettingsPage } from "modules/settings/pages"
 import { ProtectedRoute } from "modules/login/protected-route"
 import { Login, useAuth } from "modules/login"
 import { PageNotFound } from "./page-not-found"
-import styled from "styled-components"
-import { commonStyles } from "lib/ui-ux/common-styles"
+import { commonStyles } from "lib/ui-ux/common-styles";
+
+const DashboardPage = lazy(() => import('../../dashboard/pages/dashboard-page'));
+const TicketsPage = lazy(() => import('../../tickets/pages/tickets-page'));
+const CustomersPage = lazy(() => import('../../customers/pages/customers-page'));
+const SettingsPage = lazy(() => import('../../settings/pages/settings-page'));
 
 const PageContainer = styled(FlexBox)`
     ${commonStyles.sleekScrollStyle};
@@ -24,7 +25,9 @@ const HomePage = React.memo(() => {
             <PageContainer $width="100%" $height="calc(100% - 65px)">
                 <NavigationMenu />
                 <div style={{ width: 'calc(100% - 64px)' }}>
-                    <Outlet />
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <Outlet />
+                    </Suspense>
                 </div>
             </PageContainer>
         </>

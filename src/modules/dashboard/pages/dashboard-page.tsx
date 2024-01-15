@@ -1,11 +1,10 @@
-import React from "react"
 import { FlexBox } from "lib/ui-ux"
 import { Alert, Typography } from "@mui/material"
 import { useTheme } from "styled-components";
 import { DashboardLayout } from "../components";
 import { usePermissions } from "lib/hooks";
 
-export const DashboardPage = React.memo(() => {
+export default function DashboardPage() {
     const theme = useTheme();
     const { isDashboardPageAccessible } = usePermissions();
 
@@ -25,4 +24,4 @@ export const DashboardPage = React.memo(() => {
             }
         </>
     )
-})
+}

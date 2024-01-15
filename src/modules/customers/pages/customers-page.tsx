@@ -1,4 +1,3 @@
-import React from "react"
 import { FlexBox } from "lib/ui-ux"
 import styled from "styled-components";
 import { commonStyles } from "lib/ui-ux/common-styles";
@@ -10,7 +9,7 @@ const Container = styled(FlexBox)`
     ${commonStyles.sleekScrollStyle};
 `;
 
-export const CustomersPage = React.memo(() => {
+export default function CustomersPage() {
     return (
         <Container $height="100%">
             <CustomerViews />
@@ -24,4 +23,4 @@ export const CustomersPage = React.memo(() => {
             </div>
         </Container>
     )
-})
+}

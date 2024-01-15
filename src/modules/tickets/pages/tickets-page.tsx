@@ -1,4 +1,3 @@
-import React from "react"
 import { FlexBox } from "lib/ui-ux"
 import { TicketViews } from "../components"
 import { Navigate, Route, Routes, useMatch } from "react-router-dom"
@@ -6,7 +5,7 @@ import { UnassignedTicketsContainer } from "../containers"
 import { TicketDetailsLayout } from "../components/ticket-details"
 import { useAuth } from "modules/login"
 
-export const TicketsPage = React.memo(() => {
+export default function TicketsPage() {
     const match = useMatch('/tickets/:type/:ticketId');
     const { user } = useAuth();
     return (
@@ -40,4 +39,4 @@ export const TicketsPage = React.memo(() => {
             </FlexBox>
         </>
     )
-})
+}
