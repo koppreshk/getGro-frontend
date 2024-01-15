@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Button, Drawer, Typography } from "@mui/material"
 import { SelectField, TextboxField } from "lib/form-fields";
 import { CustomIconButton, FlexBox, HorizontalSeparator } from "lib/ui-ux";
@@ -7,6 +6,7 @@ import styled from "styled-components";
 import { TicketDisposeFolder } from "../ticket-details-section/dispose-ticket/ticket-dispose-folder";
 import { CloseOutlined } from "@mui/icons-material";
 import { DatePicker } from "@mui/x-date-pickers";
+import { useFolderReducer } from "../ticket-details-section/dispose-ticket";
 
 interface IAddTicketProps {
     openAddTicketDrawer: boolean;
@@ -68,21 +68,18 @@ const assignToOptions = [
 ];
 
 const AddTicketForm = () => {
-    const [parentFolderValue, setParentFolderValue] = useState('');
-    const [childFolderValue, setChildFolderValue] = useState('');
+    const [folderStates, dispatch] = useFolderReducer();
 
     const parentFolderClick = (name: string) => {
-        setParentFolderValue(name);
-        setChildFolderValue('');
+        dispatch({ type: 'parent-folder', payload: { parentFolder: name, childFolder: '' } })
     };
 
     const childFolderClick = (name: string) => {
-        setChildFolderValue(name);
+        dispatch({ type: 'child-folder', payload: { parentFolder: folderStates.parentFolder, childFolder: name } })
     }
 
     const onClickClearSelection = () => {
-        setParentFolderValue('');
-        setChildFolderValue('');
+        dispatch({ type: 'clear-folders' })
     };
 
     return (
@@ -100,8 +97,8 @@ const AddTicketForm = () => {
             />
             <HorizontalSeparator $margin="8px 0px" />
             <TicketDisposeFolder
-                parentFolderValue={parentFolderValue}
-                childFolderValue={childFolderValue}
+                parentFolderValue={folderStates.parentFolder}
+                childFolderValue={folderStates.childFolder}
                 parentFolderClick={parentFolderClick}
                 onClickClearSelection={onClickClearSelection}
                 childFolderClick={childFolderClick} />
