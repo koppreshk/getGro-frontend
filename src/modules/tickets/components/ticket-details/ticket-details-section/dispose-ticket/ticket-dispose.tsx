@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useReducer } from "react";
 import { Button, FormControlLabel, Typography } from "@mui/material";
 import { SelectField, TextboxField } from "lib/form-fields";
 import { CheckboxField } from "lib/form-fields/checkbox-field";
@@ -51,31 +51,45 @@ interface ITicketDisposeProps {
     submitDisposeTicket: (data: IDisposeTicketArgs) => void
 }
 
+type FolderStates = {
+    parentFolder: string;
+    childFolder: string
+}
+
+export const useFolderReducer = () => {
+    const reducer = (state: FolderStates, action: { type: 'parent-folder' | 'child-folder' | 'clear-folders', payload?: FolderStates }) => {
+        switch (action.type) {
+            case 'parent-folder':
+                return { ...state, parentFolder: action.payload!.parentFolder };
+            case 'child-folder':
+                return { ...state, childFolder: action.payload!.childFolder };
+            case 'clear-folders':
+                return { parentFolder: '', childFolder: '' }
+            default: return state;
+        }
+    }
+
+    return useReducer(reducer, { parentFolder: '', childFolder: '' })
+}
 export const TicketDispose = (props: ITicketDisposeProps) => {
     const { submitDisposeTicket } = props;
     const methods = useForm<IDispostionInputField>();
-
-
-    const [parentFolderValue, setParentFolderValue] = useState('');
-    const [childFolderValue, setChildFolderValue] = useState('');
+    const [folderStates, dispatch] = useFolderReducer();
 
     const parentFolderClick = (name: string) => {
-        setParentFolderValue(name);
-        setChildFolderValue('');
+        dispatch({ type: 'parent-folder', payload: { parentFolder: name, childFolder: '' } })
     };
 
     const childFolderClick = (name: string) => {
-        setChildFolderValue(name);
+        dispatch({ type: 'child-folder', payload: { parentFolder: folderStates.parentFolder, childFolder: name } })
     }
 
     const onClickClearSelection = () => {
-        setParentFolderValue('');
-        setChildFolderValue('');
+        dispatch({ type: 'clear-folders' })
     };
 
     const onSubmitDisposeTicket = React.useCallback(() => {
         const getformvalues = methods.getValues();
-        console.log(getformvalues.dispositionType);
         submitDisposeTicket({ dispositionType: getformvalues.dispositionType });
     }, [methods, submitDisposeTicket]);
 
@@ -87,8 +101,8 @@ export const TicketDispose = (props: ITicketDisposeProps) => {
                 </StyledFlexbox>
                 <FlexBox $flexDirection="column" $padding="15px">
                     <TicketDisposeFolder
-                        parentFolderValue={parentFolderValue}
-                        childFolderValue={childFolderValue}
+                        parentFolderValue={folderStates.parentFolder}
+                        childFolderValue={folderStates.childFolder}
                         parentFolderClick={parentFolderClick}
                         onClickClearSelection={onClickClearSelection}
                         childFolderClick={childFolderClick} />
