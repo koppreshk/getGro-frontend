@@ -7,10 +7,12 @@ import { FormProvider, useForm } from "react-hook-form"
 import styled from "styled-components";
 import { IDisposeTicketArgs } from "modules/tickets/apis";
 import { TicketDisposeFolder } from "./ticket-dispose-folder";
-import { HeaderWrapper } from "../../ticket-list-view";
 
-const StyledFlexbox = styled(HeaderWrapper)`
+const StyledFlexbox = styled(FlexBox)`
     min-height: 72px;
+    box-sizing: border-box;
+    padding: 15px 10px;
+    border-bottom: ${({ theme }) => theme.semantics.standardBorder};
 `;
 
 const menuOptions = [{
