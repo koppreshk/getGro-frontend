@@ -24,10 +24,10 @@ export const EmailConversationLayout = (props: { conversationsData: ITicketById 
     const iframeRef = useRef<HTMLIFrameElement>(null);
 
     useEffect(() => {
-        if (casedConversation.length) {
+        if (casedConversation.length !== emailThreads.length) {
             setEmailThreads(casedConversation);
         }
-    }, [casedConversation.length]);
+    }, [casedConversation, casedConversation.length, emailThreads.length]);
 
     const onPrintHandler = () => {
         if (containerRef.current && iframeRef.current) {

@@ -32,7 +32,7 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
                 {customerId
                     ? <UnlinkCustomer />
                     : <CustomIconButton tooltipProps={{ title: 'Search Customer', arrow: true, placement: "left" }} iconComponent={<PersonSearch />} onClick={onSearchUserBtnClick} />
-                    }
+                }
             </FlexBox>
             <ContactInfo defaultData={ticketDetails} />
             <SearchCustomerContainer showSearchUserFlyout={showSearchUserFlyout} onSearchUserBtnClick={onSearchUserBtnClick} />
