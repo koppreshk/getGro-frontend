@@ -50,7 +50,7 @@ export const TagInput = (props: ITagInputProps) => {
     }, [onTagInputChange, tagItems]);
 
     return (
-        <FlexBox $gap="10px" $flexWrap="wrap" $width={width ?? "100%"}>
+        <FlexBox gap="10px" flexWrap="wrap" width={width ?? "100%"}>
             {tagItems.map((item, index) => (
                 <Chip
                     key={index}

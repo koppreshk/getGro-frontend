@@ -44,7 +44,7 @@ export const SearchCustomerForm = (props: ISearchCustomerFormProps) => {
                         <TextboxField name="orderId" label="Order ID" type="text" fullWidth />
                     </Grid>
                 </Grid>
-                <StlyedFlexBox $gap='10px' $width="100%" $justifyContent="flex-end">
+                <StlyedFlexBox gap='10px' width="100%" justifyContent="flex-end">
                     {/* <Button variant="contained" size="large">Search & Link</Button> */}
                     <Button variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onsubmit)}>Search</Button>
                 </StlyedFlexBox>

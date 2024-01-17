@@ -53,13 +53,13 @@ export const EmailEditor = (props: IEmailEditorProps) => {
     }, []);
 
     return (
-        <FlexBox $gap="10px" >
+        <FlexBox gap="10px" >
             <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>{getInitialsByName(from)}</Avatar>
-            <StyledForwardCardContainer ref={containerRef} $flexDirection="column" $gap="10px" $width="calc(100% - 60px)">
+            <StyledForwardCardContainer ref={containerRef} flexDirection="column" gap="10px" width="calc(100% - 60px)">
                 <div>
                     {showEmailHeaderOptions ? <EmailHeaderOptions editorType={editorType} /> : null}
                     <RichTextEditorField name={`${editorType}.editor`} />
-                    <FlexBox $gap="8px" $padding="0px 16px" $flexWrap="wrap">
+                    <FlexBox gap="8px" padding="0px 16px" flexWrap="wrap">
                         {attachmets?.selectedFiles.map((item) => (<UploadedAttachmentsPreview item={item} attachmets={attachmets} />))}
                     </FlexBox>
                 </div>
@@ -72,8 +72,8 @@ export const EmailEditor = (props: IEmailEditorProps) => {
 const EmailFooterOptions = (props: Pick<IEmailEditorProps, 'onSendClick' | 'onCancelClick' | 'editorType' | 'isMutationLoading'>) => {
     const { editorType, isMutationLoading, onCancelClick, onSendClick } = props;
     return (
-        <FlexBox $justifyContent="space-between" $padding="0px 16px 10px">
-            <FlexBox $gap="5px">
+        <FlexBox justifyContent="space-between" padding="0px 16px 10px">
+            <FlexBox gap="5px">
                 <RoundedSendButton disabled={isMutationLoading} variant="contained" endIcon={isMutationLoading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : <Send />} title="Send" onClick={onSendClick}>
                     Send
                 </RoundedSendButton>

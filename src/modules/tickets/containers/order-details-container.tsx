@@ -11,7 +11,7 @@ export const OrderDetailsContainer = () => {
 
     if (isLoading) {
         return (
-            <FlexBox $alignItems="center" $justifyContent="center" $height="100%" $width="100%">
+            <FlexBox alignItems="center" justifyContent="center" height="100%" width="100%">
                 <CircularProgress />
             </FlexBox>
         )

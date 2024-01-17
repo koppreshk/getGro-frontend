@@ -34,17 +34,17 @@ export const TicketNotes = () => {
     }
 
     return (
-        <FlexBox $flexDirection="column" $padding="10px" $height="100%">
+        <FlexBox flexDirection="column" padding="10px" height="100%">
             <Typography fontWeight="500">Ticket notes</Typography>
             <HorizontalSeparator $margin="10px 0px" />
 
             {savedState.length === 0 ?
-                <FlexBox $alignItems="center" $height="calc(100% - 265px);" $justifyContent="center">No notes present</FlexBox>
+                <FlexBox alignItems="center" height="calc(100% - 265px);" justifyContent="center">No notes present</FlexBox>
                 : null}
 
             <InnreHTML dangerouslySetInnerHTML={{ __html: savedState }} />
 
-            <FlexBox $gap="10px" $width="100%" $alignItems="center" style={{ position: 'relative' }}>
+            <FlexBox gap="10px" width="100%" alignItems="center" style={{ position: 'relative' }}>
                 <EditorContainer>
                     <ReactQuill
                         theme="snow"

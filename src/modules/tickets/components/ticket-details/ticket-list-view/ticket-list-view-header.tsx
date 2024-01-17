@@ -59,8 +59,8 @@ export const TicketListViewHeader = () => {
     }, []);
 
     return (
-        <HeaderWrapper $width="100%" $justifyContent="space-between">
-            <FlexBox $alignItems="center" $gap="10px">
+        <HeaderWrapper width="100%" justifyContent="space-between">
+            <FlexBox alignItems="center" gap="10px">
                 <Typography variant="h5">{header}</Typography>
                 <Chip label={noOfRecords} size="small" variant="filled" color="primary" />
                 <CustomIconButton tooltipProps={{ title: 'Sort' }} iconComponent={<SortIcon />} onClick={handleClick} />
@@ -70,7 +70,7 @@ export const TicketListViewHeader = () => {
                     <MenuItem>Source</MenuItem>
                 </Menu>
             </FlexBox>
-            <FlexBox $gap="5px" $alignItems="center">
+            <FlexBox gap="5px" alignItems="center">
                 <StyledIconButtons iconComponent={<PhoneRounded fontSize="small" />} size="small" color="primary" onClick={toggleCallBtn} tooltipProps={{ title: 'Make a call' }} />
                 <StyledIconButtons iconComponent={<PostAdd fontSize="small" />} size="small" color="primary" onClick={toggleAddTicketDrawer} tooltipProps={{ title: 'Add Ticket' }} />
             </FlexBox>

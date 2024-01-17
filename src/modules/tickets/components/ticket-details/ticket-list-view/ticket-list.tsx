@@ -60,7 +60,7 @@ export const TicketList = (props: ITicketListProps) => {
     ));
 
     return (
-        <TickListWrapper $flexDirection="column">{ticketViewDetails}</TickListWrapper>
+        <TickListWrapper flexDirection="column">{ticketViewDetails}</TickListWrapper>
     )
 };
 
@@ -108,16 +108,16 @@ const TicketDetails = (props: ITicketDetailsProps) => {
     const onTicketClick = React.useCallback(() => navigate(`/tickets/${match?.params.ticketType}/${ticketId}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`), [match?.params.ticketType, navigate, noOfRecords, pageNumber, ticketId]);
 
     return (
-        <TicketWrapper $flexDirection="row" $isTicketActive={isTicketActive} ref={ref} onClick={onTicketClick}>
-            <FlexBox $justifyContent="center" $alignItems="center">
+        <TicketWrapper flexDirection="row" $isTicketActive={isTicketActive} ref={ref} onClick={onTicketClick}>
+            <FlexBox justifyContent="center" alignItems="center">
                 <Avatar />
             </FlexBox>
-            <TicketDetailsSectionRight $flexDirection="column" $gap="6px">
-                <FlexBox $justifyContent="space-between">
+            <TicketDetailsSectionRight flexDirection="column" gap="6px">
+                <FlexBox justifyContent="space-between">
                     <Typography variant="h6">{customerName}</Typography>
                     <Typography variant="caption">{getFormattedDate(createdAt)}</Typography>
                 </FlexBox>
-                <FlexBox $flexDirection="row" $gap="10px" $alignItems="center">
+                <FlexBox flexDirection="row" gap="10px" alignItems="center">
                     <>
                         {rendersourceIcon(source)}
                     </>

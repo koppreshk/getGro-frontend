@@ -46,7 +46,7 @@ export const EmailHeaderOptions = (props: { editorType: 'forward' | 'reply' }) =
 
     const renderTagInputs = (args: { name: string, label: string }) => {
         return (
-            <FlexBox $gap="10px" $width="calc(100% - 63px)">
+            <FlexBox gap="10px" width="calc(100% - 63px)">
                 <Typography variant="h6">{args.label}:</Typography>
                 <TagInputField
                     name={`${editorType}.${args.name}`}
@@ -60,10 +60,10 @@ export const EmailHeaderOptions = (props: { editorType: 'forward' | 'reply' }) =
     }
 
     return (
-        <StyledFlexBox $width="100%" $flexDirection="column" $gap="10px" $padding="12px 16px">
-            <FlexBox $width="100%">
+        <StyledFlexBox width="100%" flexDirection="column" gap="10px" padding="12px 16px">
+            <FlexBox width="100%">
                 {renderTagInputs({ name: 'to', label: 'To' })}
-                <FlexBox $gap="10px">
+                <FlexBox gap="10px">
                     {!showCCTagInput && <StyledTypography variant="h6" onClick={onCCTextClick}>Cc</StyledTypography>}
                     {!showBCCTagInput && <StyledTypography variant="h6" onClick={onBCCTextClick}>Bcc</StyledTypography>}
                 </FlexBox>

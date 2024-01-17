@@ -102,7 +102,7 @@ export const TableHeader = <T extends object>(props: ITableHeaderProps<T>) => {
 
     return (
         <TableHeaderWrapper id="table-column-header" key={header.id} colSpan={header.colSpan} ref={dropRef} style={{ minWidth: header.getSize(), opacity: options.isDragging ? 0.5 : 1 }}>
-            {<FlexBox onClick={header.column.getToggleSortingHandler()} ref={previewRef} $width={isGroupedHeader ? '100%' : 'auto'} style={{ textAlign: isGroupedHeader ? 'center' : 'unset' }}>
+            {<FlexBox onClick={header.column.getToggleSortingHandler()} ref={previewRef} width={isGroupedHeader ? '100%' : 'auto'} style={{ textAlign: isGroupedHeader ? 'center' : 'unset' }}>
                 {!header.column.columnDef.meta?.disableColReorder
                     ?
                     <DragabbleIcon ref={dragRef}>
@@ -110,7 +110,7 @@ export const TableHeader = <T extends object>(props: ITableHeaderProps<T>) => {
                     </DragabbleIcon>
                     : null
                 }
-                <FlexBox $gap="10px" $alignItems='center' $width={isGroupedHeader ? '100%' : 'auto'}>
+                <FlexBox gap="10px" alignItems='center' width={isGroupedHeader ? '100%' : 'auto'}>
                     <Typography variant='h6' fontSize="14px" width={isGroupedHeader ? '100%' : 'auto'} textOverflow={'ellipsis'} overflow="hidden" whiteSpace="nowrap" maxWidth={header.column.getSize()}>
                         {flexRender(
                             header.column.columnDef.header,

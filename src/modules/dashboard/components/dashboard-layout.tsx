@@ -12,7 +12,7 @@ export const DashboardLayout = () => {
     };
 
     return (
-        <FlexBox $flexDirection="column" $height="calc(100% - 43px)">
+        <FlexBox flexDirection="column" height="calc(100% - 43px)">
             <Tabs value={value} onChange={handleChange}>
                 <Tab label="Agent Performance" id="agent-performance" />
                 <Tab label="Folder Performance" id="folder-performance" />

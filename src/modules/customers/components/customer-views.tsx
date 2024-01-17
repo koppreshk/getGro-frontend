@@ -60,7 +60,7 @@ const customerViewOptions = [
 export const CustomerViews = () => {
 
     return (
-        <CustomerViewsWrapper $flexDirection="column">
+        <CustomerViewsWrapper flexDirection="column">
             {customerViewOptions.map((data) => <CustomerViewOptions name={data.name} route={data.route} key={data.primaryKey} />)}
         </CustomerViewsWrapper>
 

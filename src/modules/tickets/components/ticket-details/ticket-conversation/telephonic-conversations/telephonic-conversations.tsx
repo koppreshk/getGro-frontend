@@ -79,23 +79,23 @@ const TelephonicConversationCard = (props: ITelephonicConversationCardProps) => 
     const { pallete } = useTheme();
 
     return (
-        <CardWrapper $gap="10px">
-            <FlexBox $justifyContent="center" $alignItems="center" $width="10%">
+        <CardWrapper gap="10px">
+            <FlexBox justifyContent="center" alignItems="center" width="10%">
                 <Tooltip title={`${callStatus} call`} arrow placement="bottom">
-                    <IconWrapper $justifyContent="center" $alignItems="center" $callStatus={callStatus}>
+                    <IconWrapper justifyContent="center" alignItems="center" $callStatus={callStatus}>
                         {CallStatusIcon(callStatus)}
                     </IconWrapper>
                 </Tooltip>
             </FlexBox>
-            <FlexBox $flexDirection="column" $gap="5px" $width="88%">
-                <FlexBox $flexDirection="row" $justifyContent="space-between" $alignItems="baseline">
+            <FlexBox flexDirection="column" gap="5px" width="88%">
+                <FlexBox flexDirection="row" justifyContent="space-between" alignItems="baseline">
                     <Typography variant="h6">{name}</Typography>
                     <Typography variant="body2">{date}</Typography>
                 </FlexBox>
-                <FlexBox $flexDirection="column">
+                <FlexBox flexDirection="column">
                     <Typography variant="subtitle1" color={pallete.green}>{phoneNumber}</Typography>
-                    <FlexBox $flexDirection="row" $justifyContent="space-between">
-                        <FlexBox $gap="8px">
+                    <FlexBox flexDirection="row" justifyContent="space-between">
+                        <FlexBox gap="8px">
                             <Typography variant="body2">{capitalizeFirstLetter(callStatus)} call,</Typography>
                             <Typography variant="body2">{callDuration}</Typography>
                         </FlexBox>
