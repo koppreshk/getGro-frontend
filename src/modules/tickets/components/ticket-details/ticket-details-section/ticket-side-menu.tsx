@@ -90,15 +90,15 @@ export const TicketSideMenu = (props: ITicketSideMenuProps) => {
     }, [onExpandCollapse, onSetMenuOption, showHideTicketDetails])
 
     return (
-        <SideMenuWrapper $flexDirection="column" $gap="12px" $justifyContent="space-between">
-            <FlexBox $flexDirection="column" $gap="12px">
+        <SideMenuWrapper flexDirection="column" gap="12px" justifyContent="space-between">
+            <FlexBox flexDirection="column" gap="12px">
                 {sideMenuOptions.map((option, index) => <Tooltip title={option.title} key={index} arrow placement="left">
                     <IconWrapper $isSelected={selectedMenuOption === option.id} $isDisabled={option.disabled} onClick={() => onOptionClick(option)}>
                         {option.iconComponent()}
                     </IconWrapper>
                 </Tooltip>)}
             </FlexBox>
-            <FlexBox $flexDirection="column" $gap="12px">
+            <FlexBox flexDirection="column" gap="12px">
                 <Tooltip title="Exapnd/Collapse" arrow placement="left">
                     <IconButton onClick={onExpandCollapse}>
                         {showHideTicketDetails ? <ChevronRight /> : <ChevronLeft />}

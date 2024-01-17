@@ -65,7 +65,7 @@ export const AgentStatistics = () => {
                 open={open}
                 anchorEl={anchorEl}
                 onClose={handleClose}>
-                <StatsContainer $gap="15px" $flexDirection="column">
+                <StatsContainer gap="15px" flexDirection="column">
                     {data.map((item) => <StatsMiniBlock item={item} key={item.dataType} />)}
                 </StatsContainer>
             </PopoverWithBeak>
@@ -99,11 +99,11 @@ const StyledFlexbox = styled(FlexBox)`
 const StatsMiniBlock = (props: IStatsMiniBlockProps) => {
     const { item } = props;
     return (
-        <FlexBox $gap="5px" $flexDirection="column">
+        <FlexBox gap="5px" flexDirection="column">
             <Typography variant="h6">{item.headerLabel}</Typography>
             <StyledFlexbox>
                 {item.dataValues.map((arg) => (
-                    <FlexBox $flexDirection="column" className="stats-mini-block-child" $alignItems="center" key={arg.label} $width="75px" $justifyContent="center" $padding="4px">
+                    <FlexBox flexDirection="column" className="stats-mini-block-child" alignItems="center" key={arg.label} width="75px" justifyContent="center" padding="4px">
                         <Typography variant="h6">{arg.value}</Typography>
                         <Typography variant="body2">{arg.label}</Typography>
                     </FlexBox>

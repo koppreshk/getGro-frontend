@@ -45,7 +45,7 @@ export const TelephonicDialer = (props: ITelephonicDialerProps) => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogContent>
-                    <FlexBox $width="100%" $flexDirection="column" $gap="20px" >
+                    <FlexBox width="100%" flexDirection="column" gap="20px" >
                         <TextboxField name="phoneNumber" label="Phone Number" fullWidth />
                         <SelectField name="telephoneVendor" menuOptions={menuOptions} label="Select Vendor" fullWidth />
                     </FlexBox>

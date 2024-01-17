@@ -99,8 +99,8 @@ export const NavigationMenu = React.memo(() => {
     const primaryOptions = usePrimaryOptions();
 
     return (
-        <MenuWrapper $flexDirection="column" $justifyContent="space-between">
-            <PrimaryOptionsWrapper $gap="10px" $flexDirection="column" $justifyContent="center" $alignItems="center">
+        <MenuWrapper flexDirection="column" justifyContent="space-between">
+            <PrimaryOptionsWrapper gap="10px" flexDirection="column" justifyContent="center" alignItems="center">
                 {primaryOptions.map((item) => (
                     <React.Fragment key={item.primaryKey}>
                         {
@@ -114,7 +114,7 @@ export const NavigationMenu = React.memo(() => {
 
                 ))}
             </PrimaryOptionsWrapper>
-            <SecondaryOptionWrapper $flexDirection="column" $justifyContent="center" $alignItems="center">
+            <SecondaryOptionWrapper flexDirection="column" justifyContent="center" alignItems="center">
                 <SecondaryOption />
             </SecondaryOptionWrapper>
         </MenuWrapper>
@@ -135,7 +135,7 @@ const PrimaryOption = React.memo((props: IPrimaryOptionProps) => {
 
     return (
         <Tooltip title={title} arrow placement="right">
-            <IconWrapper $isOptionsSelected={isOptionsSelected} $alignItems="center" $justifyContent="center" onClick={onClick}>
+            <IconWrapper $isOptionsSelected={isOptionsSelected} alignItems="center" justifyContent="center" onClick={onClick}>
                 {iconComponent()}
             </IconWrapper>
         </Tooltip>
@@ -157,7 +157,7 @@ const SecondaryOption = React.memo(() => {
 
     return (
         <>
-            <SecondaryIconWrapper onClick={handleClick} $alignItems="center" $justifyContent="center">
+            <SecondaryIconWrapper onClick={handleClick} alignItems="center" justifyContent="center">
                 <Tooltip title="Reminders" arrow placement="right">
                     <EventOutlined />
                 </Tooltip>
@@ -183,7 +183,7 @@ const SecondaryOption = React.memo(() => {
 
 const ReminderContent = () => {
     return (
-        <FlexBox $height="500px" $width="300px">
+        <FlexBox height="500px" width="300px">
             <Typography variant="h5">Reminder content</Typography>
         </FlexBox>
     )

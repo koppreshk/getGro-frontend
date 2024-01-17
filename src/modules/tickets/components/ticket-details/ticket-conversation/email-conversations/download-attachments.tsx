@@ -43,10 +43,10 @@ export const DownloadAttachments = (props: Pick<IEmailConversations, 'attachment
     const { attachments } = props;
 
     return (
-        <FlexBox $gap="10px" style={{ marginLeft: '50px' }} $flexWrap="wrap">
+        <FlexBox gap="10px" style={{ marginLeft: '50px' }} flexWrap="wrap">
             {attachments.map((attachment) => (
-                <AttachmentPreviewContainer $gap="8px" $alignItems="center" key={attachment.id}>
-                    <FileType $alignItems="center" $justifyContent="center">
+                <AttachmentPreviewContainer gap="8px" alignItems="center" key={attachment.id}>
+                    <FileType alignItems="center" justifyContent="center">
                         <Typography variant="caption" sx={{ color: 'inherit' }}>
                             {(getFileExtension(attachment.contentType) || attachment.contentType.split('/')[1]).toUpperCase()}
                         </Typography>
@@ -57,7 +57,7 @@ export const DownloadAttachments = (props: Pick<IEmailConversations, 'attachment
                         sx={{ maxWidth: '120px', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}>
                         {attachment.filename}
                     </Typography>
-                    <FlexBox $alignItems="center">
+                    <FlexBox alignItems="center">
                         <PreviewFileContainer id={attachment.id} contentType={attachment.contentType} />
                         <DownloadAttachmentsContainer id={attachment.id} />
                     </FlexBox>

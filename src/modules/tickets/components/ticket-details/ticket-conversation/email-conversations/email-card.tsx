@@ -95,14 +95,14 @@ export const EmailCard = (props: IEmailCardProps) => {
 
     return (
         <StyledEmailCardContainer className="email-card-container">
-            <FlexBox $flexDirection="column" $gap="12px" $justifyContent="center">
-                <FlexBox style={{ cursor: 'pointer' }} $flexDirection="column" $width="100%" onClick={onCardClick}>
-                    <FlexBox $gap="10px" $width="100%">
+            <FlexBox flexDirection="column" gap="12px" justifyContent="center">
+                <FlexBox style={{ cursor: 'pointer' }} flexDirection="column" width="100%" onClick={onCardClick}>
+                    <FlexBox gap="10px" width="100%">
                         <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>{getInitialsByName(from || fromEmail)}</Avatar>
-                        <FlexBox $flexDirection="column" $width="calc(100% - 50px)">
-                            <FlexBox $justifyContent="space-between">
+                        <FlexBox flexDirection="column" width="calc(100% - 50px)">
+                            <FlexBox justifyContent="space-between">
                                 <Typography variant="h6">{from || fromEmail}</Typography>
-                                <FlexBox $gap="10px" $justifyContent="space-between" $alignItems="center">
+                                <FlexBox gap="10px" justifyContent="space-between" alignItems="center">
                                     <SubTextValue variant="caption">{getFormattedDate(createdAt)}</SubTextValue>
                                     {!isCollapsed ? <EmailThreadOptions onReplyClick={onReplyClick} onForwardClick={onForwardClick} /> : null}
                                 </FlexBox>
@@ -110,7 +110,7 @@ export const EmailCard = (props: IEmailCardProps) => {
                             {
                                 isCollapsed
                                     ? <StripedEmailContent variant="body3">{strip(htmlContent)}</StripedEmailContent>
-                                    : <FlexBox $gap="4px" $alignItems="center">
+                                    : <FlexBox gap="4px" alignItems="center">
                                         <SubTextValue fontSize="12px">to {toEmail.split('@')[0]}</SubTextValue>
                                         <EmailPopoverMetadata fromEmail={fromEmail} toEmail={toEmail} subject={subject} createdAt={createdAt} />
                                     </FlexBox>

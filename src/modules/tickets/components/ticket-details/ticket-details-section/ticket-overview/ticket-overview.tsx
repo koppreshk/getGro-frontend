@@ -23,16 +23,16 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
     const customerId = useAppSelector((state) => state.tickets.linkedCustomer.customerId)
 
     return (
-        <FlexBox $gap="30px" $padding="10px" $flexDirection="column">
-            <FlexBox $justifyContent="space-between">
-                <FlexBox $gap="5px" $alignItems="center">
+        <FlexBox gap="30px" padding="10px" flexDirection="column">
+            <FlexBox justifyContent="space-between">
+                <FlexBox gap="5px" alignItems="center">
                     <Typography variant="h5" >{customerName}</Typography><Typography variant="body2"> messaged via</Typography>
                     <Platform variant="body2" $platform={source.toLocaleLowerCase()}>{source}</Platform>
                 </FlexBox>
                 {customerId
                     ? <UnlinkCustomer />
                     : <CustomIconButton tooltipProps={{ title: 'Search Customer', arrow: true, placement: "left" }} iconComponent={<PersonSearch />} onClick={onSearchUserBtnClick} />
-                    }
+                }
             </FlexBox>
             <ContactInfo defaultData={ticketDetails} />
             <SearchCustomerContainer showSearchUserFlyout={showSearchUserFlyout} onSearchUserBtnClick={onSearchUserBtnClick} />

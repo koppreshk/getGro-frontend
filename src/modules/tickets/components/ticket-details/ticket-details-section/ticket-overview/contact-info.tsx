@@ -71,7 +71,7 @@ const ContactInfoActions = (props: IContactInfoActionsProps) => {
     ];
 
     return (
-        <FlexBox $gap="10px">
+        <FlexBox gap="10px">
             {contactInfoIcons.map((option, index) =>
                 <Tooltip key={index} title={option.title} arrow placement="bottom">
                     <IconWrapper $isDisabled={option.disabled} onClick={() => !option.disabled && option?.onClick!()}>
@@ -98,8 +98,8 @@ export const ContactInfo = (props: IContactInfoProps) => {
     }, []);
 
     return (
-        <FlexBox $gap="20px" $flexDirection="column">
-            <FlexBox $gap="10px" $alignItems="center" $flexDirection="column">
+        <FlexBox gap="20px" flexDirection="column">
+            <FlexBox gap="10px" alignItems="center" flexDirection="column">
                 {name === undefined ? <StyledAvatar /> : <StyledAvatar>{getInitialsByName(name)}</StyledAvatar>}
                 <Typography variant="h4" >{name === '' || name === undefined ? customerName || 'NA' : name}</Typography>
                 <ContactInfoActions email={email}
@@ -107,7 +107,7 @@ export const ContactInfo = (props: IContactInfoProps) => {
                 />
             </FlexBox>
             <HorizontalSeparator />
-            <FlexBox $padding="0 20px" $flexDirection="column" $gap="15px">
+            <FlexBox padding="0 20px" flexDirection="column" gap="15px">
                 {contactInfoData('Email', email === '' || email === undefined ? 'NA' : email)}
                 {contactInfoData('Phone', phoneNumber ?? 'NA')}
                 {contactInfoData('Customer Id', customerId === undefined ? 'NA' : customerId)}
@@ -145,8 +145,8 @@ const contactInfoData = (name: string, value: string | number) => {
     }
 
     return (
-        <FlexBox $width="100%" $flexDirection="row" $gap="5px">
-            <FlexBox $width="40%" $flexDirection="row" $gap="5px" $alignItems="center">
+        <FlexBox width="100%" flexDirection="row" gap="5px">
+            <FlexBox width="40%" flexDirection="row" gap="5px" alignItems="center">
                 {renderIcons(name)}
                 <TypographyName variant="subheading1">{name}</TypographyName>
             </FlexBox>

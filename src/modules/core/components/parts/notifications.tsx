@@ -81,9 +81,9 @@ export const Notifications = () => {
                 open={open}
                 anchorEl={anchorEl}
                 onClose={handleClose}>
-                <NotifiacationsContainer $padding="16px" $flexDirection="column" $gap="8px" $maxWidth='200px'>
+                <NotifiacationsContainer padding="16px" flexDirection="column" gap="8px" maxWidth='200px'>
                     {notifications.map((item) => (
-                        <StyledNotification key={item.value} $flexDirection='column' className='single-notification'>
+                        <StyledNotification key={item.value} flexDirection='column' className='single-notification'>
                             <Typography variant='body3'>{item.value}</Typography>
                         </StyledNotification>
                     ))}

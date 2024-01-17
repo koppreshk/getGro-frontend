@@ -27,8 +27,8 @@ export const UploadedAttachmentsPreview = (props: IUploadedAttachmentsPreviewPro
     const { item, attachmets } = props;
 
     return (
-        <AttachmentPreviewContainer key={item.id} $gap="8px" $alignItems="center">
-            <FileType $alignItems="center" $justifyContent="center">
+        <AttachmentPreviewContainer key={item.id} gap="8px" alignItems="center">
+            <FileType alignItems="center" justifyContent="center">
                 <Typography variant="caption" sx={{ color: 'inherit' }}>{item.name.split('.').pop()?.toUpperCase()}</Typography>
             </FileType>
             <Typography variant="body3" title={item.name} sx={{ maxWidth: '120px', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}>{item.name}</Typography>

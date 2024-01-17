@@ -11,7 +11,7 @@ const Container = styled(FlexBox)`
 
 export default function CustomersPage() {
     return (
-        <Container $height="100%">
+        <Container height="100%">
             <CustomerViews />
             <div style={{ width: 'calc(100% - 200px)' }}>
                 <Routes>

@@ -40,13 +40,13 @@ export const TicketConversationFooter = (props: ITicketConversationFooterProps) 
     }, [onSendClick]);
 
     return (
-        <FlexBox $flexDirection="column">
+        <FlexBox flexDirection="column">
             <Tabs value={value} onChange={handleChange} aria-label="Tabs footer content">
                 <Tab label="Reply" id="reply-tab" />
             </Tabs>
             <CustomTabPanel index={0} value={value}>
                 <TextArea onChange={onTextChange} value={textareaValue} onKeyDown={onKeyDown} placeholder="Shift + Enter to add a new line" />
-                <FlexBox $justifyContent="flex-end" $padding="0px 10px">
+                <FlexBox justifyContent="flex-end" padding="0px 10px">
                     <RoundedSendButton variant="contained" endIcon={<Send />} onClick={onSendClick} >
                         Send
                     </RoundedSendButton>
