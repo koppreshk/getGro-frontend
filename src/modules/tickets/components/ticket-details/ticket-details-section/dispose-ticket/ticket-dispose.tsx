@@ -41,6 +41,17 @@ const menuOptions = [{
     value: 'Closed'
 }]
 
+const employeeMenuOptions = [
+    {
+        key: '1',
+        value: 'Mouin Pasha'
+    },
+    {
+        key: '2',
+        value: 'Anup Dives'
+    }
+]
+
 interface IDispostionInputField {
     remarks: string;
     dispositionType: string;
@@ -110,6 +121,7 @@ export const TicketDispose = (props: ITicketDisposeProps) => {
                         childFolderClick={childFolderClick} />
                     <FlexBox flexDirection="column" gap="40px" padding="40px 0px">
                         <FlexBox flexDirection="column" gap="10px">
+                            <SelectField name="selectEmployee" label="Select Employee" menuOptions={employeeMenuOptions} />
                             <TextboxField name="remarks" label="Remarks" multiline rows={4} />
                             <SelectField name="dispositionType" label="Disposition Type" menuOptions={menuOptions} />
                             <FormControlLabel control={<CheckboxField name="callBackRequired" sx={{ width: '40px' }} />} label="is callback required?" />

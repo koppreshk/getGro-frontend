@@ -86,3 +86,10 @@ export const EmailConversationLayout = (props: { conversationsData: ITicketById 
         </>
     )
 }
+
+export const EmailConversationLayoutx = () => {
+
+    // return(
+
+    // )
+}
