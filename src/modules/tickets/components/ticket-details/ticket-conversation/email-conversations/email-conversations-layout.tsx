@@ -64,10 +64,10 @@ export const EmailConversationLayout = (props: { conversationsData: ITicketById 
     return (
         <>
             <iframe ref={iframeRef} id="ifmcontentstoprint" style={{ display: 'none' }} />
-            <LayoutWrapper ref={containerRef} $flexDirection="column" $gap="10px" $width="100%" $height="100%">
-                <FlexBox $justifyContent="space-between" $alignItems="center" $padding="0px 16px 0px 0px">
+            <LayoutWrapper ref={containerRef} flexDirection="column" gap="10px" width="100%" height="100%">
+                <FlexBox justifyContent="space-between" alignItems="center" padding="0px 16px 0px 0px">
                     <Typography variant="h5" title={subject} textOverflow={'ellipsis'} overflow={'hidden'} whiteSpace='nowrap' width={'calc(100% - 90px)'}>{subject}</Typography>
-                    <FlexBox $gap="10px">
+                    <FlexBox gap="10px">
                         {
                             isCollapsedAll ?
                                 <CustomIconButton tooltipProps={{ title: 'Expand all' }} iconComponent={<UnfoldMore />} sx={{ width: '24px', height: '24px' }} onClick={onExpandAll} />

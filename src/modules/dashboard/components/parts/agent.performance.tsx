@@ -210,7 +210,7 @@ export const AgentPerformance = () => {
 
     return (
         <>
-            <FlexBox $flexDirection="column" $gap="15px" $height="100%">
+            <FlexBox flexDirection="column" gap="15px" height="100%">
                 <Typography variant="h5">Productivity Via Testing</Typography>
                 <StyledDataGrid
                     data={data}

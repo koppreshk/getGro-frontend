@@ -61,7 +61,7 @@ const SelectFolder = (props: ISelectFolderProps) => {
     return (
         <>
             <Typography variant="h6">{title}</Typography>
-            <FlexBox $flexWrap="wrap" $gap="5px">
+            <FlexBox flexWrap="wrap" gap="5px">
                 {items.map((item) => (
                     <Chip
                         key={item}
@@ -90,13 +90,13 @@ export const TicketDisposeFolder = (props: ITicketDisposeFolderProps) => {
         parentFolderValue.length !== 0 ? disposeFolderData.find((data) => data.name === parentFolderValue)! : {} as IDisposeFolderData, [parentFolderValue]);
 
     return (
-        <FlexBox $gap="10px" $flexDirection="column">
+        <FlexBox gap="10px" flexDirection="column">
             <Typography variant="body3">
                 Click on the folders to select path to dispose ticket
             </Typography>
-            <FolderAddress $padding="5px" $justifyContent="space-between" $alignItems="center" $width="100%">
+            <FolderAddress padding="5px" justifyContent="space-between" alignItems="center" width="100%">
                 <StyledBreadCrumbs separator={<NavigateNext fontSize="small" />}>
-                    <FlexBox $alignItems="center">
+                    <FlexBox alignItems="center">
                         <FolderCopyOutlined fontSize="small" />
                     </FlexBox>
                     {parentFolderValue && <Chip label={parentFolderValue} variant="filled" color="primary" size="small" />}

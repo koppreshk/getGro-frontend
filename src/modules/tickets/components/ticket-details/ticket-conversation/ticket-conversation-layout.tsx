@@ -34,7 +34,7 @@ export const TicketConversationLayout = (props: ITicketConversationLayoutProps) 
     }, [conversationsData, props.data, props.isLoading, ticketSource]);
 
     return (
-        <LayoutWrapper $width="100%" $flexDirection="column">
+        <LayoutWrapper width="100%" flexDirection="column">
             <TicketConversationHeader ticketDetailsById={ticketDetailsById} />
             <div style={{ height: 'calc(100% - 73px)' }}>
                 {renderConversation()}

@@ -18,11 +18,11 @@ const TopBar = styled(FlexBox)`
 export const Toolbar = () => {
     return (
         <TopBarWrapper>
-            <TopBar $justifyContent="space-between" $alignItems="stretch">
-                <FlexBox $alignItems="center">
+            <TopBar justifyContent="space-between" alignItems="stretch">
+                <FlexBox alignItems="center">
                     <GetGroLogoImg />
                 </FlexBox>
-                <FlexBox $justifyContent="flex-end" $gap="10px" $alignItems="center">
+                <FlexBox justifyContent="flex-end" gap="5px" alignItems="center">
                     <AgentStatistics />
                     <AgentStatus />
                     <Notifications />

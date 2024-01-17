@@ -57,10 +57,10 @@ export const OrderDetails = React.memo((props: IOrderDetailsProps) => {
     const { orderDetails } = props;
     return (
         <>
-            <OrderDetailsHeader $padding="15px 10px" $flexDirection="column">
+            <OrderDetailsHeader padding="15px 10px" flexDirection="column">
                 <Typography variant="h6">Order Details</Typography>
             </OrderDetailsHeader>
-            <OrderWrappers $height="calc(100% - 93px)" $gap="10px" $flexDirection="column">
+            <OrderWrappers height="calc(100% - 93px)" gap="10px" flexDirection="column">
                 <AutoSizer>
                     {({ height, width }) => (
                         <List
@@ -90,23 +90,23 @@ const Order = (props: IOrderViewProps) => {
     const { orderNumber, lineItems, fulfillmentStatus, currency } = orderDetails[index];
 
     return (
-        <StyledOrder $gap="10px">
-            <OrderPLaceholderIconWrapper $alignItems="center" $padding="0 12px">
+        <StyledOrder gap="10px">
+            <OrderPLaceholderIconWrapper alignItems="center" padding="0 12px">
                 <ShoppingBagOutlined sx={{ width: '48px', height: '48px' }} />
             </OrderPLaceholderIconWrapper>
-            <FlexBox $width="calc(100% - 82px)">
-                <FlexBox $flexDirection="column" $gap="10px" $width="50%">
-                    <FlexBox $flexDirection="column">
+            <FlexBox width="calc(100% - 82px)">
+                <FlexBox flexDirection="column" gap="10px" width="50%">
+                    <FlexBox flexDirection="column">
                         <Typography variant="h6">Order Number:</Typography>
                         <TextFieldValue variant="body2" >{'#' + orderNumber}</TextFieldValue>
                     </FlexBox>
-                    <FlexBox $flexDirection="column">
+                    <FlexBox flexDirection="column">
                         <Typography variant="h6" >Item Name:</Typography>
                         <TextFieldValue variant="body2" >{lineItems[0].name}</TextFieldValue>
                     </FlexBox>
                 </FlexBox>
-                <RelativePositionedFlexBox $flexDirection="column" $gap="10px" $width="50%" >
-                    <FlexBox $flexDirection="column">
+                <RelativePositionedFlexBox flexDirection="column" gap="10px" width="50%" >
+                    <FlexBox flexDirection="column">
                         <Typography variant="h6">Price:</Typography>
                         <span>
                             {currency === 'INR' && <Typography variant="body2" display="inline" >&#x20B9;</Typography>}
@@ -118,7 +118,7 @@ const Order = (props: IOrderViewProps) => {
                             <ChevronRight />
                         </MoreDetailsBtn>
                     </Tooltip>
-                    <FlexBox $flexDirection="column">
+                    <FlexBox flexDirection="column">
                         <Typography variant="h6">FulFillment Status:</Typography>
                         <TextFieldValue variant="body2" >{fulfillmentStatus}</TextFieldValue>
                     </FlexBox>

@@ -11,7 +11,7 @@ export const TicketListView = (props: ITicketListViewsProps) => {
     const { data } = props;
 
     return (
-        <FlexBox $flexDirection="column" $width="100%" style={{ backgroundColor: '#fff' }}>
+        <FlexBox flexDirection="column" width="100%" style={{ backgroundColor: '#fff' }}>
             <TicketListViewHeader />
             <TicketList data={data} />
         </FlexBox>

@@ -33,9 +33,9 @@ export const Platform = styled(Typography) <{ $platform: string }>`
 export const TicketConversationHeader = (props: { ticketDetailsById: ITicketDetails | undefined }) => {
     const { ticketDetailsById } = props;
     return (
-        <HeaderWrapper $width="100%" $flexDirection="column">
+        <HeaderWrapper width="100%" flexDirection="column">
             <Typography variant="h5">Conversations</Typography>
-            <FlexBox $gap="5px">
+            <FlexBox gap="5px">
                 <Typography variant="body2">with {ticketDetailsById?.customerName ? ticketDetailsById.customerName + ' via' : 'Siddarth Menon via'}</Typography>
                 <Platform variant="body2" $platform={ticketDetailsById?.source.toLocaleLowerCase() ?? ''}>{ticketDetailsById?.source}</Platform>
             </FlexBox>

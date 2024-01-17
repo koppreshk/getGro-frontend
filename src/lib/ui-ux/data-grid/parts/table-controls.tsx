@@ -89,11 +89,11 @@ export const TableControls = <T extends object>(props: ITableControlProps<T>) =>
     const isTableActionsvisible = table.getIsSomeRowsSelected() || table.getIsAllRowsSelected();
 
     return (
-        <StyledFlexBox $justifyContent="space-between" $height="76px">
-            <FlexBox $alignItems="end">
+        <StyledFlexBox justifyContent="space-between" height="76px">
+            <FlexBox alignItems="end">
                 {isTableActionsvisible ? <TableActions /> : <></>}
             </FlexBox>
-            <FlexBox $gap="30px" $alignItems="center">
+            <FlexBox gap="30px" alignItems="center">
                 <StyledSlider
                     aria-label="Restricted values"
                     defaultValue={10}
@@ -117,7 +117,7 @@ export const TableControls = <T extends object>(props: ITableControlProps<T>) =>
                     <IconButton aria-label="Previous" onClick={onPrevPage} disabled={pageNumber === 1} color="primary">
                         <ChevronLeft fontSize="small" />
                     </IconButton>
-                    <FlexBox $gap="5px" $alignItems='center'>
+                    <FlexBox gap="5px" alignItems='center'>
                         <Typography variant='body3'>
                             {pageNumber} of{' '}
                             {totalPages}
@@ -165,7 +165,7 @@ const TableActions = () => {
     ]
 
     return (
-        <FlexBox $alignItems='center' $gap='10px'>
+        <FlexBox alignItems='center' gap='10px'>
             {tableActionOptions.map((option, index) => (
                 <div key={index}>
                     <Tooltip title={option.title} key={option.title} arrow placement="bottom">

@@ -35,8 +35,8 @@ export const AddTicket = (props: IAddTicketProps) => {
         <>
             <Drawer anchor="right" open={openAddTicketDrawer} onClose={toggleAddTicketDrawer}>
                 <FormProvider {...formMethods}>
-                    <AddTicketContainer $width="500px" $height="100%" $padding="16px" $flexDirection="column" $gap="10px">
-                        <FlexBox $width="100%" $justifyContent="space-between" $alignItems="center">
+                    <AddTicketContainer width="500px" height="100%" padding="16px" flexDirection="column" gap="10px">
+                        <FlexBox width="100%" justifyContent="space-between" alignItems="center">
                             <Typography variant="h5">Add Ticket</Typography>
                             <CustomIconButton iconComponent={<CloseOutlined />} tooltipProps={{ title: 'Close' }} onClick={toggleAddTicketDrawer} />
                         </FlexBox>
@@ -83,8 +83,8 @@ const AddTicketForm = () => {
     };
 
     return (
-        <FlexBox $flexDirection="column" $width="100%" $gap="15px" $height="calc(100% - 50px)" $padding="5px 0 0 0" $overflowY="auto">
-            <FlexBox $width="100%" $gap="10px">
+        <FlexBox flexDirection="column" width="100%" gap="15px" height="calc(100% - 50px)" padding="5px 0 0 0" overflowY="auto">
+            <FlexBox width="100%" gap="10px">
                 <TextboxField name="title" label="Title" sx={{ width: 'calc(50% - 10px)' }} />
                 <SelectField name="priority" label="Priority" sx={{ width: '50%' }} menuOptions={[{ key: 'low', value: 'Low' }, { key: 'medium', value: 'Medium' }, { key: 'high', value: 'High' }]} />
             </FlexBox>
@@ -103,7 +103,7 @@ const AddTicketForm = () => {
                 onClickClearSelection={onClickClearSelection}
                 childFolderClick={childFolderClick} />
             <HorizontalSeparator $margin="8px 0px" />
-            <FlexBox $gap="10px">
+            <FlexBox gap="10px">
                 <SelectField name="queue" sx={{ width: '50%' }} label="Queue" menuOptions={queueOptions} />
                 <SelectField name="assignTo" sx={{ width: '50%' }} label="Assign To" menuOptions={assignToOptions} />
             </FlexBox>

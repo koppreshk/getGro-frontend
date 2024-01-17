@@ -104,7 +104,7 @@ const useViewOptions = () => {
 export const TicketViews = () => {
     const viewOptions = useViewOptions();
     return (
-        <ViewsWrapper $flexDirection="column">
+        <ViewsWrapper flexDirection="column">
             {viewOptions.map((item) => (
                 <React.Fragment key={item.primaryKey}>
                     {item.showOption ? <TicketViewOptions name={item.name} route={item.route} /> : null}

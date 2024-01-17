@@ -59,7 +59,7 @@ const LoginForm = () => {
             <form>
                 <Grid container spacing={4}>
                     <Grid item md={12}>
-                        <FlexBox $gap="10px">
+                        <FlexBox gap="10px">
                             <Typography variant="h3" fontWeight='500'>Welcome</Typography>
                             <Typography variant="h3" fontWeight='500' color='#6969ff'>back!</Typography>
                         </FlexBox>
@@ -76,7 +76,7 @@ const LoginForm = () => {
                     </Grid>
                 </Grid>
                 <Grid item md={12} marginTop='20px'>
-                    <FlexBox $justifyContent="space-between" $alignItems="center">
+                    <FlexBox justifyContent="space-between" alignItems="center">
                         <FormControlLabel
                             value="end"
                             control={<CheckboxField name="rememberMe" />}
@@ -101,14 +101,14 @@ export const Login = React.memo(() => {
         }
     });
     return (
-        <FlexBox $height="100%" $width="100%">
+        <FlexBox height="100%" width="100%">
 
-            <LoginSectionLeft $width="70%" $alignItems="center">
+            <LoginSectionLeft width="70%" alignItems="center">
                 <IllustrationImg src={LoginImage} alt="" />
             </LoginSectionLeft>
 
-            <LoginSectionRight $width="30%" $flexDirection="column" $alignItems="center">
-                <GetGroLogoWrapper $width="100%" $justifyContent="center">
+            <LoginSectionRight width="30%" flexDirection="column" alignItems="center">
+                <GetGroLogoWrapper width="100%" justifyContent="center">
                     <img src={GetGroLogoImg} width='50%' />
                 </GetGroLogoWrapper>
                 <FormProvider {...formValues}>

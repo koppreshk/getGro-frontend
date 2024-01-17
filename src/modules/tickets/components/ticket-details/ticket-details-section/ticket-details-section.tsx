@@ -34,7 +34,7 @@ export const TicketDetailsSection = () => {
     }, [selectedMenuOption]);
 
     return (
-        <StyledFlexBox $width={'100%'} $justifyContent={'flex-end'}>
+        <StyledFlexBox width={'100%'} justifyContent={'flex-end'}>
             {showHideTicketDetails ?
                 <div style={{ width: 'calc(100% - 56px)' }}>
                     {renderBasedOnSelectedview()}

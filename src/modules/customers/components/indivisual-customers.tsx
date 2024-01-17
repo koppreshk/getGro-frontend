@@ -50,7 +50,7 @@ export const IndivisualCustomers = (props: IIndivisualCustomersProps) => {
     const { data } = props;
     const columns = useColumns()
     return (
-        <FlexBox $padding="10px">
+        <FlexBox padding="10px">
             <DataGrid columns={columns} data={data} />
         </FlexBox>
     )

@@ -10,7 +10,7 @@ export default function TicketsPage() {
     const { user } = useAuth();
     return (
         <>
-            <FlexBox $height="100%">
+            <FlexBox height="100%">
                 {match?.params?.ticketId ? null : <TicketViews />}
                 <div style={{ width: match?.params?.ticketId ? '100%' : 'calc(100% - 200px)' }}>
                     <Routes>

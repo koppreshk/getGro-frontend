@@ -50,7 +50,7 @@ export const ColumnsConfiguration = <T extends object>(props: IColumnsConfigurat
                     vertical: 'bottom',
                     horizontal: 'left'
                 }}>
-                <FlexBox $padding="16px" $flexDirection="column">
+                <FlexBox padding="16px" flexDirection="column">
                     {
                         allColumns.map(column => {
                             return (

@@ -97,19 +97,19 @@ export const TicketDispose = (props: ITicketDisposeProps) => {
 
     return (
         <FormProvider {...methods}>
-            <FlexBox $flexDirection="column">
-                <StyledFlexbox $alignItems="center">
+            <FlexBox flexDirection="column">
+                <StyledFlexbox alignItems="center">
                     <Typography fontWeight="500">Dispose Ticket</Typography>
                 </StyledFlexbox>
-                <FlexBox $flexDirection="column" $padding="15px">
+                <FlexBox flexDirection="column" padding="15px">
                     <TicketDisposeFolder
                         parentFolderValue={folderStates.parentFolder}
                         childFolderValue={folderStates.childFolder}
                         parentFolderClick={parentFolderClick}
                         onClickClearSelection={onClickClearSelection}
                         childFolderClick={childFolderClick} />
-                    <FlexBox $flexDirection="column" $gap="40px" $padding="40px 0px">
-                        <FlexBox $flexDirection="column" $gap="10px">
+                    <FlexBox flexDirection="column" gap="40px" padding="40px 0px">
+                        <FlexBox flexDirection="column" gap="10px">
                             <TextboxField name="remarks" label="Remarks" multiline rows={4} />
                             <SelectField name="dispositionType" label="Disposition Type" menuOptions={menuOptions} />
                             <FormControlLabel control={<CheckboxField name="callBackRequired" sx={{ width: '40px' }} />} label="is callback required?" />

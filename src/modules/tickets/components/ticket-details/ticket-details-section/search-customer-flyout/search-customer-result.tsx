@@ -53,24 +53,24 @@ const CustomerTile = (props: ICustomerTileProps) => {
     }, [dispatch, email, firstName, id, lastName, onSearchUserBtnClick, params.ticketId, phone, showNotification]);
 
     return (
-        <CustomerTileWrapper $gap='20px'>
-            <FlexBox $justifyContent="center" $alignItems="center">
+        <CustomerTileWrapper gap='20px'>
+            <FlexBox justifyContent="center" alignItems="center">
                 <Avatar />
             </FlexBox>
-            <FlexBox $width="calc(100% - 120px)">
-                <FlexBox $flexDirection="column" $width="25%">
+            <FlexBox width="calc(100% - 120px)">
+                <FlexBox flexDirection="column" width="25%">
                     <Typography variant="h6">Name:</Typography>
                     <TextFieldValue variant="body2" >{firstName} {lastName}</TextFieldValue>
                 </FlexBox>
-                <FlexBox $flexDirection="column" $width="20%">
+                <FlexBox flexDirection="column" width="20%">
                     <Typography variant="h6">Customer Id:</Typography>
                     <TextFieldValue variant="body2" >{id}</TextFieldValue>
                 </FlexBox>
-                <FlexBox $flexDirection="column" $width="30%">
+                <FlexBox flexDirection="column" width="30%">
                     <Typography variant="h6">Email:</Typography>
                     <TextFieldValue variant="body2" >{email}</TextFieldValue>
                 </FlexBox>
-                <FlexBox $flexDirection="column" $width="25%">
+                <FlexBox flexDirection="column" width="25%">
                     <Typography variant="h6">Phone Number:</Typography>
                     <TextFieldValue variant="body2" >{phone}</TextFieldValue>
                 </FlexBox>
@@ -94,14 +94,14 @@ export const SearchCustomerResult = (props: ISearchCustomerResultProps) => {
             phone={item.phone} key={item.id} onSearchUserBtnClick={onSearchUserBtnClick} />));
 
     return (
-        <SearchCustomerResultWrapper $flexDirection="column" $gap="20px">
+        <SearchCustomerResultWrapper flexDirection="column" gap="20px">
             {isLoading ?
-                <FlexBox $alignItems="center" $justifyContent="center">
+                <FlexBox alignItems="center" justifyContent="center">
                     <CircularProgress />
                 </FlexBox> :
                 customerList?.length ?
                     customerList :
-                    <FlexBox $justifyContent='center'>Oops no customer found! </FlexBox>}
+                    <FlexBox justifyContent='center'>Oops no customer found! </FlexBox>}
         </SearchCustomerResultWrapper>
     )
 }

@@ -10,7 +10,7 @@ export const TicketConversationContainer = () => {
 
     if (conversationLoading) {
         return (
-            <FlexBox $alignItems="center" $justifyContent="center" $width="100%" $height="100%">
+            <FlexBox alignItems="center" justifyContent="center" width="100%" height="100%">
                 <CircularProgress />
             </FlexBox>
         )
@@ -18,7 +18,7 @@ export const TicketConversationContainer = () => {
     //Temp code, should be removed!
     if (conversationsData?.subject === undefined || isError) {
         return (
-            <FlexBox $alignItems="center" $justifyContent="center" $width="100%" $height="100%">
+            <FlexBox alignItems="center" justifyContent="center" width="100%" height="100%">
                 <Alert sx={{ height: 'fit-content' }} severity="error">There was an error while fetching the data, please retry later</Alert>
             </FlexBox>
         )
