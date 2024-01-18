@@ -1,0 +1,22 @@
+@media print {
+    html, body * {
+        height: auto !important;
+        visibility: hidden;
+    }
+    body {
+        position: unset !important;
+    }
+    #printable-content, #printable-content * {
+        visibility: visible;
+    }
+    #printable-content {
+        position: absolute !important;
+        top: 0;
+        left: 0;
+        overflow: visible;
+        height: 100% !important;
+    }
+    .no-print {
+        display: none;
+    }
+}
