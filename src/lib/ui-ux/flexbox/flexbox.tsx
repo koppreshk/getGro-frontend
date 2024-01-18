@@ -51,21 +51,23 @@ const StyledFlexBox = styled.div<CSSFlexProperties>`
     ${({ $overflowY }) => $overflowY && css`overflow-y: ${$overflowY};`}
 `;
 
-type IFlexBoxProps = IFlex & JSX.IntrinsicElements["div"] & {
+type IFlexBoxProps = IFlex & Omit<JSX.IntrinsicElements["div"], 'ref'> & {
     children?: React.ReactNode;
     className?: string;
+    elementRef?: React.LegacyRef<HTMLDivElement>;
     renderSeparator?: () => React.ReactNode;
 }
 
 export const FlexBox = (props: IFlexBoxProps) => {
     const { alignContent, alignItems, alignSelf, flexDirection, flexFlow
         , flexWrap, gap, height, inline, justifyContent, justifyItems, justifySelf,
-        maxHeight, maxWidth, overflowX, overflowY, padding, width, children, className, renderSeparator, ...rest } = props;
+        maxHeight, maxWidth, overflowX, overflowY, padding, width, children, className, elementRef, renderSeparator, ...rest } = props;
 
     const totalChildrenCount = Children.count(children);
 
     return (
         <StyledFlexBox {...rest}
+            ref={elementRef}
             $alignContent={alignContent} $alignItems={alignItems} $alignSelf={alignSelf} $flexDirection={flexDirection} $flexFlow={flexFlow}
             $flexWrap={flexWrap} $gap={gap} $height={height} $inline={inline} $justifyContent={justifyContent} $justifySelf={justifySelf} $justifyItems={justifyItems}
             $maxHeight={maxHeight} $maxWidth={maxWidth} $overflowX={overflowX} $overflowY={overflowY} $padding={padding} $width={width} className={className}>
