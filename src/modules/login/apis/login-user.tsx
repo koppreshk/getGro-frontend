@@ -11,10 +11,12 @@ export type LoginResult = {
 export const useLoginUser = () => {
     const onLoginUser = React.useCallback((data: { email: string, password: string }) => {
         const restURl = import.meta.env.VITE_REST_URL;
+        const subDomainValue = import.meta.env.VITE_SUB_DOMAIN;
+
         return fetch(`${restURl}${LoginEndPoint.LOGIN_USER}?email_address=${data.email}&password=${data.password}`, {
             method: 'POST',
             headers: {
-                'sub-domain': 'https://intent.getgro.io/'
+                'sub-domain': subDomainValue
             }
         })
             .then((res) => {
