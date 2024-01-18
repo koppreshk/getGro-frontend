@@ -35,10 +35,9 @@ export const EmailSkeletonLoader = () => {
 
 
             <FlexBox width="100%" padding="15px 10px 0 10px" flexDirection="column" gap="20px">
-                {Array(6).fill(
-                    <FlexBox gap="10px">
+                {Array(6).fill({}).map((_item, index) => (
+                    <FlexBox gap="10px" key={index}>
                         <Skeleton variant="circular" width={40} height={40} />
-
                         <FlexBox flexDirection="column" width="calc(100% - 50px)" gap="5px">
                             <FlexBox width="100%" justifyContent="space-between">
                                 <Skeleton width="20%">
@@ -53,7 +52,7 @@ export const EmailSkeletonLoader = () => {
                             </Skeleton>
                         </FlexBox>
                     </FlexBox>
-                )}
+                ))}
             </FlexBox>
         </FlexBox >
     )

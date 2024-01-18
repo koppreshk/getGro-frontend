@@ -55,7 +55,7 @@ export const EmailEditor = (props: IEmailEditorProps) => {
     return (
         <FlexBox gap="10px" >
             <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>{getInitialsByName(from)}</Avatar>
-            <StyledForwardCardContainer ref={containerRef} flexDirection="column" gap="10px" width="calc(100% - 60px)">
+            <StyledForwardCardContainer elementRef={containerRef} flexDirection="column" gap="10px" width="calc(100% - 60px)">
                 <div>
                     {showEmailHeaderOptions ? <EmailHeaderOptions editorType={editorType} /> : null}
                     <RichTextEditorField name={`${editorType}.editor`} />
