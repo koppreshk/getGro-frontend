@@ -39,11 +39,18 @@ const getFileExtension = (contentType: string): string | undefined => {
     return fileTypes[contentType.toLocaleLowerCase() as keyof typeof fileTypes];
 };
 
+const StyledFlexBox = styled(FlexBox)`
+    margin-left: 50px;
+    @media print {
+        margin: 0px;
+    }
+`;
+
 export const DownloadAttachments = (props: Pick<IEmailConversations, 'attachments'>) => {
     const { attachments } = props;
 
     return (
-        <FlexBox gap="10px" style={{ marginLeft: '50px' }} flexWrap="wrap">
+        <StyledFlexBox gap="10px" flexWrap="wrap">
             {attachments.map((attachment) => (
                 <AttachmentPreviewContainer gap="8px" alignItems="center" key={attachment.id}>
                     <FileType alignItems="center" justifyContent="center">
@@ -63,6 +70,6 @@ export const DownloadAttachments = (props: Pick<IEmailConversations, 'attachment
                     </FlexBox>
                 </AttachmentPreviewContainer>
             ))}
-        </FlexBox>
+        </StyledFlexBox>
     )
 }

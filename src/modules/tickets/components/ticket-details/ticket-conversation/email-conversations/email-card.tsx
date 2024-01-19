@@ -22,6 +22,9 @@ interface IEmailCardProps {
 
 const InnerHTML = styled.div`
     padding-left: 50px;
+    @media print {
+        padding: 0px;
+    }
 `;
 
 const SubTextValue = styled(Typography)`
@@ -41,7 +44,14 @@ const StripedEmailContent = styled(Typography)`
         white-space: nowrap;
         overflow: hidden;
     }
-`
+`;
+
+const StyledFlex = styled(FlexBox)`
+    width: calc(100% - 50px);
+    @media print {
+        width: 100%;
+    }
+`;
 
 function strip(html: string) {
     const doc = new DOMParser().parseFromString(html, 'text/html');
@@ -98,10 +108,10 @@ export const EmailCard = (props: IEmailCardProps) => {
             <FlexBox flexDirection="column" gap="12px" justifyContent="center">
                 <FlexBox style={{ cursor: 'pointer' }} flexDirection="column" width="100%" onClick={onCardClick}>
                     <FlexBox gap="10px" width="100%">
-                        <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>{getInitialsByName(from || fromEmail)}</Avatar>
-                        <FlexBox flexDirection="column" width="calc(100% - 50px)">
+                        <Avatar className="no-print" sx={{ color: textColor, bgcolor: backgroundColor }}>{getInitialsByName(from || fromEmail)}</Avatar>
+                        <StyledFlex flexDirection="column">
                             <FlexBox justifyContent="space-between">
-                                <Typography variant="h6">{from || fromEmail}</Typography>
+                                <Typography variant="h6">{from || fromEmail} <span className="print">{`<${fromEmail}>`}</span></Typography>
                                 <FlexBox gap="10px" justifyContent="space-between" alignItems="center">
                                     <SubTextValue variant="caption">{getFormattedDate(createdAt)}</SubTextValue>
                                     {!isCollapsed ? <EmailThreadOptions onReplyClick={onReplyClick} onForwardClick={onForwardClick} /> : null}
@@ -111,11 +121,11 @@ export const EmailCard = (props: IEmailCardProps) => {
                                 isCollapsed
                                     ? <StripedEmailContent variant="body3">{strip(htmlContent)}</StripedEmailContent>
                                     : <FlexBox gap="4px" alignItems="center">
-                                        <SubTextValue fontSize="12px">to {toEmail.split('@')[0]}</SubTextValue>
+                                        <SubTextValue fontSize="12px">to {toEmail.split('@')[0]} <span className="print">{`<${toEmail}>`}</span></SubTextValue>
                                         <EmailPopoverMetadata fromEmail={fromEmail} toEmail={toEmail} subject={subject} createdAt={createdAt} />
                                     </FlexBox>
                             }
-                        </FlexBox>
+                        </StyledFlex>
                     </FlexBox>
                 </FlexBox>
                 {!isCollapsed && <InnerHTML dangerouslySetInnerHTML={{ __html: htmlContent }} />}

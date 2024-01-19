@@ -19,4 +19,12 @@
     .no-print {
         display: none;
     }
+    .print {
+        display: inline-block !important;
+        font-size: 12px;
+        font-weight: 400;  
+     }
+}
+.print {
+   display: none;     
 }

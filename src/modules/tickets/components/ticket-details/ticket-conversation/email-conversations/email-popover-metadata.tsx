@@ -28,7 +28,7 @@ export const EmailPopoverMetadata = (props: IEmailPopoverMetadataProps) => {
 
     return (
         <div>
-            <IconButton sx={{ width: '24px', height: '24px' }} onClick={handleClick}>
+            <IconButton className="no-print" sx={{ width: '24px', height: '24px' }} onClick={handleClick}>
                 <ArrowDropDown />
             </IconButton>
             <Popover
