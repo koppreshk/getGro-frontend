@@ -80,7 +80,7 @@ export const TicketConversationChatContent = (props: IChatContentProps) => {
     }, []);
 
     return (
-        <Wrapper gap="10px" alignItems="center" elementRef={containerRef} $isCustomerQuery={isCustomerQuery} flexDirection={isCustomerQuery ? 'row' : 'row-reverse'}>
+        <Wrapper gap="10px" alignItems="center" ref={containerRef} $isCustomerQuery={isCustomerQuery} flexDirection={isCustomerQuery ? 'row' : 'row-reverse'}>
             <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>{getInitialsByName(isCustomerQuery ? customerName : agentName)}</Avatar>
             <Content $isCustomerQuery={isCustomerQuery} maxWidth="50%">
                 <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }} >
