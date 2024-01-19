@@ -108,7 +108,7 @@ const TicketDetails = (props: ITicketDetailsProps) => {
     const onTicketClick = React.useCallback(() => navigate(`/tickets/${match?.params.ticketType}/${ticketId}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`), [match?.params.ticketType, navigate, noOfRecords, pageNumber, ticketId]);
 
     return (
-        <TicketWrapper flexDirection="row" $isTicketActive={isTicketActive} elementRef={ref} onClick={onTicketClick}>
+        <TicketWrapper flexDirection="row" $isTicketActive={isTicketActive} ref={ref} onClick={onTicketClick}>
             <FlexBox justifyContent="center" alignItems="center">
                 <Avatar />
             </FlexBox>

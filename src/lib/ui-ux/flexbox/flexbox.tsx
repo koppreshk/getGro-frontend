@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { Property } from 'csstype';
-import React, { Children } from 'react';
+import React, { Children, ForwardedRef } from 'react';
 
 type IFlex = {
     inline?: boolean;
@@ -54,20 +54,20 @@ const StyledFlexBox = styled.div<CSSFlexProperties>`
 type IFlexBoxProps = IFlex & Omit<JSX.IntrinsicElements["div"], 'ref'> & {
     children?: React.ReactNode;
     className?: string;
-    elementRef?: React.LegacyRef<HTMLDivElement>;
     renderSeparator?: () => React.ReactNode;
 }
 
-export const FlexBox = (props: IFlexBoxProps) => {
-    const { alignContent, alignItems, alignSelf, flexDirection, flexFlow
-        , flexWrap, gap, height, inline, justifyContent, justifyItems, justifySelf,
-        maxHeight, maxWidth, overflowX, overflowY, padding, width, children, className, elementRef, renderSeparator, ...rest } = props;
+export const FlexBox = React.forwardRef((props: IFlexBoxProps, ref: ForwardedRef<HTMLDivElement>) => {
+    const { alignContent, alignItems, alignSelf, flexDirection, flexFlow,
+        flexWrap, gap, height, inline, justifyContent, justifyItems, justifySelf,
+        maxHeight, maxWidth, overflowX, overflowY, padding, width, children, className,
+        renderSeparator, ...rest } = props;
 
     const totalChildrenCount = Children.count(children);
 
     return (
         <StyledFlexBox {...rest}
-            ref={elementRef}
+            ref={ref}
             $alignContent={alignContent} $alignItems={alignItems} $alignSelf={alignSelf} $flexDirection={flexDirection} $flexFlow={flexFlow}
             $flexWrap={flexWrap} $gap={gap} $height={height} $inline={inline} $justifyContent={justifyContent} $justifySelf={justifySelf} $justifyItems={justifyItems}
             $maxHeight={maxHeight} $maxWidth={maxWidth} $overflowX={overflowX} $overflowY={overflowY} $padding={padding} $width={width} className={className}>
@@ -79,4 +79,4 @@ export const FlexBox = (props: IFlexBoxProps) => {
             ))}
         </StyledFlexBox >
     )
-}
+})

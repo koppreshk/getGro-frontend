@@ -102,7 +102,7 @@ export const TableHeader = <T extends object>(props: ITableHeaderProps<T>) => {
 
     return (
         <TableHeaderWrapper id="table-column-header" key={header.id} colSpan={header.colSpan} ref={dropRef} style={{ minWidth: header.getSize(), opacity: options.isDragging ? 0.5 : 1 }}>
-            {<FlexBox onClick={header.column.getToggleSortingHandler()} elementRef={previewRef} width={isGroupedHeader ? '100%' : 'auto'} style={{ textAlign: isGroupedHeader ? 'center' : 'unset' }}>
+            {<FlexBox onClick={header.column.getToggleSortingHandler()} ref={previewRef} width={isGroupedHeader ? '100%' : 'auto'} style={{ textAlign: isGroupedHeader ? 'center' : 'unset' }}>
                 {!header.column.columnDef.meta?.disableColReorder
                     ?
                     <DragabbleIcon ref={dragRef}>
