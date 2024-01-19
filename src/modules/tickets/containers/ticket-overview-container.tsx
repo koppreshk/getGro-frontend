@@ -1,12 +1,12 @@
 import { CircularProgress } from "@mui/material";
-import { useGetTicketDetailsById } from "../apis";
 import { FlexBox } from "lib/ui-ux";
 import { TicketOverview } from "../components/ticket-details/ticket-details-section/ticket-overview/ticket-overview";
+import { useAppSelector } from "lib/hooks";
 
 export const TicketOverviewContainer = () => {
-    const { data, isLoading, error } = useGetTicketDetailsById();
+    const ticketDetails = useAppSelector(state => state.tickets.ticketDetails);
 
-    if (isLoading) {
+    if (ticketDetails === undefined) {
         return (
             <FlexBox alignItems="center" justifyContent="center" height="100%" width="100%">
                 <CircularProgress />
@@ -14,13 +14,13 @@ export const TicketOverviewContainer = () => {
         )
     }
 
-    if (data) {
+    if (ticketDetails) {
         return (
             <>
-                <TicketOverview ticketDetails={data} />
+                <TicketOverview ticketDetails={ticketDetails} />
             </>
         )
     }
 
-    return <span>Error: {error as string}</span>
+    return <span>Error</span>
 }

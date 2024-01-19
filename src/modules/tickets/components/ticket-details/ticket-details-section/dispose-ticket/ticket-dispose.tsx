@@ -7,6 +7,7 @@ import { FormProvider, useForm } from "react-hook-form"
 import styled from "styled-components";
 import { IDisposeTicketArgs } from "modules/tickets/apis";
 import { TicketDisposeFolder } from "./ticket-dispose-folder";
+import { useAppSelector } from "lib/hooks";
 
 const StyledFlexbox = styled(FlexBox)`
     min-height: 72px;
@@ -70,6 +71,7 @@ type FolderStates = {
 }
 
 export const useFolderReducer = () => {
+    const { source } = useAppSelector(state => state.tickets.ticketDetails)!;
     const reducer = (state: FolderStates, action: { type: 'parent-folder' | 'child-folder' | 'clear-folders', payload?: FolderStates }) => {
         switch (action.type) {
             case 'parent-folder':
@@ -82,7 +84,7 @@ export const useFolderReducer = () => {
         }
     }
 
-    return useReducer(reducer, { parentFolder: '', childFolder: '' })
+    return useReducer(reducer, { parentFolder: source || '', childFolder: '' })
 }
 export const TicketDispose = (props: ITicketDisposeProps) => {
     const { submitDisposeTicket } = props;

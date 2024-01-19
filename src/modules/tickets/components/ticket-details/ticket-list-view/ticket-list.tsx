@@ -6,6 +6,8 @@ import { Facebook, Email, WhatsApp, Twitter, LocalPhone, Instagram, Sms } from "
 import { FlexBox } from "lib/ui-ux"
 import { ITicketDetails } from "modules/tickets/apis";
 import { getFormattedDate } from "lib/utils";
+import { useAppDispatch } from "lib/hooks";
+import { setTicketDetails } from "modules/tickets/storage";
 
 interface ITicketListProps {
     data: ITicketDetails[];
@@ -56,7 +58,8 @@ export const TicketList = (props: ITicketListProps) => {
             source={item.source}
             ticketStatus={item.ticketStatus}
             ticketSubStatus={item.ticketSubStatus}
-            key={item.ticketId} />
+            key={item.ticketId}
+            status={item.status} />
     ));
 
     return (
@@ -85,11 +88,11 @@ const rendersourceIcon = (source: string) => {
     }
 }
 
-interface ITicketDetailsProps extends Pick<ITicketDetails, 'source' | 'ticketId' | 'customerName' | 'ticketStatus' | 'ticketSubStatus' | 'createdAt' | 'priority'> {
+interface ITicketDetailsProps extends Pick<ITicketDetails, 'source' | 'ticketId' | 'customerName' | 'ticketStatus' | 'ticketSubStatus' | 'createdAt' | 'priority' | 'status'> {
 }
 
 const TicketDetails = (props: ITicketDetailsProps) => {
-    const { createdAt, customerName, ticketId, source } = props;
+    const { createdAt, customerName, ticketId, source, priority, ticketStatus, ticketSubStatus, status } = props;
     const params = useParams();
     const navigate = useNavigate();
     const match = useMatch(`/tickets/:ticketType/:ticketId`);
@@ -98,14 +101,28 @@ const TicketDetails = (props: ITicketDetailsProps) => {
     const [searchParams] = useSearchParams();
     const noOfRecords = searchParams.get('noOfRecords');
     const pageNumber = searchParams.get('pageNumber');
+    const dispatch = useAppDispatch();
 
     React.useEffect(() => {
         if (params.ticketId === ticketId && ref.current) {
             ref.current.scrollIntoView({ behavior: "smooth" });
-        }
-    }, [params.ticketId, ticketId]);
 
-    const onTicketClick = React.useCallback(() => navigate(`/tickets/${match?.params.ticketType}/${ticketId}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`), [match?.params.ticketType, navigate, noOfRecords, pageNumber, ticketId]);
+            dispatch(setTicketDetails({
+                source: source,
+                ticketId: ticketId,
+                customerName: customerName,
+                ticketStatus: ticketStatus,
+                ticketSubStatus: ticketSubStatus,
+                createdAt: createdAt,
+                priority: priority,
+                status: status
+            }));   
+        }
+    }, [createdAt, customerName, dispatch, params.ticketId, priority, source, status, ticketId, ticketStatus, ticketSubStatus]);
+
+    const onTicketClick = React.useCallback(() => {
+        navigate(`/tickets/${match?.params.ticketType}/${ticketId}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`);
+    }, [match?.params.ticketType, navigate, noOfRecords, pageNumber, ticketId]);
 
     return (
         <TicketWrapper flexDirection="row" $isTicketActive={isTicketActive} elementRef={ref} onClick={onTicketClick}>

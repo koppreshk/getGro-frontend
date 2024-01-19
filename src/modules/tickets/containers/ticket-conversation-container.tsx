@@ -1,18 +1,17 @@
 import { Alert } from "@mui/material";
-import { useFetchTicketById, useGetTicketDetailsById, useTicketConversation } from "../apis";
+import { useFetchTicketById, useTicketConversation } from "../apis";
 import { TicketConversationLayout } from "../components/ticket-details/ticket-conversation"
 import { FlexBox } from "lib/ui-ux";
 import { EmailSkeletonLoader } from "lib/ui-ux/loader-components";
 
 export const TicketConversationContainer = () => {
     const { isLoading, data } = useTicketConversation();
-    const { data: ticketDetailsById, isLoading: ticketDetailsLoading } = useGetTicketDetailsById();
     const { data: conversationsData, isLoading: conversationLoading, isError } = useFetchTicketById();
 
     if (conversationLoading) {
         return (
             <FlexBox width="100%">
-                <EmailSkeletonLoader/>
+                <EmailSkeletonLoader />
             </FlexBox>
         )
     }
@@ -30,8 +29,8 @@ export const TicketConversationContainer = () => {
             <TicketConversationLayout
                 data={data}
                 conversationsData={conversationsData}
-                isLoading={isLoading || conversationLoading || ticketDetailsLoading}
-                ticketDetailsById={ticketDetailsById} />
+                isLoading={isLoading}
+            />
         </>
     )
 }
