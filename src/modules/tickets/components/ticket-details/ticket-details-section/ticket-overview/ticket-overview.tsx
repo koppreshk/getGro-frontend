@@ -25,7 +25,7 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
     return (
         <FlexBox gap="30px" padding="10px" flexDirection="column">
             <FlexBox justifyContent="space-between">
-                <FlexBox gap="5px" alignItems="center">
+                <FlexBox gap="5px" alignItems="center" flexWrap="wrap" maxWidth="calc(100% - 50px)">
                     <Typography variant="h5" >{customerName}</Typography><Typography variant="body2"> messaged via</Typography>
                     <Platform variant="body2" $platform={source.toLocaleLowerCase()}>{source}</Platform>
                 </FlexBox>

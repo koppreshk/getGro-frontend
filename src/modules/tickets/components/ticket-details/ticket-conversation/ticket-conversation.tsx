@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { Skeleton } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { ITicketConversationLayoutProps } from "./ticket-conversation-layout";
 import { TicketConversationFooter } from "./ticket-conversation-footer";
 import { TicketConversationChatContent } from "./ticket-conversation-chat-content";
+import { ChatConversationLoader } from "lib/ui-ux/loader-components";
 
 const Container = styled(FlexBox)`
 	background: ${() => {
@@ -37,13 +37,7 @@ export const TicketConversation = (props: Pick<ITicketConversationLayoutProps, '
     return (
         <FlexBox height="calc(100% - 84px);" flexDirection="column" gap="10px">
             <Container height="calc(80% - 10px)" flexDirection="column" gap="10px" overflowY="auto">
-                {isLoading
-                    ? Array(10).fill({}).map((_item, index) => (
-                        <FlexBox gap={'10px'} alignItems="center" width="100%" key={index} flexDirection={index % 2 == 0 ? 'row' : 'row-reverse'}>
-                            <Skeleton variant="circular" width={40} height={40} />
-                            <Skeleton width={310} height={40} />
-                        </FlexBox>
-                    ))
+                {isLoading ? <ChatConversationLoader />
                     :
                     chatData?.map((item, index) => <TicketConversationChatContent key={index} content={item} agentName={data.agentName} customerName={data.customerName} />)}
             </Container>
