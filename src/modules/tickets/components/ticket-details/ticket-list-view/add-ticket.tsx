@@ -78,7 +78,7 @@ const AddTicketForm = () => {
         dispatch({ type: 'child-folder', payload: { parentFolder: folderStates.parentFolder, childFolder: name } })
     }
 
-    const onClickClearSelection = () => {
+    const onDeleteHandler = () => {
         dispatch({ type: 'clear-folders' })
     };
 
@@ -100,7 +100,7 @@ const AddTicketForm = () => {
                 parentFolderValue={folderStates.parentFolder}
                 childFolderValue={folderStates.childFolder}
                 parentFolderClick={parentFolderClick}
-                onClickClearSelection={onClickClearSelection}
+                onDeleteHandler={onDeleteHandler}
                 childFolderClick={childFolderClick} />
             <HorizontalSeparator $margin="8px 0px" />
             <FlexBox gap="10px">

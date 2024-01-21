@@ -81,11 +81,11 @@ interface ITicketDisposeFolderProps {
     childFolderValue: string;
     parentFolderClick: (name: string) => void;
     childFolderClick: (name: string) => void;
-    onClickClearSelection: () => void;
+    onDeleteHandler: (name?: 'parent-folder' | 'child-folder') => void;
 }
 
 export const TicketDisposeFolder = (props: ITicketDisposeFolderProps) => {
-    const { childFolderValue, onClickClearSelection, parentFolderClick, parentFolderValue, childFolderClick } = props;
+    const { childFolderValue, onDeleteHandler, parentFolderClick, parentFolderValue, childFolderClick } = props;
     const getChildFolder = useMemo(() =>
         parentFolderValue.length !== 0 ? disposeFolderData.find((data) => data.name === parentFolderValue)! : {} as IDisposeFolderData, [parentFolderValue]);
 
@@ -99,11 +99,11 @@ export const TicketDisposeFolder = (props: ITicketDisposeFolderProps) => {
                     <FlexBox alignItems="center">
                         <FolderCopyOutlined fontSize="small" />
                     </FlexBox>
-                    {parentFolderValue && <Chip label={parentFolderValue} variant="filled" color="primary" size="small" />}
-                    {childFolderValue && <Chip label={childFolderValue} variant="filled" color="primary" size="small" />}
+                    {parentFolderValue && <Chip label={parentFolderValue} variant="filled" color="primary" size="small" onDelete={() => onDeleteHandler("parent-folder")} />}
+                    {childFolderValue && <Chip label={childFolderValue} variant="filled" color="primary" size="small" onDelete={() => onDeleteHandler("child-folder")} />}
                 </StyledBreadCrumbs>
                 <CustomIconButton
-                    onClick={onClickClearSelection}
+                    onClick={() => onDeleteHandler()}
                     tooltipProps={{ title: "Clear selection", arrow: true }}
                     iconComponent={<DeleteOutline fontSize="small" />}
                 />

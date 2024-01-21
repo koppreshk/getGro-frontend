@@ -99,8 +99,14 @@ export const TicketDispose = (props: ITicketDisposeProps) => {
         dispatch({ type: 'child-folder', payload: { parentFolder: folderStates.parentFolder, childFolder: name } })
     }
 
-    const onClickClearSelection = () => {
-        dispatch({ type: 'clear-folders' })
+    const onDeleteHandler = (name?: 'parent-folder' | 'child-folder') => {
+        if (name) {
+            name === 'parent-folder'
+                ? dispatch({ type: name, payload: { parentFolder: '', childFolder: folderStates.childFolder } })
+                : dispatch({ type: name, payload: { parentFolder: folderStates.parentFolder, childFolder: '' } });
+            return;
+        }
+        dispatch({ type: 'clear-folders' });
     };
 
     const onSubmitDisposeTicket = React.useCallback(() => {
@@ -119,7 +125,7 @@ export const TicketDispose = (props: ITicketDisposeProps) => {
                         parentFolderValue={folderStates.parentFolder}
                         childFolderValue={folderStates.childFolder}
                         parentFolderClick={parentFolderClick}
-                        onClickClearSelection={onClickClearSelection}
+                        onDeleteHandler={onDeleteHandler}
                         childFolderClick={childFolderClick} />
                     <FlexBox flexDirection="column" gap="40px" padding="40px 0px">
                         <FlexBox flexDirection="column" gap="10px">
