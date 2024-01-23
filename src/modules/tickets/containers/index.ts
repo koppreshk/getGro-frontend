@@ -6,3 +6,4 @@ export * from './order-details-container';
 export * from './ticket-overview-container'
 export * from './download-attachments-container';
 export * from './preview-file-container';
+export * from './created-by-me-tickets-container';

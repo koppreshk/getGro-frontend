@@ -6,3 +6,4 @@ export * from './fetch-ticket-by-id';
 export * from './reply-to-email';
 export * from './fetch-attachment';
 export * from './dispose-ticket';
+export * from './get-created-by-me-tickets';
