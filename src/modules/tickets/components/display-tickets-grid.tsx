@@ -1,10 +1,10 @@
 import React, { MouseEventHandler } from "react";
 import { useMatch, useNavigate, useSearchParams } from "react-router-dom";
 import styled, { css, useTheme } from "styled-components";
-import { Checkbox } from "@mui/material";
+import { Alert, Checkbox } from "@mui/material";
 import { Row, createColumnHelper } from "@tanstack/react-table";
 import { Facebook, Email, WhatsApp, Twitter, LocalPhone, Instagram, Sms } from '@mui/icons-material';
-import { DataGrid } from "lib/ui-ux"
+import { DataGrid, FlexBox } from "lib/ui-ux"
 import { ITicketDetails } from "../apis";
 import { useAppDispatch } from "lib/hooks";
 import { setTotalPages } from "../storage";
@@ -169,6 +169,7 @@ const Priority = (args: { priority: string }) => {
 
 
 export const DisplayTicketsGrid = (props: IDisplayTicketsGridProps) => {
+    const { data } = props;
     const navigate = useNavigate();
     const columns = useColumns();
     const dispatch = useAppDispatch();
@@ -188,7 +189,14 @@ export const DisplayTicketsGrid = (props: IDisplayTicketsGridProps) => {
 
     return (
         <>
-            <DataGrid {...props} columns={columns} onRowClick={onRowClick} />
+            {
+                data.length > 0 ? 
+                <DataGrid {...props} columns={columns} onRowClick={onRowClick} /> 
+                :
+                <FlexBox width="100%" justifyContent="center" padding="20px">
+                    <Alert severity="info" sx={{width: '75%'}}>No tickets to display.</Alert>
+                </FlexBox>
+            }
         </>
     )
 }
