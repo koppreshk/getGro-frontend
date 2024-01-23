@@ -5,7 +5,8 @@ export enum TicketsEndPoint {
     FETCH_TICKET_BY_ID = 'fetch_ticket_by_id',
     REPLY_TO_EMAIL = 'reply_to_email',
     FETCH_ATTACHMENT = 'fetch_attachment',
-    DISPOSE_TICKET = 'dispose_ticket'
+    DISPOSE_TICKET = 'dispose_ticket',
+    GET_CREATED_BY_ME_TICKETS = 'fetch_manual_tickets_by_user',
 }
 
 export enum TicketsQueryKey {
@@ -15,5 +16,6 @@ export enum TicketsQueryKey {
     FETCH_TICKET_BY_ID = 'FETCH_TICKET_BY_ID',
     REPLY_TO_EMAIL = 'REPLY_TO_EMAIL',
     FETCH_ATTACHMENT = 'FETCH_ATTACHMENT',
-    DISPOSE_TICKET = 'DISPOSE_TICKET'
+    DISPOSE_TICKET = 'DISPOSE_TICKET',
+    GET_CREATED_BY_ME_TICKETS = 'GET_CREATED_BY_ME_TICKETS',
 }

@@ -1,7 +1,7 @@
 import { FlexBox } from "lib/ui-ux"
 import { TicketViews } from "../components"
 import { Navigate, Route, Routes, useMatch } from "react-router-dom"
-import { UnassignedTicketsContainer } from "../containers"
+import { CreatedByMeTicketsContainer, UnassignedTicketsContainer } from "../containers"
 import { TicketDetailsLayout } from "../components/ticket-details"
 import { useAuth } from "modules/login"
 
@@ -20,7 +20,7 @@ export default function TicketsPage() {
                         <Route key="all-complete" path="/all-complete" element={<UnassignedTicketsContainer />} />
                         <Route key="all-junk" path="/all-junk" element={<UnassignedTicketsContainer />} />
                         <Route key="assigned-to-me" path="/assigned-to-me" element={<UnassignedTicketsContainer />} />
-                        <Route key="created-by-me" path="/created-by-me" element={<UnassignedTicketsContainer />} />
+                        <Route key="created-by-me" path="/created-by-me" element={<CreatedByMeTicketsContainer />} />
                         <Route key="completed-by-me" path="/completed-by-me" element={<UnassignedTicketsContainer />} />
                         <Route key="completed-by-team" path="/completed-by-team" element={<UnassignedTicketsContainer />} />
                         <Route key="pending-by-team" path="/pending-by-team" element={<UnassignedTicketsContainer />} />

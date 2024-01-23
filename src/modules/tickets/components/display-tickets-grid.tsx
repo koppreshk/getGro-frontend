@@ -10,7 +10,7 @@ import { useAppDispatch } from "lib/hooks";
 import { setTotalPages } from "../storage";
 import { getFormattedDate } from "lib/utils";
 
-interface IUnassignedTicketsProps {
+interface IDisplayTicketsGridProps {
     data: ITicketDetails[];
     isLoading?: boolean;
     totalPages: number;
@@ -168,7 +168,7 @@ const Priority = (args: { priority: string }) => {
 }
 
 
-export const UnassignedTickets = (props: IUnassignedTicketsProps) => {
+export const DisplayTicketsGrid = (props: IDisplayTicketsGridProps) => {
     const navigate = useNavigate();
     const columns = useColumns();
     const dispatch = useAppDispatch();

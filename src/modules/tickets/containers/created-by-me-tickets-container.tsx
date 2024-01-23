@@ -1,9 +1,9 @@
 import React from "react";
+import { useGetCreatedByMeTickets } from "../apis"
 import { DisplayTicketsGrid } from "../components";
-import { useGetUnassignedTickets } from "../apis";
 
-export const UnassignedTicketsContainer = React.memo(() => {
-    const { data, isLoading, isFetching, error } = useGetUnassignedTickets();
+export const CreatedByMeTicketsContainer = React.memo(() => {
+    const { data, error, isLoading, isFetching } = useGetCreatedByMeTickets();
 
     if (data || isLoading) {
         const ticketsData = data?.data ?? [];
