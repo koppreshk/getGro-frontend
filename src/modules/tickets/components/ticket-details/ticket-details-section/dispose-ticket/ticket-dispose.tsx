@@ -116,11 +116,11 @@ export const TicketDispose = (props: ITicketDisposeProps) => {
 
     return (
         <FormProvider {...methods}>
-            <FlexBox flexDirection="column">
+            <FlexBox flexDirection="column" height="100%">
                 <StyledFlexbox alignItems="center">
                     <Typography fontWeight="500">Dispose Ticket</Typography>
                 </StyledFlexbox>
-                <FlexBox flexDirection="column" padding="15px">
+                <FlexBox flexDirection="column" padding="15px" overflowY="auto" height="calc(100% - 72px)">
                     <TicketDisposeFolder
                         parentFolderValue={folderStates.parentFolder}
                         childFolderValue={folderStates.childFolder}
