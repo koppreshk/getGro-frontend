@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
 import { Avatar, CircularProgress, Typography } from '@mui/material';
@@ -9,6 +9,7 @@ import { commonStyles } from "lib/ui-ux/common-styles";
 import { CustomIconButton, FlexBox } from 'lib/ui-ux';
 import { ISearchCustomerFlyoutProps } from './search-customer-flyout';
 import { useNotifications } from 'lib';
+import { useAttachCustomer } from 'modules/tickets/apis';
 
 const CustomerTileWrapper = styled(FlexBox)`
     border-radius: 10px;
@@ -39,16 +40,23 @@ interface ICustomerTileProps {
     onSearchUserBtnClick: () => void;
 }
 
-const CustomerTile = (props: ICustomerTileProps) => {
+const CustomerTile = memo((props: ICustomerTileProps) => {
     const params = useParams();
     const { email, firstName, id, lastName, phone, onSearchUserBtnClick } = props;
     const dispatch = useAppDispatch();
     const { showNotification } = useNotifications();
+    const { mutateAsync } = useAttachCustomer();
 
     const linkCustomerCallback = React.useCallback(() => {
-        dispatch(setLinkedCustomer({ email, name: `${firstName} ${lastName}`, phoneNumber: phone, ticketId: params.ticketId!, customerId: id }));
-        showNotification({ message: 'Customer linked successfully', type: 'success' });
-        onSearchUserBtnClick()
+        mutateAsync({ email, firstName, lastName, ticketId: params.ticketId! })
+            .then(() => {
+                dispatch(setLinkedCustomer({ email, name: `${firstName} ${lastName}`, phoneNumber: phone, ticketId: params.ticketId!, customerId: id }));
+                showNotification({ message: 'Customer linked successfully', type: 'success' });
+                onSearchUserBtnClick()
+            })
+            .catch(() => {
+                showNotification({ message: 'Failed to link customer', type: 'error' });
+            })
 
     }, [dispatch, email, firstName, id, lastName, onSearchUserBtnClick, params.ticketId, phone, showNotification]);
 
@@ -78,7 +86,7 @@ const CustomerTile = (props: ICustomerTileProps) => {
             <CustomIconButton tooltipProps={{ title: 'Link Customer', arrow: true, placement: "bottom" }} iconComponent={<PersonAddIcon />} onClick={linkCustomerCallback} />
         </CustomerTileWrapper>
     )
-}
+})
 
 interface ISearchCustomerResultProps extends Pick<ISearchCustomerFlyoutProps, 'data' | 'isLoading'> {
     onSearchUserBtnClick: () => void;
