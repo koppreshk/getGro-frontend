@@ -190,12 +190,12 @@ export const DisplayTicketsGrid = (props: IDisplayTicketsGridProps) => {
     return (
         <>
             {
-                data.length > 0 ? 
-                <DataGrid {...props} columns={columns} onRowClick={onRowClick} /> 
-                :
-                <FlexBox width="100%" justifyContent="center" padding="20px">
-                    <Alert severity="info" sx={{width: '75%'}}>No tickets to display.</Alert>
-                </FlexBox>
+                (data.length > 0 || props.isLoading) ?
+                    <DataGrid {...props} columns={columns} onRowClick={onRowClick} />
+                    :
+                    <FlexBox width="100%" justifyContent="center" padding="20px">
+                        <Alert severity="info" sx={{ width: '75%' }}>No tickets to display.</Alert>
+                    </FlexBox>
             }
         </>
     )

@@ -7,6 +7,7 @@ export enum TicketsEndPoint {
     FETCH_ATTACHMENT = 'fetch_attachment',
     DISPOSE_TICKET = 'dispose_ticket',
     GET_CREATED_BY_ME_TICKETS = 'fetch_manual_tickets_by_user',
+    ATTACH_CUSTOMER = 'attach_customer_to_ticket'
 }
 
 export enum TicketsQueryKey {
@@ -18,4 +19,5 @@ export enum TicketsQueryKey {
     FETCH_ATTACHMENT = 'FETCH_ATTACHMENT',
     DISPOSE_TICKET = 'DISPOSE_TICKET',
     GET_CREATED_BY_ME_TICKETS = 'GET_CREATED_BY_ME_TICKETS',
+    ATTACH_CUSTOMER='ATTACH_CUSTOMER'
 }
