@@ -1,7 +1,7 @@
 import React from "react";
 import { createSearchParams, useMatch, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { Avatar, Typography } from "@mui/material"
+import { Avatar, SxProps, Theme, Typography } from "@mui/material"
 import { Facebook, Email, WhatsApp, Twitter, LocalPhone, Instagram, Sms } from "@mui/icons-material";
 import { FlexBox } from "lib/ui-ux"
 import { ITicketDetails } from "modules/tickets/apis";
@@ -59,7 +59,8 @@ export const TicketList = (props: ITicketListProps) => {
             ticketStatus={item.ticketStatus}
             ticketSubStatus={item.ticketSubStatus}
             key={item.ticketId}
-            status={item.status} />
+            status={item.status}
+            pastTickets={item.pastTickets} />
     ));
 
     return (
@@ -67,32 +68,32 @@ export const TicketList = (props: ITicketListProps) => {
     )
 };
 
-const rendersourceIcon = (source: string) => {
+export const rendersourceIcon = (source: string, sx?: SxProps<Theme>) => {
     switch (source.toLocaleLowerCase()) {
         case 'facebook':
-            return <Facebook sx={{ fill: '#3b5998 !important' }} />
+            return <Facebook sx={{ fill: '#3b5998 !important', ...sx }} />
         case 'email':
-            return <Email sx={{ fill: '#df4b3a !important' }} />
+            return <Email sx={{ fill: '#df4b3a !important', ...sx }} />
         case 'whatsapp':
-            return <WhatsApp sx={{ fill: '#25d366 !important' }} />
+            return <WhatsApp sx={{ fill: '#25d366 !important', ...sx }} />
         case 'twitter':
-            return <Twitter sx={{ fill: '#00acee !important' }} />
+            return <Twitter sx={{ fill: '#00acee !important', ...sx }} />
         case 'telephonic':
-            return <LocalPhone sx={{ fill: '#00c2ff !important' }} />
+            return <LocalPhone sx={{ fill: '#00c2ff !important', ...sx }} />
         case 'instagram':
-            return <Instagram sx={{ fill: '#d62976 !important' }} />
+            return <Instagram sx={{ fill: '#d62976 !important', ...sx }} />
         case 'sms':
-            return <Sms sx={{ fill: '#ffb800 !important' }} />
+            return <Sms sx={{ fill: '#ffb800 !important', ...sx }} />
         default:
             return source;
     }
 }
 
-interface ITicketDetailsProps extends Pick<ITicketDetails, 'source' | 'ticketId' | 'customerName' | 'ticketStatus' | 'ticketSubStatus' | 'createdAt' | 'priority' | 'status'> {
+interface ITicketDetailsProps extends ITicketDetails {
 }
 
 const TicketDetails = (props: ITicketDetailsProps) => {
-    const { createdAt, customerName, ticketId, source, priority, ticketStatus, ticketSubStatus, status } = props;
+    const { createdAt, customerName, ticketId, source, priority, ticketStatus, ticketSubStatus, status, pastTickets, customerInfo } = props;
     const params = useParams();
     const navigate = useNavigate();
     const match = useMatch(`/tickets/:ticketType/:ticketId`);
@@ -108,15 +109,17 @@ const TicketDetails = (props: ITicketDetailsProps) => {
             ref.current.scrollIntoView({ behavior: "smooth" });
 
             dispatch(setTicketDetails({
-                source: source,
-                ticketId: ticketId,
-                customerName: customerName,
-                ticketStatus: ticketStatus,
-                ticketSubStatus: ticketSubStatus,
-                createdAt: createdAt,
-                priority: priority,
-                status: status
-            }));   
+                source,
+                ticketId,
+                customerName,
+                ticketStatus,
+                ticketSubStatus,
+                createdAt,
+                priority,
+                status,
+                pastTickets,
+                customerInfo
+            }));
         }
     }, [createdAt, customerName, dispatch, params.ticketId, priority, source, status, ticketId, ticketStatus, ticketSubStatus]);
 

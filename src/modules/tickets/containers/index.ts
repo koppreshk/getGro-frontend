@@ -7,3 +7,5 @@ export * from './ticket-overview-container'
 export * from './download-attachments-container';
 export * from './preview-file-container';
 export * from './created-by-me-tickets-container';
+export * from './past-tickets-container';
+export * from './ticket-dispose-container';

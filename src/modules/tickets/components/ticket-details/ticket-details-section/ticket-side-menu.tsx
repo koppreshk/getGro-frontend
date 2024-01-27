@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Person, ShoppingCart, Description, ArchiveOutlined, ChevronRight, ChevronLeft } from "@mui/icons-material"
+import { Person, ShoppingCart, Description, ArchiveOutlined, ChevronRight, ChevronLeft, ConfirmationNumber } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material"
 import { FlexBox } from "lib/ui-ux";
 import { useAppDispatch, useAppSelector } from "lib/hooks";
@@ -36,7 +36,8 @@ export enum MenuOptions {
     CustomerProfile = 'customer-profile',
     OrderDetails = 'order-details',
     Notes = 'notes',
-    TicketDispose = 'ticket-dispose'
+    TicketDispose = 'ticket-dispose',
+    PastTickets = 'past-tickets'
 }
 
 const useSideMenuOptions = () => {
@@ -58,6 +59,11 @@ const useSideMenuOptions = () => {
             title: 'Notes',
             id: MenuOptions.Notes,
             iconComponent: () => <Description />
+        },
+        {
+            title: 'Past Tickets',
+            id: MenuOptions.PastTickets,
+            iconComponent: () => <ConfirmationNumber />
         },
         {
             title: 'Ticket Dispose',

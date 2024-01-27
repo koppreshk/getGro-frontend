@@ -13,6 +13,13 @@ export interface ITicketDetails {
     createdAt: string;
     priority: string;
     status: boolean;
+    pastTickets: ITicketDetails[];
+    customerInfo?: {
+        email: string;
+        first_name: string;
+        last_name: string;
+        oms_customer_id: string | null;
+    }
 }
 
 export const useGetUnassignedTickets = () => {
