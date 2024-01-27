@@ -16,9 +16,10 @@ export interface ITicketDetails {
     pastTickets: ITicketDetails[];
     customerInfo?: {
         email: string;
-        first_name: string;
-        last_name: string;
-        oms_customer_id: string | null;
+        firstName: string;
+        lastName: string;
+        omsCustomerId: string;
+        phoneNumber: string;
     }
 }
 

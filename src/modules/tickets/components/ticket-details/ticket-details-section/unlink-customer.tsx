@@ -1,15 +1,14 @@
 import { useCallback, useState, Fragment } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { PersonRemove } from '@mui/icons-material';
-import { useAppDispatch } from 'lib/hooks';
-import { setLinkedCustomer } from 'modules/tickets/storage';
 import { useNotifications } from 'lib';
 import { CustomIconButton } from 'lib/ui-ux';
+import { useUnlinkCustomer } from 'modules/tickets/apis';
 
-export const UnlinkCustomer = () => {
+export const UnlinkCustomer = (props: { ticketId: string }) => {
     const [open, setOpen] = useState(false);
-    const dispatch = useAppDispatch();
     const { showNotification } = useNotifications();
+    const { mutateAsync } = useUnlinkCustomer();
 
     const handleClickOpen = useCallback(() => {
         setOpen(true);
@@ -20,16 +19,13 @@ export const UnlinkCustomer = () => {
     }, []);
 
     const unlinkCustomer = useCallback(() => {
-        dispatch(setLinkedCustomer({
-            email: undefined,
-            name: undefined,
-            phoneNumber: undefined,
-            ticketId: undefined,
-            customerId: undefined
-        }));
-        handleClose();
-        showNotification({ message: 'Successfully unlinked the customer', type: 'success' })
-    }, [dispatch, handleClose, showNotification])
+        mutateAsync({ ticketId: props.ticketId }).then(() => {
+            handleClose();
+            showNotification({ message: 'Successfully unlinked the customer', type: 'success' })
+        }).catch(() => {
+            showNotification({ message: 'Failed to unlink the customer', type: 'error' })
+        })
+    }, [handleClose, mutateAsync, props.ticketId, showNotification])
 
     return (
         <Fragment>

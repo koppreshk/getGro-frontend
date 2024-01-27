@@ -8,3 +8,4 @@ export * from './fetch-attachment';
 export * from './dispose-ticket';
 export * from './get-created-by-me-tickets';
 export * from './attach-customer';
+export * from './unlink-customer';

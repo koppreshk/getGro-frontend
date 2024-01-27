@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import { useParams } from 'react-router';
 import { Avatar, CircularProgress, Typography } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import { useAppDispatch } from "lib/hooks";
-import { setLinkedCustomer } from "modules/tickets/storage";
 import { commonStyles } from "lib/ui-ux/common-styles";
 import { CustomIconButton, FlexBox } from 'lib/ui-ux';
 import { ISearchCustomerFlyoutProps } from './search-customer-flyout';
@@ -43,14 +41,12 @@ interface ICustomerTileProps {
 const CustomerTile = memo((props: ICustomerTileProps) => {
     const params = useParams();
     const { email, firstName, id, lastName, phone, onSearchUserBtnClick } = props;
-    const dispatch = useAppDispatch();
     const { showNotification } = useNotifications();
     const { mutateAsync } = useAttachCustomer();
 
     const linkCustomerCallback = React.useCallback(() => {
         mutateAsync({ email, firstName, lastName, ticketId: params.ticketId!, id })
             .then(() => {
-                dispatch(setLinkedCustomer({ email, name: `${firstName} ${lastName}`, phoneNumber: phone, ticketId: params.ticketId!, customerId: id }));
                 showNotification({ message: 'Customer linked successfully', type: 'success' });
                 onSearchUserBtnClick()
             })
@@ -58,7 +54,7 @@ const CustomerTile = memo((props: ICustomerTileProps) => {
                 showNotification({ message: 'Failed to link customer', type: 'error' });
             })
 
-    }, [dispatch, email, firstName, id, lastName, onSearchUserBtnClick, params.ticketId, phone, showNotification]);
+    }, [email, firstName, id, lastName, mutateAsync, onSearchUserBtnClick, params.ticketId, showNotification]);
 
     return (
         <CustomerTileWrapper gap='20px'>

@@ -1,3 +1,4 @@
+import React from "react";
 import { PersonSearch } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import { CustomIconButton, FlexBox } from "lib/ui-ux";
@@ -6,7 +7,6 @@ import { SearchCustomerContainer } from "modules/tickets/containers";
 import { useAppSelector } from "lib/hooks";
 import { UnlinkCustomer } from "../unlink-customer";
 import { ITicketDetails } from "modules/tickets/apis";
-import React from "react";
 import { ContactInfo } from "./contact-info";
 
 interface ITicketOverviewProps {
@@ -29,12 +29,12 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
                     <Typography variant="h5" >{customerName}</Typography><Typography variant="body2"> messaged via</Typography>
                     <Platform variant="body2" $platform={source.toLocaleLowerCase()}>{source}</Platform>
                 </FlexBox>
-                {customerInfo
-                    ? <UnlinkCustomer />
+                {customerInfo?.omsCustomerId
+                    ? <UnlinkCustomer ticketId={ticketId} />
                     : <CustomIconButton tooltipProps={{ title: 'Search Customer', arrow: true, placement: "left" }} iconComponent={<PersonSearch />} onClick={onSearchUserBtnClick} />
                 }
             </FlexBox>
-            <ContactInfo customerInfo={customerInfo} createdAt={createdAt} ticketId={ticketId} ticketStatus={ticketStatus} priority={priority} />
+            <ContactInfo customerInfo={customerInfo} createdAt={createdAt} ticketId={ticketId} ticketStatus={ticketStatus} priority={priority} customerName={customerName} />
             <SearchCustomerContainer showSearchUserFlyout={showSearchUserFlyout} onSearchUserBtnClick={onSearchUserBtnClick} />
         </FlexBox>
     )

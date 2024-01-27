@@ -6,8 +6,8 @@ import { toCamelCasedKeysFromUnderScores } from "lib/utils";
 import { useAppSelector } from "lib/hooks";
 
 export const OrderDetailsContainer = () => {
-    const customerId = useAppSelector((state) => state.tickets.linkedCustomer.customerId)
-    const { data, isLoading, error } = useGetOrderDetails(customerId);
+    const customerId = useAppSelector((state) => state.tickets.ticketDetails?.customerInfo?.omsCustomerId)
+    const { data, isLoading, error } = useGetOrderDetails(Number(customerId)!);
 
     if (isLoading) {
         return (
