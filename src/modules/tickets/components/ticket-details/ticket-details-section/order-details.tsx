@@ -6,6 +6,7 @@ import AutoSizer from 'react-virtualized-auto-sizer';
 import { IconButton, Tooltip, Typography } from "@mui/material"
 import { FlexBox } from "lib/ui-ux"
 import { IOrders } from "modules/tickets/apis";
+import { CommonHeader } from "./common-header";
 
 interface IOrderDetailsProps {
     orderDetails: IOrders[]
@@ -49,32 +50,33 @@ const OrderPLaceholderIconWrapper = styled(FlexBox)`
     border-radius: 8px;
 `;
 
-const OrderDetailsHeader = styled(FlexBox)`
-    border-bottom: ${({ theme }) => theme.semantics.standardBorder};
-`;
-
 export const OrderDetails = React.memo((props: IOrderDetailsProps) => {
     const { orderDetails } = props;
     return (
         <>
-            <OrderDetailsHeader padding="15px 10px" flexDirection="column">
-                <Typography variant="h6">Order Details</Typography>
-            </OrderDetailsHeader>
-            <OrderWrappers height="calc(100% - 93px)" gap="10px" flexDirection="column">
-                <AutoSizer>
-                    {({ height, width }) => (
-                        <List
-                            width={width}
-                            itemCount={orderDetails.length}
-                            itemSize={130}
-                            height={height}>
-                            {({ index, style }) => (
-                                <Order index={index} style={style} orderDetails={orderDetails} />
-                            )}
-                        </List>
-                    )}
-                </AutoSizer>
-            </OrderWrappers>
+            <CommonHeader headerName="Order Details" />
+            {orderDetails.length ?
+                <OrderWrappers height="calc(100% - 72px)" gap="10px" flexDirection="column">
+                    <AutoSizer>
+                        {({ height, width }) => (
+                            <List
+                                width={width}
+                                itemCount={orderDetails.length}
+                                itemSize={130}
+                                height={height}>
+                                {({ index, style }) => (
+                                    <Order index={index} style={style} orderDetails={orderDetails} />
+                                )}
+                            </List>
+                        )}
+                    </AutoSizer>
+                </OrderWrappers>
+                :
+                (
+                    <FlexBox alignItems="center" justifyContent="center" height="100%">
+                        <Typography>No orders found</Typography>
+                    </FlexBox>
+                )}
         </>
     )
 });

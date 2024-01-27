@@ -5,7 +5,7 @@ import { CustomIconButton, FlexBox } from "lib/ui-ux";
 import { Platform } from "../../ticket-conversation/ticket-conversation-header";
 import { SearchCustomerContainer } from "modules/tickets/containers";
 import { useAppSelector } from "lib/hooks";
-import { UnlinkCustomer } from "../unlink-customer";
+import { UnlinkCustomer } from "./unlink-customer";
 import { ITicketDetails } from "modules/tickets/apis";
 import { ContactInfo } from "./contact-info";
 

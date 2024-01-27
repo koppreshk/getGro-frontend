@@ -1,9 +1,10 @@
-import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
+import { FlexBox } from "lib/ui-ux";
 import { useState } from "react";
 import styled from "styled-components";
 import ReactQuill from "react-quill";
-import { IconButton, Typography } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { Save } from "@mui/icons-material";
+import { CommonHeader } from "./common-header";
 
 const InnreHTML = styled.div`
     height: calc(100% - 265px);
@@ -34,10 +35,8 @@ export const TicketNotes = () => {
     }
 
     return (
-        <FlexBox flexDirection="column" padding="10px" height="100%">
-            <Typography fontWeight="500">Ticket notes</Typography>
-            <HorizontalSeparator $margin="10px 0px" />
-
+        <FlexBox flexDirection="column" height="100%">
+            <CommonHeader headerName="Ticket notes" />
             {savedState.length === 0 ?
                 <FlexBox alignItems="center" height="calc(100% - 265px);" justifyContent="center">No notes present</FlexBox>
                 : null}
@@ -53,7 +52,7 @@ export const TicketNotes = () => {
                         preserveWhitespace
                         onChange={onChange} />
                 </EditorContainer>
-                <IconButton aria-label="First" onClick={onSaveClick} color="primary" sx={{position: 'absolute', top: '1px', right: '0px'}}>
+                <IconButton aria-label="First" onClick={onSaveClick} color="primary" sx={{ position: 'absolute', top: '1px', right: '0px' }}>
                     <Save />
                 </IconButton>
             </FlexBox>

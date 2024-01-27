@@ -1,20 +1,13 @@
 import React, { useReducer } from "react";
-import { Button, FormControlLabel, Typography } from "@mui/material";
+import { Button, FormControlLabel } from "@mui/material";
 import { SelectField, TextboxField } from "lib/form-fields";
 import { CheckboxField } from "lib/form-fields/checkbox-field";
 import { FlexBox } from "lib/ui-ux";
 import { FormProvider, useForm } from "react-hook-form"
-import styled from "styled-components";
 import { IDisposeTicketArgs } from "modules/tickets/apis";
 import { TicketDisposeFolder } from "./ticket-dispose-folder";
 import { useAppSelector } from "lib/hooks";
-
-export const StyledHeaderContainer = styled(FlexBox)`
-    min-height: 72px;
-    box-sizing: border-box;
-    padding: 15px 10px;
-    border-bottom: ${({ theme }) => theme.semantics.standardBorder};
-`;
+import { CommonHeader } from "../common-header";
 
 const menuOptions = [{
     key: 'pending-from-tech',
@@ -117,9 +110,7 @@ export const TicketDispose = (props: ITicketDisposeProps) => {
     return (
         <FormProvider {...methods}>
             <FlexBox flexDirection="column" height="100%">
-                <StyledHeaderContainer alignItems="center">
-                    <Typography fontWeight="500">Dispose Ticket</Typography>
-                </StyledHeaderContainer>
+                <CommonHeader headerName="Dispose Ticket" />
                 <FlexBox flexDirection="column" padding="15px" overflowY="auto" height="calc(100% - 72px)">
                     <TicketDisposeFolder
                         parentFolderValue={folderStates.parentFolder}
