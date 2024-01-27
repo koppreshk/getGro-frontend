@@ -9,7 +9,7 @@ import { IDisposeTicketArgs } from "modules/tickets/apis";
 import { TicketDisposeFolder } from "./ticket-dispose-folder";
 import { useAppSelector } from "lib/hooks";
 
-const StyledFlexbox = styled(FlexBox)`
+export const StyledHeaderContainer = styled(FlexBox)`
     min-height: 72px;
     box-sizing: border-box;
     padding: 15px 10px;
@@ -117,9 +117,9 @@ export const TicketDispose = (props: ITicketDisposeProps) => {
     return (
         <FormProvider {...methods}>
             <FlexBox flexDirection="column" height="100%">
-                <StyledFlexbox alignItems="center">
+                <StyledHeaderContainer alignItems="center">
                     <Typography fontWeight="500">Dispose Ticket</Typography>
-                </StyledFlexbox>
+                </StyledHeaderContainer>
                 <FlexBox flexDirection="column" padding="15px" overflowY="auto" height="calc(100% - 72px)">
                     <TicketDisposeFolder
                         parentFolderValue={folderStates.parentFolder}

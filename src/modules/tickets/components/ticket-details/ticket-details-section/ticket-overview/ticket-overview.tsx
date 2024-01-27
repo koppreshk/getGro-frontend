@@ -15,12 +15,12 @@ interface ITicketOverviewProps {
 
 export const TicketOverview = (props: ITicketOverviewProps) => {
     const { ticketDetails } = props;
-    const { customerName, source } = ticketDetails;
+    const { customerName, source, createdAt, ticketId, ticketStatus, priority } = ticketDetails;
     const [showSearchUserFlyout, setShowSearchUserFlyout] = React.useState(false);
     const onSearchUserBtnClick = React.useCallback(() => {
         setShowSearchUserFlyout((x) => !x);
     }, []);
-    const customerId = useAppSelector((state) => state.tickets.linkedCustomer.customerId)
+    const customerInfo = useAppSelector((state) => state.tickets.ticketDetails?.customerInfo)
 
     return (
         <FlexBox gap="30px" padding="10px" flexDirection="column">
@@ -29,12 +29,12 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
                     <Typography variant="h5" >{customerName}</Typography><Typography variant="body2"> messaged via</Typography>
                     <Platform variant="body2" $platform={source.toLocaleLowerCase()}>{source}</Platform>
                 </FlexBox>
-                {customerId
+                {customerInfo
                     ? <UnlinkCustomer />
                     : <CustomIconButton tooltipProps={{ title: 'Search Customer', arrow: true, placement: "left" }} iconComponent={<PersonSearch />} onClick={onSearchUserBtnClick} />
                 }
             </FlexBox>
-            <ContactInfo defaultData={ticketDetails} />
+            <ContactInfo customerInfo={customerInfo} createdAt={createdAt} ticketId={ticketId} ticketStatus={ticketStatus} priority={priority} />
             <SearchCustomerContainer showSearchUserFlyout={showSearchUserFlyout} onSearchUserBtnClick={onSearchUserBtnClick} />
         </FlexBox>
     )

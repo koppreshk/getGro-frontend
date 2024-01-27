@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { ITicketDetails } from '../apis';
 
 interface ILinkedCustomer {
     customerId?: number,
@@ -6,17 +7,6 @@ interface ILinkedCustomer {
     name?: string,
     phoneNumber?: string,
     ticketId?: string
-}
-
-interface ITicketDetails {
-    source: string;
-    ticketId: string;
-    customerName: string;
-    ticketStatus: string;
-    ticketSubStatus: string;
-    createdAt: string;
-    priority: string;
-    status: boolean;
 }
 
 interface TicketsState {

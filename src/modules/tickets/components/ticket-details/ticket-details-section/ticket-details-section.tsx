@@ -1,11 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { FlexBox } from "lib/ui-ux";
-import { OrderDetailsContainer, TicketOverviewContainer } from "modules/tickets/containers";
+import { OrderDetailsContainer, TicketOverviewContainer, PastTicketsContainer, TicketDisposeContainer } from "modules/tickets/containers";
 import { MenuOptions, TicketSideMenu } from "./ticket-side-menu";
 import { TicketNotes } from "./ticket-notes";
 import { useAppSelector } from "lib/hooks";
-import { TicketDisposeContainer } from "modules/tickets/containers/ticket-dispose-container";
 
 const StyledFlexBox = styled(FlexBox)`  
     background-color: ${({ theme }) => theme.pallete.white};
@@ -24,11 +23,13 @@ export const TicketDetailsSection = () => {
             case MenuOptions.CustomerProfile:
                 return <TicketOverviewContainer />;
             case MenuOptions.OrderDetails:
-                return <OrderDetailsContainer />
+                return <OrderDetailsContainer />;
             case MenuOptions.Notes:
                 return <TicketNotes />
             case MenuOptions.TicketDispose:
-                return <TicketDisposeContainer/>
+                return <TicketDisposeContainer />;
+            case MenuOptions.PastTickets:
+                return <PastTicketsContainer />
             default: return <span>default</span>
         }
     }, [selectedMenuOption]);
