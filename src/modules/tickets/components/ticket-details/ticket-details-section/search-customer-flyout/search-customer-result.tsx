@@ -48,7 +48,7 @@ const CustomerTile = memo((props: ICustomerTileProps) => {
     const { mutateAsync } = useAttachCustomer();
 
     const linkCustomerCallback = React.useCallback(() => {
-        mutateAsync({ email, firstName, lastName, ticketId: params.ticketId! })
+        mutateAsync({ email, firstName, lastName, ticketId: params.ticketId!, id })
             .then(() => {
                 dispatch(setLinkedCustomer({ email, name: `${firstName} ${lastName}`, phoneNumber: phone, ticketId: params.ticketId!, customerId: id }));
                 showNotification({ message: 'Customer linked successfully', type: 'success' });
