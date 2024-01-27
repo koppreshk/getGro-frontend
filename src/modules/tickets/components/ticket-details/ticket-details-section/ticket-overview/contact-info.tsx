@@ -82,29 +82,28 @@ const ContactInfoActions = (props: IContactInfoActionsProps) => {
     )
 };
 
-interface IContactInfoProps extends Pick<ITicketDetails, 'customerInfo' | 'ticketId' | 'createdAt' | 'ticketStatus' | 'priority'> {
+interface IContactInfoProps extends Pick<ITicketDetails, 'customerInfo' | 'ticketId' | 'createdAt' | 'ticketStatus' | 'priority' | 'customerName'> {
 
 }
 
 export const ContactInfo = (props: IContactInfoProps) => {
-    const { customerInfo, createdAt, ticketId, priority, ticketStatus } = props;
-    const { email, fullName, customerId } = useMemo(() => {
-        if (customerInfo) {
+    const { customerInfo, createdAt, ticketId, priority, ticketStatus, customerName } = props;
+    const { email, fullName, omsCustomerId, phoneNumber } = useMemo(() => {
+        if (customerInfo?.hasOwnProperty('email')) {
             return {
                 email: customerInfo.email,
-                fullName: customerInfo.first_name + ' ' + customerInfo.last_name,
-                customerId: customerInfo.oms_customer_id || 'NA'
+                fullName: customerInfo.firstName + ' ' + customerInfo.lastName,
+                omsCustomerId: customerInfo.omsCustomerId,
+                phoneNumber: customerInfo.phoneNumber || 'NA'
             }
         }
         return {
             email: 'NA',
-            fullName: 'NA',
-            customerId: 'NA'
+            fullName: customerName,
+            omsCustomerId: 'NA',
+            phoneNumber: 'NA'
         }
-    }, []);
-
-    //Need to get from customerInfo
-    const phoneNumber = 'NA';
+    }, [customerInfo, customerName]);
 
     const [openCallPopUp, setOpenCallPopUp] = React.useState(false);
 
@@ -125,7 +124,7 @@ export const ContactInfo = (props: IContactInfoProps) => {
             <FlexBox padding="0 20px" flexDirection="column" gap="15px">
                 {contactInfoData('Email', email)}
                 {contactInfoData('Phone', phoneNumber)}
-                {contactInfoData('Customer Id', customerId)}
+                {contactInfoData('Customer Id', omsCustomerId)}
                 {contactInfoData('Ticket Id', ticketId)}
                 {contactInfoData('Created At', getFormattedDate(createdAt))}
                 {contactInfoData('Ticket Status', ticketStatus)}

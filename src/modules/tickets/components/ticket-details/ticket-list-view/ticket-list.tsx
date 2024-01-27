@@ -122,7 +122,8 @@ const TicketDetails = (props: ITicketDetailsProps) => {
                 customerInfo
             }));
         }
-    }, [createdAt, customerName, dispatch, params.ticketId, priority, source, status, ticketId, ticketStatus, ticketSubStatus]);
+    }, [customerInfo, createdAt, customerName, dispatch, params.ticketId, priority,
+        source, status, ticketId, ticketStatus, ticketSubStatus, pastTickets]);
 
     const onTicketClick = React.useCallback(() => {
         navigate(`/tickets/${match?.params.ticketType}/${ticketId}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`);

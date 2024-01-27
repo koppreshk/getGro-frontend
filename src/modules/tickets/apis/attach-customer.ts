@@ -1,6 +1,6 @@
 import { useServiceClient } from "lib";
 import { useCallback } from "react";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { TicketsEndPoint, TicketsQueryKey } from "./api-enums";
 
 interface IAttachCustomerArgs {
@@ -13,12 +13,16 @@ interface IAttachCustomerArgs {
 
 export const useAttachCustomer = () => {
     const { postData } = useServiceClient();
+    const queryClient = useQueryClient();
 
     const attachCustomer = useCallback((args: IAttachCustomerArgs) =>
         postData(`${TicketsEndPoint.ATTACH_CUSTOMER}?ticket_id=${args.ticketId}&email=${args.email}&first_name=${args.firstName}&last_name=${args.lastName}&oms_customer_id=${args.id}`).then((res) => res.json()), [postData]);
 
     return useMutation({
         mutationKey: [TicketsQueryKey.ATTACH_CUSTOMER],
-        mutationFn: attachCustomer
+        mutationFn: attachCustomer,
+        onSuccess: () => {
+            queryClient.invalidateQueries(TicketsQueryKey.GET_ALL_TICKETS);
+        }
     });
 }

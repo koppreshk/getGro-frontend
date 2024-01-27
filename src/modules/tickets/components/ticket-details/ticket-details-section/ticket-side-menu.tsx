@@ -41,8 +41,7 @@ export enum MenuOptions {
 }
 
 const useSideMenuOptions = () => {
-    const customerId = useAppSelector((state) => state.tickets.linkedCustomer.customerId)
-
+    const customerInfo = useAppSelector((state) => state.tickets.ticketDetails?.customerInfo)
     return [
         {
             title: 'Customer Profile',
@@ -50,10 +49,10 @@ const useSideMenuOptions = () => {
             iconComponent: () => <Person />
         },
         {
-            title: customerId === undefined ? 'Link a customer to get order details' : 'Order Details',
+            title: !customerInfo?.omsCustomerId ? 'Link a customer to get order details' : 'Order Details',
             id: MenuOptions.OrderDetails,
             iconComponent: () => <ShoppingCart />,
-            disabled: customerId === undefined
+            disabled: !customerInfo?.omsCustomerId
         },
         {
             title: 'Notes',
