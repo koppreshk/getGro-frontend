@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { getFormattedDate, getInitialsByName } from "lib/utils";
 import { TelephonicDialer } from "../../ticket-conversation/telephonic-conversations";
 import styled from "styled-components";
@@ -7,7 +7,6 @@ import { Typography, Tooltip, Avatar } from "@mui/material";
 import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { commonStyles } from "lib/ui-ux/common-styles";
 import { ITicketDetails } from "modules/tickets/apis";
-import { useAppSelector } from "lib/hooks";
 
 const StyledAvatar = styled(Avatar)`
     && {
@@ -83,13 +82,29 @@ const ContactInfoActions = (props: IContactInfoActionsProps) => {
     )
 };
 
-interface IContactInfoProps {
-    defaultData: ITicketDetails;
+interface IContactInfoProps extends Pick<ITicketDetails, 'customerInfo' | 'ticketId' | 'createdAt' | 'ticketStatus' | 'priority'> {
+
 }
 
 export const ContactInfo = (props: IContactInfoProps) => {
-    const { defaultData: { customerName, ticketStatus, createdAt, ticketId, priority } } = props;
-    const { email, name, phoneNumber, customerId } = useAppSelector((state) => state.tickets.linkedCustomer);
+    const { customerInfo, createdAt, ticketId, priority, ticketStatus } = props;
+    const { email, fullName, customerId } = useMemo(() => {
+        if (customerInfo) {
+            return {
+                email: customerInfo.email,
+                fullName: customerInfo.first_name + ' ' + customerInfo.last_name,
+                customerId: customerInfo.oms_customer_id || 'NA'
+            }
+        }
+        return {
+            email: 'NA',
+            fullName: 'NA',
+            customerId: 'NA'
+        }
+    }, []);
+
+    //Need to get from customerInfo
+    const phoneNumber = 'NA';
 
     const [openCallPopUp, setOpenCallPopUp] = React.useState(false);
 
@@ -100,24 +115,24 @@ export const ContactInfo = (props: IContactInfoProps) => {
     return (
         <FlexBox gap="20px" flexDirection="column">
             <FlexBox gap="10px" alignItems="center" flexDirection="column">
-                {name === undefined ? <StyledAvatar /> : <StyledAvatar>{getInitialsByName(name)}</StyledAvatar>}
-                <Typography variant="h4" >{name === '' || name === undefined ? customerName || 'NA' : name}</Typography>
+                {fullName === undefined ? <StyledAvatar /> : <StyledAvatar>{getInitialsByName(fullName)}</StyledAvatar>}
+                <Typography variant="h4" >{fullName}</Typography>
                 <ContactInfoActions email={email}
                     phoneNumber={phoneNumber} toggleCallBtn={toggleCallBtn}
                 />
             </FlexBox>
             <HorizontalSeparator />
             <FlexBox padding="0 20px" flexDirection="column" gap="15px">
-                {contactInfoData('Email', email === '' || email === undefined ? 'NA' : email)}
-                {contactInfoData('Phone', phoneNumber ?? 'NA')}
-                {contactInfoData('Customer Id', customerId === undefined ? 'NA' : customerId)}
+                {contactInfoData('Email', email)}
+                {contactInfoData('Phone', phoneNumber)}
+                {contactInfoData('Customer Id', customerId)}
                 {contactInfoData('Ticket Id', ticketId)}
                 {contactInfoData('Created At', getFormattedDate(createdAt))}
                 {contactInfoData('Ticket Status', ticketStatus)}
                 {contactInfoData('Priority', priority)}
             </FlexBox>
             {openCallPopUp ? <TelephonicDialer openCallPopUp={openCallPopUp} toggleCallBtn={toggleCallBtn} phoneNumber={phoneNumber} /> : <></>}
-            
+
         </FlexBox>
     )
 }

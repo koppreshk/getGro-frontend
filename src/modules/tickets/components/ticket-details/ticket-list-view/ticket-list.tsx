@@ -60,7 +60,8 @@ export const TicketList = (props: ITicketListProps) => {
             ticketSubStatus={item.ticketSubStatus}
             key={item.ticketId}
             status={item.status}
-            pastTickets={item.pastTickets} />
+            pastTickets={item.pastTickets}
+            customerInfo={item.customerInfo} />
     ));
 
     return (
