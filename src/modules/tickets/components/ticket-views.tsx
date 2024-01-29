@@ -44,6 +44,12 @@ const useViewOptions = () => {
 
     return [
         {
+            name: 'All',
+            primaryKey: 'all',
+            route: 'all',
+            showOption: authorize(TicketAccessRights.All)
+        },
+        {
             name: 'Unassigned',
             primaryKey: 'unassigned',
             route: 'unassigned',
