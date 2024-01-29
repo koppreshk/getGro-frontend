@@ -13,6 +13,7 @@ enum AccessRightKeys {
 }
 
 export enum TicketAccessRights {
+    All = 'all',
     Unassigned = 'unassigned',
     AllPending = 'all-pending',
     AllComplete = 'all-complete',
@@ -45,6 +46,10 @@ const accessRights = [
     {
         name: AccessRightKeys.ViewTickets,
         mode: [Roles.Admin, Roles.Agent],
+    },
+    {
+        name: TicketAccessRights.All,
+        mode: [Roles.Admin],
     },
     {
         name: TicketAccessRights.Unassigned,

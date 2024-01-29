@@ -27,7 +27,7 @@ export default function TicketsPage() {
                         <Route key="completed-by-team" path="/completed-by-team" element={<UnassignedTicketsContainer />} />
                         <Route key="pending-by-team" path="/pending-by-team" element={<UnassignedTicketsContainer />} />
                         
-                        <Route key="all" path="/all:ticketId" element={<TicketDetailsLayout />} />
+                        <Route key="all" path="/all/:ticketId" element={<TicketDetailsLayout />} />
                         <Route key="unassigned-details" path="/unassigned/:ticketId" element={<TicketDetailsLayout />} />
                         <Route key="all-pending-details" path="/all-pending/:ticketId" element={<TicketDetailsLayout />} />
                         <Route key="all-complete-details" path="/all-complete/:ticketId" element={<TicketDetailsLayout />} />
