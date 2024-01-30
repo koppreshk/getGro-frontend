@@ -9,10 +9,17 @@ const StyledHeaderContainer = styled(FlexBox)`
     border-bottom: ${({ theme }) => theme.semantics.standardBorder};
 `;
 
-export const CommonHeader = (props: { headerName: string }) => {
+interface ICommonHeaderProps {
+    headerName: string;
+    renderFarPositionedItems?: () => React.ReactNode;
+}
+
+export const CommonHeader = (props: ICommonHeaderProps) => {
+    const { headerName, renderFarPositionedItems } = props;
     return (
-        <StyledHeaderContainer alignItems="center">
-            <Typography fontWeight="500">{props.headerName}</Typography>
+        <StyledHeaderContainer alignItems="center" justifyContent="space-between">
+            <Typography fontWeight="500">{headerName}</Typography>
+            {renderFarPositionedItems ? renderFarPositionedItems() : null}
         </StyledHeaderContainer>
     )
 }

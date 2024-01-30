@@ -9,3 +9,7 @@ export * from './dispose-ticket';
 export * from './get-created-by-me-tickets';
 export * from './attach-customer';
 export * from './unlink-customer';
+export * from './fetch-all-completed-tickets';
+export * from './fetch-all-pending-tickets';
+export * from './fetch-all-tickets';
+export * from './get-data-by-key';
