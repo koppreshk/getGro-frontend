@@ -22,7 +22,7 @@ const HomePage = React.memo(() => {
     return (
         <>
             <Toolbar />
-            <PageContainer width="100%" height="calc(100% - 65px)">
+            <PageContainer width="100%" height="calc(100% - 53px)">
                 <NavigationMenu />
                 <div style={{ width: 'calc(100% - 64px)' }}>
                     <Suspense fallback={<div>Loading...</div>}>

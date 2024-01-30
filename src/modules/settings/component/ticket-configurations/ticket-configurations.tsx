@@ -9,22 +9,22 @@ const ticketConfigOptions = [
     {
         route: "disposition-type",
         label: "Disposition Type",
-        key: "disposition-type"
+        uniqueKey: "disposition-type"
     },
     {
         route: "ticket-filter",
         label: "Ticket Filter",
-        key: "ticket-filter"
+        uniqueKey: "ticket-filter"
     },
     {
         route: "ticket-escalation",
         label: "Ticket Escalation",
-        key: "ticket-escalation"
+        uniqueKey: "ticket-escalation"
     },
     {
         route: "ticket-queue",
         label: "Ticket Queue",
-        key: "ticket-queue"
+        uniqueKey: "ticket-queue"
     }
 ]
 
@@ -43,19 +43,18 @@ const OptionWrapper = styled.div`
 interface ITicketConfigOptionsProps {
     route: string;
     label: string;
-    key: string;
+    uniqueKey: string;
 }
 
 const TicketConfigOptions = (props: ITicketConfigOptionsProps) => {
-    const { key, label, route } = props;
+    const { label, route } = props;
     const navigate = useNavigate();
     const OnLinkClick = () => {
         navigate(route);
     }
-    
-    return (
 
-        <ConfigLinkWrapper onClick={OnLinkClick} key={key}>
+    return (
+        <ConfigLinkWrapper onClick={OnLinkClick}>
             <OptionWrapper>
                 <Typography variant="body3"> {label} </Typography>
             </OptionWrapper>
@@ -74,7 +73,7 @@ export const TicketsConfiguration = () => {
             </FlexBox>
 
             <FlexBox flexDirection="column">
-                {ticketConfigOptions.map((data) => <TicketConfigOptions key={data.key} label={data.label} route={data.route} />)}
+                {ticketConfigOptions.map((data) => <TicketConfigOptions key={data.uniqueKey} uniqueKey={data.uniqueKey} label={data.label} route={data.route} />)}
             </FlexBox>
         </FlexBox>
     )

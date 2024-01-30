@@ -76,6 +76,9 @@ const IconWrapper = styled(FlexBox) <{ $isOptionsSelected: boolean }>`
     `: css`
         background-color: unset;
         color: ${({ theme }) => theme.pallete.grayNeutral};
+        &:hover {
+            background-color: ${({ theme }) => theme.others.sideMenuHoverColor};
+        }
     `};
     height: 40px;
     width: 40px;

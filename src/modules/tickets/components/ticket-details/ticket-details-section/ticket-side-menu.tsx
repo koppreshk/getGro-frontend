@@ -13,7 +13,7 @@ interface IMenuOption {
     disabled?: boolean;
 }
 const SideMenuWrapper = styled(FlexBox)`
-    padding: 8px;
+    padding: 10px 8px;
     box-sizing: border-box;
     background: ${({ theme }) => theme.others.sideMenuBg};
 `;
@@ -28,7 +28,7 @@ const IconWrapper = styled(FlexBox) <{ $isSelected: boolean; $isDisabled?: boole
     opacity: ${({ $isDisabled }) => $isDisabled ? '0.5' : '1'};
     cursor: ${({ $isDisabled }) => $isDisabled ? 'not-allowed' : 'pointer'};
     &:hover {
-        background-color: ${({ theme }) => theme.others.sideMenuHoverColor};
+        background-color: ${({ theme, $isSelected }) => $isSelected ? '#e5e4fc' : theme.others.sideMenuHoverColor};
     }  
 `;
 

@@ -23,7 +23,7 @@ export const AccountMenu = () => {
     return (
         <>
             <IconButton onClick={handleOpen}>
-                <Avatar sx={{ width: 32, height: 32 }}>{getInitialsByName(user?.email || 'M')}</Avatar>
+                <Avatar sx={{ width: 32, height: 32, fontSize: '1rem' }}>{getInitialsByName(user?.email || 'M')}</Avatar>
             </IconButton>
             <Menu open={Boolean(anchor)} onClose={handleClose} anchorEl={anchor as Element} slotProps={{ paper: { sx: { width: '200px' } } }}>
                 <MenuItem >

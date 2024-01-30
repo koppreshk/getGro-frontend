@@ -68,6 +68,13 @@ export const defaultMUITheme = createTheme(
         fontSize: 12,
         fontWeight: 500
       }
+    },
+    components: {
+      MuiSvgIcon: {
+        defaultProps: {
+          fontSize: 'small'
+        }
+      }
     }
   }
 )

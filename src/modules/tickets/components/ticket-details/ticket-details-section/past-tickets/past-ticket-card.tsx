@@ -8,7 +8,7 @@ import { rendersourceIcon } from "../../ticket-list-view";
 
 const TimeLine = styled.div`
   width: 5px;
-  height: calc(100% - 24px);
+  height: calc(100% - 20px);
   border-radius: 16px;
   background-color: ${({ theme }) => theme.pallete.primaryPurple};
 `;
