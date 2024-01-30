@@ -26,7 +26,7 @@ export const AutocompleteField = (props: IAutocompleteFieldProps) => {
                     disableCloseOnSelect
                     limitTags={3}
                     getOptionLabel={(option) => option.value}
-                    onChange={(ev, newValue) => onChange(newValue)}
+                    onChange={(_ev, newValue) => onChange(newValue)}
                     renderOption={(props, option, { selected }) => (
                         <li {...props}>
                             <Checkbox
