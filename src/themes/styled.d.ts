@@ -22,7 +22,9 @@ declare module 'styled-components' {
       grayNeutral: string,
       defaultTextColor: string,
       primaryPurpleText: string,
-      genericBackgroundColor: string
+      genericBackgroundColor: string,
+      toolbarBgColor: string,
+      toolbarBgColorOnHover: string
     },
     semantics: {
       standardBorder: string;
@@ -42,7 +44,7 @@ declare module 'styled-components' {
       scrollContainerColor: string;
       sideMenuBg: string;
       sideMenuIconColor: string;
-      sideMenuActiveColor: string;
+      sideMenuHoverColor: string;
     }
   }
 }

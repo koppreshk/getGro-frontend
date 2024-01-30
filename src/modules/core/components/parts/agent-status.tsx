@@ -31,6 +31,15 @@ const Status = styled.div<{ $status?: string }>`
     }};
 `;
 
+const StyledButton = styled(Button)`
+    &&{
+        background-color: ${({ theme }) => theme.pallete.toolbarBgColorOnHover};
+        &:hover {
+            background-color: ${({ theme }) => theme.pallete.toolbarBgColorOnHover};
+        }
+    }
+`;
+
 const options = [Statuses.Active, Statuses.Busy, Statuses.Away, Statuses.DoNotDisturb, Statuses.Offline];
 
 export const AgentStatus = () => {
@@ -54,13 +63,13 @@ export const AgentStatus = () => {
 
     return (
         <>
-            <Button variant="text" onClick={handleClick} sx={{ textTransform: 'unset', gap: '6px' }}>
+            <StyledButton variant="text" onClick={handleClick} sx={{ textTransform: 'unset', gap: '6px' }}>
                 <Status $status={options[selectedIndex]} />
-                <Typography variant="h6">
+                <Typography variant="h6" color="#fff">
                     {convertCamelCaseStringToSpaceSeparated(options[selectedIndex])}
                 </Typography>
-                <ExpandMoreIcon sx={{ width: 16, height: 16 }} />
-            </Button>
+                <ExpandMoreIcon sx={{ width: 16, height: 16, color: '#fff' }} />
+            </StyledButton>
             <Menu
                 anchorEl={anchorEl}
                 open={open}

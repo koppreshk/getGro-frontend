@@ -50,7 +50,10 @@ const StyledIconButton = styled(IconButton) <{ $showAnimation: boolean }>`
                 transform: scale3d(1, 1, 1);
             }
         }
-        animation: ${(props) => props.$showAnimation ? 'zoomNotification 2s infinite' : 'none'};   
+        animation: ${(props) => props.$showAnimation ? 'zoomNotification 2s infinite' : 'none'};
+        &:hover{
+            background-color: ${({ theme }) => theme.pallete.toolbarBgColorOnHover};
+        }
     }
 `;
 
@@ -74,7 +77,7 @@ export const Notifications = () => {
         <>
             <StyledIconButton onClick={handleClick} $showAnimation={showAnimation}>
                 <Badge badgeContent={notifications.length} color="error">
-                    <NotificationsOutlinedIcon />
+                    <NotificationsOutlinedIcon sx={{ color: '#fff' }} />
                 </Badge>
             </StyledIconButton>
             <PopoverWithBeak
