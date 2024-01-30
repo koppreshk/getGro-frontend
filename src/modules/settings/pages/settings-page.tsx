@@ -1,12 +1,13 @@
-import { FlexBox } from "lib/ui-ux"
-import { Typography } from "@mui/material"
+import { Route, Routes } from "react-router-dom"
+import { Configurations, TicketQueue } from "../component"
 
-export default function SettingsPage() {
+export default function ConfigurationsPage() {
     return (
-        <FlexBox width="100%" height="100%" justifyContent="center" alignItems="center">
-            <Typography variant="h2">
-                Settings page coming soon...
-            </Typography>
-        </FlexBox>
+
+        <Routes>
+            <Route key="configuration-home" path='/' element={<Configurations />} />
+            <Route key="ticket-queue" path="/ticket-queue" element={<TicketQueue />} />
+        </Routes>
     )
 }
+

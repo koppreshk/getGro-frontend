@@ -12,7 +12,7 @@ import { commonStyles } from "lib/ui-ux/common-styles";
 const DashboardPage = lazy(() => import('../../dashboard/pages/dashboard-page'));
 const TicketsPage = lazy(() => import('../../tickets/pages/tickets-page'));
 const CustomersPage = lazy(() => import('../../customers/pages/customers-page'));
-const SettingsPage = lazy(() => import('../../settings/pages/settings-page'));
+const ConfigurationsPage = lazy(() => import('../../settings/pages/settings-page'));
 
 const PageContainer = styled(FlexBox)`
     ${commonStyles.sleekScrollStyle};
@@ -67,9 +67,9 @@ export const CoreLayout = () => {
                         path="customers/*"
                         element={<CustomersPage />} />
                     <Route
-                        key="settings"
-                        path="settings"
-                        element={<SettingsPage />} />
+                        key="configurations"
+                        path="configurations/*"
+                        element={<ConfigurationsPage />} />
                 </Route>
             </Route>
             <Route key="login" path="/login" element={<Login />} />
