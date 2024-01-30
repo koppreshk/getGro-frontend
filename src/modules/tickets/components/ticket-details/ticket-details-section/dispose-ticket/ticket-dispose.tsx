@@ -102,10 +102,9 @@ export const TicketDispose = (props: ITicketDisposeProps) => {
         dispatch({ type: 'clear-folders' });
     };
 
-    const onSubmitDisposeTicket = React.useCallback(() => {
-        const getformvalues = methods.getValues();
+    const onSubmitDisposeTicket = React.useCallback((getformvalues: IDispostionInputField) => {
         submitDisposeTicket({ dispositionType: getformvalues.dispositionType });
-    }, [methods, submitDisposeTicket]);
+    }, [submitDisposeTicket]);
 
     return (
         <FormProvider {...methods}>
