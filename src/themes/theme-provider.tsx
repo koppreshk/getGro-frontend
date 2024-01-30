@@ -29,7 +29,7 @@ const defaultTheme: DefaultTheme = {
     },
     channelSpecific: {
         facebook: '#3b5998',
-        email: '#df4b3a',
+        email: '#2F4F4F',
         whatsApp: '#25d366',
         instagram: '#d62976',
         twitter: '#00acee',

@@ -25,9 +25,12 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
     return (
         <FlexBox gap="30px" padding="10px" flexDirection="column">
             <FlexBox justifyContent="space-between">
-                <FlexBox gap="5px" alignItems="center" flexWrap="wrap" maxWidth="calc(100% - 50px)">
-                    <Typography variant="h5" >{customerName}</Typography><Typography variant="body2"> messaged via</Typography>
-                    <Platform variant="body2" $platform={source.toLocaleLowerCase()}>{source}</Platform>
+                <FlexBox flexDirection="column" maxWidth="calc(100% - 50px)">
+                    <Typography variant="h5" >{customerName}</Typography>
+                    <FlexBox gap="5px" >
+                        <Typography variant="body3"> messaged via</Typography>
+                        <Platform variant="body3" $platform={source.toLocaleLowerCase()}>{source}</Platform>
+                    </FlexBox>
                 </FlexBox>
                 {customerInfo?.omsCustomerId
                     ? <UnlinkCustomer ticketId={ticketId} />

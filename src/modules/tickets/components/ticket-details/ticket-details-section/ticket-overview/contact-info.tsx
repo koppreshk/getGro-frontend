@@ -12,6 +12,8 @@ const StyledAvatar = styled(Avatar)`
     && {
         width: 100px;
         height: 100px;
+        font-size: 2.5rem;
+        text-transform: uppercase;
     }
 `;
 
