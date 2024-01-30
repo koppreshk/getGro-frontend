@@ -19,7 +19,9 @@ const defaultTheme: DefaultTheme = {
         purpleLight: '#f3f3fd',
         grayNeutral: '#787f83',
         defaultTextColor: '#3b4455',
-        genericBackgroundColor: '#F1F2F4'
+        genericBackgroundColor: '#F1F2F4',
+        toolbarBgColor: '#323452',
+        toolbarBgColorOnHover: '#ffffff1a'
     },
     semantics: {
         standardBorder: '1px solid #E9EBED',
@@ -37,9 +39,9 @@ const defaultTheme: DefaultTheme = {
     others: {
         scrollContainerColor: '#E4E4E4',
         scrollHandleColor: '#CECECE',
-        sideMenuBg: '#EEF5FF',
-        sideMenuIconColor: '#176B87',
-        sideMenuActiveColor: '#c8dfff',
+        sideMenuBg: '#f7f8f9',
+        sideMenuIconColor: '#4f5762',
+        sideMenuHoverColor: '#e8eaed'
     }
 }
 

@@ -46,6 +46,14 @@ const data = [
     }
 ];
 
+const StyledIconButton = styled(CustomIconButton)`
+    &&{
+        &:hover{
+            background-color: ${({ theme }) => theme.pallete.toolbarBgColorOnHover};
+        }
+    }
+`;
+
 export const AgentStatistics = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -60,7 +68,7 @@ export const AgentStatistics = () => {
 
     return (
         <>
-            <CustomIconButton iconComponent={<DonutIcon />} tooltipProps={{ title: 'Quick Stats' }} onClick={handleClick} />
+            <StyledIconButton iconComponent={<DonutIcon />} tooltipProps={{ title: 'Quick Stats' }} onClick={handleClick} />
             <PopoverWithBeak
                 open={open}
                 anchorEl={anchorEl}

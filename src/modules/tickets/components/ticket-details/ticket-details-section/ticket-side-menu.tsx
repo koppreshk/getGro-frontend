@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Person, ShoppingCart, Description, ArchiveOutlined, ChevronRight, ChevronLeft, ConfirmationNumber } from "@mui/icons-material";
+import { PersonOutlineOutlined, ShoppingCartOutlined, DescriptionOutlined, ArchiveOutlined, ChevronRight, ChevronLeft, ConfirmationNumberOutlined } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material"
 import { FlexBox } from "lib/ui-ux";
 import { useAppDispatch, useAppSelector } from "lib/hooks";
@@ -23,12 +23,12 @@ const IconWrapper = styled(FlexBox) <{ $isSelected: boolean; $isDisabled?: boole
     padding: 8px;
     box-sizing: border-box;
     cursor: pointer;
-    color: ${({ theme }) => theme.others.sideMenuIconColor};
-    background-color: ${({ $isSelected, theme }) => $isSelected ? theme.others.sideMenuActiveColor : 'unset'};
+    color: ${({ theme, $isSelected }) => $isSelected ? '#544dc9' : theme.others.sideMenuIconColor};
+    background-color: ${({ $isSelected }) => $isSelected ? '#e5e4fc' : 'unset'};
     opacity: ${({ $isDisabled }) => $isDisabled ? '0.5' : '1'};
     cursor: ${({ $isDisabled }) => $isDisabled ? 'not-allowed' : 'pointer'};
     &:hover {
-        background-color: ${({ $isSelected, theme }) => $isSelected ? theme.others.sideMenuActiveColor : theme.others.sideMenuActiveColor};
+        background-color: ${({ theme }) => theme.others.sideMenuHoverColor};
     }  
 `;
 
@@ -46,23 +46,23 @@ const useSideMenuOptions = () => {
         {
             title: 'Customer Profile',
             id: MenuOptions.CustomerProfile,
-            iconComponent: () => <Person />
+            iconComponent: () => <PersonOutlineOutlined />
         },
         {
             title: !customerInfo?.omsCustomerId ? 'Link a customer to get order details' : 'Order Details',
             id: MenuOptions.OrderDetails,
-            iconComponent: () => <ShoppingCart />,
+            iconComponent: () => <ShoppingCartOutlined />,
             disabled: !customerInfo?.omsCustomerId
         },
         {
             title: 'Notes',
             id: MenuOptions.Notes,
-            iconComponent: () => <Description />
+            iconComponent: () => <DescriptionOutlined />
         },
         {
             title: 'Past Tickets',
             id: MenuOptions.PastTickets,
-            iconComponent: () => <ConfirmationNumber />
+            iconComponent: () => <ConfirmationNumberOutlined />
         },
         {
             title: 'Ticket Dispose',
