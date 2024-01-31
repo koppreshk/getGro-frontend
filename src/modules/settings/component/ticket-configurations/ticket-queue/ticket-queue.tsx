@@ -1,8 +1,8 @@
 import React, { useCallback } from "react"
 import styled from "styled-components"
-import { Add, Close } from "@mui/icons-material"
+import { Add, Close, Delete, Edit } from "@mui/icons-material"
 import { Button, Drawer, IconButton, Typography } from "@mui/material"
-import { FlexBox } from "lib/ui-ux"
+import { FlexBox, GridLayout } from "lib/ui-ux"
 import { ITicketQueues, Queue } from "modules/settings/apis"
 import { CreateTicketQueueContainer } from "modules/settings/containers"
 
@@ -11,7 +11,7 @@ interface ITicketQueueListProps {
 }
 
 const StyledFlexbox = styled(FlexBox)`
-    :hover {
+    &:hover {
         background-color: ${({ theme }) => theme.pallete.purpleLight};
     }
 `;
@@ -22,7 +22,7 @@ const TicketQueueList = (props: ITicketQueueListProps) => {
         <FlexBox flexDirection="column" width="100%">
             {queueData.map((data) =>
                 <StyledFlexbox width="100%" key={data.id}>
-                    <FlexBox padding="10px" width="100%" justifyContent="space-between">
+                    <GridLayout $padding="10px" $gridGap="10px" $width="100%" $gridTemplateColumns={"repeat(5, 1fr) 40px 40px"}>
                         <FlexBox flexDirection="column">
                             <Typography variant="caption">Queue Name</Typography>
                             <Typography variant="h6">{data.name}</Typography>
@@ -43,7 +43,13 @@ const TicketQueueList = (props: ITicketQueueListProps) => {
                             <Typography variant="body3">Timeout</Typography>
                             <Typography variant="h6"></Typography>
                         </FlexBox>
-                    </FlexBox>
+                        <IconButton>
+                            <Edit />
+                        </IconButton>
+                        <IconButton>
+                            <Delete />
+                        </IconButton>
+                    </GridLayout>
                 </StyledFlexbox>
             )}
         </FlexBox>
@@ -72,7 +78,7 @@ const AddNewQueue = (props: IAddNewQueueProps) => {
                             <Close />
                         </IconButton>
                     </HeaderWrapper>
-                    <CreateTicketQueueContainer toggleAddQueueDrawer={toggleAddQueueDrawer}/>
+                    <CreateTicketQueueContainer toggleAddQueueDrawer={toggleAddQueueDrawer} />
                 </FlexBox>
             </Drawer>
         </>

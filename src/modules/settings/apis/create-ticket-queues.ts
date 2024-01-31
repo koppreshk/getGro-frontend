@@ -13,7 +13,7 @@ export interface ICreateTicketQueueArgs {
     queueName: string;
     queueKey: string;
     autoAssignType: string;
-    type: string;
+    queueType: string;
     assigned_employees: IAssignedEmployees[]
 }
 
@@ -26,7 +26,7 @@ export const useCreateTicketQueues = () => {
             name: args.queueName,
             unique_key: args.queueKey,
             auto_assign_type: args.autoAssignType,
-            queue_type: args.type,
+            queue_type: args.queueType,
             assigned_employees: args.assigned_employees
         }).then((res) => res.json()), [postData]);
 

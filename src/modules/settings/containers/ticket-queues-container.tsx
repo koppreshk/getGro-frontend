@@ -15,11 +15,8 @@ export const TicketQueuesContainer = () => {
     }
 
     if (data) {
-        
         return (
-            <>
-                <TicketQueue data={data}/>
-            </>
+            <TicketQueue data={data} />
         )
     }
 

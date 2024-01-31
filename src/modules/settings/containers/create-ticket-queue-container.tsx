@@ -1,6 +1,6 @@
 import React from "react";
 import { useNotifications } from "lib";
-import { ICreateTicketQueueArgs, useCreateTicketQueues } from "../apis"
+import { ICreateTicketQueueArgs, useCreateTicketQueues, useFetchTicketMetadata } from "../apis"
 import { AddTicketQueueForm } from "../component/ticket-configurations/ticket-queue"
 
 interface ICreateTicketQueueContainerProps {
@@ -8,6 +8,7 @@ interface ICreateTicketQueueContainerProps {
 }
 export const CreateTicketQueueContainer = (props: ICreateTicketQueueContainerProps) => {
     const { mutateAsync: createTicketQueue } = useCreateTicketQueues();
+    const { data } = useFetchTicketMetadata();
     const { showNotification } = useNotifications();
 
     const submitCreateTicketQueue = React.useCallback((data: ICreateTicketQueueArgs) => {
@@ -15,7 +16,7 @@ export const CreateTicketQueueContainer = (props: ICreateTicketQueueContainerPro
             queueName: data.queueName,
             queueKey: data.queueKey,
             autoAssignType: data.autoAssignType,
-            type: data.type,
+            queueType: data.queueType,
             assigned_employees: data.assigned_employees
         }).then(() => {
             showNotification({ message: 'New Ticket Queue created', type: 'success' });
@@ -23,7 +24,14 @@ export const CreateTicketQueueContainer = (props: ICreateTicketQueueContainerPro
         })
     }, [createTicketQueue, props, showNotification]);
 
-    return (
-        <AddTicketQueueForm submitCreateTicketQueue={submitCreateTicketQueue} />
-    )
+    if (data) {
+        const { auto_assign_types, employees, queue_types } = data;
+        return (
+            <AddTicketQueueForm
+                submitCreateTicketQueue={submitCreateTicketQueue}
+                autoAssignTypes={auto_assign_types}
+                employees={employees}
+                queueTypes={queue_types} />
+        )
+    }
 }
