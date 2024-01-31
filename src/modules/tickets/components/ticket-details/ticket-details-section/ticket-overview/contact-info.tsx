@@ -133,7 +133,6 @@ export const ContactInfo = (props: IContactInfoProps) => {
                 {contactInfoData('Priority', priority)}
             </FlexBox>
             {openCallPopUp ? <TelephonicDialer openCallPopUp={openCallPopUp} toggleCallBtn={toggleCallBtn} phoneNumber={phoneNumber} /> : <></>}
-
         </FlexBox>
     )
 }

@@ -35,7 +35,7 @@ export const AddTicket = (props: IAddTicketProps) => {
         <>
             <Drawer anchor="right" open={openAddTicketDrawer} onClose={toggleAddTicketDrawer}>
                 <FormProvider {...formMethods}>
-                    <AddTicketContainer width="500px" height="100%" padding="16px" flexDirection="column" gap="10px">
+                    <AddTicketContainer width="420px" height="100%" padding="16px" flexDirection="column" gap="10px">
                         <FlexBox width="100%" justifyContent="space-between" alignItems="center">
                             <Typography variant="h5">Add Ticket</Typography>
                             <CustomIconButton iconComponent={<CloseOutlined />} tooltipProps={{ title: 'Close' }} onClick={toggleAddTicketDrawer} />

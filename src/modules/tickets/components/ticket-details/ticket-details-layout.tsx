@@ -25,7 +25,7 @@ export const TicketDetailsLayout = () => {
             <StyledLayouts width={!showHideTicketDetails ? "calc(75% - 96px)" : "calc(45% - 20px)"}>
                 <TicketConversationContainer />
             </StyledLayouts>
-            <StyledLayouts width={!showHideTicketDetails ? "56px" : "calc(30% - 20px)"}>
+            <StyledLayouts width={!showHideTicketDetails ? "52px" : "calc(30% - 20px)"}>
                 <TicketDetailsSection />
             </StyledLayouts>
         </StyledLayoutWrapper>

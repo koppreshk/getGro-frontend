@@ -26,8 +26,6 @@ export const TicketDetailsSection = () => {
                 return <OrderDetailsContainer />;
             case MenuOptions.Notes:
                 return <TicketNotes />
-            case MenuOptions.TicketDispose:
-                return <TicketDisposeContainer />;
             case MenuOptions.PastTickets:
                 return <PastTicketsContainer />
             default: return <span>default</span>
@@ -37,9 +35,12 @@ export const TicketDetailsSection = () => {
     return (
         <StyledFlexBox width={'100%'} justifyContent={'flex-end'}>
             {showHideTicketDetails ?
-                <div style={{ width: 'calc(100% - 56px)' }}>
-                    {renderBasedOnSelectedview()}
-                </div>
+                <FlexBox width='calc(100% - 52px)' flexDirection="column" height="100%">
+                    <div style={{ height: 'calc(100% - 47px)' }}>
+                        {renderBasedOnSelectedview()}
+                    </div>
+                    <TicketDisposeContainer />
+                </FlexBox>
                 : null}
             <TicketSideMenu onSetMenuOption={onMenuOptionClick} selectedMenuOption={selectedMenuOption} />
         </StyledFlexBox>
