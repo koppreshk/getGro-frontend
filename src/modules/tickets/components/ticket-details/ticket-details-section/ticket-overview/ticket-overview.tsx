@@ -23,7 +23,7 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
     const customerInfo = useAppSelector((state) => state.tickets.ticketDetails?.customerInfo)
 
     return (
-        <FlexBox gap="30px" padding="10px" flexDirection="column">
+        <FlexBox gap="30px" padding="10px" flexDirection="column" height="100%" overflowY="auto">
             <FlexBox justifyContent="space-between">
                 <FlexBox flexDirection="column" maxWidth="calc(100% - 50px)">
                     <Typography variant="h5" >{customerName}</Typography>

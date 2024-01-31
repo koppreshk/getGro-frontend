@@ -8,6 +8,9 @@ export const TicketDisposeContainer = () => {
     const { mutateAsync } = useDisposeTicket();
     const navigate = useNavigate();
     const { showNotification } = useNotifications();
+    const [openTicketDisposeDrawer, setTicketDisposeDrawer] = React.useState(false);
+
+    const onToggleTicketDispose = () => setTicketDisposeDrawer((prevalue) => !prevalue);
 
     const submitDisposeTicket = React.useCallback((data: IDisposeTicketArgs) => {
         mutateAsync({ dispositionType: data.dispositionType })
@@ -16,9 +19,10 @@ export const TicketDisposeContainer = () => {
                 showNotification({ message: 'Successfully disposed ticket', type: 'success' });
             })
             .catch(() => showNotification({ message: 'Unable to disposed ticket', type: 'error' }))
+            .finally(() => onToggleTicketDispose())
     }, [mutateAsync, navigate, showNotification]);
 
     return (
-        <TicketDispose submitDisposeTicket={submitDisposeTicket} />
+        <TicketDispose submitDisposeTicket={submitDisposeTicket} onToggleTicketDispose={onToggleTicketDispose} openTicketDisposeDrawer={openTicketDisposeDrawer} />
     )
 }

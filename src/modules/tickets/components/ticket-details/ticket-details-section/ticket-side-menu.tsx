@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { PersonOutlineOutlined, ShoppingCartOutlined, DescriptionOutlined, ArchiveOutlined, ChevronRight, ChevronLeft, ConfirmationNumberOutlined } from "@mui/icons-material";
+import { PersonOutlineOutlined, ShoppingCartOutlined, DescriptionOutlined, ChevronRight, ChevronLeft, ConfirmationNumberOutlined } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material"
 import { FlexBox } from "lib/ui-ux";
 import { useAppDispatch, useAppSelector } from "lib/hooks";
@@ -9,9 +9,10 @@ import { useCallback } from "react";
 interface IMenuOption {
     title: string;
     id: MenuOptions;
-    iconComponent: () => JSX.Element;
     disabled?: boolean;
+    iconComponent: () => JSX.Element;
 }
+
 const SideMenuWrapper = styled(FlexBox)`
     padding: 10px 8px;
     box-sizing: border-box;
@@ -36,7 +37,6 @@ export enum MenuOptions {
     CustomerProfile = 'customer-profile',
     OrderDetails = 'order-details',
     Notes = 'notes',
-    TicketDispose = 'ticket-dispose',
     PastTickets = 'past-tickets'
 }
 
@@ -63,11 +63,6 @@ const useSideMenuOptions = () => {
             title: 'Past Tickets',
             id: MenuOptions.PastTickets,
             iconComponent: () => <ConfirmationNumberOutlined />
-        },
-        {
-            title: 'Ticket Dispose',
-            id: MenuOptions.TicketDispose,
-            iconComponent: () => <ArchiveOutlined />
         }
     ] as IMenuOption[];
 }
