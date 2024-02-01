@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import styled from "styled-components";
 import { Grid, Button } from "@mui/material";
 import { TextboxField, AutocompleteField, SelectField } from "lib/form-fields";
 import { FlexBox } from "lib/ui-ux";
-import { Employee, ICreateTicketQueueArgs } from "modules/settings/apis";
+import { Employee } from "modules/settings/apis";
 
 const StlyedFlexBox = styled(FlexBox)`
     margin-top: 20px;
@@ -15,10 +15,10 @@ interface IEmployeeList {
     value: string;
 }
 
-interface IAddNewQueueFormFields {
+export interface IQueueFormFields {
     queueName: string;
     queueKey: string;
-    employee: IEmployeeList[];
+    assignedEmployees: IEmployeeList[];
     backUpEmployee: IEmployeeList[];
     autoAssignType: string;
     queueType: string;
@@ -39,48 +39,33 @@ const selectBackupEmployeeList = [
     }
 ] as IEmployeeList[]
 
-interface IAddTicketQueueFormProps {
+interface ITicketQueueFormProps {
     autoAssignTypes: string[];
     employees: Employee[];
     queueTypes: string[];
-    submitCreateTicketQueue: (data: ICreateTicketQueueArgs) => void;
+    defaultValues?: IQueueFormFields;
+    mode: 'create' | 'edit'
+    onFormSubmitHandler: (data: IQueueFormFields) => void;
 }
 
-export const AddTicketQueueForm = (props: IAddTicketQueueFormProps) => {
+export const TicketQueueForm = (props: ITicketQueueFormProps) => {
+    const { mode, defaultValues, autoAssignTypes, employees, queueTypes, onFormSubmitHandler } = props;
+    const isInEditMode = useMemo(() => mode === 'edit', [mode]);
 
-    const { submitCreateTicketQueue, autoAssignTypes, employees, queueTypes } = props;
-
-    const methods = useForm<IAddNewQueueFormFields>({
-        defaultValues: {
+    const methods = useForm<IQueueFormFields>({
+        defaultValues: defaultValues ?? {
             queueKey: '',
             queueName: '',
-            employee: [],
+            assignedEmployees: [],
             backUpEmployee: [],
             autoAssignType: autoAssignTypes[0],
             queueType: queueTypes[0]
         }
     });
 
-    const onSubmit = React.useCallback(async (getformvalues: IAddNewQueueFormFields) => {
-        submitCreateTicketQueue({
-            queueName: getformvalues.queueName,
-            queueKey: getformvalues.queueKey,
-            autoAssignType: getformvalues.autoAssignType,
-            queueType: getformvalues.queueType,
-            assigned_employees: [
-                {
-                    "firstName": "Moiun",
-                    "lastName": "Pasha",
-                    "id": 12
-                },
-                {
-                    "firstName": "Sangay",
-                    "lastName": "Jee",
-                    "id": 11
-                }
-            ]
-        });
-    }, [submitCreateTicketQueue])
+    const onSubmit = React.useCallback(async (formvalues: IQueueFormFields) => {
+        onFormSubmitHandler(formvalues);
+    }, [onFormSubmitHandler])
 
     return (
         <FormProvider {...methods}>
@@ -90,10 +75,10 @@ export const AddTicketQueueForm = (props: IAddTicketQueueFormProps) => {
                         <TextboxField name="queueName" label="Queue Name" fullWidth rules={{ required: 'Queue name is required' }} />
                     </Grid>
                     <Grid item xs={6}>
-                        <TextboxField name="queueKey" label="Queue Key" fullWidth rules={{ required: 'Queue key is required' }} />
+                        <TextboxField name="queueKey" disabled={isInEditMode} label="Queue Key" fullWidth rules={{ required: 'Queue key is required' }} />
                     </Grid>
                     <Grid item xs={12}>
-                        <AutocompleteField label="Select Employee" name="employee"
+                        <AutocompleteField label="Select Employee" name="assignedEmployees"
                             options={employees.map((item) => ({ key: item.id.toString(), value: `${item.firstName} ${item.lastName ?? ''}` }))}
                             placeholder="Select Employee" />
                     </Grid>
@@ -116,7 +101,7 @@ export const AddTicketQueueForm = (props: IAddTicketQueueFormProps) => {
                     </Grid>
                 </Grid>
                 <StlyedFlexBox gap='10px' width="100%" justifyContent="flex-end">
-                    <Button variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>Add Queue</Button>
+                    <Button variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>{isInEditMode ? 'Edit Queue' : 'Add Queue'}</Button>
                 </StlyedFlexBox>
             </FlexBox>
         </FormProvider>
