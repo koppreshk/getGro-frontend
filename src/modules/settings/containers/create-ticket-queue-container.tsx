@@ -1,28 +1,33 @@
 import React from "react";
 import { useNotifications } from "lib";
-import { ICreateTicketQueueArgs, useCreateTicketQueues, useFetchTicketMetadata } from "../apis"
-import { AddTicketQueueForm } from "../component/ticket-configurations/ticket-queue"
+import { useCreateTicketQueues, useFetchTicketMetadata } from "../apis"
+import { IQueueFormFields, TicketQueueForm } from "../component/ticket-configurations/ticket-queue"
 import { CenteredCircularProgress } from "lib/ui-ux";
 
 interface ICreateTicketQueueContainerProps {
     toggleAddQueueDrawer: () => void;
 }
+
 export const CreateTicketQueueContainer = (props: ICreateTicketQueueContainerProps) => {
     const { mutateAsync: createTicketQueue } = useCreateTicketQueues();
     const { data, isLoading } = useFetchTicketMetadata();
     const { showNotification } = useNotifications();
 
-    const submitCreateTicketQueue = React.useCallback((data: ICreateTicketQueueArgs) => {
+    const submitCreateTicketQueue = React.useCallback((formData: IQueueFormFields) => {
         createTicketQueue({
-            queueName: data.queueName,
-            queueKey: data.queueKey,
-            autoAssignType: data.autoAssignType,
-            queueType: data.queueType,
-            assigned_employees: data.assigned_employees
+            queueName: formData.queueName,
+            queueKey: formData.queueKey,
+            autoAssignType: formData.autoAssignType,
+            queueType: formData.queueType,
+            assigned_employees: formData.assignedEmployees.map((item) => ({
+                firstName: item.value.split(' ')[0],
+                lastName: item.value.split(' ')[1],
+                id: Number(item.key)
+            }))
         }).then(() => {
             showNotification({ message: 'New Ticket Queue created', type: 'success' });
             props.toggleAddQueueDrawer();
-        })
+        }).catch(() => showNotification({ message: 'Failed to create the queue', type: 'error' }))
     }, [createTicketQueue, props, showNotification]);
 
     if (isLoading) {
@@ -32,8 +37,9 @@ export const CreateTicketQueueContainer = (props: ICreateTicketQueueContainerPro
     if (data) {
         const { auto_assign_types, employees, queue_types } = data;
         return (
-            <AddTicketQueueForm
-                submitCreateTicketQueue={submitCreateTicketQueue}
+            <TicketQueueForm
+                mode="create"
+                onFormSubmitHandler={submitCreateTicketQueue}
                 autoAssignTypes={auto_assign_types}
                 employees={employees}
                 queueTypes={queue_types} />

@@ -13,7 +13,6 @@ interface IAddNewQueueProps {
 }
 
 const HeaderWrapper = styled(FlexBox)`
-    padding: 15px 10px;
     border-bottom: ${({ theme }) => theme.semantics.standardBorder};
 `;
 
@@ -23,7 +22,7 @@ const AddNewQueue = (props: IAddNewQueueProps) => {
         <>
             <Drawer anchor="right" open={openAddQueueDrawer} onClose={toggleAddQueueDrawer}>
                 <FlexBox width="600px" height="100%" flexDirection="column">
-                    <HeaderWrapper width="100%" justifyContent="space-between" alignItems="center">
+                    <HeaderWrapper padding="20px" width="100%" justifyContent="space-between" alignItems="center">
                         <Typography variant="h5">Add New Queue</Typography>
                         <IconButton aria-label="Close" onClick={toggleAddQueueDrawer}>
                             <Close />

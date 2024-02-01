@@ -23,11 +23,11 @@ export const useCreateTicketQueues = () => {
 
     const createTicketQueue = React.useCallback((args: ICreateTicketQueueArgs) =>
         postData(`${ConfigurationsEndPoint.CREATE_TICKET_QUEUE}`, {
+            assigned_employees: args.assigned_employees,
+            auto_assign_type: args.autoAssignType,
             name: args.queueName,
             unique_key: args.queueKey,
-            auto_assign_type: args.autoAssignType,
-            queue_type: args.queueType,
-            assigned_employees: args.assigned_employees
+            queue_type: args.queueType
         }).then((res) => res.json()), [postData]);
 
     return useMutation({

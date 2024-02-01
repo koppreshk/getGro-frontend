@@ -1,9 +1,9 @@
-import { Edit } from "@mui/icons-material";
 import styled from "styled-components"
-import { Typography, IconButton } from "@mui/material";
+import { Typography } from "@mui/material";
 import { FlexBox, GridLayout } from "lib/ui-ux";
 import { DeleteQueue } from "./delete-queue";
 import { Queue } from "modules/settings/apis";
+import { EditQueue } from "./edit-queue";
 
 interface ITicketQueueListProps {
     queueData: Queue[];
@@ -32,19 +32,17 @@ export const TicketQueueList = (props: ITicketQueueListProps) => {
                         </FlexBox>
                         <FlexBox flexDirection="column">
                             <Typography variant="caption">Auto Assign Type</Typography>
-                            <Typography variant="h6">{data.autoAssignType}</Typography>
+                            <Typography variant="h6" textTransform="capitalize">{data.autoAssignType.split('_').join(' ')}</Typography>
                         </FlexBox>
                         <FlexBox flexDirection="column">
                             <Typography variant="body3">Type</Typography>
-                            <Typography variant="h6">{data.queueType}</Typography>
+                            <Typography variant="h6" textTransform="capitalize">{data.queueType.split('_').join(' ')}</Typography>
                         </FlexBox>
                         <FlexBox flexDirection="column">
                             <Typography variant="body3">Timeout</Typography>
                             <Typography variant="h6"></Typography>
                         </FlexBox>
-                        <IconButton>
-                            <Edit />
-                        </IconButton>
+                        <EditQueue queueMetadata={data} />
                         <DeleteQueue id={data.id} />
                     </GridLayout>
                 </StyledFlexbox>

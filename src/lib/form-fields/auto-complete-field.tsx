@@ -18,9 +18,12 @@ export const AutocompleteField = (props: IAutocompleteFieldProps) => {
     const { control } = useFormContext();
     return (
         <Controller
-            render={({ field: { onChange } }) => (
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            render={({ field: { onChange, ref, ...rest } }) => (
                 <Autocomplete
+                    {...rest}
                     multiple
+                    isOptionEqualToValue={(option, value) => option.key === value.key}
                     id="checkboxes-tags-demo"
                     options={options}
                     disableCloseOnSelect
