@@ -27,7 +27,7 @@ export const CreateTicketQueueContainer = (props: ICreateTicketQueueContainerPro
         }).then(() => {
             showNotification({ message: 'New Ticket Queue created', type: 'success' });
             props.toggleAddQueueDrawer();
-        })
+        }).catch(() => showNotification({ message: 'Failed to create the queue', type: 'error' }))
     }, [createTicketQueue, props, showNotification]);
 
     if (isLoading) {

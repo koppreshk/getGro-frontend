@@ -59,7 +59,9 @@ export const TicketQueueForm = (props: ITicketQueueFormProps) => {
             assignedEmployees: [],
             backUpEmployee: [],
             autoAssignType: autoAssignTypes[0],
-            queueType: queueTypes[0]
+            queueType: queueTypes[0],
+            maxAssignments: 0,
+            timeout: 0
         }
     });
 
@@ -69,7 +71,7 @@ export const TicketQueueForm = (props: ITicketQueueFormProps) => {
 
     return (
         <FormProvider {...methods}>
-            <FlexBox padding="20px" width="100%" flexDirection="column">
+            <FlexBox padding="20px" width="100%" height="calc(100% - 77px)" flexDirection="column" justifyContent="space-between">
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <TextboxField name="queueName" label="Queue Name" fullWidth rules={{ required: 'Queue name is required' }} />
@@ -88,10 +90,10 @@ export const TicketQueueForm = (props: ITicketQueueFormProps) => {
                             placeholder="Select Backup Employee" />
                     </Grid>
                     <Grid item xs={6}>
-                        <SelectField name="autoAssignType" label="Auto Assign Type" menuOptions={autoAssignTypes.map((item) => ({ key: item, value: item }))} sx={{ width: '100%' }} />
+                        <SelectField name="autoAssignType" label="Auto Assign Type" menuOptions={autoAssignTypes.map((item) => ({ key: item, value: item.split('_').map(mi => (mi[0].toLocaleUpperCase() + mi.slice(1))).join(' ') }))} sx={{ width: '100%' }} />
                     </Grid>
                     <Grid item xs={6}>
-                        <SelectField name="queueType" label="Type" menuOptions={queueTypes.map((item) => ({ key: item, value: item }))} sx={{ width: '100%' }} />
+                        <SelectField name="queueType" label="Type" menuOptions={queueTypes.map((item) => ({ key: item, value: item.split('_').map(mi => (mi[0].toLocaleUpperCase() + mi.slice(1))).join(' ') }))} sx={{ width: '100%' }} />
                     </Grid>
                     <Grid item xs={6}>
                         <TextboxField name="timeout" label="Timeout" fullWidth type="number" />
