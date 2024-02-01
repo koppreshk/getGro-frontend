@@ -1,60 +1,11 @@
 import React, { useCallback } from "react"
 import styled from "styled-components"
-import { Add, Close, Delete, Edit } from "@mui/icons-material"
+import { Add, Close } from "@mui/icons-material"
 import { Button, Drawer, IconButton, Typography } from "@mui/material"
-import { FlexBox, GridLayout } from "lib/ui-ux"
-import { ITicketQueues, Queue } from "modules/settings/apis"
+import { FlexBox } from "lib/ui-ux"
+import { ITicketQueues } from "modules/settings/apis"
 import { CreateTicketQueueContainer } from "modules/settings/containers"
-
-interface ITicketQueueListProps {
-    queueData: Queue[];
-}
-
-const StyledFlexbox = styled(FlexBox)`
-    &:hover {
-        background-color: ${({ theme }) => theme.pallete.purpleLight};
-    }
-`;
-
-const TicketQueueList = (props: ITicketQueueListProps) => {
-    const { queueData } = props;
-    return (
-        <FlexBox flexDirection="column" width="100%">
-            {queueData.map((data) =>
-                <StyledFlexbox width="100%" key={data.id}>
-                    <GridLayout $padding="10px" $gridGap="10px" $width="100%" $gridTemplateColumns={"repeat(5, 1fr) 40px 40px"}>
-                        <FlexBox flexDirection="column">
-                            <Typography variant="caption">Queue Name</Typography>
-                            <Typography variant="h6">{data.name}</Typography>
-                        </FlexBox>
-                        <FlexBox flexDirection="column">
-                            <Typography variant="caption">Queue Key</Typography>
-                            <Typography variant="h6">{data.uniqueKey}</Typography>
-                        </FlexBox>
-                        <FlexBox flexDirection="column">
-                            <Typography variant="caption">Auto Assign Type</Typography>
-                            <Typography variant="h6">{data.autoAssignType}</Typography>
-                        </FlexBox>
-                        <FlexBox flexDirection="column">
-                            <Typography variant="body3">Type</Typography>
-                            <Typography variant="h6">{data.queueType}</Typography>
-                        </FlexBox>
-                        <FlexBox flexDirection="column">
-                            <Typography variant="body3">Timeout</Typography>
-                            <Typography variant="h6"></Typography>
-                        </FlexBox>
-                        <IconButton>
-                            <Edit />
-                        </IconButton>
-                        <IconButton>
-                            <Delete />
-                        </IconButton>
-                    </GridLayout>
-                </StyledFlexbox>
-            )}
-        </FlexBox>
-    )
-}
+import { TicketQueueList } from "./ticket-queue-list"
 
 interface IAddNewQueueProps {
     openAddQueueDrawer: boolean;
