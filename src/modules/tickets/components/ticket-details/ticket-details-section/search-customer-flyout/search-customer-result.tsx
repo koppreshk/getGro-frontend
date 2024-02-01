@@ -1,10 +1,10 @@
 import React, { memo } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
-import { Avatar, CircularProgress, Typography } from '@mui/material';
+import { Avatar, Typography } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { commonStyles } from "lib/ui-ux/common-styles";
-import { CustomIconButton, FlexBox } from 'lib/ui-ux';
+import { CenteredCircularProgress, CustomIconButton, FlexBox } from 'lib/ui-ux';
 import { ISearchCustomerFlyoutProps } from './search-customer-flyout';
 import { useNotifications } from 'lib';
 import { useAttachCustomer } from 'modules/tickets/apis';
@@ -100,9 +100,8 @@ export const SearchCustomerResult = (props: ISearchCustomerResultProps) => {
     return (
         <SearchCustomerResultWrapper flexDirection="column" gap="20px">
             {isLoading ?
-                <FlexBox alignItems="center" justifyContent="center">
-                    <CircularProgress />
-                </FlexBox> :
+                <CenteredCircularProgress />
+                :
                 customerList?.length ?
                     customerList :
                     <FlexBox justifyContent='center'>Oops no customer found! </FlexBox>}
