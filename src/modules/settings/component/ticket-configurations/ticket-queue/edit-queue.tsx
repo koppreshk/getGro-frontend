@@ -1,10 +1,9 @@
 import React, { useCallback } from "react";
-import { Close, Edit } from "@mui/icons-material"
-import { Drawer, IconButton, Typography } from "@mui/material"
-import { FlexBox } from "lib/ui-ux";
+import { Edit } from "@mui/icons-material"
+import { IconButton, } from "@mui/material"
 import { Queue } from "modules/settings/apis"
 import { EditQueueContainer } from "modules/settings/containers";
-import { HeaderWrapper } from "modules/tickets/components/ticket-details/ticket-list-view";
+import { DrawerExtended } from "lib/ui-ux";
 
 export const EditQueue = (props: { queueMetadata: Queue }) => {
     const { queueMetadata } = props;
@@ -19,19 +18,17 @@ export const EditQueue = (props: { queueMetadata: Queue }) => {
             <IconButton onClick={toggleAddQueueDrawer}>
                 <Edit />
             </IconButton>
-            <Drawer anchor="right" open={openAddQueueDrawer} onClose={toggleAddQueueDrawer}>
-                <FlexBox width="600px" height="100%" flexDirection="column">
-                    <HeaderWrapper padding="20px !important" width="100%" justifyContent="space-between" alignItems="center">
-                        <Typography variant="h5">Edit Queue</Typography>
-                        <IconButton aria-label="Close" onClick={toggleAddQueueDrawer}>
-                            <Close />
-                        </IconButton>
-                    </HeaderWrapper>
+            <DrawerExtended
+                anchor="right"
+                width="500px"
+                open={openAddQueueDrawer}
+                header="Edit Queue"
+                onRenderContent={() => (
                     <EditQueueContainer
                         toggleAddQueueDrawer={toggleAddQueueDrawer}
                         queueMetadata={queueMetadata} />
-                </FlexBox>
-            </Drawer>
+                )}
+                onClose={toggleAddQueueDrawer} />
         </>
     )
 }

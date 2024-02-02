@@ -1,5 +1,5 @@
 import { CircularProgress } from "@mui/material"
-import { FlexBox } from "./flexbox/flexbox"
+import { FlexBox } from "../flexbox/flexbox"
 
 export const CenteredCircularProgress = () => {
     return (

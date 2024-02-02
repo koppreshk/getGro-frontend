@@ -1,21 +1,11 @@
 import styled from "styled-components";
-import { Drawer, IconButton, Typography } from "@mui/material";
-import { FlexBox } from "lib/ui-ux";
-import CloseIcon from '@mui/icons-material/Close';
+import { DrawerExtended } from "lib/ui-ux";
 import { ICustomerDetails } from "modules/tickets/apis/get-customer-details";
 import { SearchCustomerForm, SearchCustomerResult } from ".";
 
 const DrawerContent = styled.div`
-    width: 1000px;
     background-color: #f5f7f9;
     height: 100%;
-`;
-
-const HeaderWrapper = styled(FlexBox)`
-    box-sizing: border-box;
-    padding: 15px 10px 10px 15px;
-    border-bottom: ${({ theme }) => theme.semantics.standardBorder};
-    background-color: white;
 `;
 
 export interface ISearchCustomerFlyoutProps {
@@ -30,17 +20,16 @@ export const SearchCustomerFlyout = (props: ISearchCustomerFlyoutProps) => {
     const { onSearchUserBtnClick, showSearchUserFlyout, onformSubmit, data, isLoading } = props;
 
     return (
-        <Drawer anchor="right" open={showSearchUserFlyout} onClose={onSearchUserBtnClick}>
-            <DrawerContent>
-                <HeaderWrapper width="100%" justifyContent="space-between">
-                    <Typography variant="h4">Search Customer Form</Typography>
-                    <IconButton aria-label="Close" onClick={onSearchUserBtnClick}>
-                        <CloseIcon />
-                    </IconButton>
-                </HeaderWrapper>
-                <SearchCustomerForm onformSubmit={onformSubmit} />
-                <SearchCustomerResult data={data} isLoading={isLoading} onSearchUserBtnClick={onSearchUserBtnClick}/>
-            </DrawerContent>
-        </Drawer>
+        <DrawerExtended
+            width="800px"
+            header={"Search Customer Form"}
+            anchor="right" open={showSearchUserFlyout}
+            onRenderContent={() => (
+                <DrawerContent>
+                    <SearchCustomerForm onformSubmit={onformSubmit} />
+                    <SearchCustomerResult data={data} isLoading={isLoading} onSearchUserBtnClick={onSearchUserBtnClick} />
+                </DrawerContent>
+            )}
+            onClose={onSearchUserBtnClick} />
     );
 }
