@@ -1,14 +1,13 @@
 import React, { useReducer } from "react";
 import styled from "styled-components";
 import { FormProvider, useForm } from "react-hook-form"
-import { Button, Drawer, FormControlLabel } from "@mui/material";
+import { Button, FormControlLabel } from "@mui/material";
 import { ArchiveOutlined } from "@mui/icons-material";
 import { SelectField, TextboxField, CheckboxField } from "lib/form-fields";
-import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
+import { DrawerExtended, FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { useAppSelector } from "lib/hooks";
 import { IDisposeTicketArgs } from "modules/tickets/apis";
 import { TicketDisposeFolder } from "./ticket-dispose-folder";
-import { CommonHeader } from "../common-header";
 
 const StyledButton = styled(Button)`
     &&{
@@ -136,33 +135,45 @@ const TicketDisposeForm = (props: ITicketDisposeProps) => {
         submitDisposeTicket({ dispositionType: getformvalues.dispositionType });
     }, [submitDisposeTicket]);
 
-    return (
-        <Drawer anchor="right" open={openTicketDisposeDrawer} onClose={onToggleTicketDispose}>
-            <FormProvider {...methods}>
-                <FlexBox flexDirection="column" height="100%" width="420px">
-                    <CommonHeader headerName="Dispose Ticket" />
-                    <FlexBox flexDirection="column" padding="15px" overflowY="auto" height="calc(100% - 72px)">
-                        <TicketDisposeFolder
-                            parentFolderValue={folderStates.parentFolder}
-                            childFolderValue={folderStates.childFolder}
-                            parentFolderClick={parentFolderClick}
-                            onDeleteHandler={onDeleteHandler}
-                            childFolderClick={childFolderClick} />
-                        <FlexBox flexDirection="column" gap="40px" padding="40px 0px">
-                            <FlexBox flexDirection="column" gap="10px">
-                                <SelectField name="selectEmployee" label="Select Employee" menuOptions={employeeMenuOptions} />
-                                <TextboxField name="remarks" label="Remarks" multiline rows={4} />
-                                <SelectField name="dispositionType" label="Disposition Type" menuOptions={menuOptions} />
-                                <FormControlLabel control={<CheckboxField name="callBackRequired" sx={{ width: '40px' }} />} label="is callback required?" />
+    const onRenderContent = () => {
+        return (
+            <>
+                <FormProvider {...methods}>
+                    <FlexBox flexDirection="column" padding="20px" height="calc(100% - 77px)" justifyContent="space-between">
+                        <FlexBox flexDirection="column" overflowY="auto">
+                            <TicketDisposeFolder
+                                parentFolderValue={folderStates.parentFolder}
+                                childFolderValue={folderStates.childFolder}
+                                parentFolderClick={parentFolderClick}
+                                onDeleteHandler={onDeleteHandler}
+                                childFolderClick={childFolderClick} />
+                            <FlexBox flexDirection="column" gap="40px" padding="40px 0px">
+                                <FlexBox flexDirection="column" gap="10px">
+                                    <SelectField name="selectEmployee" label="Select Employee" menuOptions={employeeMenuOptions} />
+                                    <TextboxField name="remarks" label="Remarks" multiline rows={4} />
+                                    <SelectField name="dispositionType" label="Disposition Type" menuOptions={menuOptions} />
+                                    <FormControlLabel control={<CheckboxField name="callBackRequired" sx={{ width: '40px' }} />} label="is callback required?" />
+                                </FlexBox>
                             </FlexBox>
-                            <Button variant="contained" onClick={methods.handleSubmit(onSubmitDisposeTicket)}>
-                                Dispose Ticket
-                            </Button>
                         </FlexBox>
+                        <Button variant="contained" onClick={methods.handleSubmit(onSubmitDisposeTicket)}>
+                            Dispose Ticket
+                        </Button>
                     </FlexBox>
-                </FlexBox>
-            </FormProvider>
-        </Drawer>
+                </FormProvider>
+            </>
+        )
+    }
+
+    return (
+        <DrawerExtended
+            header="Dispose Ticket"
+            width="420px"
+            anchor="right"
+            open={openTicketDisposeDrawer}
+            onRenderContent={onRenderContent}
+            onClose={onToggleTicketDispose}>
+        </DrawerExtended>
     )
 }
 

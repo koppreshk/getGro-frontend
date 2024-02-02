@@ -1,10 +1,8 @@
-import { Button, Drawer, Typography } from "@mui/material"
+import { Button } from "@mui/material"
 import { SelectField, TextboxField } from "lib/form-fields";
-import { CustomIconButton, FlexBox, HorizontalSeparator } from "lib/ui-ux";
+import { DrawerExtended, FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { FormProvider, useForm } from "react-hook-form";
-import styled from "styled-components";
 import { TicketDisposeFolder } from "../ticket-details-section/dispose-ticket/ticket-dispose-folder";
-import { CloseOutlined } from "@mui/icons-material";
 import { DatePicker } from "@mui/x-date-pickers";
 import { useFolderReducer } from "../ticket-details-section/dispose-ticket";
 
@@ -12,10 +10,6 @@ interface IAddTicketProps {
     openAddTicketDrawer: boolean;
     toggleAddTicketDrawer: () => void;
 }
-
-const AddTicketContainer = styled(FlexBox)`
-
-`;
 
 interface IAddTIcketFormFields {
     title: string;
@@ -32,20 +26,16 @@ export const AddTicket = (props: IAddTicketProps) => {
     });
 
     return (
-        <>
-            <Drawer anchor="right" open={openAddTicketDrawer} onClose={toggleAddTicketDrawer}>
+        <DrawerExtended
+            anchor="right"
+            header={"Add Ticket"}
+            open={openAddTicketDrawer}
+            onRenderContent={() => (
                 <FormProvider {...formMethods}>
-                    <AddTicketContainer width="420px" height="100%" padding="16px" flexDirection="column" gap="10px">
-                        <FlexBox width="100%" justifyContent="space-between" alignItems="center">
-                            <Typography variant="h5">Add Ticket</Typography>
-                            <CustomIconButton iconComponent={<CloseOutlined />} tooltipProps={{ title: 'Close' }} onClick={toggleAddTicketDrawer} />
-                        </FlexBox>
-                        <HorizontalSeparator />
-                        <AddTicketForm />
-                    </AddTicketContainer>
+                    <AddTicketForm />
                 </FormProvider>
-            </Drawer>
-        </>
+            )}
+            onClose={toggleAddTicketDrawer} />
     )
 }
 
@@ -83,7 +73,7 @@ const AddTicketForm = () => {
     };
 
     return (
-        <FlexBox flexDirection="column" width="100%" gap="15px" height="calc(100% - 50px)" padding="5px 0 0 0" overflowY="auto">
+        <FlexBox flexDirection="column" width="100%" gap="15px" padding="20px" overflowY="auto">
             <FlexBox width="100%" gap="10px">
                 <TextboxField name="title" label="Title" sx={{ width: 'calc(50% - 10px)' }} />
                 <SelectField name="priority" label="Priority" sx={{ width: '50%' }} menuOptions={[{ key: 'low', value: 'Low' }, { key: 'medium', value: 'Medium' }, { key: 'high', value: 'High' }]} />
