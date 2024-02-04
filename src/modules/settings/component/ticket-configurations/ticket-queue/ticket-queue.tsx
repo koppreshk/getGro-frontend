@@ -41,7 +41,7 @@ export const TicketQueue = (props: ITicketQueueProps) => {
 
     return (
         <FlexBox width="100%" flexDirection="column">
-            <FlexBox width="100%" justifyContent="space-between" padding="10px">
+            <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <Typography variant="h5">Ticket Queue</Typography>
                 <Button variant="contained" startIcon={<Add />} onClick={toggleAddQueueDrawer}>Add Queue</Button>
                 <AddNewQueue openAddQueueDrawer={openAddQueueDrawer} toggleAddQueueDrawer={toggleAddQueueDrawer} />

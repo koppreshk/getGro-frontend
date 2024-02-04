@@ -64,7 +64,7 @@ const usePrimaryOptions = () => {
         iconComponent: () => <SettingsOutlined />,
         primaryKey: 'configurations',
         route: 'configurations',
-        title: 'configurations',
+        title: 'Configurations',
         hidden: !isSettingsPageAccessible
     }];
 }
