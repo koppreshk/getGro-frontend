@@ -14,7 +14,7 @@ export interface IGridLayoutProps {
     $padding?: Property.Padding;
     $boxSizing?: Property.BoxSizing;
     $overflow?: Property.Overflow;
-    alignItems?: Property.AlignItems;
+    $alignItems?: Property.AlignItems;
 }
 
 export const GridLayout = styled.div<IGridLayoutProps>`
@@ -52,7 +52,7 @@ export const GridLayout = styled.div<IGridLayoutProps>`
     ${({ $overflow }) => $overflow && css`
         overflow: ${$overflow};
     `};
-    ${({ alignItems }) => alignItems && css`
-        align-items: ${alignItems};
+    ${({ $alignItems }) => $alignItems && css`
+        align-items: ${$alignItems};
     `};
 `;

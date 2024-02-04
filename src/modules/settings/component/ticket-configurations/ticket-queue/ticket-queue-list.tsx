@@ -28,15 +28,14 @@ export const TicketQueueList = (props: ITicketQueueListProps) => {
                 {queueHeaders.map((item) => <Typography color={pallete.grayVariant2} key={item} variant="h6">{item}</Typography>)}
             </GridLayout>
             {queueData.map((data) =>
-                <StyledGridLayout key={data.id} $padding="10px" $gridGap="10px" alignItems="center" $gridTemplateColumns={"repeat(5, 1fr) 40px 40px"}>
+                <StyledGridLayout key={data.id} $padding="10px" $gridGap="10px" $alignItems="center" $gridTemplateColumns={"repeat(5, 1fr) 40px 40px"}>
                     <Typography variant="body3">{data.name}</Typography>
                     <Typography variant="body3">{data.uniqueKey}</Typography>
                     <Typography variant="body3" textTransform="capitalize">{data.autoAssignType.split('_').join(' ')}</Typography>
                     <Typography variant="body3" textTransform="capitalize">{data.queueType.split('_').join(' ')}</Typography>
                     <FlexBox gap="4px" style={{ position: 'relative' }}>
-                        {data.assignedEmployees.map((item, idx) => <Tooltip arrow placement="bottom" title={item.firstName + ' ' + (item.lastName ?? '')}>
+                        {data.assignedEmployees.map((item, idx) => <Tooltip key={item.id} arrow placement="bottom" title={item.firstName + ' ' + (item.lastName ?? '')}>
                             <Avatar
-                                key={item.id}
                                 sx={{
                                     background: chooseRandomColors(item.firstName + item.lastName).backgroundColor,
                                     color: chooseRandomColors(item.firstName + item.lastName).textColor,
