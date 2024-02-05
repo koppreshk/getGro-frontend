@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery } from "react-query";
 import { useServiceClient } from "lib"
-import { ConfigurationsEndPoint, ConfigurationsQueryKey } from "../api-enums";
+import { ConfigurationsEndPoint, ConfigurationsQueryKey } from "./api-enums";
 
 export interface Employee {
     firstName: string;
