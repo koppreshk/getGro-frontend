@@ -1,7 +1,7 @@
 import React from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useServiceClient } from "lib";
-import { ConfigurationsEndPoint, ConfigurationsQueryKey } from "./api-enums";
+import { ConfigurationsEndPoint, ConfigurationsQueryKey } from "../api-enums";
 import { Queue } from "./fetch-all-queues";
 
 export const useEditQueue = () => {

@@ -2,7 +2,7 @@ import styled, { useTheme } from "styled-components"
 import { Typography } from "@mui/material";
 import { FlexBox, GridLayout } from "lib/ui-ux";
 import { DeleteQueue } from "./delete-queue";
-import { Queue } from "modules/settings/apis";
+import { Queue } from "modules/settings/apis/queues";
 import { EditQueue } from "./edit-queue";
 import { AssignedEmployees } from "./assigned-employees";
 

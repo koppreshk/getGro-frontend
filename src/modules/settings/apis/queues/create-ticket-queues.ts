@@ -1,6 +1,6 @@
 import { useServiceClient } from "lib"
 import React from "react";
-import { ConfigurationsEndPoint, ConfigurationsQueryKey } from "./api-enums";
+import { ConfigurationsEndPoint, ConfigurationsQueryKey } from "../api-enums";
 import { useMutation, useQueryClient } from "react-query";
 
 interface IAssignedEmployees {

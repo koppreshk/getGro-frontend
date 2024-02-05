@@ -2,7 +2,7 @@ import React, { useCallback } from "react"
 import { Add } from "@mui/icons-material"
 import { Button, Typography } from "@mui/material"
 import { DrawerExtended, FlexBox } from "lib/ui-ux"
-import { ITicketQueues } from "modules/settings/apis"
+import { ITicketQueues } from "modules/settings/apis/queues"
 import { CreateTicketQueueContainer } from "modules/settings/containers"
 import { TicketQueueList } from "./ticket-queue-list"
 

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Grid, Button } from "@mui/material";
 import { TextboxField, AutocompleteField, SelectField } from "lib/form-fields";
 import { FlexBox } from "lib/ui-ux";
-import { Employee } from "modules/settings/apis";
+import { Employee } from "modules/settings/apis/queues";
 
 const StlyedFlexBox = styled(FlexBox)`
     margin-top: 20px;
