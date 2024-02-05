@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { useServiceClient } from "lib"
 import { ConfigurationsEndPoint, ConfigurationsQueryKey } from "./api-enums";
 
-interface Employee {
+export interface Employee {
     firstName: string;
     lastName: string | null;
     id: number;
