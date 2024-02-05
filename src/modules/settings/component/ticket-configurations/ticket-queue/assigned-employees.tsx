@@ -15,7 +15,7 @@ export const AssignedEmployees = (props: Pick<Queue, 'assignedEmployees'>) => {
                         sx={{
                             width: 32, height: 32, fontSize: '13px',
                             fontWeight: 500, marginLeft: '-8px'
-                        }}>{(assignedEmployees.slice(4).length - 1) + '+'}
+                        }}>{('+' + assignedEmployees.slice(4).length)}
                     </Avatar>
                 </Tooltip>
                 : null}
