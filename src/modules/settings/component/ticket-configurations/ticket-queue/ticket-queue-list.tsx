@@ -1,10 +1,10 @@
 import styled, { useTheme } from "styled-components"
-import { Avatar, Tooltip, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { FlexBox, GridLayout } from "lib/ui-ux";
 import { DeleteQueue } from "./delete-queue";
-import { Employee, Queue } from "modules/settings/apis";
+import { Queue } from "modules/settings/apis";
 import { EditQueue } from "./edit-queue";
-import { chooseRandomColors } from "lib/utils";
+import { AssignedEmployees } from "./assigned-employees";
 
 interface ITicketQueueListProps {
     queueData: Queue[];
@@ -33,29 +33,11 @@ export const TicketQueueList = (props: ITicketQueueListProps) => {
                     <Typography variant="body3">{data.uniqueKey}</Typography>
                     <Typography variant="body3" textTransform="capitalize">{data.autoAssignType.split('_').join(' ')}</Typography>
                     <Typography variant="body3" textTransform="capitalize">{data.queueType.split('_').join(' ')}</Typography>
-                    <FlexBox gap="4px">
-                        {data.assignedEmployees.map((item, idx) => <EmployeeAvatar key={item.id} item={item} idx={idx} />)}
-                    </FlexBox>
+                    <AssignedEmployees assignedEmployees={data.assignedEmployees} />
                     <EditQueue queueMetadata={data} />
                     <DeleteQueue id={data.id} />
                 </StyledGridLayout>
             )}
         </FlexBox>
-    )
-}
-
-const EmployeeAvatar = (props: { item: Employee, idx: number }) => {
-    const { firstName, lastName } = props.item;
-    const { backgroundColor, textColor } = chooseRandomColors(firstName + lastName)
-    return (
-        <Tooltip arrow placement="bottom" title={firstName + ' ' + (lastName ?? '')}>
-            <Avatar
-                sx={{
-                    background: backgroundColor,
-                    color: textColor,
-                    marginLeft: props.idx > 0 ? '-8px' : 'unset',
-                    width: 32, height: 32, fontSize: '13px', fontWeight: 500
-                }}>{firstName[0] + (lastName ? lastName[0] : '')}</Avatar>
-        </Tooltip>
     )
 }
