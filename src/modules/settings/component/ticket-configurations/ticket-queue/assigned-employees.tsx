@@ -1,7 +1,7 @@
 import { Tooltip, Avatar } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { chooseRandomColors } from "lib/utils";
-import { Queue, Employee } from "modules/settings/apis";
+import { Queue, Employee } from "modules/settings/apis/queues";
 
 export const AssignedEmployees = (props: Pick<Queue, 'assignedEmployees'>) => {
     const { assignedEmployees } = props;

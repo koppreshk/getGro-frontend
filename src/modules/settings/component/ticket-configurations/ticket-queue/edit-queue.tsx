@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { Edit } from "@mui/icons-material"
 import { IconButton, } from "@mui/material"
-import { Queue } from "modules/settings/apis"
+import { Queue } from "modules/settings/apis/queues"
 import { EditQueueContainer } from "modules/settings/containers";
 import { DrawerExtended } from "lib/ui-ux";
 

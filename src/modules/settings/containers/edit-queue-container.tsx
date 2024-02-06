@@ -1,6 +1,6 @@
 import React from "react";
 import { useNotifications } from "lib";
-import { Queue, useEditQueue, useFetchTicketMetadata } from "../apis"
+import { Queue, useEditQueue, useFetchTicketMetadata } from "../apis/queues"
 import { IQueueFormFields, TicketQueueForm } from "../component/ticket-configurations/ticket-queue"
 import { CenteredCircularProgress } from "lib/ui-ux";
 
