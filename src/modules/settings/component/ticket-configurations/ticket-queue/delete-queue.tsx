@@ -1,7 +1,7 @@
 import { Delete } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { useNotifications } from "lib";
-import { useDeleteQueue } from "modules/settings/apis";
+import { useDeleteQueue } from "modules/settings/apis/queues";
 
 export const DeleteQueue = (props: { id: number }) => {
     const { mutateAsync } = useDeleteQueue();

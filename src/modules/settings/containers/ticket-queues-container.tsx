@@ -1,5 +1,5 @@
 import { CenteredCircularProgress } from "lib/ui-ux";
-import { useFetchAllTicketQueues } from "../apis";
+import { useFetchAllTicketQueues } from "../apis/queues";
 import { TicketQueue } from "../component";
 
 export const TicketQueuesContainer = () => {
