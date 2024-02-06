@@ -1,6 +1,6 @@
-import { useCreateEscalations, useFetchEscalationMetadata } from "../apis/escalations"
+import { useCreateEscalations, useFetchEscalationMetadata } from "../../apis/escalations"
 import { CenteredCircularProgress } from "lib/ui-ux";
-import { CreateTicketEscalation, ITicketEscalationFormFields } from "../component/ticket-configurations/ticket-escalation";
+import { CreateTicketEscalation, ITicketEscalationFormFields } from "../../component/ticket-configurations/ticket-escalation";
 import { useCallback } from "react";
 import { useNotifications } from "lib";
 
