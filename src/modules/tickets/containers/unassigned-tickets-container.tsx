@@ -1,6 +1,7 @@
 import React from "react";
 import { DisplayTicketsGrid } from "../components";
 import { useGetUnassignedTickets } from "../apis";
+import { ErrorMessage } from "lib/ui-ux";
 
 export const UnassignedTicketsContainer = React.memo(() => {
     const { data, isLoading, isFetching, error } = useGetUnassignedTickets();
@@ -17,6 +18,6 @@ export const UnassignedTicketsContainer = React.memo(() => {
     }
 
     return (
-        <span>Error: {error as never}</span>
+        <ErrorMessage statusCode={error?.message} />
     )
 })

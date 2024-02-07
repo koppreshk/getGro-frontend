@@ -21,8 +21,8 @@ class ServiceClient {
             if (res.status === 200) {
                 return res;
             }
-            throw new Error(`Something went wrong! Status Code: ${res.status} Message: ${res.statusText}`);
-        });
+            throw new Error(`StatusCode: ${res.status}`);
+        }).catch(err => Promise.reject(err));
     }
 
 
