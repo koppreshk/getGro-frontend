@@ -1,9 +1,8 @@
 import React, { useCallback } from "react";
 import { Edit } from "@mui/icons-material"
-import { IconButton, } from "@mui/material"
 import { Queue } from "modules/settings/apis/queues"
 import { EditQueueContainer } from "modules/settings/containers";
-import { DrawerExtended } from "lib/ui-ux";
+import { CustomIconButton, DrawerExtended } from "lib/ui-ux";
 
 export const EditQueue = (props: { queueMetadata: Queue }) => {
     const { queueMetadata } = props;
@@ -15,9 +14,7 @@ export const EditQueue = (props: { queueMetadata: Queue }) => {
 
     return (
         <>
-            <IconButton onClick={toggleAddQueueDrawer}>
-                <Edit />
-            </IconButton>
+            <CustomIconButton onClick={toggleAddQueueDrawer} iconComponent={<Edit />} tooltipProps={{ title: "Edit Queue", arrow: true }} />
             <DrawerExtended
                 anchor="right"
                 width="500px"

@@ -1,6 +1,6 @@
 import { Delete } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
 import { useNotifications } from "lib";
+import { CustomIconButton } from "lib/ui-ux";
 import { useDeleteQueue } from "modules/settings/apis/queues";
 
 export const DeleteQueue = (props: { id: number }) => {
@@ -15,8 +15,6 @@ export const DeleteQueue = (props: { id: number }) => {
             .catch(() => showNotification({ message: 'Failed to delete the queue', type: 'error' }))
     }
     return (
-        <IconButton onClick={onDeleleHandler}>
-            <Delete />
-        </IconButton>
+        <CustomIconButton onClick={onDeleleHandler} iconComponent={<Delete />} tooltipProps={{ title: "Delete Queue", arrow: true }} />
     )
 }

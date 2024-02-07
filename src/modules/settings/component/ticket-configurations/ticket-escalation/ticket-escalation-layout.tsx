@@ -157,8 +157,6 @@ const useColumns = () => {
 }
 
 
-
-
 const AddNewEscalation = (props: {
     openAddEscalationDrawer: boolean;
     toggleAddEscalationDrawer: () => void
