@@ -34,6 +34,7 @@ interface IConfigDataGridProps<T> extends Pick<TableOptions<T>, 'data' | 'column
 
 export const ConfigDataGrid = <T extends object>(props: IConfigDataGridProps<T>) => {
     const { columns, data, isLoading } = props;
+    console.log('columns', columns);
     const memoizedData = useMemo(() => isLoading ? Array(10).fill({}) : data, [data, isLoading]);
     const memoizedColumns = useMemo(() =>
         isLoading
@@ -82,7 +83,9 @@ export const ConfigDataGrid = <T extends object>(props: IConfigDataGridProps<T>)
                                             </Typography>
 
                                             <IconButton onClick={header.column.getToggleSortingHandler()}>
-                                                {header.column.getIsSorted() === false ? <UnfoldMore /> : header.column.getIsSorted() === 'asc' ? <ExpandLess /> : <ExpandMore />}
+                                                {header.column.getCanSort() ?
+                                                    header.column.getIsSorted() === false ? <UnfoldMore /> : header.column.getIsSorted() === 'asc' ? <ExpandLess /> : <ExpandMore />
+                                                    : null}
                                             </IconButton>
                                         </FlexBox>
                                     </FlexBox>
