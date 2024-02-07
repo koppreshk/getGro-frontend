@@ -3,6 +3,7 @@ import { Button, Grid } from "@mui/material";
 import { SelectField, TextboxField } from "lib/form-fields"
 import { FlexBox } from "lib/ui-ux"
 import { IEscalationMetadata } from "modules/settings/apis/escalations";
+import { capitalizeFirstLetter } from "lib/utils";
 
 export interface ITicketEscalationFormFields {
     name: string;
@@ -43,22 +44,22 @@ const CreateEscalationForm = (props: Pick<ICreateEscalationProps, 'after' | 'con
                 <TextboxField name="name" label="Name" />
             </Grid>
             <Grid item xs={6}>
-                <SelectField sx={{ width: '100%' }} name="after" label="After" menuOptions={after.map((item) => ({ key: item, value: item }))} />
+                <SelectField sx={{ width: '100%' }} name="after" label="After" menuOptions={after.map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} />
             </Grid>
             <Grid item xs={12}>
-                <SelectField sx={{ width: '100%' }} name="conditions" label="Conditions" menuOptions={conditions.map((item) => ({ key: item, value: item }))} />
+                <SelectField sx={{ width: '100%' }} name="conditions" label="Conditions" menuOptions={conditions.map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} />
             </Grid>
             <Grid item xs={6}>
                 <TextboxField name="alert" label="Alert(in min)" type="number" />
             </Grid>
             <Grid item xs={6}>
-                <SelectField sx={{ width: '100%' }} name="queues" label="Queues" menuOptions={queues.map((item) => ({ key: item.uniqueKey, value: item.name }))} />
+                <SelectField sx={{ width: '100%' }} name="queues" label="Queues" menuOptions={queues.map((item) => ({ key: item.uniqueKey, value: capitalizeFirstLetter(item.name, '_') }))} />
             </Grid>
             <Grid item xs={12}>
-                <SelectField sx={{ width: '100%' }} name="statuses" label="Statuses" menuOptions={statuses.map((item) => ({ key: item, value: item }))} />
+                <SelectField sx={{ width: '100%' }} name="statuses" label="Statuses" menuOptions={statuses.map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} />
             </Grid>
             <Grid item xs={12}>
-                <SelectField sx={{ width: '100%' }} name="subStatuses" label="Sub Statuses" menuOptions={subStatuses.map((item) => ({ key: item, value: item }))} />
+                <SelectField sx={{ width: '100%' }} name="subStatuses" label="Sub Statuses" menuOptions={subStatuses.map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} />
             </Grid>
         </Grid>
     )

@@ -37,8 +37,8 @@ export const toCamelCasedKeysFromUnderScores = (obj: { [key: string]: any }) => 
         }, {} as any))
 };
 
-export const capitalizeFirstLetter = (string: string) => {
-    const words = string.split(" ");
+export const capitalizeFirstLetter = (string: string, splitter?: string) => {
+    const words = string.split(splitter ?? " ");
 
     return words.map((word) => {
         return word[0].toUpperCase() + word.substring(1);

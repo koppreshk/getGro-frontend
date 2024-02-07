@@ -5,6 +5,7 @@ import { Grid, Button } from "@mui/material";
 import { TextboxField, AutocompleteField, SelectField } from "lib/form-fields";
 import { FlexBox } from "lib/ui-ux";
 import { Employee } from "modules/settings/apis/queues";
+import { capitalizeFirstLetter } from "lib/utils";
 
 const StlyedFlexBox = styled(FlexBox)`
     margin-top: 20px;
@@ -90,10 +91,10 @@ export const TicketQueueForm = (props: ITicketQueueFormProps) => {
                             placeholder="Select Backup Employee" />
                     </Grid>
                     <Grid item xs={6}>
-                        <SelectField name="autoAssignType" label="Auto Assign Type" menuOptions={autoAssignTypes.map((item) => ({ key: item, value: item.split('_').map(mi => (mi[0].toLocaleUpperCase() + mi.slice(1))).join(' ') }))} sx={{ width: '100%' }} />
+                        <SelectField name="autoAssignType" label="Auto Assign Type" menuOptions={autoAssignTypes.map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} sx={{ width: '100%' }} />
                     </Grid>
                     <Grid item xs={6}>
-                        <SelectField name="queueType" label="Type" menuOptions={queueTypes.map((item) => ({ key: item, value: item.split('_').map(mi => (mi[0].toLocaleUpperCase() + mi.slice(1))).join(' ') }))} sx={{ width: '100%' }} />
+                        <SelectField name="queueType" label="Type" menuOptions={queueTypes.map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} sx={{ width: '100%' }} />
                     </Grid>
                     <Grid item xs={6}>
                         <TextboxField name="timeout" label="Timeout" fullWidth type="number" />
