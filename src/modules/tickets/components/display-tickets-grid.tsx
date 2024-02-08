@@ -1,10 +1,10 @@
 import React, { MouseEventHandler } from "react";
 import { useMatch, useNavigate, useSearchParams } from "react-router-dom";
 import styled, { css, useTheme } from "styled-components";
-import { Alert, Checkbox } from "@mui/material";
+import { Checkbox } from "@mui/material";
 import { Row, createColumnHelper } from "@tanstack/react-table";
 import { Facebook, Email, WhatsApp, Twitter, LocalPhone, Instagram, Sms } from '@mui/icons-material';
-import { DataGrid, FlexBox } from "lib/ui-ux"
+import { DataGrid, NoDataIllustration } from "lib/ui-ux"
 import { ITicketDetails } from "../apis";
 import { useAppDispatch } from "lib/hooks";
 import { setTotalPages } from "../storage";
@@ -193,9 +193,7 @@ export const DisplayTicketsGrid = (props: IDisplayTicketsGridProps) => {
                 (data.length > 0 || props.isLoading) ?
                     <DataGrid {...props} columns={columns} onRowClick={onRowClick} />
                     :
-                    <FlexBox width="100%" justifyContent="center" padding="20px">
-                        <Alert severity="info" sx={{ width: '75%' }}>No tickets to display.</Alert>
-                    </FlexBox>
+                    <NoDataIllustration message="No tickets to display" />
             }
         </>
     )
