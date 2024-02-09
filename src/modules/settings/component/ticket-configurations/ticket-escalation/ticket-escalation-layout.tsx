@@ -184,7 +184,7 @@ export const TicketEscalationLayout = () => {
     }, []);
 
     return (
-        <FlexBox width="100%" flexDirection="column">
+        <FlexBox width="100%" flexDirection="column" height="100%">
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <Typography variant="h5">Ticket Escalation</Typography>
                 <Button variant="contained" onClick={toggleAddEscalationDrawer} startIcon={<Add />}>Add Escalation</Button>

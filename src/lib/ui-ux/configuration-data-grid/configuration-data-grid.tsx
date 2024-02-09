@@ -21,7 +21,7 @@ const StyledTable = styled.table`
 `;
 
 const DataGridWrapper = styled(FlexBox)`
-
+    overflow: auto;
 `;
 
 const StyledTableHeader = styled.th`
@@ -66,7 +66,7 @@ export const ConfigDataGrid = <T extends object>(props: IConfigDataGridProps<T>)
     })
 
     return (
-        <DataGridWrapper className="datagridwrapper">
+        <DataGridWrapper className="datagridwrapper" height="100%">
             <StyledTable>
                 <thead>
                     {table.getHeaderGroups().map(headerGroup => (
