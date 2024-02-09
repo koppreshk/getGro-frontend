@@ -1,9 +1,11 @@
 /// <reference types="vite-plugin-svgr/client" />
 
 import { FlexBox } from 'lib/ui-ux'
-import PageNotFoundIllustration from '../../../../src/assets/svg/not-found-illustation.svg?react'
 import { Typography } from '@mui/material'
 import { Link } from 'react-router-dom';
+import { lazy } from 'react';
+
+const PageNotFoundIllustration  = lazy(() => import('../../../../src/assets/svg/not-found-illustation.svg?react'));
 
 export const PageNotFound = () => {
     return (

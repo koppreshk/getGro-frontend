@@ -2,9 +2,9 @@
 
 import { Typography } from '@mui/material';
 import { FlexBox } from '..';
-import ErrorIllustration from '../../../../src/assets/svg/api-error.svg?react'
-import { useMemo } from 'react';
+import { lazy, useMemo } from 'react';
 
+const ErrorIllustration = lazy(() => import( '../../../../src/assets/svg/api-error.svg?react'));
 export const ErrorMessage = (props: { statusCode?: string }) => {
     const { statusCode } = props;
 
