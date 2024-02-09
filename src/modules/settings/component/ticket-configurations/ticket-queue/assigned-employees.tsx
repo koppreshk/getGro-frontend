@@ -14,7 +14,7 @@ export const AssignedEmployees = (props: Pick<Queue, 'assignedEmployees'>) => {
                     <Avatar
                         sx={{
                             width: 32, height: 32, fontSize: '13px',
-                            fontWeight: 500, marginLeft: '-8px'
+                            fontWeight: 500, marginLeft: '-10px', border: '2px solid white'
                         }}>{('+' + assignedEmployees.slice(4).length)}
                     </Avatar>
                 </Tooltip>
@@ -32,8 +32,8 @@ const EmployeeAvatar = (props: { item: Employee, idx: number }) => {
                 sx={{
                     background: backgroundColor,
                     color: textColor,
-                    marginLeft: props.idx > 0 ? '-8px' : 'unset',
-                    width: 32, height: 32, fontSize: '13px', fontWeight: 500
+                    marginLeft: props.idx > 0 ? '-10px' : 'unset',
+                    width: 32, height: 32, fontSize: '13px', fontWeight: 500, border: '2px solid white'
                 }}>{firstName[0] + (lastName ? lastName[0] : '')}</Avatar>
         </Tooltip>
     )
