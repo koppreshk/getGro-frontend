@@ -30,10 +30,11 @@ const AddNewQueue = (props: IAddNewQueueProps) => {
 
 interface ITicketQueueProps {
     data: ITicketQueues;
+    isLoading: boolean;
 }
 
 export const TicketQueue = (props: ITicketQueueProps) => {
-    const { data } = props;
+    const { data, isLoading } = props;
     const navigate = useNavigate();
 
     const [openAddQueueDrawer, setOpenAddQueueDrawer] = React.useState(false);
@@ -52,7 +53,7 @@ export const TicketQueue = (props: ITicketQueueProps) => {
                 <Button variant="contained" startIcon={<Add />} onClick={toggleAddQueueDrawer}>Add Queue</Button>
                 <AddNewQueue openAddQueueDrawer={openAddQueueDrawer} toggleAddQueueDrawer={toggleAddQueueDrawer} />
             </FlexBox>
-            <TicketQueueList queueData={data.queues} />
+            <TicketQueueList queueData={data.queues} isLoading={isLoading} />
         </FlexBox>
     )
 }
