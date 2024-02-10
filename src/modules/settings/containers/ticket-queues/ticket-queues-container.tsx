@@ -1,19 +1,12 @@
-import { CenteredCircularProgress } from "lib/ui-ux";
 import { useFetchAllTicketQueues } from "../../apis/queues";
 import { TicketQueue } from "../../component";
 
 export const TicketQueuesContainer = () => {
     const { data, isLoading, error } = useFetchAllTicketQueues();
 
-    if (isLoading) {
+    if (data || isLoading) {
         return (
-            <CenteredCircularProgress />
-        )
-    }
-
-    if (data) {
-        return (
-            <TicketQueue data={data} />
+            <TicketQueue isLoading={isLoading} data={data || { employees: [], queues: [], total_pages: 0 }} />
         )
     }
 

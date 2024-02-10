@@ -34,7 +34,6 @@ interface IConfigDataGridProps<T> extends Pick<TableOptions<T>, 'data' | 'column
 
 export const ConfigDataGrid = <T extends object>(props: IConfigDataGridProps<T>) => {
     const { columns, data, isLoading } = props;
-    console.log('columns', columns);
     const memoizedData = useMemo(() => isLoading ? Array(10).fill({}) : data, [data, isLoading]);
     const memoizedColumns = useMemo(() =>
         isLoading
@@ -100,9 +99,9 @@ export const ConfigDataGrid = <T extends object>(props: IConfigDataGridProps<T>)
                         <tr key={row.id} className="table-row-styles">
                             {row.getVisibleCells().map(cell => (
                                 <td key={cell.id} style={{ width: cell.column.getSize() }}>
-                                    <FlexBox alignItems="center" padding="10px">
+                                    <Typography padding="0px 10px" variant='body2' textOverflow={'ellipsis'} overflow="hidden" whiteSpace="nowrap" maxWidth={cell.column.getSize()}>
                                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                    </FlexBox>
+                                    </Typography>
                                 </td>
                             ))}
                         </tr>
