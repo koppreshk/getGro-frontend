@@ -160,7 +160,7 @@ const PriorityIcon = styled.span<{ $priority: string }>`
     font-weight: 600;
 `;
 
-const Priority = (args: { priority: string }) => {
+export const Priority = (args: { priority: string }) => {
     const { priority } = args;
     return (
         <PriorityIcon $priority={priority} >{priority}</PriorityIcon>

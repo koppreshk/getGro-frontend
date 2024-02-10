@@ -1,12 +1,13 @@
 import React, { useCallback, useMemo } from "react";
-import { getFormattedDate, getInitialsByName } from "lib/utils";
-import { TelephonicDialer } from "../../ticket-conversation/telephonic-conversations";
 import styled from "styled-components";
 import { AccountCircleOutlined, CalendarToday, Call, ChecklistOutlined, ConfirmationNumberOutlined, Email, EmailOutlined, ImportExportRounded, Message, Phone } from "@mui/icons-material";
 import { Typography, Tooltip, Avatar } from "@mui/material";
+import { getFormattedDate, getInitialsByName } from "lib/utils";
 import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { commonStyles } from "lib/ui-ux/common-styles";
 import { ITicketDetails } from "modules/tickets/apis";
+import { Priority } from "modules/tickets/components";
+import { TelephonicDialer } from "../../ticket-conversation/telephonic-conversations";
 
 const StyledAvatar = styled(Avatar)`
     && {
@@ -113,6 +114,10 @@ export const ContactInfo = (props: IContactInfoProps) => {
         setOpenCallPopUp((prevValue) => !prevValue)
     }, []);
 
+    const onPriorityRender = useCallback(() => (
+        <Priority priority={priority} />
+    ), [priority]);
+
     return (
         <FlexBox gap="20px" flexDirection="column">
             <FlexBox gap="10px" alignItems="center" flexDirection="column">
@@ -130,14 +135,14 @@ export const ContactInfo = (props: IContactInfoProps) => {
                 {contactInfoData('Ticket Id', ticketId)}
                 {contactInfoData('Created At', getFormattedDate(createdAt))}
                 {contactInfoData('Ticket Status', ticketStatus)}
-                {contactInfoData('Priority', priority)}
+                {contactInfoData('Priority', onPriorityRender)}
             </FlexBox>
             {openCallPopUp ? <TelephonicDialer openCallPopUp={openCallPopUp} toggleCallBtn={toggleCallBtn} phoneNumber={phoneNumber} /> : <></>}
         </FlexBox>
     )
 }
 
-const contactInfoData = (name: string, value: string | number) => {
+const contactInfoData = (name: string, value: string | number | (() => JSX.Element)) => {
     const renderIcons = (name: string) => {
         switch (name) {
             case 'Email':
@@ -165,7 +170,7 @@ const contactInfoData = (name: string, value: string | number) => {
                 {renderIcons(name)}
                 <TypographyName variant="subheading1">{name}</TypographyName>
             </FlexBox>
-            <TypographyValue variant="h6" width='60%'>{value}</TypographyValue>
+            {typeof value === 'function' ? value() : <TypographyValue variant="h6" width='60%'>{value}</TypographyValue>}
         </FlexBox>
     )
 }
