@@ -1,10 +1,12 @@
 
 import React, { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { createColumnHelper } from "@tanstack/react-table";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid"
 import { Add } from "@mui/icons-material"
 import { Button, Typography } from "@mui/material"
-import { DrawerExtended, FlexBox } from "lib/ui-ux"
+import { CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-ux"
 import { CreateTicketEscalationContainer } from "modules/settings/containers";
 
 export interface IUserData {
@@ -178,6 +180,7 @@ const AddNewEscalation = (props: {
 export const TicketEscalationLayout = () => {
     const columns = useColumns();
     const [openAddEscalationDrawer, setOpenAddEscalationDrawer] = React.useState(false);
+    const navigate = useNavigate();
 
     const toggleAddEscalationDrawer = useCallback(() => {
         setOpenAddEscalationDrawer((prevValue) => !prevValue)
@@ -186,7 +189,10 @@ export const TicketEscalationLayout = () => {
     return (
         <FlexBox width="100%" flexDirection="column" height="100%">
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
-                <Typography variant="h5">Ticket Escalation</Typography>
+                <FlexBox alignItems="center" gap="10px">
+                    <CustomIconButton onClick={() => navigate(-1)} iconComponent={<ArrowBackIcon />} tooltipProps={{ title: 'Back' }} />
+                    <Typography variant="h5">Ticket Escalation</Typography>
+                </FlexBox>
                 <Button variant="contained" onClick={toggleAddEscalationDrawer} startIcon={<Add />}>Add Escalation</Button>
                 <AddNewEscalation openAddEscalationDrawer={openAddEscalationDrawer} toggleAddEscalationDrawer={toggleAddEscalationDrawer} />
             </FlexBox>

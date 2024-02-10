@@ -104,6 +104,7 @@ export const TicketQueueForm = (props: ITicketQueueFormProps) => {
                     </Grid>
                 </Grid>
                 <StlyedFlexBox gap='10px' width="100%" justifyContent="flex-end">
+                    {isInEditMode ? <Button variant="text" size="large" type="button" onClick={() => methods.reset()}>{'Reset'}</Button> : null}
                     <Button variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>{isInEditMode ? 'Edit Queue' : 'Add Queue'}</Button>
                 </StlyedFlexBox>
             </FlexBox>
