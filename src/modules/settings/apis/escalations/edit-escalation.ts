@@ -18,7 +18,7 @@ export const useEditEscalation = () => {
         mutationKey: EscalationQueryKey.EDIT_ESCALATION,
         mutationFn: editEscalation,
         onSuccess: () => {
-            queryClient.invalidateQueries(EscalationEndPoint.FETCH_ALL_ESCALATIONS);
+            queryClient.invalidateQueries(EscalationQueryKey.FETCH_ALL_ESCALATIONS);
         }
     });
 }

@@ -1,7 +1,7 @@
 import { useServiceClient } from "lib"
 import React from "react";
 import { EscalationQueryKey, EscalationEndPoint } from "./api-enums";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 export interface ICreateEscalationsArgs {
     name: string;
@@ -14,6 +14,7 @@ export interface ICreateEscalationsArgs {
 
 export const useCreateEscalations = () => {
     const { postData } = useServiceClient();
+    const queryClient = useQueryClient();
 
     const createEscalation = React.useCallback((args: ICreateEscalationsArgs) =>
         postData(`${EscalationEndPoint.CREATE_ESCALATION}`, {
@@ -27,6 +28,9 @@ export const useCreateEscalations = () => {
 
     return useMutation({
         mutationKey: EscalationQueryKey.CREATE_ESCALATION,
-        mutationFn: createEscalation
+        mutationFn: createEscalation,
+        onSuccess: () => {
+            queryClient.invalidateQueries(EscalationQueryKey.FETCH_ALL_ESCALATIONS);
+        }
     });
 }

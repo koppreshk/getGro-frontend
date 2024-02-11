@@ -28,7 +28,15 @@ export const TicketEscalationForm = (props: TicketEscalationFormProps) => {
     const isInEditMode = useMemo(() => mode === 'edit', [mode]);
 
     const form = useForm<ITicketEscalationFormFields>({
-        defaultValues: defaultValues
+        defaultValues: defaultValues ?? {
+            after: '',
+            alert: 2,
+            conditions: '',
+            name: '',
+            queues: '',
+            statuses: '',
+            subStatuses: ''
+        }
     });
 
     const { after, conditions, queues, statuses, subStatuses } = rest;

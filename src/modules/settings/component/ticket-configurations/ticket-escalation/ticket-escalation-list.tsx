@@ -4,6 +4,7 @@ import { ConfigDataGrid } from 'lib/ui-ux/configuration-data-grid';
 import { EscalationConditions } from 'modules/settings/apis/escalations';
 import { FlexBox } from 'lib/ui-ux';
 import EditEscalation from './edit-escalation';
+import { DeleteEscalation } from './delete-escalation';
 
 interface ITicketEscalationListProps extends ITicketEscalaltionLayoutProps {
 
@@ -50,6 +51,7 @@ const useColumns = () => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
                         <EditEscalation escalaltionMetadata={original} />
+                        <DeleteEscalation id={original.id} />
                     </FlexBox>
                 )
             },
