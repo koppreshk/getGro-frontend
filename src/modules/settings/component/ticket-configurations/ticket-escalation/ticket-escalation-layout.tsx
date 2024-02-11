@@ -2,67 +2,17 @@
 import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { createColumnHelper } from "@tanstack/react-table";
-import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid"
 import { Add } from "@mui/icons-material"
 import { Button, Typography } from "@mui/material"
 import { CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-ux"
 import { CreateTicketEscalationContainer } from "modules/settings/containers";
 import { EscalationConditions } from "modules/settings/apis/escalations";
+import TicketEscalationList from "./ticket-escalation-list";
 
-export interface IUserData {
-    firstName: string
-    lastName: string
-    age: number
-    gender: string
-    visits: number
-    progress: number
-}
-
-interface ITicketEscalaltionLayoutProps {
+export interface ITicketEscalaltionLayoutProps {
     isLoading: boolean;
     escalationConditions: EscalationConditions[]
 }
-
-const useColumns = () => {
-    const columnHelper = createColumnHelper<EscalationConditions>();
-
-    const columns = [
-        columnHelper.accessor("name", {
-            id: 'name',
-            cell: info => info.getValue(),
-            header: () => 'Name',
-        }),
-        columnHelper.accessor("condition", {
-            id: 'condition',
-            cell: info => info.getValue(),
-            header: () => 'Condition',
-        }),
-        columnHelper.accessor("after", {
-            id: 'after',
-            cell: info => info.getValue(),
-            header: () => 'After',
-        }),
-        columnHelper.accessor("designation_type", {
-            id: 'designation_type',
-            cell: info => info.getValue(),
-            header: () => 'Designation Type',
-        }),
-        columnHelper.accessor("status", {
-            id: 'status',
-            cell: info => info.getValue(),
-            header: () => 'Status',
-        }),
-        columnHelper.accessor("type_of_ticket", {
-            id: 'type_of_ticket',
-            cell: info => info.getValue(),
-            header: () => 'Type Of Ticket',
-        })
-    ]
-
-    return columns;
-}
-
 
 const AddNewEscalation = (props: {
     openAddEscalationDrawer: boolean;
@@ -83,8 +33,6 @@ const AddNewEscalation = (props: {
 }
 
 export const TicketEscalationLayout = (props: ITicketEscalaltionLayoutProps) => {
-    const { escalationConditions, isLoading } = props;
-    const columns = useColumns();
     const [openAddEscalationDrawer, setOpenAddEscalationDrawer] = React.useState(false);
     const navigate = useNavigate();
 
@@ -102,7 +50,7 @@ export const TicketEscalationLayout = (props: ITicketEscalaltionLayoutProps) => 
                 <Button variant="contained" onClick={toggleAddEscalationDrawer} startIcon={<Add />}>Add Escalation</Button>
                 <AddNewEscalation openAddEscalationDrawer={openAddEscalationDrawer} toggleAddEscalationDrawer={toggleAddEscalationDrawer} />
             </FlexBox>
-            <ConfigDataGrid columns={columns} isLoading={isLoading} data={escalationConditions} />
+            <TicketEscalationList {...props} />
         </FlexBox>
     )
 }
