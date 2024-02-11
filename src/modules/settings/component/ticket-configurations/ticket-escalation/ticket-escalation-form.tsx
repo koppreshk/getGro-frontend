@@ -1,12 +1,12 @@
 import React, { useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { Button, Grid, Step, StepLabel, Stepper } from "@mui/material";
-import { capitalizeFirstLetter } from "lib/utils";
-import { SelectField, TextboxField } from "lib/form-fields"
+import { Button, Step, StepLabel, Stepper } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { IEscalationMetadata } from "modules/settings/apis/escalations";
+import { EscalationActionsForm } from "./escalation-actions-form";
+import { EscalationConditionForm } from "./escalation-condition-form";
 
-interface TicketEscalationFormProps extends Pick<IEscalationMetadata, 'after' | 'conditions' | 'queues' | 'statuses'> {
+export interface TicketEscalationFormProps extends Pick<IEscalationMetadata, 'after' | 'conditions' | 'queues' | 'statuses'> {
     subStatuses: string[];
     onFormSubmitHandler: (formData: ITicketEscalationFormFields) => void;
     defaultValues?: ITicketEscalationFormFields;
@@ -69,7 +69,7 @@ export const TicketEscalationForm = (props: TicketEscalationFormProps) => {
                         );
                     })}
                 </Stepper>
-                {activeStep === 0 ? <EscalationConditionForm {...rest} /> : <span>actions</span>}
+                {activeStep === 0 ? <EscalationConditionForm {...rest} /> : <EscalationActionsForm />}
                 <FlexBox gap='10px' width="100%" justifyContent="flex-end">
                     <Button
                         color="inherit"
@@ -89,36 +89,5 @@ export const TicketEscalationForm = (props: TicketEscalationFormProps) => {
                 </FlexBox>
             </FlexBox>
         </FormProvider>
-    )
-}
-
-const EscalationConditionForm = (props: Pick<TicketEscalationFormProps, 'after' | 'conditions' | 'queues' | 'statuses' | 'subStatuses'>) => {
-    const { after, conditions, queues, statuses, subStatuses } = props;
-    return (
-        <>
-            <Grid container spacing={2}>
-                <Grid item xs={6}>
-                    <TextboxField name="name" label="Name" />
-                </Grid>
-                <Grid item xs={6}>
-                    <SelectField sx={{ width: '100%' }} name="after" label="After" menuOptions={after.map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} />
-                </Grid>
-                <Grid item xs={12}>
-                    <SelectField sx={{ width: '100%' }} name="conditions" label="Conditions" menuOptions={conditions.map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} />
-                </Grid>
-                <Grid item xs={6}>
-                    <TextboxField name="alert" label="Alert(in min)" type="number" />
-                </Grid>
-                <Grid item xs={6}>
-                    <SelectField sx={{ width: '100%' }} name="queues" label="Queues" menuOptions={queues.map((item) => ({ key: item.uniqueKey, value: capitalizeFirstLetter(item.name, '_') }))} />
-                </Grid>
-                <Grid item xs={12}>
-                    <SelectField sx={{ width: '100%' }} name="statuses" label="Statuses" menuOptions={statuses.map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} />
-                </Grid>
-                <Grid item xs={12}>
-                    <SelectField sx={{ width: '100%' }} name="subStatuses" label="Sub Statuses" menuOptions={subStatuses.map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} />
-                </Grid>
-            </Grid>
-        </>
     )
 }
