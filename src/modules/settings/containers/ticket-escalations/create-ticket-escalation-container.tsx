@@ -1,6 +1,6 @@
 import { useCreateEscalations, useFetchEscalationMetadata } from "../../apis/escalations"
 import { CenteredCircularProgress } from "lib/ui-ux";
-import { CreateTicketEscalation, ITicketEscalationFormFields } from "../../component/ticket-configurations/ticket-escalation";
+import { ITicketEscalationFormFields, TicketEscalationForm } from "../../component/ticket-configurations/ticket-escalation";
 import { useCallback } from "react";
 import { useNotifications } from "lib";
 
@@ -35,7 +35,7 @@ export const CreateTicketEscalationContainer = (props: ICreateTicketEscalationCo
     if (data) {
         return (
             <>
-                <CreateTicketEscalation {...data} subStatuses={data.sub_statuses} onAddEscalation={onAddEscalation} />
+                <TicketEscalationForm {...data} mode="create" subStatuses={data.sub_statuses} onFormSubmitHandler={onAddEscalation} />
             </>
         )
     }
