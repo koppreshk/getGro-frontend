@@ -22,6 +22,10 @@ export interface ITicketEscalationFormFields {
     queues: string;
     statuses: string;
     subStatuses: string;
+    customerClassification: string,
+    designationType: string,
+    lastConversationType: string,
+    typeOfTicket: string,
     autoDispose: {
         escalateTo: string;
         dispostionType: string;
@@ -74,6 +78,10 @@ const formDefaultValues = {
     queues: '',
     statuses: '',
     subStatuses: '',
+    customerClassification: '',
+    designationType: '',
+    lastConversationType: '',
+    typeOfTicket: '',
     autoDispose: {
         dispostionType: '',
         escalateTo: '',

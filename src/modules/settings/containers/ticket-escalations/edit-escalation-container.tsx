@@ -18,7 +18,17 @@ export const EditEscalationContainer = (props: IEditEscalationContainerProps) =>
     const onEditEscalation = React.useCallback((formData: ITicketEscalationFormFields) => {
         editEscalation({
             id: escalationMetadata.id,
-            name: formData.name
+            name: formData.name,
+            after: formData.after,
+            alert_time: formData.alert,
+            condition: formData.conditions,
+            customer_classification: formData.customerClassification,
+            designation_type: formData.designationType,
+            last_conversation_type: formData.lastConversationType,
+            queue_list_id: formData.queues,
+            status: formData.statuses,
+            sub_status: formData.subStatuses,
+            type_of_ticket: formData.typeOfTicket
         }).then(() => {
             showNotification({ message: 'Escalation edited successfully', type: 'success' });
             toggleAddEscalationDrawer();
@@ -48,6 +58,10 @@ export const EditEscalationContainer = (props: IEditEscalationContainerProps) =>
                 queues: escalationMetadata.queue_list_id || '',
                 statuses: escalationMetadata.status,
                 subStatuses: escalationMetadata.sub_status,
+                customerClassification: escalationMetadata.customer_classification || '',
+                designationType: escalationMetadata.designation_type || '',
+                lastConversationType: escalationMetadata.last_conversation_type || '',
+                typeOfTicket: escalationMetadata.type_of_ticket || '',
                 autoDispose: {
                     dispostionType: '',
                     escalateTo: '',

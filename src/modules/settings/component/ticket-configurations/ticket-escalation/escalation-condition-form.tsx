@@ -23,11 +23,23 @@ export const EscalationConditionForm = (props: Pick<TicketEscalationFormProps, '
                 <Grid item xs={6}>
                     <SelectField sx={{ width: '100%' }} name="queues" label="Queues" menuOptions={queues.map((item) => ({ key: item.uniqueKey, value: capitalizeFirstLetter(item.name, '_') }))} />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                     <SelectField sx={{ width: '100%' }} name="statuses" label="Statuses" menuOptions={statuses.map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                     <SelectField sx={{ width: '100%' }} name="subStatuses" label="Sub Statuses" menuOptions={subStatuses.map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} />
+                </Grid>
+                <Grid item xs={6}>
+                    <SelectField sx={{ width: '100%' }} name="customerClassification" label="Customer Classification" menuOptions={[].map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} />
+                </Grid>
+                <Grid item xs={6}>
+                    <SelectField sx={{ width: '100%' }} name="designationType" label="Designation Type" menuOptions={[].map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} />
+                </Grid>
+                <Grid item xs={6}>
+                    <SelectField sx={{ width: '100%' }} name="lastConversationType" label="Last Conversation Type" menuOptions={[].map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} />
+                </Grid>
+                <Grid item xs={6}>
+                    <SelectField sx={{ width: '100%' }} name="typeOfTicket" label="Type Of Ticket" menuOptions={[].map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} />
                 </Grid>
             </Grid>
         </>

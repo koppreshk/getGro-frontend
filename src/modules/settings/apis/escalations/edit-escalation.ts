@@ -8,11 +8,8 @@ export const useEditEscalation = () => {
     const { postData } = useServiceClient();
     const queryClient = useQueryClient();
 
-    const editEscalation = React.useCallback((args: Pick<EscalationConditions, 'id' | 'name'>) =>
-        postData(`${EscalationEndPoint.EDIT_ESCALATION}`, {
-            name: args.name,
-            id: args.id,
-        }).then((res) => res.json()), [postData]);
+    const editEscalation = React.useCallback((args: EscalationConditions) =>
+        postData(`${EscalationEndPoint.EDIT_ESCALATION}`, args).then((res) => res.json()), [postData]);
 
     return useMutation({
         mutationKey: EscalationQueryKey.EDIT_ESCALATION,
