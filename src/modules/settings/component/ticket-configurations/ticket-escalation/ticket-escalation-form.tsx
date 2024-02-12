@@ -163,7 +163,7 @@ export const TicketEscalationForm = (props: TicketEscalationFormProps) => {
                         variant="contained"
                         size="large"
                         type="submit"
-                        onClick={() => activeStep === steps.length - 1 ? form.handleSubmit(onSubmit) : handleNext()}>
+                        onClick={() => activeStep === steps.length - 1 ? form.handleSubmit(onSubmit)() : handleNext()}>
                         {activeStep === steps.length - 1 ? isInEditMode ? 'Edit Escalaltion' : 'Add Escalation' : 'Next'}
                     </Button>
                 </FlexBox>
