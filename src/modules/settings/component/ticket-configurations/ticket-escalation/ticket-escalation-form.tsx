@@ -1,11 +1,11 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Button, Step, StepLabel, Stepper } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { IEscalationMetadata } from "modules/settings/apis/escalations";
 import { EscalationActionsForm } from "./escalation-actions-form";
 import { EscalationConditionForm } from "./escalation-condition-form";
-import { KeyboardArrowLeft } from "@mui/icons-material";
+import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 
 export interface TicketEscalationFormProps extends Pick<IEscalationMetadata, 'after' | 'conditions' | 'queues' | 'statuses'> {
     subStatuses: string[];
@@ -119,16 +119,20 @@ export const TicketEscalationForm = (props: TicketEscalationFormProps) => {
     const [activeStep, setActiveStep] = React.useState(0);
 
     const form = useForm<ITicketEscalationFormFields>({
-        defaultValues: defaultValues ?? formDefaultValues
+        defaultValues: defaultValues ?? formDefaultValues,
+        mode: 'onBlur'
     });
 
     const onSubmit = React.useCallback(async (formvalues: ITicketEscalationFormFields) => {
         onFormSubmitHandler(formvalues);
     }, [onFormSubmitHandler]);
 
-    const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    };
+    const handleNext = useCallback(async () => {
+        const isFormValidated = await form.trigger();
+        if (isFormValidated) {
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        }
+    }, [form]);
 
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -149,23 +153,25 @@ export const TicketEscalationForm = (props: TicketEscalationFormProps) => {
                 <div style={{ height: 'calc(100% - 140px)' }}>
                     {activeStep === 0 ? <EscalationConditionForm {...rest} /> : <EscalationActionsForm />}
                 </div>
-                <FlexBox gap='10px' width="100%" justifyContent="flex-end">
-                    <Button
-                        color="inherit"
-                        disabled={activeStep === 0}
-                        onClick={handleBack}
-                        startIcon={<KeyboardArrowLeft />}
-                        sx={{ mr: 1 }}>
-                        Back
-                    </Button>
-                    {isInEditMode ? <Button variant="text" color="inherit" size="large" type="button" onClick={() => form.reset()}>{'Reset'}</Button> : null}
-                    <Button
-                        variant="contained"
-                        size="large"
-                        type="submit"
-                        onClick={() => activeStep === steps.length - 1 ? form.handleSubmit(onSubmit)() : handleNext()}>
-                        {activeStep === steps.length - 1 ? isInEditMode ? 'Edit Escalaltion' : 'Add Escalation' : 'Next'}
-                    </Button>
+                <FlexBox gap='10px' width="100%" justifyContent="space-between">
+                    {isInEditMode ? <Button variant="outlined" size="large" type="button" onClick={() => form.reset()}>{'Reset'}</Button> : null}
+                    <FlexBox gap='10px' >
+                        <Button
+                            color="inherit"
+                            disabled={activeStep === 0}
+                            onClick={handleBack}
+                            startIcon={<KeyboardArrowLeft />}>
+                            Back
+                        </Button>
+                        <Button
+                            variant="contained"
+                            size="large"
+                            type="submit"
+                            endIcon={activeStep !== steps.length - 1 ? <KeyboardArrowRight /> : undefined}
+                            onClick={() => activeStep === steps.length - 1 ? form.handleSubmit(onSubmit)() : handleNext()}>
+                            {activeStep === steps.length - 1 ? isInEditMode ? 'Update Escalation' : 'Add Escalation' : 'Next'}
+                        </Button>
+                    </FlexBox>
                 </FlexBox>
             </FlexBox>
         </FormProvider>

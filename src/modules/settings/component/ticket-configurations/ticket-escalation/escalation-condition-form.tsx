@@ -9,7 +9,7 @@ export const EscalationConditionForm = (props: Pick<TicketEscalationFormProps, '
         <>
             <Grid container spacing={2}>
                 <Grid item xs={6}>
-                    <TextboxField name="name" label="Name" />
+                    <TextboxField name="name" label="Name" placeholder="Escalation name" rules={{ required: 'Name is required' }} />
                 </Grid>
                 <Grid item xs={6}>
                     <SelectField sx={{ width: '100%' }} name="after" label="After" menuOptions={after.map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} />
