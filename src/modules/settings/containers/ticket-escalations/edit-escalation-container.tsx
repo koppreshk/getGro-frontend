@@ -47,7 +47,44 @@ export const EditEscalationContainer = (props: IEditEscalationContainerProps) =>
                 name: escalationMetadata.name,
                 queues: escalationMetadata.queue_list_id || '',
                 statuses: escalationMetadata.status,
-                subStatuses: escalationMetadata.sub_status
+                subStatuses: escalationMetadata.sub_status,
+                autoDispose: {
+                    dispostionType: '',
+                    escalateTo: '',
+                    priority: ''
+                },
+                customEmailEscalation: {
+                    customEmailTemplate: '',
+                    customPhone: ''
+                },
+                customerEmailEscalation: {
+                    customerTemplate: ''
+                },
+                customerSMSEscalation: {
+                    customerTemplate: ''
+                },
+                customSMSEscalation: {
+                    customPhone: '',
+                    customSMSTemplate: ''
+                },
+                internalEmailEscalation: {
+                    assignedTemplate: '',
+                    creatorTemplate: '',
+                    managerTemplate: '',
+                    teamLeaderTemplate: ''
+                },
+                internalSMSEscalation: {
+                    assignedTemplate: '',
+                    creatorTemplate: '',
+                    managerTemplate: '',
+                    teamLeaderTemplate: ''
+                },
+                internalWebNotification: {
+                    toAssignee: false,
+                    toCreator: false,
+                    toManager: false,
+                    toTeamLeader: false
+                }
             }} />
     )
 }
