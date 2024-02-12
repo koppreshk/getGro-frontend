@@ -153,7 +153,7 @@ export const TicketEscalationForm = (props: TicketEscalationFormProps) => {
                 <div style={{ height: 'calc(100% - 140px)' }}>
                     {activeStep === 0 ? <EscalationConditionForm {...rest} /> : <EscalationActionsForm />}
                 </div>
-                <FlexBox gap='10px' width="100%" justifyContent="space-between">
+                <FlexBox gap='10px' width="100%" justifyContent={isInEditMode ? "space-between" : 'flex-end'}>
                     {isInEditMode ? <Button variant="outlined" size="large" type="button" onClick={() => form.reset()}>{'Reset'}</Button> : null}
                     <FlexBox gap='10px' >
                         <Button
