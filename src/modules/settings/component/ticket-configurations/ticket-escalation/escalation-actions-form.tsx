@@ -1,6 +1,6 @@
 import { ExpandMore } from "@mui/icons-material";
 import { AccordionSummary, Accordion, AccordionDetails, styled } from "@mui/material";
-import { SelectField, SwitchField } from "lib/form-fields";
+import { SelectField, SwitchField, TextboxField } from "lib/form-fields";
 import { FlexBox } from "lib/ui-ux";
 
 const StyledAccordianHeader = styled(AccordionSummary)`
@@ -64,6 +64,40 @@ const escalationActions = [
                     <SwitchField name="internalWebNotification.toTeamLeader" label="To Team Leader" />
                     <SwitchField name="internalWebNotification.toManager" label="To Manager" />
                 </FlexBox>
+            </FlexBox>
+        )
+    },
+    {
+        headerLabel: 'Customer SMS Escalation',
+        onRenderContent: () => (
+            <FlexBox flexDirection="column" gap="16px">
+                <SelectField name="customerSMSEscalation.customerTemplate" label="Customer Template" menuOptions={[]} sx={{ width: '100%' }} />
+            </FlexBox>
+        )
+    },
+    {
+        headerLabel: 'Customer Email Escalation',
+        onRenderContent: () => (
+            <FlexBox flexDirection="column" gap="16px">
+                <SelectField name="customerEmailEscalation.customerTemplate" label="Customer Template" menuOptions={[]} sx={{ width: '100%' }} />
+            </FlexBox>
+        )
+    },
+    {
+        headerLabel: 'Custom SMS Escalation',
+        onRenderContent: () => (
+            <FlexBox flexDirection="row" gap="16px">
+                <TextboxField name="customSMSEscalation.customPhone" label="Custom Phone" />
+                <SelectField name="customSMSEscalation.customSMSTemplate" label="Custom SMS Template" menuOptions={[]} sx={{ width: '50%' }} />
+            </FlexBox>
+        )
+    },
+    {
+        headerLabel: 'Custom Email Escalation',
+        onRenderContent: () => (
+            <FlexBox flexDirection="row" gap="16px">
+                <TextboxField name="customEmailEscalation.customPhone" label="Custom Email" />
+                <SelectField name="customEmailEscalation.customEmailTemplate" label="Custom Email Template" menuOptions={[]} sx={{ width: '50%' }} />
             </FlexBox>
         )
     }

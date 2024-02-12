@@ -22,6 +22,43 @@ export interface ITicketEscalationFormFields {
     queues: string;
     statuses: string;
     subStatuses: string;
+    autoDispose: {
+        escalateTo: string;
+        dispostionType: string;
+        priority: string;
+    }
+    internalSMSEscalation: {
+        assignedTemplate: string;
+        creatorTemplate: string;
+        teamLeaderTemplate: string;
+        managerTemplate: string;
+    }
+    internalEmailEscalation: {
+        assignedTemplate: string;
+        creatorTemplate: string;
+        teamLeaderTemplate: string;
+        managerTemplate: string;
+    }
+    internalWebNotification: {
+        toAssignee: boolean;
+        toCreator: boolean;
+        toTeamLeader: boolean;
+        toManager: boolean;
+    }
+    customerSMSEscalation: {
+        customerTemplate: string;
+    }
+    customerEmailEscalation: {
+        customerTemplate: string;
+    }
+    customSMSEscalation: {
+        customPhone: string;
+        customSMSTemplate: string;
+    }
+    customEmailEscalation: {
+        customPhone: string;
+        customEmailTemplate: string;
+    }
 }
 
 const steps = [
@@ -29,21 +66,60 @@ const steps = [
     'Set Actions for Escalation'
 ];
 
+const formDefaultValues = {
+    after: '',
+    alert: 2,
+    conditions: '',
+    name: '',
+    queues: '',
+    statuses: '',
+    subStatuses: '',
+    autoDispose: {
+        dispostionType: '',
+        escalateTo: '',
+        priority: ''
+    },
+    customEmailEscalation: {
+        customEmailTemplate: '',
+        customPhone: ''
+    },
+    customerEmailEscalation: {
+        customerTemplate: ''
+    },
+    customerSMSEscalation: {
+        customerTemplate: ''
+    },
+    customSMSEscalation: {
+        customPhone: '',
+        customSMSTemplate: ''
+    },
+    internalEmailEscalation: {
+        assignedTemplate: '',
+        creatorTemplate: '',
+        managerTemplate: '',
+        teamLeaderTemplate: ''
+    },
+    internalSMSEscalation: {
+        assignedTemplate: '',
+        creatorTemplate: '',
+        managerTemplate: '',
+        teamLeaderTemplate: ''
+    },
+    internalWebNotification: {
+        toAssignee: false,
+        toCreator: false,
+        toManager: false,
+        toTeamLeader: false
+    }
+}
+
 export const TicketEscalationForm = (props: TicketEscalationFormProps) => {
     const { onFormSubmitHandler, mode, defaultValues, ...rest } = props;
     const isInEditMode = useMemo(() => mode === 'edit', [mode]);
     const [activeStep, setActiveStep] = React.useState(0);
 
     const form = useForm<ITicketEscalationFormFields>({
-        defaultValues: defaultValues ?? {
-            after: '',
-            alert: 2,
-            conditions: '',
-            name: '',
-            queues: '',
-            statuses: '',
-            subStatuses: ''
-        }
+        defaultValues: defaultValues ?? formDefaultValues
     });
 
     const onSubmit = React.useCallback(async (formvalues: ITicketEscalationFormFields) => {
