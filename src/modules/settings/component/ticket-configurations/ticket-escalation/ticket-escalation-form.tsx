@@ -5,6 +5,7 @@ import { FlexBox } from "lib/ui-ux";
 import { IEscalationMetadata } from "modules/settings/apis/escalations";
 import { EscalationActionsForm } from "./escalation-actions-form";
 import { EscalationConditionForm } from "./escalation-condition-form";
+import { KeyboardArrowLeft } from "@mui/icons-material";
 
 export interface TicketEscalationFormProps extends Pick<IEscalationMetadata, 'after' | 'conditions' | 'queues' | 'statuses'> {
     subStatuses: string[];
@@ -69,22 +70,25 @@ export const TicketEscalationForm = (props: TicketEscalationFormProps) => {
                         );
                     })}
                 </Stepper>
-                {activeStep === 0 ? <EscalationConditionForm {...rest} /> : <EscalationActionsForm />}
+                <div style={{ height: 'calc(100% - 140px)' }}>
+                    {activeStep === 0 ? <EscalationConditionForm {...rest} /> : <EscalationActionsForm />}
+                </div>
                 <FlexBox gap='10px' width="100%" justifyContent="flex-end">
                     <Button
                         color="inherit"
                         disabled={activeStep === 0}
                         onClick={handleBack}
+                        startIcon={<KeyboardArrowLeft />}
                         sx={{ mr: 1 }}>
                         Back
                     </Button>
-                    {isInEditMode ? <Button variant="text" size="large" type="button" onClick={() => form.reset()}>{'Reset'}</Button> : null}
+                    {isInEditMode ? <Button variant="text" color="inherit" size="large" type="button" onClick={() => form.reset()}>{'Reset'}</Button> : null}
                     <Button
                         variant="contained"
                         size="large"
                         type="submit"
                         onClick={() => activeStep === steps.length - 1 ? form.handleSubmit(onSubmit) : handleNext()}>
-                        {isInEditMode ? 'Edit Escalaltion' : activeStep === steps.length - 1 ? 'Add Escalation' : 'Next'}
+                        {activeStep === steps.length - 1 ? isInEditMode ? 'Edit Escalaltion' : 'Add Escalation' : 'Next'}
                     </Button>
                 </FlexBox>
             </FlexBox>
