@@ -9,11 +9,13 @@ import { CoreLayout } from "./modules/core/pages/core-layout-page";
 import { ThemeProvider, defaultMUITheme } from "themes";
 import { NotificationProvider, ServiceClientProvider } from "lib";
 import ticketsReducer from './modules/tickets/storage/tickets-slice';
+import configurationsReducer from './modules/settings/storage/configurations-slice';
 import { AuthProvider } from "modules/login/auth-provider-context";
 
 const store = configureStore({
   reducer: {
-    tickets: ticketsReducer
+    tickets: ticketsReducer,
+    configurations: configurationsReducer
   },
 })
 

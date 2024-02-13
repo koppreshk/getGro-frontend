@@ -10,6 +10,7 @@ import { createColumnHelper } from "@tanstack/react-table";
 interface ITicketQueueListProps {
     queueData: Queue[];
     isLoading: boolean;
+    totalPage: number;
 }
 
 const useColumns = () => {
@@ -66,9 +67,9 @@ const useColumns = () => {
 };
 
 export const TicketQueueList = (props: ITicketQueueListProps) => {
-    const { queueData, isLoading } = props;
+    const { queueData, isLoading, totalPage } = props;
     const colums = useColumns();
     return (
-        <ConfigDataGrid columns={colums} isLoading={isLoading} data={queueData} />
+        <ConfigDataGrid columns={colums} isLoading={isLoading} data={queueData} totalPages={totalPage}/>
     )
 }
