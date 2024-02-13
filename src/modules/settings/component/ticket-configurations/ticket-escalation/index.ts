@@ -1,2 +1,2 @@
 export * from './ticket-escalation-layout';
-export * from './create-ticket-escalation';
+export * from './ticket-escalation-form';
