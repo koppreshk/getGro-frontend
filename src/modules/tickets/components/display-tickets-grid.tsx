@@ -174,7 +174,6 @@ export const DisplayTicketsGrid = (props: IDisplayTicketsGridProps) => {
     const columns = useColumns();
     const dispatch = useAppDispatch();
     const [searchParams] = useSearchParams();
-    const { totalPages } = useAppSelector((state) => state.tickets);
     const noOfRecords = searchParams.get('noOfRecords');
     const pageNumber = searchParams.get('pageNumber');
     const match = useMatch('/:tickets/:ticketType')
@@ -188,6 +187,8 @@ export const DisplayTicketsGrid = (props: IDisplayTicketsGridProps) => {
         dispatch(setTotalPages(props.totalPages));
     }, [dispatch, props.totalPages]);
 
+    const { totalPages } = useAppSelector((state) => state.tickets);
+    
     return (
         <>
             {
