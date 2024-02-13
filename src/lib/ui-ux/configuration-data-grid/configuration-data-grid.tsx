@@ -3,7 +3,7 @@ import { SortingState, TableOptions, flexRender, getCoreRowModel, getSortedRowMo
 import styled, { useTheme } from "styled-components";
 import { IconButton, Skeleton, Typography } from "@mui/material";
 import { ExpandLess, ExpandMore, UnfoldMore } from "@mui/icons-material";
-import { FlexBox } from "..";
+import { FlexBox, TableControls } from "..";
 
 const StyledTable = styled.table`
     border-collapse: collapse;
@@ -66,7 +66,8 @@ export const ConfigDataGrid = <T extends object>(props: IConfigDataGridProps<T>)
     })
 
     return (
-        <DataGridWrapper className="datagridwrapper" height="100%">
+        <DataGridWrapper className="datagridwrapper" height="100%" flexDirection="column">
+            <TableControls table={table} />
             <StyledTable>
                 <thead>
                     {table.getHeaderGroups().map(headerGroup => (

@@ -6,7 +6,7 @@ import { Row, createColumnHelper } from "@tanstack/react-table";
 import { Facebook, Email, WhatsApp, Twitter, LocalPhone, Instagram, Sms } from '@mui/icons-material';
 import { DataGrid, NoDataIllustration } from "lib/ui-ux"
 import { ITicketDetails } from "../apis";
-import { useAppDispatch } from "lib/hooks";
+import { useAppDispatch, useAppSelector } from "lib/hooks";
 import { setTotalPages } from "../storage";
 import { getFormattedDate } from "lib/utils";
 
@@ -174,6 +174,7 @@ export const DisplayTicketsGrid = (props: IDisplayTicketsGridProps) => {
     const columns = useColumns();
     const dispatch = useAppDispatch();
     const [searchParams] = useSearchParams();
+    const { totalPages } = useAppSelector((state) => state.tickets);
     const noOfRecords = searchParams.get('noOfRecords');
     const pageNumber = searchParams.get('pageNumber');
     const match = useMatch('/:tickets/:ticketType')
@@ -191,7 +192,7 @@ export const DisplayTicketsGrid = (props: IDisplayTicketsGridProps) => {
         <>
             {
                 (data.length > 0 || props.isLoading) ?
-                    <DataGrid {...props} columns={columns} onRowClick={onRowClick} />
+                    <DataGrid {...props} columns={columns} onRowClick={onRowClick} totalPages={totalPages}/>
                     :
                     <NoDataIllustration message="No tickets to display" />
             }

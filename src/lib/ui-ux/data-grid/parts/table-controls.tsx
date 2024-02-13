@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { IconButton, Slider, Tooltip, Typography } from "@mui/material";
 import { FlexBox, VerticalSeparator } from "lib/ui-ux";
 import { ArchiveOutlined, AssignmentIndOutlined, ChevronLeft, ChevronRight, DeleteOutline, KeyboardDoubleArrowLeft, KeyboardDoubleArrowRight, MarkChatReadOutlined, MarkUnreadChatAltOutlined } from '@mui/icons-material';
-import { useAppSelector } from "lib/hooks";
 import { Table } from "@tanstack/react-table";
 
 const StyledFlexBox = styled(FlexBox)`
@@ -46,11 +45,11 @@ function valuetext(value: number) {
 
 interface ITableControlProps<T> {
     table: Table<T>;
+    totalPages?: number;
 }
 
 export const TableControls = <T extends object>(props: ITableControlProps<T>) => {
-    const { table } = props;
-    const { totalPages } = useAppSelector((state) => state.tickets);
+    const { table, totalPages } = props;
     const [searchParams, setSearchParams] = useSearchParams();
     const pageNumber = Number(searchParams.get('pageNumber')) || 1;
     const noOfRecords = Number(searchParams.get('noOfRecords')) || 10;
@@ -72,7 +71,7 @@ export const TableControls = <T extends object>(props: ITableControlProps<T>) =>
     }, [searchParams, setSearchParams]);
 
     const lastBtnClick = useCallback(() => {
-        searchParams.set('pageNumber', totalPages.toString());
+        searchParams.set('pageNumber', totalPages!.toString());
         setSearchParams(searchParams);
     }, [searchParams, setSearchParams, totalPages]);
 
