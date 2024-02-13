@@ -11,7 +11,8 @@ import TicketEscalationList from "./ticket-escalation-list";
 
 export interface ITicketEscalaltionLayoutProps {
     isLoading: boolean;
-    escalationConditions: EscalationConditions[]
+    escalationConditions: EscalationConditions[];
+    totalPages: number;
 }
 
 const AddNewEscalation = (props: {

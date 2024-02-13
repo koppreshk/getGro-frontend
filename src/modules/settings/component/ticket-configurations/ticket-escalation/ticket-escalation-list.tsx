@@ -64,9 +64,9 @@ const useColumns = () => {
 
 function TicketEscalationList(props: ITicketEscalationListProps) {
     const columns = useColumns();
-    const { escalationConditions, isLoading } = props;
+    const { escalationConditions, isLoading, totalPages } = props;
     return (
-        <ConfigDataGrid columns={columns} isLoading={isLoading} data={escalationConditions} />
+        <ConfigDataGrid columns={columns} isLoading={isLoading} data={escalationConditions}totalPages={totalPages} />
     );
 }
 

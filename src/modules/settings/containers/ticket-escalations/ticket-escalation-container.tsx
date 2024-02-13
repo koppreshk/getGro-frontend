@@ -5,10 +5,10 @@ import { ErrorMessage } from "lib/ui-ux";
 export const TicketEscalationContainer = () => {
     const { data, isLoading, error } = useFetchAllEscalations();
 
-    if (data || isLoading) {
+    if (data || isLoading) {        
         return (
             <>
-                <TicketEscalationLayout isLoading={isLoading} escalationConditions={data?.escalation_conditions || []} />
+                <TicketEscalationLayout isLoading={isLoading} escalationConditions={data?.escalation_conditions || []} totalPages={data?.total_pages ?? 0}/>
             </>
         )
     }
