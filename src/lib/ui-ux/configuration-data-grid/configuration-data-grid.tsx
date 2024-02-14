@@ -33,13 +33,14 @@ const ScrollableDiv = styled.div`
     overflow: auto;
 `
 
-interface IConfigDataGridProps<T> extends Pick<TableOptions<T>, 'data' | 'columns'> {
+export interface IConfigDataGridProps<T> extends Pick<TableOptions<T>, 'data' | 'columns'> {
     isLoading?: boolean;
     totalPages?: number
+    enableSerchField?: boolean;
 }
 
 export const ConfigDataGrid = <T extends object>(props: IConfigDataGridProps<T>) => {
-    const { columns, data, isLoading, totalPages } = props;
+    const { columns, data, isLoading, totalPages, enableSerchField } = props;
     const memoizedData = useMemo(() => isLoading ? Array(10).fill({}) : data, [data, isLoading]);
     const memoizedColumns = useMemo(() =>
         isLoading
@@ -72,9 +73,8 @@ export const ConfigDataGrid = <T extends object>(props: IConfigDataGridProps<T>)
 
     return (
         <DataGridWrapper className="datagridwrapper" height="100%" flexDirection="column">
-            <TableControls table={table} totalPages={totalPages} />
+            <TableControls table={table} totalPages={totalPages} enableSerchField={enableSerchField} />
             <ScrollableDiv>
-
                 <StyledTable>
                     <thead>
                         {table.getHeaderGroups().map(headerGroup => (

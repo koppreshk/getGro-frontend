@@ -82,6 +82,6 @@ export const TicketQueueList = (props: ITicketQueueListProps) => {
     const configTotalPages = useAppSelector((state) => state.configurations.totalPages);
 
     return (
-        <ConfigDataGrid columns={colums} isLoading={isLoading} data={queueData} totalPages={configTotalPages} />
+        <ConfigDataGrid columns={colums} isLoading={isLoading} data={queueData} totalPages={configTotalPages} enableSerchField />
     )
 }
