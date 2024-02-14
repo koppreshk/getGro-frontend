@@ -12,4 +12,5 @@ export * from './unlink-customer';
 export * from './fetch-all-completed-tickets';
 export * from './fetch-all-pending-tickets';
 export * from './fetch-all-tickets';
+export * from './fetch-all-assigned';
 export * from './get-data-by-key';

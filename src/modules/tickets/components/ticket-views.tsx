@@ -47,7 +47,8 @@ const useViewOptions = () => {
             name: 'All',
             primaryKey: 'all',
             route: 'all',
-            showOption: authorize(TicketAccessRights.All)
+            // showOption: authorize(TicketAccessRights.All), //hiding this option until we get some clarity
+            showOption: false
         },
         {
             name: 'Unassigned',

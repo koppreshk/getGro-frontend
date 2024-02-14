@@ -1,7 +1,10 @@
 import { FlexBox } from "lib/ui-ux"
 import { TicketViews } from "../components"
 import { Navigate, Route, Routes, useMatch } from "react-router-dom"
-import { AllCompletedTicketsContainer, CreatedByMeTicketsContainer, UnassignedTicketsContainer, AllPendingTicketsContainer } from "../containers"
+import {
+    AllCompletedTicketsContainer, CreatedByMeTicketsContainer, UnassignedTicketsContainer,
+    AllPendingTicketsContainer, AssignedToMeTicketsContainer
+} from "../containers"
 import { TicketDetailsLayout } from "../components/ticket-details"
 import { useAuth } from "modules/login";
 import { AllTicketsContainer } from "../containers/all-tickets-container"
@@ -21,12 +24,12 @@ export default function TicketsPage() {
                         <Route key="all-pending" path="/all-pending" element={<AllPendingTicketsContainer />} />
                         <Route key="all-complete" path="/all-complete" element={<AllCompletedTicketsContainer />} />
                         <Route key="all-junk" path="/all-junk" element={<UnassignedTicketsContainer />} />
-                        <Route key="assigned-to-me" path="/assigned-to-me" element={<UnassignedTicketsContainer />} />
+                        <Route key="assigned-to-me" path="/assigned-to-me" element={<AssignedToMeTicketsContainer />} />
                         <Route key="created-by-me" path="/created-by-me" element={<CreatedByMeTicketsContainer />} />
                         <Route key="completed-by-me" path="/completed-by-me" element={<UnassignedTicketsContainer />} />
                         <Route key="completed-by-team" path="/completed-by-team" element={<UnassignedTicketsContainer />} />
                         <Route key="pending-by-team" path="/pending-by-team" element={<UnassignedTicketsContainer />} />
-                        
+
                         <Route key="all" path="/all/:ticketId" element={<TicketDetailsLayout />} />
                         <Route key="unassigned-details" path="/unassigned/:ticketId" element={<TicketDetailsLayout />} />
                         <Route key="all-pending-details" path="/all-pending/:ticketId" element={<TicketDetailsLayout />} />

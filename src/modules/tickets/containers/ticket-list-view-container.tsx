@@ -10,8 +10,8 @@ export const useGetQueryEndPoint = () => {
 
     const getQueryEndPointByType = (): keyof typeof TicketsEndPoint => {
         switch (match?.params.ticketType || '') {
-            case 'all':
-                return 'FETCH_ALL_TICKETS';
+            case 'assigned-to-me':
+                return 'FETCH_ALL_ASSIGNED';
             case 'unassigned':
                 return 'FETCH_ALL_UNASSIGNED';
             case 'all-pending':
