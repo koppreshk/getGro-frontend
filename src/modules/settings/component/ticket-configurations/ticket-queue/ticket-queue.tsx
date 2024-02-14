@@ -47,13 +47,13 @@ export const TicketQueue = (props: ITicketQueueProps) => {
         <FlexBox width="100%" flexDirection="column">
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
-                    <CustomIconButton onClick={() => navigate(-1)} iconComponent={<ArrowBackIcon />} tooltipProps={{ title: 'Back' }} />
+                    <CustomIconButton onClick={() => navigate('/configurations')} iconComponent={<ArrowBackIcon />} tooltipProps={{ title: 'Back' }} />
                     <Typography variant="h5">Ticket Queue</Typography>
                 </FlexBox>
                 <Button variant="contained" startIcon={<Add />} onClick={toggleAddQueueDrawer}>Add Queue</Button>
                 <AddNewQueue openAddQueueDrawer={openAddQueueDrawer} toggleAddQueueDrawer={toggleAddQueueDrawer} />
             </FlexBox>
-            <TicketQueueList queueData={data.queues} isLoading={isLoading} totalPages={data.total_pages}/>
+            <TicketQueueList queueData={data.queues} isLoading={isLoading} totalPages={data.total_pages} />
         </FlexBox>
     )
 }

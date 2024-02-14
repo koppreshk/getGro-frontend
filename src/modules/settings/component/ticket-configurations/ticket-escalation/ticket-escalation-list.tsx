@@ -68,9 +68,9 @@ function TicketEscalationList(props: ITicketEscalationListProps) {
     const { escalationConditions, isLoading } = props;
 
     const configTotalPages = useAppSelector((state) => state.configurations.totalPages);
-    
+
     return (
-        <ConfigDataGrid columns={columns} isLoading={isLoading} data={escalationConditions} totalPages={configTotalPages} />
+        <ConfigDataGrid columns={columns} isLoading={isLoading} data={escalationConditions} totalPages={configTotalPages} enableSerchField />
     );
 }
 

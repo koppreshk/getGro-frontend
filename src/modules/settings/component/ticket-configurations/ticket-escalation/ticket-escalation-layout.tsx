@@ -53,7 +53,7 @@ export const TicketEscalationLayout = (props: ITicketEscalaltionLayoutProps) => 
         <FlexBox width="100%" flexDirection="column">
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
-                    <CustomIconButton onClick={() => {navigate(-1)}} iconComponent={<ArrowBackIcon />} tooltipProps={{ title: 'Back' }} />
+                    <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBackIcon />} tooltipProps={{ title: 'Back' }} />
                     <Typography variant="h5">Ticket Escalation</Typography>
                 </FlexBox>
                 <Button variant="contained" onClick={toggleAddEscalationDrawer} startIcon={<Add />}>Add Escalation</Button>

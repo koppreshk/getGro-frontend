@@ -1,10 +1,11 @@
 import React, { useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
-import { IconButton, Slider, Tooltip, Typography } from "@mui/material";
+import { IconButton, Slider, TextField, Tooltip, Typography } from "@mui/material";
 import { FlexBox, VerticalSeparator } from "lib/ui-ux";
 import { ArchiveOutlined, AssignmentIndOutlined, ChevronLeft, ChevronRight, DeleteOutline, KeyboardDoubleArrowLeft, KeyboardDoubleArrowRight, MarkChatReadOutlined, MarkUnreadChatAltOutlined } from '@mui/icons-material';
 import { Table } from "@tanstack/react-table";
+import { IConfigDataGridProps } from "lib/ui-ux/configuration-data-grid";
 
 const StyledFlexBox = styled(FlexBox)`
     padding: 0px 20px 0 8px;  
@@ -43,13 +44,12 @@ function valuetext(value: number) {
     return `${value} Rows`;
 }
 
-interface ITableControlProps<T> {
+interface ITableControlProps<T> extends Pick<IConfigDataGridProps<T>, 'enableSerchField' | 'totalPages'> {
     table: Table<T>;
-    totalPages?: number;
 }
 
 export const TableControls = <T extends object>(props: ITableControlProps<T>) => {
-    const { table, totalPages } = props;
+    const { table, totalPages, enableSerchField } = props;
     const [searchParams, setSearchParams] = useSearchParams();
     const pageNumber = Number(searchParams.get('pageNumber')) || 1;
     const noOfRecords = Number(searchParams.get('noOfRecords')) || 10;
@@ -85,12 +85,18 @@ export const TableControls = <T extends object>(props: ITableControlProps<T>) =>
         setSearchParams(searchParams);
     }, [pageNumber, searchParams, setSearchParams]);
 
+    const onSearchChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = useCallback((ev) => {
+        searchParams.set('searchText', ev.target.value);
+        setSearchParams(searchParams);
+    }, [searchParams, setSearchParams]);
+
     const isTableActionsvisible = table.getIsSomeRowsSelected() || table.getIsAllRowsSelected();
 
     return (
         <StyledFlexBox justifyContent="space-between" height="76px">
             <FlexBox alignItems="end">
-                {isTableActionsvisible ? <TableActions /> : <></>}
+                {isTableActionsvisible ? <TableActions /> : null}
+                {enableSerchField ? <TextField placeholder="Input here..." label="Search" type="search" onChange={onSearchChange} /> : null}
             </FlexBox>
             <FlexBox gap="30px" alignItems="center">
                 <StyledSlider
