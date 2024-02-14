@@ -1,10 +1,11 @@
 /// <reference types="vite-plugin-svgr/client" />
 
 import { Typography } from "@mui/material"
-import { CustomIconButton, FlexBox, PopoverWithBeak } from "lib/ui-ux"
+import { FlexBox, PopoverWithBeak } from "lib/ui-ux"
 import styled from 'styled-components';
 import { useState } from "react";
-import DonutIcon from '../../../../assets/svg/donut-chart.svg?react'
+import { DonutChart, DonutSlice } from "./donut-chart";
+// import DonutIcon from '../../../../assets/svg/donut-chart.svg?react'
 
 const StatsContainer = styled(FlexBox)`
     padding: 20px;
@@ -46,13 +47,26 @@ const data = [
     }
 ];
 
-const StyledIconButton = styled(CustomIconButton)`
-    &&{
-        &:hover{
-            background-color: ${({ theme }) => theme.pallete.toolbarBgColorOnHover};
-        }
-    }
-`;
+const FAKE_DATA = [
+    {
+        id: 1,
+        percent: 70,
+        color: '#3cd300',
+        label: 'Slice 1',
+    },
+    {
+        id: 2,
+        percent: 10,
+        color: 'rgb(222,36,1)',
+        label: 'Slice 2',
+    },
+    {
+        id: 3,
+        percent: 20,
+        color: 'rgb(255,198,3)',
+        label: 'Slice 3',
+    },
+] as DonutSlice[];
 
 export const AgentStatistics = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -68,7 +82,13 @@ export const AgentStatistics = () => {
 
     return (
         <>
-            <StyledIconButton iconComponent={<DonutIcon />} tooltipProps={{ title: 'Quick Stats' }} onClick={handleClick} />
+            <div style={{ width: '28px', height: '28px', marginRight: '8px' }} onClick={handleClick}>
+                <DonutChart
+                    viewBox={100}
+                    radius={50}
+                    borderSize={20}
+                    data={FAKE_DATA} />
+            </div>
             <PopoverWithBeak
                 open={open}
                 anchorEl={anchorEl}
