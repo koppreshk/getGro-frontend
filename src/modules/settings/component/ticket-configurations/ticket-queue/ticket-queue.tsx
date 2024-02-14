@@ -53,7 +53,7 @@ export const TicketQueue = (props: ITicketQueueProps) => {
                 <Button variant="contained" startIcon={<Add />} onClick={toggleAddQueueDrawer}>Add Queue</Button>
                 <AddNewQueue openAddQueueDrawer={openAddQueueDrawer} toggleAddQueueDrawer={toggleAddQueueDrawer} />
             </FlexBox>
-            <TicketQueueList queueData={data.queues} isLoading={isLoading} totalPage={data.total_pages}/>
+            <TicketQueueList queueData={data.queues} isLoading={isLoading} totalPages={data.total_pages}/>
         </FlexBox>
     )
 }
