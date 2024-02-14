@@ -99,7 +99,6 @@ export const ConfigDataGrid = <T extends object>(props: IConfigDataGridProps<T>)
                                         </FlexBox>
                                     </StyledTableHeader>
                                 ))}
-
                             </tr>
                         ))}
                     </thead>

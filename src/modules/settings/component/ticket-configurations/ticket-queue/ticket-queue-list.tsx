@@ -1,3 +1,5 @@
+import React from "react";
+import { createColumnHelper } from "@tanstack/react-table";
 import { Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { DeleteQueue } from "./delete-queue";
@@ -5,12 +7,13 @@ import { Queue } from "modules/settings/apis/queues";
 import { EditQueue } from "./edit-queue";
 import { AssignedEmployees } from "./assigned-employees";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
-import { createColumnHelper } from "@tanstack/react-table";
+import { useAppDispatch, useAppSelector } from "lib/hooks";
+import { setTotalPage } from "modules/settings/storage";
 
 interface ITicketQueueListProps {
     queueData: Queue[];
     isLoading: boolean;
-    totalPage: number;
+    totalPages: number;
 }
 
 const useColumns = () => {
@@ -67,9 +70,18 @@ const useColumns = () => {
 };
 
 export const TicketQueueList = (props: ITicketQueueListProps) => {
-    const { queueData, isLoading, totalPage } = props;
+    const { queueData, isLoading, totalPages } = props;
     const colums = useColumns();
+
+    const dispatch = useAppDispatch();
+
+    React.useEffect(() => {
+        dispatch(setTotalPage(totalPages));
+    }, [dispatch, totalPages]);
+
+    const configTotalPages = useAppSelector((state) => state.configurations.totalPages);
+
     return (
-        <ConfigDataGrid columns={colums} isLoading={isLoading} data={queueData} totalPages={totalPage}/>
+        <ConfigDataGrid columns={colums} isLoading={isLoading} data={queueData} totalPages={configTotalPages} />
     )
 }

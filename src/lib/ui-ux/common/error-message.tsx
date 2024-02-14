@@ -1,10 +1,10 @@
 /// <reference types="vite-plugin-svgr/client" />
 
+import { Suspense, lazy, useMemo } from 'react';
 import { Typography } from '@mui/material';
 import { FlexBox } from '..';
-import { lazy, useMemo } from 'react';
 
-const ErrorIllustration = lazy(() => import( '../../../../src/assets/svg/api-error.svg?react'));
+const ErrorIllustration = lazy(() => import('../../../../src/assets/svg/api-error.svg?react'));
 export const ErrorMessage = (props: { statusCode?: string }) => {
     const { statusCode } = props;
 
@@ -21,14 +21,16 @@ export const ErrorMessage = (props: { statusCode?: string }) => {
     }, [parsedStatusCode])
 
     return (
-        <FlexBox width='100%' height='100%' flexDirection='column' alignItems='center' justifyContent='center'>
-            <ErrorIllustration width="60%" height="60%" />
-            {parsedStatusCode ?
-                <FlexBox gap={'4px'}>
-                    <Typography sx={{ color: 'red' }}>{parsedStatusCode}: </Typography>
-                    <Typography sx={{ color: 'red' }}>{parsedMessage}</Typography>
-                </FlexBox>
-                : null}
-        </FlexBox>
+        <Suspense fallback={<span>Loading illustration...</span>}>
+            <FlexBox width='100%' height='100%' flexDirection='column' alignItems='center' justifyContent='center'>
+                <ErrorIllustration width="60%" height="60%" />
+                {parsedStatusCode ?
+                    <FlexBox gap={'4px'}>
+                        <Typography sx={{ color: 'red' }}>{parsedStatusCode}: </Typography>
+                        <Typography sx={{ color: 'red' }}>{parsedMessage}</Typography>
+                    </FlexBox>
+                    : null}
+            </FlexBox>
+        </Suspense>
     )
 }

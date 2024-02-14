@@ -5,6 +5,7 @@ import { EscalationConditions } from 'modules/settings/apis/escalations';
 import { FlexBox } from 'lib/ui-ux';
 import EditEscalation from './edit-escalation';
 import { DeleteEscalation } from './delete-escalation';
+import { useAppSelector } from 'lib/hooks';
 
 interface ITicketEscalationListProps extends ITicketEscalaltionLayoutProps {
 
@@ -64,9 +65,12 @@ const useColumns = () => {
 
 function TicketEscalationList(props: ITicketEscalationListProps) {
     const columns = useColumns();
-    const { escalationConditions, isLoading, totalPages } = props;
+    const { escalationConditions, isLoading } = props;
+
+    const configTotalPages = useAppSelector((state) => state.configurations.totalPages);
+    
     return (
-        <ConfigDataGrid columns={columns} isLoading={isLoading} data={escalationConditions}totalPages={totalPages} />
+        <ConfigDataGrid columns={columns} isLoading={isLoading} data={escalationConditions} totalPages={configTotalPages} />
     );
 }
 

@@ -8,6 +8,8 @@ import { CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-ux"
 import { CreateTicketEscalationContainer } from "modules/settings/containers";
 import { EscalationConditions } from "modules/settings/apis/escalations";
 import TicketEscalationList from "./ticket-escalation-list";
+import { useAppDispatch } from "lib/hooks";
+import { setTotalPage } from "modules/settings/storage";
 
 export interface ITicketEscalaltionLayoutProps {
     isLoading: boolean;
@@ -41,11 +43,17 @@ export const TicketEscalationLayout = (props: ITicketEscalaltionLayoutProps) => 
         setOpenAddEscalationDrawer((prevValue) => !prevValue)
     }, []);
 
+    const dispatch = useAppDispatch();
+
+    React.useEffect(() => {
+        dispatch(setTotalPage(props.totalPages));
+    }, [dispatch, props.totalPages]);
+
     return (
         <FlexBox width="100%" flexDirection="column">
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
-                    <CustomIconButton onClick={() => navigate(-1)} iconComponent={<ArrowBackIcon />} tooltipProps={{ title: 'Back' }} />
+                    <CustomIconButton onClick={() => {navigate(-1)}} iconComponent={<ArrowBackIcon />} tooltipProps={{ title: 'Back' }} />
                     <Typography variant="h5">Ticket Escalation</Typography>
                 </FlexBox>
                 <Button variant="contained" onClick={toggleAddEscalationDrawer} startIcon={<Add />}>Add Escalation</Button>
