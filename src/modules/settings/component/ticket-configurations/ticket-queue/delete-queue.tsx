@@ -7,7 +7,8 @@ export const DeleteQueue = (props: { id: number }) => {
     const { mutateAsync } = useDeleteQueue();
     const { showNotification } = useNotifications();
 
-    const onDeleleHandler = () => {
+    const onDeleleHandler: React.MouseEventHandler<HTMLButtonElement> = (ev) => {
+        ev.stopPropagation();
         mutateAsync({
             id: props.id
         })

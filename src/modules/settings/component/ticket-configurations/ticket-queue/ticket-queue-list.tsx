@@ -1,14 +1,15 @@
-import React from "react";
-import { createColumnHelper } from "@tanstack/react-table";
+import React, { useState } from "react";
+import { Row, createColumnHelper } from "@tanstack/react-table";
 import { Typography } from "@mui/material";
-import { FlexBox } from "lib/ui-ux";
+import { CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-ux";
 import { DeleteQueue } from "./delete-queue";
 import { Queue } from "modules/settings/apis/queues";
-import { EditQueue } from "./edit-queue";
 import { AssignedEmployees } from "./assigned-employees";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
 import { useAppDispatch, useAppSelector } from "lib/hooks";
 import { setTotalPage } from "modules/settings/storage";
+import { EditQueueContainer } from "modules/settings/containers";
+import { Edit } from "@mui/icons-material";
 
 interface ITicketQueueListProps {
     queueData: Queue[];
@@ -57,7 +58,7 @@ const useColumns = () => {
             cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
-                        <EditQueue queueMetadata={original} />
+                        <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: "Edit Queue", arrow: true }} />
                         <DeleteQueue id={original.id} />
                     </FlexBox>
                 )
@@ -72,6 +73,12 @@ const useColumns = () => {
 export const TicketQueueList = (props: ITicketQueueListProps) => {
     const { queueData, isLoading, totalPages } = props;
     const colums = useColumns();
+    const [showDrawer, setDrawerDisplay] = useState(false);
+    const [queueMetadata, setQueueMetadata] = useState({});
+
+    const toggleQueueDrawer = () => {
+        setDrawerDisplay((preValue) => !preValue);
+    }
 
     const dispatch = useAppDispatch();
 
@@ -81,7 +88,31 @@ export const TicketQueueList = (props: ITicketQueueListProps) => {
 
     const configTotalPages = useAppSelector((state) => state.configurations.totalPages);
 
+    const onRowClick = (row: Row<Queue>) => {
+        toggleQueueDrawer()
+        setQueueMetadata(row.original);
+    }
+
     return (
-        <ConfigDataGrid columns={colums} isLoading={isLoading} data={queueData} totalPages={configTotalPages} enableSerchField />
+        <>
+            <ConfigDataGrid
+                columns={colums}
+                isLoading={isLoading}
+                data={queueData}
+                totalPages={configTotalPages}
+                enableSerchField
+                onRowClick={onRowClick} />
+            <DrawerExtended
+                anchor="right"
+                width="500px"
+                open={showDrawer}
+                header="View or Edit Queue"
+                onRenderContent={() => (
+                    <EditQueueContainer
+                        toggleAddQueueDrawer={toggleQueueDrawer}
+                        queueMetadata={queueMetadata as Queue} />
+                )}
+                onClose={toggleQueueDrawer} />
+        </>
     )
 }

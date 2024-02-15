@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { memo, useMemo } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import styled from "styled-components";
 import { Grid, Button } from "@mui/material";
@@ -49,7 +49,7 @@ interface ITicketQueueFormProps {
     onFormSubmitHandler: (data: IQueueFormFields) => void;
 }
 
-export const TicketQueueForm = (props: ITicketQueueFormProps) => {
+export const TicketQueueForm = memo((props: ITicketQueueFormProps) => {
     const { mode, defaultValues, autoAssignTypes, employees, queueTypes, onFormSubmitHandler } = props;
     const isInEditMode = useMemo(() => mode === 'edit', [mode]);
 
@@ -110,4 +110,4 @@ export const TicketQueueForm = (props: ITicketQueueFormProps) => {
             </FlexBox>
         </FormProvider>
     )
-}
+})

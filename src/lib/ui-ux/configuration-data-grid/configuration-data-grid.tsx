@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { SortingState, TableOptions, flexRender, getCoreRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
+import { Row, SortingState, TableOptions, flexRender, getCoreRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import styled, { useTheme } from "styled-components";
 import { IconButton, Skeleton, Typography } from "@mui/material";
 import { ExpandLess, ExpandMore, UnfoldMore } from "@mui/icons-material";
@@ -37,10 +37,11 @@ export interface IConfigDataGridProps<T> extends Pick<TableOptions<T>, 'data' | 
     isLoading?: boolean;
     totalPages?: number
     enableSerchField?: boolean;
+    onRowClick?: (row: Row<T>) => void;
 }
 
 export const ConfigDataGrid = <T extends object>(props: IConfigDataGridProps<T>) => {
-    const { columns, data, isLoading, totalPages, enableSerchField } = props;
+    const { columns, data, isLoading, totalPages, enableSerchField, onRowClick } = props;
     const memoizedData = useMemo(() => isLoading ? Array(10).fill({}) : data, [data, isLoading]);
     const memoizedColumns = useMemo(() =>
         isLoading
@@ -104,7 +105,7 @@ export const ConfigDataGrid = <T extends object>(props: IConfigDataGridProps<T>)
                     </thead>
                     <tbody>
                         {table.getRowModel().rows.map(row => (
-                            <tr key={row.id} className="table-row-styles">
+                            <tr key={row.id} className="table-row-styles" onClick={isLoading ? undefined : onRowClick && (() => onRowClick(row))}>
                                 {row.getVisibleCells().map(cell => (
                                     <td key={cell.id} style={{ width: cell.column.getSize() }}>
                                         <Typography padding="0px 10px" variant='body2' textOverflow={'ellipsis'} overflow="hidden" whiteSpace="nowrap" maxWidth={cell.column.getSize()}>
