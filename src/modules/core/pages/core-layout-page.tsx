@@ -5,14 +5,15 @@ import { Toolbar } from "../components/toolbar"
 import { FlexBox } from "lib/ui-ux"
 import { Routes, Route, useNavigate, useLocation, Outlet, Navigate } from "react-router-dom"
 import { ProtectedRoute } from "modules/login/protected-route"
-import { Login, useAuth } from "modules/login"
-import { PageNotFound } from "./page-not-found"
+import { useAuth } from "modules/login"
 import { commonStyles } from "lib/ui-ux/common-styles";
 
 const DashboardPage = lazy(() => import('../../dashboard/pages/dashboard-page'));
 const TicketsPage = lazy(() => import('../../tickets/pages/tickets-page'));
 const CustomersPage = lazy(() => import('../../customers/pages/customers-page'));
 const ConfigurationsPage = lazy(() => import('../../settings/pages/settings-page'));
+const PageNotFound = lazy(() => import('./page-not-found'));
+const LoginPage = lazy(() => import('../../login/login'));
 
 const PageContainer = styled(FlexBox)`
     ${commonStyles.sleekScrollStyle};
@@ -72,7 +73,7 @@ export const CoreLayout = () => {
                         element={<ConfigurationsPage />} />
                 </Route>
             </Route>
-            <Route key="login" path="/login" element={<Login />} />
+            <Route key="login" path="/login" element={<LoginPage />} />
             <Route key="not-found" path="*" element={<PageNotFound />} />
         </Routes>
     )

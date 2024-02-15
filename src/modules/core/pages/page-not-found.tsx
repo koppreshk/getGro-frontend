@@ -7,7 +7,7 @@ import { Typography } from '@mui/material'
 
 const PageNotFoundIllustration = lazy(() => import('../../../../src/assets/svg/not-found-illustation.svg?react'));
 
-export const PageNotFound = () => {
+export default function PageNotFound() {
     return (
         <Suspense fallback={<span>Loading illustration...</span>}>
             <FlexBox justifyContent='center' alignItems='center' height='100%' flexDirection="column" gap="20px">

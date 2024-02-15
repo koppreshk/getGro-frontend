@@ -92,7 +92,7 @@ const LoginForm = () => {
     )
 }
 
-export const Login = React.memo(() => {
+const Login = React.memo(() => {
     const formValues = useForm<ILoginFields>({
         defaultValues: {
             email: '',
@@ -119,3 +119,5 @@ export const Login = React.memo(() => {
         </FlexBox>
     )
 })
+
+export default Login
