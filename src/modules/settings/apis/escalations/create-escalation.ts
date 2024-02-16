@@ -2,29 +2,14 @@ import { useServiceClient } from "lib"
 import React from "react";
 import { EscalationQueryKey, EscalationEndPoint } from "./api-enums";
 import { useMutation, useQueryClient } from "react-query";
-
-export interface ICreateEscalationsArgs {
-    name: string;
-    after: string;
-    condition: string;
-    alertTime: number;
-    status: string;
-    subStatus: string
-}
+import { EscalationConditionsArgs } from "./edit-escalation";
 
 export const useCreateEscalations = () => {
     const { postData } = useServiceClient();
     const queryClient = useQueryClient();
 
-    const createEscalation = React.useCallback((args: ICreateEscalationsArgs) =>
-        postData(`${EscalationEndPoint.CREATE_ESCALATION}`, {
-            name: args.name,
-            after: args.after,
-            condition: args.condition,
-            alert_time: args.alertTime,
-            status: args.status,
-            sub_status: args.subStatus
-        }).then((res) => res.json()), [postData]);
+    const createEscalation = React.useCallback((args: Omit<EscalationConditionsArgs, 'id'>) =>
+        postData(`${EscalationEndPoint.CREATE_ESCALATION}`, args).then((res) => res.json()), [postData]);
 
     return useMutation({
         mutationKey: EscalationQueryKey.CREATE_ESCALATION,

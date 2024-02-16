@@ -3,8 +3,8 @@ import { TextboxField, SelectField } from "lib/form-fields";
 import { capitalizeFirstLetter } from "lib/utils";
 import { TicketEscalationFormProps } from "./ticket-escalation-form";
 
-export const EscalationConditionForm = (props: Pick<TicketEscalationFormProps, 'after' | 'conditions' | 'queues' | 'statuses' | 'subStatuses'>) => {
-    const { after, conditions, queues, statuses, subStatuses } = props;
+export const EscalationConditionForm = (props: Pick<TicketEscalationFormProps, 'after' | 'conditions' | 'queues' | 'statuses' | 'sub_statuses'>) => {
+    const { after, conditions, queues, statuses, sub_statuses: subStatuses } = props;
     return (
         <>
             <Grid container spacing={2}>
@@ -24,10 +24,10 @@ export const EscalationConditionForm = (props: Pick<TicketEscalationFormProps, '
                     <SelectField sx={{ width: '100%' }} name="queues" label="Queues" menuOptions={queues.map((item) => ({ key: item.uniqueKey, value: capitalizeFirstLetter(item.name, '_') }))} />
                 </Grid>
                 <Grid item xs={6}>
-                    <SelectField sx={{ width: '100%' }} name="statuses" label="Statuses" menuOptions={statuses.map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} />
+                    <SelectField sx={{ width: '100%' }} name="statuses" label="Statuses" menuOptions={statuses.map((item) => ({ key: item.id.toString(), value: capitalizeFirstLetter(item.name, '_') }))} />
                 </Grid>
                 <Grid item xs={6}>
-                    <SelectField sx={{ width: '100%' }} name="subStatuses" label="Sub Statuses" menuOptions={subStatuses.map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} />
+                    <SelectField sx={{ width: '100%' }} name="subStatuses" label="Sub Statuses" menuOptions={subStatuses.map((item) => ({ key: item.id.toString(), value: capitalizeFirstLetter(item.name, '_') }))} />
                 </Grid>
                 <Grid item xs={6}>
                     <SelectField sx={{ width: '100%' }} name="customerClassification" label="Customer Classification" menuOptions={[].map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} />

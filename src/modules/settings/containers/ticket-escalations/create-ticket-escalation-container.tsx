@@ -15,17 +15,31 @@ export const CreateTicketEscalationContainer = (props: ICreateTicketEscalationCo
 
     const onAddEscalation = useCallback((formData: ITicketEscalationFormFields) => {
         mutateAsync({
-            after: formData.after,
-            alertTime: Number(formData.alert),
-            condition: formData.conditions,
             name: formData.name,
-            status: formData.statuses,
-            subStatus: formData.subStatuses
+            after: formData.after,
+            alert_time: Number(formData.alert),
+            condition: formData.conditions,
+            customer_classification: formData.customerClassification,
+            designation_type: formData.designationType,
+            last_conversation_type: formData.lastConversationType,
+            queue_list_id: formData.queues,
+            status_id: Number(formData.statuses),
+            sub_status_id: Number(formData.subStatuses),
+            type_of_ticket: formData.typeOfTicket,
+            escalate_to: Number(formData.autoDispose.escalateTo),
+            priorities: Number(formData.autoDispose.priority),
+            dispostion_type: Number(formData.autoDispose.dispostionType)
         })
-            .then(() => {
-                props.toggleAddEscalationDrawer();
-                showNotification({ message: 'Escalation was created successfully', type: 'success' });
-            }).catch(() => showNotification({ message: 'Failed to create the escalaltion', type: 'error' }))
+            .then((res: { status: false }) => {
+                if (res.status) {
+                    showNotification({ message: 'Escalation was created successfully', type: 'success' });
+                }
+                else {
+                    return Promise.reject('err')
+                }
+            })
+            .catch(() => showNotification({ message: 'Failed to create the escalaltion', type: 'error' }))
+            .finally(() => props.toggleAddEscalationDrawer())
     }, [mutateAsync, props, showNotification])
 
     if (isLoading) {
@@ -35,7 +49,7 @@ export const CreateTicketEscalationContainer = (props: ICreateTicketEscalationCo
     if (data) {
         return (
             <>
-                <TicketEscalationForm {...data} mode="create" subStatuses={data.sub_statuses} onFormSubmitHandler={onAddEscalation} />
+                <TicketEscalationForm {...data} mode="create" onFormSubmitHandler={onAddEscalation} />
             </>
         )
     }

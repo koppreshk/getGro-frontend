@@ -26,20 +26,29 @@ export const EditEscalationContainer = (props: IEditEscalationContainerProps) =>
             designation_type: formData.designationType,
             last_conversation_type: formData.lastConversationType,
             queue_list_id: formData.queues,
-            status: formData.statuses,
-            sub_status: formData.subStatuses,
-            type_of_ticket: formData.typeOfTicket
-        }).then(() => {
-            showNotification({ message: 'Escalation edited successfully', type: 'success' });
-            toggleAddEscalationDrawer();
-        }).catch(() => showNotification({ message: 'Failed to edit the Escalation', type: 'error' }))
+            status_id: Number(formData.statuses),
+            sub_status_id: Number(formData.subStatuses),
+            type_of_ticket: formData.typeOfTicket,
+            escalate_to: Number(formData.autoDispose.escalateTo),
+            priorities: Number(formData.autoDispose.priority),
+            dispostion_type: Number(formData.autoDispose.dispostionType),
+        }).then((res: { status: false }) => {
+            if (res.status) {
+                showNotification({ message: 'Escalation edited successfully', type: 'success' });
+            }
+            else {
+                return Promise.reject('err')
+            }
+        })
+            .catch(() => showNotification({ message: 'Failed to edit the Escalation', type: 'error' }))
+            .finally(() => toggleAddEscalationDrawer())
     }, [editEscalation, escalationMetadata.id, showNotification, toggleAddEscalationDrawer]);
 
     if (isLoading) {
         return <CenteredCircularProgress />
     }
 
-    const { after, conditions, queues, statuses, sub_statuses } = data!;
+    const { after, conditions, queues, statuses, sub_statuses, escalate_to, priorities } = data!;
 
     return (
         <TicketEscalationForm
@@ -49,15 +58,17 @@ export const EditEscalationContainer = (props: IEditEscalationContainerProps) =>
             conditions={conditions}
             queues={queues}
             statuses={statuses}
-            subStatuses={sub_statuses}
+            sub_statuses={sub_statuses}
+            escalate_to={escalate_to}
+            priorities={priorities}
             defaultValues={{
                 after: escalationMetadata.after,
                 alert: escalationMetadata.alert_time,
                 conditions: escalationMetadata.condition,
                 name: escalationMetadata.name,
                 queues: escalationMetadata.queue_list_id || '',
-                statuses: escalationMetadata.status,
-                subStatuses: escalationMetadata.sub_status,
+                statuses: statuses.find((item) => escalationMetadata.status === item.name)!.id!,
+                subStatuses: sub_statuses.find((item) => escalationMetadata.sub_status === item.name)!.id!,
                 customerClassification: escalationMetadata.customer_classification || '',
                 designationType: escalationMetadata.designation_type || '',
                 lastConversationType: escalationMetadata.last_conversation_type || '',

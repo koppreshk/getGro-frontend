@@ -14,8 +14,8 @@ export interface EscalationConditions {
     after: string
     condition: string
     alert_time: number
-    status: string
-    sub_status: string
+    status: string;
+    sub_status: string;
     last_conversation_type: string | null
     queue_list_id: string | null
     customer_classification: string | null

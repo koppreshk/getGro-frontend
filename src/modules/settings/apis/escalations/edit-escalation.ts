@@ -4,11 +4,19 @@ import { useServiceClient } from "lib";
 import { EscalationEndPoint, EscalationQueryKey } from "./api-enums";
 import { EscalationConditions } from "./fetch-all-escalations";
 
+export type EscalationConditionsArgs = Omit<EscalationConditions, 'status' | 'sub_status'> & {
+    status_id: number;
+    sub_status_id: number;
+    escalate_to: number;
+    priorities: number;
+    dispostion_type: number;
+}
+
 export const useEditEscalation = () => {
     const { postData } = useServiceClient();
     const queryClient = useQueryClient();
 
-    const editEscalation = React.useCallback((args: EscalationConditions) =>
+    const editEscalation = React.useCallback((args: EscalationConditionsArgs) =>
         postData(`${EscalationEndPoint.EDIT_ESCALATION}`, args).then((res) => res.json()), [postData]);
 
     return useMutation({

@@ -7,8 +7,7 @@ import { EscalationActionsForm } from "./escalation-actions-form";
 import { EscalationConditionForm } from "./escalation-condition-form";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 
-export interface TicketEscalationFormProps extends Pick<IEscalationMetadata, 'after' | 'conditions' | 'queues' | 'statuses'> {
-    subStatuses: string[];
+export interface TicketEscalationFormProps extends IEscalationMetadata {
     onFormSubmitHandler: (formData: ITicketEscalationFormFields) => void;
     defaultValues?: ITicketEscalationFormFields;
     mode: 'create' | 'edit'
@@ -20,8 +19,8 @@ export interface ITicketEscalationFormFields {
     conditions: string;
     alert: number;
     queues: string;
-    statuses: string;
-    subStatuses: string;
+    statuses: string | number;
+    subStatuses: string | number;
     customerClassification: string,
     designationType: string,
     lastConversationType: string,
@@ -159,7 +158,7 @@ export const TicketEscalationForm = (props: TicketEscalationFormProps) => {
                     })}
                 </Stepper>
                 <div style={{ height: 'calc(100% - 140px)' }}>
-                    {activeStep === 0 ? <EscalationConditionForm {...rest} /> : <EscalationActionsForm />}
+                    {activeStep === 0 ? <EscalationConditionForm {...rest} /> : <EscalationActionsForm escalate_to={rest.escalate_to} priorities={rest.priorities} sub_statuses={rest.sub_statuses} />}
                 </div>
                 <FlexBox gap='10px' width="100%" justifyContent={isInEditMode ? "space-between" : 'flex-end'}>
                     {isInEditMode ? <Button variant="outlined" size="large" type="button" onClick={() => form.reset()}>{'Reset'}</Button> : null}
