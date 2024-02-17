@@ -7,7 +7,8 @@ export const DeleteEscalation = (props: { id: number }) => {
     const { mutateAsync } = useDeleteEscalation();
     const { showNotification } = useNotifications();
 
-    const onDeleleHandler = () => {
+    const onDeleleHandler = (ev: React.MouseEvent<HTMLButtonElement>) => {
+        ev.stopPropagation();
         mutateAsync({
             id: props.id
         })
