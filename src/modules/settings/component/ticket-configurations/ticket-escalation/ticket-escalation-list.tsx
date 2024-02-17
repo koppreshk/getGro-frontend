@@ -1,11 +1,13 @@
-import { createColumnHelper } from '@tanstack/react-table';
+import { useCallback, useState } from 'react';
+import { useAppSelector } from 'lib/hooks';
+import { Row, createColumnHelper } from '@tanstack/react-table';
 import { ITicketEscalaltionLayoutProps } from './ticket-escalation-layout';
 import { ConfigDataGrid } from 'lib/ui-ux/configuration-data-grid';
 import { EscalationConditions } from 'modules/settings/apis/escalations';
-import { FlexBox } from 'lib/ui-ux';
-import EditEscalation from './edit-escalation';
+import { CustomIconButton, DrawerExtended, FlexBox } from 'lib/ui-ux';
 import { DeleteEscalation } from './delete-escalation';
-import { useAppSelector } from 'lib/hooks';
+import { EditEscalationContainer } from 'modules/settings/containers';
+import { Edit } from '@mui/icons-material';
 
 interface ITicketEscalationListProps extends ITicketEscalaltionLayoutProps {
 
@@ -51,7 +53,7 @@ const useColumns = () => {
             cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
-                        <EditEscalation escalaltionMetadata={original} />
+                        <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: "Edit Escalation", arrow: true }} />
                         <DeleteEscalation id={original.id} />
                     </FlexBox>
                 )
@@ -66,11 +68,42 @@ const useColumns = () => {
 function TicketEscalationList(props: ITicketEscalationListProps) {
     const columns = useColumns();
     const { escalationConditions, isLoading } = props;
+    const [openAddEscalationDrawer, setOpenAddEscalationDrawer] = useState(false);
+    const [escalationMetaData, setEscalationMetaData] = useState({});
 
     const configTotalPages = useAppSelector((state) => state.configurations.totalPages);
 
+
+    const toggleAddEscalationDrawer = useCallback(() => {
+        setOpenAddEscalationDrawer((prevValue) => !prevValue)
+    }, []);
+
+    const onRowClick = (row: Row<EscalationConditions>) => {
+        toggleAddEscalationDrawer()
+        setEscalationMetaData(row.original);
+    }
+
     return (
-        <ConfigDataGrid columns={columns} isLoading={isLoading} data={escalationConditions} totalPages={configTotalPages} enableSerchField />
+        <>
+            <ConfigDataGrid
+                columns={columns}
+                isLoading={isLoading}
+                data={escalationConditions}
+                totalPages={configTotalPages}
+                enableSerchField
+                onRowClick={onRowClick} />
+            <DrawerExtended
+                anchor="right"
+                width="500px"
+                open={openAddEscalationDrawer}
+                header="View or Edit Escalation"
+                onRenderContent={() => (
+                    <EditEscalationContainer
+                        toggleAddEscalationDrawer={toggleAddEscalationDrawer}
+                        escalationMetadata={escalationMetaData as EscalationConditions} />
+                )}
+                onClose={toggleAddEscalationDrawer} />
+        </>
     );
 }
 
