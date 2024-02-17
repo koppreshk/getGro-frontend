@@ -21,7 +21,7 @@ export const EscalationConditionForm = (props: Pick<TicketEscalationFormProps, '
                     <TextboxField name="alert" label="Alert(in min)" type="number" />
                 </Grid>
                 <Grid item xs={6}>
-                    <SelectField sx={{ width: '100%' }} name="queues" label="Queues" menuOptions={queues.map((item) => ({ key: item.uniqueKey, value: capitalizeFirstLetter(item.name, '_') }))} />
+                    <SelectField sx={{ width: '100%' }} name="queues" label="Queues" menuOptions={queues.map((item) => ({ key: item.id.toString(), value: capitalizeFirstLetter(item.name, '_') }))} />
                 </Grid>
                 <Grid item xs={6}>
                     <SelectField sx={{ width: '100%' }} name="statuses" label="Statuses" menuOptions={statuses.map((item) => ({ key: item.id.toString(), value: capitalizeFirstLetter(item.name, '_') }))} />

@@ -22,7 +22,7 @@ export const CreateTicketEscalationContainer = (props: ICreateTicketEscalationCo
             customer_classification: formData.customerClassification,
             designation_type: formData.designationType,
             last_conversation_type: formData.lastConversationType,
-            queue_list_id: formData.queues,
+            queue_list_id: Number(formData.queues),
             status_id: Number(formData.statuses),
             sub_status_id: Number(formData.subStatuses),
             type_of_ticket: formData.typeOfTicket,
