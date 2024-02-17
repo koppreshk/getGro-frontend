@@ -3,8 +3,7 @@ interface ICreateTicketDispositionTypeContainerProps {
     toggleAddDispositionTypeDrawer: () => void;
 }
 
-export const CreateTicketDispositionTypeContainer = (props: ICreateTicketDispositionTypeContainerProps) => {
-
+export const CreateTicketDispositionTypeContainer = (_props: ICreateTicketDispositionTypeContainerProps) => {
     return <span>form</span>
 
 }
