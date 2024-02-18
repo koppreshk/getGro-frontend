@@ -46,7 +46,6 @@ interface ITopMetricProps extends Pick<LinearProgressProps, 'color'> {
 }
 
 export const TopFourMetrics = () => {
-
     return (
         <GridLayout $gridGap="20px" $gridTemplateColumns={'repeat(4, 1fr)'}>
             {data.map((item, idx) => (
