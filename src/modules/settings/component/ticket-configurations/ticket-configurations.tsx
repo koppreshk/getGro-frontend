@@ -1,4 +1,4 @@
-import { TaskOutlined } from "@mui/icons-material";
+import { TaskOutlined, Tune } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import { FlexBox, GridLayout } from "lib/ui-ux";
 import { useNavigate } from "react-router-dom";
@@ -12,17 +12,14 @@ interface ICategoryOptions {
 
 interface IConfigCategory {
     categoryName: string;
+    categoryIcon: () => JSX.Element;
     categoryOptions: ICategoryOptions[];
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface IConfigurations {
-    configurations: IConfigCategory[];
 }
 
 const configurations = [
     {
         categoryName: "Tickets",
+        categoryIcon: () => <TaskOutlined color="primary" />,
         categoryOptions: [
             {
                 route: "disposition-type",
@@ -48,6 +45,7 @@ const configurations = [
     },
     {
         categoryName: "General",
+        categoryIcon: () => <Tune color="primary" />,
         categoryOptions: [
             {
                 route: "access-configuration",
@@ -91,7 +89,7 @@ const configurations = [
         ]
     },
 
-]
+] as IConfigCategory[]
 
 const ConfigLinkWrapper = styled.div`
     :hover {
@@ -132,7 +130,7 @@ export const TicketsConfiguration = () => {
                 (
                     <FlexBox padding="20px" flexDirection="column" gap="10px" width="100%">
                         <FlexBox alignItems="center" gap="5px" padding="0 10px">
-                            <TaskOutlined color="primary" />
+                            {data.categoryIcon()}
                             <Typography variant="h5">
                                 {data.categoryName}
                             </Typography>
