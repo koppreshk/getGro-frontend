@@ -18,7 +18,7 @@ const UserDetails = () => {
     const { pallete } = useTheme();
     return (
         <FlexBox flexDirection="column" gap="5px">
-            <Typography variant="h3">Hi {user?.email.split('@')[0]}</Typography>
+            <Typography variant="h2">Hi {user?.email.split('@')[0]}</Typography>
             <Typography variant="h6" sx={{ color: pallete.grayVariant2 }}>Welcome back!</Typography>
         </FlexBox>
     )
