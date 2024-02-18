@@ -15,27 +15,27 @@ const Metric = styled(FlexBox)`
 `;
 
 const data = [{
-    name: 'Tickets resolved out of 800',
-    value: 415,
-    total: 800,
+    name: 'Tickets resolved out of ' + new Intl.NumberFormat("en-IN").format(124800),
+    value: 84568,
+    total: 124800,
     color: 'secondary'
 },
 {
-    name: 'Tickets disposed out of 616',
-    value: 215,
-    total: 616,
+    name: 'Tickets disposed out of ' + new Intl.NumberFormat("en-IN").format(113510),
+    value: 55879,
+    total: 113510,
     color: 'primary'
 },
 {
-    name: 'Tickets disposed as resolved out of 616',
-    value: 115,
-    total: 616,
+    name: 'Tickets disposed as resolved out of ' + new Intl.NumberFormat("en-IN").format(113510),
+    value: 71565,
+    total: 113510,
     color: 'success'
 },
 {
-    name: 'Tickets disposed as pending out of 616',
-    value: 100,
-    total: 616,
+    name: 'Tickets disposed as pending out of ' + new Intl.NumberFormat("en-IN").format(113510),
+    value: 19008,
+    total: 113510,
     color: 'info'
 }] as ITopMetricProps[]
 
@@ -66,7 +66,7 @@ const TopMetric = (props: { item: ITopMetricProps }) => {
 
     return (
         <Metric flexDirection="column" gap="10px">
-            <Typography variant="h3">{value}</Typography>
+            <Typography variant="h3">{new Intl.NumberFormat("en-IN").format(value)}</Typography>
             <Typography sx={{ color: pallete.grayVariant2 }} variant="subheading2">{name}</Typography>
             <FlexBox width="100%" gap="10px" alignItems="center">
                 <LinearProgress sx={{ width: 'calc(100% - 38px)' }} color={color} variant="determinate" value={progress} />
