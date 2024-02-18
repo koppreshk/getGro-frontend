@@ -13,7 +13,7 @@ export const ConfigListView = (props: IConfigListViewProps) => {
 
     return (
         <FlexBox flexDirection="column" width="100%">
-            <GridLayout $padding="10px" $gridGap="10px" $gridTemplateColumns={"repeat(5, 1fr) 36px 36px"}>
+            <GridLayout $padding="10px" $gridGap="10px" $gridTemplateColumns={"repeat(5, 1fr)"}>
                 {headers.map((item) => <Typography color={pallete.grayVariant2} key={item} variant="h6">{item}</Typography>)}
             </GridLayout>
         </FlexBox>

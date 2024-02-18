@@ -2,11 +2,21 @@ import { Search } from "@mui/icons-material"
 import { Typography, TextField, InputAdornment } from "@mui/material"
 import { FlexBox } from "lib/ui-ux"
 import { TicketsConfiguration } from "./ticket-configurations"
+import styled from "styled-components";
+
+const StyledHeader = styled(FlexBox)`
+    background: white;
+    border-bottom: ${({ theme }) => theme.semantics.standardBorder};
+`;
+
+const StyledContent = styled(FlexBox)`
+    background: #f9f9f9; 
+`;
 
 export const Configurations = () => {
     return (
         <>
-            <FlexBox width="100%" justifyContent="space-between" padding="20px" alignItems="center">
+            <StyledHeader width="100%" justifyContent="space-between" padding="20px" alignItems="center" >
                 <Typography variant="h4">
                     Configurations
                 </Typography>
@@ -18,10 +28,10 @@ export const Configurations = () => {
                         </InputAdornment>
                     ),
                 }} />
-            </FlexBox>
-            <FlexBox>
+            </StyledHeader>
+            <StyledContent flexDirection="column" height="100%">
                 <TicketsConfiguration />
-            </FlexBox>
+            </StyledContent>
         </>
     )
 }
