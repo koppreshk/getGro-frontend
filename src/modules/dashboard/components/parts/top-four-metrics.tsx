@@ -16,9 +16,9 @@ const Metric = styled(FlexBox)`
 
 const data = [{
     name: 'Tickets resolved out of ' + new Intl.NumberFormat("en-IN").format(124800),
-    value: 84568,
+    value: 104568,
     total: 124800,
-    color: 'secondary'
+    color: 'success'
 },
 {
     name: 'Tickets disposed out of ' + new Intl.NumberFormat("en-IN").format(113510),
@@ -30,7 +30,7 @@ const data = [{
     name: 'Tickets disposed as resolved out of ' + new Intl.NumberFormat("en-IN").format(113510),
     value: 71565,
     total: 113510,
-    color: 'success'
+    color: 'secondary'
 },
 {
     name: 'Tickets disposed as pending out of ' + new Intl.NumberFormat("en-IN").format(113510),
