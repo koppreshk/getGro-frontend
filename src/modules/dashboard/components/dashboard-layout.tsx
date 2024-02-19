@@ -3,14 +3,21 @@ import { FlexBox } from "lib/ui-ux"
 import { useAuth } from "modules/login"
 import { useTheme } from "styled-components"
 import { TopFourMetrics } from "./parts/top-four-metrics"
-import { TotalDisposed } from "./parts/total-disposed"
+import { ChartContainer, TotalDisposed } from "./parts/total-disposed"
+import { TicketsBySource } from "./parts/tickets-by-source"
 
 export const DashboardLayout = () => {
     return (
         <FlexBox flexDirection="column" gap="15px" height="100%" width="100%">
             <UserDetails />
             <TopFourMetrics />
-            <TotalDisposed />
+            <FlexBox gap="10px">
+                <TotalDisposed />
+                <TicketsBySource />
+                <ChartContainer width="33%">
+                    3
+                </ChartContainer>
+            </FlexBox>
         </FlexBox>
     )
 }
