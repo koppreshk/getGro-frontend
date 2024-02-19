@@ -8,6 +8,7 @@ const chartMetadata = {
     series: [44, 55, 13, 43, 22],
     options: {
         chart: {
+            fontFamily: 'Poppins',
             width: 400,
             height: 480,
             type: 'pie',

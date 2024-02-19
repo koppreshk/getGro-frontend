@@ -3,20 +3,19 @@ import { FlexBox } from "lib/ui-ux"
 import { useAuth } from "modules/login"
 import { useTheme } from "styled-components"
 import { TopFourMetrics } from "./parts/top-four-metrics"
-import { ChartContainer, TotalDisposed } from "./parts/total-disposed"
+import { TotalDisposed } from "./parts/total-disposed"
 import { TicketsBySource } from "./parts/tickets-by-source"
+import { IncomingTickets } from "./parts/incoming-tickets"
 
 export const DashboardLayout = () => {
     return (
-        <FlexBox flexDirection="column" gap="15px" height="100%" width="100%">
+        <FlexBox flexDirection="column" gap="20px" height="100%" width="100%">
             <UserDetails />
             <TopFourMetrics />
-            <FlexBox gap="10px">
+            <FlexBox gap="20px">
                 <TotalDisposed />
                 <TicketsBySource />
-                <ChartContainer width="33%">
-                    3
-                </ChartContainer>
+                <IncomingTickets />
             </FlexBox>
         </FlexBox>
     )

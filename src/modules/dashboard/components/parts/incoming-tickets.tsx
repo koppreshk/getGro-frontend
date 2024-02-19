@@ -21,29 +21,9 @@ const chartMetadata = {
         },
     } as ApexOptions,
     series: [{
-        name: 'Shubham',
+        name: 'Tickets Received',
         data: [30, 40, 35, 50, 49, 60, 56]
-    },
-    {
-        name: 'Koppresh',
-        data: [12, 4, 66, 77, 98, 44, 23]
-    },
-    {
-        name: 'Anup',
-        data: [10, 20, 35, 50, 39, 80, 46]
-    },
-    {
-        name: 'Siddarth',
-        data: [7, 15, 35, 45, 49, 76, 53]
-    },
-    {
-        name: 'Sanjay',
-        data: [43, 54, 47, 98, 23, 66, 88]
-    },
-    {
-        name: 'Mouin',
-        data: [12, 42, 22, 55, 25, 29, 87]
-    },],
+    }],
 }
 
 export const ChartContainer = styled(FlexBox)`
@@ -52,11 +32,11 @@ export const ChartContainer = styled(FlexBox)`
     border-radius: 8px;
 `;
 
-export const TotalDisposed = () => {
+export const IncomingTickets = () => {
     return (
         <ChartContainer flexDirection='column' width='33%'>
-            <Typography variant='h3'>Total Disposed</Typography>
-            <Chart options={chartMetadata.options} series={chartMetadata.series} type="area" height="350px" width={'100%'} />
+            <Typography variant='h3'>Incoming Tickets</Typography>
+            <Chart options={chartMetadata.options} series={chartMetadata.series} type="bar" height="350px" width={'100%'} />
         </ChartContainer>
     )
 }
