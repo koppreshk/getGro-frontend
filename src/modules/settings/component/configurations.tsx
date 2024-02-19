@@ -10,7 +10,7 @@ const StyledHeader = styled(FlexBox)`
 `;
 
 const StyledContent = styled(FlexBox)`
-    background: #f9f9f9; 
+    background: ${({ theme }) => theme.pallete.grayVariant7}; 
 `;
 
 export const Configurations = () => {

@@ -1,54 +1,33 @@
-import { useState } from "react";
-import { Tabs, Tab } from "@mui/material"
+import { Typography } from "@mui/material"
 import { FlexBox } from "lib/ui-ux"
-import styled from "styled-components";
-import { AgentPerformance } from "./parts/agent.performance";
+import { useAuth } from "modules/login"
+import { useTheme } from "styled-components"
+import { TopFourMetrics } from "./parts/top-four-metrics"
+import { TotalDisposed } from "./parts/total-disposed"
+import { TicketsBySource } from "./parts/tickets-by-source"
+import { IncomingTickets } from "./parts/incoming-tickets"
 
 export const DashboardLayout = () => {
-    const [value, setValue] = useState(0);
-
-    const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
-    };
-
     return (
-        <FlexBox flexDirection="column" height="calc(100% - 43px)">
-            <Tabs value={value} onChange={handleChange}>
-                <Tab label="Agent Performance" id="agent-performance" />
-                <Tab label="Folder Performance" id="folder-performance" />
-                <Tab label="Queue Performance" id="queue-performance" />
-                <Tab label="Time Wise Dashboard" id="time-wise-dashboard" />
-            </Tabs>
-            <CustomTabPanel index={0} value={value}>
-                <AgentPerformance />
-            </CustomTabPanel>
+        <FlexBox flexDirection="column" gap="20px" height="100%" width="100%">
+            <UserDetails />
+            <TopFourMetrics />
+            <FlexBox gap="20px">
+                <TotalDisposed />
+                <TicketsBySource />
+                <IncomingTickets />
+            </FlexBox>
         </FlexBox>
     )
 }
 
-const Container = styled.div`
-    height: calc(100% - 48px);
-    padding: 16px;
-    box-sizing: border-box;
-    max-height: 400px;
-    background-color: ${({ theme }) => theme.pallete.genericBackgroundColor};
-`
-function CustomTabPanel(props: {
-    children?: React.ReactNode;
-    index: number;
-    value: number;
-}) {
-    const { children, value, index } = props;
-
+const UserDetails = () => {
+    const { user } = useAuth();
+    const { pallete } = useTheme();
     return (
-        <Container
-            role="tabpanel"
-            hidden={value !== index}
-            id={`tabpanel-${index}`}
-            aria-labelledby={`tab-${index}`}>
-            {value === index && (
-                <>{children}</>
-            )}
-        </Container>
-    );
+        <FlexBox flexDirection="column" gap="5px">
+            <Typography variant="h2" textTransform={"capitalize"}>Hi {user?.email.split('@')[0]}</Typography>
+            <Typography variant="h6" sx={{ color: pallete.grayVariant2 }}>Welcome back!</Typography>
+        </FlexBox>
+    )
 }
