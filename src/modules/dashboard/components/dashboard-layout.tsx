@@ -6,12 +6,14 @@ import { TopFourMetrics } from "./parts/top-four-metrics"
 import { TotalDisposed } from "./parts/total-disposed"
 import { TicketsBySource } from "./parts/tickets-by-source"
 import { IncomingTickets } from "./parts/incoming-tickets"
+import { Trends } from "./parts/trends"
 
 export const DashboardLayout = () => {
     return (
-        <FlexBox flexDirection="column" gap="20px" height="100%" width="100%">
+        <FlexBox flexDirection="column" gap="20px" height="100%" padding="0 10px 0px 0px" width="100%" overflowY="auto">
             <UserDetails />
             <TopFourMetrics />
+            <Trends />
             <FlexBox gap="20px">
                 <TotalDisposed />
                 <TicketsBySource />

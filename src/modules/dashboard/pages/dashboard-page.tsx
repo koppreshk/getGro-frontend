@@ -16,7 +16,7 @@ export default function DashboardPage() {
             {
                 isDashboardPageAccessible
                     ?
-                    <StyledDasboardPage width="100%" height="100%" padding="25px" gap="15px" flexDirection="column">
+                    <StyledDasboardPage width="100%" height="100%" padding="25px 15px 25px 25px" gap="15px" flexDirection="column">
                         <DashboardLayout />
                     </StyledDasboardPage>
                     :

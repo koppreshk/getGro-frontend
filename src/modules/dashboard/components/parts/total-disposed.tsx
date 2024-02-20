@@ -8,7 +8,10 @@ const chartMetadata = {
     options: {
         chart: {
             fontFamily: 'Poppins',
-            id: 'apexchart-example'
+            id: 'apexchart-example',
+            zoom: {
+                enabled: false
+            }
         },
         xaxis: {
             lines: {
@@ -54,8 +57,8 @@ export const ChartContainer = styled(FlexBox)`
 
 export const TotalDisposed = () => {
     return (
-        <ChartContainer flexDirection='column' width='33%'>
-            <Typography variant='h3'>Total Disposed</Typography>
+        <ChartContainer flexDirection='column' width='calc(33.33% - 20px)'>
+            <Typography variant='h4'>Total Disposed</Typography>
             <Chart options={chartMetadata.options} series={chartMetadata.series} type="area" height="350px" width={'100%'} />
         </ChartContainer>
     )

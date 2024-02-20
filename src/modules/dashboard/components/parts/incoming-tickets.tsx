@@ -34,8 +34,8 @@ export const ChartContainer = styled(FlexBox)`
 
 export const IncomingTickets = () => {
     return (
-        <ChartContainer flexDirection='column' width='33%'>
-            <Typography variant='h3'>Incoming Tickets</Typography>
+        <ChartContainer flexDirection='column' width='33.33%'>
+            <Typography variant='h4'>Incoming Tickets</Typography>
             <Chart options={chartMetadata.options} series={chartMetadata.series} type="bar" height="350px" width={'100%'} />
         </ChartContainer>
     )
