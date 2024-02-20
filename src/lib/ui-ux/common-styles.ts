@@ -2,12 +2,6 @@ import { css } from "styled-components";
 
 export const commonStyles = {
     sleekScrollStyle: css`
-        scrollbar-color: ${props => `${props.theme.others.scrollHandleColor} ${props.theme.others.scrollContainerColor}`};
-        scrollbar-width: thin;
-        *{
-            scrollbar-color: ${props => `${props.theme.others.scrollHandleColor} ${props.theme.others.scrollContainerColor}`};
-            scrollbar-width: thin;
-        }
         *::-webkit-scrollbar {
             width: 6px;
             height: 6px;

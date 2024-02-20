@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material"
 import { ApexOptions } from "apexcharts";
-import { FlexBox } from "lib/ui-ux"
+import { FlexBox, GridLayout } from "lib/ui-ux"
 import ReactApexChart from "react-apexcharts";
 import { ChartContainer } from "./total-disposed";
 import styled, { useTheme } from "styled-components";
@@ -25,7 +25,7 @@ export const Trends = () => {
                 fontFamily: 'Poppins',
                 zoom: {
                     enabled: false
-                }
+                },
             },
             dataLabels: {
                 enabled: true
@@ -35,7 +35,7 @@ export const Trends = () => {
             },
             title: {
                 text: 'Product Trends by Month',
-                align: 'left'
+                align: 'center'
             },
             grid: {
                 row: {
@@ -69,12 +69,12 @@ export const Trends = () => {
                 <Typography variant="h4">Trends</Typography>
                 <Typography variant="subheading2" color={pallete.grayVariant3}>20/02/2024</Typography>
             </FlexBox>
-            <FlexBox width="100%" gap="30px">
+            <GridLayout $gridTemplateColumns={'2fr 1fr'} $gridGap="20px">
                 <StyledChart
                     options={state.options}
                     series={state.series}
-                    type="area" height={350} width={866} />
-                <FlexBox gap="35px" flexWrap="wrap" width="calc(100% - 866px)">
+                    type="area" height={350} />
+                <FlexBox gap="20px" width="calc(100% - 866px)">
                     <FlexBox flexDirection="column" gap="20px">
                         {section1.map((item, idx) => <Stats key={idx} label={item.label} value={item.value} />)}
                     </FlexBox>
@@ -82,7 +82,7 @@ export const Trends = () => {
                         {section2.map((item, idx) => <Stats key={idx} label={item.label} value={item.value} />)}
                     </FlexBox>
                 </FlexBox>
-            </FlexBox>
+            </GridLayout>
         </ChartContainer>
     )
 }
