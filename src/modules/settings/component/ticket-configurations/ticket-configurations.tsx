@@ -84,7 +84,7 @@ const configurations = [
             {
                 route: "ticket-queue",
                 label: "Ticket Queue",
-                uniqueKey: "general-ticket-queue1"
+                uniqueKey: "general-ticket-queue2"
             }
         ]
     },
@@ -128,7 +128,7 @@ export const TicketsConfiguration = () => {
             {
                 configurations.map((data) =>
                 (
-                    <FlexBox padding="20px" flexDirection="column" gap="10px" width="100%">
+                    <FlexBox padding="20px" flexDirection="column" gap="10px" width="100%" key={data.categoryName}>
                         <FlexBox alignItems="center" gap="5px" padding="0 10px">
                             {data.categoryIcon()}
                             <Typography variant="h5">

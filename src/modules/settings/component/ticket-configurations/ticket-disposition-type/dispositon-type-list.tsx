@@ -1,37 +1,12 @@
 import { Delete, Edit } from "@mui/icons-material";
 import { createColumnHelper } from "@tanstack/react-table";
 import { CustomIconButton, FlexBox } from "lib/ui-ux";
-import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid"
+import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
+import { IDispositionTypes } from "modules/settings/apis/disposition-types";
+import { ITicketDispositionTypeLayoutProps } from "./ticket-disposition-type-layout";
 
-interface DispositionType {
-    name: string;
-    sub_status: string;
-}
-
-const data = [
-    {
-        name: 'test',
-        sub_status: 'test_status'
-    },
-    {
-        name: 'tes1t',
-        sub_status: 'test_status1'
-    },
-    {
-        name: 'test2',
-        sub_status: 'test_status2'
-    },
-    {
-        name: 'test3',
-        sub_status: 'test_status3'
-    },
-    {
-        name: 'test4',
-        sub_status: 'test_status4'
-    }
-]
 const useColumns = () => {
-    const columnHelper = createColumnHelper<DispositionType>();
+    const columnHelper = createColumnHelper<IDispositionTypes>();
 
     const columns = [
         columnHelper.accessor("name", {
@@ -39,10 +14,10 @@ const useColumns = () => {
             cell: info => info.getValue(),
             header: () => 'Name',
         }),
-        columnHelper.accessor("sub_status", {
-            id: 'sub_status',
+        columnHelper.accessor("id", {
+            id: 'id',
             cell: info => info.getValue(),
-            header: () => 'Sub Status',
+            header: () => 'ID',
         }),
         columnHelper.display({
             id: 'actions',
@@ -62,12 +37,17 @@ const useColumns = () => {
     return columns;
 }
 
-export const DispositionTypeList = () => {
+interface IDispositionTypeListProps extends ITicketDispositionTypeLayoutProps {
+
+}
+
+export const DispositionTypeList = (props: IDispositionTypeListProps) => {
+    const { data, isLoading } = props;
     const columns = useColumns();
 
     return (
         <>
-            <ConfigDataGrid columns={columns} data={data} enableSerchField />
+            <ConfigDataGrid columns={columns} data={data!} enableSerchField isLoading={isLoading} />
         </>
     )
 } 
