@@ -6,7 +6,6 @@ import { FormProvider, useForm } from "react-hook-form"
 
 export interface IDispositionTypeFormFields {
     dispositionTypeName: string;
-    subStatus: string;
 }
 
 interface IDispositionTypeFormProps {
@@ -15,20 +14,19 @@ interface IDispositionTypeFormProps {
     onFormSubmitHandler: (data: IDispositionTypeFormFields) => void;
 }
 
-export const TispositionTypeForm = (props: IDispositionTypeFormProps) => {
+export const DispositionTypeForm = (props: IDispositionTypeFormProps) => {
     const { mode, defaultValues, onFormSubmitHandler } = props;
     const isInEditMode = useMemo(() => mode === 'edit', [mode]);
 
     const methods = useForm<IDispositionTypeFormFields>({
         defaultValues: defaultValues ?? {
-            dispositionTypeName: '',
-            subStatus: ''
+            dispositionTypeName: ''
         }
     });
 
     const onSubmit = useCallback(async (formvalues: IDispositionTypeFormFields) => {
         onFormSubmitHandler(formvalues);
-    }, [onFormSubmitHandler])
+    }, [onFormSubmitHandler]);
 
     return (
         <FormProvider {...methods}>
@@ -36,9 +34,6 @@ export const TispositionTypeForm = (props: IDispositionTypeFormProps) => {
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <TextboxField name="dispositionTypeName" label="Name" fullWidth rules={{ required: 'Disposition type name is required' }} />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextboxField name="subStatus" label="Sub Status" fullWidth />
                     </Grid>
                 </Grid>
                 <FlexBox gap='10px' width="100%" justifyContent="flex-end">

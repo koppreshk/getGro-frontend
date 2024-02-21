@@ -7,10 +7,11 @@ import { Button, Typography } from "@mui/material"
 import { CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-ux"
 import { CreateTicketDispositionTypeContainer } from "modules/settings/containers";
 import { DispositionTypeList } from "./dispositon-type-list";
+import { IDispositionTypes } from "modules/settings/apis/disposition-types";
 
 export interface ITicketDispositionTypeLayoutProps {
-    // isLoading: boolean;
-    // totalPages: number;
+    isLoading: boolean;
+    data: IDispositionTypes[] | undefined;
 }
 
 const AddNewDispositionType = (props: {
@@ -38,12 +39,6 @@ export const TicketDispositionTypeLayout = (props: ITicketDispositionTypeLayoutP
     const toggleAddDispositionTypeDrawer = useCallback(() => {
         setOpenAddDispositionTypeDrawer((prevValue) => !prevValue)
     }, []);
-
-    // const dispatch = useAppDispatch();
-
-    // React.useEffect(() => {
-    //     dispatch(setTotalPage(props.totalPages));
-    // }, [dispatch, props.totalPages]);
 
     return (
         <FlexBox width="100%" flexDirection="column">

@@ -1,20 +1,29 @@
-import { IDispositionTypeFormFields, TispositionTypeForm } from "modules/settings/component/ticket-configurations";
+import { useNotifications } from "lib/providers";
+import { useCreateDisposition } from "modules/settings/apis/disposition-types";
+import { IDispositionTypeFormFields, DispositionTypeForm } from "modules/settings/component/ticket-configurations";
 import React from "react";
 
 interface ICreateTicketDispositionTypeContainerProps {
     toggleAddDispositionTypeDrawer: () => void;
 }
 
-export const CreateTicketDispositionTypeContainer = (_props: ICreateTicketDispositionTypeContainerProps) => {
+export const CreateTicketDispositionTypeContainer = (props: ICreateTicketDispositionTypeContainerProps) => {
+
+    const { mutateAsync: createDispositionType } = useCreateDisposition();
+    const { showNotification } = useNotifications();
 
     const submitCreateTicketQueue = React.useCallback((formData: IDispositionTypeFormFields) => {
-        console.log(formData);
-    }, []);
+        createDispositionType({
+            name: formData.dispositionTypeName
+        }).then(() => {
+            showNotification({ message: 'New Disposition created', type: 'success' });
+            props.toggleAddDispositionTypeDrawer();
+        }).catch(() => showNotification({ message: 'Failed to create disposition', type: 'error' }))
+    }, [createDispositionType, props, showNotification]);
 
     return (
-        <TispositionTypeForm
+        <DispositionTypeForm
             mode="create"
             onFormSubmitHandler={submitCreateTicketQueue} />
-    )
-
+    );
 }
