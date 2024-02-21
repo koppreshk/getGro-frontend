@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material"
-import { FlexBox } from "lib/ui-ux"
+import { FlexBox, GridLayout } from "lib/ui-ux"
 import { useAuth } from "modules/login"
 import { useTheme } from "styled-components"
 import { TopFourMetrics } from "./parts/top-four-metrics"
@@ -14,11 +14,11 @@ export const DashboardLayout = () => {
             <UserDetails />
             <TopFourMetrics />
             <Trends />
-            <FlexBox gap="20px">
+            <GridLayout $gridGap="20px" $gridTemplateColumns={'1fr 1fr 1fr'}>
                 <TotalDisposed />
                 <TicketsBySource />
                 <IncomingTickets />
-            </FlexBox>
+            </GridLayout>
         </FlexBox>
     )
 }

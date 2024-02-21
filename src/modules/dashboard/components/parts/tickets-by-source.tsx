@@ -31,7 +31,7 @@ const chartMetadata = {
 export const TicketsBySource = () => {
     return (
         <>
-            <ChartContainer flexDirection="column" width="calc(33.33% - 20px)">
+            <ChartContainer flexDirection="column">
                 <Typography variant='h4'>Channel Contribution</Typography>
                 <FlexBox alignItems='center' height='100%'>
                     <Chart options={chartMetadata.options} series={chartMetadata.series} type="pie" width={430} />

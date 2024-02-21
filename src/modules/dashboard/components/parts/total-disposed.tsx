@@ -57,7 +57,7 @@ export const ChartContainer = styled(FlexBox)`
 
 export const TotalDisposed = () => {
     return (
-        <ChartContainer flexDirection='column' width='calc(33.33% - 20px)'>
+        <ChartContainer flexDirection='column'>
             <Typography variant='h4'>Total Disposed</Typography>
             <Chart options={chartMetadata.options} series={chartMetadata.series} type="area" height="350px" width={'100%'} />
         </ChartContainer>
