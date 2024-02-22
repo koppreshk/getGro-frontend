@@ -4,6 +4,10 @@ import { FlexBox, GridLayout } from "lib/ui-ux"
 import ReactApexChart from "react-apexcharts";
 import { ChartContainer } from "./total-disposed";
 import styled, { useTheme } from "styled-components";
+import { DateTime } from "luxon";
+import { useCallback, useState } from "react";
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import { DateFilters } from "./date-filters";
 
 const StyledChart = styled(ReactApexChart)`
     .apexcharts-title-text {
@@ -13,10 +17,16 @@ const StyledChart = styled(ReactApexChart)`
 
 export const Trends = () => {
     const { pallete } = useTheme();
+    const [filterValue, setFilters] = useState<'week' | 'month'>('week');
+
+    const onFilterChangeHandler = useCallback((value: 'week' | 'month') => {
+        setFilters(value);
+    }, []);
+
     const state = {
         series: [{
             name: "Resolved",
-            data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+            data: filterValue === 'month' ? [10, 41, 35, 51, 49, 62, 69, 91, 148, 45, 56, 88] : [3, 14, 45, 55, 63, 11, 34]
         }],
         options: {
             chart: {
@@ -34,7 +44,7 @@ export const Trends = () => {
                 curve: 'smooth'
             },
             title: {
-                text: 'Product Trends by Month',
+                text: `Tickets resolved in a ${filterValue === 'month' ? 'month' : 'week'}`,
                 align: 'center'
             },
             grid: {
@@ -44,7 +54,7 @@ export const Trends = () => {
                 },
             },
             xaxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                categories: filterValue === 'month' ? ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] : ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'],
             },
             fill: {
                 type: 'gradient',
@@ -63,11 +73,20 @@ export const Trends = () => {
     const section1 = [{ label: 'Resolved', value: '45' }, { label: 'Average first response time', value: '12m' }, { label: 'Resolution within SLA', value: '91%' }]
     const section2 = [{ label: 'Received', value: '100' }, { label: 'Average response time', value: '22m 12s' }]
 
+    const previousUnit = filterValue === 'month' ? { month: 1 } : { days: 7 };
     return (
         <ChartContainer flexDirection="column" width="100%" gap="5px">
-            <FlexBox flexDirection="column">
-                <Typography variant="h4">Trends</Typography>
-                <Typography variant="subheading2" color={pallete.grayVariant3}>20/02/2024</Typography>
+            <FlexBox flexDirection="column" width="65%">
+                <FlexBox justifyContent="space-between">
+                    <FlexBox gap="4px" alignItems="center">
+                        <Typography variant="h4">Trends</Typography>
+                        <TrendingUpIcon color="info" />
+                    </FlexBox>
+                    <DateFilters onFilterChangeHandler={onFilterChangeHandler} filterValue={filterValue} />
+                </FlexBox>
+                <Typography variant="subheading2" color={pallete.grayVariant3}>
+                    {DateTime.now().minus(previousUnit).toLocaleString(DateTime.DATE_MED)} - {DateTime.local().toLocaleString(DateTime.DATE_MED)}
+                </Typography>
             </FlexBox>
             <GridLayout $gridTemplateColumns={'2fr 1fr'} $gridGap="20px">
                 <StyledChart
@@ -94,6 +113,7 @@ const StatsContainer = styled(FlexBox)`
 const Stats = (props: { label: string, value: string }) => {
     const { label, value } = props;
     const { pallete } = useTheme();
+
     return (
         <>
             <StatsContainer flexDirection="column" padding="0px 0px 0px 15px" style={{}}>
