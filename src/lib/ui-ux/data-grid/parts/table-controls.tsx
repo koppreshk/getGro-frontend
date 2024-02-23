@@ -1,7 +1,7 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
-import { IconButton, Slider, TextField, Tooltip, Typography } from "@mui/material";
+import { IconButton, TextField, Tooltip, Typography } from "@mui/material";
 import { FlexBox, VerticalSeparator } from "lib/ui-ux";
 import { ArchiveOutlined, AssignmentIndOutlined, ChevronLeft, ChevronRight, DeleteOutline, KeyboardDoubleArrowLeft, KeyboardDoubleArrowRight, MarkChatReadOutlined, MarkUnreadChatAltOutlined } from '@mui/icons-material';
 import { Table } from "@tanstack/react-table";
@@ -10,39 +10,6 @@ import { IConfigDataGridProps } from "lib/ui-ux/configuration-data-grid";
 const StyledFlexBox = styled(FlexBox)`
     padding: 0px 20px 0 8px;  
 `;
-
-const StyledSlider = styled(Slider)`
-    .MuiSlider-markLabel {
-        font-size: 12px;
-    }
-`;
-
-const marks = [
-    {
-        value: 10,
-        label: '10'
-    },
-    {
-        value: 20,
-        label: '20'
-    },
-    {
-        value: 30,
-        label: '30'
-    },
-    {
-        value: 40,
-        label: '40'
-    },
-    {
-        value: 50,
-        label: '50'
-    }
-];
-
-function valuetext(value: number) {
-    return `${value} Rows`;
-}
 
 interface ITableControlProps<T> extends Pick<IConfigDataGridProps<T>, 'enableSerchField' | 'totalPages'> {
     table: Table<T>;
@@ -53,6 +20,7 @@ export const TableControls = <T extends object>(props: ITableControlProps<T>) =>
     const [searchParams, setSearchParams] = useSearchParams();
     const pageNumber = Number(searchParams.get('pageNumber')) || 1;
     const noOfRecords = Number(searchParams.get('noOfRecords')) || 10;
+    const [noOfRows, setFilters] = useState<Rows>('10');
 
     React.useEffect(() => {
         searchParams.set('noOfRecords', noOfRecords.toString());
@@ -60,8 +28,9 @@ export const TableControls = <T extends object>(props: ITableControlProps<T>) =>
         setSearchParams(searchParams);
     }, [noOfRecords, pageNumber, searchParams, setSearchParams])
 
-    const onSliderChange = useCallback((_event: Event, value: number | number[]) => {
-        searchParams.set('noOfRecords', value.toString());
+    const onFilterChangeHandler = useCallback((value: Rows) => {
+        setFilters(value);
+        searchParams.set('noOfRecords', value);
         setSearchParams(searchParams);
     }, [searchParams, setSearchParams]);
 
@@ -99,21 +68,7 @@ export const TableControls = <T extends object>(props: ITableControlProps<T>) =>
                 {enableSerchField ? <TextField placeholder="Input here..." label="Search" type="search" onChange={onSearchChange} /> : null}
             </FlexBox>
             <FlexBox gap="30px" alignItems="center">
-                <StyledSlider
-                    aria-label="Restricted values"
-                    defaultValue={10}
-                    valueLabelFormat={valuetext}
-                    getAriaValueText={valuetext}
-                    onChange={onSliderChange}
-                    step={10}
-                    valueLabelDisplay="auto"
-                    value={noOfRecords}
-                    marks={marks}
-                    min={10}
-                    max={50}
-                    size="small"
-                    sx={{ width: '150px', marginBottom: 'unset' }}
-                />
+                <NoOfPages noOfRows={noOfRows} onFilterChangeHandler={onFilterChangeHandler} />
                 <VerticalSeparator />
                 <FlexBox>
                     <IconButton aria-label="First" onClick={firstBtnClick} disabled={pageNumber === 1} color="primary">
@@ -182,5 +137,47 @@ const TableActions = () => {
                 </div>
             ))}
         </FlexBox>
+    )
+}
+
+type Rows = "10" | "20" | "30" | "40" | "50";
+interface INoOfRowsProps {
+    noOfRows: Rows;
+    onFilterChangeHandler: (value: Rows) => void;
+}
+
+const StyledFilterContainer = styled(FlexBox)`
+    background-color: ${({ theme }) => theme.pallete.grayVariant5};
+    padding: 4px 8px;
+    border-radius: 8px;
+`;
+
+const Text = styled(Typography) <{ $isSelected?: boolean }>`
+  &&{
+    color: ${({ $isSelected, theme }) => $isSelected ? theme.pallete.primaryPurple : '#3b4455'};
+    background-color: ${({ $isSelected }) => $isSelected ? '#fff' : 'unset'};
+    padding: 4px;
+    border-radius: inherit;
+    cursor: pointer;
+  }  
+`;
+
+const NoOfPages = (props: INoOfRowsProps) => {
+    const { noOfRows, onFilterChangeHandler } = props;
+    return (
+        <>
+            <StyledFilterContainer gap="4px">
+                {["10", "20", "30", "40", "50"].map((item) => (
+                    <Tooltip key={item} title={`${item} rows per page`}>
+                        <Text
+                            variant="subheading1"
+                            $isSelected={noOfRows === item}
+                            onClick={() => onFilterChangeHandler(item as Rows)}>
+                            {item}
+                        </Text>
+                    </Tooltip>
+                ))}
+            </StyledFilterContainer>
+        </>
     )
 }
