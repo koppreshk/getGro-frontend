@@ -19,11 +19,11 @@ export const TableControls = <T extends object>(props: ITableControlProps<T>) =>
     const { table, totalPages, enableSerchField } = props;
     const [searchParams, setSearchParams] = useSearchParams();
     const pageNumber = Number(searchParams.get('pageNumber')) || 1;
-    const noOfRecords = Number(searchParams.get('noOfRecords')) || 10;
-    const [noOfRows, setFilters] = useState<Rows>('10');
+    const noOfRecords = searchParams.get('noOfRecords') || '10';
+    const [noOfRows, setFilters] = useState(noOfRecords);
 
     React.useEffect(() => {
-        searchParams.set('noOfRecords', noOfRecords.toString());
+        searchParams.set('noOfRecords', noOfRecords);
         searchParams.set('pageNumber', pageNumber.toString());
         setSearchParams(searchParams);
     }, [noOfRecords, pageNumber, searchParams, setSearchParams])
@@ -68,7 +68,7 @@ export const TableControls = <T extends object>(props: ITableControlProps<T>) =>
                 {enableSerchField ? <TextField placeholder="Input here..." label="Search" type="search" onChange={onSearchChange} /> : null}
             </FlexBox>
             <FlexBox gap="30px" alignItems="center">
-                <NoOfPages noOfRows={noOfRows} onFilterChangeHandler={onFilterChangeHandler} />
+                <NoOfPages noOfRows={noOfRows as Rows} onFilterChangeHandler={onFilterChangeHandler} />
                 <VerticalSeparator />
                 <FlexBox>
                     <IconButton aria-label="First" onClick={firstBtnClick} disabled={pageNumber === 1} color="primary">
