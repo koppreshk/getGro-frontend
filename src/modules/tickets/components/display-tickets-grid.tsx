@@ -1,7 +1,7 @@
 import React, { MouseEventHandler } from "react";
 import { useMatch, useNavigate, useSearchParams } from "react-router-dom";
 import styled, { css, useTheme } from "styled-components";
-import { Checkbox } from "@mui/material";
+import { Checkbox, SxProps, Theme } from "@mui/material";
 import { Row, createColumnHelper } from "@tanstack/react-table";
 import { Facebook, Email, WhatsApp, Twitter, LocalPhone, Instagram, Sms } from '@mui/icons-material';
 import { DataGrid, NoDataIllustration } from "lib/ui-ux"
@@ -16,8 +16,33 @@ interface IDisplayTicketsGridProps {
     totalPages: number;
 }
 
-const useColumns = () => {
+export const useSourceIcon = () => {
     const theme = useTheme();
+    const getSourceIcon = (source: string, sx?: SxProps<Theme>) => {
+        switch (source.toLocaleLowerCase()) {
+            case 'facebook':
+                return <Facebook sx={{ fill: theme.channelSpecific.facebook + '!important', ...sx }} />
+            case 'email':
+                return <Email sx={{ fill: theme.channelSpecific.email + '!important', ...sx }} />
+            case 'whatsapp':
+                return <WhatsApp sx={{ fill: theme.channelSpecific.whatsApp + '!important', ...sx }} />
+            case 'twitter':
+                return <Twitter sx={{ fill: theme.channelSpecific.twitter + '!important', ...sx }} />
+            case 'telephonic':
+                return <LocalPhone sx={{ fill: theme.channelSpecific.telephonic + '!important', ...sx }} />
+            case 'instagram':
+                return <Instagram sx={{ fill: theme.channelSpecific.instagram + '!important' }} />
+            case 'sms':
+                return <Sms sx={{ fill: theme.channelSpecific.sms + '!important' }} />
+            default:
+                return source;
+        }
+    }
+
+    return getSourceIcon;
+}
+const useColumns = () => {
+    const getSourceIcon = useSourceIcon();
 
     const columnHelper = createColumnHelper<ITicketDetails>()
 
@@ -70,26 +95,7 @@ const useColumns = () => {
         columnHelper.accessor('source', {
             id: 'source',
             header: 'Source',
-            cell: info => {
-                switch (info.getValue().toLocaleLowerCase()) {
-                    case 'facebook':
-                        return <Facebook sx={{ fill: theme.channelSpecific.facebook + '!important' }} />
-                    case 'email':
-                        return <Email sx={{ fill: theme.channelSpecific.email + '!important' }} />
-                    case 'whatsapp':
-                        return <WhatsApp sx={{ fill: theme.channelSpecific.whatsApp + '!important' }} />
-                    case 'twitter':
-                        return <Twitter sx={{ fill: theme.channelSpecific.twitter + '!important' }} />
-                    case 'telephonic':
-                        return <LocalPhone sx={{ fill: theme.channelSpecific.telephonic + '!important' }} />
-                    case 'instagram':
-                        return <Instagram sx={{ fill: theme.channelSpecific.instagram + '!important' }} />
-                    case 'sms':
-                        return <Sms sx={{ fill: theme.channelSpecific.sms + '!important' }} />
-                    default:
-                        return info.getValue();
-                }
-            },
+            cell: info => getSourceIcon(info.getValue().toLocaleLowerCase()),
             minSize: 240
         }),
         columnHelper.accessor('ticketStatus', {
@@ -188,12 +194,12 @@ export const DisplayTicketsGrid = (props: IDisplayTicketsGridProps) => {
     }, [dispatch, props.totalPages]);
 
     const { totalPages } = useAppSelector((state) => state.tickets);
-    
+
     return (
         <>
             {
                 (data.length > 0 || props.isLoading) ?
-                    <DataGrid {...props} columns={columns} onRowClick={onRowClick} totalPages={totalPages}/>
+                    <DataGrid {...props} columns={columns} onRowClick={onRowClick} totalPages={totalPages} />
                     :
                     <NoDataIllustration message="No tickets to display" />
             }

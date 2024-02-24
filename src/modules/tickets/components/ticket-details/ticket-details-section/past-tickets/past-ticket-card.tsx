@@ -4,7 +4,7 @@ import { FlexBox } from "lib/ui-ux";
 import { getFormattedDate } from "lib/utils";
 import { ITicketDetails } from "modules/tickets/apis";
 import styled, { useTheme } from "styled-components";
-import { rendersourceIcon } from "../../ticket-list-view";
+import { useSourceIcon } from "modules/tickets/components";
 
 const TimeLine = styled.div`
   width: 5px;
@@ -27,7 +27,7 @@ const StyledChip = styled(Chip)`
 `;
 
 const StyledContainer = styled(FlexBox)`
-    background:  ${({ theme }) => theme.pallete.purpleLight};
+    background:  ${({ theme }) => theme.pallete.grayVariant5};
     border-radius: 8px;
     padding: 8px;
     margin: 12px 0px;
@@ -43,6 +43,8 @@ const StyledContainer = styled(FlexBox)`
 export const PastTicketCard = (props: { item: ITicketDetails; onPastTicketClick: (ticktId: string) => void }) => {
     const { item, onPastTicketClick } = props;
     const { pallete } = useTheme();
+    const getSourceIcon = useSourceIcon();
+
     return (
         <FlexBox gap="5px" className="parent-container" >
             <FlexBox flexDirection="column" alignItems="center">
@@ -50,7 +52,7 @@ export const PastTicketCard = (props: { item: ITicketDetails; onPastTicketClick:
                 <TimeLine />
             </FlexBox>
             <StyledContainer className="child-container" gap="10px" alignItems="center" onClick={() => onPastTicketClick(item.ticketId)}>
-                {rendersourceIcon(item.source, { width: '1.5em', height: '1.5em' })}
+                {getSourceIcon(item.source, { width: '1.5em', height: '1.5em' })}
                 <FlexBox flexDirection="column" width="calc(100% - 46px)">
                     <StyledChip label={getFormattedDate(item.createdAt)} variant="filled" />
                     <Typography marginTop={'8px'} variant="caption">{item.ticketStatus}</Typography>

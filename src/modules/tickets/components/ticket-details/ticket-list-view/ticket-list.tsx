@@ -1,13 +1,13 @@
 import React from "react";
 import { createSearchParams, useMatch, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { Avatar, SxProps, Theme, Typography } from "@mui/material"
-import { Facebook, Email, WhatsApp, Twitter, LocalPhone, Instagram, Sms } from "@mui/icons-material";
+import { Avatar, Typography } from "@mui/material"
 import { FlexBox } from "lib/ui-ux"
 import { ITicketDetails } from "modules/tickets/apis";
 import { getFormattedDate } from "lib/utils";
 import { useAppDispatch } from "lib/hooks";
 import { setTicketDetails } from "modules/tickets/storage";
+import { useSourceIcon } from "../../display-tickets-grid";
 
 interface ITicketListProps {
     data: ITicketDetails[];
@@ -69,27 +69,6 @@ export const TicketList = (props: ITicketListProps) => {
     )
 };
 
-export const rendersourceIcon = (source: string, sx?: SxProps<Theme>) => {
-    switch (source.toLocaleLowerCase()) {
-        case 'facebook':
-            return <Facebook sx={{ fill: '#3b5998 !important', ...sx }} />
-        case 'email':
-            return <Email sx={{ fill: '#df4b3a !important', ...sx }} />
-        case 'whatsapp':
-            return <WhatsApp sx={{ fill: '#25d366 !important', ...sx }} />
-        case 'twitter':
-            return <Twitter sx={{ fill: '#00acee !important', ...sx }} />
-        case 'telephonic':
-            return <LocalPhone sx={{ fill: '#00c2ff !important', ...sx }} />
-        case 'instagram':
-            return <Instagram sx={{ fill: '#d62976 !important', ...sx }} />
-        case 'sms':
-            return <Sms sx={{ fill: '#ffb800 !important', ...sx }} />
-        default:
-            return source;
-    }
-}
-
 interface ITicketDetailsProps extends ITicketDetails {
 }
 
@@ -104,6 +83,7 @@ const TicketDetails = (props: ITicketDetailsProps) => {
     const noOfRecords = searchParams.get('noOfRecords');
     const pageNumber = searchParams.get('pageNumber');
     const dispatch = useAppDispatch();
+    const getSourceIcon = useSourceIcon();
 
     React.useEffect(() => {
         if (params.ticketId === ticketId && ref.current) {
@@ -141,7 +121,7 @@ const TicketDetails = (props: ITicketDetailsProps) => {
                 </FlexBox>
                 <FlexBox flexDirection="row" gap="10px" alignItems="center">
                     <>
-                        {rendersourceIcon(source)}
+                        {getSourceIcon(source)}
                     </>
                     <StyledTypography variant="body2">Id: {ticketId}</StyledTypography>
                 </FlexBox>
