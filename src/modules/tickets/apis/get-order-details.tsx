@@ -19,7 +19,7 @@ export interface IOrders {
     confirmationNumber: string;
     confirmed: boolean;
     contactEmail: string;
-    createdAt: Date;
+    createdAt: string;
     currency: Currency;
     currentSubtotalPrice: string;
     currentSubtotalPriceSet: Set;
@@ -54,7 +54,7 @@ export interface IOrders {
     phone: string;
     poNumber: null;
     presentmentCurrency: Currency;
-    processedAt: Date;
+    processedAt: string;
     reference: string;
     referringSite: null;
     sourceIdentifier: string;
@@ -80,7 +80,7 @@ export interface IOrders {
     totalTaxSet: Set;
     totalTipReceived: string;
     totalWeight: number;
-    updatedAt: Date;
+    updatedAt: string;
     userId: number;
     billingAddress: Address;
     customer: Customer;
@@ -142,8 +142,8 @@ export interface Customer {
     id: number;
     email: string;
     acceptsMarketing: boolean;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: string;
+    updatedAt: string;
     firstName: string;
     lastName: string;
     state: string;
@@ -156,7 +156,7 @@ export interface Customer {
     smsMarketingConsent: MarketingConsent;
     tags: string;
     currency: Currency;
-    acceptsMarketingUpdatedAt: Date;
+    acceptsMarketingUpdatedAt: string;
     marketingOptInLevel: null;
     taxExemptions: [];
     adminGraphqlApiId: string;
@@ -173,7 +173,7 @@ export interface MarketingConsent {
 export interface Fulfillment {
     id: number;
     adminGraphqlApiId: string;
-    createdAt: Date;
+    createdAt: string;
     locationId: number;
     name: string;
     orderId: number;
@@ -187,7 +187,7 @@ export interface Fulfillment {
     trackingNumbers: { [key: string]: string }[];
     trackingUrl: null;
     trackingUrls: [];
-    updatedAt: Date;
+    updatedAt: string;
     lineItems: LineItem[];
 }
 
