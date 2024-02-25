@@ -13,7 +13,6 @@ interface IOrderDetailsProps {
 }
 
 const OrderWrappers = styled(FlexBox)`
-    background-color: #f5f7f9;
     padding: 10px;
 `;
 

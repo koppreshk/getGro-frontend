@@ -48,6 +48,7 @@ const StyledOrder = styled(FlexBox)`
     padding: 10px 12px;
     width: 100%;
     box-sizing: border-box;
+    border: 2px solid #f1f2f4;
 `;
 
 export const TextFieldValue = styled(Typography)`
