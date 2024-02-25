@@ -4,7 +4,8 @@ import { DrawerExtended, FlexBox } from "lib/ui-ux";
 import { IOrders } from "modules/tickets/apis";
 import { useState } from "react";
 import styled from "styled-components";
-import { OrderDetailsDrawerContent } from "./order-details-drawer-content";
+import { CurrencyINR, OrderDetailsDrawerContent } from "./order-details-drawer-content";
+import { getFormatedNumberByLocale } from "lib/utils";
 
 interface IOrderViewProps {
     orderDetails: IOrders[];
@@ -59,7 +60,7 @@ export const TextFieldValue = styled(Typography)`
 
 export const OrderItem = (props: IOrderViewProps) => {
     const { index, orderDetails } = props;
-    const { orderNumber, financialStatus, fulfillmentStatus, currency, totalPrice } = orderDetails[index];
+    const { orderNumber, financialStatus, fulfillmentStatus, totalPrice } = orderDetails[index];
     const [showDrawer, setDrawerDisplay] = useState(false);
 
     const toggleOrderDetailsDrawer = () => {
@@ -86,10 +87,7 @@ export const OrderItem = (props: IOrderViewProps) => {
                     <RelativePositionedFlexBox flexDirection="column" gap="10px" width="50%" justifyContent="space-between">
                         <FlexBox flexDirection="column">
                             <Typography variant="h6">Price:</Typography>
-                            <span>
-                                {currency === 'INR' && <Typography variant="body2" display="inline" >&#8377;</Typography>}
-                                <TextFieldValue variant="subheading2" display="inline" >{totalPrice}</TextFieldValue>
-                            </span>
+                            <TextFieldValue variant="subheading2" display="inline" ><CurrencyINR />{getFormatedNumberByLocale(totalPrice)}</TextFieldValue>
                         </FlexBox>
                         <Tooltip title="More details" arrow placement="left">
                             <MoreDetailsBtn onClick={toggleOrderDetailsDrawer}>

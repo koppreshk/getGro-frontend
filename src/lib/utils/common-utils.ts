@@ -94,3 +94,7 @@ export const chooseRandomColors = memoizeFunction((_name: string): IInitialsColo
 }, 500);
 
 export const generateId = () => v1();
+
+export const getFormatedNumberByLocale = (number: number | string, locale = 'en-IN') => {
+    return new Intl.NumberFormat(locale).format(Number(number))
+}

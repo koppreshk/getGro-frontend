@@ -1,5 +1,6 @@
 import { LinearProgress, LinearProgressProps, Typography } from "@mui/material";
 import { FlexBox, GridLayout } from "lib/ui-ux"
+import { getFormatedNumberByLocale } from "lib/utils";
 import { useMemo } from "react";
 import styled, { useTheme } from "styled-components"
 
@@ -15,25 +16,25 @@ const Metric = styled(FlexBox)`
 `;
 
 const data = [{
-    name: 'Tickets resolved out of ' + new Intl.NumberFormat("en-IN").format(124800),
+    name: 'Tickets resolved out of ' + getFormatedNumberByLocale(124800),
     value: 104568,
     total: 124800,
     color: 'success'
 },
 {
-    name: 'Tickets disposed out of ' + new Intl.NumberFormat("en-IN").format(113510),
+    name: 'Tickets disposed out of ' + getFormatedNumberByLocale(113510),
     value: 55879,
     total: 113510,
     color: 'primary'
 },
 {
-    name: 'Tickets disposed as resolved out of ' + new Intl.NumberFormat("en-IN").format(113510),
+    name: 'Tickets disposed as resolved out of ' + getFormatedNumberByLocale(113510),
     value: 71565,
     total: 113510,
     color: 'secondary'
 },
 {
-    name: 'Tickets disposed as pending out of ' + new Intl.NumberFormat("en-IN").format(113510),
+    name: 'Tickets disposed as pending out of ' + getFormatedNumberByLocale(113510),
     value: 19008,
     total: 113510,
     color: 'info'
@@ -65,7 +66,7 @@ const TopMetric = (props: { item: ITopMetricProps }) => {
 
     return (
         <Metric flexDirection="column" gap="10px">
-            <Typography variant="h3">{new Intl.NumberFormat("en-IN").format(value)}</Typography>
+            <Typography variant="h3">{getFormatedNumberByLocale(value)}</Typography>
             <Typography sx={{ color: pallete.grayVariant2 }} variant="subheading2">{name}</Typography>
             <FlexBox width="100%" gap="10px" alignItems="center">
                 <LinearProgress sx={{ width: 'calc(100% - 38px)' }} color={color} variant="determinate" value={progress} />

@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
-import { getFormattedDate } from "lib/utils";
+import { getFormatedNumberByLocale, getFormattedDate } from "lib/utils";
 import { IOrders } from "modules/tickets/apis";
 import { TextFieldValue } from "./order-item";
 
@@ -27,34 +27,36 @@ export const OrderDetailsDrawerContent = (props: { orderDetails: IOrders }) => {
                             <Typography variant="subheading1">{item.name}</Typography>
                             <FlexBox gap="15px">
                                 <Typography variant="subheading2">
-                                    {item.quantity} <span>&#215;</span> <span>&#8377;</span>{item.price}
+                                    {item.quantity} <span style={{ fontFamily: 'Arial' }}>&#215;</span> <CurrencyINR />{getFormatedNumberByLocale(item.price)}
                                 </Typography>
                                 <Typography variant="subheading2">
-                                    <span>&#8377;</span>{item.quantity * Math.abs(Number(item.price))}
+                                    <CurrencyINR />{getFormatedNumberByLocale(item.quantity * Math.abs(Number(item.price)))}
                                 </Typography>
                             </FlexBox>
                         </FlexBox>
                     ))}
                     <FlexBox justifyContent="space-between">
                         <Typography variant="subheading2">{'Discount'}</Typography>
-                        <Typography variant="subheading2">
-                            -<span>&#8377;</span>{totalDiscounts}
+                        <Typography variant="subheading2" color="#388e3c">
+                            -<CurrencyINR />{getFormatedNumberByLocale(totalDiscounts)}
                         </Typography>
                     </FlexBox>
                     <FlexBox justifyContent="space-between">
                         <Typography variant="subheading2">{'Tax'}</Typography>
                         <Typography variant="subheading2">
-                            <span>&#8377;</span>{totalTax}
+                            <CurrencyINR />{getFormatedNumberByLocale(totalTax)}
                         </Typography>
                     </FlexBox>
                 </FlexBox>
                 <FlexBox justifyContent="space-between" padding="10px" style={{ background: '#f1f2f3' }}>
                     <Typography variant="subheading2">{'Total'}</Typography>
                     <Typography variant="subheading1">
-                        <span>&#8377;</span>{totalPrice}
+                        <CurrencyINR />{getFormatedNumberByLocale(totalPrice)}
                     </Typography>
                 </FlexBox>
             </FlexBox>
         </FlexBox>
     )
 }
+
+export const CurrencyINR = () => <span style={{ fontFamily: 'Arial' }}>&#x20B9;</span>
