@@ -89,7 +89,7 @@ export interface IOrders {
     lineItems: LineItem[];
     paymentTerms: null;
     refunds: [];
-    shippingAddress: Address;
+    shippingAddress: Address | null;
     shippingLines: [];
 }
 

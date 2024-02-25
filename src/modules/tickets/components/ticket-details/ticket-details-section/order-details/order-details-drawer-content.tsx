@@ -12,13 +12,14 @@ export const OrderDetailsDrawerContent = (props: { orderDetails: IOrders }) => {
                 <Typography variant="h6">Order placed on:</Typography>
                 <TextFieldValue variant="subheading2" >{getFormattedDate(createdAt)}</TextFieldValue>
             </FlexBox>
-            <FlexBox flexDirection="column">
-                <Typography variant="h6">Shipping Address:</Typography>
-                <TextFieldValue variant="subheading2" >
-                    {[shippingAddress.address1, shippingAddress.address2, shippingAddress.city
-                        , shippingAddress.country, shippingAddress.zip].filter((item) => item).join(', ')}
-                </TextFieldValue>
-            </FlexBox>
+            {shippingAddress !== null
+                ? <FlexBox flexDirection="column">
+                    <Typography variant="h6">Shipping Address:</Typography>
+                    <TextFieldValue variant="subheading2" >
+                        {[shippingAddress.address1, shippingAddress.address2, shippingAddress.city
+                            , shippingAddress.country, shippingAddress.zip].filter((item) => item).join(', ')}
+                    </TextFieldValue>
+                </FlexBox> : null}
             <FlexBox flexDirection="column">
                 <Typography variant="h6">Items:</Typography>
                 <FlexBox style={{ border: '1px solid #f1f2f4' }} flexDirection="column" gap="10px" padding="10px">
