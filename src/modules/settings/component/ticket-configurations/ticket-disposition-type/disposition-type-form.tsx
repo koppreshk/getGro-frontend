@@ -6,6 +6,7 @@ import { FormProvider, useForm } from "react-hook-form"
 
 export interface IDispositionTypeFormFields {
     dispositionTypeName: string;
+    dispositionId?: number;
 }
 
 interface IDispositionTypeFormProps {
@@ -34,6 +35,13 @@ export const DispositionTypeForm = (props: IDispositionTypeFormProps) => {
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <TextboxField name="dispositionTypeName" label="Name" fullWidth rules={{ required: 'Disposition type name is required' }} />
+
+                    </Grid>
+                    <Grid item xs={12}>
+                        {isInEditMode ?
+                            <TextboxField name="dispositionId" label="Id" fullWidth disabled />
+                            :
+                            <></>}
                     </Grid>
                 </Grid>
                 <FlexBox gap='10px' width="100%" justifyContent="flex-end">
