@@ -1,4 +1,4 @@
-import { ChevronRight, ShoppingBagOutlined } from "@mui/icons-material";
+import { Info, ShoppingBagOutlined } from "@mui/icons-material";
 import { IconButton, Tooltip, Typography } from "@mui/material";
 import { DrawerExtended, FlexBox } from "lib/ui-ux";
 import { IOrders } from "modules/tickets/apis";
@@ -31,8 +31,8 @@ const RelativePositionedFlexBox = styled(FlexBox)`
 const MoreDetailsBtn = styled(IconButton)`
     &&{
         position: absolute;
-        right: -0px;
-        top: 28px;
+        right: 0px;
+        top: -6px;
     }
 `;
 
@@ -91,7 +91,7 @@ export const OrderItem = (props: IOrderViewProps) => {
                         </FlexBox>
                         <Tooltip title="More details" arrow placement="left">
                             <MoreDetailsBtn onClick={toggleOrderDetailsDrawer}>
-                                <ChevronRight />
+                                <Info />
                             </MoreDetailsBtn>
                         </Tooltip>
                         <FlexBox flexDirection="column">
