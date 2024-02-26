@@ -20,7 +20,7 @@ export const toCamelCasedKeysFromUnderScores = (obj: { [key: string]: any }) => 
 
     const getValue = (key: string): any => {
         if (obj[key] !== null && typeof obj[key] === 'object') {
-            return isArray(obj[key]) ? obj[key].map((item: any) => toCamelCasedKeysFromUnderScores(item)) : toCamelCasedKeysFromUnderScores(obj[key])
+            return isArray(obj[key]) ? obj[key].map((item: any) => typeof item === 'string' ? item : toCamelCasedKeysFromUnderScores(item)) : toCamelCasedKeysFromUnderScores(obj[key])
         }
         return obj[key];
     }

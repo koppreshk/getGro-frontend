@@ -1,6 +1,6 @@
-import { Info, ShoppingBagOutlined } from "@mui/icons-material";
-import { IconButton, Tooltip, Typography } from "@mui/material";
-import { DrawerExtended, FlexBox } from "lib/ui-ux";
+import { Close, Info, Paid, ShoppingBagOutlined } from "@mui/icons-material";
+import { Chip, IconButton, Tooltip, Typography } from "@mui/material";
+import { DrawerExtended, DrawerHeaderWrapper, FlexBox } from "lib/ui-ux";
 import { IOrders } from "modules/tickets/apis";
 import { useState } from "react";
 import styled from "styled-components";
@@ -67,6 +67,21 @@ export const OrderItem = (props: IOrderViewProps) => {
         setDrawerDisplay((preValue) => !preValue);
     }
 
+    const renderHeader = () => {
+        return (
+            <DrawerHeaderWrapper flexDirection="column">
+                <FlexBox justifyContent="space-between" alignItems="center" width="100%">
+                    <Typography variant="h5">{`Order #${orderNumber}`}</Typography>
+                    <IconButton aria-label="Close" onClick={toggleOrderDetailsDrawer}>
+                        <Close />
+                    </IconButton>
+                </FlexBox >
+                <Tooltip title="Financial Status">
+                    <Chip icon={<Paid fontSize="small" />} label={financialStatus} sx={{ width: 'fit-content' }} size="small" />
+                </Tooltip>
+            </DrawerHeaderWrapper>
+        )
+    }
     return (
         <>
             <StyledOrder gap="10px">
@@ -105,7 +120,7 @@ export const OrderItem = (props: IOrderViewProps) => {
                 anchor="right"
                 width="420px"
                 open={showDrawer}
-                header={`Order #${orderNumber}`}
+                header={renderHeader}
                 onRenderContent={() => (
                     <OrderDetailsDrawerContent orderDetails={orderDetails[index]} />
                 )}

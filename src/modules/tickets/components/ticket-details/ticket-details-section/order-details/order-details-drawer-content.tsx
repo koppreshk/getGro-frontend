@@ -5,21 +5,19 @@ import { IOrders } from "modules/tickets/apis";
 import { TextFieldValue } from "./order-item";
 
 export const OrderDetailsDrawerContent = (props: { orderDetails: IOrders }) => {
-    const { createdAt, shippingAddress, lineItems, totalTax, totalDiscounts, totalPrice } = props.orderDetails;
+    const { createdAt, shippingAddress, lineItems, totalTax, totalDiscounts, totalPrice, paymentGatewayNames } = props.orderDetails;
+
     return (
         <FlexBox flexDirection="column" padding="20px" gap="10px">
-            <FlexBox flexDirection="column">
-                <Typography variant="h6">Order placed on:</Typography>
-                <TextFieldValue variant="subheading2" >{getFormattedDate(createdAt)}</TextFieldValue>
-            </FlexBox>
+            <HeaderValue heading="Order placed on:" value={getFormattedDate(createdAt)} />
             {shippingAddress !== null
-                ? <FlexBox flexDirection="column">
-                    <Typography variant="h6">Shipping Address:</Typography>
-                    <TextFieldValue variant="subheading2" >
-                        {[shippingAddress.address1, shippingAddress.address2, shippingAddress.city
-                            , shippingAddress.country, shippingAddress.zip].filter((item) => item).join(', ')}
-                    </TextFieldValue>
-                </FlexBox> : null}
+                ? <HeaderValue heading="Shipping Address:"
+                    value={
+                        [shippingAddress.address1, shippingAddress.address2, shippingAddress.city
+                            , shippingAddress.country, shippingAddress.zip].filter((item) => item).join(', ')
+                    } />
+                : null}
+            <HeaderValue heading="Payment mode:" value={paymentGatewayNames.join(',')} />
             <FlexBox flexDirection="column">
                 <Typography variant="h6">Items:</Typography>
                 <FlexBox style={{ border: '1px solid #f1f2f4' }} flexDirection="column" gap="10px" padding="10px">
@@ -61,3 +59,14 @@ export const OrderDetailsDrawerContent = (props: { orderDetails: IOrders }) => {
 }
 
 export const CurrencyINR = () => <span style={{ fontFamily: 'Arial' }}>&#x20B9;</span>
+
+export const HeaderValue = (props: { heading: string, value: string }) => {
+    return (
+        <>
+            <FlexBox flexDirection="column">
+                <Typography variant="h6">{props.heading}</Typography>
+                <TextFieldValue variant="subheading2" >{props.value}</TextFieldValue>
+            </FlexBox>
+        </>
+    )
+} 

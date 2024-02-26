@@ -12,7 +12,7 @@ interface IDrawerExtendedProps extends DrawerProps {
     onRenderContent?: () => React.ReactNode;
 }
 
-const HeaderWrapper = styled(FlexBox)`
+export const DrawerHeaderWrapper = styled(FlexBox)`
     padding: 20px;
     border-bottom: ${({ theme }) => theme.semantics.standardBorder};
 `;
@@ -23,12 +23,12 @@ export const DrawerExtended = (props: IDrawerExtendedProps) => {
         <Drawer {...rest}>
             <FlexBox width={width} height="100%" flexDirection="column">
                 {typeof header === 'string'
-                    ? <HeaderWrapper width="100%" justifyContent="space-between" alignItems="center">
+                    ? <DrawerHeaderWrapper width="100%" justifyContent="space-between" alignItems="center">
                         <Typography variant="h5">{header}</Typography>
                         <IconButton aria-label="Close" onClick={(ev) => rest?.onClose && rest?.onClose(ev, 'escapeKeyDown')}>
                             <Close />
                         </IconButton>
-                    </HeaderWrapper>
+                    </DrawerHeaderWrapper>
                     : header ? header() : null}
                 {onRenderContent ? onRenderContent() : null}
             </FlexBox>
