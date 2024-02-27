@@ -63,9 +63,9 @@ export const TableControls = <T extends object>(props: ITableControlProps<T>) =>
 
     return (
         <StyledFlexBox justifyContent="space-between" height="76px">
-            <FlexBox alignItems="end">
+            <FlexBox alignItems="center">
                 {isTableActionsvisible ? <TableActions /> : null}
-                {enableSerchField ? <TextField placeholder="Input here..." label="Search" type="search" onChange={onSearchChange} /> : null}
+                {enableSerchField ? <TextField placeholder="Input here..." size="small" label="Search" type="search" onChange={onSearchChange} /> : null}
             </FlexBox>
             <FlexBox gap="30px" alignItems="center">
                 <NoOfPages noOfRows={noOfRows as Rows} onFilterChangeHandler={onFilterChangeHandler} />
