@@ -70,8 +70,7 @@ export const Trends = () => {
 
     };
 
-    const section1 = [{ label: 'Resolved', value: '45' }, { label: 'Average first response time', value: '12m' }, { label: 'Resolution within SLA', value: '91%' }]
-    const section2 = [{ label: 'Received', value: '100' }, { label: 'Average response time', value: '22m 12s' }]
+    const section1 = [{ label: 'Resolved', value: '45' }, { label: 'Average first response time', value: '12m' }, { label: 'Resolution within SLA', value: '91%' }, { label: 'Received', value: '100' }, { label: 'Average response time', value: '22m 12s' }]
 
     const previousUnit = filterValue === 'month' ? { month: 1 } : { days: 7 };
     return (
@@ -88,17 +87,14 @@ export const Trends = () => {
                     {DateTime.now().minus(previousUnit).toLocaleString(DateTime.DATE_MED)} - {DateTime.local().toLocaleString(DateTime.DATE_MED)}
                 </Typography>
             </FlexBox>
-            <GridLayout $gridTemplateColumns={'2fr 1fr'} $gridGap="20px">
+            <GridLayout $gridTemplateColumns={'3fr 1fr'} $gridGap="20px">
                 <StyledChart
                     options={state.options}
                     series={state.series}
                     type="area" height={350} />
-                <FlexBox gap="20px" width="calc(100% - 866px)">
+                <FlexBox gap="20px" width="calc(100% - 866px)" alignItems="center">
                     <FlexBox flexDirection="column" gap="20px">
                         {section1.map((item, idx) => <Stats key={idx} label={item.label} value={item.value} />)}
-                    </FlexBox>
-                    <FlexBox flexDirection="column" gap="20px">
-                        {section2.map((item, idx) => <Stats key={idx} label={item.label} value={item.value} />)}
                     </FlexBox>
                 </FlexBox>
             </GridLayout>
