@@ -7,13 +7,17 @@ import { TotalDisposed } from "./parts/total-disposed"
 import { TicketsBySource } from "./parts/tickets-by-source"
 import { IncomingTickets } from "./parts/incoming-tickets"
 import { Trends } from "./parts/trends"
+import { ToDoList } from "./parts/to-do-list"
 
 export const DashboardLayout = () => {
     return (
         <FlexBox flexDirection="column" gap="20px" height="100%" padding="0 10px 0px 0px" width="100%" overflowY="auto">
             <UserDetails />
             <TopFourMetrics />
-            <Trends />
+            <GridLayout $gridGap="20px" $gridTemplateColumns={'3.13fr 1fr'}>
+                <Trends />
+                <ToDoList />
+            </GridLayout>
             <GridLayout $gridGap="20px" $gridTemplateColumns={'1fr 1fr 1fr'}>
                 <TotalDisposed />
                 <TicketsBySource />
