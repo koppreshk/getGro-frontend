@@ -74,7 +74,7 @@ const formDefaultValues = {
     alert: 2,
     conditions: '',
     name: '',
-    queues: "",
+    queues: '',
     statuses: '',
     subStatuses: '',
     customerClassification: '',
