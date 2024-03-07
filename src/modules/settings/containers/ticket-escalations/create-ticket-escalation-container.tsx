@@ -22,13 +22,13 @@ export const CreateTicketEscalationContainer = (props: ICreateTicketEscalationCo
             customer_classification: formData.customerClassification,
             designation_type: formData.designationType,
             last_conversation_type: formData.lastConversationType,
-            queue_list_id: Number(formData.queues),
-            status_id: Number(formData.statuses),
-            sub_status_id: Number(formData.subStatuses),
+            queue_list_id: formData.queues ? Number(formData.queues) : null,
+            status_id: formData.statuses ? Number(formData.statuses) : null,
+            sub_status_id: formData.subStatuses ? Number(formData.subStatuses) : null,
             type_of_ticket: formData.typeOfTicket,
-            escalate_to: Number(formData.autoDispose.escalateTo),
-            priorities: Number(formData.autoDispose.priority),
-            dispostion_type: Number(formData.autoDispose.dispostionType)
+            escalate_to: formData.autoDispose.escalateTo ? Number(formData.autoDispose.escalateTo) : null,
+            priorities: formData.autoDispose.priority ? Number(formData.autoDispose.priority) : null,
+            dispostion_type: formData.autoDispose.dispostionType ? Number(formData.autoDispose.dispostionType) : null
         })
             .then((res: { status: false }) => {
                 if (res.status) {

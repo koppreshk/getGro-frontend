@@ -18,7 +18,7 @@ export interface ITicketEscalationFormFields {
     after: string;
     conditions: string;
     alert: number;
-    queues: string;
+    queues: string | number;
     statuses: string | number;
     subStatuses: string | number;
     customerClassification: string,
