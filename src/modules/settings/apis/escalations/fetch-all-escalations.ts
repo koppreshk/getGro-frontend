@@ -13,7 +13,7 @@ export interface EscalationConditions {
     name: string
     after: string
     condition: string
-    alert_time: number | null
+    alert_time: number
     status: string;
     sub_status: string;
     last_conversation_type: string | null

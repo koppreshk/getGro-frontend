@@ -17,7 +17,7 @@ export const CreateTicketEscalationContainer = (props: ICreateTicketEscalationCo
         mutateAsync({
             name: formData.name,
             after: formData.after,
-            alert_time: formData.alert ? Number(formData.alert) : null,
+            alert_time: Number(formData.alert),
             condition: formData.conditions,
             customer_classification: formData.customerClassification,
             designation_type: formData.designationType,
