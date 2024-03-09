@@ -31,7 +31,9 @@ export const EditEscalationContainer = (props: IEditEscalationContainerProps) =>
             type_of_ticket: formData.typeOfTicket,
             escalate_to: Number(formData.autoDispose.escalateTo),
             priorities: Number(formData.autoDispose.priority),
-            dispostion_type: Number(formData.autoDispose.dispostionType),
+            dispostion_type: Number(formData.autoDispose.dispostionType), //\payload has a typo
+            tag: formData.tag.map((item) => item.key),
+            channel: formData.channel,
         }).then((res: { status: false }) => {
             if (res.status) {
                 showNotification({ message: 'Escalation edited successfully', type: 'success' });
@@ -48,7 +50,7 @@ export const EditEscalationContainer = (props: IEditEscalationContainerProps) =>
         return <CenteredCircularProgress />
     }
 
-    const { after, conditions, queues, statuses, sub_statuses, escalate_to, priorities } = data!;
+    const { after, conditions, queues, statuses, sub_statuses, escalate_to, priorities, channels } = data!;
 
     return (
         <TicketEscalationForm
@@ -60,6 +62,7 @@ export const EditEscalationContainer = (props: IEditEscalationContainerProps) =>
             statuses={statuses}
             sub_statuses={sub_statuses}
             escalate_to={escalate_to}
+            channels={channels}
             priorities={priorities}
             defaultValues={{
                 after: escalationMetadata.after,
@@ -73,10 +76,12 @@ export const EditEscalationContainer = (props: IEditEscalationContainerProps) =>
                 designationType: escalationMetadata.designation_type || '',
                 lastConversationType: escalationMetadata.last_conversation_type || '',
                 typeOfTicket: escalationMetadata.type_of_ticket || '',
+                channel: escalationMetadata.channel,
+                tag: channels.find((item) => item.channel_id === Number(escalationMetadata.channel))?.tags!.map((item) => ({ key: item.tag_id.toString(), value: item.tag })) || [],
                 autoDispose: {
-                    dispostionType: '',
-                    escalateTo: '',
-                    priority: ''
+                    dispostionType: escalationMetadata.disposition_type,
+                    escalateTo: escalationMetadata.escalate_to,
+                    priority: escalationMetadata.priority
                 },
                 customEmailEscalation: {
                     customEmailTemplate: '',

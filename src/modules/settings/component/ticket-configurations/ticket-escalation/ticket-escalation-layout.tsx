@@ -24,7 +24,7 @@ const AddNewEscalation = (props: {
     const { openAddEscalationDrawer, toggleAddEscalationDrawer } = props;
     return (
         <DrawerExtended
-            width="500px"
+            width="800px"
             header="Add New Escalation"
             anchor="right"
             open={openAddEscalationDrawer}
