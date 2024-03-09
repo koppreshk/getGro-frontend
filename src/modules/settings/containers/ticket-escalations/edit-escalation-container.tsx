@@ -32,7 +32,7 @@ export const EditEscalationContainer = (props: IEditEscalationContainerProps) =>
             escalate_to: Number(formData.autoDispose.escalateTo),
             priorities: Number(formData.autoDispose.priority),
             dispostion_type: Number(formData.autoDispose.dispostionType),
-            tag: formData.tag,
+            tag: formData.tag.map((item) => item.key),
             channel: formData.channel
         }).then((res: { status: false }) => {
             if (res.status) {

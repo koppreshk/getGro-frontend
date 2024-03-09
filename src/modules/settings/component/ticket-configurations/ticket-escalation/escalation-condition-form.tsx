@@ -8,7 +8,7 @@ export const EscalationConditionForm = (props: Pick<TicketEscalationFormProps, '
     const { after, conditions, queues, statuses, sub_statuses: subStatuses, channels } = props;
     const { watch } = useFormContext();
 
-    const selectedChannelData = watch('channels') !== undefined ? channels.find((item) => item.channel_id.toString() === `2`)!.tags : undefined;
+    const selectedChannelData = watch('channel') !== undefined ? channels.find((item) => item.channel_id.toString() === `2`)!.tags : undefined;
 
     return (
         <>
@@ -51,7 +51,7 @@ export const EscalationConditionForm = (props: Pick<TicketEscalationFormProps, '
                     <SelectField sx={{ width: '100%' }} name="typeOfTicket" label="Type Of Ticket" menuOptions={[].map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} />
                 </Grid>
                 <Grid item xs={6}>
-                    <SelectField sx={{ width: '100%' }} name="channels" label="Select Channel" menuOptions={channels.map((item) => ({ key: item?.channel_id.toString(), value: item?.name }))} />
+                    <SelectField sx={{ width: '100%' }} name="channel" label="Select Channel" menuOptions={channels.map((item) => ({ key: item?.channel_id.toString(), value: item?.name }))} />
                 </Grid>
                 <Grid item xs={6}>
                     <AutocompleteField name="tag" label="Select Tags" options={selectedChannelData?.map((item) => ({ key: item?.tag_id?.toString(), value: item?.tag }))} placeholder="Select Tags" />

@@ -20,7 +20,7 @@ export interface EscalationConditions {
     status: string;
     sub_status: string;
     channel: string;
-    tag: string[];
+    tag: string[] | null;
     last_conversation_type: string | null
     queue_list_id: string | null
     customer_classification: string | null

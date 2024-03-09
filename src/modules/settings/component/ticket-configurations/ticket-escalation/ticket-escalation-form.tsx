@@ -26,7 +26,7 @@ export interface ITicketEscalationFormFields {
     lastConversationType: string,
     typeOfTicket: string,
     channel: string,
-    tag: string[],
+    tag: { key: string, value: string }[],
     autoDispose: {
         escalateTo: string;
         dispostionType: string;
@@ -71,7 +71,7 @@ const steps = [
     'Set Actions for Escalation'
 ];
 
-const formDefaultValues:ITicketEscalationFormFields = {
+const formDefaultValues: ITicketEscalationFormFields = {
     after: '',
     alert: 2,
     conditions: '',
