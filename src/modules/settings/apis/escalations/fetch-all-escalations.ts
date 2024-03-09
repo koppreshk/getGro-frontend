@@ -12,10 +12,15 @@ export interface EscalationConditions {
     id: number
     name: string
     after: string
-    condition: string
+    condition: string;
+    disposition_type: string;
+    escalate_to: string;
+    priority: string;
     alert_time: number
     status: string;
     sub_status: string;
+    channel: string;
+    tag: string[];
     last_conversation_type: string | null
     queue_list_id: string | null
     customer_classification: string | null

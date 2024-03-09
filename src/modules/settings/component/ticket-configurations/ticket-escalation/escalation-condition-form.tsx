@@ -1,28 +1,14 @@
-import { Grid, SelectChangeEvent } from "@mui/material";
+import { Grid } from "@mui/material";
 import { TextboxField, SelectField, AutocompleteField } from "lib/form-fields";
 import { capitalizeFirstLetter } from "lib/utils";
 import { TicketEscalationFormProps } from "./ticket-escalation-form";
-import { useEffect, useState } from "react";
-import { ChannelTag } from "modules/settings/apis/escalations";
+import { useFormContext } from "react-hook-form";
 
 export const EscalationConditionForm = (props: Pick<TicketEscalationFormProps, 'after' | 'conditions' | 'queues' | 'statuses' | 'sub_statuses' | 'channels'>) => {
     const { after, conditions, queues, statuses, sub_statuses: subStatuses, channels } = props;
-    const [selectedChannel, setSelectedChannel] = useState("");
-    const [channelTags, setChannelTag] = useState<ChannelTag[]>([]);
+    const { watch } = useFormContext();
 
-    useEffect(() => {
-        const selectedChannelData = channels.find((item) => item.channel_id.toString() === selectedChannel);
-        console.log(selectedChannelData);
-
-        if (selectedChannelData) {
-            setChannelTag(selectedChannelData.tags);
-        }
-
-    }, [channels, selectedChannel]);
-
-    const onChannelChange = (event: SelectChangeEvent<unknown>) => {
-        setSelectedChannel(event.target.value as string);
-    };
+    const selectedChannelData = watch('channels') !== undefined ? channels.find((item) => item.channel_id.toString() === `2`)!.tags : undefined;
 
     return (
         <>
@@ -65,10 +51,10 @@ export const EscalationConditionForm = (props: Pick<TicketEscalationFormProps, '
                     <SelectField sx={{ width: '100%' }} name="typeOfTicket" label="Type Of Ticket" menuOptions={[].map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} />
                 </Grid>
                 <Grid item xs={6}>
-                    <SelectField sx={{ width: '100%' }} name="channels" label="Select Channel" onChange={onChannelChange} menuOptions={channels.map((item) => ({ key: item?.channel_id.toString(), value: capitalizeFirstLetter(item?.name, '_') }))} />
+                    <SelectField sx={{ width: '100%' }} name="channels" label="Select Channel" menuOptions={channels.map((item) => ({ key: item?.channel_id.toString(), value: item?.name }))} />
                 </Grid>
                 <Grid item xs={6}>
-                    <AutocompleteField label="Select Tags" name="tag" options={channelTags.map((item) => ({ key: item.tag_id.toString(), value: item.tag }))} placeholder="Select Tags" />
+                    <AutocompleteField name="tag" label="Select Tags" options={selectedChannelData?.map((item) => ({ key: item?.tag_id?.toString(), value: item?.tag }))} placeholder="Select Tags" />
                 </Grid>
             </Grid>
         </>

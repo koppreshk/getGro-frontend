@@ -73,7 +73,6 @@ function TicketEscalationList(props: ITicketEscalationListProps) {
 
     const configTotalPages = useAppSelector((state) => state.configurations.totalPages);
 
-
     const toggleAddEscalationDrawer = useCallback(() => {
         setOpenAddEscalationDrawer((prevValue) => !prevValue)
     }, []);
