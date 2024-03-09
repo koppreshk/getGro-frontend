@@ -4,12 +4,12 @@ import { useServiceClient } from "lib";
 import { EscalationEndPoint, EscalationQueryKey } from "./api-enums";
 import { EscalationConditions } from "./fetch-all-escalations";
 
-export type EscalationConditionsArgs = Omit<EscalationConditions, 'status' | 'sub_status' | 'queue_list_id'> & {
+export type EscalationConditionsArgs = Omit<EscalationConditions, 'status' | 'sub_status' | 'queue_list_id' | 'escalate_to' | 'disposition_type' | 'priority'> & {
     status_id: number | null;
     sub_status_id: number | null;
     escalate_to: number | null;
     priorities: number | null;
-    dispostion_type: number | null;
+    disposition_type: number | null;
     queue_list_id: number | null;
 }
 

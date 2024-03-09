@@ -31,9 +31,9 @@ export const EditEscalationContainer = (props: IEditEscalationContainerProps) =>
             type_of_ticket: formData.typeOfTicket,
             escalate_to: Number(formData.autoDispose.escalateTo),
             priorities: Number(formData.autoDispose.priority),
-            dispostion_type: Number(formData.autoDispose.dispostionType),
+            disposition_type: Number(formData.autoDispose.dispostionType),
             tag: formData.tag.map((item) => item.key),
-            channel: formData.channel
+            channel: formData.channel,
         }).then((res: { status: false }) => {
             if (res.status) {
                 showNotification({ message: 'Escalation edited successfully', type: 'success' });
