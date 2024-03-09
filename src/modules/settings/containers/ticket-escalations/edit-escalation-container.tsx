@@ -31,7 +31,7 @@ export const EditEscalationContainer = (props: IEditEscalationContainerProps) =>
             type_of_ticket: formData.typeOfTicket,
             escalate_to: Number(formData.autoDispose.escalateTo),
             priorities: Number(formData.autoDispose.priority),
-            disposition_type: Number(formData.autoDispose.dispostionType),
+            dispostion_type: Number(formData.autoDispose.dispostionType), //\payload has a typo
             tag: formData.tag.map((item) => item.key),
             channel: formData.channel,
         }).then((res: { status: false }) => {

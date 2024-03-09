@@ -9,7 +9,7 @@ export type EscalationConditionsArgs = Omit<EscalationConditions, 'status' | 'su
     sub_status_id: number | null;
     escalate_to: number | null;
     priorities: number | null;
-    disposition_type: number | null;
+    dispostion_type: number | null;
     queue_list_id: number | null;
 }
 
