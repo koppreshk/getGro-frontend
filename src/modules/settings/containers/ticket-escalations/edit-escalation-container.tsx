@@ -77,7 +77,7 @@ export const EditEscalationContainer = (props: IEditEscalationContainerProps) =>
                 lastConversationType: escalationMetadata.last_conversation_type || '',
                 typeOfTicket: escalationMetadata.type_of_ticket || '',
                 channel: escalationMetadata.channel,
-                tag: escalationMetadata.tag || [],
+                tag: channels.find((item) => item.channel_id === Number(escalationMetadata.channel))?.tags!.map((item) => ({ key: item.tag_id.toString(), value: item.tag })) || [],
                 autoDispose: {
                     dispostionType: escalationMetadata.disposition_type,
                     escalateTo: escalationMetadata.escalate_to,

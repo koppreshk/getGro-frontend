@@ -93,7 +93,7 @@ function TicketEscalationList(props: ITicketEscalationListProps) {
                 onRowClick={onRowClick} />
             <DrawerExtended
                 anchor="right"
-                width="500px"
+                width="800px"
                 open={openAddEscalationDrawer}
                 header="View or Edit Escalation"
                 onRenderContent={() => (
