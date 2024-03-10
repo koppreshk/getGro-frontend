@@ -4,13 +4,15 @@ import { useServiceClient } from "lib";
 import { EscalationEndPoint, EscalationQueryKey } from "./api-enums";
 import { EscalationConditions } from "./fetch-all-escalations";
 
-export type EscalationConditionsArgs = Omit<EscalationConditions, 'status' | 'sub_status' | 'queue_list_id' | 'escalate_to' | 'disposition_type' | 'priority'> & {
+export type EscalationConditionsArgs = Omit<EscalationConditions, 'status' | 'sub_status' | 'queue_list_id' | 'escalate_to' | 'disposition_type' | 'priority' | 'channel' | 'tag'> & {
     status_id: number | null;
     sub_status_id: number | null;
     escalate_to: number | null;
     priorities: number | null;
     dispostion_type: number | null;
     queue_list_id: number | null;
+    channel_id: number | string | null;
+    tag_id: string[];
 }
 
 export const useEditEscalation = () => {

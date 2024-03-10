@@ -19,8 +19,8 @@ export interface EscalationConditions {
     alert_time: number
     status: string;
     sub_status: string;
-    channel: string;
-    tag: string[] | null;
+    channel: { channel_id: number, name: string };
+    tag: { tag_id: number, tag: string }[] | null;
     last_conversation_type: string | null
     queue_list_id: string | null
     customer_classification: string | null

@@ -29,8 +29,8 @@ export const CreateTicketEscalationContainer = (props: ICreateTicketEscalationCo
             escalate_to: formData.autoDispose.escalateTo ? Number(formData.autoDispose.escalateTo) : null,
             priorities: formData.autoDispose.priority ? Number(formData.autoDispose.priority) : null,
             dispostion_type: formData.autoDispose.dispostionType ? Number(formData.autoDispose.dispostionType) : null,
-            channel: formData.channel,
-            tag: formData.tag.map((item) => item.key)
+            channel_id: formData.channel,
+            tag_id: formData.tag.map((item) => item.key)
         })
             .then((res: { status: false }) => {
                 if (res.status) {
