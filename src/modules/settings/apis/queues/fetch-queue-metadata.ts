@@ -1,5 +1,5 @@
-import { useServiceClient } from "lib";
 import React from "react";
+import { useServiceClient } from "lib";
 import { useQuery } from "react-query";
 import { ConfigurationsEndPoint, ConfigurationsQueryKey } from "./api-enums";
 import { Employee } from "./fetch-all-queues";

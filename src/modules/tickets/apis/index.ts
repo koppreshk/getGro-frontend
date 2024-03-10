@@ -14,3 +14,4 @@ export * from './fetch-all-pending-tickets';
 export * from './fetch-all-tickets';
 export * from './fetch-all-assigned';
 export * from './get-data-by-key';
+export * from './fetch-ticket-by-id';
