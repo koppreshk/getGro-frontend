@@ -8,8 +8,7 @@ export const EscalationConditionForm = (props: Pick<TicketEscalationFormProps, '
     const { after, conditions, queues, statuses, sub_statuses: subStatuses, channels } = props;
     const { watch } = useFormContext();
 
-    const selectedChannelData = watch('channel') !== undefined ? channels.find((item) => item.channel_id.toString() === `2`)!.tags : undefined;
-
+    const selectedChannelData = watch('channel') ? channels.find((item) => item.channel_id.toString() === watch('channel'))!.tags : undefined;
     return (
         <>
             <Grid container spacing={2}>
