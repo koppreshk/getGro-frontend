@@ -32,8 +32,8 @@ export const EditEscalationContainer = (props: IEditEscalationContainerProps) =>
             escalate_to: Number(formData.autoDispose.escalateTo),
             priorities: Number(formData.autoDispose.priority),
             dispostion_type: Number(formData.autoDispose.dispostionType), //\payload has a typo
-            tag: formData.tag.map((item) => item.key),
-            channel: formData.channel,
+            tag_id: formData.tag.map((item) => item.key),
+            channel_id: formData.channel,
         }).then((res: { status: false }) => {
             if (res.status) {
                 showNotification({ message: 'Escalation edited successfully', type: 'success' });
@@ -76,8 +76,8 @@ export const EditEscalationContainer = (props: IEditEscalationContainerProps) =>
                 designationType: escalationMetadata.designation_type || '',
                 lastConversationType: escalationMetadata.last_conversation_type || '',
                 typeOfTicket: escalationMetadata.type_of_ticket || '',
-                channel: escalationMetadata.channel,
-                tag: channels.find((item) => item.channel_id === Number(escalationMetadata.channel))?.tags!.map((item) => ({ key: item.tag_id.toString(), value: item.tag })) || [],
+                channel: escalationMetadata.channel.channel_id.toString(),
+                tag: escalationMetadata.tag?.map((item) => ({ key: item.tag_id.toString(), value: item.tag })) || [],
                 autoDispose: {
                     dispostionType: sub_statuses.find((item) => item.name === escalationMetadata.disposition_type)!.id.toString()!,
                     escalateTo: escalationMetadata.escalate_to,
