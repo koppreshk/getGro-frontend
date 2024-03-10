@@ -79,9 +79,9 @@ export const EditEscalationContainer = (props: IEditEscalationContainerProps) =>
                 channel: escalationMetadata.channel,
                 tag: channels.find((item) => item.channel_id === Number(escalationMetadata.channel))?.tags!.map((item) => ({ key: item.tag_id.toString(), value: item.tag })) || [],
                 autoDispose: {
-                    dispostionType: escalationMetadata.disposition_type,
+                    dispostionType: sub_statuses.find((item) => item.name === escalationMetadata.disposition_type)!.id.toString()!,
                     escalateTo: escalationMetadata.escalate_to,
-                    priority: escalationMetadata.priority
+                    priority: priorities.find((item) => item.name === escalationMetadata.priority)!.id.toString()!
                 },
                 customEmailEscalation: {
                     customEmailTemplate: '',
