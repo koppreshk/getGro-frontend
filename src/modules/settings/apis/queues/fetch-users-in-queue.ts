@@ -9,13 +9,13 @@ export interface IQueueUsers {
     id: number;
 }
 
-export const useFetchUsersInQueue = () => {
+export const useFetchUsersInQueue = (queueId: string) => {
 
     const { getData } = useServiceClient();
 
-    const fetchTicketMetadata = React.useCallback(() => getData(`${ConfigurationsEndPoint.FETCH_USERS_IN_QUEUE}`).then((res) => res.json()), [getData])
+    const fetchTicketMetadata = React.useCallback(() => getData(`${ConfigurationsEndPoint.FETCH_USERS_IN_QUEUE}?queue_id=${queueId}`).then((res) => res.json()), [getData])
 
-    return useQuery<IQueueUsers>({
+    return useQuery<IQueueUsers[]>({
         queryFn: fetchTicketMetadata,
         queryKey: ConfigurationsQueryKey.FETCH_USERS_IN_QUEUE,
     });

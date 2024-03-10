@@ -7,6 +7,7 @@ import { SelectField, TextboxField, CheckboxField, AutocompleteField } from "lib
 import { DrawerExtended, FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { useAppSelector } from "lib/hooks";
 import { ITicketDetailsSectionProps } from "../ticket-details-section";
+import { GetEmployeesByQueueContainer } from "modules/tickets/containers";
 
 const StyledButton = styled(Button)`
     &&{
@@ -35,17 +36,6 @@ const StyledButton = styled(Button)`
         }
     }
 `
-
-const employeeMenuOptions = [
-    {
-        key: '1',
-        value: 'Mouin Pasha'
-    },
-    {
-        key: '2',
-        value: 'Anup Dives'
-    }
-]
 
 interface MutliSelect {
     key: string;
@@ -116,9 +106,7 @@ const TicketDisposeForm = (props: ITicketDisposeProps) => {
                                 <SelectField name="queueId" label="Select Queue" sx={{ width: '100%' }}
                                     menuOptions={queuesData.map((item) => ({ key: item.id.toString(), value: item.name }))} />
                             </Grid>
-                            <Grid item xs={12}>
-                                <SelectField name="employeeId" label="Select Employee" sx={{ width: '100%' }} menuOptions={employeeMenuOptions} />
-                            </Grid>
+                            {methods.watch('queueId') ? <GetEmployeesByQueueContainer queueId={methods.watch('queueId')!.toString()} /> : null}
                             <Grid item xs={12}>
                                 <TextboxField name="remarks" label="Remarks" multiline rows={4} fullWidth />
                             </Grid>
