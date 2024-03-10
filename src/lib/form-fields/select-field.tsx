@@ -34,7 +34,7 @@ export const SelectField = (props: ITextboxFieldProps) => {
                             labelId="demo-select-small-label"
                             id="demo-select-small"
                             label={label}
-                            {...rest} {...field} error={hasError}>
+                            {...rest} {...field} error={hasError} onChange={(e) => field.onChange(e.target.value)}>
                             {
                                 menuOptions.map((item) => <MenuItem key={item.key} value={item.key}>{item.value}</MenuItem>)
                             }

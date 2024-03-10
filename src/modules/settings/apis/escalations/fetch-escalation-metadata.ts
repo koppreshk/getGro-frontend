@@ -11,6 +11,7 @@ export interface IEscalationMetadata {
   sub_statuses: SubStatus[]
   escalate_to: EscalateTo[]
   priorities: Priority[]
+  channels: Channel[]
 }
 
 export interface Queue {
@@ -38,6 +39,17 @@ export interface EscalateTo {
 export interface Priority {
   id: number
   name: string
+}
+
+export interface ChannelTag {
+  tag_id: number;
+  tag: string;
+}
+
+export interface Channel {
+  channel_id: number;
+  name: string;
+  tags: ChannelTag[];
 }
 
 export const useFetchEscalationMetadata = () => {
