@@ -1,12 +1,17 @@
 import { Alert } from "@mui/material";
-import { useFetchTicketById, useTicketConversation } from "../apis";
+import { ITicketById, useTicketConversation } from "../apis";
 import { TicketConversationLayout } from "../components/ticket-details/ticket-conversation"
 import { FlexBox } from "lib/ui-ux";
 import { EmailSkeletonLoader } from "lib/ui-ux/loader-components";
+import { UseQueryResult } from "react-query";
 
-export const TicketConversationContainer = () => {
+interface ITicketConversationContainerProps {
+    fetchTicketsAPIinfo: UseQueryResult<ITicketById, unknown>
+}
+
+export const TicketConversationContainer = (props: ITicketConversationContainerProps) => {
     const { isLoading, data } = useTicketConversation();
-    const { data: conversationsData, isLoading: conversationLoading, isError } = useFetchTicketById();
+    const { data: conversationsData, isLoading: conversationLoading, isError } = props.fetchTicketsAPIinfo;
 
     if (conversationLoading) {
         return (

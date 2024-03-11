@@ -1,13 +1,13 @@
 import React, { useReducer } from "react";
 import styled from "styled-components";
 import { FormProvider, useForm } from "react-hook-form"
-import { Button, FormControlLabel } from "@mui/material";
+import { Button, FormControlLabel, Grid } from "@mui/material";
 import { ArchiveOutlined } from "@mui/icons-material";
-import { SelectField, TextboxField, CheckboxField } from "lib/form-fields";
+import { SelectField, TextboxField, CheckboxField, AutocompleteField } from "lib/form-fields";
 import { DrawerExtended, FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { useAppSelector } from "lib/hooks";
-import { IDisposeTicketArgs } from "modules/tickets/apis";
-import { TicketDisposeFolder } from "./ticket-dispose-folder";
+import { ITicketDetailsSectionProps } from "../ticket-details-section";
+import { GetEmployeesByQueueContainer } from "modules/tickets/containers";
 
 const StyledButton = styled(Button)`
     &&{
@@ -36,54 +36,25 @@ const StyledButton = styled(Button)`
         }
     }
 `
-const menuOptions = [{
-    key: 'pending-from-tech',
-    value: 'Pending from Tech'
-}, {
-    key: 'pending-from-finance',
-    value: 'Pending from Finance'
-}, {
-    key: 'resolved',
-    value: 'Resolved'
-}, {
-    key: 'in-progress',
-    value: 'In Progress'
-}, {
-    key: 'pending',
-    value: 'Pending'
-}, {
-    key: 'on-hold',
-    value: 'On Hold'
-}, {
-    key: 'pending-from-internal-team',
-    value: 'Pending From Internal Team'
-}, {
-    key: 'closed',
-    value: 'Closed'
-}]
 
-const employeeMenuOptions = [
-    {
-        key: '1',
-        value: 'Mouin Pasha'
-    },
-    {
-        key: '2',
-        value: 'Anup Dives'
-    }
-]
-
-interface IDispostionInputField {
-    remarks: string;
-    dispositionType: string;
-    callBackRequired: boolean;
-    parentFolder: string;
-    childFolder: string;
+interface MutliSelect {
+    key: string;
+    value: string;
 }
 
-interface ITicketDisposeProps {
+export interface IDispostionFormFields {
+    dispositionId: number;
+    queueId?: number;
+    employeeId?: number;
+    tagId: MutliSelect[];
+    remarks?: string;
+    callBackTime?: string;
+    callBackRequired?: boolean;
+}
+
+interface ITicketDisposeProps extends ITicketDetailsSectionProps {
     openTicketDisposeDrawer: boolean;
-    submitDisposeTicket: (data: IDisposeTicketArgs) => void;
+    submitDisposeTicket: (data: IDispostionFormFields) => void;
     onToggleTicketDispose: () => void;
 }
 
@@ -108,57 +79,49 @@ export const useFolderReducer = () => {
 
     return useReducer(reducer, { parentFolder: source, childFolder: '' })
 }
+
 const TicketDisposeForm = (props: ITicketDisposeProps) => {
-    const { openTicketDisposeDrawer, onToggleTicketDispose, submitDisposeTicket } = props;
-    const methods = useForm<IDispostionInputField>();
-    const [folderStates, dispatch] = useFolderReducer();
+    const { openTicketDisposeDrawer, onToggleTicketDispose, submitDisposeTicket, dispositonData, queuesData, tagData } = props;
+    const methods = useForm<IDispostionFormFields>();
 
-    const parentFolderClick = (name: string) => {
-        dispatch({ type: 'parent-folder', payload: { parentFolder: name, childFolder: '' } })
-    };
-
-    const childFolderClick = (name: string) => {
-        dispatch({ type: 'child-folder', payload: { parentFolder: folderStates.parentFolder, childFolder: name } })
-    }
-
-    const onDeleteHandler = (name?: 'parent-folder' | 'child-folder') => {
-        if (name) {
-            name === 'parent-folder'
-                ? dispatch({ type: name, payload: { parentFolder: '', childFolder: folderStates.childFolder } })
-                : dispatch({ type: name, payload: { parentFolder: folderStates.parentFolder, childFolder: '' } });
-            return;
-        }
-        dispatch({ type: 'clear-folders' });
-    };
-
-    const onSubmitDisposeTicket = React.useCallback((getformvalues: IDispostionInputField) => {
-        submitDisposeTicket({ dispositionType: getformvalues.dispositionType });
+    const onSubmitDisposeTicket = React.useCallback(async (getformvalues: IDispostionFormFields) => {
+        submitDisposeTicket(getformvalues);
     }, [submitDisposeTicket]);
 
     const onRenderContent = () => {
         return (
             <>
                 <FormProvider {...methods}>
-                    <FlexBox flexDirection="column" padding="20px" height="calc(100% - 77px)" justifyContent="space-between">
-                        <FlexBox flexDirection="column" overflowY="auto">
-                            <TicketDisposeFolder
-                                parentFolderValue={folderStates.parentFolder}
-                                childFolderValue={folderStates.childFolder}
-                                parentFolderClick={parentFolderClick}
-                                onDeleteHandler={onDeleteHandler}
-                                childFolderClick={childFolderClick} />
-                            <FlexBox flexDirection="column" gap="40px" padding="40px 0px">
-                                <FlexBox flexDirection="column" gap="10px">
-                                    <SelectField name="selectEmployee" label="Select Employee" menuOptions={employeeMenuOptions} />
-                                    <TextboxField name="remarks" label="Remarks" multiline rows={4} />
-                                    <SelectField name="dispositionType" label="Disposition Type" menuOptions={menuOptions} />
-                                    <FormControlLabel control={<CheckboxField name="callBackRequired" sx={{ width: '40px' }} />} label="is callback required?" />
-                                </FlexBox>
-                            </FlexBox>
+                    <FlexBox flexDirection="column" padding="20px" height="calc(100% - 77px)" justifyContent="space-between" overflowY="auto">
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <AutocompleteField name="tagId" label="Select Tags" placeholder="Select Tags"
+                                    options={tagData?.map((item) => ({ key: item.tag_id.toString(), value: item.tag }))} />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <SelectField name="dispositionId" label="Disposition Type" sx={{ width: '100%' }}
+                                    menuOptions={dispositonData.map((item) => ({ key: item.id.toString(), value: item.name }))} />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <SelectField name="queueId" label="Select Queue" sx={{ width: '100%' }}
+                                    menuOptions={queuesData.map((item) => ({ key: item.id.toString(), value: item.name }))} />
+                            </Grid>
+                            {methods.watch('queueId') ? <GetEmployeesByQueueContainer queueId={methods.watch('queueId')!.toString()} /> : null}
+                            <Grid item xs={12}>
+                                <TextboxField name="remarks" label="Remarks" multiline rows={4} fullWidth />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <FormControlLabel control={<CheckboxField name="callBackRequired" sx={{ width: '40px' }} />} label="is callback required?" />
+                            </Grid>
+                            <Grid item xs={12}>
+
+                            </Grid>
+                        </Grid>
+                        <FlexBox width="100%" >
+                            <Button variant="contained" onClick={methods.handleSubmit(onSubmitDisposeTicket)} fullWidth>
+                                Dispose Ticket
+                            </Button>
                         </FlexBox>
-                        <Button variant="contained" onClick={methods.handleSubmit(onSubmitDisposeTicket)}>
-                            Dispose Ticket
-                        </Button>
                     </FlexBox>
                 </FormProvider>
             </>
