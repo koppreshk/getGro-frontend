@@ -5,10 +5,10 @@ import { useServiceClient } from "lib"
 import { TicketsEndPoint, TicketsQueryKey } from "./api-enums";
 
 export interface IDisposeTicketArgs {
-    dispositionId: number;
-    queueId?: number;
-    employeeId?: number;
-    tagId?: number;
+    dispositionId: string;
+    queueId?: string;
+    employeeId?: string;
+    tagId?: string;
     remarks?: string;
     callBackTime?: string;
 }
