@@ -21,10 +21,10 @@ export const TicketDisposeContainer = (props: ITicketDisposeContainerProps) => {
         mutateAsync({
             dispositionId: data.dispositionId,
             callBackTime: data.callBackTime,
-            employeeId: data.employeeId,
+            employeeId: data.employeeId ? Number(data.employeeId[0].key): undefined,
             queueId: data.queueId,
             remarks: data.remarks,
-            tagId: (data.tagId[0].key)
+            tagId:  data.tagId ? Number(data.tagId[0].key) : undefined
         })
             .then(() => {
                 navigate('/tickets', { replace: true });
