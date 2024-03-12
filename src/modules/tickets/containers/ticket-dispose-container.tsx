@@ -24,7 +24,7 @@ export const TicketDisposeContainer = (props: ITicketDisposeContainerProps) => {
             employeeId: data.employeeId,
             queueId: data.queueId,
             remarks: data.remarks,
-            tagId: Number(data.tagId[0].key)
+            tagId: (data.tagId[0].key)
         })
             .then(() => {
                 navigate('/tickets', { replace: true });

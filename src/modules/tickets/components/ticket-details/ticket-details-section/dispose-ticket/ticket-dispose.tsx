@@ -43,9 +43,9 @@ interface MutliSelect {
 }
 
 export interface IDispostionFormFields {
-    dispositionId: number;
-    queueId?: number;
-    employeeId?: number;
+    dispositionId: string;
+    queueId?: string;
+    employeeId?: string;
     tagId: MutliSelect[];
     remarks?: string;
     callBackTime?: string;
@@ -82,7 +82,13 @@ export const useFolderReducer = () => {
 
 const TicketDisposeForm = (props: ITicketDisposeProps) => {
     const { openTicketDisposeDrawer, onToggleTicketDispose, submitDisposeTicket, dispositonData, queuesData, tagData } = props;
-    const methods = useForm<IDispostionFormFields>();
+    const methods = useForm<IDispostionFormFields>({
+        defaultValues: {
+            dispositionId: '',
+            queueId: ''
+        }
+    });
+    const ticketDetails = useAppSelector(state => state.tickets.ticketDetails);
 
     const onSubmitDisposeTicket = React.useCallback(async (getformvalues: IDispostionFormFields) => {
         submitDisposeTicket(getformvalues);
@@ -95,11 +101,11 @@ const TicketDisposeForm = (props: ITicketDisposeProps) => {
                     <FlexBox flexDirection="column" padding="20px" height="calc(100% - 77px)" justifyContent="space-between" overflowY="auto">
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
-                                <AutocompleteField name="tagId" label="Select Tags" placeholder="Select Tags"
+                                <AutocompleteField name="tagId" label={`${ticketDetails!.source} Tags`} placeholder="Select Tags"
                                     options={tagData?.map((item) => ({ key: item.tag_id.toString(), value: item.tag }))} />
                             </Grid>
                             <Grid item xs={12}>
-                                <SelectField name="dispositionId" label="Disposition Type" sx={{ width: '100%' }}
+                                <SelectField name="dispositionId" label="Disposition Type" sx={{ width: '100%' }} rules={{ required: 'Disposition type is required' }}
                                     menuOptions={dispositonData.map((item) => ({ key: item.id.toString(), value: item.name }))} />
                             </Grid>
                             <Grid item xs={12}>
