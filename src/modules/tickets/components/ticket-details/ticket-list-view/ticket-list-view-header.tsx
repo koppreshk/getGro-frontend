@@ -61,16 +61,18 @@ export const TicketListViewHeader = () => {
 
     return (
         <HeaderWrapper width="100%" justifyContent="space-between">
-            <CustomIconButton onClick={() => { navigate(-1) }} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
-            <FlexBox alignItems="center" gap="10px">
-                <Typography variant="h5">{header}</Typography>
-                <Chip label={noOfRecords} size="small" variant="filled" color="primary" />
-                <CustomIconButton tooltipProps={{ title: 'Sort' }} iconComponent={<SortIcon />} onClick={handleClick} />
-                <Menu open={open} anchorEl={anchorEl} onClose={handleClose} >
-                    <MenuItem>Status</MenuItem>
-                    <MenuItem>Due Date</MenuItem>
-                    <MenuItem>Source</MenuItem>
-                </Menu>
+            <FlexBox>
+                <CustomIconButton onClick={() => { navigate(-1) }} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
+                <FlexBox alignItems="center" gap="10px">
+                    <Typography variant="h5">{header}</Typography>
+                    <Chip label={noOfRecords} size="small" variant="filled" color="primary" />
+                    <CustomIconButton tooltipProps={{ title: 'Sort' }} iconComponent={<SortIcon />} onClick={handleClick} />
+                    <Menu open={open} anchorEl={anchorEl} onClose={handleClose} >
+                        <MenuItem>Status</MenuItem>
+                        <MenuItem>Due Date</MenuItem>
+                        <MenuItem>Source</MenuItem>
+                    </Menu>
+                </FlexBox>
             </FlexBox>
             <FlexBox gap="5px" alignItems="center">
                 <StyledIconButtons iconComponent={<PhoneRounded fontSize="small" />} size="small" color="primary" onClick={toggleCallBtn} tooltipProps={{ title: 'Make a call' }} />

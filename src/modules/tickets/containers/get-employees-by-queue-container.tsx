@@ -7,13 +7,17 @@ export const GetEmployeesByQueueContainer = (props: { queueId: string }) => {
     const { data, isLoading } = useFetchUsersInQueue(props.queueId);
 
     if (isLoading) {
-        return <CenteredCircularProgress height="auto"/>
+        return <CenteredCircularProgress height="auto" />
     }
 
     if (data) {
         return (
             <Grid item xs={12}>
-                <SelectField name="employeeId" label="Select Employee" sx={{ width: '100%' }} menuOptions={data.map((item) => ({ key: item.id.toString(), value: item.firstName }))} />
+                <SelectField name="employeeId" label="Select Employee" sx={{ width: '100%' }}
+                    menuOptions={data.map((item) => (
+                        { key: item.id.toString(), value: `${item.firstName} ${item.lastName ? item.lastName : ''}` }
+                    ))
+                    } />
             </Grid>
         )
     }

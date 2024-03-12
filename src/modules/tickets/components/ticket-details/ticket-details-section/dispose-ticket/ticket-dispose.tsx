@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 import styled from "styled-components";
 import { FormProvider, useForm } from "react-hook-form"
 import { Button, FormControlLabel, Grid } from "@mui/material";
@@ -8,6 +8,7 @@ import { DrawerExtended, FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { useAppSelector } from "lib/hooks";
 import { ITicketDetailsSectionProps } from "../ticket-details-section";
 import { GetEmployeesByQueueContainer } from "modules/tickets/containers";
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 const StyledButton = styled(Button)`
     &&{
@@ -45,8 +46,8 @@ interface MutliSelect {
 export interface IDispostionFormFields {
     dispositionId: number;
     queueId?: number;
-    employeeId?: number;
-    tagId: MutliSelect[];
+    employeeId?: MutliSelect[];
+    tagId?: MutliSelect[];
     remarks?: string;
     callBackTime?: string;
     callBackRequired?: boolean;
@@ -84,7 +85,10 @@ const TicketDisposeForm = (props: ITicketDisposeProps) => {
     const { openTicketDisposeDrawer, onToggleTicketDispose, submitDisposeTicket, dispositonData, queuesData, tagData } = props;
     const methods = useForm<IDispostionFormFields>();
 
+    const [dateTime, setDateTime] = useState(null)
+
     const onSubmitDisposeTicket = React.useCallback(async (getformvalues: IDispostionFormFields) => {
+        // console.log(getformvalues.callBackTime);
         submitDisposeTicket(getformvalues);
     }, [submitDisposeTicket]);
 
@@ -113,9 +117,12 @@ const TicketDisposeForm = (props: ITicketDisposeProps) => {
                             <Grid item xs={12}>
                                 <FormControlLabel control={<CheckboxField name="callBackRequired" sx={{ width: '40px' }} />} label="is callback required?" />
                             </Grid>
-                            <Grid item xs={12}>
-
-                            </Grid>
+                            {methods.watch('callBackRequired') ?
+                                <Grid item xs={12}>
+                                    <DateTimePicker sx={{ width: '100%' }} name="" value={dateTime} onChange={(newValue) => setDateTime(newValue)} />
+                                </Grid>
+                                : <></>
+                            }
                         </Grid>
                         <FlexBox width="100%" >
                             <Button variant="contained" onClick={methods.handleSubmit(onSubmitDisposeTicket)} fullWidth>
