@@ -18,14 +18,17 @@ export const TicketDisposeContainer = (props: ITicketDisposeContainerProps) => {
     const onToggleTicketDispose = () => setTicketDisposeDrawer((prevalue) => !prevalue);
 
     const submitDisposeTicket = React.useCallback((data: IDispostionFormFields) => {
-        mutateAsync({
+        const payload = {
             dispositionId: data.dispositionId,
             callBackTime: data.callBackTime,
-            employeeId: data.employeeId ? Number(data.employeeId[0].key): undefined,
             queueId: data.queueId,
             remarks: data.remarks,
-            tagId:  data.tagId ? Number(data.tagId[0].key) : undefined
-        })
+            tagId: data.tagId ? Number(data.tagId[0].key) : undefined
+        };
+
+        data.employeeId && (payload["employeeId"] = Number(data.employeeId[0].key));
+
+        mutateAsync(payload)
             .then(() => {
                 navigate('/tickets', { replace: true });
                 showNotification({ message: 'Successfully disposed ticket', type: 'success' });
