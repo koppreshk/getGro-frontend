@@ -44,9 +44,9 @@ interface MutliSelect {
 }
 
 export interface IDispostionFormFields {
-    dispositionId: number;
-    queueId?: number;
-    employeeId?: MutliSelect[];
+    dispositionId: string;
+    queueId?: string;
+    employeeId?: string;
     tagId?: MutliSelect[];
     remarks?: string;
     callBackTime?: string;
@@ -85,8 +85,8 @@ const TicketDisposeForm = (props: ITicketDisposeProps) => {
     const { openTicketDisposeDrawer, onToggleTicketDispose, submitDisposeTicket, dispositonData, queuesData, tagData } = props;
     const methods = useForm<IDispostionFormFields>({
         defaultValues: {
-            dispositionId: 0,
-            queueId: 0
+            dispositionId: '',
+            queueId: ''
         }
     });
     const ticketDetails = useAppSelector(state => state.tickets.ticketDetails);
@@ -94,9 +94,15 @@ const TicketDisposeForm = (props: ITicketDisposeProps) => {
     const [dateTime, setDateTime] = useState(null)
 
     const onSubmitDisposeTicket = React.useCallback(async (getformvalues: IDispostionFormFields) => {
-        // console.log(getformvalues.callBackTime);
+        // console.log(getformvalues);
         submitDisposeTicket(getformvalues);
     }, [submitDisposeTicket]);
+
+    React.useEffect(() => {
+        if (methods.formState.isSubmitSuccessful) {
+          methods.reset();
+        }
+      }, [methods])
 
     const onRenderContent = () => {
         return (
