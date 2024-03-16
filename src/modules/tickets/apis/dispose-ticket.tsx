@@ -4,11 +4,11 @@ import { useMutation } from "react-query";
 import { useServiceClient } from "lib"
 import { TicketsEndPoint, TicketsQueryKey } from "./api-enums";
 
-export interface IDisposeTicketArgs {
+interface IDisposeTicketArgs {
     dispositionId: string;
     queueId?: string;
     employeeId?: string;
-    tagId?: string;
+    tagId?: string[];
     remarks?: string;
     callBackTime?: string;
 }

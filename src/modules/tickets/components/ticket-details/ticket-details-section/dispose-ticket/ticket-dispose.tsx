@@ -94,7 +94,6 @@ const TicketDisposeForm = (props: ITicketDisposeProps) => {
     const [dateTime, setDateTime] = useState(null)
 
     const onSubmitDisposeTicket = React.useCallback(async (getformvalues: IDispostionFormFields) => {
-        // console.log(getformvalues);
         submitDisposeTicket(getformvalues);
     }, [submitDisposeTicket]);
 

@@ -23,7 +23,7 @@ export const TicketDisposeContainer = (props: ITicketDisposeContainerProps) => {
             callBackTime: data.callBackTime,
             queueId: data.queueId,
             remarks: data.remarks,
-            tagId: data.tagId ? data.tagId[0].key : undefined,
+            tagId: data.tagId ? data.tagId.map((item) => item.key) : undefined,
             employeeId: data.employeeId ?? undefined
         })
             .then(() => {
