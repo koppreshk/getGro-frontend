@@ -102,7 +102,10 @@ const TelephonicConversationCard = (props: ITelephonicConversationCardProps) => 
                         <Typography variant="body2">Call To: {callTo}</Typography>
                     </FlexBox>
                 </FlexBox>
-
+                <audio controls>
+                    <source src="https://file-examples.com/storage/fe8119f4e865f33329898be/2017/11/file_example_MP3_700KB.mp3" type="audio/mpeg" />
+                    Your browser does not support the audio element.
+                </audio>
             </FlexBox>
         </CardWrapper>
     )
