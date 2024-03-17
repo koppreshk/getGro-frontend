@@ -8,6 +8,7 @@ type ITextboxFieldProps = Omit<SelectProps<unknown>, 'error' | 'required'> & {
     menuOptions: {
         key: string;
         value: string;
+        iconComponent?: React.ReactNode;
     }[]
     rules?: Omit<RegisterOptions<FieldValues, string>, "disabled" | "valueAsNumber" | "valueAsDate" | "setValueAs"> | undefined
 }
@@ -36,7 +37,10 @@ export const SelectField = (props: ITextboxFieldProps) => {
                             label={label}
                             {...rest} {...field} error={hasError} onChange={(e) => field.onChange(e.target.value)}>
                             {
-                                menuOptions.map((item) => <MenuItem key={item.key} value={item.key}>{item.value}</MenuItem>)
+                                menuOptions.map((item) => (<MenuItem key={item.key} value={item.key}>
+                                    {item.iconComponent ?? null}
+                                    {item.value}
+                                </MenuItem>))
                             }
                         </Select>
                     </FormControl>)}

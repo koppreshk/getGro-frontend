@@ -31,7 +31,7 @@ export const useSourceIcon = () => {
             case 'telephonic':
                 return <LocalPhone sx={{ fill: theme.channelSpecific.telephonic + '!important', ...sx }} />
             case 'instagram':
-                return <Instagram sx={{ fill: theme.channelSpecific.instagram + '!important' }} />
+                return <Instagram sx={{ fill: theme.channelSpecific.instagram + '!important', ...sx }} />
             case 'sms':
                 return <Sms sx={{ fill: theme.channelSpecific.sms + '!important' }} />
             default:

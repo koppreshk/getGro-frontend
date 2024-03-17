@@ -3,19 +3,32 @@ import { TextboxField, SelectField, AutocompleteField } from "lib/form-fields";
 import { capitalizeFirstLetter } from "lib/utils";
 import { TicketEscalationFormProps } from "./ticket-escalation-form";
 import { useFormContext } from "react-hook-form";
+import { useSourceIcon } from "modules/tickets/components";
+import styled from "styled-components";
+
+const StyledSelectField = styled(SelectField)`
+    &&{
+        .MuiSelect-select{
+            display: flex;
+            align-items: center;
+        }
+    }
+`;
 
 export const EscalationConditionForm = (props: Pick<TicketEscalationFormProps, 'after' | 'conditions' | 'queues' | 'statuses' | 'sub_statuses' | 'channels'>) => {
     const { after, conditions, queues, statuses, sub_statuses: subStatuses, channels } = props;
     const { watch } = useFormContext();
 
     const selectedChannelData = watch('channel') ? channels.find((item) => item.channel_id.toString() === watch('channel'))!.tags : undefined;
+
+    const getSourceIcon = useSourceIcon();
     return (
         <>
             <Grid container spacing={2}>
-                <Grid item xs={6}>
+                <Grid item xs={6} marginTop={"5px"}>
                     <TextboxField name="name" label="Name" placeholder="Escalation name" rules={{ required: 'Name is required' }} fullWidth />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={6} marginTop={"5px"}>
                     <SelectField sx={{ width: '100%' }} name="after" label="After" menuOptions={after.map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} />
                 </Grid>
 
@@ -37,7 +50,7 @@ export const EscalationConditionForm = (props: Pick<TicketEscalationFormProps, '
                 <Grid item xs={6}>
                     <SelectField sx={{ width: '100%' }} name="subStatuses" label="Sub Statuses" menuOptions={subStatuses.map((item) => ({ key: item.id.toString(), value: capitalizeFirstLetter(item.name, '_') }))} />
                 </Grid>
-                <Grid item xs={6}>
+                {/* <Grid item xs={6}>
                     <SelectField sx={{ width: '100%' }} name="customerClassification" label="Customer Classification" menuOptions={[].map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} />
                 </Grid>
                 <Grid item xs={6}>
@@ -48,11 +61,11 @@ export const EscalationConditionForm = (props: Pick<TicketEscalationFormProps, '
                 </Grid>
                 <Grid item xs={6}>
                     <SelectField sx={{ width: '100%' }} name="typeOfTicket" label="Type Of Ticket" menuOptions={[].map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} />
+                </Grid> */}
+                <Grid item xs={3}>
+                    <StyledSelectField sx={{ width: '100%' }} name="channel" label="Select Channel" menuOptions={channels.map((item) => ({ key: item?.channel_id.toString(), value: item.name, iconComponent: getSourceIcon(item.name, { marginRight: '10px' }) }))} />
                 </Grid>
-                <Grid item xs={6}>
-                    <SelectField sx={{ width: '100%' }} name="channel" label="Select Channel" menuOptions={channels.map((item) => ({ key: item?.channel_id.toString(), value: item?.name }))} />
-                </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={9}>
                     <AutocompleteField name="tag" label="Select Tags" options={selectedChannelData?.map((item) => ({ key: item?.tag_id?.toString(), value: item?.tag }))} placeholder="Select Tags" />
                 </Grid>
             </Grid>
