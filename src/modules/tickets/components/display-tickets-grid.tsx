@@ -196,13 +196,13 @@ export const DisplayTicketsGrid = (props: IDisplayTicketsGridProps) => {
     const { totalPages } = useAppSelector((state) => state.tickets);
 
     return (
-        <>
+        <React.Fragment>
             {
                 (data.length > 0 || props.isLoading) ?
                     <DataGrid {...props} columns={columns} onRowClick={onRowClick} totalPages={totalPages} />
                     :
                     <NoDataIllustration message="No tickets to display" />
             }
-        </>
+        </React.Fragment>
     )
 }
