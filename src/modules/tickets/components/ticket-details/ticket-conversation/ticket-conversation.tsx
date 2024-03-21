@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { FlexBox } from "lib/ui-ux";
-import { ITicketConversationLayoutProps } from "./ticket-conversation-layout";
 import { TicketConversationFooter } from "./ticket-conversation-footer";
 import { TicketConversationChatContent } from "./ticket-conversation-chat-content";
 import { ChatConversationLoader } from "lib/ui-ux/loader-components";
+import { ITicketConversation } from "modules/tickets/apis";
 
 const Container = styled(FlexBox)`
 	background: ${() => {
@@ -22,7 +22,7 @@ const Container = styled(FlexBox)`
     padding: 10px;
 `;
 
-export const TicketConversation = (props: Pick<ITicketConversationLayoutProps, 'data' | 'isLoading'>) => {
+export const TicketConversation = (props: { data: ITicketConversation, isLoading?: boolean }) => {
     const { data, isLoading } = props;
     const [chatData, setChatData] = React.useState(data.chatConversation);
 

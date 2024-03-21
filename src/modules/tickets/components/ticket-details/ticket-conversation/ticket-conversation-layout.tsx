@@ -2,16 +2,11 @@ import React from "react";
 import { FlexBox } from "lib/ui-ux"
 import styled from "styled-components"
 import { TicketConversationHeader } from "./ticket-conversation-header";
-import { TicketConversation } from "./ticket-conversation";
-import { ITicketById, ITicketConversation } from "modules/tickets/apis";
-import { EmailConversationLayout } from "./email-conversations/email-conversations-layout";
 import { TelephonicConversationsLayout } from "./telephonic-conversations/telephonic-conversations";
 import { useAppSelector } from "lib/hooks";
+import { TicketConversationContainer, WhatsAppConversationContainer } from "modules/tickets/containers";
 
 export interface ITicketConversationLayoutProps {
-    data: ITicketConversation;
-    conversationsData?: ITicketById;
-    isLoading?: boolean;
 }
 
 const LayoutWrapper = styled(FlexBox)`
@@ -19,20 +14,21 @@ const LayoutWrapper = styled(FlexBox)`
 `;
 
 export const TicketConversationLayout = (props: ITicketConversationLayoutProps) => {
-    const { conversationsData } = props;
     const ticketDetailsById = useAppSelector(state => state.tickets.ticketDetails);
     const ticketSource = ticketDetailsById && ticketDetailsById.source?.toLocaleLowerCase();
 
     const renderConversation = React.useCallback(() => {
         switch (ticketSource) {
             case 'email':
-                return conversationsData ? <EmailConversationLayout conversationsData={conversationsData} /> : null;
+                return <TicketConversationContainer />
             case 'telephonic':
                 return <TelephonicConversationsLayout />;
+            case 'whatsapp':
+                return <WhatsAppConversationContainer />
             default:
-                return <TicketConversation data={props.data} isLoading={props.isLoading} />
+                return <></>
         }
-    }, [conversationsData, props.data, props.isLoading, ticketSource]);
+    }, [ticketSource]);
 
     return (
         <LayoutWrapper width="100%" flexDirection="column">
