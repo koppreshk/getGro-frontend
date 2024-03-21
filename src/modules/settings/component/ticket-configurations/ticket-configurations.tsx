@@ -40,6 +40,11 @@ const configurations = [
                 route: "ticket-queue",
                 label: "Ticket Queue",
                 uniqueKey: "ticket-queue"
+            },
+            {
+                route: "tags",
+                label: "Tags",
+                uniqueKey: "tags"
             }
         ]
     },
