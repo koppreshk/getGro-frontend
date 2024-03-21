@@ -13,7 +13,7 @@ const LayoutWrapper = styled(FlexBox)`
     background-color: ${({ theme: { pallete } }) => pallete.white};
 `;
 
-export const TicketConversationLayout = (props: ITicketConversationLayoutProps) => {
+export const TicketConversationLayout = (_props: ITicketConversationLayoutProps) => {
     const ticketDetailsById = useAppSelector(state => state.tickets.ticketDetails);
     const ticketSource = ticketDetailsById && ticketDetailsById.source?.toLocaleLowerCase();
 

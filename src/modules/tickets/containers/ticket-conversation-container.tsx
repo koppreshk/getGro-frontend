@@ -7,7 +7,7 @@ import { EmailConversationLayout } from "../components/ticket-details/ticket-con
 interface ITicketConversationContainerProps {
 }
 
-export const TicketConversationContainer = (props: ITicketConversationContainerProps) => {
+export const TicketConversationContainer = (_props: ITicketConversationContainerProps) => {
     const { data: conversationsData, isLoading: conversationLoading, isError } = useFetchTicketById();
 
     if (conversationLoading) {
