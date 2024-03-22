@@ -8,6 +8,7 @@ interface ICategoryOptions {
     route: string;
     label: string;
     uniqueKey: string;
+    description?: string;
 }
 
 interface IConfigCategory {
@@ -24,22 +25,26 @@ const configurations = [
             {
                 route: "disposition-type",
                 label: "Disposition Type",
-                uniqueKey: "disposition-type"
+                uniqueKey: "disposition-type",
+                description: "Create your ticket dipositon type for efficient ticket routing"
             },
             {
                 route: "ticket-filter",
                 label: "Ticket Filter",
-                uniqueKey: "ticket-filter"
+                uniqueKey: "ticket-filter",
+                description: "Lorem ipsum dolor sit amet, consectetur adipiscing."
             },
             {
                 route: "ticket-escalation",
                 label: "Ticket Escalation",
-                uniqueKey: "ticket-escalation"
+                uniqueKey: "ticket-escalation",
+                description: "Streamline ticket management: Automate categorization and routing with custom rules"
             },
             {
                 route: "ticket-queue",
                 label: "Ticket Queue",
-                uniqueKey: "ticket-queue"
+                uniqueKey: "ticket-queue",
+                description: "Organizing agents based on their expertise to address specific ticket types"
             }
         ]
     },
@@ -50,41 +55,49 @@ const configurations = [
             {
                 route: "access-configuration",
                 label: "Access Configuration",
-                uniqueKey: "general-access-configuration"
+                uniqueKey: "general-access-configuration",
+                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
             },
             {
                 route: "ticket-filter",
                 label: "Chat Configuration",
-                uniqueKey: "general-ticket-filter"
+                uniqueKey: "general-ticket-filter",
+                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
             },
             {
                 route: "ticket-escalation",
                 label: "Product Configuration",
-                uniqueKey: "general-ticket-escalation2"
+                uniqueKey: "general-ticket-escalation2",
+                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
             },
             {
                 route: "ticket-queue",
                 label: "Agent Assistant Configuration",
-                uniqueKey: "general-ticket-queue1"
+                uniqueKey: "general-ticket-queue1",
+                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
             }, {
                 route: "access-configuration",
                 label: "Dashboard Configuration",
-                uniqueKey: "general-access-configuration1"
+                uniqueKey: "general-access-configuration1",
+                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
             },
             {
                 route: "ticket-filter",
                 label: "Gen AI Configuration",
-                uniqueKey: "general-ticket-filter1"
+                uniqueKey: "general-ticket-filter1",
+                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
             },
             {
                 route: "ticket-escalation",
                 label: "Ticket Escalation",
-                uniqueKey: "general-ticket-escalation1"
+                uniqueKey: "general-ticket-escalation1",
+                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
             },
             {
                 route: "ticket-queue",
                 label: "Ticket Queue",
-                uniqueKey: "general-ticket-queue2"
+                uniqueKey: "general-ticket-queue2",
+                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
             }
         ]
     },
@@ -93,21 +106,24 @@ const configurations = [
 
 const ConfigLinkWrapper = styled.div`
     :hover {
-        background: ${(props) => props.theme.pallete.purpleLight};
+        background: ${(props) => props.theme.pallete.grayVariant5};
+
+        .config-name {
+            color: ${(props) => props.theme.pallete.primaryPurpleText};
+        }
     }
     background-color: white;
 `;
 
 const OptionWrapper = styled(FlexBox)`
-  padding: 0 15px;
+  padding: 10px 15px;
   cursor: pointer;
   border-radius: 5px;
-  border: 1px solid #e3e3e3;
-  height: 50px;
+  height: 85px;
 `;
 
 const TicketConfigOptions = (props: ICategoryOptions) => {
-    const { label, route } = props;
+    const { label, route, description } = props;
     const navigate = useNavigate();
     const OnLinkClick = () => {
         navigate(route);
@@ -115,8 +131,9 @@ const TicketConfigOptions = (props: ICategoryOptions) => {
 
     return (
         <ConfigLinkWrapper onClick={OnLinkClick}>
-            <OptionWrapper alignItems="center" justifyContent="center">
-                <Typography variant="body3"> {label} </Typography>
+            <OptionWrapper flexDirection="column">
+                <Typography variant="subtitle2" className="config-name"> {label} </Typography>
+                <Typography variant="caption">{description}</Typography>
             </OptionWrapper>
         </ConfigLinkWrapper>
     )
@@ -131,12 +148,14 @@ export const TicketsConfiguration = () => {
                     <FlexBox padding="20px" flexDirection="column" gap="10px" width="100%" key={data.categoryName}>
                         <FlexBox alignItems="center" gap="5px" padding="0 10px">
                             {data.categoryIcon()}
-                            <Typography variant="h5">
+                            <Typography variant="h4">
                                 {data.categoryName}
                             </Typography>
                         </FlexBox>
-                        <GridLayout $padding="10px" $gridGap="10px" $gridTemplateColumns={"repeat(6, 1fr)"}>
-                            {data.categoryOptions.map((categoryData) => <TicketConfigOptions key={categoryData.uniqueKey} uniqueKey={categoryData.uniqueKey} label={categoryData.label} route={categoryData.route} />)}
+                        <GridLayout $padding="10px" $gridGap="14px 12px" $gridTemplateColumns={"repeat(4, 1fr)"}>
+                            {data.categoryOptions.map((categoryData) => 
+                            <TicketConfigOptions key={categoryData.uniqueKey} uniqueKey={categoryData.uniqueKey}
+                             label={categoryData.label} route={categoryData.route} description={categoryData.description}/>)}
                         </GridLayout>
                     </FlexBox>
                 ))
