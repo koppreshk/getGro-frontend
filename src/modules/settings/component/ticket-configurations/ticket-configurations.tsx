@@ -45,6 +45,12 @@ const configurations = [
                 label: "Ticket Queue",
                 uniqueKey: "ticket-queue",
                 description: "Organizing agents based on their expertise to address specific ticket types"
+            },
+            {
+                route: "tags",
+                label: "Tags",
+                uniqueKey: "tags",
+                description: "Label your tickets for better organizing and reporting"
             }
         ]
     },
@@ -71,11 +77,6 @@ const configurations = [
                 description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
             },
             {
-                route: "ticket-queue",
-                label: "Agent Assistant Configuration",
-                uniqueKey: "general-ticket-queue1",
-                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
-            }, {
                 route: "access-configuration",
                 label: "Dashboard Configuration",
                 uniqueKey: "general-access-configuration1",
@@ -91,12 +92,6 @@ const configurations = [
                 route: "ticket-escalation",
                 label: "Ticket Escalation",
                 uniqueKey: "general-ticket-escalation1",
-                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
-            },
-            {
-                route: "ticket-queue",
-                label: "Ticket Queue",
-                uniqueKey: "general-ticket-queue2",
                 description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
             }
         ]

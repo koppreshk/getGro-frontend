@@ -1,17 +1,14 @@
 import { Alert } from "@mui/material";
-import { ITicketById, useTicketConversation } from "../apis";
-import { TicketConversationLayout } from "../components/ticket-details/ticket-conversation"
+import { useFetchTicketById } from "../apis";
 import { FlexBox } from "lib/ui-ux";
 import { EmailSkeletonLoader } from "lib/ui-ux/loader-components";
-import { UseQueryResult } from "react-query";
+import { EmailConversationLayout } from "../components/ticket-details/ticket-conversation/email-conversations/email-conversations-layout";
 
 interface ITicketConversationContainerProps {
-    fetchTicketsAPIinfo: UseQueryResult<ITicketById, unknown>
 }
 
-export const TicketConversationContainer = (props: ITicketConversationContainerProps) => {
-    const { isLoading, data } = useTicketConversation();
-    const { data: conversationsData, isLoading: conversationLoading, isError } = props.fetchTicketsAPIinfo;
+export const TicketConversationContainer = (_props: ITicketConversationContainerProps) => {
+    const { data: conversationsData, isLoading: conversationLoading, isError } = useFetchTicketById();
 
     if (conversationLoading) {
         return (
@@ -31,11 +28,7 @@ export const TicketConversationContainer = (props: ITicketConversationContainerP
 
     return (
         <>
-            <TicketConversationLayout
-                data={data}
-                conversationsData={conversationsData}
-                isLoading={isLoading}
-            />
+            <EmailConversationLayout conversationsData={conversationsData} />
         </>
     )
 }
