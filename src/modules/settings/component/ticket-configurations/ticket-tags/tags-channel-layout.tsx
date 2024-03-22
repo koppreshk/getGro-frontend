@@ -22,7 +22,7 @@ export const TagsChannelLayout = () => {
             </Tabs>
             <>
                 <CustomTabPanel index={value} value={value}>
-                    <TicketTagsContainer value={value} />
+                    <TicketTagsContainer channelId={value} />
                 </CustomTabPanel>
             </>
         </Box>

@@ -2,8 +2,8 @@ import { CenteredCircularProgress } from "lib/ui-ux";
 import { useFetchTagsByChannel } from "modules/settings/apis/tags";
 import { TicketTags } from "modules/settings/component/ticket-configurations";
 
-export const TicketTagsContainer = (props: { value: number }) => {
-    const { data, isLoading, error } = useFetchTagsByChannel(props.value.toString());
+export const TicketTagsContainer = (props: { channelId: number }) => {
+    const { data, isLoading, error } = useFetchTagsByChannel(props.channelId.toString());
 
     if (isLoading) {
         return (
@@ -13,7 +13,7 @@ export const TicketTagsContainer = (props: { value: number }) => {
 
     if (data) {
         return (
-            <TicketTags data={data} />
+            <TicketTags data={data} channelId={props.channelId} />
         )
     }
 
