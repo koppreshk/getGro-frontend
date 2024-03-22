@@ -37,9 +37,12 @@ export const TagInput = (props: ITagInputProps) => {
 
     const _onKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (ev) => {
         if (ev.key === KeyCodes.EnterKey && ev.currentTarget.value.length > 0 && !ev.currentTarget.validity.typeMismatch) {
-            setTagItems([...tagItems, value]);
             setInputValue('');
-            onTagInputChange && onTagInputChange([...tagItems, value], value, 'ON_ENTER_KEY')
+            if (onTagInputChange) {
+                onTagInputChange([...tagItems, value], value, 'ON_ENTER_KEY');
+                return;
+            }
+            setTagItems([...tagItems, value]);
         }
     };
 

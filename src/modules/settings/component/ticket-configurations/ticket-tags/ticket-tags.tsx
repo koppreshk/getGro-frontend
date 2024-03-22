@@ -1,4 +1,4 @@
-import { useCallback } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { FlexBox, TagInput } from "lib/ui-ux"
 import { ITag, useCreateTagByChannelId, useDeleteTag } from "modules/settings/apis/tags";
 import { useNotifications } from "lib";
@@ -13,6 +13,14 @@ export const TicketTags = (props: ITicketTagsProps) => {
     const { mutateAsync } = useDeleteTag();
     const { mutateAsync: createTag } = useCreateTagByChannelId();
     const { showNotification } = useNotifications();
+
+    const [tags, setTags] = useState(data.map((item) => item.tag));
+
+    useEffect(() => {
+        if (data) {
+            setTags(data.map((item) => item.tag));
+        }
+    }, [data]);
 
     const onTagInputChange = useCallback((_items: string[], item: string, reason: 'ON_ENTER_KEY' | 'ON_DELETE') => {
         if (reason === 'ON_DELETE') {
@@ -30,7 +38,7 @@ export const TicketTags = (props: ITicketTagsProps) => {
 
     return (
         <FlexBox width="70%">
-            <TagInput tagInputs={data.map((item) => item.tag)} onTagInputChange={onTagInputChange} placeholder="Add your tags here..." />
+            <TagInput tagInputs={tags} onTagInputChange={onTagInputChange} placeholder="Add your tags here..." />
         </FlexBox>
     )
 }
