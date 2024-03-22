@@ -11,7 +11,7 @@ export interface ITagInputProps extends React.InputHTMLAttributes<HTMLInputEleme
      */
     tagInputs?: string[];
     width?: string;
-    onTagInputChange?: (items: string[]) => void;
+    onTagInputChange?: (items: string[], item: string, reason: 'ON_ENTER_KEY' | 'ON_DELETE') => void;
 }
 
 const StyledInput = styled.input`
@@ -39,14 +39,14 @@ export const TagInput = (props: ITagInputProps) => {
         if (ev.key === KeyCodes.EnterKey && ev.currentTarget.value.length > 0 && !ev.currentTarget.validity.typeMismatch) {
             setTagItems([...tagItems, value]);
             setInputValue('');
-            onTagInputChange && onTagInputChange([...tagItems, value])
+            onTagInputChange && onTagInputChange([...tagItems, value], value, 'ON_ENTER_KEY')
         }
     };
 
     const __onTagDeleteHandler = useCallback((item: string) => {
         const filteredValues = tagItems.filter((option) => option !== item);
         setTagItems(filteredValues);
-        onTagInputChange && onTagInputChange(filteredValues)
+        onTagInputChange && onTagInputChange(filteredValues, item, 'ON_DELETE')
     }, [onTagInputChange, tagItems]);
 
     return (
