@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Alert } from "@mui/material";
 import { useFetchTicketById } from "../apis";
 import { FlexBox } from "lib/ui-ux";

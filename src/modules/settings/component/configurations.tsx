@@ -10,7 +10,7 @@ const StyledHeader = styled(FlexBox)`
 `;
 
 const StyledContent = styled(FlexBox)`
-    background: ${({ theme }) => theme.pallete.grayVariant7}; 
+    
 `;
 
 export const Configurations = () => {
@@ -21,10 +21,10 @@ export const Configurations = () => {
                     Configurations
                 </Typography>
 
-                <TextField label="Search" name="search" InputProps={{
+                <TextField label="Search" name="search" size="small" InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
-                            <Search />
+                            <Search/>
                         </InputAdornment>
                     ),
                 }} />
