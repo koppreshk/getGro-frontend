@@ -13,6 +13,7 @@ export interface ITagInputProps extends React.InputHTMLAttributes<HTMLInputEleme
     tagInputs?: string[];
     width?: string;
     gap?: Property.Gap;
+    onTagClick?: (item: string) => void;
     onTagInputChange?: (items: string[], item: string, reason: 'ON_ENTER_KEY' | 'ON_DELETE') => void;
 }
 
@@ -23,7 +24,7 @@ const StyledInput = styled.input`
 `;
 
 export const TagInput = (props: ITagInputProps) => {
-    const { onTagInputChange, tagInputs, width, gap, ...rest } = props;
+    const { onTagInputChange, onTagClick, tagInputs, width, gap, ...rest } = props;
     const [tagItems, setTagItems] = useState<string[]>([]);
     const [value, setInputValue] = useState('');
 
@@ -61,6 +62,7 @@ export const TagInput = (props: ITagInputProps) => {
                     key={index}
                     label={item}
                     size="small"
+                    onClick={() => onTagClick && onTagClick(item)}
                     avatar={<Avatar>{item[0].toLocaleUpperCase()}</Avatar>}
                     onDelete={() => __onTagDeleteHandler(item)} />)
             )}
