@@ -100,9 +100,9 @@ const configurations = [
 ] as IConfigCategory[]
 
 const ConfigLinkWrapper = styled.div`
-    :hover {
+    &:hover {
         background: ${(props) => props.theme.pallete.grayVariant5};
-
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
         .config-name {
             color: ${(props) => props.theme.pallete.primaryPurpleText};
         }
@@ -127,7 +127,7 @@ const TicketConfigOptions = (props: ICategoryOptions) => {
     return (
         <ConfigLinkWrapper onClick={OnLinkClick}>
             <OptionWrapper flexDirection="column">
-                <Typography variant="subtitle2" className="config-name"> {label} </Typography>
+                <Typography variant="h5" className="config-name"> {label} </Typography>
                 <Typography variant="caption">{description}</Typography>
             </OptionWrapper>
         </ConfigLinkWrapper>
