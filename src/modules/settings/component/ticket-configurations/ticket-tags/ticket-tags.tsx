@@ -38,7 +38,7 @@ export const TicketTags = (props: ITicketTagsProps) => {
 
     return (
         <FlexBox width="70%">
-            <TagInput tagInputs={tags} onTagInputChange={onTagInputChange} placeholder="Add your tags here..." />
+            <TagInput tagInputs={tags} gap={"15px"} onTagInputChange={onTagInputChange} placeholder="Add your tags here..." />
         </FlexBox>
     )
 }

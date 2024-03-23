@@ -1,6 +1,7 @@
 import React from "react";
 import { KeyCodes } from "lib/enums";
 import { useCallback, useState } from "react";
+import { Property } from 'csstype';
 import styled from "styled-components";
 import { FlexBox } from "../flexbox/flexbox";
 import { Avatar, Chip } from "@mui/material";
@@ -11,6 +12,7 @@ export interface ITagInputProps extends React.InputHTMLAttributes<HTMLInputEleme
      */
     tagInputs?: string[];
     width?: string;
+    gap?: Property.Gap;
     onTagInputChange?: (items: string[], item: string, reason: 'ON_ENTER_KEY' | 'ON_DELETE') => void;
 }
 
@@ -21,7 +23,7 @@ const StyledInput = styled.input`
 `;
 
 export const TagInput = (props: ITagInputProps) => {
-    const { onTagInputChange, tagInputs, width, ...rest } = props;
+    const { onTagInputChange, tagInputs, width, gap, ...rest } = props;
     const [tagItems, setTagItems] = useState<string[]>([]);
     const [value, setInputValue] = useState('');
 
@@ -53,7 +55,7 @@ export const TagInput = (props: ITagInputProps) => {
     }, [onTagInputChange, tagItems]);
 
     return (
-        <FlexBox gap="10px" flexWrap="wrap" width={width ?? "100%"}>
+        <FlexBox gap={gap ?? "10px"} flexWrap="wrap" width={width ?? "100%"}>
             {tagItems.map((item, index) => (
                 <Chip
                     key={index}

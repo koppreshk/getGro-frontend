@@ -1,10 +1,13 @@
-import { Facebook, Email, WhatsApp, Twitter, LocalPhone, Instagram } from '@mui/icons-material';
-import { Box, Tab, Tabs } from "@mui/material";
+import { Facebook, Email, WhatsApp, Twitter, LocalPhone, Instagram, ArrowBack } from '@mui/icons-material';
+import { Box, Tab, Tabs, Typography } from "@mui/material";
+import { FlexBox, CustomIconButton } from 'lib/ui-ux';
 import { TicketTagsContainer } from 'modules/settings/containers';
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 
 export const TagsChannelLayout = () => {
     const [value, setValue] = React.useState(1);
+    const navigate = useNavigate();
 
     const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
@@ -12,6 +15,10 @@ export const TagsChannelLayout = () => {
 
     return (
         <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
+            <FlexBox alignItems="center" gap="10px" padding='10px'>
+                <CustomIconButton onClick={() => navigate('/configurations')} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
+                <Typography variant="h5">Ticket Tags</Typography>
+            </FlexBox>
             <Tabs value={value} onChange={handleChange} centered>
                 <Tab icon={<Facebook />} label="Facebook" value={1} />
                 <Tab icon={<Email />} label="Email" value={2} />
@@ -20,11 +27,9 @@ export const TagsChannelLayout = () => {
                 <Tab icon={<LocalPhone />} label="Telephone" value={5} />
                 <Tab icon={<Instagram />} label="Instagram" value={6} />
             </Tabs>
-            <>
-                <CustomTabPanel index={value} value={value}>
-                    <TicketTagsContainer channelId={value} />
-                </CustomTabPanel>
-            </>
+            <CustomTabPanel index={value} value={value}>
+                <TicketTagsContainer channelId={value} />
+            </CustomTabPanel>
         </Box>
     );
 }
