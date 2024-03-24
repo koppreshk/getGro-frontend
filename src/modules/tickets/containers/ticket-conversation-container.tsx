@@ -1,11 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Alert } from "@mui/material";
-import { useFetchTicketById, useTicketConversation } from "../apis";
-import { TicketConversationLayout } from "../components/ticket-details/ticket-conversation"
+import { useFetchTicketById } from "../apis";
 import { FlexBox } from "lib/ui-ux";
 import { EmailSkeletonLoader } from "lib/ui-ux/loader-components";
+import { EmailConversationLayout } from "../components/ticket-details/ticket-conversation/email-conversations/email-conversations-layout";
 
-export const TicketConversationContainer = () => {
-    const { isLoading, data } = useTicketConversation();
+interface ITicketConversationContainerProps {
+}
+
+export const TicketConversationContainer = (_props: ITicketConversationContainerProps) => {
     const { data: conversationsData, isLoading: conversationLoading, isError } = useFetchTicketById();
 
     if (conversationLoading) {
@@ -26,11 +29,7 @@ export const TicketConversationContainer = () => {
 
     return (
         <>
-            <TicketConversationLayout
-                data={data}
-                conversationsData={conversationsData}
-                isLoading={isLoading}
-            />
+            <EmailConversationLayout conversationsData={conversationsData} />
         </>
     )
 }

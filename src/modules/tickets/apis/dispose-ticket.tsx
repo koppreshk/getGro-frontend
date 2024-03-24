@@ -4,20 +4,28 @@ import { useMutation } from "react-query";
 import { useServiceClient } from "lib"
 import { TicketsEndPoint, TicketsQueryKey } from "./api-enums";
 
-export interface IDisposeTicketArgs {
-    dispositionType: string;
+interface IDisposeTicketArgs {
+    dispositionId: string;
+    queueId?: string;
+    employeeId?: string;
+    tagId?: string[];
     remarks?: string;
-    callBackRequired?: boolean;
-    parentFolder?: string;
-    childFolder?: string;
+    callBackTime?: string;
 }
 
 export const useDisposeTicket = () => {
     const { ticketId } = useParams();
     const { postData } = useServiceClient();
 
-    const disposeTicket = useCallback((args: IDisposeTicketArgs) =>
-        postData(`${TicketsEndPoint.DISPOSE_TICKET}?status=${args.dispositionType}&ticket_id=${ticketId}`).then((res) => res.json()), [postData, ticketId]);
+    const disposeTicket = useCallback((args: IDisposeTicketArgs) => postData(TicketsEndPoint.DISPOSE_TICKET,
+        {
+            disposition_id: args.dispositionId,
+            queue_id: args.queueId,
+            employee_id: args.employeeId,
+            tag_id: args.tagId,
+            ticket_id: ticketId,
+            call_back_at: false
+        }).then((res) => res.json()), [postData, ticketId]);
 
     return useMutation({
         mutationKey: [TicketsQueryKey.DISPOSE_TICKET],

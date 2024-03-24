@@ -12,3 +12,5 @@ export * from './ticket-dispose-container';
 export * from './all-completed-tickets-container';
 export * from './all-pending-tickets-container';
 export * from './assigned-to-me-tickets-container';
+export * from './get-employees-by-queue-container';
+export * from './whatsapp-conversations-container';

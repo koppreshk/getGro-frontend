@@ -8,14 +8,15 @@ interface IAutocompleteFieldProps {
     name: string;
     label: string;
     placeholder: string;
-    options: {
+    options?: {
         key: string;
         value: string;
     }[];
 }
 export const AutocompleteField = (props: IAutocompleteFieldProps) => {
-    const { name, options, label, placeholder } = props;
+    const { name, options = [], label, placeholder } = props;
     const { control } = useFormContext();
+
     return (
         <Controller
             // eslint-disable-next-line @typescript-eslint/no-unused-vars

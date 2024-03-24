@@ -18,13 +18,15 @@ export interface ITicketEscalationFormFields {
     after: string;
     conditions: string;
     alert: number;
-    queues: string;
+    queues: string | number;
     statuses: string | number;
     subStatuses: string | number;
     customerClassification: string,
     designationType: string,
     lastConversationType: string,
     typeOfTicket: string,
+    channel: string,
+    tag: { key: string, value: string }[],
     autoDispose: {
         escalateTo: string;
         dispostionType: string;
@@ -69,7 +71,7 @@ const steps = [
     'Set Actions for Escalation'
 ];
 
-const formDefaultValues = {
+const formDefaultValues: ITicketEscalationFormFields = {
     after: '',
     alert: 2,
     conditions: '',
@@ -81,6 +83,8 @@ const formDefaultValues = {
     designationType: '',
     lastConversationType: '',
     typeOfTicket: '',
+    channel: '',
+    tag: [],
     autoDispose: {
         dispostionType: '',
         escalateTo: '',
@@ -157,7 +161,7 @@ export const TicketEscalationForm = (props: TicketEscalationFormProps) => {
                         );
                     })}
                 </Stepper>
-                <div style={{ height: 'calc(100% - 140px)' }}>
+                <div style={{ height: 'calc(100% - 140px)', overflow: 'auto' }}>
                     {activeStep === 0 ? <EscalationConditionForm {...rest} /> : <EscalationActionsForm escalate_to={rest.escalate_to} priorities={rest.priorities} sub_statuses={rest.sub_statuses} />}
                 </div>
                 <FlexBox gap='10px' width="100%" justifyContent={isInEditMode ? "space-between" : 'flex-end'}>

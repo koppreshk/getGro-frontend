@@ -31,7 +31,7 @@ export const useSourceIcon = () => {
             case 'telephonic':
                 return <LocalPhone sx={{ fill: theme.channelSpecific.telephonic + '!important', ...sx }} />
             case 'instagram':
-                return <Instagram sx={{ fill: theme.channelSpecific.instagram + '!important' }} />
+                return <Instagram sx={{ fill: theme.channelSpecific.instagram + '!important', ...sx }} />
             case 'sms':
                 return <Sms sx={{ fill: theme.channelSpecific.sms + '!important' }} />
             default:
@@ -84,41 +84,41 @@ const useColumns = () => {
             header: 'Ticket Id',
             id: 'ticketId',
             cell: info => info.getValue(),
-            minSize: 240
+            minSize: 200
         }),
         columnHelper.accessor('customerName', {
             header: 'Customer Name',
             id: 'customerName',
             cell: info => info.getValue(),
-            minSize: 240
+            minSize: 200
         }),
         columnHelper.accessor('source', {
             id: 'source',
             header: 'Source',
             cell: info => getSourceIcon(info.getValue().toLocaleLowerCase()),
-            minSize: 240
+            minSize: 120
         }),
         columnHelper.accessor('ticketStatus', {
             header: () => 'Ticket Status',
             id: 'ticketStatus',
             cell: info => info.renderValue(),
-            minSize: 240
+            minSize: 190
         }),
         columnHelper.accessor('createdAt', {
             header: () => 'Created At',
             id: 'createdAt',
             cell: info => getFormattedDate(info.getValue()!),
-            minSize: 240
+            minSize: 200
         }),
         columnHelper.accessor('ticketSubStatus', {
             header: () => 'Ticket Sub Status',
             id: 'ticketSubStatus',
-            minSize: 240
+            minSize: 200
         }),
         columnHelper.accessor('priority', {
             header: 'Priority',
             id: 'priority',
-            minSize: 240,
+            minSize: 140,
             cell: info => {
                 return <Priority priority={info.getValue().toLocaleLowerCase()} />
             },
@@ -196,13 +196,13 @@ export const DisplayTicketsGrid = (props: IDisplayTicketsGridProps) => {
     const { totalPages } = useAppSelector((state) => state.tickets);
 
     return (
-        <>
+        <React.Fragment>
             {
                 (data.length > 0 || props.isLoading) ?
                     <DataGrid {...props} columns={columns} onRowClick={onRowClick} totalPages={totalPages} />
                     :
                     <NoDataIllustration message="No tickets to display" />
             }
-        </>
+        </React.Fragment>
     )
 }
