@@ -9,7 +9,7 @@ interface ITicketConversationContainerProps {
 }
 
 export const TicketConversationContainer = (_props: ITicketConversationContainerProps) => {
-    const { data: conversationsData, isLoading: conversationLoading, isError } = useFetchTicketById();
+    const { data: conversationsData, isLoading: conversationLoading, isError, refetch } = useFetchTicketById();
 
     if (conversationLoading) {
         return (
@@ -27,9 +27,13 @@ export const TicketConversationContainer = (_props: ITicketConversationContainer
         )
     }
 
+    const fetchNewThreads = () => {
+        refetch();
+    }
+
     return (
         <>
-            <EmailConversationLayout conversationsData={conversationsData} />
+            <EmailConversationLayout conversationsData={conversationsData} fetchNewThreads={fetchNewThreads} />
         </>
     )
 }
