@@ -7,26 +7,32 @@ import { UnfoldMore, UnfoldLess, Print } from '@mui/icons-material';
 import { Conversations, ITicketById } from "modules/tickets/apis";
 import { toCamelCasedKeysFromUnderScores } from "lib/utils";
 import './printable-content.css';
+import { useSocket } from "lib/providers/socket";
 
 const LayoutWrapper = styled(FlexBox)`
     padding: 15px 0px 15px 10px;
 `;
 
 export interface IEmailConversations extends Conversations {
-    isCollapsed: boolean
+    isCollapsed: boolean;
 }
 
-export const EmailConversationLayout = (props: { conversationsData: ITicketById }) => {
-    const { conversationsData } = props;
+export const EmailConversationLayout = (props: { conversationsData: ITicketById, fetchNewThreads: () => void; }) => {
+    const { conversationsData, fetchNewThreads } = props;
     const { subject, conversations } = conversationsData;
     const casedConversation = conversations.map(item => ({ ...toCamelCasedKeysFromUnderScores(item), isCollapsed: true })) as IEmailConversations[];
+    const { socket } = useSocket();
     const [emailThreads, setEmailThreads] = useState(casedConversation);
 
     useEffect(() => {
         if (casedConversation.length !== emailThreads.length) {
             setEmailThreads(casedConversation);
         }
-    }, [casedConversation, casedConversation.length, emailThreads.length]);
+        socket.on('production_email_channel', (_info) => {
+            //TODO: need to use this info obj which contains id and has to be consumed
+            fetchNewThreads();
+        })
+    }, [casedConversation, casedConversation.length, emailThreads.length, fetchNewThreads, socket]);
 
     const onPrintHandler = () => {
         window.print();
