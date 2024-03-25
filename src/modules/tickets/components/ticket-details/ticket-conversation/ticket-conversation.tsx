@@ -35,8 +35,8 @@ export const TicketConversation = (props: { data: ITicketConversation, isLoading
     }, [])
 
     return (
-        <FlexBox height="calc(100% - 84px);" flexDirection="column" gap="10px">
-            <Container height="calc(80% - 10px)" flexDirection="column" gap="10px" overflowY="auto">
+        <FlexBox height="100%" flexDirection="column" gap="10px">
+            <Container height="calc(100% - 117px)" flexDirection="column" gap="10px" overflowY="auto">
                 {isLoading ? <ChatConversationLoader />
                     :
                     chatData?.map((item, index) => <TicketConversationChatContent key={index} content={item} agentName={data.agentName} customerName={data.customerName} />)}
