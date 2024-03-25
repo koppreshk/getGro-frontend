@@ -30,7 +30,7 @@ export const TicketConversation = (props: { data: ITicketConversation, isLoading
         setChatData(data.chatConversation);
     }, [data.chatConversation]);
 
-    const onSendAction = React.useCallback((newConversation: { custumerQuery?: string, agentQuery?: string }) => {
+    const onSendAction = React.useCallback((newConversation: { custumerQuery?: string, agentQuery?: string, date: string }) => {
         setChatData((prevValue) => ([...prevValue, newConversation]))
     }, [])
 

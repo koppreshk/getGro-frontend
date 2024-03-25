@@ -4,15 +4,13 @@ import { Avatar, Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { ITicketConversation } from "modules/tickets/apis";
 import { chooseRandomColors, getInitialsByName } from "lib/utils";
+import { Done, DoneAll } from '@mui/icons-material';
+import { DateTime } from "luxon";
 
 const Content = styled(FlexBox) <{ $isCustomerQuery: boolean }>`
-    background-color: ${({ theme, $isCustomerQuery }) => $isCustomerQuery ? theme.pallete.white : theme.pallete.primaryPurple};
+    background-color: ${({ theme, $isCustomerQuery }) => $isCustomerQuery ? theme.pallete.white : '#d9fdd3'};
     padding: 10px;
     border-radius: ${({ $isCustomerQuery }) => $isCustomerQuery ? '0px 6px 6px 6px' : '6px 0px 6px 6px'};
-
-    .MuiTypography-body2 {
-        color: ${({ theme, $isCustomerQuery }) => $isCustomerQuery ? 'unset' : theme.pallete.white};
-    }
 
     box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
 `;
@@ -65,6 +63,8 @@ interface IChatContentProps extends Pick<ITicketConversation, 'agentName' | 'cus
     content: {
         custumerQuery?: string,
         agentQuery?: string
+        agtMsgDeliveryStatus?: string;
+        date: string;
     };
 }
 
@@ -82,11 +82,28 @@ export const TicketConversationChatContent = (props: IChatContentProps) => {
     return (
         <Wrapper gap="10px" alignItems="center" ref={containerRef} $isCustomerQuery={isCustomerQuery} flexDirection={isCustomerQuery ? 'row' : 'row-reverse'}>
             <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>{getInitialsByName(isCustomerQuery ? customerName : agentName)}</Avatar>
-            <Content $isCustomerQuery={isCustomerQuery} maxWidth="50%">
-                <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }} >
+            <Content $isCustomerQuery={isCustomerQuery} maxWidth="50%" flexDirection="column" gap="10px">
+                <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap', marginRight: '16px' }} >
                     {query}
                 </Typography>
+                {!isCustomerQuery
+                    ? <FlexBox justifyContent="flex-end" gap="5px" alignItems="center">
+                        <Typography variant="body3" sx={{ color: '#8696a0' }}>{DateTime.fromISO(content.date).toLocaleString(DateTime.TIME_24_SIMPLE)}</Typography>
+                        <MessageDeliveryStatuses agtMsgDeliveryStatus={content.agtMsgDeliveryStatus!} />
+                    </FlexBox> :
+                    <FlexBox justifyContent="flex-end" alignItems="center">
+                        <Typography variant="body3" sx={{ color: '#8696a0' }}>{DateTime.fromISO(content.date).toLocaleString(DateTime.TIME_24_SIMPLE)}</Typography>
+                    </FlexBox>}
             </Content>
         </Wrapper>
+    )
+}
+
+const MessageDeliveryStatuses = (props: { agtMsgDeliveryStatus: string }) => {
+    const { agtMsgDeliveryStatus } = props;
+
+    const Component = agtMsgDeliveryStatus === 'sent' ? Done : DoneAll;
+    return (
+        <Component sx={{ color: agtMsgDeliveryStatus === 'read' ? "#53bdeb" : '#8696a0' }} />
     )
 }
