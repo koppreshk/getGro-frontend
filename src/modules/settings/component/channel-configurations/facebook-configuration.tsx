@@ -2,7 +2,7 @@ import { FlexBox } from 'lib/ui-ux';
 import FacebookLogin from 'react-facebook-login';
 
 export const FacebookConfigurations = () => {
-    const responseFacebook = (response) => {
+    const responseFacebook = (response: unknown) => {
         console.log(response);
     }
 
