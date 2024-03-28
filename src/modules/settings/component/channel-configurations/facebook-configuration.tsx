@@ -32,14 +32,14 @@ export const FacebookConfigurations = () => {
     }
 
     return (
-        <FlexBox width='100%' height='100%' padding='20px' alignItems='center' justifyContent='center' flexDirection='column'>
+        <FlexBox width='100%' height='100%' padding='20px' alignItems='center' justifyContent='center' flexDirection='column' overflowY="auto">
             <FacebookLogin
                 appId={import.meta.env.VITE_FACEBOOK_APP_ID}
                 autoLoad={true}
                 fields="name,email,picture"
                 callback={responseFacebook} />
             <pre>
-                {facebookResponse ? JSON.stringify(facebookResponse) : null}
+                {facebookResponse ? JSON.stringify(facebookResponse, null, 2) : null}
             </pre>
         </FlexBox>
     )
