@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom"
 import { Configurations } from "../component"
 import { TicketQueuesContainer, TicketEscalationContainer, TicketDispositionTypeContainer } from "../containers"
 import { TagsChannelLayout } from "../component/ticket-configurations/ticket-tags/tags-channel-layout"
+import { FacebookConfigurations } from "../component/channel-configurations"
 
 export default function ConfigurationsPage() {
     return (
@@ -11,6 +12,7 @@ export default function ConfigurationsPage() {
             <Route key="ticket-escalation" path="/ticket-escalation" element={<TicketEscalationContainer />} />
             <Route key="ticket-disposition-type" path="/disposition-type" element={<TicketDispositionTypeContainer />} />
             <Route key="ticket-tags" path="/tags" element={<TagsChannelLayout />} />
+            <Route key="facebook-login" path="/facebook" element={<FacebookConfigurations />} />
         </Routes>
     )
 }

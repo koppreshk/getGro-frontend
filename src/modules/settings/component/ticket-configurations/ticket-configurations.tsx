@@ -1,4 +1,4 @@
-import { TaskOutlined, Tune } from "@mui/icons-material";
+import { TaskOutlined, Tune, Tag } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import { FlexBox, GridLayout } from "lib/ui-ux";
 import { useNavigate } from "react-router-dom";
@@ -51,6 +51,18 @@ const configurations = [
                 label: "Tags",
                 uniqueKey: "tags",
                 description: "Label your tickets for better organizing and reporting"
+            }
+        ]
+    },
+    {
+        categoryName: 'Channels',
+        categoryIcon: () => <Tag color="primary" />,
+        categoryOptions: [
+            {
+                label: 'Facebook',
+                route: 'facebook',
+                uniqueKey: 'facebook',
+                description: 'Configure facebook'
             }
         ]
     },
@@ -148,9 +160,9 @@ export const TicketsConfiguration = () => {
                             </Typography>
                         </FlexBox>
                         <GridLayout $padding="10px" $gridGap="14px 12px" $gridTemplateColumns={"repeat(4, 1fr)"}>
-                            {data.categoryOptions.map((categoryData) => 
-                            <TicketConfigOptions key={categoryData.uniqueKey} uniqueKey={categoryData.uniqueKey}
-                             label={categoryData.label} route={categoryData.route} description={categoryData.description}/>)}
+                            {data.categoryOptions.map((categoryData) =>
+                                <TicketConfigOptions key={categoryData.uniqueKey} uniqueKey={categoryData.uniqueKey}
+                                    label={categoryData.label} route={categoryData.route} description={categoryData.description} />)}
                         </GridLayout>
                     </FlexBox>
                 ))
