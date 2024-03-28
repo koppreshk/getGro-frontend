@@ -1,4 +1,3 @@
-import { FlexBox } from 'lib/ui-ux';
 import { useState } from 'react';
 import FacebookLogin from 'react-facebook-login';
 
@@ -32,7 +31,7 @@ export const FacebookConfigurations = () => {
     }
 
     return (
-        <FlexBox width='100%' height='100%' padding='20px' alignItems='center' justifyContent='center' flexDirection='column' overflowY="auto">
+        <div style={{ overflow: "auto", height: '100%' }}>
             <FacebookLogin
                 appId={import.meta.env.VITE_FACEBOOK_APP_ID}
                 autoLoad={true}
@@ -41,6 +40,6 @@ export const FacebookConfigurations = () => {
             <pre>
                 {facebookResponse ? JSON.stringify(facebookResponse, null, 2) : null}
             </pre>
-        </FlexBox>
+        </div>
     )
 }
