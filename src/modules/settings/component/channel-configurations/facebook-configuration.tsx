@@ -1,0 +1,99 @@
+import { useState } from 'react';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+import { Button } from "@mui/material";
+import { Facebook } from '@mui/icons-material';
+import styled from 'styled-components';
+import { FlexBox } from 'lib/ui-ux';
+
+interface FacebookResponse {
+    name: string;
+    picture: Picture;
+    id: string;
+    userID: string;
+    expiresIn: number;
+    accessToken: string;
+    signedRequest: string;
+    graphDomain: string;
+    data_access_expiration_time: number;
+    status?: string
+}
+
+export interface Picture {
+    data: Data;
+}
+
+export interface Data {
+    height: number;
+    is_silhouette: boolean;
+    url: string;
+    width: number;
+}
+
+const Conatainer = styled.div`
+    overflow: auto;
+    height: 100%;
+    padding: 20px;
+`;
+
+const StyledButton = styled(Button)`
+    &&{
+        background: ${({ theme }) => theme.channelSpecific.facebook};
+        &:hover {
+            background: ${({ theme }) => theme.channelSpecific.facebook} !important;
+        }
+    }
+`;
+
+// const hardcodedData = {
+//     "name": "Nav Inten",
+//     "email": "intentnavigator@gmail.com",
+//     "picture": {
+//         "data": {
+//             "height": 50,
+//             "is_silhouette": false,
+//             "url": "https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=122150474858080493&height=50&width=50&ext=1714277683&hash=AfrO1CJ6vTHOWtr9hGC96vhbvsPsYQPF0Pr1W1GFxlz8bg",
+//             "width": 50
+//         }
+//     },
+//     "id": "122150474858080493",
+//     "accessToken": "EAAwpasSJqQgBOZCqlAaXJZBqtW0HO96ZBzU5mNQk2VNAs3fzU9wMsCejyaNriL0IVuHZCP3mB0cEmIn9ThPK3ZA1ML7kahjDJwstQZBzai6MZBQ9TWlDkQ1olnOAdjn7YnXWGMwdY9PihRpAFevNj5nZATzPpWgmZA0Tqw6fRpeDCaZBQVval7F6xDUPxWMHfYKWyxEAZDZD",
+//     "userID": "122150474858080493",
+//     "expiresIn": 5135983,
+//     "signedRequest": "fh4j-CCss6GaOQesVXz4u7u3ecvpxFQKC9BJqYqhyWQ.eyJ1c2VyX2lkIjoiMTIyMTUwNDc0ODU4MDgwNDkzIiwiY29kZSI6IkFRQWh5YVh4OUlGN25mQmFPczY1cGthMFp4TEs4Mkt3SjRibUFOaVh0eGJZN29LTkRhSVpLanhnbWZDNVdOSnM2ZGYtNEtuUDJBSmtlYm5yS2E4aXpuZ0FpOVpKYkZKT0JwQXdMVnV2NEZFbzJUUXBKVHJRMTJtU3FMVzJaaFAtNnJaRHBSbXJMdmhURkZLbTg1X0FCWkNoMzFpWTBIR1Y2OXNFWUZsaWZpRVk5TVZNVlg3MHJRZzZBRnZ3WEk5T3lxT0hUR3E4TDVzSHJPQmxjSE1aTkUtNWI1NjFURmNzRkdpaExLOHBzczJKcW9fNjZ5WjFULThRc2h6RlkxWkZWN2pLR0FEV2lDTUJoVllCazBJTm96X2Y5ZUQwT1ZZeXdsSzlzcEplLWtlUEExQVlxc3JySzdJcVN4Ulo3Mm92eUdVIiwib2F1dGhfdG9rZW4iOiJFQUF3cGFzU0pxUWdCT1pDcWxBYVhKWkJxdFcwSE85NlpCelU1bU5RazJWTkFzM2Z6VTl3TXNDZWp5YU5yaUwwSVZ1SFpDUDNtQjBjRW1JbjlUaFBLM1pBMU1MN2thaGpESndzdFFaQnphaTZNWkJROVRXbERrUTFvbG5PQWRqbjdZblhXR013ZFk5UGloUnBBRmV2Tmo1blpBVHpQcFdnbVpBMFRxdzZmUnBlRENhWkJRVnZhbDdGNnhEVVB4V01IZllLV3l4RUFaRFpEIiwiYWxnb3JpdGhtIjoiSE1BQy1TSEEyNTYiLCJpc3N1ZWRfYXQiOjE3MTE2ODU2ODN9",
+//     "graphDomain": "facebook",
+//     "data_access_expiration_time": 1719415572
+// }
+
+export const FacebookConfigurations = () => {
+    const [facebookResponse, setFacebookResponse] = useState<null | FacebookResponse>(null);
+
+    const responseFacebook = (response: FacebookResponse) => {
+        if (response?.status === 'unknown') {
+            setFacebookResponse(null);
+            return;
+        }
+        setFacebookResponse(response);
+    }
+
+    return (
+        <Conatainer>
+            {facebookResponse === null
+                ? <FacebookLogin
+                    appId={import.meta.env.VITE_FACEBOOK_APP_ID}
+                    fields="name,email,picture"
+                    render={renderProps => (
+                        <StyledButton startIcon={<Facebook />} variant='contained' onClick={renderProps.onClick}>
+                            Login with facebook
+                        </StyledButton>
+                    )}
+                    callback={responseFacebook} />
+                :
+                <FlexBox flexDirection='column' gap="10px">
+                    <pre>
+                        {JSON.stringify(facebookResponse, null, 2)}
+                    </pre>
+                    <Button variant='contained' sx={{ width: 'fit-content' }} onClick={() => setFacebookResponse(null)}>Logout</Button>
+                </FlexBox>}
+        </Conatainer>
+    )
+}
