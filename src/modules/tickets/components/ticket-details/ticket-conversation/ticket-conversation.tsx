@@ -37,7 +37,7 @@ export const TicketConversation = (props: { data: ITicketConversation, isLoading
     }, [])
 
     return (
-        <FlexBox height="100%" flexDirection="column" gap="10px">
+        <FlexBox height="100%" flexDirection="column">
             <Container style={{ backgroundImage: `url(${image})` }} height="calc(100% - 117px)" flexDirection="column" gap="10px" overflowY="auto">
                 {isLoading ? <ChatConversationLoader />
                     :
