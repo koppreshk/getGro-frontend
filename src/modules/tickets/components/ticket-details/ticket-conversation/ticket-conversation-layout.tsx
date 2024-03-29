@@ -4,7 +4,12 @@ import styled from "styled-components"
 import { TicketConversationHeader } from "./ticket-conversation-header";
 import { TelephonicConversationsLayout } from "./telephonic-conversations/telephonic-conversations";
 import { useAppSelector } from "lib/hooks";
-import { TicketConversationContainer, WhatsAppConversationContainer } from "modules/tickets/containers";
+import {
+    FacebookConversationsContainer,
+    InstagramConversationsContainer,
+    TicketConversationContainer,
+    WhatsAppConversationContainer
+} from "modules/tickets/containers";
 
 export interface ITicketConversationLayoutProps {
 }
@@ -13,7 +18,7 @@ const LayoutWrapper = styled(FlexBox)`
     background-color: ${({ theme: { pallete } }) => pallete.white};
 `;
 
-export const TicketConversationLayout = (_props: ITicketConversationLayoutProps) => {
+export const TicketConversationLayout = () => {
     const ticketDetailsById = useAppSelector(state => state.tickets.ticketDetails);
     const ticketSource = ticketDetailsById && ticketDetailsById.source?.toLocaleLowerCase();
 
@@ -22,9 +27,13 @@ export const TicketConversationLayout = (_props: ITicketConversationLayoutProps)
             case 'email':
                 return <TicketConversationContainer />
             case 'telephonic':
-                return <TelephonicConversationsLayout />;
+                return <TelephonicConversationsLayout />
             case 'whatsapp':
                 return <WhatsAppConversationContainer />
+            case 'instagram':
+                return <InstagramConversationsContainer />
+            case 'facebook':
+                return <FacebookConversationsContainer />
             default:
                 return <></>
         }

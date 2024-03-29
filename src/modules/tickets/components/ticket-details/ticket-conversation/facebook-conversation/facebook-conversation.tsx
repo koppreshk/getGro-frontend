@@ -1,0 +1,35 @@
+import React from "react";
+import styled from "styled-components";
+import { FlexBox } from "lib/ui-ux";
+import { ChatConversationLoader } from "lib/ui-ux/loader-components";
+import { ITicketConversation } from "modules/tickets/apis";
+import { TicketConversationFooter } from "../ticket-conversation-footer";
+import { FacebookConversationChatContent } from "./facebook-conversation-chat-content";
+
+const Container = styled(FlexBox)`
+    padding: 10px;
+`;
+
+export const FacebookConversation = (props: { data: ITicketConversation, isLoading?: boolean }) => {
+    const { data, isLoading } = props;
+    const [chatData, setChatData] = React.useState(data.chatConversation);
+
+    React.useEffect(() => {
+        setChatData(data.chatConversation);
+    }, [data.chatConversation]);
+
+    const onSendAction = React.useCallback((newConversation: { custumerQuery?: string, agentQuery?: string, date: string }) => {
+        setChatData((prevValue) => ([...prevValue, newConversation]))
+    }, [])
+
+    return (
+        <FlexBox height="100%" flexDirection="column">
+            <Container height="calc(100% - 117px)" flexDirection="column" gap="10px" overflowY="auto">
+                {isLoading ? <ChatConversationLoader />
+                    :
+                    chatData?.map((item, index) => <FacebookConversationChatContent key={index} content={item} agentName={data.agentName} customerName={data.customerName} /> )}
+            </Container>
+            <TicketConversationFooter onSendAction={onSendAction} />
+        </FlexBox>
+    );
+}
