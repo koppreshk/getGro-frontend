@@ -29,7 +29,7 @@ export const Configurations = () => {
                     ),
                 }} />
             </StyledHeader>
-            <StyledContent flexDirection="column" height="100%" overflowY="auto">
+            <StyledContent flexDirection="column" height="calc(100% - 81px)" overflowY="auto">
                 <TicketsConfiguration />
             </StyledContent>
         </>
