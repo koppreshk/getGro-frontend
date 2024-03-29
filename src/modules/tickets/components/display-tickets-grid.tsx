@@ -35,7 +35,7 @@ export const useSourceIcon = () => {
             case 'sms':
                 return <Sms sx={{ fill: theme.channelSpecific.sms + '!important' }} />
             default:
-                return source;
+                return <></>;
         }
     }
 
