@@ -1,13 +1,17 @@
-import { Facebook, Email, WhatsApp, Twitter, LocalPhone, Instagram, ArrowBack } from '@mui/icons-material';
+import { ArrowBack } from '@mui/icons-material';
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import { FlexBox, CustomIconButton } from 'lib/ui-ux';
+import { IChannels } from 'modules/settings/apis/tags';
 import { TicketTagsContainer } from 'modules/settings/containers';
+import { useSourceIcon } from 'modules/tickets/components';
 import React from "react";
 import { useNavigate } from 'react-router-dom';
 
-export const TagsChannelLayout = () => {
+export const TagsChannelLayout = (props: { channels: IChannels[] }) => {
+    const { channels } = props;
     const [value, setValue] = React.useState(1);
     const navigate = useNavigate();
+    const getIcon = useSourceIcon();
 
     const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
@@ -20,12 +24,9 @@ export const TagsChannelLayout = () => {
                 <Typography variant="h5">Ticket Tags</Typography>
             </FlexBox>
             <Tabs value={value} onChange={handleChange} centered>
-                <Tab icon={<Facebook />} label="Facebook" value={1} />
-                <Tab icon={<Email />} label="Email" value={2} />
-                <Tab icon={<WhatsApp />} label="WhatsApp" value={3} />
-                <Tab icon={<Twitter />} label="Twitter" value={4} />
-                <Tab icon={<LocalPhone />} label="Telephone" value={5} />
-                <Tab icon={<Instagram />} label="Instagram" value={6} />
+                {channels.map((channel) => {
+                    return <Tab icon={getIcon(channel.name)} key={channel.channel_id} label={channel.name} value={channel.channel_id} />
+                })}
             </Tabs>
             <CustomTabPanel index={value} value={value}>
                 <TicketTagsContainer channelId={value} />
