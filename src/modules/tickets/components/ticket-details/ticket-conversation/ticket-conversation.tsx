@@ -3,8 +3,7 @@ import styled from "styled-components";
 import { FlexBox } from "lib/ui-ux";
 import { TicketConversationFooter } from "./ticket-conversation-footer";
 import { TicketConversationChatContent } from "./ticket-conversation-chat-content";
-import { ChatConversationLoader } from "lib/ui-ux/loader-components";
-import { ITicketConversation } from "modules/tickets/apis";
+import { IWhatsAppMessages } from "modules/tickets/apis";
 import image from 'assets/png/whatsapp-static-bg.jpg'
 
 // background: ${() => {
@@ -24,24 +23,24 @@ const Container = styled(FlexBox)`
     padding: 10px;
 `;
 
-export const TicketConversation = (props: { data: ITicketConversation, isLoading?: boolean }) => {
-    const { data, isLoading } = props;
-    const [chatData, setChatData] = React.useState(data.chatConversation);
+export const TicketConversation = (props: { data: IWhatsAppMessages }) => {
+    const { data } = props;
+    const [chatData, setChatData] = React.useState(data.conversations);
 
     React.useEffect(() => {
-        setChatData(data.chatConversation);
-    }, [data.chatConversation]);
+        setChatData(data.conversations);
+    }, [data.conversations]);
 
-    const onSendAction = React.useCallback((newConversation: { custumerQuery?: string, agentQuery?: string, date: string }) => {
-        setChatData((prevValue) => ([...prevValue, newConversation]))
+    const onSendAction = React.useCallback((_newConversation: { custumerQuery?: string, agentQuery?: string, date: string }) => {
+        // setChatData((prevValue) => ([...prevValue, newConversation]))
     }, [])
 
     return (
         <FlexBox height="100%" flexDirection="column" gap="10px">
             <Container style={{ backgroundImage: `url(${image})` }} height="calc(100% - 117px)" flexDirection="column" gap="10px" overflowY="auto">
-                {isLoading ? <ChatConversationLoader />
-                    :
-                    chatData?.map((item, index) => <TicketConversationChatContent key={index} content={item} agentName={data.agentName} customerName={data.customerName} />)}
+                {
+                    chatData?.map((item, index) => <TicketConversationChatContent key={index} content={item} agentName={data.agent_name} customerName={data.customer_name} />)
+                }
             </Container>
             <TicketConversationFooter onSendAction={onSendAction} />
         </FlexBox>
