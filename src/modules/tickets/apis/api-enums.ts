@@ -12,7 +12,8 @@ export enum TicketsEndPoint {
     ATTACH_CUSTOMER = 'attach_customer_to_ticket',
     UNLINK_CUSTOMER = 'unlink_customer_from_ticket',
     FETCH_ALL_COMPLETED_TICKETS = 'fetch_all_completed_tickets',
-    FETCH_ALL_PENDING_TICKETS = 'fetch_all_pending_tickets'
+    FETCH_ALL_PENDING_TICKETS = 'fetch_all_pending_tickets',
+    FETCH_ALL_WHATSAPP_MESSAGES = 'fetch_whatsapp_messages_by_ticket_id'
 }
 
 export enum TicketsQueryKey {
@@ -29,5 +30,6 @@ export enum TicketsQueryKey {
     ATTACH_CUSTOMER = 'ATTACH_CUSTOMER',
     UNLINK_CUSTOMER = 'UNLINK_CUSTOMER',
     FETCH_ALL_COMPLETED_TICKETS = 'FETCH_ALL_COMPLETED_TICKETS',
-    FETCH_ALL_PENDING_TICKETS = 'FETCH_ALL_PENDING_TICKETS'
+    FETCH_ALL_PENDING_TICKETS = 'FETCH_ALL_PENDING_TICKETS',
+    FETCH_ALL_WHATSAPP_MESSAGES = 'FETCH_ALL_WHATSAPP_MESSAGES'
 }

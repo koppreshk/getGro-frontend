@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import styled, { css } from "styled-components";
 import { Avatar, Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
-import { ITicketConversation } from "modules/tickets/apis";
+import { Conversation } from "modules/tickets/apis";
 import { chooseRandomColors, getInitialsByName } from "lib/utils";
 import { Done, DoneAll } from '@mui/icons-material';
 import { DateTime } from "luxon";
@@ -59,21 +59,18 @@ const Wrapper = styled(FlexBox) <{ $isCustomerQuery: boolean }>`
     ${({ $isCustomerQuery }) => $isCustomerQuery ? animateClient : animateAgent};
 `;
 
-interface IChatContentProps extends Pick<ITicketConversation, 'agentName' | 'customerName'> {
-    content: {
-        custumerQuery?: string,
-        agentQuery?: string
-        agtMsgDeliveryStatus?: string;
-        date: string;
-    };
+interface IChatContentProps {
+    content: Conversation;
+    agentName: string;
+    customerName: string;
 }
 
 export const TicketConversationChatContent = (props: IChatContentProps) => {
     const { content, agentName, customerName } = props;
-    const isCustomerQuery = content.custumerQuery !== undefined;
-    const query = content.custumerQuery ? content.custumerQuery : content.agentQuery;
+    const isCustomerQuery = !content.is_agent_sent;
     const containerRef = React.useRef<HTMLDivElement>(null);
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(isCustomerQuery ? customerName : agentName), [agentName, customerName, isCustomerQuery]);
+    const agtMsgDeliveryStatus = content.read ? 'read' : content.delivered ? 'delivered' : 'sent';
 
     React.useEffect(() => {
         containerRef?.current && containerRef?.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -84,15 +81,15 @@ export const TicketConversationChatContent = (props: IChatContentProps) => {
             <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>{getInitialsByName(isCustomerQuery ? customerName : agentName)}</Avatar>
             <Content $isCustomerQuery={isCustomerQuery} maxWidth="50%" flexDirection="column" gap="10px">
                 <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap', marginRight: '16px' }} >
-                    {query}
+                    {content.message}
                 </Typography>
                 {!isCustomerQuery
                     ? <FlexBox justifyContent="flex-end" gap="5px" alignItems="center">
-                        <Typography variant="body3" sx={{ color: '#8696a0' }}>{DateTime.fromISO(content.date).toLocaleString(DateTime.TIME_24_SIMPLE)}</Typography>
-                        <MessageDeliveryStatuses agtMsgDeliveryStatus={content.agtMsgDeliveryStatus!} />
+                        <Typography variant="body3" sx={{ color: '#8696a0' }}>{DateTime.fromISO(content.created_at).toLocaleString(DateTime.TIME_24_SIMPLE)}</Typography>
+                        <MessageDeliveryStatuses agtMsgDeliveryStatus={agtMsgDeliveryStatus!} />
                     </FlexBox> :
                     <FlexBox justifyContent="flex-end" alignItems="center">
-                        <Typography variant="body3" sx={{ color: '#8696a0' }}>{DateTime.fromISO(content.date).toLocaleString(DateTime.TIME_24_SIMPLE)}</Typography>
+                        <Typography variant="body3" sx={{ color: '#8696a0' }}>{DateTime.fromISO(content.created_at).toLocaleString(DateTime.TIME_24_SIMPLE)}</Typography>
                     </FlexBox>}
             </Content>
         </Wrapper>
