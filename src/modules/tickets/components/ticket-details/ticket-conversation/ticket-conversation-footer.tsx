@@ -9,9 +9,7 @@ import styled from "styled-components";
 
 interface ITicketConversationFooterProps {
     onSendAction: (newConversation: {
-        custumerQuery?: string;
-        agentQuery?: string;
-        date: string;
+        message: string;
     }) => void;
 }
 
@@ -30,7 +28,7 @@ export const TicketConversationFooter = (props: ITicketConversationFooterProps) 
 
     const onSendClick = React.useCallback(() => {
         if (textareaValue.length) {
-            onSendAction({ agentQuery: textareaValue, date: new Date().toISOString() });
+            onSendAction({ message: textareaValue });
             setTextAreaValue('');
         }
     }, [onSendAction, textareaValue]);
