@@ -18,8 +18,8 @@ export const InstagramConversation = (props: { data: ITicketConversation, isLoad
         setChatData(data.chatConversation);
     }, [data.chatConversation]);
 
-    const onSendAction = React.useCallback((newConversation: { custumerQuery?: string, agentQuery?: string, date: string }) => {
-        setChatData((prevValue) => ([...prevValue, newConversation]))
+    const onSendAction = React.useCallback((newConversation: { message: string }) => {
+        setChatData((prevValue) => ([...prevValue, { date: new Date().toISOString(), agentQuery: newConversation.message, agtMsgDeliveryStatus: 'sent' }]))
     }, [])
 
     return (
@@ -27,7 +27,7 @@ export const InstagramConversation = (props: { data: ITicketConversation, isLoad
             <Container height="calc(100% - 117px)" flexDirection="column" gap="10px" overflowY="auto">
                 {isLoading ? <ChatConversationLoader />
                     :
-                    chatData?.map((item, index) => <InstagramConversationChatContent key={index} content={item} agentName={data.agentName} customerName={data.customerName} /> )}
+                    chatData?.map((item, index) => <InstagramConversationChatContent key={index} content={item} agentName={data.agentName} customerName={data.customerName} />)}
             </Container>
             <TicketConversationFooter onSendAction={onSendAction} />
         </FlexBox>
