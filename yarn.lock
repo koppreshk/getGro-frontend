@@ -15,6 +15,11 @@
     "@jridgewell/gen-mapping" "^0.3.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
+"@amraneze/react-instagram-login@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@amraneze/react-instagram-login/-/react-instagram-login-4.0.0.tgz#07726a3c14222a054a8bf920ddafa2b623e441af"
+  integrity sha512-6WO462FVtXR9AvrW3TNCx78ntt1Ub+ACUaxcJxqo2/R7+hi61SdK3YfZsjz4g143yoUvY8GteiSxjIJDXWqsKA==
+
 "@babel/cli@^7.21.0":
   version "7.22.15"
   resolved "https://registry.npmjs.org/@babel/cli/-/cli-7.22.15.tgz"
@@ -1882,6 +1887,10 @@
   resolved "https://registry.yarnpkg.com/@tanstack/table-core/-/table-core-8.10.1.tgz#04bd980fad9f3205840449c6ed16553c35ed48c9"
   integrity sha512-dvO7wz+WjnT+7KI6ZZ+GAe9tljIFResDaV/TfOhfpeTB0ud9pILsavuM22HAXG2NsVaIG2Zax2OaVIsNt0z7Og==
 
+"@types/@amraneze/react-instagram-login":
+  version "4.0.0"
+  resolved "https://codeload.github.com/amraneze/react-instagram-login/tar.gz/2ef4efd9cc4ae328527395bc1d475103be145fa0"
+
 "@types/estree@^1.0.0":
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-1.0.5.tgz#a6ce3e556e00fd9895dd872dd172ad0d4bd687f4"
@@ -3608,6 +3617,11 @@ react@^18.2.0:
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
   dependencies:
     loose-envify "^1.1.0"
+
+reactjs-social-login@^2.6.3:
+  version "2.6.3"
+  resolved "https://registry.yarnpkg.com/reactjs-social-login/-/reactjs-social-login-2.6.3.tgz#41bc6006346e3c69b387854db920be121a3fc7dc"
+  integrity sha512-i/pcyJPtlVpHoPRr/j5/KjaP/GNxAInnnHDk0PD2Zo0B3cMdvr0ZiGC/GMjOKAAgKCujyniDf/OiZ7c6MrOLQg==
 
 readdirp@~3.6.0:
   version "3.6.0"

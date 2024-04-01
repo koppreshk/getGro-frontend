@@ -62,7 +62,13 @@ const configurations = [
                 label: 'Facebook',
                 route: 'facebook',
                 uniqueKey: 'facebook',
-                description: 'Configure facebook'
+                description: 'Configure Facebook'
+            },
+            {
+                label: 'Instagram',
+                route: 'instagram',
+                uniqueKey: 'instagram',
+                description: 'Configure Instagram'
             }
         ]
     },
