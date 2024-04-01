@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { FlexBox } from "lib/ui-ux";
 import { TicketConversationFooter } from "./ticket-conversation-footer";
 import { TicketConversationChatContent } from "./ticket-conversation-chat-content";
-import { IWhatsAppMessages } from "modules/tickets/apis";
+import { IWhatsAppMessages, useSendWhatsAppMessages } from "modules/tickets/apis";
 import image from 'assets/png/whatsapp-static-bg.jpg'
 
 // background: ${() => {
@@ -26,14 +26,23 @@ const Container = styled(FlexBox)`
 export const TicketConversation = (props: { data: IWhatsAppMessages }) => {
     const { data } = props;
     const [chatData, setChatData] = React.useState(data.conversations);
+    const { mutateAsync } = useSendWhatsAppMessages();
 
     React.useEffect(() => {
         setChatData(data.conversations);
     }, [data.conversations]);
 
-    const onSendAction = React.useCallback((_newConversation: { custumerQuery?: string, agentQuery?: string, date: string }) => {
-        // setChatData((prevValue) => ([...prevValue, newConversation]))
-    }, [])
+    const onSendAction = React.useCallback((newConversation: { message: string }) => {
+        setChatData((prevValue) => ([...prevValue, {
+            created_at: new Date().toISOString(),
+            delivered: false,
+            is_agent_sent: true,
+            message: newConversation.message,
+            message_id: '',
+            read: false
+        }]))
+        mutateAsync({ messageId: chatData[chatData.length - 1].message_id, message: newConversation.message })
+    }, [chatData, mutateAsync])
 
     return (
         <FlexBox height="100%" flexDirection="column">
