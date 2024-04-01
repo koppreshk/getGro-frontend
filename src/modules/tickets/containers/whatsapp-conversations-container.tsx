@@ -1,10 +1,20 @@
+import React from "react";
 import { ChatConversationLoader } from "lib/ui-ux/loader-components";
 import { useFetchWhatsAppMessages } from "../apis";
 import { TicketConversation } from "../components/ticket-details/ticket-conversation/ticket-conversation";
 import { FlexBox } from "lib/ui-ux";
+import { useSocket } from "lib/providers/socket";
 
 export const WhatsAppConversationContainer = () => {
-    const { isLoading, data } = useFetchWhatsAppMessages();
+    const { isLoading, data, refetch } = useFetchWhatsAppMessages();
+    const { socket } = useSocket();
+
+    React.useEffect(() => {
+        socket.on('production_whatsapp_channel', (_info) => {
+            //TODO: need to use this info obj which contains id and has to be consumed
+            refetch();
+        })
+    }, [refetch, socket])
 
     if (isLoading) {
         return (
