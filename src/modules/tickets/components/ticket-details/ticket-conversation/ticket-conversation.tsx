@@ -32,7 +32,7 @@ export const TicketConversation = (props: { data: IWhatsAppMessages }) => {
         setChatData(data.conversations);
     }, [data.conversations]);
 
-    const onSendAction = React.useCallback((newConversation: { message: string }) => {
+    const onSendAction = React.useCallback((newConversation: { message: string; fileUrl?: string }) => {
         setChatData((prevValue) => ([...prevValue, {
             created_at: new Date().toISOString(),
             delivered: false,
@@ -41,7 +41,7 @@ export const TicketConversation = (props: { data: IWhatsAppMessages }) => {
             message_id: '',
             read: false
         }]))
-        mutateAsync({ messageId: chatData[chatData.length - 1].message_id, message: newConversation.message })
+        mutateAsync({ messageId: chatData[chatData.length - 1].message_id, message: newConversation.message, fileUrl: newConversation.fileUrl })
     }, [chatData, mutateAsync])
 
     return (

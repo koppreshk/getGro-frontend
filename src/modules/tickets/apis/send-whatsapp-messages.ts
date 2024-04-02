@@ -6,6 +6,7 @@ import { TicketsEndPoint, TicketsQueryKey } from "./api-enums";
 interface ISendWhatsAppMessagesArgs {
     messageId: string;
     message?: string;
+    fileUrl?: string;
 }
 
 export const useSendWhatsAppMessages = () => {
@@ -15,7 +16,8 @@ export const useSendWhatsAppMessages = () => {
     const sendWhatsAppMessage = useCallback((args: ISendWhatsAppMessagesArgs) => postData(TicketsEndPoint.SEND_WHATSAPP_MESSAGES,
         {
             message_id: args.messageId,
-            message: args.message
+            message: args.message,
+            file_url: args.fileUrl
         }).then((res) => res.json()), [postData]);
 
     return useMutation({

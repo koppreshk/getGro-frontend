@@ -17,3 +17,4 @@ export * from './get-data-by-key';
 export * from './fetch-ticket-by-id';
 export * from './get-ticket-conversations';
 export * from './send-whatsapp-messages';
+export * from './upload-file';
