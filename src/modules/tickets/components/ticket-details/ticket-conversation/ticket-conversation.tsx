@@ -19,9 +19,14 @@ import image from 'assets/png/whatsapp-static-bg.jpg'
 // }}
 //     ;
 
-const Container = styled(FlexBox)`
-    padding: 10px;
+const Container = styled.div`
+    /* padding: 10px; */
+    height:100%; 
 `;
+
+const ConversationWrapper = styled(FlexBox)`
+    position: relative;
+`
 
 export const TicketConversation = (props: { data: IWhatsAppMessages }) => {
     const { data } = props;
@@ -45,13 +50,15 @@ export const TicketConversation = (props: { data: IWhatsAppMessages }) => {
     }, [chatData, mutateAsync])
 
     return (
-        <FlexBox height="100%" flexDirection="column">
-            <Container style={{ backgroundImage: `url(${image})` }} height="calc(100% - 117px)" flexDirection="column" gap="10px" overflowY="auto">
-                {
-                    chatData?.map((item, index) => <TicketConversationChatContent key={index} content={item} agentName={data.agent_name} customerName={data.customer_name} />)
-                }
+        <ConversationWrapper height="100%" flexDirection="column">
+            <Container style={{ backgroundImage: `url(${image})` }} >
+                <FlexBox height="calc(100% - 150px)" flexDirection="column" gap="10px" overflowY="auto" padding="10px">
+                    {
+                        chatData?.map((item, index) => <TicketConversationChatContent key={index} content={item} agentName={data.agent_name} customerName={data.customer_name} />)
+                    }
+                </FlexBox>
             </Container>
             <TicketConversationFooter onSendAction={onSendAction} />
-        </FlexBox>
+        </ConversationWrapper>
     );
 }
