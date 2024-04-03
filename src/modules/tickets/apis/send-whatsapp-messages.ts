@@ -7,6 +7,7 @@ interface ISendWhatsAppMessagesArgs {
     messageId: string;
     message?: string;
     fileUrl?: string;
+    type: string
 }
 
 export const useSendWhatsAppMessages = () => {
@@ -17,7 +18,8 @@ export const useSendWhatsAppMessages = () => {
         {
             message_id: args.messageId,
             message: args.message,
-            file_url: args.fileUrl
+            file_url: args.fileUrl,
+            type: args.type
         }).then((res) => res.json()), [postData]);
 
     return useMutation({

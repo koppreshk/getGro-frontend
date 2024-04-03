@@ -14,6 +14,7 @@ interface ITicketConversationFooterProps {
     onSendAction: (newConversation: {
         message: string;
         fileUrl?: string;
+        type: string;
     }) => void;
 }
 
@@ -39,7 +40,7 @@ export const TicketConversationFooter = (props: ITicketConversationFooterProps) 
 
     const onSendClick = React.useCallback(() => {
         if (textareaValue.length) {
-            onSendAction({ message: textareaValue });
+            onSendAction({ message: textareaValue, type: 'text' });
             setTextAreaValue('');
         }
     }, [onSendAction, textareaValue]);
@@ -86,7 +87,7 @@ const UploadedFilePreview = (props: { toggleFileDisplay: () => void, filePreview
             contentType: fileData!.selectedFiles[0].type,
             file: data!.split(',')[1]
         }).then((res: { file_url: string }) => {
-            onSendAction({ message: textareaValue, fileUrl: res.file_url });
+            onSendAction({ message: textareaValue, fileUrl: res.file_url, type: 'image' });
         })
             .catch(() => showNotification({ message: 'Failed to send the file and message', type: 'error' }))
             .finally(() => toggleFileDisplay())
