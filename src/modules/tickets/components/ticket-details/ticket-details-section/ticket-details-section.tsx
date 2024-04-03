@@ -1,22 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 import { FlexBox } from "lib/ui-ux";
-import { OrderDetailsContainer, TicketOverviewContainer, PastTicketsContainer, TicketDisposeContainer } from "modules/tickets/containers";
+import { OrderDetailsContainer, TicketOverviewContainer, PastTicketsContainer } from "modules/tickets/containers";
 import { MenuOptions, TicketSideMenu } from "./ticket-side-menu";
 import { TicketNotes } from "./ticket-notes";
 import { useAppSelector } from "lib/hooks";
-import { Tags, Dispositons, Queues } from "modules/tickets/apis";
+import { TicketDispose } from "./dispose-ticket";
 
 const StyledFlexBox = styled(FlexBox)`  
     background-color: ${({ theme }) => theme.pallete.white};
 `;
 
-export interface ITicketDetailsSectionProps {
-    tagData : Tags[];
-    dispositonData: Dispositons[];
-    queuesData: Queues[];
-}
-export const TicketDetailsSection = (props: ITicketDetailsSectionProps) => {
+export const TicketDetailsSection = () => {
     const [selectedMenuOption, setSelectedMenuOption] = React.useState<string>(MenuOptions.CustomerProfile);
     const showHideTicketDetails = useAppSelector((state) => state.tickets.showHideTicketDetails)
 
@@ -45,7 +40,7 @@ export const TicketDetailsSection = (props: ITicketDetailsSectionProps) => {
                     <div style={{ height: 'calc(100% - 47px)' }}>
                         {renderBasedOnSelectedview()}
                     </div>
-                    <TicketDisposeContainer {...props}/>
+                    <TicketDispose />
                 </FlexBox>
                 : null}
             <TicketSideMenu onSetMenuOption={onMenuOptionClick} selectedMenuOption={selectedMenuOption} />
