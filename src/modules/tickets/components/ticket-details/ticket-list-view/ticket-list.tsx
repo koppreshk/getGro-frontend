@@ -61,7 +61,8 @@ export const TicketList = (props: ITicketListProps) => {
             key={item.ticketId}
             status={item.status}
             pastTickets={item.pastTickets}
-            customerInfo={item.customerInfo} />
+            customerInfo={item.customerInfo}
+            channelId={item.channelId} />
     ));
 
     return (
@@ -73,7 +74,7 @@ interface ITicketDetailsProps extends ITicketDetails {
 }
 
 const TicketDetails = (props: ITicketDetailsProps) => {
-    const { createdAt, customerName, ticketId, source, priority, ticketStatus, ticketSubStatus, status, pastTickets, customerInfo } = props;
+    const { createdAt, customerName, ticketId, source, priority, ticketStatus, ticketSubStatus, status, pastTickets, customerInfo, channelId } = props;
     const params = useParams();
     const navigate = useNavigate();
     const match = useMatch(`/tickets/:ticketType/:ticketId`);
@@ -99,11 +100,11 @@ const TicketDetails = (props: ITicketDetailsProps) => {
                 priority,
                 status,
                 pastTickets,
-                customerInfo
+                customerInfo,
+                channelId
             }));
         }
-    }, [customerInfo, createdAt, customerName, dispatch, params.ticketId, priority,
-        source, status, ticketId, ticketStatus, ticketSubStatus, pastTickets]);
+    }, [customerInfo, createdAt, customerName, dispatch, params.ticketId, priority, source, status, ticketId, ticketStatus, ticketSubStatus, pastTickets, channelId]);
 
     const onTicketClick = React.useCallback(() => {
         navigate(`/tickets/${match?.params.ticketType}/${ticketId}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`);

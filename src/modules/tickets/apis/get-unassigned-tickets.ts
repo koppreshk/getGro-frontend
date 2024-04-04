@@ -6,6 +6,7 @@ import { useSearchParams } from "react-router-dom";
 
 export interface ITicketDetails {
     source: string;
+    channelId: number;
     ticketId: string;
     customerName: string;
     ticketStatus: string;

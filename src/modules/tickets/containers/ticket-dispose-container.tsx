@@ -1,21 +1,20 @@
 import React from "react";
-import { useDisposeTicket } from "../apis"
-import { IDispostionFormFields, TicketDispose } from "../components/ticket-details/ticket-details-section/dispose-ticket";
 import { useNavigate } from "react-router-dom";
+import { useDisposeTicket, useFetchTicketDispositionOptions } from "../apis"
+import { IDispostionFormFields, TicketDisposeForm } from "../components/ticket-details/ticket-details-section/dispose-ticket";
 import { useNotifications } from "lib";
-import { ITicketDetailsSectionProps } from "../components/ticket-details";
+import { CenteredCircularProgress } from "lib/ui-ux";
 
-interface ITicketDisposeContainerProps extends ITicketDetailsSectionProps {
-
+interface ITicketDisposeContainerProps {
+    onToggleTicketDispose: () => void;
 }
 
 export const TicketDisposeContainer = (props: ITicketDisposeContainerProps) => {
+    const { onToggleTicketDispose } = props;
     const { mutateAsync } = useDisposeTicket();
+    const { data: dispostionOptionData, isLoading } = useFetchTicketDispositionOptions();
     const navigate = useNavigate();
     const { showNotification } = useNotifications();
-    const [openTicketDisposeDrawer, setTicketDisposeDrawer] = React.useState(false);
-
-    const onToggleTicketDispose = () => setTicketDisposeDrawer((prevalue) => !prevalue);
 
     const submitDisposeTicket = React.useCallback((data: IDispostionFormFields) => {
         mutateAsync({
@@ -32,14 +31,18 @@ export const TicketDisposeContainer = (props: ITicketDisposeContainerProps) => {
             })
             .catch(() => showNotification({ message: 'Unable to disposed ticket', type: 'error' }))
             .finally(() => onToggleTicketDispose())
-    }, [mutateAsync, navigate, showNotification]);
+    }, [mutateAsync, navigate, onToggleTicketDispose, showNotification]);
+
+    if (isLoading) {
+        return <CenteredCircularProgress />
+    }
 
     return (
-        <TicketDispose
-            submitDisposeTicket={submitDisposeTicket}
-            onToggleTicketDispose={onToggleTicketDispose}
-            openTicketDisposeDrawer={openTicketDisposeDrawer}
-            {...props}
+        <TicketDisposeForm
+            submitDisposeTicket={submitDisposeTicket} onToggleTicketDispose={onToggleTicketDispose}
+            dispositions={dispostionOptionData?.dispositions || []}
+            queues={dispostionOptionData?.queues || []}
+            tags={dispostionOptionData?.tags || []}
         />
     )
 }
