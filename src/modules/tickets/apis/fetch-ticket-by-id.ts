@@ -26,30 +26,10 @@ export interface Conversations {
     htmlContent: string
     attachments: IAttachments[];
 }
-
-export interface Tags {
-    tag_id: number;
-    tag: string;
-}
-
-export interface Dispositons {
-    id: number;
-    name: string;
-}
-
-export interface Queues {
-    id: number;
-    name: string;
-    uniqueKey: string;
-}
-
 export interface ITicketById {
     subject: string;
     conversations: Conversations[];
     threadId: string;
-    tags: Tags[];
-    dispositions: Dispositons[];
-    queues: Queues[];
 }
 
 export const useFetchTicketById = () => {
