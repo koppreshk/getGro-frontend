@@ -18,6 +18,8 @@ export interface Conversation {
     read: boolean;
     message_id: string;
     is_agent_sent: boolean;
+    message_type: string;
+    file_url?: string;
 }
 
 export const useFetchWhatsAppMessages = () => {

@@ -39,7 +39,9 @@ export const TicketConversation = (props: { data: IWhatsAppMessages }) => {
             is_agent_sent: true,
             message: newConversation.message,
             message_id: '',
-            read: false
+            read: false,
+            file_url: newConversation.fileUrl,
+            message_type: newConversation.type
         }]))
         mutateAsync({
             messageId: chatData[chatData.length - 1].message_id,

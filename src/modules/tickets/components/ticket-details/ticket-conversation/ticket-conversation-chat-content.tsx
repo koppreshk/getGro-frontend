@@ -80,6 +80,7 @@ export const TicketConversationChatContent = (props: IChatContentProps) => {
         <Wrapper gap="10px" alignItems="center" ref={containerRef} $isCustomerQuery={isCustomerQuery} flexDirection={isCustomerQuery ? 'row' : 'row-reverse'}>
             <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>{getInitialsByName(isCustomerQuery ? customerName : agentName)}</Avatar>
             <Content $isCustomerQuery={isCustomerQuery} maxWidth="50%" flexDirection="column" >
+                {content.file_url ? <img src={content.file_url} loading="lazy" /> : null}
                 <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap', marginRight: '21px' }} >
                     {content.message}
                 </Typography>
