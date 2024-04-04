@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { FlexBox } from "lib/ui-ux";
 import { ChatConversationLoader } from "lib/ui-ux/loader-components";
 import { ITicketConversation } from "modules/tickets/apis";
-import { TicketConversationFooter } from "../ticket-conversation-footer";
 import { FacebookConversationChatContent } from "./facebook-conversation-chat-content";
+import { TicketConversationFooter } from "../instagram-conversations";
 
 const Container = styled(FlexBox)`
     padding: 10px;
