@@ -31,7 +31,7 @@ export const TicketConversationFooter = (props: ITicketConversationFooterProps) 
     const { onSendAction } = props;
     const [textareaValue, setTextAreaValue] = React.useState('');
     const [filePreviewDisplay, setFilePreviewDisplay] = React.useState(false);
-    const [fileInfo, setFileInfo] = React.useState<IFileInfoState>({});
+    const [fileInfo, setFileInfo] = React.useState<IFileInfoState>({ original: [], parsedFile: [] });
     const form = useForm();
 
     const toggleFileDisplay = () => setFilePreviewDisplay((prevValue) => !prevValue);
