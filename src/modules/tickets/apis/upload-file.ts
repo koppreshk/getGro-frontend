@@ -1,16 +1,19 @@
-import { useServiceClient } from "lib";
 import { useCallback } from "react";
 import { useMutation } from "react-query";
 import { TicketsEndPoint, TicketsQueryKey } from "./api-enums";
+import { useAuth } from "modules/login";
 
 export const useUploadFile = () => {
-    const { postData } = useServiceClient();
+    const { user } = useAuth();
 
-    const uploadFile = useCallback((args: { file: string, contentType: string }) =>
-        postData(`${TicketsEndPoint.UPLOAD_FILE}`, {
-            file: args.file,
-            content_type: args.contentType
-        }).then((res) => res.json()), [postData]);
+    const uploadFile = useCallback((body: FormData) =>
+        fetch(`${import.meta.env.VITE_REST_URL}${TicketsEndPoint.UPLOAD_FILE}`, {
+            body: body,
+            method: 'post',
+            headers: {
+                'Authorization': user!.authToken,
+            }
+        }).then((res) => res.json()), [user]);
 
     return useMutation({
         mutationKey: [TicketsQueryKey.UPLOAD_FILE],

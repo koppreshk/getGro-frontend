@@ -11,7 +11,7 @@ const DefaultFileInput = styled.input.attrs({
     display: none;
 `;
 
-const parseFileInfo = (settledResult: PromiseSettledResult<IFileInfo>): IFileInfo => (settledResult.status === 'fulfilled' ? settledResult.value : settledResult.reason);
+export const parseFileInfo = (settledResult: PromiseSettledResult<IFileInfo>): IFileInfo => (settledResult.status === 'fulfilled' ? settledResult.value : settledResult.reason);
 
 export const FileUpload = React.memo((props: IFileUploadProps) => {
     const {
