@@ -6,3 +6,4 @@ export * from './rich-text-editor';
 export * from './auto-complete-field';
 export * from './checkbox-field';
 export * from './switch-field';
+export * from './date-time-picker-field';

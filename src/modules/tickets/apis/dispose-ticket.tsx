@@ -24,7 +24,7 @@ export const useDisposeTicket = () => {
             employee_id: args.employeeId,
             tag_id: args.tagId,
             ticket_id: ticketId,
-            call_back_at: false
+            call_back_at: args.callBackTime
         }).then((res) => res.json()), [postData, ticketId]);
 
     return useMutation({
