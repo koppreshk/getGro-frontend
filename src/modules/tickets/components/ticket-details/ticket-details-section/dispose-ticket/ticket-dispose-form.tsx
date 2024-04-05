@@ -1,12 +1,12 @@
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Grid, FormControlLabel, Button } from "@mui/material";
-import { DateTimePicker } from "@mui/x-date-pickers";
-import { AutocompleteField, SelectField, TextboxField, CheckboxField } from "lib/form-fields";
+import { AutocompleteField, SelectField, TextboxField, CheckboxField, DateTimePickerField } from "lib/form-fields";
 import { useAppSelector } from "lib/hooks";
 import { FlexBox } from "lib/ui-ux";
 import { ITicketDispositionOptions } from "modules/tickets/apis";
 import { GetEmployeesByQueueContainer } from "modules/tickets/containers";
+// import { DateTime } from "luxon";
 
 interface MutliSelect {
     key: string;
@@ -30,7 +30,6 @@ interface ITicketDisposeFormProps extends ITicketDispositionOptions {
 
 export const TicketDisposeForm = (props: ITicketDisposeFormProps) => {
     const { submitDisposeTicket, dispositions, queues, tags } = props;
-    const [dateTime, setDateTime] = React.useState(null)
 
     const methods = useForm<IDispostionFormFields>({
         defaultValues: {
@@ -43,6 +42,7 @@ export const TicketDisposeForm = (props: ITicketDisposeFormProps) => {
 
     const onSubmitDisposeTicket = React.useCallback(async (getformvalues: IDispostionFormFields) => {
         submitDisposeTicket(getformvalues);
+        console.log(getformvalues);
     }, [submitDisposeTicket]);
 
     React.useEffect(() => {
@@ -77,7 +77,7 @@ export const TicketDisposeForm = (props: ITicketDisposeFormProps) => {
                         </Grid>
                         {methods.watch('callBackRequired') ?
                             <Grid item xs={12}>
-                                <DateTimePicker sx={{ width: '100%' }} name="" value={dateTime} onChange={(newValue) => setDateTime(newValue)} />
+                                <DateTimePickerField label="Select Date & Time" name="callBackTime"/>
                             </Grid>
                             : <></>
                         }
