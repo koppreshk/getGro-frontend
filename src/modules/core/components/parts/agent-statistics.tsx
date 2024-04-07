@@ -50,19 +50,19 @@ const data = [
 const FAKE_DATA = [
     {
         id: 1,
-        percent: 70,
+        percent: 25,
         color: '#3cd300',
         label: 'Slice 1',
     },
     {
         id: 2,
-        percent: 10,
+        percent: 60,
         color: 'rgb(222,36,1)',
         label: 'Slice 2',
     },
     {
         id: 3,
-        percent: 20,
+        percent: 15,
         color: 'rgb(255,198,3)',
         label: 'Slice 3',
     },

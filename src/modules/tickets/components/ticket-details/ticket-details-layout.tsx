@@ -4,7 +4,6 @@ import { TicketListViewContainer } from "modules/tickets/containers"
 import { TicketDetailsSection } from "./ticket-details-section/ticket-details-section";
 import { useAppSelector } from "lib/hooks";
 import { TicketConversationLayout } from "./ticket-conversation";
-import { IncomingCall } from "./ticket-conversation/telephonic-conversations";
 
 const StyledLayoutWrapper = styled(FlexBox)`
     background-color: ${({ theme }) => theme.pallete.white};
@@ -30,7 +29,6 @@ export const TicketDetailsLayout = () => {
             <StyledLayouts width={!showHideTicketDetails ? "52px" : "calc(30% - 20px)"}>
                 <TicketDetailsSection />
             </StyledLayouts>
-            <IncomingCall />
         </StyledLayoutWrapper>
     )
 }

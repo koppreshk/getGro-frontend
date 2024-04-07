@@ -7,13 +7,14 @@ import { Routes, Route, useNavigate, useLocation, Outlet, Navigate } from "react
 import { ProtectedRoute } from "modules/login/protected-route"
 import { useAuth } from "modules/login"
 import { commonStyles } from "lib/ui-ux/common-styles";
+import { IncomingCall } from "modules/tickets/components/ticket-details/ticket-conversation/telephonic-conversations"
+import LoginPage from '../../login/login';
 
 const DashboardPage = lazy(() => import('../../dashboard/pages/dashboard-page'));
 const TicketsPage = lazy(() => import('../../tickets/pages/tickets-page'));
 const CustomersPage = lazy(() => import('../../customers/pages/customers-page'));
 const ConfigurationsPage = lazy(() => import('../../settings/pages/settings-page'));
 const PageNotFound = lazy(() => import('./page-not-found'));
-const LoginPage = lazy(() => import('../../login/login'));
 
 const PageContainer = styled(FlexBox)`
     ${commonStyles.sleekScrollStyle};
@@ -30,6 +31,7 @@ const HomePage = React.memo(() => {
                         <Outlet />
                     </Suspense>
                 </div>
+                <IncomingCall />
             </PageContainer>
         </>
     )

@@ -102,11 +102,9 @@ const Login = React.memo(() => {
     });
     return (
         <FlexBox height="100%" width="100%">
-
             <LoginSectionLeft width="70%" alignItems="center">
                 <IllustrationImg src={LoginImage} alt="" />
             </LoginSectionLeft>
-
             <LoginSectionRight width="30%" flexDirection="column" alignItems="center">
                 <GetGroLogoWrapper width="100%" justifyContent="center">
                     <img src={GetGroLogoImg} width='50%' />
@@ -115,7 +113,6 @@ const Login = React.memo(() => {
                     <LoginForm />
                 </FormProvider>
             </LoginSectionRight>
-
         </FlexBox>
     )
 })
