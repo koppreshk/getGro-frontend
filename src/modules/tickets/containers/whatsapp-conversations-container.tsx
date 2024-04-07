@@ -19,7 +19,7 @@ export const WhatsAppConversationContainer = () => {
 
     if (isLoading) {
         return (
-            <FlexBox width="100%">
+            <FlexBox width="100%" height="100%" flexDirection="column" padding="10px">
                 <ChatConversationLoader />
             </FlexBox>
         )
