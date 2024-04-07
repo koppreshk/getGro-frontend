@@ -3,7 +3,6 @@ import { FlexBox } from "lib/ui-ux"
 import { TicketListViewContainer } from "modules/tickets/containers"
 import { TicketDetailsSection } from "./ticket-details-section/ticket-details-section";
 import { useAppSelector } from "lib/hooks";
-import { useFetchTicketById } from "modules/tickets/apis";
 import { TicketConversationLayout } from "./ticket-conversation";
 
 const StyledLayoutWrapper = styled(FlexBox)`
@@ -18,7 +17,6 @@ const StyledLayouts = styled(FlexBox)`
 
 export const TicketDetailsLayout = () => {
     const showHideTicketDetails = useAppSelector((state) => state.tickets.showHideTicketDetails)
-    const fetchTicketsAPIinfo = useFetchTicketById();
 
     return (
         <StyledLayoutWrapper width="100%" height="100%" gap="20px">
@@ -29,7 +27,7 @@ export const TicketDetailsLayout = () => {
                 <TicketConversationLayout />
             </StyledLayouts>
             <StyledLayouts width={!showHideTicketDetails ? "52px" : "calc(30% - 20px)"}>
-                <TicketDetailsSection tagData={fetchTicketsAPIinfo.data?.tags || []} dispositonData={fetchTicketsAPIinfo.data?.dispositions || []} queuesData={fetchTicketsAPIinfo.data?.queues || []} />
+                <TicketDetailsSection />
             </StyledLayouts>
         </StyledLayoutWrapper>
     )

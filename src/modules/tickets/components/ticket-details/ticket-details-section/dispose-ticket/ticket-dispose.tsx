@@ -1,14 +1,10 @@
-import React, { useReducer, useState } from "react";
+import React, { useReducer } from "react";
 import styled from "styled-components";
-import { FormProvider, useForm } from "react-hook-form"
-import { Button, FormControlLabel, Grid } from "@mui/material";
+import { Button } from "@mui/material";
 import { ArchiveOutlined } from "@mui/icons-material";
-import { SelectField, TextboxField, CheckboxField, AutocompleteField } from "lib/form-fields";
 import { DrawerExtended, FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { useAppSelector } from "lib/hooks";
-import { ITicketDetailsSectionProps } from "../ticket-details-section";
-import { GetEmployeesByQueueContainer } from "modules/tickets/containers";
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { TicketDisposeContainer } from "modules/tickets/containers";
 
 const StyledButton = styled(Button)`
     &&{
@@ -36,34 +32,14 @@ const StyledButton = styled(Button)`
             --myColor2: #6a69f6;
         }
     }
-`
-
-interface MutliSelect {
-    key: string;
-    value: string;
-}
-
-export interface IDispostionFormFields {
-    dispositionId: string;
-    queueId?: string;
-    employeeId?: string;
-    tagId?: MutliSelect[];
-    remarks?: string;
-    callBackTime?: string;
-    callBackRequired?: boolean;
-}
-
-interface ITicketDisposeProps extends ITicketDetailsSectionProps {
-    openTicketDisposeDrawer: boolean;
-    submitDisposeTicket: (data: IDispostionFormFields) => void;
-    onToggleTicketDispose: () => void;
-}
+`;
 
 type FolderStates = {
     parentFolder: string;
     childFolder: string
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useFolderReducer = () => {
     const { source } = useAppSelector(state => state?.tickets?.ticketDetails)!;
     const reducer = (state: FolderStates, action: { type: 'parent-folder' | 'child-folder' | 'clear-folders', payload?: FolderStates }) => {
@@ -81,86 +57,13 @@ export const useFolderReducer = () => {
     return useReducer(reducer, { parentFolder: source, childFolder: '' })
 }
 
-const TicketDisposeForm = (props: ITicketDisposeProps) => {
-    const { openTicketDisposeDrawer, onToggleTicketDispose, submitDisposeTicket, dispositonData, queuesData, tagData } = props;
-    const methods = useForm<IDispostionFormFields>({
-        defaultValues: {
-            dispositionId: '',
-            queueId: ''
-        }
-    });
-    const ticketDetails = useAppSelector(state => state.tickets.ticketDetails);
-
-    const [dateTime, setDateTime] = useState(null)
-
-    const onSubmitDisposeTicket = React.useCallback(async (getformvalues: IDispostionFormFields) => {
-        submitDisposeTicket(getformvalues);
-    }, [submitDisposeTicket]);
-
-    React.useEffect(() => {
-        if (methods.formState.isSubmitSuccessful) {
-          methods.reset();
-        }
-      }, [methods])
-
-    const onRenderContent = () => {
-        return (
-            <>
-                <FormProvider {...methods}>
-                    <FlexBox flexDirection="column" padding="20px" height="calc(100% - 77px)" justifyContent="space-between" overflowY="auto">
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <AutocompleteField name="tagId" label={`${ticketDetails!.source} Tags`} placeholder="Select Tags"
-                                    options={tagData?.map((item) => ({ key: item.tag_id.toString(), value: item.tag }))} />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <SelectField name="dispositionId" label="Disposition Type" sx={{ width: '100%' }} rules={{ required: 'Disposition type is required' }}
-                                    menuOptions={dispositonData.map((item) => ({ key: item.id.toString(), value: item.name }))} />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <SelectField name="queueId" label="Select Queue" sx={{ width: '100%' }}
-                                    menuOptions={queuesData.map((item) => ({ key: item.id.toString(), value: item.name }))} />
-                            </Grid>
-                            {methods.watch('queueId') ? <GetEmployeesByQueueContainer queueId={methods.watch('queueId')!.toString()} /> : null}
-                            <Grid item xs={12}>
-                                <TextboxField name="remarks" label="Remarks" multiline rows={4} fullWidth />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <FormControlLabel control={<CheckboxField name="callBackRequired" sx={{ width: '40px' }} />} label="is callback required?" />
-                            </Grid>
-                            {methods.watch('callBackRequired') ?
-                                <Grid item xs={12}>
-                                    <DateTimePicker sx={{ width: '100%' }} name="" value={dateTime} onChange={(newValue) => setDateTime(newValue)} />
-                                </Grid>
-                                : <></>
-                            }
-                        </Grid>
-                        <FlexBox width="100%" >
-                            <Button variant="contained" onClick={methods.handleSubmit(onSubmitDisposeTicket)} fullWidth>
-                                Dispose Ticket
-                            </Button>
-                        </FlexBox>
-                    </FlexBox>
-                </FormProvider>
-            </>
-        )
-    }
-
-    return (
-        <DrawerExtended
-            header="Dispose Ticket"
-            width="420px"
-            anchor="right"
-            open={openTicketDisposeDrawer}
-            onRenderContent={onRenderContent}
-            onClose={onToggleTicketDispose}>
-        </DrawerExtended>
-    )
-}
-
-export const TicketDispose = (props: ITicketDisposeProps) => {
+export const TicketDispose = () => {
     const ticketDetails = useAppSelector(state => state.tickets.ticketDetails);
     const doesRequiredMedadataExist = ticketDetails !== undefined;
+
+    const [openTicketDisposeDrawer, setTicketDisposeDrawer] = React.useState(false);
+
+    const onToggleTicketDispose = () => setTicketDisposeDrawer((prevalue) => !prevalue);
 
     return (
         <>
@@ -170,11 +73,18 @@ export const TicketDispose = (props: ITicketDisposeProps) => {
                     variant="contained"
                     startIcon={<ArchiveOutlined />}
                     disabled={!doesRequiredMedadataExist}
-                    onClick={props.onToggleTicketDispose}>
+                    onClick={onToggleTicketDispose}>
                     Dispose Ticket
                 </StyledButton>
             </FlexBox>
-            {doesRequiredMedadataExist ? <TicketDisposeForm {...props} /> : null}
+            <DrawerExtended
+                header="Dispose Ticket"
+                width="420px"
+                anchor="right"
+                open={openTicketDisposeDrawer}
+                onRenderContent={() => <TicketDisposeContainer onToggleTicketDispose={onToggleTicketDispose}/>}
+                onClose={onToggleTicketDispose}>
+            </DrawerExtended>
         </>
     )
 }
