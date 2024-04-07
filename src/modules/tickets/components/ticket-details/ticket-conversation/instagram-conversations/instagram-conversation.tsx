@@ -9,10 +9,8 @@ import { Send } from "@mui/icons-material";
 import { KeyCodes } from "lib/enums";
 import { FileUploadField } from "lib/form-fields";
 import { RoundedSendButton } from "../email-conversations/email-editor";
+import { Container } from "..";
 
-const Container = styled(FlexBox)`
-    padding: 10px;
-`;
 
 export const InstagramConversation = (props: { data: ITicketConversation, isLoading?: boolean }) => {
     const { data, isLoading } = props;
@@ -28,10 +26,12 @@ export const InstagramConversation = (props: { data: ITicketConversation, isLoad
 
     return (
         <FlexBox height="100%" flexDirection="column">
-            <Container height="calc(100% - 117px)" flexDirection="column" gap="10px" overflowY="auto">
-                {isLoading ? <ChatConversationLoader />
-                    :
-                    chatData?.map((item, index) => <InstagramConversationChatContent key={index} content={item} agentName={data.agentName} customerName={data.customerName} />)}
+            <Container>
+                <FlexBox height="calc(100% - 150px)" flexDirection="column" gap="10px" overflowY="auto" padding="10px">
+                    {isLoading ? <ChatConversationLoader />
+                        :
+                        chatData?.map((item, index) => <InstagramConversationChatContent key={index} content={item} agentName={data.agentName} customerName={data.customerName} />)}
+                </FlexBox>
             </Container>
             <TicketConversationFooter onSendAction={onSendAction} />
         </FlexBox>

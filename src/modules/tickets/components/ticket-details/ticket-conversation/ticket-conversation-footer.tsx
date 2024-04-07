@@ -20,7 +20,19 @@ interface ITicketConversationFooterProps {
 }
 
 const FooterWrapper = styled(FlexBox)`
-    border-top: ${({ theme }) => theme.semantics.standardBorder} ;
+    /* border-top: ${({ theme }) => theme.semantics.standardBorder} ; */
+    position: absolute;
+    width: 100%;
+    padding: 15px;
+    bottom: 0px;
+`;
+
+const ContentArea = styled(FlexBox)`
+    border-radius: 20px;
+    padding: 10px;
+    background: white;
+    /* box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px; */
+    box-shadow: 0px 10px 50px 12px rgba(0,0,0,0.1);
 `;
 
 interface IFileInfoState {
@@ -66,14 +78,16 @@ export const TicketConversationFooter = (props: ITicketConversationFooterProps) 
 
     return (
         <FormProvider {...form}>
-            <FooterWrapper flexDirection="column" >
-                <TextArea onChange={onTextChange} value={textareaValue} onKeyDown={onKeyDown} placeholder="Shift + Enter to add a new line" />
-                <FlexBox justifyContent="space-between" padding="0px 10px 10px">
-                    <NativeFileUpload onChange={onFileUpload} />
-                    <RoundedSendButton variant="contained" size="small" endIcon={<Send />} onClick={onSendClick} >
-                        Send
-                    </RoundedSendButton>
-                </FlexBox>
+            <FooterWrapper>
+                <ContentArea flexDirection="column" width="100%">
+                    <TextArea onChange={onTextChange} value={textareaValue} onKeyDown={onKeyDown} placeholder="Shift + Enter to add a new line" />
+                    <FlexBox justifyContent="space-between" padding="0px 10px 10px">
+                        <NativeFileUpload onChange={onFileUpload} />
+                        <RoundedSendButton variant="contained" size="small" endIcon={<Send />} onClick={onSendClick} >
+                            Send
+                        </RoundedSendButton>
+                    </FlexBox>
+                </ContentArea>
             </FooterWrapper>
             {filePreviewDisplay ?
                 <UploadedFilePreview
