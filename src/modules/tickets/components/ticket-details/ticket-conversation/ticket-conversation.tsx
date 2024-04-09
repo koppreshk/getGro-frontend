@@ -1,14 +1,25 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 import { FlexBox } from "lib/ui-ux";
 import { TicketConversationFooter } from "./ticket-conversation-footer";
 import { TicketConversationChatContent } from "./ticket-conversation-chat-content";
-import { IWhatsAppMessages, useSendWhatsAppMessages } from "modules/tickets/apis";
+import { Conversation, IWhatsAppMessages, useSendWhatsAppMessages } from "modules/tickets/apis";
 import { Container } from ".";
+import { Typography } from "@mui/material";
+import { isToday, isYesterday } from "lib/utils";
 
 const ConversationWrapper = styled(FlexBox)`
     position: relative;
-`
+`;
+
+const DateText = styled(Typography)`
+    background: #fffffff2;
+    color: ${({ theme }) => theme.pallete.grayVariant2};
+    padding: 5px 12px 6px 12px;
+    border-radius: 6px;
+    width: fit-content;
+`;
+
 export const TicketConversation = (props: { data: IWhatsAppMessages }) => {
     const { data } = props;
     const [chatData, setChatData] = React.useState(data.conversations);
@@ -37,12 +48,34 @@ export const TicketConversation = (props: { data: IWhatsAppMessages }) => {
         })
     }, [chatData, mutateAsync])
 
+    const groupedBydateData = useMemo(() => chatData.reduce((acc, curr) => {
+        const date = curr.created_at.split('T')[0];
+
+        if (!acc[date]) {
+            acc[date] = []
+        }
+        acc[date].push(curr);
+        return acc;
+    }, {} as {
+        [key: string]: Conversation[]
+    }), [chatData]);
+
     return (
         <ConversationWrapper height="100%" flexDirection="column">
             <Container>
                 <FlexBox height="calc(100% - 150px)" flexDirection="column" gap="10px" overflowY="auto" padding="10px">
                     {
-                        chatData?.map((item, index) => <TicketConversationChatContent key={index} content={item} agentName={data.agent_name} customerName={data.customer_name} />)
+                        Object.keys(groupedBydateData).map((date) => {
+                            return (
+                                <React.Fragment key={date}>
+                                    <FlexBox justifyContent="center">
+                                        <DateText variant="subheading2">{isToday(date) ? 'Today' : isYesterday(date) ? 'Yesterday' : date}</DateText>
+                                    </FlexBox>
+                                    {groupedBydateData[date]?.map((item, index) => <TicketConversationChatContent key={index} content={item} agentName={data.agent_name} customerName={data.customer_name} />)}
+                                </React.Fragment>
+                            )
+                        }
+                        )
                     }
                 </FlexBox>
             </Container>
