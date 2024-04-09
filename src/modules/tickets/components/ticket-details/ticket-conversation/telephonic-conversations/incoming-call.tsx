@@ -56,6 +56,9 @@ export const IncomingCall = () => {
                 setCallData(undefined);
             }
         })
+        return () => {
+            socket.off('production_incoming_call')
+        }
     }, [socket]);
 
     return (

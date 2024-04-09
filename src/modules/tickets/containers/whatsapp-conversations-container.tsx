@@ -15,6 +15,9 @@ export const WhatsAppConversationContainer = () => {
             //TODO: need to use this info obj which contains id and has to be consumed
             refetch();
         })
+        return () => {
+            socket.off('production_whatsapp_channel')
+        }
     }, [refetch, socket])
 
     if (isLoading) {
