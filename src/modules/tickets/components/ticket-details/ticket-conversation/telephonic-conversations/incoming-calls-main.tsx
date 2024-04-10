@@ -168,7 +168,7 @@ const CardComponent = (props: IIncomingCallCardComponent) => {
 
 export const IncomingCallMain = () => {
     const { socket } = useSocket();
-    const [showIncomingCallDialog, setDialogDisplay] = useState(true);
+    const [showIncomingCallDialog, setDialogDisplay] = useState(false);
     const [callData, setCallData] = useState<IIncomingCall | undefined>();
     // const { user } = useAuth();
 
