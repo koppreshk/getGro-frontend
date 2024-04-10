@@ -19,3 +19,4 @@ export * from './get-ticket-conversations';
 export * from './send-whatsapp-messages';
 export * from './upload-file';
 export * from './fetch-ticket-disposition-options';
+export * from './fetch-calls-by-ticket-id';

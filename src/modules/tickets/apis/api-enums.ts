@@ -16,7 +16,8 @@ export enum TicketsEndPoint {
     FETCH_ALL_WHATSAPP_MESSAGES = 'fetch_whatsapp_messages_by_ticket_id',
     SEND_WHATSAPP_MESSAGES = 'send_message_to_whatsapp',
     UPLOAD_FILE = 'upload_file',
-    FETCH_TICKET_DISPOSITION_OPTIONS = 'fetch_ticket_disposition_options'
+    FETCH_TICKET_DISPOSITION_OPTIONS = 'fetch_ticket_disposition_options',
+    FETCH_CALLS_BY_TICKETID = 'fetch_calls_by_ticket_id'
 }
 
 export enum TicketsQueryKey {
@@ -37,5 +38,6 @@ export enum TicketsQueryKey {
     FETCH_ALL_WHATSAPP_MESSAGES = 'FETCH_ALL_WHATSAPP_MESSAGES',
     SEND_WHATSAPP_MESSAGES = 'SEND_WHATSAPP_MESSAGES',
     UPLOAD_FILE = 'UPLOAD_FILE',
-    FETCH_TICKET_DISPOSITION_OPTIONS = 'FETCH_TICKET_DISPOSITION_OPTIONS'
+    FETCH_TICKET_DISPOSITION_OPTIONS = 'FETCH_TICKET_DISPOSITION_OPTIONS',
+    FETCH_CALLS_BY_TICKETID = 'FETCH_CALLS_BY_TICKETID'
 }
