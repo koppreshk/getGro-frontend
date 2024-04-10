@@ -65,7 +65,7 @@ interface IChatContentProps {
     customerName: string;
 }
 
-export const TicketConversationChatContent = (props: IChatContentProps) => {
+export const WhatsAppChatContent = (props: IChatContentProps) => {
     const { content, agentName, customerName } = props;
     const isCustomerQuery = !content.is_agent_sent;
     const containerRef = React.useRef<HTMLDivElement>(null);
