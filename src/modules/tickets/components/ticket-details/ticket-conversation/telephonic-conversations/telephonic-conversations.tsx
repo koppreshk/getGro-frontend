@@ -2,6 +2,7 @@ import { CallMade, CallMissed, CallReceived } from "@mui/icons-material";
 import { Tooltip, Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux"
 import { capitalizeFirstLetter } from "lib/utils";
+import { Call, ICallsByTicketId } from "modules/tickets/apis";
 import styled, { useTheme } from "styled-components"
 
 const CardWrapper = styled(FlexBox)`
@@ -18,33 +19,6 @@ const IconWrapper = styled(FlexBox) <{ $callStatus: string }>`
   width: 50px;
   background-color: ${({ $callStatus }) => $callStatus === 'incoming' || $callStatus === 'outgoing' ? '#D4EDDA' : $callStatus === 'missed' ? '#F8D7DA' : '#ffff'};
 `;
-
-const telephonincArray = [
-    {
-        name: 'Jon Snow',
-        phoneNumber: '+91 8197004599',
-        callDuration: '0 mins 33 secs',
-        callTo: '+123 1800022111',
-        callStatus: 'incoming',
-        date: '11 Dec 2023, 12:20 pm'
-    },
-    {
-        name: 'Cersie Lannister',
-        phoneNumber: '+91 8197002399',
-        callDuration: '10 mins 33 secs',
-        callTo: '+123 1800022111',
-        callStatus: 'outgoing',
-        date: '11 Dec 2023, 12:20 pm'
-    },
-    {
-        name: 'Arya Stark',
-        phoneNumber: '+91 8197664019',
-        callDuration: '1 mins 33 secs',
-        callTo: '+123 1800022111',
-        callStatus: 'missed',
-        date: '11 Dec 2023, 12:20 pm'
-    },
-];
 
 const CallStatusIcon = (callStatus: string) => {
     if (callStatus === 'incoming') {
@@ -63,47 +37,36 @@ const CallStatusIcon = (callStatus: string) => {
     }
 }
 
-interface ITelephonicConversationCardProps {
-    data: {
-        name: string;
-        phoneNumber: string;
-        callDuration: string;
-        callTo: string;
-        callStatus: string;
-        date: string;
-    }
-}
-
-const TelephonicConversationCard = (props: ITelephonicConversationCardProps) => {
-    const { data: { callDuration, callStatus, callTo, name, phoneNumber, date } } = props;
+const TelephonicConversationCard = (props: { data: Call }) => {
+    const { agent_name, date, direction, duration, from, to, url } = props.data;
     const { pallete } = useTheme();
 
     return (
         <CardWrapper gap="10px">
             <FlexBox justifyContent="center" alignItems="center" width="10%">
-                <Tooltip title={`${callStatus} call`} arrow placement="bottom">
-                    <IconWrapper justifyContent="center" alignItems="center" $callStatus={callStatus}>
-                        {CallStatusIcon(callStatus)}
+                <Tooltip title={`${direction} call`} arrow placement="bottom">
+                    <IconWrapper justifyContent="center" alignItems="center" $callStatus={direction}>
+                        {CallStatusIcon(direction)}
                     </IconWrapper>
                 </Tooltip>
             </FlexBox>
             <FlexBox flexDirection="column" gap="5px" width="88%">
                 <FlexBox flexDirection="row" justifyContent="space-between" alignItems="baseline">
-                    <Typography variant="h6">{name}</Typography>
+                    <Typography variant="h6">{agent_name}</Typography>
                     <Typography variant="body2">{date}</Typography>
                 </FlexBox>
                 <FlexBox flexDirection="column">
-                    <Typography variant="subtitle1" color={pallete.green}>{phoneNumber}</Typography>
+                    <Typography variant="subtitle1" color={pallete.green}>{from}</Typography>
                     <FlexBox flexDirection="row" justifyContent="space-between">
                         <FlexBox gap="8px">
-                            <Typography variant="body2">{capitalizeFirstLetter(callStatus)} call,</Typography>
-                            <Typography variant="body2">{callDuration}</Typography>
+                            <Typography variant="body2">{capitalizeFirstLetter(direction)} call,</Typography>
+                            <Typography variant="body2">{duration}</Typography>
                         </FlexBox>
-                        <Typography variant="body2">Call To: {callTo}</Typography>
+                        <Typography variant="body2">Call To: {to}</Typography>
                     </FlexBox>
                 </FlexBox>
                 <audio controls>
-                    <source src="https://file-examples.com/storage/fe8119f4e865f33329898be/2017/11/file_example_MP3_700KB.mp3" type="audio/mpeg" />
+                    <source src={url} type="audio/mpeg" />
                     Your browser does not support the audio element.
                 </audio>
             </FlexBox>
@@ -111,10 +74,11 @@ const TelephonicConversationCard = (props: ITelephonicConversationCardProps) => 
     )
 };
 
-export const TelephonicConversationsLayout = () => {
+export const TelephonicConversationsLayout = (props: { data: ICallsByTicketId }) => {
+    const { data } = props;
     return (
         <>
-            {telephonincArray.map((data, index) => <TelephonicConversationCard data={data} key={index} />)}
+            {data.calls.map((data, index) => <TelephonicConversationCard data={data} key={index} />)}
         </>
     )
 }
