@@ -16,3 +16,4 @@ export * from './get-employees-by-queue-container';
 export * from './whatsapp-conversations-container';
 export * from './instagram-conversations-container';
 export * from './facebook-conversation-container';
+export * from './telephonic-conversations-container';

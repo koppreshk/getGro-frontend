@@ -32,6 +32,9 @@ export const EmailConversationLayout = (props: { conversationsData: ITicketById,
             //TODO: need to use this info obj which contains id and has to be consumed
             fetchNewThreads();
         })
+        return () => {
+            socket.off('production_email_channel')
+        }
     }, [casedConversation, casedConversation.length, emailThreads.length, fetchNewThreads, socket]);
 
     const onPrintHandler = () => {

@@ -2,11 +2,11 @@ import React from "react";
 import { FlexBox } from "lib/ui-ux"
 import styled from "styled-components"
 import { TicketConversationHeader } from "./ticket-conversation-header";
-import { TelephonicConversationsLayout } from "./telephonic-conversations/telephonic-conversations";
 import { useAppSelector } from "lib/hooks";
 import {
     FacebookConversationsContainer,
     InstagramConversationsContainer,
+    TelephonicConversationContainer,
     TicketConversationContainer,
     WhatsAppConversationContainer
 } from "modules/tickets/containers";
@@ -27,7 +27,7 @@ export const TicketConversationLayout = () => {
             case 'email':
                 return <TicketConversationContainer />
             case 'telephonic':
-                return <TelephonicConversationsLayout />
+                return <TelephonicConversationContainer />
             case 'whatsapp':
                 return <WhatsAppConversationContainer />
             case 'instagram':

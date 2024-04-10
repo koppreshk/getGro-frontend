@@ -2,16 +2,16 @@ import React, { useCallback } from "react";
 import { FlexBox, IFileInfo, TextArea, parseFileInfo } from "lib/ui-ux";
 import { Send } from "@mui/icons-material";
 import { KeyCodes } from "lib/enums";
-import { RoundedSendButton } from "./email-conversations/email-editor";
+import { RoundedSendButton } from "../email-conversations/email-editor";
 import { FormProvider, useForm } from "react-hook-form";
 import styled from "styled-components";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
 import { useUploadFile } from "modules/tickets/apis";
 import { useNotifications } from "lib";
-import { NativeFileUpload } from "../../../../../lib/ui-ux/file-upload/native-file-upload-field";
+import { NativeFileUpload } from "../../../../../../lib/ui-ux/file-upload/native-file-upload-field";
 import { getAllFilesInfo } from "lib/ui-ux/file-upload/utils";
 
-interface ITicketConversationFooterProps {
+interface IWhatsappFooterProps {
     onSendAction: (newConversation: {
         message: string;
         fileUrl?: string;
@@ -39,7 +39,7 @@ interface IFileInfoState {
     original: File[];
     parsedFile: IFileInfo[]
 }
-export const TicketConversationFooter = (props: ITicketConversationFooterProps) => {
+export const WhatsappFooter = (props: IWhatsappFooterProps) => {
     const { onSendAction } = props;
     const [textareaValue, setTextAreaValue] = React.useState('');
     const [filePreviewDisplay, setFilePreviewDisplay] = React.useState(false);
@@ -101,7 +101,7 @@ export const TicketConversationFooter = (props: ITicketConversationFooterProps) 
 }
 
 
-const UploadedFilePreview = (props: { toggleFileDisplay: () => void, filePreviewDisplay: boolean; fileInfo: IFileInfoState } & ITicketConversationFooterProps) => {
+const UploadedFilePreview = (props: { toggleFileDisplay: () => void, filePreviewDisplay: boolean; fileInfo: IFileInfoState } & IWhatsappFooterProps) => {
     const { filePreviewDisplay, fileInfo, toggleFileDisplay, onSendAction } = props;
     const [textareaValue, setTextAreaValue] = React.useState('');
     const { mutateAsync } = useUploadFile();
