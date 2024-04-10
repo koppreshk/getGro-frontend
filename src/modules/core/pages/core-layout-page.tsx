@@ -7,7 +7,7 @@ import { Routes, Route, useNavigate, useLocation, Outlet, Navigate } from "react
 import { ProtectedRoute } from "modules/login/protected-route"
 import { useAuth } from "modules/login"
 import { commonStyles } from "lib/ui-ux/common-styles";
-import { IncomingCall, IncomingCallMain } from "modules/tickets/components/ticket-details/ticket-conversation/telephonic-conversations"
+import { IncomingCallMain } from "modules/tickets/components/ticket-details/ticket-conversation/telephonic-conversations"
 import LoginPage from '../../login/login';
 
 const DashboardPage = lazy(() => import('../../dashboard/pages/dashboard-page'));
@@ -31,7 +31,6 @@ const HomePage = React.memo(() => {
                         <Outlet />
                     </Suspense>
                 </div>
-                <IncomingCall />
                 <IncomingCallMain />
             </PageContainer>
         </>

@@ -1,6 +1,7 @@
 
 import { AppsRounded, Mic, Phone, PhonePaused, RadioButtonChecked } from "@mui/icons-material";
 import { Avatar, Button, Tooltip, Typography } from "@mui/material";
+import { useSocket } from "lib/providers/socket";
 import { FlexBox } from "lib/ui-ux";
 import React from "react";
 import { useState } from "react";
@@ -9,18 +10,11 @@ import styled, { css, useTheme } from "styled-components"
 
 const Card = styled(FlexBox)`
     position: fixed;
-    left: 40%;
+    left: 5%;
     padding: 20px;
     width: 300px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     bottom: 10px;
-
-    /* backdrop-filter: blur(10px) saturate(180%);
-    -webkit-backdrop-filter: blur(10px) saturate(180%);
-    background-color: rgba(163, 163, 163, 0.6);
-    border-radius: 12px;
-    border: 1px solid rgba(209, 213, 219, 0.3); */
-
     backdrop-filter: blur(10px) saturate(170%);
     -webkit-backdrop-filter: blur(10px) saturate(170%);
     background-color: rgba(0, 0, 0, 0.73);
@@ -48,24 +42,6 @@ const IncomingCallHeader = styled(FlexBox)`
 const IncomingCallFooter = styled(FlexBox)`
     
 `;
-
-// const IconWrapper = styled(FlexBox)`
-//     ${({ $isOptionsSelected }) => $isOptionsSelected ? css`
-//         background-color: ${({ theme }) => theme.pallete.purpleLight};
-//         color: ${({ theme }) => theme.pallete.primaryPurple};
-//     `: css`
-//         background-color: unset;
-//         color: ${({ theme }) => theme.pallete.grayNeutral};
-//         &:hover {
-//             background-color: ${({ theme }) => theme.others.sideMenuHoverColor};
-//         }
-//     `};
-//     height: 40px;
-//     width: 40px;
-//     border-radius: 6px;
-//     cursor: pointer;
-//     position: relative;
-// `;
 
 const IconWrapper = styled(FlexBox) <{ $buttonType: string }>`
     ${({ $buttonType }) =>
@@ -103,21 +79,34 @@ const IconWrapper = styled(FlexBox) <{ $buttonType: string }>`
     position: relative;
 `;
 
+interface IIncomingCall {
+    call_from: string;
+    call_to: string;
+    direction: string;
+    current_time: string;
+    dial_whom_number: string;
+    status: string;
+    event_type: string;
+    agent_email: string;
+}
 
-const CardComponent = (props: {onClose: () => void}) => {
+interface IIncomingCallCardComponent {
+    OnClickEndCall: () => void;
+    callData: IIncomingCall | undefined
+}
+
+const CardComponent = (props: IIncomingCallCardComponent) => {
+    const { OnClickEndCall, callData } = props;
     const { pallete } = useTheme();
     const [isCallAnswered, setIsCallAnswered] = React.useState(false);
 
     return (
         <Card flexDirection="column" gap="16px">
-            {/* <button onClick={props.onClose}>
-                Dismiss
-            </button> */}
 
             <IncomingCallHeader flexDirection='row' gap="12px" alignItems="center">
                 <Avatar sx={{ color: '#ffff', bgcolor: '#a7a7a7', width: 56, height: 56 }}>MO</Avatar>
                 <FlexBox flexDirection="column">
-                    <Typography variant="body1" color={pallete.white} sx={{fontSize: '18px'}}>+91 8197004599</Typography>
+                    <Typography variant="body1" color={pallete.white} sx={{ fontSize: '18px' }}>{callData?.call_from}</Typography>
                     <Typography variant="h6" color={pallete.white}>Michelle O'Connor</Typography>
                     {isCallAnswered ?
                         <Typography variant="subheading2" color={pallete.grayVariant4}>Call in progress 00:30</Typography>
@@ -137,7 +126,6 @@ const CardComponent = (props: {onClose: () => void}) => {
                     </Tooltip>
 
                     <FlexBox flexDirection="row" gap="9px">
-
                         <Tooltip title="Call recording in progress" arrow placement="bottom">
                             <IconWrapper alignItems="center" justifyContent="center" $buttonType="recording">
                                 <RadioButtonChecked />
@@ -154,12 +142,10 @@ const CardComponent = (props: {onClose: () => void}) => {
                                 <PhonePaused />
                             </IconWrapper>
                         </Tooltip>
-
-
                     </FlexBox>
 
                     <Tooltip title="End Call" arrow placement="bottom">
-                        <IconWrapper alignItems="center" justifyContent="center" $buttonType="phone" onClick={props.onClose}>
+                        <IconWrapper alignItems="center" justifyContent="center" $buttonType="phone" onClick={OnClickEndCall}>
                             <Phone sx={{ transform: 'rotate(135deg)' }} />
                         </IconWrapper>
                     </Tooltip>
@@ -167,7 +153,7 @@ const CardComponent = (props: {onClose: () => void}) => {
                 </IncomingCallFooter>
                 :
                 <IncomingCallFooter flexDirection="row" gap="10px">
-                    <Button variant="contained" color="error" fullWidth startIcon={<Phone sx={{ transform: 'rotate(135deg)' }} />} onClick={props.onClose}>
+                    <Button variant="contained" color="error" fullWidth startIcon={<Phone sx={{ transform: 'rotate(135deg)' }} />} onClick={OnClickEndCall}>
                         Reject
                     </Button>
                     <Button variant="contained" color="success" fullWidth startIcon={<Phone />} onClick={() => setIsCallAnswered(true)}>
@@ -181,15 +167,34 @@ const CardComponent = (props: {onClose: () => void}) => {
 
 
 export const IncomingCallMain = () => {
-    const [showCard, setShowCard] = useState(true);
+    const { socket } = useSocket();
+    const [showIncomingCallDialog, setDialogDisplay] = useState(true);
+    const [callData, setCallData] = useState<IIncomingCall | undefined>();
+    // const { user } = useAuth();
 
-    const toggleCard = () => {
-        setShowCard(!showCard);
+    React.useEffect(() => {
+        socket.on('production_incoming_call', (info: string) => {
+            const parsedInfo = JSON.parse(info) as IIncomingCall;
+            if (parsedInfo.event_type === 'Dial') {
+                setDialogDisplay(true);
+                setCallData(parsedInfo);
+            } else if (parsedInfo.event_type === 'Terminal') {
+                setDialogDisplay(false);
+                setCallData(undefined);
+            }
+        })
+        return () => {
+            socket.off('production_incoming_call')
+        }
+    }, [socket]);
+
+    const OnClickEndCall = () => {
+        setDialogDisplay(!showIncomingCallDialog);
     };
+
     return (
         <>
-            {showCard && <CardComponent onClose={toggleCard} />}
-            <button onClick={toggleCard}>Show Card</button>
+            {showIncomingCallDialog && <CardComponent OnClickEndCall={OnClickEndCall} callData={callData} />}
         </>
     )
 }
