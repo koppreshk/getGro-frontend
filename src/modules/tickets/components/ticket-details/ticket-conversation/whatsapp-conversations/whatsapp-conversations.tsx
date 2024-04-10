@@ -1,10 +1,10 @@
 import React, { useMemo } from "react";
 import styled from "styled-components";
 import { FlexBox } from "lib/ui-ux";
-import { TicketConversationFooter } from "./ticket-conversation-footer";
-import { TicketConversationChatContent } from "./ticket-conversation-chat-content";
+import { WhatsappFooter } from "./whatsapp-footer";
+import { WhatsAppChatContent } from "./whatsapp-chat-content";
 import { Conversation, IWhatsAppMessages, useSendWhatsAppMessages } from "modules/tickets/apis";
-import { Container } from ".";
+import { Container } from "..";
 import { Typography } from "@mui/material";
 import { isToday, isYesterday } from "lib/utils";
 
@@ -20,7 +20,7 @@ const DateText = styled(Typography)`
     width: fit-content;
 `;
 
-export const TicketConversation = (props: { data: IWhatsAppMessages }) => {
+export const WhatsAppConversations = (props: { data: IWhatsAppMessages }) => {
     const { data } = props;
     const [chatData, setChatData] = React.useState(data.conversations);
     const { mutateAsync } = useSendWhatsAppMessages();
@@ -71,7 +71,7 @@ export const TicketConversation = (props: { data: IWhatsAppMessages }) => {
                                     <FlexBox justifyContent="center">
                                         <DateText variant="subheading2">{isToday(date) ? 'Today' : isYesterday(date) ? 'Yesterday' : date}</DateText>
                                     </FlexBox>
-                                    {groupedBydateData[date]?.map((item, index) => <TicketConversationChatContent key={index} content={item} agentName={data.agent_name} customerName={data.customer_name} />)}
+                                    {groupedBydateData[date]?.map((item, index) => <WhatsAppChatContent key={index} content={item} agentName={data.agent_name} customerName={data.customer_name} />)}
                                 </React.Fragment>
                             )
                         }
@@ -79,7 +79,7 @@ export const TicketConversation = (props: { data: IWhatsAppMessages }) => {
                     }
                 </FlexBox>
             </Container>
-            <TicketConversationFooter onSendAction={onSendAction} />
+            <WhatsappFooter onSendAction={onSendAction} />
         </ConversationWrapper>
     );
 }

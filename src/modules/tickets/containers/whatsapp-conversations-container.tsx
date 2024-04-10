@@ -1,9 +1,9 @@
 import React from "react";
 import { ChatConversationLoader } from "lib/ui-ux/loader-components";
 import { useFetchWhatsAppMessages } from "../apis";
-import { TicketConversation } from "../components/ticket-details/ticket-conversation/ticket-conversation";
 import { FlexBox } from "lib/ui-ux";
 import { useSocket } from "lib/providers/socket";
+import { WhatsAppConversations } from "../components/ticket-details/ticket-conversation/whatsapp-conversations";
 
 export const WhatsAppConversationContainer = () => {
     const { isLoading, data, refetch } = useFetchWhatsAppMessages();
@@ -30,7 +30,7 @@ export const WhatsAppConversationContainer = () => {
 
     return (
         <>
-            <TicketConversation data={data!} />
+            <WhatsAppConversations data={data!} />
         </>
     )
 }
