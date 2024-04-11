@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { Facebook } from '@mui/icons-material';
 import styled from 'styled-components';
 import { FlexBox } from 'lib/ui-ux';
+import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 
 interface FacebookResponse {
     name: string;
+    email: string;
     picture: Picture;
     id: string;
     userID: string;
@@ -44,6 +46,13 @@ const StyledButton = styled(Button)`
     }
 `;
 
+const StyledContainer = styled(FlexBox)`
+    width: fit-content;
+    background: ${({ theme }) => theme.pallete.grayVariant5};
+    padding: 18px;
+    border-radius: 6px;
+`;
+
 // const hardcodedData = {
 //     "name": "Nav Inten",
 //     "email": "intentnavigator@gmail.com",
@@ -75,6 +84,10 @@ export const FacebookConfigurations = () => {
         setFacebookResponse(response);
     }
 
+    const onCopy = () => {
+        navigator.clipboard.writeText(JSON.stringify(facebookResponse!, null, 2));
+    }
+
     return (
         <Conatainer>
             {facebookResponse === null
@@ -89,10 +102,32 @@ export const FacebookConfigurations = () => {
                     callback={responseFacebook} />
                 :
                 <FlexBox flexDirection='column' gap="10px">
-                    <pre>
-                        {JSON.stringify(facebookResponse, null, 2)}
-                    </pre>
-                    <Button variant='contained' sx={{ width: 'fit-content' }} onClick={() => setFacebookResponse(null)}>Logout</Button>
+                    <img src={facebookResponse.picture.data.url} height={facebookResponse.picture.data.height} width={facebookResponse.picture.data.width} />
+                    <StyledContainer flexDirection='column' gap="8px">
+                        <Typography variant='h5' textAlign="center" color="green">Connected to facebook</Typography>
+                        <FlexBox gap="8px" alignItems='center'>
+                            <Typography variant='h6'>Name: </Typography>
+                            <Typography variant='body2'>{facebookResponse.name}</Typography>
+                        </FlexBox>
+                        <FlexBox gap="8px" alignItems='center'>
+                            <Typography variant='h6'>Email: </Typography>
+                            <Typography variant='body2'>{facebookResponse.email}</Typography>
+                        </FlexBox>
+                        <FlexBox gap="8px" alignItems='center'>
+                            <Typography variant='h6'>UserId: </Typography>
+                            <Typography variant='body2'>{facebookResponse.userID}</Typography>
+                        </FlexBox>
+                    </StyledContainer>
+                    <FlexBox gap="10px">
+                        <Button variant='contained' sx={{ width: 'fit-content' }} onClick={() => setFacebookResponse(null)}>Logout</Button>
+                        <Button
+                            variant='outlined'
+                            sx={{ width: 'fit-content' }}
+                            startIcon={<AssignmentOutlinedIcon />}
+                            onClick={onCopy}>
+                            Copy metadata to clipboard
+                        </Button >
+                    </FlexBox>
                 </FlexBox>}
         </Conatainer>
     )
