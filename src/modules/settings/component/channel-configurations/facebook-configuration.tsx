@@ -5,6 +5,7 @@ import { Facebook } from '@mui/icons-material';
 import styled from 'styled-components';
 import { FlexBox } from 'lib/ui-ux';
 import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
+import { useNotifications } from 'lib';
 
 interface FacebookResponse {
     name: string;
@@ -75,6 +76,7 @@ const StyledContainer = styled(FlexBox)`
 
 export const FacebookConfigurations = () => {
     const [facebookResponse, setFacebookResponse] = useState<null | FacebookResponse>(null);
+    const { showNotification } = useNotifications();
 
     const responseFacebook = (response: FacebookResponse) => {
         if (response?.status === 'unknown') {
@@ -85,7 +87,9 @@ export const FacebookConfigurations = () => {
     }
 
     const onCopy = () => {
-        navigator.clipboard.writeText(JSON.stringify(facebookResponse!, null, 2));
+        navigator.clipboard.writeText(JSON.stringify(facebookResponse!, null, 2))
+            .then(() => showNotification({ message: 'Copied to clipboard', type: 'success' }))
+            .catch(() => showNotification({ message: 'Failed to copy', type: 'error' }));
     }
 
     return (
