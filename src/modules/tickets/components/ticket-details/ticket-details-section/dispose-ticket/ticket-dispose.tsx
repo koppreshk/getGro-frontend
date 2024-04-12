@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Button } from "@mui/material";
 import { ArchiveOutlined } from "@mui/icons-material";
@@ -34,29 +34,6 @@ const StyledButton = styled(Button)`
     }
 `;
 
-type FolderStates = {
-    parentFolder: string;
-    childFolder: string
-}
-
-// eslint-disable-next-line react-refresh/only-export-components
-export const useFolderReducer = () => {
-    const { source } = useAppSelector(state => state?.tickets?.ticketDetails)!;
-    const reducer = (state: FolderStates, action: { type: 'parent-folder' | 'child-folder' | 'clear-folders', payload?: FolderStates }) => {
-        switch (action.type) {
-            case 'parent-folder':
-                return { ...state, parentFolder: action.payload!.parentFolder };
-            case 'child-folder':
-                return { ...state, childFolder: action.payload!.childFolder };
-            case 'clear-folders':
-                return { parentFolder: '', childFolder: '' }
-            default: return state;
-        }
-    }
-
-    return useReducer(reducer, { parentFolder: source, childFolder: '' })
-}
-
 export const TicketDispose = () => {
     const ticketDetails = useAppSelector(state => state.tickets.ticketDetails);
     const doesRequiredMedadataExist = ticketDetails !== undefined;
@@ -82,7 +59,7 @@ export const TicketDispose = () => {
                 width="420px"
                 anchor="right"
                 open={openTicketDisposeDrawer}
-                onRenderContent={() => <TicketDisposeContainer onToggleTicketDispose={onToggleTicketDispose}/>}
+                onRenderContent={() => <TicketDisposeContainer onToggleTicketDispose={onToggleTicketDispose} />}
                 onClose={onToggleTicketDispose}>
             </DrawerExtended>
         </>

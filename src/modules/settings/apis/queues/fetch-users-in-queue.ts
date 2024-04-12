@@ -10,10 +10,9 @@ export interface IQueueUsers {
 }
 
 export const useFetchUsersInQueue = (queueId: string) => {
-
     const { getData } = useServiceClient();
 
-    const fetchTicketMetadata = React.useCallback(() => getData(`${ConfigurationsEndPoint.FETCH_USERS_IN_QUEUE}?queue_id=${queueId}`).then((res) => res.json()), [getData])
+    const fetchTicketMetadata = React.useCallback(() => getData(`${ConfigurationsEndPoint.FETCH_USERS_IN_QUEUE}?queue_id=${queueId}`).then((res) => res.json()), [getData, queueId])
 
     return useQuery<IQueueUsers[]>({
         queryFn: fetchTicketMetadata,
