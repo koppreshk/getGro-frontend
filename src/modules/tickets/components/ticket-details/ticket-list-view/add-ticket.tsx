@@ -20,7 +20,10 @@ export const AddTicket = (props: IAddTicketProps) => {
     const formMethods = useForm<IAddTIcketFormFields>({
         defaultValues: {
             priority: 'low',
-            title: ''
+            title: '',
+            channel: '1',
+            queueId: '',
+            tag: []
         }
     });
 
