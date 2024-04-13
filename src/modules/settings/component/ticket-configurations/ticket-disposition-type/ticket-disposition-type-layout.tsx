@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Add } from "@mui/icons-material"
 import { Button, Typography } from "@mui/material"
-import { CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-ux"
+import { BreadCrumbs, CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-ux"
 import { CreateTicketDispositionTypeContainer } from "modules/settings/containers";
 import { DispositionTypeList } from "./dispositon-type-list";
 import { IDispositionTypes } from "modules/settings/apis/disposition-types";
@@ -37,11 +37,12 @@ export const TicketDispositionTypeLayout = (props: ITicketDispositionTypeLayoutP
     const navigate = useNavigate();
 
     const toggleAddDispositionTypeDrawer = useCallback(() => {
-        setOpenAddDispositionTypeDrawer((prevValue) => !prevValue)
+        setOpenAddDispositionTypeDrawer((prevValue) => !prevValue);
     }, []);
 
     return (
         <FlexBox width="100%" flexDirection="column">
+            <BreadCrumbs/>
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
                     <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBackIcon />} tooltipProps={{ title: 'Back' }} />

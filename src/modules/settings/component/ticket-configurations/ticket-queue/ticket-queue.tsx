@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Add } from "@mui/icons-material"
 import { Button, Typography } from "@mui/material"
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-ux"
+import { BreadCrumbs, CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-ux"
 import { ITicketQueues } from "modules/settings/apis/queues"
 import { CreateTicketQueueContainer } from "modules/settings/containers"
 import { TicketQueueList } from "./ticket-queue-list"
@@ -45,6 +45,7 @@ export const TicketQueue = (props: ITicketQueueProps) => {
 
     return (
         <FlexBox width="100%" flexDirection="column">
+            <BreadCrumbs />
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
                     <CustomIconButton onClick={() => navigate('/configurations')} iconComponent={<ArrowBackIcon />} tooltipProps={{ title: 'Back' }} />

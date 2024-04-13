@@ -1,6 +1,6 @@
 import { ArrowBack } from '@mui/icons-material';
 import { Box, Tab, Tabs, Typography } from "@mui/material";
-import { FlexBox, CustomIconButton } from 'lib/ui-ux';
+import { FlexBox, CustomIconButton, BreadCrumbs } from 'lib/ui-ux';
 import { IChannels } from 'modules/settings/apis/tags';
 import { TicketTagsContainer } from 'modules/settings/containers';
 import { useSourceIcon } from 'modules/tickets/components';
@@ -19,6 +19,7 @@ export const TagsChannelLayout = (props: { channels: IChannels[] }) => {
 
     return (
         <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
+            <BreadCrumbs />
             <FlexBox alignItems="center" gap="10px" padding='10px'>
                 <CustomIconButton onClick={() => navigate('/configurations')} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
                 <Typography variant="h5">Ticket Tags</Typography>
