@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Add } from "@mui/icons-material"
 import { Button, Typography } from "@mui/material"
-import { CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-ux"
+import { BreadCrumbs, CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-ux"
 import { CreateTicketEscalationContainer } from "modules/settings/containers";
 import { EscalationConditions } from "modules/settings/apis/escalations";
 import TicketEscalationList from "./ticket-escalation-list";
@@ -51,6 +51,7 @@ export const TicketEscalationLayout = (props: ITicketEscalaltionLayoutProps) => 
 
     return (
         <FlexBox width="100%" flexDirection="column">
+            <BreadCrumbs />
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
                     <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBackIcon />} tooltipProps={{ title: 'Back' }} />
