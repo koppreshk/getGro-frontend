@@ -3,7 +3,7 @@ import { AddTicketForm } from "../components/ticket-details/ticket-list-view/add
 import { useFetchAllChannels } from "modules/settings/apis/tags";
 import { useFetchAllTicketQueues } from "modules/settings/apis";
 
-export const AddTicketContainer = () => {
+export const AddTicketContainer = (props: { toggleAddTicketDrawer: () => void }) => {
     const { data, isLoading } = useFetchAllChannels();
     const { data: queueData, isLoading: queueDataLoading, error } = useFetchAllTicketQueues();
 
@@ -15,7 +15,7 @@ export const AddTicketContainer = () => {
 
     if (data && queueData) {
         return (
-            <AddTicketForm queueData={queueData?.queues} channelData={data} />
+            <AddTicketForm queueData={queueData?.queues} channelData={data} toggleAddTicketDrawer={props.toggleAddTicketDrawer} />
         )
     }
 
