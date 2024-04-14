@@ -20,9 +20,7 @@ export const useCreateManualTicket = () => {
     const queryKey = useGetQueryEndPoint();
 
     const createManualTicket = useCallback((args: ICreateManualTicketArgs) =>
-        postData(`${TicketsEndPoint.CREATE_MANUAL_TICKET}`, {
-            body: args
-        }).then((res) => res.json()), [postData]);
+        postData(`${TicketsEndPoint.CREATE_MANUAL_TICKET}`, args).then((res) => res.json()), [postData]);
 
     return useMutation({
         mutationKey: [TicketsQueryKey.CREATE_MANUAL_TICKET],
