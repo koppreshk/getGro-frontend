@@ -7,23 +7,45 @@ import { GetEmployeesByQueueContainer } from "modules/tickets/containers";
 import { Queue } from "modules/settings/apis";
 import { IAddTIcketFormFields } from "./add-ticket";
 import { useSourceIcon } from "../../display-tickets-grid";
+import { useCreateManualTicket } from "modules/tickets/apis";
+import { useNotifications } from "lib";
 
 interface IAddTicketFormProps {
     queueData: Queue[];
     channelData: IChannels[];
+    toggleAddTicketDrawer: () => void;
 }
 
+const priorities = [{ key: '1', value: 'Low' }, { key: '2', value: 'Medium' }, { key: '4', value: 'High' }, { key: '3', value: 'Critical' }];
+
 export const AddTicketForm = (props: IAddTicketFormProps) => {
-    const { queueData, channelData } = props;
+    const { queueData, channelData, toggleAddTicketDrawer } = props;
     const getSourceIcon = useSourceIcon();
-    const { watch } = useFormContext<IAddTIcketFormFields>();
+    const { watch, handleSubmit } = useFormContext<IAddTIcketFormFields>();
+    const { mutateAsync } = useCreateManualTicket();
+    const { showNotification } = useNotifications();
+
+    const onSubmit = (formData: IAddTIcketFormFields) => {
+        mutateAsync({
+            channel_id: formData.channel,
+            employee_id: formData.employeeId,
+            priority_id: formData.priority,
+            queue_id: formData.queueId,
+            remarks: formData.remarks,
+            tag_id: formData.tag.map((item) => (item.key)),
+            title: formData.title
+        })
+            .then(() => showNotification({ message: 'Created a new ticket successfully', type: 'success' }))
+            .catch(() => showNotification({ message: 'Failed to create a new ticket', type: 'error' }))
+            .finally(() => toggleAddTicketDrawer())
+    }
 
     return (
         <FlexBox flexDirection="column" width="100%" padding="20px" justifyContent="space-between" height="calc(100% - 77px)">
             <FlexBox gap="15px" flexDirection="column" overflowY="auto" maxHeight="calc(100% - 45px)">
                 <FlexBox width="100%" gap="10px">
                     <TextboxField name="title" label="Title" sx={{ width: 'calc(50% - 10px)' }} />
-                    <SelectField name="priority" label="Priority" sx={{ width: '50%' }} menuOptions={[{ key: 'low', value: 'Low' }, { key: 'medium', value: 'Medium' }, { key: 'high', value: 'High' }]} />
+                    <SelectField name="priority" label="Priority" sx={{ width: '50%' }} menuOptions={priorities} />
                 </FlexBox>
                 <TextboxField
                     name="remarks" label="Remarks"
@@ -53,7 +75,7 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
                 </Grid>
                 {watch('queueId') ? <GetEmployeesByQueueContainer queueId={watch('queueId')!.toString()} /> : null}
             </FlexBox>
-            <Button variant="contained">Submit</Button>
+            <Button variant="contained" onClick={handleSubmit(onSubmit)}>Submit</Button>
         </FlexBox>
     )
 }

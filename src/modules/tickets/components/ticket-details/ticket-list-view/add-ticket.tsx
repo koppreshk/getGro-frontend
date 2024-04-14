@@ -12,6 +12,8 @@ export interface IAddTIcketFormFields {
     priority: string;
     channel: string,
     queueId: string;
+    remarks: string;
+    employeeId: string;
     tag: { key: string, value: string }[],
 }
 
@@ -19,7 +21,7 @@ export const AddTicket = (props: IAddTicketProps) => {
     const { openAddTicketDrawer, toggleAddTicketDrawer } = props;
     const formMethods = useForm<IAddTIcketFormFields>({
         defaultValues: {
-            priority: 'low',
+            priority: '1',
             title: '',
             channel: '1',
             queueId: '',
@@ -34,7 +36,7 @@ export const AddTicket = (props: IAddTicketProps) => {
             open={openAddTicketDrawer}
             onRenderContent={() => (
                 <FormProvider {...formMethods}>
-                    <AddTicketContainer />
+                    <AddTicketContainer toggleAddTicketDrawer={toggleAddTicketDrawer} />
                 </FormProvider>
             )}
             onClose={toggleAddTicketDrawer} />
