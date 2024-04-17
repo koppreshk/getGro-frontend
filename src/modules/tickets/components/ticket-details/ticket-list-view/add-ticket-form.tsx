@@ -7,19 +7,18 @@ import { GetEmployeesByQueueContainer } from "modules/tickets/containers";
 import { Queue } from "modules/settings/apis";
 import { IAddTIcketFormFields } from "./add-ticket";
 import { useSourceIcon } from "../../display-tickets-grid";
-import { useCreateManualTicket } from "modules/tickets/apis";
+import { IPriorities, useCreateManualTicket } from "modules/tickets/apis";
 import { useNotifications } from "lib";
 
 interface IAddTicketFormProps {
     queueData: Queue[];
+    priorities: IPriorities[]
     channelData: IChannels[];
     toggleAddTicketDrawer: () => void;
 }
 
-const priorities = [{ key: '1', value: 'Low' }, { key: '2', value: 'Medium' }, { key: '4', value: 'High' }, { key: '3', value: 'Critical' }];
-
 export const AddTicketForm = (props: IAddTicketFormProps) => {
-    const { queueData, channelData, toggleAddTicketDrawer } = props;
+    const { queueData, channelData, priorities, toggleAddTicketDrawer } = props;
     const getSourceIcon = useSourceIcon();
     const { watch, handleSubmit } = useFormContext<IAddTIcketFormFields>();
     const { mutateAsync } = useCreateManualTicket();
@@ -45,7 +44,7 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
             <FlexBox gap="15px" flexDirection="column" overflowY="auto" maxHeight="calc(100% - 45px)">
                 <FlexBox width="100%" gap="10px">
                     <TextboxField name="title" label="Title" sx={{ width: 'calc(50% - 10px)' }} />
-                    <SelectField name="priority" label="Priority" sx={{ width: '50%' }} menuOptions={priorities} />
+                    <SelectField name="priority" label="Priority" sx={{ width: '50%' }} menuOptions={priorities.map((item) => ({ key: item.id, value: item.name }))} />
                 </FlexBox>
                 <TextboxField
                     name="remarks" label="Remarks"
