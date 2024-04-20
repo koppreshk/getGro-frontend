@@ -32,17 +32,21 @@
     * {
       margin: 0;
     }
-    div, p {
+
+    div,
+    p {
       font-size: 14px;
     }
   </style>
-
 </head>
 
 <body>
 
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
+  <script>
+    var global = global || window
+  </script>
 </body>
 
 </html>
