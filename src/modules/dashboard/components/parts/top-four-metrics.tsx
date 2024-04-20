@@ -1,7 +1,6 @@
-import { LinearProgress, LinearProgressProps, Typography } from "@mui/material";
+import { LinearProgressProps, Typography } from "@mui/material";
 import { FlexBox, GridLayout } from "lib/ui-ux"
 import { getFormatedNumberByLocale } from "lib/utils";
-import { useMemo } from "react";
 import styled, { useTheme } from "styled-components"
 
 const Metric = styled(FlexBox)`
@@ -16,26 +15,32 @@ const Metric = styled(FlexBox)`
 `;
 
 const data = [{
-    name: 'Tickets resolved out of ' + getFormatedNumberByLocale(124800),
+    name: 'Created TIckets',
     value: 104568,
     total: 124800,
     color: 'success'
 },
 {
-    name: 'Tickets disposed out of ' + getFormatedNumberByLocale(113510),
+    name: 'Pending TIckets',
     value: 55879,
     total: 113510,
     color: 'primary'
 },
 {
-    name: 'Tickets disposed as resolved out of ' + getFormatedNumberByLocale(113510),
+    name: 'Disposed Tickets',
     value: 71565,
     total: 113510,
     color: 'secondary'
 },
 {
-    name: 'Tickets disposed as pending out of ' + getFormatedNumberByLocale(113510),
+    name: 'FCR (First Contact Resolution)',
     value: 19008,
+    total: 113510,
+    color: 'info'
+},
+{
+    name: 'Reopened Tickets',
+    value: 1008,
     total: 113510,
     color: 'info'
 }] as ITopMetricProps[]
@@ -48,7 +53,7 @@ interface ITopMetricProps extends Pick<LinearProgressProps, 'color'> {
 
 export const TopFourMetrics = () => {
     return (
-        <GridLayout $gridGap="20px" $gridTemplateColumns={'repeat(4, 1fr)'}>
+        <GridLayout $gridGap="20px" $gridTemplateColumns={'repeat(5, 1fr)'}>
             {data.map((item, idx) => (
                 <TopMetric item={item} key={idx} />
             ))}
@@ -57,23 +62,23 @@ export const TopFourMetrics = () => {
 }
 
 const TopMetric = (props: { item: ITopMetricProps }) => {
-    const { name, total, value, color } = props.item;
+    const { name, value } = props.item;
     const { pallete } = useTheme();
 
-    const progress = useMemo(() => {
-        return (value / total) * 100;
-    }, [total, value]);
+    // const progress = useMemo(() => {
+    //     return (value / total) * 100;
+    // }, [total, value]);
 
     return (
-        <Metric flexDirection="column" gap="10px">
-            <Typography variant="h3">{getFormatedNumberByLocale(value)}</Typography>
-            <Typography sx={{ color: pallete.grayVariant2 }} variant="subheading2">{name}</Typography>
-            <FlexBox width="100%" gap="10px" alignItems="center">
+        <Metric flexDirection="column" gap="10px" alignItems="center">
+            <Typography variant="h2">{getFormatedNumberByLocale(value)}</Typography>
+            <Typography sx={{ color: pallete.grayNeutral }} variant="subheading1">{name}</Typography>
+            {/* <FlexBox width="100%" gap="10px" alignItems="center">
                 <LinearProgress sx={{ width: 'calc(100% - 38px)' }} color={color} variant="determinate" value={progress} />
                 <Typography variant="body2" color="text.secondary">{`${Math.round(
                     progress,
                 )}%`}</Typography>
-            </FlexBox>
+            </FlexBox> */}
         </Metric>
     )
 }

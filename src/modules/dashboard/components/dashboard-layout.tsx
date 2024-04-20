@@ -8,11 +8,15 @@ import { TicketsBySource } from "./parts/tickets-by-source"
 import { IncomingTickets } from "./parts/incoming-tickets"
 import { Trends } from "./parts/trends"
 import { ToDoList } from "./parts/to-do-list"
+import { DashboardDateRangePicker } from "./parts/dashboard-date-range-picker"
 
 export const DashboardLayout = () => {
     return (
         <FlexBox flexDirection="column" gap="20px" height="100%" padding="0 10px 0px 0px" width="100%" overflowY="auto">
-            <UserDetails />
+            <FlexBox justifyContent="space-between" alignItems="center">
+                <UserDetails />
+                <DashboardDateRangePicker />
+            </FlexBox>
             <TopFourMetrics />
             <GridLayout $gridGap="20px" $gridTemplateColumns={'3.13fr 1fr'}>
                 <Trends />
