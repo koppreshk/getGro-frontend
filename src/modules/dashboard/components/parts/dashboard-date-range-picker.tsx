@@ -1,4 +1,5 @@
 import React from "react";
+import { DateTime } from "luxon";
 import styled from "styled-components";
 import { Popover, Typography } from "@mui/material"
 import { DateRangePicker, DateRange } from "@matharumanpreet00/react-daterange-picker";
@@ -7,18 +8,16 @@ import { FlexBox } from "lib/ui-ux";
 import { getFormattedDate } from "lib/utils";
 
 const DateRangeDisplay = styled(FlexBox)`
-    border: 1px solid ${({ theme }) => theme.pallete.grayVariant4};
-    border-radius: 6px;
+    border-radius: 8px;
     background-color: white;
     padding: 8px;
     height: fit-content;
     cursor: pointer;
-    color: ${({ theme }) => theme.pallete.grayVariant2}
+    color: ${({ theme }) => theme.pallete.grayNeutral} !important
 `;
 
 export const DashboardDateRangePicker = () => {
-    const [dateRange, setDateRange] = React.useState<DateRange>({ startDate: new Date(), endDate: new Date() });
-
+    const [dateRange, setDateRange] = React.useState<DateRange>({ startDate: DateTime.now().minus({ month: 1 }).toJSDate(), endDate: new Date() });
     const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | null>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -35,9 +34,9 @@ export const DashboardDateRangePicker = () => {
     return (
         <>
             <DateRangeDisplay onClick={handleClick} gap="10px">
-                <Typography variant="h6">{getFormattedDate(dateRange.startDate!.toISOString()!, { dateStyle: 'medium' })}</Typography>
-                <Typography variant="h6">-</Typography>
-                <Typography variant="h6">{getFormattedDate(dateRange.endDate!.toISOString(), { dateStyle: 'medium' })}</Typography>
+                <Typography variant="subheading1">
+                    {getFormattedDate(dateRange.startDate!.toISOString()!, { dateStyle: 'medium' })} - {getFormattedDate(dateRange.endDate!.toISOString(), { dateStyle: 'medium' })}
+                </Typography>
                 <KeyboardArrowDownIcon />
             </DateRangeDisplay>
             <Popover
@@ -51,6 +50,7 @@ export const DashboardDateRangePicker = () => {
                 }}>
                 <DateRangePicker
                     open={open}
+                    initialDateRange={dateRange}
                     onChange={range => setDateRange(range)}
                 />
             </Popover>
