@@ -1,6 +1,6 @@
-import { DateTime, Duration } from "luxon";
+import { DateTime, DateTimeFormatOptions, Duration } from "luxon";
 
-export const getFormattedDate = (date: string) => DateTime.fromISO(date).toLocaleString(DateTime.DATETIME_MED);
+export const getFormattedDate = (date: string, formatOpts?: DateTimeFormatOptions) => DateTime.fromISO(date).toLocaleString(formatOpts || DateTime.DATETIME_MED);
 
 export const isToday = (date: string) => {
     return DateTime.fromISO(date).hasSame(DateTime.local(), "day");
