@@ -13,7 +13,12 @@ const DateRangeDisplay = styled(FlexBox)`
     padding: 8px;
     height: fit-content;
     cursor: pointer;
-    color: ${({ theme }) => theme.pallete.grayNeutral} !important
+    color: ${({ theme }) => theme.pallete.grayNeutral} !important;
+`;
+
+const StyledKBArrowIcon = styled(KeyboardArrowDownIcon) <{ $isOpen: boolean }>`
+    transform: ${({ $isOpen }) => $isOpen ? 'rotate(180deg)' : 'unset'};
+    transition: transform 0.3s;
 `;
 
 export const DashboardDateRangePicker = () => {
@@ -28,6 +33,11 @@ export const DashboardDateRangePicker = () => {
         setAnchorEl(null);
     };
 
+    const onDateRangeChange = (range: DateRange) => {
+        setDateRange(range);
+        handleClose();
+    }
+
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
@@ -37,7 +47,7 @@ export const DashboardDateRangePicker = () => {
                 <Typography variant="subheading1">
                     {getFormattedDate(dateRange.startDate!.toISOString()!, { dateStyle: 'medium' })} - {getFormattedDate(dateRange.endDate!.toISOString(), { dateStyle: 'medium' })}
                 </Typography>
-                <KeyboardArrowDownIcon />
+                <StyledKBArrowIcon $isOpen={open} />
             </DateRangeDisplay>
             <Popover
                 id={id}
@@ -51,7 +61,7 @@ export const DashboardDateRangePicker = () => {
                 <DateRangePicker
                     open={open}
                     initialDateRange={dateRange}
-                    onChange={range => setDateRange(range)}
+                    onChange={onDateRangeChange}
                 />
             </Popover>
         </>
