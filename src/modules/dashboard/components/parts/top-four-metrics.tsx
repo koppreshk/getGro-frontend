@@ -1,7 +1,8 @@
+import styled, { useTheme } from "styled-components";
 import { LinearProgressProps, Typography } from "@mui/material";
-import { FlexBox, GridLayout } from "lib/ui-ux"
+import { TrendingUp, TrendingDown } from '@mui/icons-material';
+import { FlexBox, GridLayout } from "lib/ui-ux";
 import { getFormatedNumberByLocale } from "lib/utils";
-import styled, { useTheme } from "styled-components"
 
 const Metric = styled(FlexBox)`
     background-color: ${({ theme }) => theme.pallete.white};
@@ -17,38 +18,38 @@ const Metric = styled(FlexBox)`
 const data = [{
     name: 'Created TIckets',
     value: 104568,
-    total: 124800,
+    trends: { trendType: 'positive', change: '67%' },
     color: 'success'
 },
 {
     name: 'Pending TIckets',
     value: 55879,
-    total: 113510,
+    trends: { trendType: 'negative', change: '48.7%' },
     color: 'primary'
 },
 {
     name: 'Disposed Tickets',
     value: 71565,
-    total: 113510,
+    trends: { trendType: 'positive', change: '45%' },
     color: 'secondary'
 },
 {
     name: 'FCR (First Contact Resolution)',
     value: 19008,
-    total: 113510,
+    trends: { trendType: 'negative', change: '12%' },
     color: 'info'
 },
 {
     name: 'Reopened Tickets',
     value: 1008,
-    total: 113510,
+    trends: { trendType: 'negative', change: '34.6%' },
     color: 'info'
 }] as ITopMetricProps[]
 
 interface ITopMetricProps extends Pick<LinearProgressProps, 'color'> {
     name: string;
     value: number;
-    total: number;
+    trends: { trendType: string, change: string };
 }
 
 export const TopFourMetrics = () => {
@@ -62,23 +63,35 @@ export const TopFourMetrics = () => {
 }
 
 const TopMetric = (props: { item: ITopMetricProps }) => {
-    const { name, value } = props.item;
+    const { name, value, trends } = props.item;
     const { pallete } = useTheme();
-
-    // const progress = useMemo(() => {
-    //     return (value / total) * 100;
-    // }, [total, value]);
 
     return (
         <Metric flexDirection="column" gap="10px" alignItems="center">
-            <Typography variant="h2">{getFormatedNumberByLocale(value)}</Typography>
+            <FlexBox gap="20px" alignItems="center">
+                <Typography variant="h2">{getFormatedNumberByLocale(value)}</Typography>
+                <Trends trends={trends} />
+            </FlexBox>
             <Typography sx={{ color: pallete.grayNeutral }} variant="subheading1">{name}</Typography>
-            {/* <FlexBox width="100%" gap="10px" alignItems="center">
-                <LinearProgress sx={{ width: 'calc(100% - 38px)' }} color={color} variant="determinate" value={progress} />
-                <Typography variant="body2" color="text.secondary">{`${Math.round(
-                    progress,
-                )}%`}</Typography>
-            </FlexBox> */}
         </Metric>
+    )
+}
+
+const ParameterPill = styled(FlexBox) <{ $trendType: string }>`
+    background: ${({ $trendType }) => $trendType === 'positive' ? '#f2f8f4' : '#fdefec'};
+    color: ${({ $trendType }) => $trendType === 'positive' ? '#5fb284' : '#eb7c65'};
+    border-radius: 24px;
+    height: 24px;
+`;
+
+const Trends = (props: Pick<ITopMetricProps, 'trends'>) => {
+    const { trends } = props;
+    const TrendIcon = trends.trendType === 'positive' ? TrendingUp : TrendingDown;
+
+    return (
+        <ParameterPill padding="0 8px" gap="8px" alignItems="center" $trendType={trends.trendType}>
+            <TrendIcon sx={{ width: '16px', height: '16px' }} />
+            <Typography variant="subheading1">{trends.change}</Typography>
+        </ParameterPill>
     )
 }
