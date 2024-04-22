@@ -90,7 +90,7 @@ const Trends = (props: Pick<ITopMetricProps, 'trends'>) => {
     const TrendIcon = trends.trendType === 'positive' ? TrendingUp : TrendingDown;
 
     return (
-        <FlexBox flexDirection="row" justifyContent="space-between" width="100%" alignItems="center">
+        <FlexBox style={{ borderTop: `1px solid ${pallete.grayVariant5}`, paddingTop: '8px' }} flexDirection="row" justifyContent="space-between" width="100%" alignItems="center">
             <ParameterPill padding="0 8px" gap="8px" alignItems="center" $trendType={trends.trendType}>
                 <TrendIcon sx={{ width: '16px', height: '16px' }} />
                 <Typography variant="subheading1">{trends.change}</Typography>
