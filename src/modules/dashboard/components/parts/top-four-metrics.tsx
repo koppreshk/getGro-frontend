@@ -68,11 +68,11 @@ const TopMetric = (props: { item: ITopMetricProps }) => {
 
     return (
         <Metric flexDirection="column" gap="10px" alignItems="center">
+            <Typography sx={{ color: pallete.grayNeutral }} variant="subheading1">{name}</Typography>
             <FlexBox gap="20px" alignItems="center">
                 <Typography variant="h2">{getFormatedNumberByLocale(value)}</Typography>
-                <Trends trends={trends} />
             </FlexBox>
-            <Typography sx={{ color: pallete.grayNeutral }} variant="subheading1">{name}</Typography>
+            <Trends trends={trends} />
         </Metric>
     )
 }
@@ -86,12 +86,16 @@ const ParameterPill = styled(FlexBox) <{ $trendType: string }>`
 
 const Trends = (props: Pick<ITopMetricProps, 'trends'>) => {
     const { trends } = props;
+    const { pallete } = useTheme();
     const TrendIcon = trends.trendType === 'positive' ? TrendingUp : TrendingDown;
 
     return (
-        <ParameterPill padding="0 8px" gap="8px" alignItems="center" $trendType={trends.trendType}>
-            <TrendIcon sx={{ width: '16px', height: '16px' }} />
-            <Typography variant="subheading1">{trends.change}</Typography>
-        </ParameterPill>
+        <FlexBox flexDirection="row" justifyContent="space-between" width="100%" alignItems="center">
+            <ParameterPill padding="0 8px" gap="8px" alignItems="center" $trendType={trends.trendType}>
+                <TrendIcon sx={{ width: '16px', height: '16px' }} />
+                <Typography variant="subheading1">{trends.change}</Typography>
+            </ParameterPill>
+            <Typography variant="subheading2" sx={{ color: pallete.grayNeutral }}>from last month</Typography>
+        </FlexBox>
     )
 }
