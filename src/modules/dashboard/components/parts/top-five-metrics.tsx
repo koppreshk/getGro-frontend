@@ -9,10 +9,6 @@ const Metric = styled(FlexBox)`
     border-radius: 8px;
     padding: 20px;
     width: 100%;
-    cursor: pointer;
-    &:hover {
-        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    }
 `;
 
 const data = [{
@@ -93,9 +89,9 @@ const Trends = (props: Pick<ITopMetricProps, 'trends'>) => {
         <FlexBox style={{ borderTop: `1px solid ${pallete.grayVariant5}`, paddingTop: '8px' }} flexDirection="row" justifyContent="space-between" width="100%" alignItems="center">
             <ParameterPill padding="0 8px" gap="8px" alignItems="center" $trendType={trends.trendType}>
                 <TrendIcon sx={{ width: '16px', height: '16px' }} />
-                <Typography variant="subheading1">{trends.change}</Typography>
+                <Typography variant="subheading1">{trends.trendType === 'positive' ? '+' : '-'}{trends.change}</Typography>
             </ParameterPill>
-            <Typography variant="subheading2" sx={{ color: pallete.grayNeutral }}>from last month</Typography>
+            <Typography variant="subheading2" sx={{ color: pallete.grayNeutral }}>since last month</Typography>
         </FlexBox>
     )
 }
