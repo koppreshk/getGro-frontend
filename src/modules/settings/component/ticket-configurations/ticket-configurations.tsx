@@ -71,10 +71,10 @@ const configurations = [
         categoryIcon: () => <Tune color="primary" />,
         categoryOptions: [
             {
-                route: "access-configuration",
-                label: "Access Configuration",
-                uniqueKey: "general-access-configuration",
-                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
+                route: "add-agents",
+                label: "Add Agents",
+                uniqueKey: "add-agents",
+                description: "Add agents and assign them roles"
             },
             {
                 route: "ticket-filter",
