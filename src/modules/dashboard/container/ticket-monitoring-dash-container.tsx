@@ -3,9 +3,9 @@ import { DashboardDateRangePicker } from "../components/parts/dashboard-date-ran
 import { IncomingTickets } from "../components/parts/incoming-tickets"
 import { TicketsBySource } from "../components/parts/tickets-by-source"
 import { ToDoList } from "../components/parts/to-do-list"
-import { TopFourMetrics } from "../components/parts/top-four-metrics"
 import { TotalDisposed } from "../components/parts/total-disposed"
 import { Trends } from "../components/parts/trends"
+import { TopFiveMetrics } from "../components/parts/top-five-metrics"
 
 export const TicketMonitoringDashContainer = () => {
     return (
@@ -13,7 +13,7 @@ export const TicketMonitoringDashContainer = () => {
             <FlexBox justifyContent="flex-end" alignItems="center">
                 <DashboardDateRangePicker />
             </FlexBox>
-            <TopFourMetrics />
+            <TopFiveMetrics />
             <GridLayout $gridGap="20px" $gridTemplateColumns={'3.13fr 1fr'}>
                 <Trends />
                 <ToDoList />
