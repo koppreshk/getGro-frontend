@@ -2,7 +2,7 @@ import { Typography } from "@mui/material"
 import { FlexBox, GridLayout } from "lib/ui-ux"
 import { useAuth } from "modules/login"
 import { useTheme } from "styled-components"
-import { TopFourMetrics } from "./parts/top-four-metrics"
+import { TopFiveMetrics } from "./parts/top-five-metrics"
 import { TotalDisposed } from "./parts/total-disposed"
 import { TicketsBySource } from "./parts/tickets-by-source"
 import { IncomingTickets } from "./parts/incoming-tickets"
@@ -17,7 +17,7 @@ export const DashboardLayout = () => {
                 <UserDetails />
                 <DashboardDateRangePicker />
             </FlexBox>
-            <TopFourMetrics />
+            <TopFiveMetrics />
             <GridLayout $gridGap="20px" $gridTemplateColumns={'3.13fr 1fr'}>
                 <Trends />
                 <ToDoList />
