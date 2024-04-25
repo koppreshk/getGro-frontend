@@ -14,6 +14,7 @@ export const TagsChannelLayout = (props: { channels: IChannels[] }) => {
     const getIcon = useSourceIcon();
 
     const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
+        console.log("newValue", newValue);
         setValue(newValue);
     };
 
