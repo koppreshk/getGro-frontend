@@ -2,7 +2,7 @@ import { useServiceClient } from "lib";
 import React from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
-import { TicketsEndPoint, TicketsQueryKey } from "./api-enums";
+import { TicketsEndPoint, TicketsQueryKey } from "../api-enums";
 
 export interface ICallsByTicketId {
     calls: Call[];

@@ -3,7 +3,7 @@ import { useServiceClient } from "lib";
 import { useQuery } from "react-query";
 import { TicketsEndPoint, TicketsQueryKey } from "./api-enums";
 import { useSearchParams } from "react-router-dom";
-import { ITicketDetails } from "./get-unassigned-tickets";
+import { ITicketDetails } from "./ticket-type-apis/get-unassigned-tickets";
 
 export const useGetTicketsDataByKey = (queryEndPoint: keyof typeof TicketsEndPoint, queryKey: keyof typeof TicketsQueryKey) => {
     const [searchParams] = useSearchParams();

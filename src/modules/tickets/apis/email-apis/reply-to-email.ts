@@ -1,7 +1,7 @@
 import { useNotifications, useServiceClient } from "lib"
 import React from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { TicketsEndPoint, TicketsQueryKey } from "./api-enums";
+import { TicketsEndPoint, TicketsQueryKey } from "../api-enums";
 
 export interface IReplyToEmailArgs {
     messageId: string,

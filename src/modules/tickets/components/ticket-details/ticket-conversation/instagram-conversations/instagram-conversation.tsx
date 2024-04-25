@@ -25,7 +25,7 @@ export const InstagramConversation = (props: { data: ITicketConversation, isLoad
     }, [])
 
     return (
-        <FlexBox height="100%" flexDirection="column">
+        <FlexBox height="100%" flexDirection="column" style={{ position: 'relative' }}>
             <Container>
                 <FlexBox height="calc(100% - 150px)" flexDirection="column" gap="10px" overflowY="auto" padding="10px">
                     {isLoading ? <ChatConversationLoader />
@@ -45,7 +45,12 @@ interface ITicketConversationFooterProps {
 }
 
 const FooterWrapper = styled(FlexBox)`
-    border-top: ${({ theme }) => theme.semantics.standardBorder} ;
+    border-top: ${({ theme }) => theme.semantics.standardBorder};
+    position: absolute;
+    width: 100%;
+    padding: 15px;
+    bottom: 0px;
+    background: white;
 `;
 
 export const TicketConversationFooter = (props: ITicketConversationFooterProps) => {

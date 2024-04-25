@@ -1,5 +1,5 @@
 import { ToCamelCasedKeysFromUnderscores } from "lib/utils";
-import { TicketsEndPoint, TicketsQueryKey } from "./api-enums";
+import { TicketsEndPoint, TicketsQueryKey } from "../api-enums";
 import useLazyQuery from "lib/hooks/react-query-utils";
 
 export interface AttachmentResponse {

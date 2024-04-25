@@ -19,7 +19,7 @@ export const FacebookConversation = (props: { data: ITicketConversation, isLoadi
     }, [])
 
     return (
-        <FlexBox height="100%" flexDirection="column">
+        <FlexBox height="100%" flexDirection="column" style={{ position: 'relative' }}>
             <Container>
                 <FlexBox height="calc(100% - 150px)" flexDirection="column" gap="10px" overflowY="auto" padding="10px">
                     {isLoading ? <ChatConversationLoader />

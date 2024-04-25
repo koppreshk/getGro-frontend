@@ -1,4 +1,5 @@
 import React from "react";
+import { DateTime } from "luxon";
 import styled from "styled-components";
 import { Popover, Typography } from "@mui/material"
 import { DateRangePicker, DateRange } from "@matharumanpreet00/react-daterange-picker";
@@ -7,18 +8,21 @@ import { FlexBox } from "lib/ui-ux";
 import { getFormattedDate } from "lib/utils";
 
 const DateRangeDisplay = styled(FlexBox)`
-    border: 1px solid ${({ theme }) => theme.pallete.grayVariant4};
-    border-radius: 6px;
+    border-radius: 8px;
     background-color: white;
     padding: 8px;
     height: fit-content;
     cursor: pointer;
-    color: ${({ theme }) => theme.pallete.grayVariant2}
+    color: ${({ theme }) => theme.pallete.grayNeutral} !important;
+`;
+
+const StyledKBArrowIcon = styled(KeyboardArrowDownIcon) <{ $isOpen: boolean }>`
+    transform: ${({ $isOpen }) => $isOpen ? 'rotate(180deg)' : 'unset'};
+    transition: transform 0.3s;
 `;
 
 export const DashboardDateRangePicker = () => {
-    const [dateRange, setDateRange] = React.useState<DateRange>({ startDate: new Date(), endDate: new Date() });
-
+    const [dateRange, setDateRange] = React.useState<DateRange>({ startDate: DateTime.now().minus({ month: 1 }).toJSDate(), endDate: new Date() });
     const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | null>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -29,16 +33,21 @@ export const DashboardDateRangePicker = () => {
         setAnchorEl(null);
     };
 
+    const onDateRangeChange = (range: DateRange) => {
+        setDateRange(range);
+        handleClose();
+    }
+
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
     return (
         <>
             <DateRangeDisplay onClick={handleClick} gap="10px">
-                <Typography variant="h6">{getFormattedDate(dateRange.startDate!.toISOString()!, { dateStyle: 'medium' })}</Typography>
-                <Typography variant="h6">-</Typography>
-                <Typography variant="h6">{getFormattedDate(dateRange.endDate!.toISOString(), { dateStyle: 'medium' })}</Typography>
-                <KeyboardArrowDownIcon />
+                <Typography variant="subheading1">
+                    {getFormattedDate(dateRange.startDate!.toISOString()!, { dateStyle: 'medium' })} - {getFormattedDate(dateRange.endDate!.toISOString(), { dateStyle: 'medium' })}
+                </Typography>
+                <StyledKBArrowIcon $isOpen={open} />
             </DateRangeDisplay>
             <Popover
                 id={id}
@@ -51,7 +60,8 @@ export const DashboardDateRangePicker = () => {
                 }}>
                 <DateRangePicker
                     open={open}
-                    onChange={range => setDateRange(range)}
+                    initialDateRange={dateRange}
+                    onChange={onDateRangeChange}
                 />
             </Popover>
         </>

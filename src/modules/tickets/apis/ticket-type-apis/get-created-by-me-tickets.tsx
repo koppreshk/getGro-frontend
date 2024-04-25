@@ -1,6 +1,6 @@
 import { useServiceClient } from "lib"
 import React from "react";
-import { TicketsEndPoint, TicketsQueryKey } from "./api-enums";
+import { TicketsEndPoint, TicketsQueryKey } from "../api-enums";
 import { useSearchParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { ITicketDetails } from "./get-unassigned-tickets";
