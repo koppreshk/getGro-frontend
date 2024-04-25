@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useServiceClient } from "lib"
-import { TicketsEndPoint, TicketsQueryKey } from "./api-enums";
+import { TicketsEndPoint, TicketsQueryKey } from "../api-enums";
 
 interface ISendWhatsAppMessagesArgs {
     messageId: string;

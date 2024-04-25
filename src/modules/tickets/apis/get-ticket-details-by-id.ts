@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom"
-import { useGetUnassignedTickets } from "./get-unassigned-tickets";
+import { useGetUnassignedTickets } from "./ticket-type-apis/get-unassigned-tickets";
 
 export const useGetTicketDetailsById = () => {
     const { ticketId } = useParams();

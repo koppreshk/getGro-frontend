@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useMutation } from "react-query";
-import { TicketsEndPoint, TicketsQueryKey } from "./api-enums";
+import { TicketsEndPoint, TicketsQueryKey } from "../api-enums";
 import { useAuth } from "modules/login";
 
 export const useUploadFile = () => {
