@@ -71,10 +71,10 @@ const configurations = [
         categoryIcon: () => <Tune color="primary" />,
         categoryOptions: [
             {
-                route: "add-agents",
-                label: "Add Agents",
-                uniqueKey: "add-agents",
-                description: "Add agents and assign them roles"
+                route: "users",
+                label: "Users",
+                uniqueKey: "users",
+                description: "Add user and assign them roles"
             },
             {
                 route: "ticket-filter",
