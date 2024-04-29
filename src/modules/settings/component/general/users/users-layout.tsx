@@ -4,6 +4,7 @@ import { Add, ArrowBack } from "@mui/icons-material";
 import { Button, Typography } from "@mui/material"
 import { BreadCrumbs, CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-ux"
 import { CreateNewUserContainer } from "modules/settings/containers";
+import { GetUsersContainer } from "modules/settings/containers/users/get-users-container";
 
 const AddNewUser = (props: {
     openAddUserDrawer: boolean;
@@ -32,7 +33,7 @@ export const UsersLayout = () => {
     }, []);
 
     return (
-        <FlexBox width="100%" flexDirection="column">
+        <FlexBox width="100%" height="100%" flexDirection="column">
             <BreadCrumbs />
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
@@ -42,6 +43,7 @@ export const UsersLayout = () => {
                 <Button variant="contained" onClick={toggleAddUserDrawer} startIcon={<Add />}>Add User</Button>
                 <AddNewUser openAddUserDrawer={openAddUserDrawer} toggleAddUserDrawer={toggleAddUserDrawer} />
             </FlexBox>
+            <GetUsersContainer />
         </FlexBox>
     )
 }
