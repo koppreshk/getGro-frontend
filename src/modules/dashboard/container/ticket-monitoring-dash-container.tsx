@@ -9,7 +9,7 @@ import { TopFiveMetrics } from "../components/parts/top-five-metrics"
 
 export const TicketMonitoringDashContainer = () => {
     return (
-        <FlexBox flexDirection="column" gap="20px" height="100%" width="100%" padding="25px">
+        <FlexBox flexDirection="column" gap="20px" height="100%" width="100%" padding="0px 25px">
             <FlexBox justifyContent="flex-end" alignItems="center">
                 <DashboardDateRangePicker />
             </FlexBox>
