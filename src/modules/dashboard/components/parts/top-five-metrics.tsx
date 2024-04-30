@@ -3,6 +3,7 @@ import { LinearProgressProps, Typography } from "@mui/material";
 import { TrendingUp, TrendingDown } from '@mui/icons-material';
 import { FlexBox, GridLayout } from "lib/ui-ux";
 import { getFormatedNumberByLocale } from "lib/utils";
+import { IDashboardData } from "modules/dashboard/apis";
 
 const Metric = styled(FlexBox)`
     background-color: ${({ theme }) => theme.pallete.white};
@@ -11,36 +12,6 @@ const Metric = styled(FlexBox)`
     width: 100%;
 `;
 
-const data = [{
-    name: 'Created TIckets',
-    value: 104568,
-    trends: { trendType: 'positive', change: '67%' },
-    color: 'success'
-},
-{
-    name: 'Pending TIckets',
-    value: 55879,
-    trends: { trendType: 'negative', change: '48.7%' },
-    color: 'primary'
-},
-{
-    name: 'Disposed Tickets',
-    value: 71565,
-    trends: { trendType: 'positive', change: '45%' },
-    color: 'secondary'
-},
-{
-    name: 'FCR (First Contact Resolution)',
-    value: 19008,
-    trends: { trendType: 'negative', change: '12%' },
-    color: 'info'
-},
-{
-    name: 'Reopened Tickets',
-    value: 1008,
-    trends: { trendType: 'negative', change: '34.6%' },
-    color: 'info'
-}] as ITopMetricProps[]
 
 interface ITopMetricProps extends Pick<LinearProgressProps, 'color'> {
     name: string;
@@ -48,7 +19,39 @@ interface ITopMetricProps extends Pick<LinearProgressProps, 'color'> {
     trends: { trendType: string, change: string };
 }
 
-export const TopFiveMetrics = () => {
+export const TopFiveMetrics = (props: Pick<IDashboardData, 'total_tickets' | 'pending_tickets' | 'completed_tickets' | 'reopened_tickets' | 'first_contact_resolutions'>) => {
+    const { completed_tickets, first_contact_resolutions, pending_tickets, reopened_tickets, total_tickets } = props;
+    const data = [{
+        name: 'Total TIckets',
+        value: total_tickets,
+        trends: { trendType: 'positive', change: '67%' },
+        color: 'success'
+    },
+    {
+        name: 'Pending TIckets',
+        value: pending_tickets,
+        trends: { trendType: 'negative', change: '48.7%' },
+        color: 'primary'
+    },
+    {
+        name: 'Completed Tickets',
+        value: completed_tickets,
+        trends: { trendType: 'positive', change: '45%' },
+        color: 'secondary'
+    },
+    {
+        name: 'FCR (First Contact Resolution)',
+        value: first_contact_resolutions,
+        trends: { trendType: 'negative', change: '12%' },
+        color: 'info'
+    },
+    {
+        name: 'Reopened Tickets',
+        value: reopened_tickets,
+        trends: { trendType: 'negative', change: '34.6%' },
+        color: 'info'
+    }] as ITopMetricProps[];
+
     return (
         <GridLayout $gridGap="20px" $gridTemplateColumns={'repeat(5, 1fr)'}>
             {data.map((item, idx) => (
