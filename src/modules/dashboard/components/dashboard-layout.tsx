@@ -10,7 +10,7 @@ const StyledFlexbox = styled(FlexBox)`
 
 export const DashboardLayout = () => {
     return (
-        <FlexBox flexDirection="column" height="100%" width="100%">
+        <FlexBox flexDirection="column" height="100%" width="100%" overflowY="auto">
             <UserDetails />
             <DashboardCategoriesPanel2 />
         </FlexBox>
@@ -21,7 +21,7 @@ const UserDetails = () => {
     const { user } = useAuth();
     const { pallete } = useTheme();
     return (
-        <StyledFlexbox flexDirection="column" gap="5px" padding="25px 25px 20px">
+        <StyledFlexbox flexDirection="column" gap="5px" padding="25px 25px 0px">
             <Typography variant="h2" textTransform={"capitalize"}>Hi {user?.email.split('@')[0]}</Typography>
             <Typography variant="h6" sx={{ color: pallete.grayVariant2 }}>Welcome back!</Typography>
         </StyledFlexbox>
