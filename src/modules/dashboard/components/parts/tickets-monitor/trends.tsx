@@ -7,7 +7,7 @@ import styled, { useTheme } from "styled-components";
 import { DateTime } from "luxon";
 import { useCallback, useState } from "react";
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import { DateFilters } from "./date-filters";
+import { DateFilters } from "../date-filters";
 
 const StyledChart = styled(ReactApexChart)`
     .apexcharts-title-text {

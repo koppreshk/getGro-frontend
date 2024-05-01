@@ -64,6 +64,7 @@ function CustomTabPanel(props: TabPanelProps) {
         <div
             role="tabpanel"
             hidden={value !== index}
+            style={{ height: '100%' }}
             id={`dashboard-cat-tabpanel-${index}`}
             aria-labelledby={`dashboard-cat-tab-${index}`}
             {...other}
