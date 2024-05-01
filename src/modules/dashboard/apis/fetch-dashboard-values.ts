@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "react-query";
 import { useServiceClient } from "lib";
 import { DashboardEndPoint, DashboardQueryKeys } from "./api-enums";
+import { DateRange } from "@matharumanpreet00/react-daterange-picker";
 
 export interface IDashboardData {
     total_tickets: number
@@ -23,13 +24,15 @@ export interface TotalCompletedByUsers {
     [key: string]: number
 }
 
-export const useFetchDashboardData = () => {
+export const useFetchDashboardData = (dateRange: DateRange) => {
     const { getData } = useServiceClient();
+    const parsedFromDate = dateRange.startDate!.toISOString();
+    const parsedToDate = dateRange.endDate!.toISOString();
 
-    const fetchAllDashboardData = React.useCallback(() => getData(`dashboard/${DashboardEndPoint.FETCH_DASHBOARD_DATA}`).then((res) => res.json()), [getData])
+    const fetchAllDashboardData = React.useCallback(() => getData(`dashboard/${DashboardEndPoint.FETCH_DASHBOARD_DATA}?from=${parsedFromDate}&to=${parsedToDate}`).then((res) => res.json()), [getData, parsedFromDate, parsedToDate])
 
     return useQuery<IDashboardData>({
-        queryKey: DashboardQueryKeys.FETCH_DASHBOARD_DATA,
+        queryKey: [DashboardQueryKeys.FETCH_DASHBOARD_DATA, dateRange],
         queryFn: fetchAllDashboardData
     });
 }

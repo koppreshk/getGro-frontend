@@ -1,52 +1,80 @@
 import { Typography } from '@mui/material';
 import { ApexOptions } from 'apexcharts';
 import { FlexBox } from 'lib/ui-ux';
+import { TotalCompletedByUsers } from 'modules/dashboard/apis';
 import Chart from 'react-apexcharts';
 import styled from 'styled-components';
 
-const chartMetadata = {
-    options: {
-        chart: {
-            fontFamily: 'Poppins',
-            id: 'apexchart-example',
-            zoom: {
-                enabled: false
-            }
-        },
-        xaxis: {
-            lines: {
-                show: false
+// TODO: Can be used later
+// const chartMetadata = {
+//     options: {
+//         chart: {
+//             fontFamily: 'Poppins',
+//             id: 'apexchart-example',
+//             zoom: {
+//                 enabled: false
+//             }
+//         },
+//         xaxis: {
+//             lines: {
+//                 show: false
+//             },
+//             categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+//         },
+//         dataLabels: {
+//             enabled: false
+//         },
+//     } as ApexOptions,
+//     series: [{
+//         name: 'Shubham',
+//         data: [30, 40, 35, 50, 49, 60, 56]
+//     },
+//     {
+//         name: 'Koppresh',
+//         data: [12, 4, 66, 77, 98, 44, 23]
+//     },
+//     {
+//         name: 'Anup',
+//         data: [10, 20, 35, 50, 39, 80, 46]
+//     },
+//     {
+//         name: 'Siddarth',
+//         data: [7, 15, 35, 45, 49, 76, 53]
+//     },
+//     {
+//         name: 'Sanjay',
+//         data: [43, 54, 47, 98, 23, 66, 88]
+//     },
+//     {
+//         name: 'Mouin',
+//         data: [12, 42, 22, 55, 25, 29, 87]
+//     },],
+// }
+
+const getChartMetadata = (totalCompletedByUsers: TotalCompletedByUsers) => {
+    return {
+        series: Object.values(totalCompletedByUsers),
+        options: {
+            chart: {
+                fontFamily: 'Poppins',
+                width: 400,
+                height: 480,
+                type: 'donut',
             },
-            categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-        },
-        dataLabels: {
-            enabled: false
-        },
-    } as ApexOptions,
-    series: [{
-        name: 'Shubham',
-        data: [30, 40, 35, 50, 49, 60, 56]
-    },
-    {
-        name: 'Koppresh',
-        data: [12, 4, 66, 77, 98, 44, 23]
-    },
-    {
-        name: 'Anup',
-        data: [10, 20, 35, 50, 39, 80, 46]
-    },
-    {
-        name: 'Siddarth',
-        data: [7, 15, 35, 45, 49, 76, 53]
-    },
-    {
-        name: 'Sanjay',
-        data: [43, 54, 47, 98, 23, 66, 88]
-    },
-    {
-        name: 'Mouin',
-        data: [12, 42, 22, 55, 25, 29, 87]
-    },],
+            labels: Object.keys(totalCompletedByUsers),
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        width: 400
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }]
+        } as ApexOptions,
+    }
 }
 
 export const ChartContainer = styled(FlexBox)`
@@ -55,11 +83,18 @@ export const ChartContainer = styled(FlexBox)`
     border-radius: 8px;
 `;
 
-export const TotalDisposed = () => {
+interface ITotalDisposedProps {
+    totalCompletedByUsers: TotalCompletedByUsers;
+}
+
+export const TotalDisposed = (props: ITotalDisposedProps) => {
+    const { totalCompletedByUsers } = props;
+    const chartMetadata = getChartMetadata(totalCompletedByUsers);
+
     return (
         <ChartContainer flexDirection='column'>
-            <Typography variant='h4'>Total Disposed</Typography>
-            <Chart options={chartMetadata.options} series={chartMetadata.series} type="area" height="350px" width={'100%'} />
+            <Typography variant='h4' sx={{ marginBottom: '70px' }}>Total Disposed</Typography>
+            <Chart options={chartMetadata.options} series={chartMetadata.series} type="donut" height="350px" width={'100%'} />
         </ChartContainer>
     )
 }

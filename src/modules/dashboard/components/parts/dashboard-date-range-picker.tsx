@@ -1,5 +1,4 @@
 import React from "react";
-import { DateTime } from "luxon";
 import styled from "styled-components";
 import { Popover, Typography } from "@mui/material"
 import { DateRangePicker, DateRange } from "@matharumanpreet00/react-daterange-picker";
@@ -21,8 +20,13 @@ const StyledKBArrowIcon = styled(KeyboardArrowDownIcon) <{ $isOpen: boolean }>`
     transition: transform 0.3s;
 `;
 
-export const DashboardDateRangePicker = () => {
-    const [dateRange, setDateRange] = React.useState<DateRange>({ startDate: DateTime.now().minus({ month: 1 }).toJSDate(), endDate: new Date() });
+interface IDashboardDateRangePickerProps {
+    setDateRange: React.Dispatch<React.SetStateAction<DateRange>>;
+    dateRange: DateRange;
+}
+
+export const DashboardDateRangePicker = (props: IDashboardDateRangePickerProps) => {
+    const { dateRange, setDateRange } = props;
     const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | null>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {

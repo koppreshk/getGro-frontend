@@ -1,9 +1,14 @@
 import { CenteredCircularProgress } from "lib/ui-ux"
 import { useFetchDashboardData } from "../apis"
 import { TicketMonitor } from "../components/parts/tickets-monitor/tickets-monitor";
+import React from "react";
+import { DateTime } from "luxon";
+import { DateRange } from "@matharumanpreet00/react-daterange-picker";
 
 export const TicketMonitoringDashContainer = () => {
-    const { data, isLoading } = useFetchDashboardData();
+    const [dateRange, setDateRange] = React.useState<DateRange>({ startDate: DateTime.now().minus({ month: 1 }).toJSDate(), endDate: new Date() });
+
+    const { data, isLoading } = useFetchDashboardData(dateRange);
 
     if (isLoading) {
         return <CenteredCircularProgress />
@@ -11,7 +16,7 @@ export const TicketMonitoringDashContainer = () => {
 
     if (data) {
         return (
-            <TicketMonitor data={data} />
+            <TicketMonitor data={data} setDateRange={setDateRange} dateRange={dateRange} />
         )
     }
 

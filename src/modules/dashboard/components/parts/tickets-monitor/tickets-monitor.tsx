@@ -7,18 +7,21 @@ import { TopFiveMetrics } from "./top-five-metrics"
 import { TotalDisposed } from "./total-disposed"
 import { Trends } from "./trends"
 import { IDashboardData } from "modules/dashboard/apis"
+import { DateRange } from "@matharumanpreet00/react-daterange-picker"
 
 interface ITicketMonitorProps {
-    data: IDashboardData
+    data: IDashboardData;
+    setDateRange: React.Dispatch<React.SetStateAction<DateRange>>;
+    dateRange: DateRange;
 }
 
 export const TicketMonitor = (props: ITicketMonitorProps) => {
-    const { data } = props;
+    const { data, dateRange, setDateRange } = props;
     return (
         <>
             <FlexBox flexDirection="column" gap="20px" height="100%" width="100%" padding="0px 25px">
                 <FlexBox justifyContent="flex-end" alignItems="center">
-                    <DashboardDateRangePicker />
+                    <DashboardDateRangePicker dateRange={dateRange} setDateRange={setDateRange} />
                 </FlexBox>
                 <TopFiveMetrics
                     total_tickets={data.total_tickets}
@@ -31,7 +34,7 @@ export const TicketMonitor = (props: ITicketMonitorProps) => {
                     <ToDoList />
                 </GridLayout>
                 <GridLayout $gridGap="20px" $gridTemplateColumns={'1fr 1fr 1fr'}>
-                    <TotalDisposed />
+                    <TotalDisposed totalCompletedByUsers={data.total_completed_by_users}/>
                     <TicketsBySource channelsInfo={data.channels_info} />
                     <IncomingTickets />
                 </GridLayout>
