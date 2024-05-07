@@ -4,6 +4,16 @@ import 'styled-components';
 
 // and extend them!
 declare module 'styled-components' {
+  export interface IDashboardColors {
+    graphTextColor1: string;
+    graphBgColor1: string;
+    graphBgColor2: string;
+    graphBgColor3: string;
+    graphBgColor4: string;
+    graphBgColor5: string;
+    graphBgColor6: string;
+    graphBgColor7: string;
+  }
   export interface DefaultTheme {
     pallete: {
       white: string,
@@ -46,6 +56,7 @@ declare module 'styled-components' {
       sideMenuBg: string;
       sideMenuIconColor: string;
       sideMenuHoverColor: string;
-    }
+    },
+    dashboard: IDashboardColors
   }
 }

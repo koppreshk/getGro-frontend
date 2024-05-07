@@ -4,8 +4,9 @@ import { ChartContainer } from './total-disposed';
 import { ApexOptions } from 'apexcharts';
 import { FlexBox } from 'lib/ui-ux';
 import { ChannelsInfo } from 'modules/dashboard/apis';
+import { IDashboardColors, useTheme } from 'styled-components';
 
-const getChartMetadata = (channelsInfo: ChannelsInfo) => {
+const getChartMetadata = (channelsInfo: ChannelsInfo, theme: IDashboardColors) => {
     return {
         series: Object.values(channelsInfo),
         options: {
@@ -26,15 +27,16 @@ const getChartMetadata = (channelsInfo: ChannelsInfo) => {
                         position: 'bottom'
                     }
                 }
-            }]
+            }],
+            colors: [theme.graphBgColor2, theme.graphBgColor3, theme.graphBgColor4, theme.graphBgColor5, theme.graphBgColor6, theme.graphBgColor7],
         } as ApexOptions,
     }
 }
 
 export const TicketsBySource = (props: { channelsInfo: ChannelsInfo }) => {
     const { channelsInfo } = props;
-
-    const chartMetadata = getChartMetadata(channelsInfo);
+    const { dashboard } = useTheme();
+    const chartMetadata = getChartMetadata(channelsInfo, dashboard);
 
     return (
         <>

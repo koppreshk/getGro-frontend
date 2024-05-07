@@ -34,7 +34,7 @@ const Wrapper = styled.div<{ $isOptionSelected: boolean }>`
         border-width: 0;
         border-right-width: thick;
     ` : css`
-        background-color: #fff;
+        background-color: ${({ theme }) => theme.pallete.white};
         color: ${(props) => props.theme.pallete.defaultTextColor};
     `}
 `;

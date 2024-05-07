@@ -3,7 +3,7 @@ import { ApexOptions } from 'apexcharts';
 import { FlexBox } from 'lib/ui-ux';
 import { TotalCompletedByUsers } from 'modules/dashboard/apis';
 import Chart from 'react-apexcharts';
-import styled from 'styled-components';
+import styled, { IDashboardColors, useTheme } from 'styled-components';
 
 // TODO: Can be used later
 // const chartMetadata = {
@@ -51,7 +51,7 @@ import styled from 'styled-components';
 //     },],
 // }
 
-const getChartMetadata = (totalCompletedByUsers: TotalCompletedByUsers) => {
+const getChartMetadata = (totalCompletedByUsers: TotalCompletedByUsers, dashboard: IDashboardColors) => {
     return {
         series: Object.values(totalCompletedByUsers),
         options: {
@@ -72,13 +72,14 @@ const getChartMetadata = (totalCompletedByUsers: TotalCompletedByUsers) => {
                         position: 'bottom'
                     }
                 }
-            }]
+            }],
+            colors: [dashboard.graphBgColor2, dashboard.graphBgColor3, dashboard.graphBgColor4, dashboard.graphBgColor5, dashboard.graphBgColor6, dashboard.graphBgColor7],
         } as ApexOptions,
     }
 }
 
 export const ChartContainer = styled(FlexBox)`
-    background: #fff;
+    background: ${({ theme }) => theme.pallete.white};
     padding: 20px 20px 0 20px;
     border-radius: 8px;
 `;
@@ -89,7 +90,8 @@ interface ITotalDisposedProps {
 
 export const TotalDisposed = (props: ITotalDisposedProps) => {
     const { totalCompletedByUsers } = props;
-    const chartMetadata = getChartMetadata(totalCompletedByUsers);
+    const { dashboard } = useTheme();
+    const chartMetadata = getChartMetadata(totalCompletedByUsers, dashboard);
 
     return (
         <ChartContainer flexDirection='column'>

@@ -43,6 +43,16 @@ const defaultTheme: DefaultTheme = {
         sideMenuBg: '#f7f8f9',
         sideMenuIconColor: '#4f5762',
         sideMenuHoverColor: '#e8eaed'
+    },
+    dashboard: {
+        graphBgColor1: '#938BB7',
+        graphTextColor1: '#777194',
+        graphBgColor2: '#6A69F6',
+        graphBgColor3: '#E757D3',
+        graphBgColor4: '#FF629F',
+        graphBgColor5: '#FF9171',
+        graphBgColor6: '#FFC759',
+        graphBgColor7: '#F9F871'
     }
 }
 

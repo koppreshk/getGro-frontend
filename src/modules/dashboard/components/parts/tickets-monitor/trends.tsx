@@ -16,7 +16,7 @@ const StyledChart = styled(ReactApexChart)`
 `;
 
 export const Trends = () => {
-    const { pallete } = useTheme();
+    const { pallete, dashboard } = useTheme();
     const [filterValue, setFilters] = useState<'week' | 'month'>('week');
 
     const onFilterChangeHandler = useCallback((value: 'week' | 'month') => {
@@ -65,7 +65,8 @@ export const Trends = () => {
                     opacityTo: 0,
                     stops: [90, 95, 100]
                 },
-            }
+            },
+            colors: [dashboard.graphBgColor1]
         } as ApexOptions
 
     };
@@ -79,7 +80,7 @@ export const Trends = () => {
                 <FlexBox justifyContent="space-between">
                     <FlexBox gap="4px" alignItems="center">
                         <Typography variant="h4">Trends</Typography>
-                        <TrendingUpIcon color="info" />
+                        <TrendingUpIcon sx={{ color: dashboard.graphTextColor1 }} />
                     </FlexBox>
                     <DateFilters onFilterChangeHandler={onFilterChangeHandler} filterValue={filterValue} />
                 </FlexBox>
@@ -103,7 +104,7 @@ export const Trends = () => {
 }
 
 const StatsContainer = styled(FlexBox)`
-    border-left: 3px solid #4b94dc;
+    border-left: 3px solid ${({ theme }) => theme.dashboard.graphBgColor1};
 `;
 
 const Stats = (props: { label: string, value: string }) => {

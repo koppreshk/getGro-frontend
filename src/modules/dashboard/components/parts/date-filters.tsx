@@ -15,8 +15,8 @@ const StyledFilterContainer = styled(FlexBox)`
 
 const Text = styled(Typography) <{ $isSelected?: boolean }>`
   &&{
-    color: ${({ $isSelected }) => $isSelected ? '#4b94dc' : '#3b4455'};
-    background-color: ${({ $isSelected }) => $isSelected ? '#fff' : 'unset'};
+    color: ${({ $isSelected, theme }) => $isSelected ? theme.dashboard.graphTextColor1 : '#3b4455'};
+    background-color: ${({ $isSelected, theme }) => $isSelected ? theme.pallete.white : 'unset'};
     padding: 4px;
     border-radius: inherit;
     cursor: pointer;
