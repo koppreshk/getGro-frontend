@@ -3,7 +3,7 @@ import styled, { useTheme } from "styled-components";
 import { Box, Typography } from "@mui/material"
 import { FlexBox } from "lib/ui-ux";
 import { Widgets } from "@mui/icons-material";
-import { AgentPerformanceDashContainer, TicketMonitoringDashContainer } from "modules/dashboard/container";
+import { AgentPerformanceDashContainer, TicketMonitoringDashContainer, SupportMonitoringDashContainer } from "modules/dashboard/container";
 
 interface IDashboardCategories {
     id: number;
@@ -29,21 +29,26 @@ const DashboardCategories: IDashboardCategories[] = [
     },
     {
         id: 2,
+        name: 'Support Monitoring',
+        component: <SupportMonitoringDashContainer />
+    },
+    {
+        id: 3,
         name: "Agent Performance",
         component: <AgentPerformanceDashContainer />,
     },
     {
-        id: 3,
+        id: 4,
         name: "SLA Dashboard",
         component: <AgentPerformanceDashContainer />,
     },
     {
-        id: 4,
+        id: 5,
         name: "CSR Dashboard",
         component: <AgentPerformanceDashContainer />,
     },
     {
-        id: 5,
+        id: 6,
         name: "Ticket Conversation Report",
         component: <AgentPerformanceDashContainer />,
     },

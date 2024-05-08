@@ -7,7 +7,7 @@ import { IDashboardData } from "modules/dashboard/apis";
 
 const Metric = styled(FlexBox)`
     background-color: ${({ theme }) => theme.pallete.white};
-    border-radius: 8px;
+    border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
     padding: 20px;
     width: 100%;
 `;

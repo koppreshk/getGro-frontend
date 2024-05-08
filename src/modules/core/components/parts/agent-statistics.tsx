@@ -9,7 +9,7 @@ import { DonutChart, DonutSlice } from "./donut-chart";
 
 const StatsContainer = styled(FlexBox)`
     padding: 20px;
-    border-radius: 8px;
+    border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
 `;
 
 const data = [
@@ -114,7 +114,7 @@ interface IStatsMiniBlockProps {
 
 const StyledFlexbox = styled(FlexBox)`
     border: 1px solid ${(props) => props.theme.pallete.grayVariant1};
-    border-radius: 8px;
+    border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
     width: fit-content;
     .stats-mini-block-child {
         border-right: 1px solid ${(props) => props.theme.pallete.grayVariant1};

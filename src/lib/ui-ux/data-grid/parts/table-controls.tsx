@@ -149,7 +149,7 @@ interface INoOfRowsProps {
 const StyledFilterContainer = styled(FlexBox)`
     background-color: ${({ theme }) => theme.pallete.grayVariant5};
     padding: 4px 8px;
-    border-radius: 8px;
+    border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
 `;
 
 const Text = styled(Typography) <{ $isSelected?: boolean }>`

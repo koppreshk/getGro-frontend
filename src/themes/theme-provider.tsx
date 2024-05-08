@@ -27,6 +27,13 @@ const defaultTheme: DefaultTheme = {
     semantics: {
         standardBorder: '1px solid #E9EBED',
         secondaryTextColor: '#667287',
+        borderRadius: {
+            xs: '4px',
+            sm: '6px',
+            md: '8px',
+            lg: '10px',
+            xl: '12px'
+        }
     },
     channelSpecific: {
         facebook: '#3b5998',

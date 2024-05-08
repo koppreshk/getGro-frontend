@@ -40,6 +40,13 @@ declare module 'styled-components' {
     semantics: {
       standardBorder: string;
       secondaryTextColor: string,
+      borderRadius: {
+        xs: string,
+        sm: string,
+        md: string,
+        lg: string,
+        xl: string
+      }
     }
     channelSpecific: {
       facebook: string,

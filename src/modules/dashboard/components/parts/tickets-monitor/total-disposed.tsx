@@ -81,7 +81,7 @@ const getChartMetadata = (totalCompletedByUsers: TotalCompletedByUsers, dashboar
 export const ChartContainer = styled(FlexBox)`
     background: ${({ theme }) => theme.pallete.white};
     padding: 20px 20px 0 20px;
-    border-radius: 8px;
+    border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
 `;
 
 interface ITotalDisposedProps {
