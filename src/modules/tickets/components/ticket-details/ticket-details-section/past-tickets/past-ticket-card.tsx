@@ -28,7 +28,7 @@ const StyledChip = styled(Chip)`
 
 const StyledContainer = styled(FlexBox)`
     background:  ${({ theme }) => theme.pallete.grayVariant5};
-    border-radius: 8px;
+    border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
     padding: 8px;
     margin: 12px 0px;
     position: relative;

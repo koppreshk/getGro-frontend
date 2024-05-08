@@ -198,7 +198,7 @@ const StyledDataGrid = styled(DataGrid)`
     background-color: ${({ theme }) => theme.pallete.white};
     padding: 16px;
     height: calc(100% - 36px);
-    border-radius: 8px;
+    border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
     .column-configuration-btn {
         top: 8px;
         right: 16px;

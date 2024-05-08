@@ -38,12 +38,12 @@ const MoreDetailsBtn = styled(IconButton)`
 
 const OrderPLaceholderIconWrapper = styled(FlexBox)`
     background-color: #f1f1f1;
-    border-radius: 8px;
+    border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
 `;
 
 const StyledOrder = styled(FlexBox)`
     background-color: ${({ theme }) => theme.pallete.white};
-    border-radius: 8px;
+    border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
     height: fit-content;
     margin-bottom: 10px;
     padding: 10px 12px;

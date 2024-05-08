@@ -7,7 +7,7 @@ import { FlexBox } from "lib/ui-ux";
 import { getFormattedDate } from "lib/utils";
 
 const DateRangeDisplay = styled(FlexBox)`
-    border-radius: 8px;
+    border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
     background-color: white;
     padding: 8px;
     height: fit-content;
