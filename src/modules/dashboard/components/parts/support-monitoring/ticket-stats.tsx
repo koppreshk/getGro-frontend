@@ -1,6 +1,8 @@
 import { Typography } from "@mui/material"
 import { FlexBox } from "lib/ui-ux";
 import styled, { useTheme } from "styled-components";
+import { DateFilters } from "../tickets-monitor/date-filters";
+import { useState, useCallback } from "react";
 
 const StyledContainer = styled(FlexBox)`
     background-color: ${({ theme }) => theme.pallete.white};
@@ -34,10 +36,19 @@ export const TicketStats = () => {
         value: 7
     }]
 
+    const [filterValue, setFilters] = useState('Today');
+
+    const onFilterChangeHandler = useCallback((value: string) => {
+        setFilters(value);
+    }, []);
+
     return (
         <>
             <StyledContainer padding="20px" flexDirection="column" gap="20px">
-                <Typography variant="h5">Ticket Statistics</Typography>
+                <FlexBox justifyContent="space-between" alignItems="center">
+                    <Typography variant="h5">Ticket Statistics</Typography>
+                    <DateFilters onFilterChangeHandler={onFilterChangeHandler} filterValue={filterValue} dateFilterTypes={['Today', 'Yesterday', 'Last 7 Days', 'Last 30 Days', 'Last 90 Days']} />
+                </FlexBox>
                 <FlexBox gap="20px">
                     <FlexBox flexDirection="column" gap="20px">
                         {quickStats1.map((item) => <QuickStats key={item.name} item={item} />)}

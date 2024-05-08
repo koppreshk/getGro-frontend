@@ -15,6 +15,7 @@ interface ISupportMonitoringProps {
 
 export const SupportMonitoring = (props: ISupportMonitoringProps) => {
     const { hold_tickets, pending_tickets, resolution_overdue, response_overdue } = props.data;
+
     return (
         <>
             <FlexBox flexDirection="column" gap="20px" height="100%" width="100%" padding="0px 25px">
