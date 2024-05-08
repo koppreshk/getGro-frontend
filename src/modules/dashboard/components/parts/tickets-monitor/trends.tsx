@@ -17,9 +17,9 @@ const StyledChart = styled(ReactApexChart)`
 
 export const Trends = () => {
     const { pallete, dashboard } = useTheme();
-    const [filterValue, setFilters] = useState<'week' | 'month'>('week');
+    const [filterValue, setFilters] = useState('week');
 
-    const onFilterChangeHandler = useCallback((value: 'week' | 'month') => {
+    const onFilterChangeHandler = useCallback((value: string) => {
         setFilters(value);
     }, []);
 

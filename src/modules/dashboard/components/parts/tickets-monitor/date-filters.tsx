@@ -3,8 +3,9 @@ import { FlexBox } from "lib/ui-ux";
 import styled from "styled-components";
 
 interface IDateFiltersProps {
-    filterValue: "week" | "month";
-    onFilterChangeHandler: (value: 'week' | 'month') => void;
+    filterValue: string;
+    dateFilterTypes?: string[];
+    onFilterChangeHandler: (value: string) => void;
 }
 
 const StyledFilterContainer = styled(FlexBox)`
@@ -25,13 +26,15 @@ const Text = styled(Typography) <{ $isSelected?: boolean }>`
 
 
 export const DateFilters = (props: IDateFiltersProps) => {
-    const { filterValue, onFilterChangeHandler } = props;
+    const { filterValue, dateFilterTypes = ['week', 'month'], onFilterChangeHandler } = props;
 
     return (
         <>
             <StyledFilterContainer gap="4px">
-                <Text variant="subheading1" $isSelected={filterValue === 'week'} onClick={() => onFilterChangeHandler('week')}>Week</Text>
-                <Text variant="subheading1" $isSelected={filterValue === 'month'} onClick={() => onFilterChangeHandler('month')}>Month</Text>
+                {dateFilterTypes.map((item) => (
+                    <Text variant="subheading1" $isSelected={filterValue === item} onClick={() => onFilterChangeHandler(item)}>{item.slice(0, 1).toUpperCase() + item.slice(1)}</Text>
+                )
+                )}
             </StyledFilterContainer>
         </>
     )
