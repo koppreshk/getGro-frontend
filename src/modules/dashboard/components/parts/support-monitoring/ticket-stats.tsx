@@ -43,6 +43,8 @@ export const TicketStats = () => {
         setFilters(value);
     }, []);
 
+    const { pallete } = useTheme();
+
     return (
         <>
             <StyledContainer padding="20px" flexDirection="column" gap="20px">
@@ -51,7 +53,7 @@ export const TicketStats = () => {
                     <DateFilters onFilterChangeHandler={onFilterChangeHandler} filterValue={filterValue} dateFilterTypes={['Today', 'Yesterday', 'Last 7 Days', 'Last 30 Days', 'Last 90 Days']} />
                 </FlexBox>
                 <FlexBox width="100%">
-                    <FlexBox gap="20px" width="40%" padding="0px 0px 0px 50px">
+                    <FlexBox gap="20px" width="40%" padding="0px 0px 0px 50px" style={{ borderRight: `1px solid ${pallete.grayVariant1}` }}>
                         <FlexBox flexDirection="column" gap="60px" width="50%">
                             {quickStats1.map((item) => <QuickStats key={item.name} item={item} />)}
                         </FlexBox>
@@ -89,14 +91,14 @@ const TicketsCreated = () => {
             groupBy: 'status'
         }
     });
+    const { dashboard } = useTheme();
+
     const data = {
         series: [{
             data: [2, 10, 7]
         }],
         options: {
             chart: {
-                type: 'bar',
-                height: 350,
                 fontFamily: 'Poppins',
                 id: 'apexchart-example'
             },
@@ -111,13 +113,15 @@ const TicketsCreated = () => {
                 enabled: false
             },
             xaxis: {
-                categories: ['Unassgined', 'Pending', 'Completed'],
-            }
+                categories: ['Unassgined', 'Pending', 'Completed']
+            },
+            colors: [dashboard.graphBgColor1]
         } as ApexOptions
     };
+
     return (
         <FormProvider {...form}>
-            <FlexBox flexDirection="column" width="60%">
+            <FlexBox flexDirection="column" width="60%" padding="0px 0px 0px 40px">
                 <FlexBox justifyContent="space-between">
                     <Typography variant="h6">Tickets Created</Typography>
                     <SelectField menuOptions={[{ key: 'status', value: 'Status' }]} name="groupBy" label="Group By" size="small" sx={{ width: '200px' }} />
