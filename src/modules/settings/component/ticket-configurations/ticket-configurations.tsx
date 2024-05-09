@@ -77,10 +77,16 @@ const configurations = [
                 description: "Add user and assign them roles"
             },
             {
-                route: "ticket-filter",
-                label: "Chat Configuration",
-                uniqueKey: "general-ticket-filter",
-                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
+                route: "roles-and-permissions",
+                label: "Roles and Permissions",
+                uniqueKey: "roles-and-permissions",
+                description: "Create custom roles for agents with specific permissions"
+            },
+            {
+                route: "agent-availability",
+                label: "Agent Availability Status",
+                uniqueKey: "agent-availability",
+                description: "Add, edit or remove an agents avaibilility status"
             },
             {
                 route: "ticket-escalation",

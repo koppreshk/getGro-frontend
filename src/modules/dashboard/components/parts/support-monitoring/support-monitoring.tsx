@@ -1,6 +1,7 @@
 import { FlexBox } from "lib/ui-ux"
 import { TopFourMetrics } from "./top-four-metrics";
 import { TicketStats } from "./ticket-stats";
+import { TicketsDisposed } from "./tickets-disposed";
 
 export interface ISupportMonitor {
     pending_tickets: number;
@@ -25,6 +26,7 @@ export const SupportMonitoring = (props: ISupportMonitoringProps) => {
                     hold_tickets={hold_tickets}
                     pending_tickets={pending_tickets} />
                 <TicketStats />
+                <TicketsDisposed />
             </FlexBox>
         </>
     )
