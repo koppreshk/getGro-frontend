@@ -8,9 +8,10 @@ const StyledFCRContainer = styled(FlexBox)`
 `;
 
 export const FirstContactResolution = () => {
+    const { pallete } = useTheme();
     return (
         <StyledFCRContainer padding="20px" flexDirection="column" gap="20px">
-            <Typography variant="h6" textAlign="center">FCR(First Contact Resolution)</Typography>
+            <Typography sx={{ color: pallete.grayNeutral }} variant="h6" textAlign="center">FCR(First Contact Resolution)</Typography>
             <CustomCircularProgress value={45} />
         </StyledFCRContainer>
     )

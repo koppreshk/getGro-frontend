@@ -5,14 +5,17 @@ import { Typography } from "@mui/material";
 
 interface ISingleStatProps {
     value: string;
+    subTextValue?: string;
     subHeading: string;
 }
 
 const data = [{
-    value: "0 (0 avg per day)",
+    value: "0",
+    subTextValue: "(0 avg per day)",
     subHeading: "Tickets Assigned"
 }, {
-    value: "0 (0 avg per day)",
+    value: "0",
+    subTextValue: "(0 avg per day)",
     subHeading: "Tickets Resolved"
 }, {
     value: "4",
@@ -23,7 +26,8 @@ const data = [{
 }]
 
 const data1 = [{
-    value: "0 (0 avg per day)",
+    value: "0",
+    subTextValue: "(0 avg per day)",
     subHeading: "Public Reply Added"
 }, {
     value: "0",
@@ -59,12 +63,12 @@ export const AgentTicketStats = () => {
     return (
         <>
             <StyledLayout $gridTemplateColumns="repeat(4, 1fr)" $padding="20px">
-                {data.map((item) => <SingleStat subHeading={item.subHeading} value={item.value} key={item.subHeading} />)}
+                {data.map((item) => <SingleStat subHeading={item.subHeading} value={item.value} key={item.subHeading} subTextValue={item.subTextValue} />)}
             </StyledLayout>
             <GridLayout $gridTemplateColumns="3fr 1fr" $gridGap="20px">
                 <FlexBox flexDirection="column">
                     <StyledLayout $gridTemplateColumns="repeat(3, 1fr)" $padding="20px">
-                        {data1.map((item) => <SingleStat subHeading={item.subHeading} value={item.value} key={item.subHeading} />)}
+                        {data1.map((item) => <SingleStat subHeading={item.subHeading} value={item.value} key={item.subHeading} subTextValue={item.subTextValue} />)}
                     </StyledLayout>
                     <StyledLayout $gridTemplateColumns="repeat(3, 1fr)" $padding="20px">
                         {data2.map((item) => <SingleStat subHeading={item.subHeading} value={item.value} key={item.subHeading} />)}
@@ -82,12 +86,15 @@ const SingleStatContainer = styled(FlexBox)`
 `;
 
 const SingleStat = (props: ISingleStatProps) => {
-    const { value, subHeading } = props;
+    const { value, subHeading, subTextValue } = props;
     const { pallete } = useTheme();
     return (
         <SingleStatContainer flexDirection="column" gap="15px" className="single-stat-container">
-            <Typography variant="h4">{value}</Typography>
             <Typography sx={{ color: pallete.grayNeutral }} variant="body2">{subHeading}</Typography>
+            <FlexBox alignItems="baseline" gap="4px">
+                <Typography variant="h4">{value}</Typography>
+                <Typography variant="body3">{subTextValue}</Typography>
+            </FlexBox>
         </SingleStatContainer>
     )
 }
