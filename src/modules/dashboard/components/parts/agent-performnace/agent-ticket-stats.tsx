@@ -1,6 +1,7 @@
-import { Typography } from "@mui/material"
 import { FlexBox, GridLayout } from "lib/ui-ux"
 import styled, { useTheme } from "styled-components";
+import { FirstContactResolution } from "./first-contact-resolution";
+import { Typography } from "@mui/material";
 
 interface ISingleStatProps {
     value: string;
@@ -21,6 +22,28 @@ const data = [{
     subHeading: "Tickets Resssigned"
 }]
 
+const data1 = [{
+    value: "0 (0 avg per day)",
+    subHeading: "Public Reply Added"
+}, {
+    value: "0",
+    subHeading: "Notes Added"
+}, {
+    value: "4",
+    subHeading: "Replied Tickets"
+}];
+
+const data2 = [{
+    value: "55sec",
+    subHeading: "Avg First Response Time"
+}, {
+    value: "2min(s)",
+    subHeading: "Avg Response Time"
+}, {
+    value: "4min(s)",
+    subHeading: "Avg Resolution Time"
+}];
+
 const StyledLayout = styled(GridLayout)`
     background: ${({ theme }) => theme.pallete.white};
     border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
@@ -38,6 +61,17 @@ export const AgentTicketStats = () => {
             <StyledLayout $gridTemplateColumns="repeat(4, 1fr)" $padding="20px">
                 {data.map((item) => <SingleStat subHeading={item.subHeading} value={item.value} key={item.subHeading} />)}
             </StyledLayout>
+            <GridLayout $gridTemplateColumns="3fr 1fr" $gridGap="20px">
+                <FlexBox flexDirection="column">
+                    <StyledLayout $gridTemplateColumns="repeat(3, 1fr)" $padding="20px">
+                        {data1.map((item) => <SingleStat subHeading={item.subHeading} value={item.value} key={item.subHeading} />)}
+                    </StyledLayout>
+                    <StyledLayout $gridTemplateColumns="repeat(3, 1fr)" $padding="20px">
+                        {data2.map((item) => <SingleStat subHeading={item.subHeading} value={item.value} key={item.subHeading} />)}
+                    </StyledLayout>
+                </FlexBox>
+                <FirstContactResolution />
+            </GridLayout>
         </>
     )
 }
