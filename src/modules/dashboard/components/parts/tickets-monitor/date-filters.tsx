@@ -32,7 +32,7 @@ export const DateFilters = (props: IDateFiltersProps) => {
         <>
             <StyledFilterContainer gap="4px">
                 {dateFilterTypes.map((item) => (
-                    <Text variant="subheading1" $isSelected={filterValue === item} onClick={() => onFilterChangeHandler(item)}>{item.slice(0, 1).toUpperCase() + item.slice(1)}</Text>
+                    <Text variant="subheading1" key={item} $isSelected={filterValue === item} onClick={() => onFilterChangeHandler(item)}>{item.slice(0, 1).toUpperCase() + item.slice(1)}</Text>
                 )
                 )}
             </StyledFilterContainer>
