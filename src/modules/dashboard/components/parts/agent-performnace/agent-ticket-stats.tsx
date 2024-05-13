@@ -10,6 +10,9 @@ interface ISingleStatProps {
 }
 
 const data = [{
+    value: "6",
+    subHeading: "Tickets Created"
+}, {
     value: "0",
     subTextValue: "(0 avg per day)",
     subHeading: "Tickets Assigned"
@@ -62,7 +65,7 @@ const StyledLayout = styled(GridLayout)`
 export const AgentTicketStats = () => {
     return (
         <>
-            <StyledLayout $gridTemplateColumns="repeat(4, 1fr)" $padding="20px">
+            <StyledLayout $gridTemplateColumns="repeat(5, 1fr)" $padding="20px">
                 {data.map((item) => <SingleStat subHeading={item.subHeading} value={item.value} key={item.subHeading} subTextValue={item.subTextValue} />)}
             </StyledLayout>
             <GridLayout $gridTemplateColumns="3fr 1fr" $gridGap="20px">
