@@ -1,4 +1,6 @@
+import { MouseEventHandler } from "react";
 import { Edit } from "@mui/icons-material";
+import { Checkbox } from "@mui/material";
 import { Row, createColumnHelper } from "@tanstack/react-table";
 import { CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-ux";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
@@ -32,10 +34,30 @@ const useColumns = () => {
             cell: info => info.getValue(),
             header: () => 'Status Category',
         }),
-        columnHelper.accessor("enable", {
-            id: 'enable',
-            cell: info => info.getValue().toString(),
+        columnHelper.display({
+            id: 'select',
             header: () => 'Enable',
+            cell: ({ row }) => {
+                const onClick: MouseEventHandler<HTMLButtonElement> = (event) => {
+                    event.stopPropagation();
+                }
+                return (
+                    <Checkbox onClick={onClick}
+                        {...{
+                            checked: row.getIsSelected(),
+                            disabled: !row.getCanSelect(),
+                            indeterminate: row.getIsSomeSelected(),
+                            onChange: row.getToggleSelectedHandler()
+                        }}
+                    />
+                )
+            },
+            maxSize: 58,
+            enableResizing: false,
+            enableHiding: false,
+            meta: {
+                disableColReorder: true
+            }
         }),
         columnHelper.display({
             id: 'actions',
@@ -74,9 +96,22 @@ export const AgentStatusesList = (props: IStatusesListProps) => {
         setRowMetaData(row.original);
     }, [])
 
+    const getIntialSelectedRows = () => {
+        return statuses.reduce((acc, curr, index) => {
+            if (curr.enable) {
+                acc[index] = curr.enable
+            }
+            return acc;
+        }, {} as {
+            [key: number]: boolean
+        })
+    }
+
     return (
         <div style={{ height: '100%', overflow: 'auto', padding: '0px 15px' }}>
-            <ConfigDataGrid columns={columns} data={statuses!} enableSerchField onRowClick={onRowClick} />
+            <ConfigDataGrid columns={columns} data={statuses!} enableSerchField onRowClick={onRowClick} initialState={{
+                rowSelection: getIntialSelectedRows()
+            }} />
             <DrawerExtended
                 open={showDrawer}
                 anchor="right"

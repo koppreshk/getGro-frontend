@@ -17,7 +17,7 @@ const statuses = [{
     statusName: 'Offline'
 }, {
     color: '#ff9800',
-    enable: true,
+    enable: false,
     statusCategory: 'Be right back',
     statusName: 'Be right back'
 }] as IStatusesList[];

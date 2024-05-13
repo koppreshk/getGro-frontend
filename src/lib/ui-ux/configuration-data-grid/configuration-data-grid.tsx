@@ -33,7 +33,7 @@ const ScrollableDiv = styled.div`
     overflow: auto;
 `
 
-export interface IConfigDataGridProps<T> extends Pick<TableOptions<T>, 'data' | 'columns'> {
+export interface IConfigDataGridProps<T> extends Pick<TableOptions<T>, 'data' | 'columns' | 'initialState'> {
     isLoading?: boolean;
     totalPages?: number
     enableSerchField?: boolean;
@@ -41,7 +41,7 @@ export interface IConfigDataGridProps<T> extends Pick<TableOptions<T>, 'data' | 
 }
 
 export const ConfigDataGrid = <T extends object>(props: IConfigDataGridProps<T>) => {
-    const { columns, data, isLoading, totalPages, enableSerchField, onRowClick } = props;
+    const { columns, data, isLoading, totalPages, enableSerchField, initialState, onRowClick } = props;
     const memoizedData = useMemo(() => isLoading ? Array(10).fill({}) : data, [data, isLoading]);
     const memoizedColumns = useMemo(() =>
         isLoading
@@ -62,6 +62,7 @@ export const ConfigDataGrid = <T extends object>(props: IConfigDataGridProps<T>)
         state: {
             sorting,
         },
+        initialState: initialState,
         onSortingChange: setSorting,
         getCoreRowModel: getCoreRowModel(),
         getSortedRowModel: getSortedRowModel(),
