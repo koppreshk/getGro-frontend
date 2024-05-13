@@ -1,0 +1,130 @@
+import { Typography } from "@mui/material";
+import { FlexBox, GridLayout } from "lib/ui-ux";
+import styled, { useTheme } from "styled-components";
+import ReactApexChart from "react-apexcharts";
+import { ApexOptions } from "apexcharts";
+import { IBreachedMetrics } from ".";
+
+const StyledLayout = styled(GridLayout)`
+    background: ${({ theme }) => theme.pallete.white};
+    border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
+`;
+
+const DataGridLayout = styled(GridLayout)`
+
+    .stats-wrapper:last-child {
+        border-right: none;
+    }
+    .stats-wrapper:first-child {
+        padding: 0;
+    }
+`;
+
+const StatsWrapper = styled(FlexBox)`
+    border-right: ${({ theme }) => theme.semantics.standardBorder};
+    padding-left: 30px;
+`;
+
+export const TicketsBreached = (props: { breachedData: IBreachedMetrics }) => {
+    const { breachedData } = props;
+    const { pallete } = useTheme();
+    return (
+        <GridLayout $gridTemplateColumns="repeat(2, 1fr)" $gridGap="20px">
+
+            <StyledLayout $gridTemplateColumns="70% 30%" $padding="20px">
+                <FlexBox flexDirection="column" gap="14px">
+                    <FlexBox gap="6px">
+                        <Typography variant="h5" sx={{ color: pallete.grayVariant3 }} >Tickets Breached</Typography>
+                        <Typography variant="body3" sx={{ color: pallete.grayNeutral }}>({breachedData.TicketsCount} Unique Tickets)</Typography>
+                    </FlexBox>
+
+                    <DataGridLayout $gridTemplateColumns="repeat(2, 1fr)">
+                        <StatsWrapper gap="8px" flexDirection="column" className="stats-wrapper">
+                            <Typography variant="body2">SLA Breached</Typography >
+                            <Typography variant="h2">{breachedData.BreachedTicketsCountPercentage}%</Typography>
+                            <Typography variant="body3">{breachedData.BreachedTicketsCount} Tickets</Typography>
+                        </StatsWrapper>
+                        <StatsWrapper gap="8px" flexDirection="column" className="stats-wrapper">
+                            <Typography variant="body2">SLA Achieved</Typography>
+                            <Typography variant="h2">{breachedData.AchievedTicketsCountPercentage}%</Typography>
+                            <Typography variant="body3">{breachedData.AchievedTicketsCount} Tickets</Typography>
+                        </StatsWrapper>
+                    </DataGridLayout>
+
+                </FlexBox>
+
+                <TicketsBreachedChart breachedPercentage={breachedData.BreachedTicketsCountPercentage} />
+
+            </StyledLayout>
+
+            <StyledLayout $gridTemplateColumns="60% 40%" $padding="20px">
+                <FlexBox flexDirection="column" gap="14px">
+                    <FlexBox gap="6px">
+                        <Typography variant="h5" sx={{ color: pallete.grayVariant3 }} >SLA Breaches</Typography>
+                        <Typography variant="body3" sx={{ color: pallete.grayNeutral }}>({breachedData.BreachesCount} Unique Tickets)</Typography>
+                    </FlexBox>
+
+                    <DataGridLayout $gridTemplateColumns="repeat(2, 1fr)">
+                        <StatsWrapper gap="8px" flexDirection="column" className="stats-wrapper">
+                            <Typography variant="body2">Response Breaches</Typography >
+                            <Typography variant="h2">{breachedData.ResponseBreachedCountPercentage}%</Typography>
+                            <Typography variant="body3">{breachedData.ResponseBreachedCount} Tickets</Typography>
+                        </StatsWrapper>
+                        <StatsWrapper gap="8px" flexDirection="column" className="stats-wrapper">
+                            <Typography variant="body2">Resolution Breaches</Typography>
+                            <Typography variant="h2">{breachedData.ResolutionBreachedCountPercentage}%</Typography>
+                            <Typography variant="body3">{breachedData.ResolutionBreachedCount} Times</Typography>
+                        </StatsWrapper>
+                    </DataGridLayout>
+
+                </FlexBox>
+                <FlexBox alignItems='center' height='100%' padding="10px 0">
+                    <SLABreachedChart respBreachPercent={breachedData.ResponseBreachedCountPercentage} reslnBreachPercent={breachedData.ResolutionBreachedCountPercentage} />
+                </FlexBox>
+            </StyledLayout>
+        </GridLayout>
+    )
+}
+
+const TicketsBreachedChart = (prop: { breachedPercentage: number }) => {
+
+    const data = {
+        series: [prop.breachedPercentage],
+        options: {
+            chart: {
+                type: 'radialBar',
+            },
+            plotOptions: {
+                radialBar: {
+                    hollow: {
+                        size: '60%'
+                    }
+                }
+            },
+            labels: ['Breached'],
+            colors: ['#6a69f6']
+        } as ApexOptions
+    };
+
+
+    return (
+        <ReactApexChart options={data.options} series={data.series} type="radialBar" />
+    )
+}
+
+const SLABreachedChart = (props: { respBreachPercent: number, reslnBreachPercent: number }) => {
+
+    const data = {
+        series: Object.values(props),
+        options: {
+            chart: {
+                fontFamily: 'Poppins',
+                type: 'donut',
+            },
+        } as ApexOptions
+    };
+
+    return (
+        <ReactApexChart options={data.options} series={data.series} type="donut" />
+    )
+}

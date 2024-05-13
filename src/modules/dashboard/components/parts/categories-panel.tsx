@@ -84,6 +84,10 @@ const TabPillWrapper = styled(FlexBox) <{ $isSelected: boolean }>`
     cursor: pointer;
     background-color: ${({ $isSelected, theme }) => $isSelected ? theme.pallete.primaryPurple : '#e5e5ea'};
     color: ${({ $isSelected, theme }) => $isSelected ? theme.pallete.white : 'black'};
+
+    &:hover{
+        background-color: #dcdce1;
+    }
 `;
 
 interface ITabPillProps {
