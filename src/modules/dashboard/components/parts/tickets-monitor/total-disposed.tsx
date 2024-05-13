@@ -53,26 +53,21 @@ import styled, { IDashboardColors, useTheme } from 'styled-components';
 
 const getChartMetadata = (totalCompletedByUsers: TotalCompletedByUsers, dashboard: IDashboardColors) => {
     return {
-        series: Object.values(totalCompletedByUsers),
+        series: [{ data: Object.values(totalCompletedByUsers) }],
         options: {
             chart: {
                 fontFamily: 'Poppins',
-                width: 400,
-                height: 480,
-                type: 'donut',
+                type: 'bar',
             },
-            labels: Object.keys(totalCompletedByUsers),
-            responsive: [{
-                breakpoint: 480,
-                options: {
-                    chart: {
-                        width: 400
-                    },
-                    legend: {
-                        position: 'bottom'
-                    }
+            xaxis: {
+                categories: Object.keys(totalCompletedByUsers)
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: 4,
+                    borderRadiusApplication: 'end',
                 }
-            }],
+            },
             colors: [dashboard.graphBgColor2, dashboard.graphBgColor3, dashboard.graphBgColor4, dashboard.graphBgColor5, dashboard.graphBgColor6, dashboard.graphBgColor7],
         } as ApexOptions,
     }
@@ -96,7 +91,7 @@ export const TotalDisposed = (props: ITotalDisposedProps) => {
     return (
         <ChartContainer flexDirection='column'>
             <Typography variant='h4' sx={{ marginBottom: '70px' }}>Total Disposed</Typography>
-            <Chart options={chartMetadata.options} series={chartMetadata.series} type="donut" height="350px" width={'100%'} />
+            <Chart options={chartMetadata.options} series={chartMetadata.series} type="bar" height="350px" width={'100%'} />
         </ChartContainer>
     )
 }
