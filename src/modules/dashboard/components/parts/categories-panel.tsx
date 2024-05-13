@@ -3,7 +3,7 @@ import styled, { useTheme } from "styled-components";
 import { Box, Typography } from "@mui/material"
 import { FlexBox } from "lib/ui-ux";
 import { Widgets } from "@mui/icons-material";
-import { AgentPerformanceDashContainer, TicketMonitoringDashContainer, SupportMonitoringDashContainer } from "modules/dashboard/container";
+import { AgentPerformanceDashContainer, TicketMonitoringDashContainer, SupportMonitoringDashContainer, SLADashboardContainer } from "modules/dashboard/container";
 
 interface IDashboardCategories {
     id: number;
@@ -40,7 +40,7 @@ const DashboardCategories: IDashboardCategories[] = [
     {
         id: 4,
         name: "SLA Dashboard",
-        component: <AgentPerformanceDashContainer />,
+        component: <SLADashboardContainer />,
     },
     {
         id: 5,
@@ -84,6 +84,10 @@ const TabPillWrapper = styled(FlexBox) <{ $isSelected: boolean }>`
     cursor: pointer;
     background-color: ${({ $isSelected, theme }) => $isSelected ? theme.pallete.primaryPurple : '#e5e5ea'};
     color: ${({ $isSelected, theme }) => $isSelected ? theme.pallete.white : 'black'};
+
+    &:hover{
+        background-color: #dcdce1;
+    }
 `;
 
 interface ITabPillProps {
