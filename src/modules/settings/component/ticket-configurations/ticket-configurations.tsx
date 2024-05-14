@@ -1,8 +1,9 @@
 import { TaskOutlined, Tune, Tag } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import { FlexBox, GridLayout } from "lib/ui-ux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
+import { useMemo } from 'react';
 
 interface ICategoryOptions {
     route: string;
@@ -153,10 +154,21 @@ const TicketConfigOptions = (props: ICategoryOptions) => {
 }
 
 export const TicketsConfiguration = () => {
+    const [searchParmas] = useSearchParams();
+    const searchText = searchParmas.get('searchText');
+
+    const filteredConfig = useMemo(() => searchText ? configurations.reduce((acc, curr) => {
+        const filteredCats = curr.categoryOptions.filter((catOption) => catOption.label.toLowerCase().includes(searchText.toLowerCase()))
+        if (filteredCats.length) {
+            acc.push({ ...curr, categoryOptions: filteredCats })
+        }
+        return acc;
+    }, [] as IConfigCategory[]) : configurations, [searchText]);
+
     return (
         <>
             {
-                configurations.map((data) =>
+                filteredConfig.map((data) =>
                 (
                     <FlexBox padding="20px" flexDirection="column" gap="10px" width="100%" key={data.categoryName}>
                         <FlexBox alignItems="center" gap="5px" padding="0 10px">

@@ -1,8 +1,10 @@
+import styled from "styled-components";
+import { useSearchParams } from 'react-router-dom';
 import { Search } from "@mui/icons-material"
 import { Typography, TextField, InputAdornment } from "@mui/material"
 import { FlexBox } from "lib/ui-ux"
 import { TicketsConfiguration } from "./ticket-configurations"
-import styled from "styled-components";
+
 
 const StyledHeader = styled(FlexBox)`
     background: white;
@@ -14,6 +16,17 @@ const StyledContent = styled(FlexBox)`
 `;
 
 export const Configurations = () => {
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const onChange: React.ChangeEventHandler<HTMLInputElement> = (ev) => {
+        if (ev.target.value.length) {
+            searchParams.set('searchText', ev.target.value);
+            setSearchParams(searchParams);
+            return;
+        }
+        searchParams.delete('searchText');
+        setSearchParams(searchParams);
+    }
     return (
         <>
             <StyledHeader width="100%" justifyContent="space-between" padding="20px" alignItems="center" >
@@ -21,10 +34,10 @@ export const Configurations = () => {
                     Configurations
                 </Typography>
 
-                <TextField label="Search" name="search" size="small" InputProps={{
+                <TextField label="Search" name="search" size="small" onChange={onChange} placeholder="Search By Name" InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
-                            <Search/>
+                            <Search />
                         </InputAdornment>
                     ),
                 }} />
