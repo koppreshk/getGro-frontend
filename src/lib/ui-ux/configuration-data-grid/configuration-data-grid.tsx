@@ -22,6 +22,7 @@ const StyledTable = styled.table`
 
 const DataGridWrapper = styled(FlexBox)`
     overflow: auto;
+    padding: 0px 15px;
 `;
 
 const StyledTableHeader = styled.th`

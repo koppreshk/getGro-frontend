@@ -108,7 +108,7 @@ export const AgentStatusesList = (props: IStatusesListProps) => {
     }
 
     return (
-        <div style={{ height: '100%', overflow: 'auto', padding: '0px 15px' }}>
+        <div style={{ height: '100%', overflow: 'auto' }}>
             <ConfigDataGrid columns={columns} data={statuses!} enableSerchField onRowClick={onRowClick} initialState={{
                 rowSelection: getIntialSelectedRows()
             }} />

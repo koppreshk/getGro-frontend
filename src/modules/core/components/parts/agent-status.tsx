@@ -4,7 +4,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useState } from "react";
 import { convertCamelCaseStringToSpaceSeparated } from "lib/utils";
 
-enum Statuses {
+export enum Statuses {
     Active = 'active',
     Busy = 'busy',
     Away = 'away',

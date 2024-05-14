@@ -1,25 +1,31 @@
+import { Statuses } from "modules/core/components/parts/agent-status";
 import { AgentStatusesList, IStatusesList } from "modules/settings/component/general/agent-availability/agent-statuses-list"
 
 const statuses = [{
-    color: '#ff7a1a',
+    color: '#ffef0e',
     enable: true,
-    statusCategory: 'Away',
-    statusName: 'Away'
+    statusCategory: Statuses.Away,
+    statusName: Statuses.Away
 }, {
-    color: '#1aaa55',
+    color: '#17e254',
     enable: true,
-    statusCategory: 'Online',
-    statusName: 'Online'
+    statusCategory: Statuses.Active,
+    statusName: Statuses.Active
 }, {
-    color: '#a0aec0',
+    color: '#ec3427',
     enable: true,
-    statusCategory: 'Offline',
-    statusName: 'Offline'
+    statusCategory: Statuses.Busy,
+    statusName: Statuses.Busy
 }, {
-    color: '#ff9800',
+    color: '#c9c2c2',
+    enable: true,
+    statusCategory: Statuses.Offline,
+    statusName: Statuses.Offline
+}, {
+    color: '#d80e00',
     enable: false,
-    statusCategory: 'Be right back',
-    statusName: 'Be right back'
+    statusCategory: Statuses.DoNotDisturb,
+    statusName: Statuses.DoNotDisturb
 }] as IStatusesList[];
 
 export const AgentAvailabilityStatusesContainer = () => {
