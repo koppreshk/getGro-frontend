@@ -5,6 +5,7 @@ import { DateRangePicker, DateRange } from "@matharumanpreet00/react-daterange-p
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { FlexBox } from "lib/ui-ux";
 import { getFormattedDate } from "lib/utils";
+import TodayIcon from '@mui/icons-material/Today';
 
 const DateRangeDisplay = styled(FlexBox)`
     border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
@@ -47,7 +48,8 @@ export const DashboardDateRangePicker = (props: IDashboardDateRangePickerProps) 
 
     return (
         <>
-            <DateRangeDisplay onClick={handleClick} gap="10px">
+            <DateRangeDisplay onClick={handleClick} gap="8px" alignItems="center">
+                <TodayIcon sx={{ width: '16px' }} />
                 <Typography variant="subheading1">
                     {getFormattedDate(dateRange.startDate!.toISOString()!, { dateStyle: 'medium' })} - {getFormattedDate(dateRange.endDate!.toISOString(), { dateStyle: 'medium' })}
                 </Typography>
