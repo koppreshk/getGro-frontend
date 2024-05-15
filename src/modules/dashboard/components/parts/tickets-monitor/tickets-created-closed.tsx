@@ -3,18 +3,22 @@ import { useForm, FormProvider } from 'react-hook-form';
 import ReactApexChart from "react-apexcharts";
 import styled, { useTheme } from "styled-components";
 import { Typography } from "@mui/material"
-import { DateTime } from "luxon";
 import { FlexBox } from "lib/ui-ux"
 import { ChartContainer } from "./total-disposed";
 import { SelectField } from "lib/form-fields";
+import { DateRange } from "@matharumanpreet00/react-daterange-picker";
+import { getFormattedDate } from "lib/utils";
 
 const StyledChart = styled(ReactApexChart)`
-    .apexcharts-title-text {
-        font-weight: 400
-    }
+    
 `;
 
-export const TicketsCreatsClosed = () => {
+interface ITicketsCreatedAndCompletedProps {
+    dateRange: DateRange;
+}
+
+export const TicketsCreatedAndClosed = (props: ITicketsCreatedAndCompletedProps) => {
+    const { dateRange } = props;
     const { pallete, dashboard } = useTheme();
 
     const state = {
@@ -23,8 +27,8 @@ export const TicketsCreatsClosed = () => {
             data: [10, 41, 35, 51, 49, 62]
         },
         {
-            name: "Solved",
-            data: [5, 35, 30, 45, 31, 26]
+            name: "Completed",
+            data: [5, 35, 15, 45, 31, 26]
         }],
         options: {
             chart: {
@@ -48,7 +52,7 @@ export const TicketsCreatsClosed = () => {
                 },
             },
             xaxis: {
-                categories: ['facebook', 'instagram', 'whatsapp', 'telephonic', 'email', 'twitter'],
+                categories: ['Facebook', 'Instagram', 'Whatsapp', 'Telephonic', 'Email', 'Twitter'],
             },
             fill: {
                 type: 'gradient',
@@ -65,7 +69,6 @@ export const TicketsCreatsClosed = () => {
 
     };
 
-    const previousUnit = { month: 1 };
     const form = useForm({
         defaultValues: {
             groupBy: 'source'
@@ -78,9 +81,9 @@ export const TicketsCreatsClosed = () => {
                 <FlexBox flexDirection="column">
                     <FlexBox justifyContent="space-between" width="100%">
                         <FlexBox flexDirection="column">
-                            <Typography variant="h4">Tickets Created vs Closed</Typography>
+                            <Typography variant="h4">Tickets Created vs Completed</Typography>
                             <Typography variant="subheading2" color={pallete.grayVariant3}>
-                                {DateTime.now().minus(previousUnit).toLocaleString(DateTime.DATE_MED)} - {DateTime.local().toLocaleString(DateTime.DATE_MED)}
+                                {getFormattedDate(dateRange!.startDate!.toISOString(), { dateStyle: 'medium' })} - {getFormattedDate(dateRange!.endDate!.toISOString(), { dateStyle: 'medium' })}
                             </Typography>
                         </FlexBox>
                         <SelectField sx={{ width: '200px' }} label="GroupBy" size="small" menuOptions={[{ key: 'source', value: 'source' }]} name="groupBy" />

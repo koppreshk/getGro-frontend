@@ -5,7 +5,7 @@ import { TicketsBySource } from "./tickets-by-source"
 import { ToDoList } from "./to-do-list"
 import { TopFiveMetrics } from "./top-five-metrics"
 import { TotalDisposed } from "./total-disposed"
-import { TicketsCreatsClosed } from "./tickets-created-closed"
+import { TicketsCreatedAndClosed } from "./tickets-created-closed"
 import { IDashboardData } from "modules/dashboard/apis"
 import { DateRange } from "@matharumanpreet00/react-daterange-picker"
 import { QuickTrends } from "./quick-trends"
@@ -30,8 +30,8 @@ export const TicketMonitor = (props: ITicketMonitorProps) => {
                     pending_tickets={data.pending_tickets}
                     completed_tickets={data.completed_tickets}
                     first_contact_resolutions={data.first_contact_resolutions} />
-                <GridLayout $gridGap="20px" $gridTemplateColumns={'2fr auto auto'}>
-                    <TicketsCreatsClosed />
+                <GridLayout $gridGap="20px" $gridTemplateColumns={'2fr 0.5fr 0.5fr'}>
+                    <TicketsCreatedAndClosed dateRange={dateRange} />
                     <QuickTrends />
                     <ToDoList />
                 </GridLayout>
