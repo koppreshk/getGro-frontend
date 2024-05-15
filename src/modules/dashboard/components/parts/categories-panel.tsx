@@ -42,16 +42,16 @@ const DashboardCategories: IDashboardCategories[] = [
         name: "SLA Dashboard",
         component: <SLADashboardContainer />,
     },
-    {
-        id: 5,
-        name: "CSR Dashboard",
-        component: <AgentPerformanceDashContainer />,
-    },
-    {
-        id: 6,
-        name: "Ticket Conversation Report",
-        component: <AgentPerformanceDashContainer />,
-    },
+    // {
+    //     id: 5,
+    //     name: "CSR Dashboard",
+    //     component: <AgentPerformanceDashContainer />,
+    // },
+    // {
+    //     id: 6,
+    //     name: "Ticket Conversation Report",
+    //     component: <AgentPerformanceDashContainer />,
+    // },
 ];
 
 interface TabPanelProps {
