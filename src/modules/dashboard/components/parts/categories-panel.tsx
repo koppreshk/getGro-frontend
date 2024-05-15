@@ -86,15 +86,15 @@ const TabPillWrapper = styled(FlexBox) <{ $isSelected: boolean }>`
     color: ${({ $isSelected, theme }) => $isSelected ? theme.pallete.white : 'black'};
 
     &:hover{
-        background-color: #dcdce1;
+        background-color: ${({ $isSelected, theme }) => $isSelected ? theme.pallete.primaryPurple : '#dcdce1'};
     }
 `;
 
 interface ITabPillProps {
     label: string;
     id: number;
+    value: number;
     onClickHandler: (id: number) => void;
-    value: number
 }
 
 const TabPill = (props: ITabPillProps) => {
