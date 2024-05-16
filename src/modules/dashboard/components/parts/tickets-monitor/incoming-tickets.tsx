@@ -43,7 +43,7 @@ export const IncomingTickets = () => {
 
     return (
         <ChartContainer flexDirection='column' justifyContent='space-between'>
-            <Typography variant='h4'>Tickets Created</Typography>
+            <Typography variant='h4'>Total Created</Typography>
             <Chart options={chartMetadata.options} series={chartMetadata.series} type="line" height="350px" width={'100%'} />
         </ChartContainer>
     )

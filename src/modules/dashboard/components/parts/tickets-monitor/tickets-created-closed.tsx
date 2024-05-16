@@ -27,7 +27,7 @@ export const TicketsCreatedAndClosed = (props: ITicketsCreatedAndCompletedProps)
             data: [10, 41, 35, 51, 49, 62]
         },
         {
-            name: "Completed",
+            name: "Disposed",
             data: [5, 35, 15, 45, 31, 26]
         }],
         options: {
@@ -81,7 +81,7 @@ export const TicketsCreatedAndClosed = (props: ITicketsCreatedAndCompletedProps)
                 <FlexBox flexDirection="column">
                     <FlexBox justifyContent="space-between" width="100%">
                         <FlexBox flexDirection="column">
-                            <Typography variant="h4">Tickets Created vs Completed</Typography>
+                            <Typography variant="h4">Tickets Created vs Disposed</Typography>
                             <Typography variant="subheading2" color={pallete.grayVariant3}>
                                 {getFormattedDate(dateRange!.startDate!.toISOString(), { dateStyle: 'medium' })} - {getFormattedDate(dateRange!.endDate!.toISOString(), { dateStyle: 'medium' })}
                             </Typography>
