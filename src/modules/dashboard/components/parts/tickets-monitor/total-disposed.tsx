@@ -89,8 +89,8 @@ export const TotalDisposed = (props: ITotalDisposedProps) => {
     const chartMetadata = getChartMetadata(totalCompletedByUsers, dashboard);
 
     return (
-        <ChartContainer flexDirection='column'>
-            <Typography variant='h4' sx={{ marginBottom: '70px' }}>Total Disposed</Typography>
+        <ChartContainer flexDirection='column' justifyContent='space-between'>
+            <Typography variant='h4'>Total Disposed</Typography>
             <Chart options={chartMetadata.options} series={chartMetadata.series} type="bar" height="350px" width={'100%'} />
         </ChartContainer>
     )

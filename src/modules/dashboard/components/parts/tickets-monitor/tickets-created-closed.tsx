@@ -86,7 +86,7 @@ export const TicketsCreatedAndClosed = (props: ITicketsCreatedAndCompletedProps)
                                 {getFormattedDate(dateRange!.startDate!.toISOString(), { dateStyle: 'medium' })} - {getFormattedDate(dateRange!.endDate!.toISOString(), { dateStyle: 'medium' })}
                             </Typography>
                         </FlexBox>
-                        <SelectField sx={{ width: '200px' }} label="GroupBy" size="small" menuOptions={[{ key: 'source', value: 'source' }]} name="groupBy" />
+                        <SelectField sx={{ width: '200px' }} label="GroupBy" size="small" menuOptions={[{ key: 'source', value: 'Source' }]} name="groupBy" />
                     </FlexBox>
                 </FlexBox>
                 <StyledChart

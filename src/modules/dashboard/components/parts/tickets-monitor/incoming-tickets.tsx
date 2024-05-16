@@ -22,23 +22,29 @@ export const IncomingTickets = () => {
                 lines: {
                     show: false
                 },
-                categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                categories: ['Facebook', 'Instagram', 'Whatsapp', 'Telephonic', 'Email', 'Twitter']
             },
             dataLabels: {
                 enabled: false
             },
+            grid: {
+                row: {
+                    colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                    opacity: 0.5
+                },
+            },
             colors: [dashboard.graphBgColor1]
         } as ApexOptions,
         series: [{
-            name: 'Tickets Received',
-            data: [30, 40, 35, 50, 49, 60, 56]
+            name: 'Tickets Created',
+            data: [10, 41, 35, 51, 49, 62]
         }],
     }
 
     return (
-        <ChartContainer flexDirection='column'>
-            <Typography variant='h4'>Incoming Tickets</Typography>
-            <Chart options={chartMetadata.options} series={chartMetadata.series} type="bar" height="350px" width={'100%'} />
+        <ChartContainer flexDirection='column' justifyContent='space-between'>
+            <Typography variant='h4'>Tickets Created</Typography>
+            <Chart options={chartMetadata.options} series={chartMetadata.series} type="line" height="350px" width={'100%'} />
         </ChartContainer>
     )
 }

@@ -40,7 +40,7 @@ export const TicketsBySource = (props: { channelsInfo: ChannelsInfo }) => {
 
     return (
         <>
-            <ChartContainer flexDirection="column">
+            <ChartContainer flexDirection="column" justifyContent='space-between'>
                 <Typography variant='h4'>Channel Contribution</Typography>
                 <FlexBox alignItems='center' height='100%'>
                     <Chart options={chartMetadata.options} series={chartMetadata.series} type="pie" width={430} />
