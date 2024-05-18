@@ -17,10 +17,10 @@ export const FirstContactResolution = () => {
     )
 }
 
-function CustomCircularProgress(props: CircularProgressProps) {
+export function CustomCircularProgress(props: CircularProgressProps) {
     const { pallete } = useTheme();
     return (
-        <FlexBox height="calc(100% - 23px)" justifyContent="center" alignItems="center">
+        <FlexBox justifyContent="center" alignItems="center">
             <Box sx={{ position: 'relative' }}>
                 <CircularProgress
                     variant="determinate"

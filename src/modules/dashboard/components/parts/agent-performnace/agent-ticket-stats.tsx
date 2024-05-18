@@ -51,7 +51,7 @@ const data2 = [{
     subHeading: "Avg Resolution Time"
 }];
 
-const StyledLayout = styled(GridLayout)`
+export const StyledLayout = styled(GridLayout)`
     background: ${({ theme }) => theme.pallete.white};
     border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
     .single-stat-container:last-child {
