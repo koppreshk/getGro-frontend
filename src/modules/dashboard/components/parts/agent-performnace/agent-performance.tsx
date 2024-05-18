@@ -5,7 +5,7 @@ import React from "react";
 import { DateTime } from "luxon";
 import { DateRange } from "@matharumanpreet00/react-daterange-picker";
 import { SLABreached } from "./sla-breached";
-import { CustomerSatifaction } from "./customer-satifaction";
+import { CustomerSatifaction, TotalTimeSpent } from "./customer-satifaction";
 
 interface IAgentPerformanceProps {
 
@@ -25,6 +25,7 @@ export const AgentPerformance = (_props: IAgentPerformanceProps) => {
                 <SLABreached />
                 <GridLayout $gridTemplateColumns={'2fr 1fr'} $gridGap={'20px'}>
                     <CustomerSatifaction />
+                    <TotalTimeSpent />
                 </GridLayout>
             </FlexBox>
         </>
