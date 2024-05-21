@@ -68,7 +68,7 @@ const configurations = [
         ]
     },
     {
-        categoryName: "General",
+        categoryName: "Users and Permissions",
         categoryIcon: () => <Tune color="primary" />,
         categoryOptions: [
             {
@@ -89,6 +89,13 @@ const configurations = [
                 uniqueKey: "agent-availability",
                 description: "Add, edit or remove an agents avaibilility status"
             },
+        ]
+    },
+    {
+        categoryName: "General",
+        categoryIcon: () => <Tune color="primary" />,
+        categoryOptions: [
+
             {
                 route: "ticket-escalation",
                 label: "Product Configuration",
@@ -107,12 +114,6 @@ const configurations = [
                 uniqueKey: "general-ticket-filter1",
                 description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
             },
-            {
-                route: "ticket-escalation",
-                label: "Ticket Escalation",
-                uniqueKey: "general-ticket-escalation1",
-                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
-            }
         ]
     },
 
