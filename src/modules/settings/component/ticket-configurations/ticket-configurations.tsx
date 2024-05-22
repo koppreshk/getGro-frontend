@@ -4,12 +4,14 @@ import { FlexBox, GridLayout } from "lib/ui-ux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { useMemo } from 'react';
+import ThumbsUpDownIcon from '@mui/icons-material/ThumbsUpDown';
 
 interface ICategoryOptions {
     route: string;
     label: string;
     uniqueKey: string;
     description?: string;
+    catOptionIcon?: () => JSX.Element;
 }
 
 interface IConfigCategory {
@@ -97,10 +99,11 @@ const configurations = [
         categoryOptions: [
 
             {
-                route: "ticket-escalation",
-                label: "Product Configuration",
-                uniqueKey: "general-ticket-escalation2",
-                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
+                route: "satisfaction-survey",
+                label: "Satisfaction Survey",
+                uniqueKey: "satisfaction-survey",
+                description: "Set up customer satisfaction survey for the ticket",
+                catOptionIcon: () => <ThumbsUpDownIcon />
             },
             {
                 route: "access-configuration",
@@ -138,17 +141,20 @@ const OptionWrapper = styled(FlexBox)`
 `;
 
 const TicketConfigOptions = (props: ICategoryOptions) => {
-    const { label, route, description } = props;
+    const { label, route, description, catOptionIcon } = props;
     const navigate = useNavigate();
-    const OnLinkClick = () => {
+    const onLinkClick = () => {
         navigate(route);
     }
 
     return (
-        <ConfigLinkWrapper onClick={OnLinkClick}>
-            <OptionWrapper flexDirection="column">
-                <Typography variant="h5" className="config-name"> {label} </Typography>
-                <Typography variant="caption">{description}</Typography>
+        <ConfigLinkWrapper onClick={onLinkClick}>
+            <OptionWrapper flexDirection="row" gap="10px">
+                {catOptionIcon && catOptionIcon()}
+                <FlexBox flexDirection="column">
+                    <Typography variant="h5" className="config-name"> {label} </Typography>
+                    <Typography variant="caption">{description}</Typography>
+                </FlexBox>
             </OptionWrapper>
         </ConfigLinkWrapper>
     )
@@ -181,7 +187,7 @@ export const TicketsConfiguration = () => {
                         <GridLayout $padding="10px" $gridGap="14px 12px" $gridTemplateColumns={"repeat(4, 1fr)"}>
                             {data.categoryOptions.map((categoryData) =>
                                 <TicketConfigOptions key={categoryData.uniqueKey} uniqueKey={categoryData.uniqueKey}
-                                    label={categoryData.label} route={categoryData.route} description={categoryData.description} />)}
+                                    label={categoryData.label} route={categoryData.route} description={categoryData.description} catOptionIcon={categoryData.catOptionIcon} />)}
                         </GridLayout>
                     </FlexBox>
                 ))
