@@ -4,6 +4,7 @@ import { TicketQueuesContainer, TicketEscalationContainer, TicketDispositionType
 import { FacebookConfigurations } from "../component/channel-configurations"
 import { UsersLayout } from "../component/general"
 import { AgentAvailabilityLayout } from "../component/general/agent-availability/agent-avilability-layout"
+import { SatisfactionSurveyLayout } from "../component/general/satifaction-survey/satisfaction-survey-layout"
 
 export default function ConfigurationsPage() {
     return (
@@ -16,6 +17,7 @@ export default function ConfigurationsPage() {
             <Route key="facebook-login" path="/facebook" element={<FacebookConfigurations />} />
             <Route key="add-user" path="/users" element={<UsersLayout />} />
             <Route key="agent-availability" path="/agent-availability" element={<AgentAvailabilityLayout />} />
+            <Route key="satisfaction-survey" path="/satisfaction-survey" element={<SatisfactionSurveyLayout />} />
         </Routes>
     )
 }
