@@ -4,11 +4,19 @@ import { FlexBox } from "lib/ui-ux"
 import { FormProvider, useForm } from "react-hook-form"
 import { RatingScale } from "./rating-scale";
 
+interface ISurveyDetailsFormFields {
+    surveyQuestion: string;
+    thankYouMessage: string;
+    ratingScale: string;
+    enableCustSatifaction: boolean;
+}
 export const SurveyDetails = () => {
-    const form = useForm({
+    const form = useForm<ISurveyDetailsFormFields>({
         defaultValues: {
             surveyQuestion: 'How satisfied are you with our customer service?',
-            thankYouMessage: 'Thank you for your valuable feedback'
+            thankYouMessage: 'Thank you for your valuable feedback',
+            enableCustSatifaction: true,
+            ratingScale: '2points'
         }
     });
     return (
