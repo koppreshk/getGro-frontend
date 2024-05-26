@@ -7,3 +7,4 @@ export * from './auto-complete-field';
 export * from './checkbox-field';
 export * from './switch-field';
 export * from './date-time-picker-field';
+export * from './radio-group-field';
