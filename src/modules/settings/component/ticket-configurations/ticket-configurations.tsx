@@ -1,11 +1,10 @@
-import { TaskOutlined, Tune, Tag } from "@mui/icons-material";
+import { TaskOutlined, Tag, AccountCircle, WorkHistory, LockPerson, Facebook, SellOutlined } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import { FlexBox, GridLayout } from "lib/ui-ux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { useMemo } from 'react';
-import ThumbsUpDownIcon from '@mui/icons-material/ThumbsUpDown';
-
+import { GridViewRounded, StoreRounded, ThumbsUpDown, SettingsRounded, SupportAgentRounded } from '@mui/icons-material';
 interface ICategoryOptions {
     route: string;
     label: string;
@@ -53,6 +52,7 @@ const configurations = [
                 route: "tags",
                 label: "Tags",
                 uniqueKey: "tags",
+                catOptionIcon: () => <SellOutlined />,
                 description: "Label your tickets for better organizing and reporting"
             }
         ]
@@ -65,37 +65,41 @@ const configurations = [
                 label: 'Facebook',
                 route: 'facebook',
                 uniqueKey: 'facebook',
+                catOptionIcon: () => <Facebook />,
                 description: 'Configure facebook'
             }
         ]
     },
     {
         categoryName: "Users and Permissions",
-        categoryIcon: () => <Tune color="primary" />,
+        categoryIcon: () => <AccountCircle color="primary" />,
         categoryOptions: [
             {
                 route: "users",
                 label: "Users",
                 uniqueKey: "users",
+                catOptionIcon: () => <SupportAgentRounded />,
                 description: "Add user and assign them roles"
             },
             {
                 route: "roles-and-permissions",
                 label: "Roles and Permissions",
                 uniqueKey: "roles-and-permissions",
+                catOptionIcon: () => <LockPerson />,
                 description: "Create custom roles for agents with specific permissions"
             },
             {
                 route: "agent-availability",
                 label: "Agent Availability Status",
                 uniqueKey: "agent-availability",
+                catOptionIcon: () => <WorkHistory />,
                 description: "Add, edit or remove an agents avaibilility status"
             },
         ]
     },
     {
         categoryName: "General",
-        categoryIcon: () => <Tune color="primary" />,
+        categoryIcon: () => <SettingsRounded color="primary" />,
         categoryOptions: [
 
             {
@@ -103,7 +107,7 @@ const configurations = [
                 label: "Satisfaction Survey",
                 uniqueKey: "satisfaction-survey",
                 description: "Set up customer satisfaction survey for the ticket",
-                catOptionIcon: () => <ThumbsUpDownIcon />
+                catOptionIcon: () => <ThumbsUpDown />
             },
             {
                 route: "access-configuration",
@@ -117,6 +121,27 @@ const configurations = [
                 uniqueKey: "general-ticket-filter1",
                 description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
             },
+        ]
+    },
+    {
+        categoryName: "Apps",
+        categoryIcon: () => <GridViewRounded color="primary" />,
+        categoryOptions: [
+
+            {
+                route: "my-apps",
+                label: "My Apps",
+                uniqueKey: "my-apps",
+                description: "View and manage the installed marketplace and custom apps",
+                catOptionIcon: () => <GridViewRounded />
+            },
+            {
+                route: "marketplace",
+                label: "Marketplace",
+                uniqueKey: "marketplace",
+                catOptionIcon: () => <StoreRounded />,
+                description: "Manage and integrate third-party applications"
+            }
         ]
     },
 
@@ -151,7 +176,7 @@ const TicketConfigOptions = (props: ICategoryOptions) => {
         <ConfigLinkWrapper onClick={onLinkClick}>
             <OptionWrapper flexDirection="row" gap="10px">
                 {catOptionIcon && catOptionIcon()}
-                <FlexBox flexDirection="column">
+                <FlexBox flexDirection="column" width="calc(100% - 30px)">
                     <Typography variant="h5" className="config-name"> {label} </Typography>
                     <Typography variant="caption">{description}</Typography>
                 </FlexBox>
