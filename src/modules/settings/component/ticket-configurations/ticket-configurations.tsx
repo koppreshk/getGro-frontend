@@ -1,10 +1,12 @@
-import { TaskOutlined, Tag, AccountCircle, WorkHistory, LockPerson, Facebook, SellOutlined } from "@mui/icons-material";
+import { useMemo } from 'react';
+import {
+    TaskOutlined, Tag, AccountCircle, WorkHistory, LockPerson, Facebook, SellOutlined,
+    GridViewRounded, StoreRounded, ThumbsUpDown, SettingsRounded, SupportAgentRounded
+} from "@mui/icons-material";
+import styled from "styled-components";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Typography } from "@mui/material";
 import { FlexBox, GridLayout } from "lib/ui-ux";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import styled from "styled-components";
-import { useMemo } from 'react';
-import { GridViewRounded, StoreRounded, ThumbsUpDown, SettingsRounded, SupportAgentRounded } from '@mui/icons-material';
 interface ICategoryOptions {
     route: string;
     label: string;
