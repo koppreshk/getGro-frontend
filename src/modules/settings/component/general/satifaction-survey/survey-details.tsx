@@ -9,14 +9,25 @@ interface ISurveyDetailsFormFields {
     thankYouMessage: string;
     ratingScale: string;
     enableCustSatifaction: boolean;
+    onePoint: string;
+    twoPoints: string;
+    threePoints: string;
+    fourPoints: string;
+    fivePoints: string;
 }
+
 export const SurveyDetails = () => {
     const form = useForm<ISurveyDetailsFormFields>({
         defaultValues: {
             surveyQuestion: 'How satisfied are you with our customer service?',
             thankYouMessage: 'Thank you for your valuable feedback',
             enableCustSatifaction: true,
-            ratingScale: '2points'
+            ratingScale: '2points',
+            onePoint: 'Very Dissatisfied',
+            twoPoints: 'Dissatisfied',
+            threePoints: 'Neutral',
+            fourPoints: 'Satified',
+            fivePoints: 'Very Satisfied'
         }
     });
     return (
@@ -63,7 +74,7 @@ const SurveyQA = (props: ISurveyQAProps) => {
         <FlexBox flexDirection="column" gap="5px">
             <Typography variant="h5">{heading}</Typography>
             <Typography variant="subheading2">{subText}</Typography>
-            <TextboxField name={textboxName} />
+            <TextboxField name={textboxName} sx={{ maxWidth: '50%' }} />
         </FlexBox>
     )
 }
