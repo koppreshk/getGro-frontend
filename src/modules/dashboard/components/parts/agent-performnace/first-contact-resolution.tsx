@@ -12,22 +12,24 @@ export const FirstContactResolution = () => {
     return (
         <StyledFCRContainer padding="20px" flexDirection="column" gap="20px">
             <Typography sx={{ color: pallete.grayNeutral }} variant="h6" textAlign="center">FCR(First Contact Resolution)</Typography>
-            <CustomCircularProgress value={45} />
+            <CustomCircularProgress value={45} subText="45 out of 100" />
         </StyledFCRContainer>
     )
 }
 
-export function CustomCircularProgress(props: CircularProgressProps) {
+export function CustomCircularProgress(props: CircularProgressProps & {
+    subText?: string;
+}) {
     const { pallete } = useTheme();
     return (
-        <FlexBox justifyContent="center" alignItems="center">
+        <FlexBox justifyContent="center" alignItems="center" flexDirection="column">
             <Box sx={{ position: 'relative' }}>
                 <CircularProgress
                     variant="determinate"
                     sx={{
                         color: pallete.grayVariant5
                     }}
-                    size={110}
+                    size={130}
                     thickness={5}
                     value={100}
                 />
@@ -43,12 +45,13 @@ export function CustomCircularProgress(props: CircularProgressProps) {
                         top: 0,
                         left: 0
                     }}
-                    size={110}
+                    size={130}
                     thickness={5}
                     {...props}
                 />
                 <Typography variant="h5" sx={{ position: 'absolute', left: '50%', top: '50%', transform: `translate(-50%, -50%)` }}>{props.value + '%'}</Typography>
             </Box>
+            {props.subText && <Typography variant="h6" sx={{ mt: '20px', textAlign: 'center' }}>{props.subText}</Typography>}
         </FlexBox>
     );
 }
