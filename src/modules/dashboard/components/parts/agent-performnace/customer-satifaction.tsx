@@ -73,10 +73,10 @@ const SurveyResponse = (props: { value: string, subHeading: string }) => {
     )
 }
 
-export const TotalTimeSpent = () => {
+export const TotalLoginHours = () => {
     return (
         <StyledContainer gap="20px" flexDirection="column">
-            <Typography variant="h6">Total Time Spent</Typography>
+            <Typography variant="h6">Total Login Hours</Typography>
             <FlexBox alignItems="center" height="100%" width="100%" justifyContent="center">
                 <Typography>No Results found</Typography>
             </FlexBox>

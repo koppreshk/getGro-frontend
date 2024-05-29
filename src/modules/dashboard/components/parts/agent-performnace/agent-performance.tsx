@@ -2,10 +2,8 @@ import { FlexBox, GridLayout } from "lib/ui-ux";
 import { AgentTicketStats } from "./agent-ticket-stats";
 import { DashboardDateRangePicker } from "../dashboard-date-range-picker";
 import React from "react";
-import { DateTime } from "luxon";
 import { DateRange } from "@matharumanpreet00/react-daterange-picker";
-import { SLABreached } from "./sla-breached";
-import { CustomerSatifaction, TotalTimeSpent } from "./customer-satifaction";
+import { CustomerSatifaction, TotalLoginHours } from "./customer-satifaction";
 
 interface IAgentPerformanceProps {
 
@@ -13,7 +11,7 @@ interface IAgentPerformanceProps {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const AgentPerformance = (_props: IAgentPerformanceProps) => {
-    const [dateRange, setDateRange] = React.useState<DateRange>({ startDate: DateTime.now().minus({ month: 1 }).toJSDate(), endDate: new Date() });
+    const [dateRange, setDateRange] = React.useState<DateRange>({ startDate: new Date(), endDate: new Date() });
 
     return (
         <>
@@ -22,10 +20,9 @@ export const AgentPerformance = (_props: IAgentPerformanceProps) => {
                     <DashboardDateRangePicker dateRange={dateRange} setDateRange={setDateRange} />
                 </FlexBox>
                 <AgentTicketStats />
-                <SLABreached />
                 <GridLayout $gridTemplateColumns={'2fr 1fr'} $gridGap={'20px'}>
                     <CustomerSatifaction />
-                    <TotalTimeSpent />
+                    <TotalLoginHours />
                 </GridLayout>
             </FlexBox>
         </>

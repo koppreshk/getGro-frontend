@@ -2,6 +2,7 @@ import { FlexBox, GridLayout } from "lib/ui-ux"
 import styled, { useTheme } from "styled-components";
 import { FirstContactResolution } from "./first-contact-resolution";
 import { Typography } from "@mui/material";
+import { SLABreached } from "./sla-breached";
 
 interface ISingleStatProps {
     value: string;
@@ -25,20 +26,8 @@ const data = [{
     subHeading: "Tickets Closed"
 }, {
     value: "6",
-    subHeading: "Tickets Resssigned"
+    subHeading: "Tickets Reopened"
 }]
-
-const data1 = [{
-    value: "0",
-    subTextValue: "(0 avg per day)",
-    subHeading: "Public Reply Added"
-}, {
-    value: "0",
-    subHeading: "Notes Added"
-}, {
-    value: "4",
-    subHeading: "Replied Tickets"
-}];
 
 const data2 = [{
     value: "55sec",
@@ -69,13 +58,11 @@ export const AgentTicketStats = () => {
                 {data.map((item) => <SingleStat subHeading={item.subHeading} value={item.value} key={item.subHeading} subTextValue={item.subTextValue} />)}
             </StyledLayout>
             <GridLayout $gridTemplateColumns="3fr 1fr" $gridGap="20px">
-                <FlexBox flexDirection="column">
-                    <StyledLayout $gridTemplateColumns="repeat(3, 1fr)" $padding="20px">
-                        {data1.map((item) => <SingleStat subHeading={item.subHeading} value={item.value} key={item.subHeading} subTextValue={item.subTextValue} />)}
-                    </StyledLayout>
+                <FlexBox flexDirection="column" gap="10px">
                     <StyledLayout $gridTemplateColumns="repeat(3, 1fr)" $padding="20px">
                         {data2.map((item) => <SingleStat subHeading={item.subHeading} value={item.value} key={item.subHeading} />)}
                     </StyledLayout>
+                    <SLABreached />
                 </FlexBox>
                 <FirstContactResolution />
             </GridLayout>

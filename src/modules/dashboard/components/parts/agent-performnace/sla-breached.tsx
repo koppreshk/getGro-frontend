@@ -7,30 +7,23 @@ const data = [{
     sectionHeading: 'First Response',
     value1: '100%',
     postFixValue1: '(1 out 1)',
-    subText1: 'Breached',
+    subText1: 'No of Tickets Breached',
     value2: '64h 42m',
-    subText2: 'Average Violation time'
+    subText2: 'No of Tickets SLA achieved'
 }, {
     sectionHeading: 'Next Response',
     value1: '33.3%',
     postFixValue1: '(1 out 3)',
-    subText1: 'Breached',
+    subText1: 'No of Tickets Breached',
     value2: '32h 32m',
-    subText2: 'Average Violation time'
-}, {
-    sectionHeading: 'Resolution',
-    value1: '--',
-    postFixValue1: '',
-    subText1: 'Breached',
-    value2: '--',
-    subText2: 'Average Violation time'
+    subText2: 'No of Tickets SLA achieved'
 }]
 
 export const SLABreached = () => {
     return (
         <FlexBox gap='20px' flexDirection="column" padding="20px" style={{ background: '#fff', borderRadius: '8px' }}>
             <Typography>SLA Breached</Typography>
-            <StyledLayout $gridTemplateColumns={'1fr 1fr 1fr'} $gridGap={'20px'}>
+            <StyledLayout $gridTemplateColumns={'1fr 1fr'} $gridGap={'20px'}>
                 {data.map((item) => <SectionMetrics key={item.sectionHeading} {...item} />)}
             </StyledLayout>
         </FlexBox>
