@@ -4,6 +4,7 @@ import { FlexBox } from "lib/ui-ux"
 import React from "react";
 import { useMatch, useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components"
+import { TicketViewActionButtons } from "./ticket-details/ticket-list-view";
 
 const ViewsWrapper = styled(FlexBox)`
     width: 200px;
@@ -37,6 +38,12 @@ const OptionWrapper = styled.div`
   padding: 12px 14px;
   cursor: pointer;
   box-sizing: border-box;
+`;
+
+export const HeaderWrapper = styled(FlexBox)`
+    box-sizing: border-box;
+    padding: 0px 14px 15px;
+    border-bottom: ${({ theme }) => theme.semantics.standardBorder};
 `;
 
 const useViewOptions = () => {
@@ -112,6 +119,9 @@ export const TicketViews = () => {
     const viewOptions = useViewOptions();
     return (
         <ViewsWrapper flexDirection="column">
+            <HeaderWrapper width="100%">
+                <TicketViewActionButtons />
+            </HeaderWrapper>
             {viewOptions.map((item) => (
                 <React.Fragment key={item.primaryKey}>
                     {item.showOption ? <TicketViewOptions name={item.name} route={item.route} /> : null}
