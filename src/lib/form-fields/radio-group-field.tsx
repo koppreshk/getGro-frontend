@@ -2,7 +2,7 @@ import { FormControl, FormControlLabel, Radio, RadioGroup, RadioGroupProps } fro
 import { Controller, FieldValues, RegisterOptions, useFormContext } from "react-hook-form"
 
 
-type ITextboxFieldCheckboxProps = Omit<RadioGroupProps, 'error' | 'required'> & {
+type IRadioGroupFieldProps = Omit<RadioGroupProps, 'error' | 'required'> & {
     name: string;
     radioOptions: {
         label: string;
@@ -11,7 +11,7 @@ type ITextboxFieldCheckboxProps = Omit<RadioGroupProps, 'error' | 'required'> & 
     rules?: Omit<RegisterOptions<FieldValues, string>, "disabled" | "valueAsNumber" | "valueAsDate" | "setValueAs"> | undefined
 }
 
-export const RadioGroupField = (props: ITextboxFieldCheckboxProps) => {
+export const RadioGroupField = (props: IRadioGroupFieldProps) => {
     const { name, rules, radioOptions } = props;
     const { control } = useFormContext();
 
@@ -24,7 +24,7 @@ export const RadioGroupField = (props: ITextboxFieldCheckboxProps) => {
                             row
                             aria-labelledby="demo-row-radio-buttons-group-label"
                             {...props} {...field}>
-                            {radioOptions.map((item) => <FormControlLabel value={item.key} control={<Radio />} label={item.label} />)}
+                            {radioOptions.map((item) => <FormControlLabel value={item.key} control={<Radio size="small"/>} label={item.label} />)}
                         </RadioGroup>
                     </FormControl>
                 )}
