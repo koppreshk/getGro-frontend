@@ -1,5 +1,6 @@
 /// <reference types="vite-plugin-svgr/client" />
 
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, Typography } from "@mui/material";
 import { BreadCrumbs, FlexBox } from "lib/ui-ux"
 import ShopifyIcon from '../../../../../assets/svg/shopify-icon.svg?react';
@@ -48,9 +49,11 @@ interface IAppProps {
 }
 
 const App = (props: IAppProps) => {
-    const { description, label, iconElement } = props;
+    const { description, label, name, iconElement } = props;
+    const navigate = useNavigate();
+
     return (
-        <Card sx={{ maxWidth: 275 }}>
+        <Card sx={{ maxWidth: 275, cursor: 'pointer' }} onClick={() => navigate(name)} >
             <CardContent>
                 <FlexBox flexDirection="column" gap="10px">
                     <FlexBox gap="20px" alignItems="center">
