@@ -1,9 +1,11 @@
 /// <reference types="vite-plugin-svgr/client" />
 
-import { FlexBox } from 'lib/ui-ux'
-import ExotelIcon from '../../../../../../assets/svg/exotel-icon.svg?react'
-import { Button, Typography } from '@mui/material'
+import { useCallback, useState } from 'react';
 import styled from 'styled-components'
+import { FlexBox } from 'lib/ui-ux'
+import { Button, Typography } from '@mui/material'
+import { AddExotelDialog } from './add-exotel-dialog';
+import ExotelIcon from '../../../../../../assets/svg/exotel-icon.svg?react'
 
 const StyledFlexbox = styled(FlexBox)`
     border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
@@ -11,6 +13,11 @@ const StyledFlexbox = styled(FlexBox)`
 `;
 
 export const ExotelHeader = () => {
+    const [openPopup, setOpenPopup] = useState(false);
+    const togglePopup = useCallback(() => {
+        setOpenPopup((prevValue) => !prevValue)
+    }, []);
+    
     return (
         <StyledFlexbox justifyContent='space-between' alignItems='center' padding='4px 24px'>
             <FlexBox alignItems='center' gap="12px">
@@ -21,8 +28,8 @@ export const ExotelHeader = () => {
                 </FlexBox>
             </FlexBox>
 
-            <Button variant="contained" size="medium">Install</Button>
-
+            <Button variant="contained" size="medium" onClick={togglePopup}>Install</Button>
+            <AddExotelDialog togglePopup={togglePopup} openPopup={openPopup}/>
         </StyledFlexbox>
     )
 }
