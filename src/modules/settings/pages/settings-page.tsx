@@ -6,6 +6,7 @@ import { UsersLayout } from "../component/general"
 import { AgentAvailabilityLayout } from "../component/general/agent-availability/agent-avilability-layout"
 import { SatisfactionSurveyLayout } from "../component/general/satifaction-survey/satisfaction-survey-layout"
 import { MarketPlaceLayout } from "../component/apps/marketplace/marketplace-layout"
+import { ExotelConfiguration } from "../component/apps/marketplace/exotel-configuration"
 
 export default function ConfigurationsPage() {
     return (
@@ -20,6 +21,8 @@ export default function ConfigurationsPage() {
             <Route key="agent-availability" path="/agent-availability" element={<AgentAvailabilityLayout />} />
             <Route key="satisfaction-survey" path="/satisfaction-survey" element={<SatisfactionSurveyLayout />} />
             <Route key="marketplace" path="/marketplace" element={<MarketPlaceLayout />} />
+
+            <Route key="marketplace-exotel" path="/marketplace/exotel" element={<ExotelConfiguration />} />
         </Routes>
     )
 }
