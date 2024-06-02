@@ -6,6 +6,7 @@ import { BreadCrumbs, FlexBox } from "lib/ui-ux"
 import ShopifyIcon from '../../../../../assets/svg/shopify-icon.svg?react';
 import ExotelIcon from '../../../../../assets/svg/exotel-icon.svg?react';
 import { ShopifyLayout } from "./shopify/shopify-layout";
+import { ExotelConfiguration } from "./exotel-configuration";
 
 const MarketPlaceLayout = () => {
     return (
@@ -24,6 +25,7 @@ export const MarketplaceRoutes = () => {
             <Routes>
                 <Route key="marketplace-route" path="/" element={<MarketPlaceLayout />} />
                 <Route key="shopify-route" path="shopify" element={<ShopifyLayout />} />
+                <Route key="exotel-route" path="exotel" element={<ExotelConfiguration />} />
             </Routes>
         </>
     )
