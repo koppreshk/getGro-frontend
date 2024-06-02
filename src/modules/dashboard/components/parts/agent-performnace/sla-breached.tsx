@@ -2,24 +2,27 @@ import { Typography } from "@mui/material"
 import { FlexBox } from "lib/ui-ux";
 import { StyledLayout } from "./agent-ticket-stats";
 import styled, { useTheme } from "styled-components";
+import { SlaBreached } from "modules/dashboard/apis";
 
-const data = [{
-    sectionHeading: 'First Response',
-    value1: '100%',
-    postFixValue1: '(1 out 1)',
-    subText1: 'No of Tickets Breached',
-    value2: '64h 42m',
-    subText2: 'No of Tickets SLA achieved'
-}, {
-    sectionHeading: 'Next Response',
-    value1: '33.3%',
-    postFixValue1: '(1 out 3)',
-    subText1: 'No of Tickets Breached',
-    value2: '32h 32m',
-    subText2: 'No of Tickets SLA achieved'
-}]
+export const SLABreached = (props: { slaBreached: SlaBreached }) => {
+    const { first_response, second_response } = props.slaBreached;
 
-export const SLABreached = () => {
+    const data = [{
+        sectionHeading: 'First Response',
+        value1: first_response.tickets_breached,
+        postFixValue1: '(1 out 1 dummy)',
+        subText1: 'No of Tickets Breached',
+        value2: first_response.sla_achieve,
+        subText2: 'No of Tickets SLA achieved'
+    }, {
+        sectionHeading: 'Next Response',
+        value1: second_response.tickets_breached,
+        postFixValue1: '(1 out 3 dummy)',
+        subText1: 'No of Tickets Breached',
+        value2: second_response.sla_achieve,
+        subText2: 'No of Tickets SLA achieved'
+    }]
+
     return (
         <FlexBox gap='20px' flexDirection="column" padding="20px" style={{ background: '#fff', borderRadius: '8px' }}>
             <Typography>SLA Breached</Typography>
@@ -32,10 +35,10 @@ export const SLABreached = () => {
 
 interface ISectionMetricsProps {
     sectionHeading: string;
-    value1: string;
+    value1: number;
     postFixValue1: string;
     subText1: string;
-    value2: string;
+    value2: number;
     subText2: string;
 }
 

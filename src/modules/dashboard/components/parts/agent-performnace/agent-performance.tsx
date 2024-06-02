@@ -8,9 +8,12 @@ import { RadioGroupField } from "lib/form-fields/radio-group-field";
 import { FormProvider, useForm } from "react-hook-form";
 import { SelectField } from "lib/form-fields";
 import styled from "styled-components";
+import { IAgentPerformance } from "modules/dashboard/apis";
 
 interface IAgentPerformanceProps {
-
+    data: IAgentPerformance;
+    setDateRange: React.Dispatch<React.SetStateAction<DateRange>>;
+    dateRange: DateRange;
 }
 
 const FilterContainer = styled(FlexBox)`
@@ -30,27 +33,28 @@ interface IAgentPerformanceFormFields {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const AgentPerformance = (_props: IAgentPerformanceProps) => {
-    const [dateRange, setDateRange] = React.useState<DateRange>({ startDate: new Date(), endDate: new Date() });
+export const AgentPerformance = (props: IAgentPerformanceProps) => {
+    const { data, dateRange, setDateRange } = props;
+    const { queues, employees } = data;
     const form = useForm<IAgentPerformanceFormFields>({
         defaultValues: {
-            filterType: 'group',
-            filterValue: 'leads'
+            filterType: 'queue',
+            filterValue: queues[0].id.toString()
         }
     });
 
-    const menuOptions = form.watch('filterType') === 'group' ? [{ key: 'leads', value: 'Leads' }] : [{ key: 'anup', value: 'Anup' }]
+    const menuOptions = form.watch('filterType') === 'queue' ? queues.map((item) => ({ key: (item.id).toString(), value: item.name })) : employees.map((item) => ({ key: (item.id).toString(), value: `${item.firstName} ${item.lastName ?? ' '}` }))
     return (
         <FormProvider {...form}>
             <FlexBox flexDirection="column" gap="15px" height="100%" padding="20px">
                 <FlexBox justifyContent="space-between" alignItems="center">
                     <FilterContainer alignItems="center">
-                        <RadioGroupField name="filterType" radioOptions={[{ key: 'group', label: 'Group' }, { key: 'user', label: 'User' }]} />
-                        <SelectField name="filterValue" label={`Selected ${form.watch('filterType') === 'group' ? 'Group' : 'User'}`} menuOptions={menuOptions} size="small" sx={{ width: '200px' }} />
+                        <RadioGroupField name="filterType" radioOptions={[{ key: 'queue', label: 'Queue' }, { key: 'user', label: 'User' }]} />
+                        <SelectField name="filterValue" label={`Selected ${form.watch('filterType') === 'queue' ? 'Queue' : 'User'}`} menuOptions={menuOptions} size="small" sx={{ width: '200px' }} />
                     </FilterContainer>
                     <DashboardDateRangePicker dateRange={dateRange} setDateRange={setDateRange} />
                 </FlexBox>
-                <AgentTicketStats />
+                <AgentTicketStats data={data} />
                 <GridLayout $gridTemplateColumns={'2fr 1fr'} $gridGap={'20px'}>
                     <CustomerSatifaction />
                     <TotalLoginHours />
