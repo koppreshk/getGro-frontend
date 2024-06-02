@@ -1,18 +1,30 @@
 /// <reference types="vite-plugin-svgr/client" />
 
-import { useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { Card, CardContent, Typography } from "@mui/material";
 import { BreadCrumbs, FlexBox } from "lib/ui-ux"
 import ShopifyIcon from '../../../../../assets/svg/shopify-icon.svg?react';
 import ExotelIcon from '../../../../../assets/svg/exotel-icon.svg?react';
+import { ShopifyLayout } from "./shopify/shopify-layout";
 
-export const MarketPlaceLayout = () => {
+const MarketPlaceLayout = () => {
     return (
         <>
             <FlexBox padding="20px" flexDirection="column" gap="20px">
                 <BreadCrumbs />
                 <ThirdPartyApplications />
             </FlexBox>
+        </>
+    )
+}
+
+export const MarketplaceRoutes = () => {
+    return (
+        <>
+            <Routes>
+                <Route key="marketplace-route" path="/" element={<MarketPlaceLayout />} />
+                <Route key="shopify-route" path="shopify" element={<ShopifyLayout />} />
+            </Routes>
         </>
     )
 }
@@ -53,7 +65,7 @@ const App = (props: IAppProps) => {
     const navigate = useNavigate();
 
     return (
-        <Card sx={{ maxWidth: 275, cursor: 'pointer' }} onClick={() => navigate(name)} >
+        <Card sx={{ maxWidth: 275, cursor: 'pointer' }} onClick={() => navigate(name)} elevation={2}>
             <CardContent>
                 <FlexBox flexDirection="column" gap="10px">
                     <FlexBox gap="20px" alignItems="center">
