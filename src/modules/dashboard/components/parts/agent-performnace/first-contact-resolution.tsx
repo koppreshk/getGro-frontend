@@ -7,12 +7,12 @@ const StyledFCRContainer = styled(FlexBox)`
     border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
 `;
 
-export const FirstContactResolution = () => {
+export const FirstContactResolution = (props: { fcr: number }) => {
     const { pallete } = useTheme();
     return (
         <StyledFCRContainer padding="20px" flexDirection="column" gap="20px">
             <Typography sx={{ color: pallete.grayNeutral }} variant="h6" textAlign="center">FCR(First Contact Resolution)</Typography>
-            <CustomCircularProgress value={45} subText="45 out of 100" />
+            <CustomCircularProgress value={props.fcr} subText={`${props.fcr} out of 100`} />
         </StyledFCRContainer>
     )
 }

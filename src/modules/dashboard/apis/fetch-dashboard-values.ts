@@ -29,7 +29,7 @@ export const useFetchDashboardData = (dateRange: DateRange) => {
     const parsedFromDate = dateRange.startDate!.toISOString();
     const parsedToDate = dateRange.endDate!.toISOString();
 
-    const fetchAllDashboardData = React.useCallback(() => getData(`dashboard/${DashboardEndPoint.FETCH_DASHBOARD_DATA}?from=${parsedFromDate}&to=${parsedToDate}`).then((res) => res.json()), [getData, parsedFromDate, parsedToDate])
+    const fetchAllDashboardData = React.useCallback(() => getData(`${DashboardEndPoint.FETCH_DASHBOARD_DATA}?from=${parsedFromDate}&to=${parsedToDate}`).then((res) => res.json()), [getData, parsedFromDate, parsedToDate])
 
     return useQuery<IDashboardData>({
         queryKey: [DashboardQueryKeys.FETCH_DASHBOARD_DATA, dateRange],

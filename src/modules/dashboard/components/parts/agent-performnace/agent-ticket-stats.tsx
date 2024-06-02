@@ -3,42 +3,13 @@ import styled, { useTheme } from "styled-components";
 import { FirstContactResolution } from "./first-contact-resolution";
 import { Typography } from "@mui/material";
 import { SLABreached } from "./sla-breached";
+import { IAgentPerformance } from "modules/dashboard/apis";
 
 interface ISingleStatProps {
     value: string;
     subTextValue?: string;
     subHeading: string;
 }
-
-const data = [{
-    value: "6",
-    subHeading: "Tickets Created"
-}, {
-    value: "0",
-    subTextValue: "(0 avg per day)",
-    subHeading: "Tickets Assigned"
-}, {
-    value: "0",
-    subTextValue: "(0 avg per day)",
-    subHeading: "Tickets Resolved"
-}, {
-    value: "4",
-    subHeading: "Tickets Closed"
-}, {
-    value: "6",
-    subHeading: "Tickets Reopened"
-}]
-
-const data2 = [{
-    value: "55sec",
-    subHeading: "Avg First Response Time"
-}, {
-    value: "2min(s)",
-    subHeading: "Avg Response Time"
-}, {
-    value: "4min(s)",
-    subHeading: "Avg Resolution Time"
-}];
 
 export const StyledLayout = styled(GridLayout)`
     background: ${({ theme }) => theme.pallete.white};
@@ -51,20 +22,53 @@ export const StyledLayout = styled(GridLayout)`
     }
 `;
 
-export const AgentTicketStats = () => {
+export const AgentTicketStats = (props: { data: IAgentPerformance }) => {
+    const { data: { tickets_created, ticket_assigned, total_resolved, total_closed, tickets_reopened,
+        avg_first_response_time, avg_response_time, avg_resolution_time, sla_breached, fcr } } = props.data;
+
+    const ticketData = [{
+        value: tickets_created,
+        subHeading: "Tickets Created"
+    }, {
+        value: ticket_assigned,
+        subTextValue: "(0 avg per day dummy)",
+        subHeading: "Tickets Assigned"
+    }, {
+        value: total_resolved,
+        subTextValue: "(0 avg per day dummy)",
+        subHeading: "Tickets Resolved"
+    }, {
+        value: total_closed,
+        subHeading: "Tickets Closed"
+    }, {
+        value: tickets_reopened,
+        subHeading: "Tickets Reopened"
+    }];
+
+    const data2 = [{
+        value: avg_first_response_time,
+        subHeading: "Avg First Response Time"
+    }, {
+        value: avg_response_time,
+        subHeading: "Avg Response Time"
+    }, {
+        value: avg_resolution_time,
+        subHeading: "Avg Resolution Time"
+    }];
+
     return (
         <>
             <StyledLayout $gridTemplateColumns="repeat(5, 1fr)" $padding="20px">
-                {data.map((item) => <SingleStat subHeading={item.subHeading} value={item.value} key={item.subHeading} subTextValue={item.subTextValue} />)}
+                {ticketData.map((item) => <SingleStat subHeading={item.subHeading} value={item.value.toString()} key={item.subHeading} subTextValue={item.subTextValue} />)}
             </StyledLayout>
             <GridLayout $gridTemplateColumns="3fr 1fr" $gridGap="20px">
                 <FlexBox flexDirection="column" gap="10px">
                     <StyledLayout $gridTemplateColumns="repeat(3, 1fr)" $padding="20px">
-                        {data2.map((item) => <SingleStat subHeading={item.subHeading} value={item.value} key={item.subHeading} />)}
+                        {data2.map((item) => <SingleStat subHeading={item.subHeading} value={item.value.toString()} key={item.subHeading} />)}
                     </StyledLayout>
-                    <SLABreached />
+                    <SLABreached slaBreached={sla_breached} />
                 </FlexBox>
-                <FirstContactResolution />
+                <FirstContactResolution fcr={fcr}/>
             </GridLayout>
         </>
     )
