@@ -1,7 +1,8 @@
 import { useMemo } from 'react';
 import {
     TaskOutlined, Tag, AccountCircle, WorkHistory, LockPerson, Facebook, SellOutlined,
-    GridViewRounded, StoreRounded, ThumbsUpDown, SettingsRounded, SupportAgentRounded
+    GridViewRounded, StoreRounded, ThumbsUpDown, SettingsRounded, SupportAgentRounded,
+    Groups2Outlined, EventNoteOutlined, AssignmentTurnedInOutlined
 } from "@mui/icons-material";
 import styled from "styled-components";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -30,24 +31,21 @@ const configurations = [
                 route: "disposition-type",
                 label: "Disposition Type",
                 uniqueKey: "disposition-type",
+                catOptionIcon: () => <AssignmentTurnedInOutlined />,
                 description: "Create your ticket dipositon type for efficient ticket routing"
-            },
-            {
-                route: "ticket-filter",
-                label: "Ticket Filter",
-                uniqueKey: "ticket-filter",
-                description: "Lorem ipsum dolor sit amet, consectetur adipiscing."
             },
             {
                 route: "ticket-escalation",
                 label: "Ticket Escalation",
                 uniqueKey: "ticket-escalation",
+                catOptionIcon: () => <EventNoteOutlined />,
                 description: "Streamline ticket management: Automate categorization and routing with custom rules"
             },
             {
                 route: "ticket-queue",
                 label: "Ticket Queue",
                 uniqueKey: "ticket-queue",
+                catOptionIcon: () => <Groups2Outlined />,
                 description: "Organizing agents based on their expertise to address specific ticket types"
             },
             {
@@ -110,19 +108,7 @@ const configurations = [
                 uniqueKey: "satisfaction-survey",
                 description: "Set up customer satisfaction survey for the ticket",
                 catOptionIcon: () => <ThumbsUpDown />
-            },
-            {
-                route: "access-configuration",
-                label: "Dashboard Configuration",
-                uniqueKey: "general-access-configuration1",
-                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
-            },
-            {
-                route: "ticket-filter",
-                label: "Gen AI Configuration",
-                uniqueKey: "general-ticket-filter1",
-                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
-            },
+            }
         ]
     },
     {
@@ -153,7 +139,7 @@ const ConfigLinkWrapper = styled.div`
     &:hover {
         background: ${(props) => props.theme.pallete.grayVariant5};
         box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-        .config-name {
+        .MuiSvgIcon-root, .config-name {
             color: ${(props) => props.theme.pallete.primaryPurpleText};
         }
     }
