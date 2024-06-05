@@ -165,6 +165,7 @@ const OptionWrapper = styled(FlexBox)`
   cursor: pointer;
   border-radius: 5px;
   height: 85px;
+  color: ${({ theme }) => theme.pallete.defaultTextColor};
 `;
 
 const TicketConfigOptions = (props: ICategoryOptions) => {
