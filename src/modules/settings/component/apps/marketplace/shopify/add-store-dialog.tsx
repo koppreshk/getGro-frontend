@@ -4,6 +4,7 @@ import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider
 import { TextboxField } from "lib/form-fields";
 import { FlexBox } from "lib/ui-ux";
 import { Close } from "@mui/icons-material";
+import styled from "styled-components";
 
 interface IAddStoreDialogProps {
     open: boolean;
@@ -104,11 +105,20 @@ const ShopifyConfigSteps = (props: { activeStep: number }) => {
     )
 }
 
+const ShopifyEndURL = styled(Typography)`
+    padding: 8px;
+    background: ${({ theme }) => theme.pallete.grayVariant4};
+    border-radius: 0px 4px 4px 0px;
+`;
+
 const ShopifyDetailsForm = () => {
     return (
         <FlexBox flexDirection="column" gap="20px">
             <TextboxField name="storeName" size="small" label="Store Name" sx={{ minWidth: '400px' }} rules={{ required: 'Store name required' }} />
-            <TextboxField name="storeUrl" size="small" label="Store URL" rules={{ required: 'Store url required' }} />
+            <FlexBox>
+                <TextboxField name="storeUrl" size="small" sx={{ width: '100%', borderRight: '0px' }} label="Store URL" autoComplete="off" rules={{ required: 'Store url required' }} />
+                <ShopifyEndURL variant="body3">.myshopify.com</ShopifyEndURL>
+            </FlexBox>
             <TextboxField name="accessToken" size="small" type="password" label="Access Token" rules={{ required: 'Access token required' }} />
         </FlexBox>
     )
