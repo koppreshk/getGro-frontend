@@ -98,15 +98,23 @@ export const FacebookConfigurations = () => {
             <Conatainer>
 
                 {facebookResponse === null
-                    ? <FacebookLogin
-                        appId={import.meta.env.VITE_FACEBOOK_APP_ID}
-                        fields="name,email,picture"
-                        render={renderProps => (
-                            <StyledButton startIcon={<Facebook />} variant='contained' onClick={renderProps.onClick}>
-                                Login with facebook
-                            </StyledButton>
-                        )}
-                        callback={responseFacebook} />
+                    ?
+                    <FlexBox gap={'20px'} alignItems='center' style={{ background: '#F1F2F4', borderRadius: '4px' }}>
+                        <Facebook style={{ fontSize: 260 }} />
+                        <FlexBox flexDirection='column'>
+                            <Typography variant='h3'>Engage your customers, directly on facebook</Typography>
+                            <Typography mb='20px' variant='body3'>Associate a facebook page with customer support and respond to customer comments and wall posts directly from getgro</Typography>
+                            <FacebookLogin
+                                appId={import.meta.env.VITE_FACEBOOK_APP_ID}
+                                fields="name,email,picture"
+                                render={renderProps => (
+                                    <StyledButton startIcon={<Facebook />} sx={{ width: '300px' }} variant='contained' onClick={renderProps.onClick}>
+                                        Login with facebook
+                                    </StyledButton>
+                                )}
+                                callback={responseFacebook} />
+                        </FlexBox>
+                    </FlexBox>
                     :
                     <FlexBox flexDirection='column' gap="10px">
                         <img src={facebookResponse.picture.data.url} height={facebookResponse.picture.data.height} width={facebookResponse.picture.data.width} />
