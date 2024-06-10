@@ -3,6 +3,8 @@ import { useQuery } from "react-query";
 import { DateRange } from "@matharumanpreet00/react-daterange-picker";
 import { useServiceClient } from "lib";
 import { DashboardEndPoint, DashboardQueryKeys } from "./api-enums";
+import { useFormContext } from "react-hook-form";
+import { IAgentPerformanceFormFields } from "../components/parts/agent-performnace/agent-performance";
 
 export interface IAgentPerformance {
     queues: Queue[]
@@ -57,11 +59,26 @@ export const useFetchAgentPerformanceData = (dateRange: DateRange) => {
     const { getData } = useServiceClient();
     const parsedFromDate = dateRange.startDate!.toISOString();
     const parsedToDate = dateRange.endDate!.toISOString();
+    const { watch } = useFormContext<IAgentPerformanceFormFields>();
+    const { filterType, filterValue } = watch();
 
+    const finalParam = filterType === 'queue' && filterValue ? `queue_id=${filterValue}` : filterType === 'user' && filterValue ? `user_id=${filterValue}` : '';
+    const fetchAllAgentPerformanceData = React.useCallback(() => getData(`${DashboardEndPoint.AGENT_PERFORMANCE}?from=${parsedFromDate}&to=${parsedToDate}&type=${filterType}&${finalParam}`).then((res) => res.json()), [filterType, finalParam, getData, parsedFromDate, parsedToDate])
+
+    return useQuery<IAgentPerformance>({
+        queryKey: [DashboardQueryKeys.AGENT_PERFORMANCE, filterType, filterValue, parsedFromDate, parsedToDate],
+        queryFn: fetchAllAgentPerformanceData
+    });
+}
+
+export const useFetchAgentPerformanceDataInitial = (dateRange: DateRange) => {
+    const { getData } = useServiceClient();
+    const parsedFromDate = dateRange.startDate!.toISOString();
+    const parsedToDate = dateRange.endDate!.toISOString();
     const fetchAllAgentPerformanceData = React.useCallback(() => getData(`${DashboardEndPoint.AGENT_PERFORMANCE}?from=${parsedFromDate}&to=${parsedToDate}`).then((res) => res.json()), [getData, parsedFromDate, parsedToDate])
 
     return useQuery<IAgentPerformance>({
-        queryKey: [DashboardQueryKeys.AGENT_PERFORMANCE, dateRange],
+        queryKey: [DashboardQueryKeys.AGENT_PERFORMANCE + 'initial'],
         queryFn: fetchAllAgentPerformanceData
     });
 }

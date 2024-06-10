@@ -21,7 +21,7 @@ const StyledBox = styled(Box)`
     background-color: rgba(241, 242, 244, 0.6);
 `;
 
-const DashboardCategories: IDashboardCategories[] = [
+const dashboardCategories: IDashboardCategories[] = [
     {
         id: 1,
         name: "Tickets Monitor",
@@ -63,7 +63,7 @@ interface TabPanelProps {
 function CustomTabPanel(props: TabPanelProps) {
     const { value, index, ...other } = props;
 
-    const selectedTab = DashboardCategories.find((category) => category.id === value);
+    const selectedTab = dashboardCategories.find((category) => category.id === value);
 
     return (
         <div
@@ -113,7 +113,7 @@ const TabPill = (props: ITabPillProps) => {
     )
 }
 
-export const DashboardCategoriesPanel2 = () => {
+export const DashboardCategoriesPanel = () => {
     const [value, setValue] = React.useState(1);
     const { pallete } = useTheme();
 
@@ -129,7 +129,7 @@ export const DashboardCategoriesPanel2 = () => {
                         <Widgets color="primary" />
                         <Typography variant="h4" sx={{ color: pallete.grayVariant2 }} >Dashboards</Typography>
                     </FlexBox>
-                    {DashboardCategories.map((category) => {
+                    {dashboardCategories.map((category) => {
                         return <TabPill key={category.id} label={category.name} id={category.id} onClickHandler={onClickHandler} value={value} />
                     })}
                 </FlexBox>

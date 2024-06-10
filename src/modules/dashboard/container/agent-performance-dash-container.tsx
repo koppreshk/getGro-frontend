@@ -1,23 +1,49 @@
-import { CenteredCircularProgress } from "lib/ui-ux";
-import { useFetchAgentPerformanceData } from "../apis";
-import { AgentPerformance } from "../components/parts/agent-performnace/agent-performance"
 import React from "react";
+import { CenteredCircularProgress } from "lib/ui-ux";
+import { useFetchAgentPerformanceData, useFetchAgentPerformanceDataInitial } from "../apis";
+import { AgentPerformance, IAgentPerformanceFormFields } from "../components/parts/agent-performnace/agent-performance"
 import { DateRange } from "@matharumanpreet00/react-daterange-picker";
+import { useForm, FormProvider } from "react-hook-form";
 
-export const AgentPerformanceDashContainer = () => {
-    const [dateRange, setDateRange] = React.useState<DateRange>({ startDate: new Date(), endDate: new Date() });
+interface IAgentPerformanceDashContainerWrappedProps {
+    dateRange: DateRange;
+    setDateRange: React.Dispatch<React.SetStateAction<DateRange>>
 
-    const { data, isLoading } = useFetchAgentPerformanceData(dateRange);
+}
+
+const AgentPerformanceDashContainerWrapped = (props: IAgentPerformanceDashContainerWrappedProps) => {
+    const { data, isLoading, error } = useFetchAgentPerformanceData(props.dateRange);
 
     if (isLoading) {
         return <CenteredCircularProgress />
     }
 
-    if (data) {
-        return (
-            <AgentPerformance data={data} setDateRange={setDateRange} dateRange={dateRange} />
-        )
+    if (error) {
+        return <span>Error</span>
     }
+    return (
+        <AgentPerformance data={data!} setDateRange={props.setDateRange} dateRange={props.dateRange} />
+    )
+}
 
-    return <span>Error</span>
+export const AgentPerformanceDashContainer = () => {
+    const [dateRange, setDateRange] = React.useState<DateRange>({ startDate: new Date(), endDate: new Date() });
+
+    const apiInfo = useFetchAgentPerformanceDataInitial(dateRange);
+
+    const form = useForm<IAgentPerformanceFormFields>({
+        values: {
+            filterType: 'queue',
+            filterValue: apiInfo.data?.queues[0].id.toString() || ''
+        }
+    });
+
+    return (
+        <>
+            <FormProvider {...form}>
+                <AgentPerformanceDashContainerWrapped dateRange={dateRange} setDateRange={setDateRange} />
+            </FormProvider>
+
+        </>
+    )
 }

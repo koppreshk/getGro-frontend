@@ -1,5 +1,5 @@
 import { FlexBox } from "lib/ui-ux"
-import { DashboardCategoriesPanel2 } from "./parts/categories-panel"
+import { DashboardCategoriesPanel } from "./parts/categories-panel"
 import { Typography } from "@mui/material";
 import { useAuth } from "modules/login";
 import styled, { useTheme } from "styled-components";
@@ -12,7 +12,7 @@ export const DashboardLayout = () => {
     return (
         <FlexBox flexDirection="column" height="100%" width="100%" overflowY="auto">
             <UserDetails />
-            <DashboardCategoriesPanel2 />
+            <DashboardCategoriesPanel />
         </FlexBox>
     )
 };
