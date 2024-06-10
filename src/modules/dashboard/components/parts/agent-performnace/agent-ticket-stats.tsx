@@ -68,7 +68,7 @@ export const AgentTicketStats = (props: { data: IAgentPerformance }) => {
                     </StyledLayout>
                     <SLABreached slaBreached={sla_breached} />
                 </FlexBox>
-                <FirstContactResolution fcr={fcr}/>
+                <FirstContactResolution fcr={fcr} />
             </GridLayout>
         </>
     )
