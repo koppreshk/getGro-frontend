@@ -36,7 +36,10 @@ export interface Data {
     avg_first_response_time: number
     avg_response_time: number
     avg_resolution_time: number
-    fcr: number
+    fcr: {
+        percentage: number;
+        count_str: string;
+    };
     sla_breached: SlaBreached
 }
 
