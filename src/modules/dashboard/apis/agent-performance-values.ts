@@ -74,14 +74,12 @@ export const useFetchAgentPerformanceData = (dateRange: DateRange) => {
     });
 }
 
-export const useFetchAgentPerformanceDataInitial = (dateRange: DateRange) => {
+export const useFetchDropdownValues = () => {
     const { getData } = useServiceClient();
-    const parsedFromDate = dateRange.startDate!.toISOString();
-    const parsedToDate = dateRange.endDate!.toISOString();
-    const fetchAllAgentPerformanceData = React.useCallback(() => getData(`${DashboardEndPoint.AGENT_PERFORMANCE}?from=${parsedFromDate}&to=${parsedToDate}`).then((res) => res.json()), [getData, parsedFromDate, parsedToDate])
+    const fetchAllAgentPerformanceData = React.useCallback(() => getData(`${DashboardEndPoint.FETCH_DROPDOWN_VALUES}`).then((res) => res.json()), [getData])
 
     return useQuery<IAgentPerformance>({
-        queryKey: [DashboardQueryKeys.AGENT_PERFORMANCE + 'initial'],
+        queryKey: [DashboardQueryKeys.FETCH_DROPDOWN_VALUES],
         queryFn: fetchAllAgentPerformanceData
     });
 }

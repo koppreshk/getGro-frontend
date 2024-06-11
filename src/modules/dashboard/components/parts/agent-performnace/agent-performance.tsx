@@ -1,19 +1,16 @@
-import { FlexBox, GridLayout } from "lib/ui-ux";
-import { AgentTicketStats } from "./agent-ticket-stats";
-import { DashboardDateRangePicker } from "../dashboard-date-range-picker";
 import React, { useEffect } from "react";
-import { DateRange } from "@matharumanpreet00/react-daterange-picker";
-import { CustomerSatifaction, TotalLoginHours } from "./customer-satifaction";
-import { RadioGroupField } from "lib/form-fields/radio-group-field";
-import { useFormContext } from "react-hook-form";
-import { SelectField } from "lib/form-fields";
+import { FlexBox } from "lib/ui-ux";
 import styled from "styled-components";
+import { DateRange } from "@matharumanpreet00/react-daterange-picker";
+import { useFormContext } from "react-hook-form";
+import { DashboardDateRangePicker } from "../dashboard-date-range-picker";
+import { RadioGroupField } from "lib/form-fields/radio-group-field";
+import { SelectField } from "lib/form-fields";
 import { IAgentPerformance } from "modules/dashboard/apis";
+import { AgentPerformancecontentContainer } from "modules/dashboard/container";
 
 interface IAgentPerformanceProps {
     data: IAgentPerformance;
-    setDateRange: React.Dispatch<React.SetStateAction<DateRange>>;
-    dateRange: DateRange;
 }
 
 const FilterContainer = styled(FlexBox)`
@@ -32,10 +29,10 @@ export interface IAgentPerformanceFormFields {
     filterValue: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const AgentPerformance = (props: IAgentPerformanceProps) => {
-    const { data, dateRange, setDateRange } = props;
+    const { data } = props;
     const { queues, employees } = data;
+    const [dateRange, setDateRange] = React.useState<DateRange>({ startDate: new Date(), endDate: new Date() });
     const form = useFormContext<IAgentPerformanceFormFields>();
 
     const filterType = form.watch('filterType');
@@ -46,7 +43,10 @@ export const AgentPerformance = (props: IAgentPerformanceProps) => {
         if (filterType === 'user' && !employees.find(item => item.id.toString() == form.watch('filterValue'))) {
             form.setValue('filterValue', employees[0].id.toString());
         }
-    }, [employees, filterType, form]);
+        if(filterType === 'queue' && !queues.find(item => item.id.toString() == form.watch('filterValue'))){
+            form.setValue('filterValue', queues[0].id.toString());
+        }
+    }, [employees, filterType, form, queues]);
 
     return (
         <FlexBox flexDirection="column" gap="15px" height="100%" padding="20px">
@@ -57,11 +57,7 @@ export const AgentPerformance = (props: IAgentPerformanceProps) => {
                 </FilterContainer>
                 <DashboardDateRangePicker dateRange={dateRange} setDateRange={setDateRange} />
             </FlexBox>
-            <AgentTicketStats data={data} />
-            <GridLayout $gridTemplateColumns={'2fr 1fr'} $gridGap={'20px'}>
-                <CustomerSatifaction />
-                <TotalLoginHours />
-            </GridLayout>
+            <AgentPerformancecontentContainer dateRange={dateRange} />
         </FlexBox>
     )
 }
