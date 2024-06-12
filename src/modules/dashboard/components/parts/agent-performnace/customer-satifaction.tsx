@@ -77,7 +77,7 @@ const SurveyResponse = (props: { value: string, subHeading: string }) => {
 
 export const TotalLoginHours = () => {
     const data = {
-        series: [5, 1, 0.5, 0.3],
+        series: [6, 1.5, 0.5, 0.3],
         options: {
             chart: {
                 fontFamily: 'Poppins',
@@ -94,7 +94,9 @@ export const TotalLoginHours = () => {
                                 show: true,
                                 formatter(w) {
                                     const total = w.globals.series.reduce((acc: number, curr: number) => acc += curr);
-                                    return `${total} hr`
+                                    const [preDecimalValue, postDecimalValue] = total.toString().split('.');
+                                    const min = (postDecimalValue/10) * 60;
+                                    return `${preDecimalValue} hr ${min} min`
                                 },
                             }
                         }
