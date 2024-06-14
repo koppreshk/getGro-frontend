@@ -5,15 +5,15 @@ import { useAuth } from "modules/login";
 import styled, { useTheme } from "styled-components";
 
 const StyledFlexbox = styled(FlexBox)`
-    /* background-color: ${(props) => props.theme.pallete.white}; */
+    background-color: ${(props) => props.theme.pallete.white};
 `;
 
 export const DashboardLayout = () => {
     return (
-        <FlexBox flexDirection="column" height="100%" width="100%" overflowY="auto">
+        <StyledFlexbox flexDirection="column" height="100%" width="100%" overflowY="auto">
             <UserDetails />
             <DashboardCategoriesPanel />
-        </FlexBox>
+        </StyledFlexbox>
     )
 };
 

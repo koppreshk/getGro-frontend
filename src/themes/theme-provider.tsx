@@ -15,6 +15,7 @@ const defaultTheme: DefaultTheme = {
         grayVariant5: '#F1F2F4',
         grayVariant6: '#F8F9FA',
         grayVariant7: '#f9f9f9',
+        grayVariant8: '#e5e5ea',
         primaryPurple: '#6a69f6',
         primaryPurpleText: '#5d5de2',
         purpleLight: '#f3f3fd',

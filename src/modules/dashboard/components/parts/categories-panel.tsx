@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import styled, { useTheme } from "styled-components";
+import React from "react";
+import styled, { css, useTheme } from "styled-components";
 import { Box, Typography } from "@mui/material"
 import { FlexBox } from "lib/ui-ux";
 import { Widgets } from "@mui/icons-material";
@@ -15,10 +15,9 @@ const StyledBox = styled(Box)`
     position: sticky;
     top: -1px;
     z-index: 1;
-    padding: 12px 25px;
+    padding: 12px 25px 0px;
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
-    background-color: rgba(241, 242, 244, 0.6);
 `;
 
 const dashboardCategories: IDashboardCategories[] = [
@@ -79,14 +78,88 @@ function CustomTabPanel(props: TabPanelProps) {
     );
 }
 
-const TabPillWrapper = styled(FlexBox) <{ $isSelected: boolean }>`
-    border-radius: 20px;
+const StyledText = styled(Typography) <{ $isSelected: boolean }>`
+    &&{
+            &:before, &:after {
+                content: '';
+            }
+            
+            padding: 10px 40px; 
+            text-decoration: none;
+            font-weight: ${({ $isSelected }) => $isSelected ? '500' : '400'};
+            &:hover {
+                color: ${({ $isSelected, theme }) => !$isSelected && theme.pallete.white};
+            }
+
+            ${({ $isSelected }) => {
+                if ($isSelected) {
+                    return css`
+                                        &:before, &:after {
+                                            width: 10px;
+                                            height: 10px;
+                                            background: ${({ theme }) => theme.pallete.grayVariant5};
+                                            position: absolute;
+                                            bottom: 0px;
+                                            z-index: 2;
+                                        }
+                                        &:before {
+                                            left: -10px;
+                                        }
+                                        &:after {
+                                            right: -10px;
+                                        }
+                                    `;
+                }
+    }
+    }
+    }
+`;
+
+const TabPillWrapper = styled(FlexBox) <{ $isSelected: boolean, $isFirst: boolean, $isLast: boolean }>`
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    position: relative;
+
+    &:before, &:after {
+        content: '';
+    }
+
+    ${({ $isSelected, $isFirst, $isLast }) => {
+        if ($isSelected) {
+            return css`
+                    &:before, &:after {
+                        width: 19px;
+                        height: 19px;
+                        background: ${({ theme }) => theme.pallete.grayVariant1};
+                        border-radius: 100%;
+                        position: absolute;
+                        bottom: 0px;
+                        z-index: 3;
+                    }
+                    &:before {
+                        background: ${({ theme }) => $isFirst && theme.pallete.white};
+                        left: -23px;
+                    }
+                    &:after {
+                        background: ${({ theme }) => $isLast && theme.pallete.white};
+                        right: -23px;
+                    }
+                    `;
+        }
+    }}
+    
     cursor: pointer;
-    background-color: ${({ $isSelected, theme }) => $isSelected ? theme.pallete.primaryPurple : '#e5e5ea'};
-    color: ${({ $isSelected, theme }) => $isSelected ? theme.pallete.white : 'black'};
+    background-color: ${({ $isSelected, theme }) => $isSelected ? theme.pallete.grayVariant5 : theme.pallete.grayVariant1};
 
     &:hover{
-        background-color: ${({ $isSelected, theme }) => $isSelected ? theme.pallete.primaryPurple : '#dcdce1'};
+        z-index: 10;
+        background-color: ${({ $isSelected, theme }) => $isSelected ? '' : theme.pallete.grayVariant2};
+    }
+`;
+
+const StyledWrapper = styled(FlexBox)`
+    .tab-pill:first-child {
+        color: blue;
     }
 `;
 
@@ -99,16 +172,11 @@ interface ITabPillProps {
 
 const TabPill = (props: ITabPillProps) => {
     const { label, id, onClickHandler, value } = props;
-    const [isSelected, setIsSelected] = React.useState(false)
-    const { pallete } = useTheme();
-
-    useEffect(() => {
-        setIsSelected(() => value === id);
-    }, [id, value]);
+    const isSelected = value === id;
 
     return (
-        <TabPillWrapper onClick={() => onClickHandler(id)} padding="10px 15px" justifyContent="space-between" alignItems="center" id={`dashboard-tab-${id}`} $isSelected={isSelected}>
-            <Typography variant="caption" sx={{ color: `${isSelected ? pallete.white : pallete.grayVariant2}` }}>{label}</Typography>
+        <TabPillWrapper className='tab-pill' onClick={() => onClickHandler(id)} justifyContent="space-between" alignItems="center" id={`dashboard-tab-${id}`} $isSelected={isSelected} $isFirst={value === 1} $isLast={value === 4}>
+            <StyledText variant="caption" $isSelected={isSelected}>{label}</StyledText>
         </TabPillWrapper>
     )
 }
@@ -129,12 +197,14 @@ export const DashboardCategoriesPanel = () => {
                         <Widgets color="primary" />
                         <Typography variant="h4" sx={{ color: pallete.grayVariant2 }} >Dashboards</Typography>
                     </FlexBox>
-                    {dashboardCategories.map((category) => {
-                        return <TabPill key={category.id} label={category.name} id={category.id} onClickHandler={onClickHandler} value={value} />
-                    })}
+                    <StyledWrapper style={{ position: 'relative' }} gap='4px'>
+                        {dashboardCategories.map((category) => {
+                            return <TabPill key={category.id} label={category.name} id={category.id} onClickHandler={onClickHandler} value={value} />
+                        })}
+                    </StyledWrapper>
                 </FlexBox>
             </StyledBox>
-            <Box sx={{ width: '100%', height: '100%' }}>
+            <Box sx={{ width: '100%', background: pallete.grayVariant5, paddingTop: '12px' }}>
                 <CustomTabPanel index={value} value={value} />
             </Box >
         </>
