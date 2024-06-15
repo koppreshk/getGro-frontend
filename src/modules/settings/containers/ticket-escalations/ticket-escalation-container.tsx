@@ -6,7 +6,10 @@ export const TicketEscalationContainer = () => {
     //Temp code: w'll call api later as its breaking 
     // const { data, isLoading, error } = useFetchAllEscalations();
 
-    const data = {}
+    const data = {
+        escalation_conditions: [],
+        total_pages: 0
+    }
     // if (data || isLoading) {        
     return (
         <>
