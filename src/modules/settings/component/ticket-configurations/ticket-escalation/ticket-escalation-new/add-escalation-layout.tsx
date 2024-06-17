@@ -2,6 +2,8 @@ import React from "react";
 import { Stepper, Box, Step, StepLabel, Typography, Button, DialogActions } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useForm, FormProvider } from "react-hook-form";
+import { AddReminder } from "./add-reminder";
+import { AddEscalation } from "./add-escalation";
 import { ChooseCondition } from "./choose-condition";
 import { FlexBox } from "lib/ui-ux";
 import { KeyboardArrowLeft, KeyboardArrowRight, Save } from "@mui/icons-material";
@@ -60,13 +62,22 @@ export const AddEscalationLayout = () => {
     const isInBetween = activeStep !== 0 || isLastStep;
 
     const onClose = () => navigate(-1);
+    console.log(activeStep);
 
     return (
         <Box sx={{ p: '20px 120px', height: '100%', boxSizing: 'border-box' }}>
             <FormProvider {...form}>
                 <AddEscalaltionSteps activeStep={activeStep} />
                 <div style={{ padding: '30px 60px', height: `calc(100% - 94px)`, boxSizing: 'border-box' }}>
-                    {activeStep === 0 ? <ChooseCondition /> : <span>Work in Progress..</span>}
+                    {
+                        activeStep === 0
+                            ? <ChooseCondition />
+                            : activeStep === 1
+                                ? <span>SLA Target</span>
+                                : activeStep === 2
+                                    ? <AddReminder />
+                                    : <AddEscalation />
+                    }
                 </div>
                 <DialogActions>
                     {isLastStep || isInBetween
