@@ -2,6 +2,8 @@ import React from "react";
 import { Stepper, Box, Step, StepLabel, Typography, Button, DialogActions } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useForm, FormProvider } from "react-hook-form";
+import { AddReminder } from "./add-reminder";
+import { AddEscalation } from "./add-escalation";
 
 const steps = [
     {
@@ -34,12 +36,21 @@ export const AddEscalationLayout = () => {
     const isLastStep = activeStep === steps.length - 1;
 
     const onClose = () => navigate(-1);
+    console.log(activeStep);
 
     return (
         <Box sx={{ p: '0px 20px', mb: '10px' }}>
             <FormProvider {...form}>
                 <AddEscalaltionSteps activeStep={activeStep} />
-                {activeStep === 0 ? <ChooseCondition /> : <span>Work in Progress..</span>}
+                {
+                    activeStep === 0
+                        ? <ChooseCondition />
+                        : activeStep === 1
+                            ? <span>SLA Target</span>
+                            : activeStep === 2
+                                ? <AddReminder />
+                                : <AddEscalation/>
+                }
                 <DialogActions>
                     <Button variant="outlined" onClick={isLastStep ? handleBack : onClose}>
                         {isLastStep ? 'Back' : 'Cancel'}

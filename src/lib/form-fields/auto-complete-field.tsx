@@ -8,13 +8,14 @@ interface IAutocompleteFieldProps {
     name: string;
     label: string;
     placeholder: string;
+    size?: 'small' | 'medium';
     options?: {
         key: string;
         value: string;
     }[];
 }
 export const AutocompleteField = (props: IAutocompleteFieldProps) => {
-    const { name, options = [], label, placeholder } = props;
+    const { name, options = [], label, placeholder, size = 'medium' } = props;
     const { control } = useFormContext();
 
     return (
@@ -29,6 +30,7 @@ export const AutocompleteField = (props: IAutocompleteFieldProps) => {
                     options={options}
                     disableCloseOnSelect
                     limitTags={3}
+                    size={size}
                     getOptionLabel={(option) => option.value}
                     onChange={(_ev, newValue) => onChange(newValue)}
                     renderOption={(props, option, { selected }) => (
