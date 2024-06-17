@@ -44,12 +44,14 @@ export const TicketEscalationLayout = (props: ITicketEscalaltionLayoutProps) => 
     }, [dispatch, props.totalPages]);
 
     return (
-        <FlexBox width="100%" flexDirection="column">
+        <FlexBox width="100%" height="100%" flexDirection="column">
             <BreadCrumbs />
-            <Routes>
-                <Route key='base-route' path="/" element={<EscalationLayoutContent {...props} />} />
-                <Route key='add-route' path="add-escalation" element={<AddEscalationLayout />} />
-            </Routes>
+            <div style={{ height: 'calc(100% - 34px)' }}>
+                <Routes>
+                    <Route key='base-route' path="/" element={<EscalationLayoutContent {...props} />} />
+                    <Route key='add-route' path="add-escalation" element={<AddEscalationLayout />} />
+                </Routes>
+            </div>
         </FlexBox>
     )
 }
