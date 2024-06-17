@@ -2,6 +2,9 @@ import React from "react";
 import { Stepper, Box, Step, StepLabel, Typography, Button, DialogActions } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useForm, FormProvider } from "react-hook-form";
+import { ChooseCondition } from "./choose-condition";
+import { FlexBox } from "lib/ui-ux";
+import { KeyboardArrowLeft, KeyboardArrowRight, Save } from "@mui/icons-material";
 
 const steps = [
     {
@@ -18,10 +21,32 @@ const steps = [
     }
 ];
 
+interface IEscalationFormFields {
+    chooseCondition: {
+        name: string;
+        description: string;
+        slaEvalutaion: string,
+        ticketFields: string,
+        condition: string,
+        conditionValue: string
+    }
+}
+
 export const AddEscalationLayout = () => {
     const [activeStep, setActiveStep] = React.useState(0);
     const navigate = useNavigate();
-    const form = useForm();
+    const form = useForm<IEscalationFormFields>({
+        defaultValues: {
+            chooseCondition: {
+                name: '',
+                description: '',
+                slaEvalutaion: 'ticket-creation-time',
+                ticketFields: 'source',
+                condition: 'is',
+                conditionValue: 'open'
+            }
+        }
+    });
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -32,21 +57,34 @@ export const AddEscalationLayout = () => {
     };
 
     const isLastStep = activeStep === steps.length - 1;
+    const isInBetween = activeStep !== 0 || isLastStep;
 
     const onClose = () => navigate(-1);
 
     return (
-        <Box sx={{ p: '0px 20px', mb: '10px' }}>
+        <Box sx={{ p: '20px 120px', height: '100%', boxSizing: 'border-box' }}>
             <FormProvider {...form}>
                 <AddEscalaltionSteps activeStep={activeStep} />
-                {activeStep === 0 ? <ChooseCondition /> : <span>Work in Progress..</span>}
+                <div style={{ padding: '30px 60px', height: `calc(100% - 94px)`, boxSizing: 'border-box' }}>
+                    {activeStep === 0 ? <ChooseCondition /> : <span>Work in Progress..</span>}
+                </div>
                 <DialogActions>
-                    <Button variant="outlined" onClick={isLastStep ? handleBack : onClose}>
-                        {isLastStep ? 'Back' : 'Cancel'}
-                    </Button>
-                    <Button variant="contained" autoFocus onClick={isLastStep ? onClose : handleNext}>
-                        {isLastStep ? 'Save' : 'Next'}
-                    </Button>
+                    {isLastStep || isInBetween
+                        ?
+                        <Button variant="outlined" startIcon={<KeyboardArrowLeft />} onClick={isLastStep || isInBetween ? handleBack : onClose}>
+                            Back
+                        </Button>
+                        : null}
+                    <FlexBox justifyContent="flex-end" width='calc(100% - 94px)'>
+                        <FlexBox gap='20px'>
+                            <Button variant="outlined" onClick={onClose}>
+                                {'Cancel'}
+                            </Button>
+                            <Button variant="contained" endIcon={isLastStep ? <Save /> : <KeyboardArrowRight />} onClick={isLastStep ? onClose : handleNext}>
+                                {isLastStep ? 'Save' : 'Next'}
+                            </Button>
+                        </FlexBox>
+                    </FlexBox>
                 </DialogActions>
             </FormProvider>
         </Box>
@@ -75,11 +113,5 @@ const AddEscalaltionSteps = (props: { activeStep: number }) => {
                 </Stepper>
             </Box>
         </>
-    )
-}
-
-const ChooseCondition = () => {
-    return (
-        <span>Test</span>
     )
 }
