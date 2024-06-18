@@ -169,8 +169,7 @@ const CardComponent = (props: IIncomingCallCardComponent) => {
 export const IncomingCallMain = () => {
     // const { socket } = useSocket();
     const [showIncomingCallDialog, setDialogDisplay] = useState(false);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [callData, setCallData] = useState<IIncomingCall | undefined>();
+    const [callData] = useState<IIncomingCall | undefined>();
     // const { user } = useAuth();
 
     // React.useEffect(() => {
