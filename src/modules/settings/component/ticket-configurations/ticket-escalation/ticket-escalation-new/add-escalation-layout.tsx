@@ -24,6 +24,11 @@ const steps = [
     }
 ];
 
+interface ITimeBasedFormFields {
+    timePrefix: string,
+    timeFields: string
+}
+
 interface IEscalationFormFields {
     chooseCondition: {
         name: string;
@@ -35,10 +40,24 @@ interface IEscalationFormFields {
     }
     slaTargets: {
         critical: {
-            firstResponse: {
-                timePrefix: string,
-                timeFields: string
-            }
+            firstResponse: ITimeBasedFormFields,
+            nextResponse: ITimeBasedFormFields,
+            resolution: ITimeBasedFormFields
+        }
+        high: {
+            firstResponse: ITimeBasedFormFields,
+            nextResponse: ITimeBasedFormFields,
+            resolution: ITimeBasedFormFields
+        }
+        normal: {
+            firstResponse: ITimeBasedFormFields,
+            nextResponse: ITimeBasedFormFields,
+            resolution: ITimeBasedFormFields
+        }
+        low: {
+            firstResponse: ITimeBasedFormFields,
+            nextResponse: ITimeBasedFormFields,
+            resolution: ITimeBasedFormFields
         }
     }
 }
@@ -60,7 +79,57 @@ export const AddEscalationLayout = () => {
                 critical: {
                     firstResponse: {
                         timePrefix: '1',
-                        timeFields: 'min'
+                        timeFields: 'minutes'
+                    },
+                    nextResponse: {
+                        timePrefix: '1',
+                        timeFields: 'minutes'
+                    },
+                    resolution: {
+                        timePrefix: '1',
+                        timeFields: 'minutes'
+                    }
+                },
+                high: {
+                    firstResponse: {
+                        timePrefix: '1',
+                        timeFields: 'minutes'
+                    },
+                    nextResponse: {
+                        timePrefix: '1',
+                        timeFields: 'minutes'
+                    },
+                    resolution: {
+                        timePrefix: '1',
+                        timeFields: 'minutes'
+                    }
+                },
+                normal: {
+                    firstResponse: {
+                        timePrefix: '1',
+                        timeFields: 'minutes'
+                    },
+                    nextResponse: {
+                        timePrefix: '1',
+                        timeFields: 'minutes'
+                    },
+                    resolution: {
+                        timePrefix: '1',
+                        timeFields: 'minutes'
+                    }
+                },
+                low: {
+                    firstResponse: {
+                        timePrefix: '1',
+                        timeFields: 'minutes'
+                    },
+                    nextResponse: {
+                        timePrefix: '1',
+                        timeFields: 'minutes'
+                    },
+                    resolution: {
+                        timePrefix: '1',
+                        timeFields: 'minutes'
                     }
                 }
             }
