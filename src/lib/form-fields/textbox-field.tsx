@@ -23,7 +23,7 @@ export const TextboxField = (props: ITextboxFieldProps) => {
     return (
         <>
             <Controller
-                render={({ field }) => <TextField {...props} {...field} error={hasError} />}
+                render={({ field }) => <TextField {...props} {...field} error={hasError} required={typeof rules?.required == 'string' ? rules?.required?.length > 0 : false} />}
                 control={control}
                 name={name}
                 rules={rules}
