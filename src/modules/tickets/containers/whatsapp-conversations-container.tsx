@@ -1,24 +1,23 @@
-import React from "react";
 import { ChatConversationLoader } from "lib/ui-ux/loader-components";
 import { useFetchWhatsAppMessages } from "../apis";
 import { FlexBox } from "lib/ui-ux";
-import { useSocket } from "lib/providers/socket";
+// import { useSocket } from "lib/providers/socket";
 import { WhatsAppConversations } from "../components/ticket-details/ticket-conversation/whatsapp-conversations";
 
 export const WhatsAppConversationContainer = () => {
-    const { isLoading, data, refetch } = useFetchWhatsAppMessages();
-    const { socket } = useSocket();
+    const { isLoading, data } = useFetchWhatsAppMessages();
+    // const { socket } = useSocket();
 
-    React.useEffect(() => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        socket.on('production_whatsapp_channel', (_info) => {
-            //TODO: need to use this info obj which contains id and has to be consumed
-            refetch();
-        })
-        return () => {
-            socket.off('production_whatsapp_channel')
-        }
-    }, [refetch, socket])
+    // React.useEffect(() => {
+    //     // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    //     socket.on('production_whatsapp_channel', (_info) => {
+    //         //TODO: need to use this info obj which contains id and has to be consumed
+    //         refetch();
+    //     })
+    //     return () => {
+    //         socket.off('production_whatsapp_channel')
+    //     }
+    // }, [refetch, socket])
 
     if (isLoading) {
         return (
