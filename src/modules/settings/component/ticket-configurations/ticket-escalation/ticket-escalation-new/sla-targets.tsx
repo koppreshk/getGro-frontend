@@ -16,7 +16,7 @@ const Container = styled(FlexBox)`
 `;
 
 export const SLATargets = () => {
-    const priorities = [{ key: 'criitcal', value: 'Critical' }, { key: 'high', value: 'High' }, { key: 'normal', value: 'Normal' }, { key: 'low', value: 'Low' }]
+    const priorities = [{ key: 'critical', value: 'Critical' }, { key: 'high', value: 'High' }, { key: 'normal', value: 'Normal' }, { key: 'low', value: 'Low' }]
    
     return (
         <FlexBox flexDirection="column" gap="20px">
@@ -32,7 +32,7 @@ export const SLATargets = () => {
                         </FlexBox>
                         <FlexBox padding="20px" flexDirection="column" gap="10px">
                             <Typography variant="body3">Time to next response</Typography>
-                            <TimeInputs timePrefixName="slaTargets.${item.key}.nextResponse.timePrefix" timeFieldsName={`slaTargets.${item.key}.nextResponse.timeFields`} />
+                            <TimeInputs timePrefixName={`slaTargets.${item.key}.nextResponse.timePrefix`} timeFieldsName={`slaTargets.${item.key}.nextResponse.timeFields`} />
                         </FlexBox>
                         <FlexBox padding="20px" flexDirection="column" gap="10px">
                             <Typography variant="body3">Time to resolution</Typography>
