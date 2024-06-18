@@ -9,7 +9,7 @@ import { NotificationProvider, ServiceClientProvider } from "lib";
 import ticketsReducer from './modules/tickets/storage/tickets-slice';
 import configurationsReducer from './modules/settings/storage/configurations-slice';
 import { AuthProvider } from "modules/login/auth-provider-context";
-import { SocketProvider } from "lib/providers/socket";
+// import { SocketProvider } from "lib/providers/socket";
 
 const store = configureStore({
   reducer: {
@@ -36,7 +36,7 @@ export default function App() {
 
   return (
     <MUIthemeProvider theme={defaultMUITheme}>
-      <SocketProvider>
+      {/* <SocketProvider> */}
         <QueryClientProvider client={queryClient}>
           <Provider store={store}>
             <NotificationProvider>
@@ -52,7 +52,7 @@ export default function App() {
             </NotificationProvider>
           </Provider>
         </QueryClientProvider>
-      </SocketProvider>
+      {/* </SocketProvider> */}
     </MUIthemeProvider>
   )
 }

@@ -1,7 +1,7 @@
 
 import { AppsRounded, Mic, Phone, PhonePaused, RadioButtonChecked } from "@mui/icons-material";
 import { Avatar, Button, Tooltip, Typography } from "@mui/material";
-import { useSocket } from "lib/providers/socket";
+// import { useSocket } from "lib/providers/socket";
 import { FlexBox } from "lib/ui-ux";
 import React from "react";
 import { useState } from "react";
@@ -167,26 +167,26 @@ const CardComponent = (props: IIncomingCallCardComponent) => {
 
 
 export const IncomingCallMain = () => {
-    const { socket } = useSocket();
+    // const { socket } = useSocket();
     const [showIncomingCallDialog, setDialogDisplay] = useState(false);
-    const [callData, setCallData] = useState<IIncomingCall | undefined>();
+    const [callData] = useState<IIncomingCall | undefined>();
     // const { user } = useAuth();
 
-    React.useEffect(() => {
-        socket.on('production_incoming_call', (info: string) => {
-            const parsedInfo = JSON.parse(info) as IIncomingCall;
-            if (parsedInfo.event_type === 'Dial') {
-                setDialogDisplay(true);
-                setCallData(parsedInfo);
-            } else if (parsedInfo.event_type === 'Terminal') {
-                setDialogDisplay(false);
-                setCallData(undefined);
-            }
-        })
-        return () => {
-            socket.off('production_incoming_call')
-        }
-    }, [socket]);
+    // React.useEffect(() => {
+    //     socket.on('production_incoming_call', (info: string) => {
+    //         const parsedInfo = JSON.parse(info) as IIncomingCall;
+    //         if (parsedInfo.event_type === 'Dial') {
+    //             setDialogDisplay(true);
+    //             setCallData(parsedInfo);
+    //         } else if (parsedInfo.event_type === 'Terminal') {
+    //             setDialogDisplay(false);
+    //             setCallData(undefined);
+    //         }
+    //     })
+    //     return () => {
+    //         socket.off('production_incoming_call')
+    //     }
+    // }, [socket]);
 
     const OnClickEndCall = () => {
         setDialogDisplay(!showIncomingCallDialog);
