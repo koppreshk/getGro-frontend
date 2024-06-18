@@ -7,6 +7,7 @@ import { AddEscalation } from "./add-escalation";
 import { ChooseCondition } from "./choose-condition";
 import { FlexBox } from "lib/ui-ux";
 import { KeyboardArrowLeft, KeyboardArrowRight, Save } from "@mui/icons-material";
+import { SLATargets } from "./sla-targets";
 
 const steps = [
     {
@@ -32,6 +33,14 @@ interface IEscalationFormFields {
         condition: string,
         conditionValue: string
     }
+    slaTargets: {
+        critical: {
+            firstResponse: {
+                timePrefix: string,
+                timeFields: string
+            }
+        }
+    }
 }
 
 export const AddEscalationLayout = () => {
@@ -46,6 +55,14 @@ export const AddEscalationLayout = () => {
                 ticketFields: 'source',
                 condition: 'is',
                 conditionValue: 'open'
+            },
+            slaTargets: {
+                critical: {
+                    firstResponse: {
+                        timePrefix: '1',
+                        timeFields: 'min'
+                    }
+                }
             }
         }
     });
@@ -62,21 +79,26 @@ export const AddEscalationLayout = () => {
     const isInBetween = activeStep !== 0 || isLastStep;
 
     const onClose = () => navigate(-1);
-    console.log(activeStep);
+
+    const renderBasedOnActiveStep = () => {
+        switch (activeStep) {
+            case 0:
+                return <ChooseCondition />;
+            case 1:
+                return <SLATargets />;
+            case 2:
+                return <AddReminder />
+            default: return <AddEscalation />
+        }
+    }
 
     return (
         <Box sx={{ p: '20px 120px', height: '100%', boxSizing: 'border-box' }}>
             <FormProvider {...form}>
                 <AddEscalaltionSteps activeStep={activeStep} />
-                <div style={{ padding: '30px 60px', height: `calc(100% - 94px)`, boxSizing: 'border-box' }}>
+                <div style={{ padding: '30px 60px', height: `calc(100% - 94px)`, boxSizing: 'border-box', overflow: 'auto' }}>
                     {
-                        activeStep === 0
-                            ? <ChooseCondition />
-                            : activeStep === 1
-                                ? <span>SLA Target</span>
-                                : activeStep === 2
-                                    ? <AddReminder />
-                                    : <AddEscalation />
+                        renderBasedOnActiveStep()
                     }
                 </div>
                 <DialogActions>
