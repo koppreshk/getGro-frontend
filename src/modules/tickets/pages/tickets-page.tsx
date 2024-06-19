@@ -2,8 +2,9 @@ import { FlexBox } from "lib/ui-ux"
 import { TicketViews } from "../components"
 import { Navigate, Route, Routes, useMatch } from "react-router-dom"
 import {
-    AllCompletedTicketsContainer, CreatedByMeTicketsContainer, UnassignedTicketsContainer,
-    AllPendingTicketsContainer, AssignedToMeTicketsContainer
+    AllResolvedTicketsContainer, MyResolvedTicketsContainer,
+    AllPendingTicketsContainer, MyPendingTicketsContainer,
+    AllClosedTicketsContainer, MyClosedTicketsContainer
 } from "../containers"
 import { TicketDetailsLayout } from "../components/ticket-details"
 import { useAuth } from "modules/login";
@@ -18,28 +19,22 @@ export default function TicketsPage() {
                 {match?.params?.ticketId ? null : <TicketViews />}
                 <div style={{ width: match?.params?.ticketId ? '100%' : 'calc(100% - 200px)' }}>
                     <Routes>
-                        <Route key="default-view" path="*" element={<Navigate to={user?.role === "Admin" ? "/tickets/unassigned" : "/tickets/assigned-to-me"} />} />
-                        <Route key="all" path="/all" element={<AllTicketsContainer />} />
-                        <Route key="unassigned" path="/unassigned" element={<UnassignedTicketsContainer />} />
+                        <Route key="default-view" path="*" element={<Navigate to={user?.role === "Admin" ? "/tickets/all-tickets" : "/tickets/my-pending"} />} />
+                        <Route key="all" path="/all-tickets" element={<AllTicketsContainer />} />
                         <Route key="all-pending" path="/all-pending" element={<AllPendingTicketsContainer />} />
-                        <Route key="all-complete" path="/all-complete" element={<AllCompletedTicketsContainer />} />
-                        <Route key="all-junk" path="/all-junk" element={<UnassignedTicketsContainer />} />
-                        <Route key="assigned-to-me" path="/assigned-to-me" element={<AssignedToMeTicketsContainer />} />
-                        <Route key="created-by-me" path="/created-by-me" element={<CreatedByMeTicketsContainer />} />
-                        <Route key="completed-by-me" path="/completed-by-me" element={<UnassignedTicketsContainer />} />
-                        <Route key="completed-by-team" path="/completed-by-team" element={<UnassignedTicketsContainer />} />
-                        <Route key="pending-by-team" path="/pending-by-team" element={<UnassignedTicketsContainer />} />
+                        <Route key="all-resolved" path="/all-resolved" element={<AllResolvedTicketsContainer />} />
+                        <Route key="all-closed" path="/all-closed" element={<AllClosedTicketsContainer />} />
+                        <Route key="my-pending" path="/my-pending" element={<MyPendingTicketsContainer />} />
+                        <Route key="my-resolved" path="/my-resolved" element={<MyResolvedTicketsContainer />} />
+                        <Route key="my-closed" path="/my-closed" element={<MyClosedTicketsContainer />} />
 
                         <Route key="all" path="/all/:ticketId" element={<TicketDetailsLayout />} />
-                        <Route key="unassigned-details" path="/unassigned/:ticketId" element={<TicketDetailsLayout />} />
                         <Route key="all-pending-details" path="/all-pending/:ticketId" element={<TicketDetailsLayout />} />
-                        <Route key="all-complete-details" path="/all-complete/:ticketId" element={<TicketDetailsLayout />} />
-                        <Route key="assigned-to-me-details" path="/assigned-to-me/:ticketId" element={<TicketDetailsLayout />} />
-                        <Route key="created-by-me-details" path="/created-by-me/:ticketId" element={<TicketDetailsLayout />} />
-                        <Route key="completed-by-me-details" path="/completed-by-me/:ticketId" element={<TicketDetailsLayout />} />
-                        <Route key="completed-by-team-details" path="/completed-by-team/:ticketId" element={<TicketDetailsLayout />} />
-                        <Route key="pending-by-team-details" path="/pending-by-team/:ticketId" element={<TicketDetailsLayout />} />
-                        <Route key="all-junk-details" path="/all-junk/:ticketId" element={<TicketDetailsLayout />} />
+                        <Route key="all-resolved-details" path="/all-resolved/:ticketId" element={<TicketDetailsLayout />} />
+                        <Route key="all-closed-details" path="/all-closed/:ticketId" element={<TicketDetailsLayout />} />
+                        <Route key="my-pending-details" path="/my-pending/:ticketId" element={<TicketDetailsLayout />} />
+                        <Route key="my-resolved-details" path="/my-resolved/:ticketId" element={<TicketDetailsLayout />} />
+                        <Route key="my-closed-details" path="/my-closed/:ticketId" element={<TicketDetailsLayout />} />
                     </Routes>
                 </div>
             </FlexBox>

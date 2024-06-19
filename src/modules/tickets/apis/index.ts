@@ -1,24 +1,29 @@
-export * from './ticket-type-apis/get-unassigned-tickets';
-export * from './whatsapp-apis/fetch-whatsapp-messages';
-export * from './get-order-details';
-export * from './get-ticket-details-by-id';
-export * from './fetch-ticket-by-id';
-export * from './email-apis/reply-to-email';
-export * from './email-apis/fetch-attachment';
-export * from './dispose-ticket';
-export * from './ticket-type-apis/get-created-by-me-tickets';
-export * from './attach-customer';
-export * from './unlink-customer';
-export * from './ticket-type-apis/fetch-all-completed-tickets';
+export * from './ticket-type-apis/fetch-all-resolved-tickets';
 export * from './ticket-type-apis/fetch-all-pending-tickets';
 export * from './ticket-type-apis/fetch-all-tickets';
-export * from './ticket-type-apis/fetch-all-assigned';
+export * from './ticket-type-apis/fetch-my-pending-tickets';
+export * from './ticket-type-apis/fetch-all-closed';
+export * from './ticket-type-apis/fetch-my-resolved-tickets';
+export * from './ticket-type-apis/fetch-my-closed-tickets';
+export * from './ticket-type-apis/types';
+
+export * from './whatsapp-apis/fetch-whatsapp-messages';
+export * from './whatsapp-apis/send-whatsapp-messages';
+export * from './whatsapp-apis/upload-file';
+
+export * from './email-apis/reply-to-email';
+export * from './email-apis/fetch-attachment';
+
+export * from './telephonic-apis/fetch-calls-by-ticket-id';
+
+export * from './get-order-details';
+export * from './fetch-ticket-by-id';
+export * from './dispose-ticket';
+export * from './attach-customer';
+export * from './unlink-customer';
 export * from './get-data-by-key';
 export * from './fetch-ticket-by-id';
 export * from './get-ticket-conversations';
-export * from './whatsapp-apis/send-whatsapp-messages';
-export * from './whatsapp-apis/upload-file';
 export * from './fetch-ticket-disposition-options';
-export * from './telephonic-apis/fetch-calls-by-ticket-id';
 export * from './create-manual-ticket';
 export * from './fetch-priorities';

@@ -3,7 +3,7 @@ import { useServiceClient } from "lib";
 import { useQuery } from "react-query";
 import { TicketsEndPoint, TicketsQueryKey } from "../api-enums";
 import { useSearchParams } from "react-router-dom";
-import { ITicketDetails } from "./get-unassigned-tickets";
+import { ITicketDetails } from "./types";
 
 export const useFetchAllTickets = () => {
     const [searchParams] = useSearchParams();

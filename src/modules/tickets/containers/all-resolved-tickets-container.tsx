@@ -1,10 +1,9 @@
 import React from "react";
 import { DisplayTicketsGrid } from "../components";
-import { useGetUnassignedTickets } from "../apis";
-import { ErrorMessage } from "lib/ui-ux";
+import { useFetchAllResolvedTickets } from "../apis";
 
-export const UnassignedTicketsContainer = React.memo(() => {
-    const { data, isLoading, isFetching, error } = useGetUnassignedTickets();
+export const AllResolvedTicketsContainer = React.memo(() => {
+    const { data, isLoading, isFetching, error } = useFetchAllResolvedTickets();
 
     if (data || isLoading) {
         const ticketsData = data?.data ?? [];
@@ -18,6 +17,6 @@ export const UnassignedTicketsContainer = React.memo(() => {
     }
 
     return (
-        <ErrorMessage statusCode={error?.message} />
+        <span>Error: {error as never}</span>
     )
 })
