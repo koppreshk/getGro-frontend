@@ -28,7 +28,7 @@ export default function TicketsPage() {
                         <Route key="my-resolved" path="/my-resolved" element={<MyResolvedTicketsContainer />} />
                         <Route key="my-closed" path="/my-closed" element={<MyClosedTicketsContainer />} />
 
-                        <Route key="all" path="/all/:ticketId" element={<TicketDetailsLayout />} />
+                        <Route key="all" path="/all-tickets/:ticketId" element={<TicketDetailsLayout />} />
                         <Route key="all-pending-details" path="/all-pending/:ticketId" element={<TicketDetailsLayout />} />
                         <Route key="all-resolved-details" path="/all-resolved/:ticketId" element={<TicketDetailsLayout />} />
                         <Route key="all-closed-details" path="/all-closed/:ticketId" element={<TicketDetailsLayout />} />
