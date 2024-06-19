@@ -6,7 +6,6 @@ export enum TicketsEndPoint {
     FETCH_MY_PENDING = 'my_pending',
     FETCH_MY_RESOLVED = 'my_resolved',
     FETCH_MY_CLOSED = 'my_closed',
-    FETCH_ALL_UNASSIGNED = 'fetch_all_unassigned_tickets',
     GET_USER_ORDERS = 'fetch_user_orders',
     GET_CUSTOMER_DETAILS = 'fetch_user_details',
     FETCH_TICKET_BY_ID = 'fetch_ticket_by_id',
