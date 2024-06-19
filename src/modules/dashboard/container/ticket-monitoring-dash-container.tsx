@@ -14,7 +14,7 @@ export const TicketMonitoringDashContainer = () => {
         return <CenteredCircularProgress />
     }
 
-    if (data) {
+    if (data && Object.keys(data).length) {
         return (
             <TicketMonitor data={data} setDateRange={setDateRange} dateRange={dateRange} />
         )
