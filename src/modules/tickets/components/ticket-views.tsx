@@ -51,17 +51,10 @@ const useViewOptions = () => {
 
     return [
         {
-            name: 'All',
-            primaryKey: 'all',
-            route: 'all',
-            // showOption: authorize(TicketAccessRights.All), //hiding this option until we get some clarity
-            showOption: false
-        },
-        {
-            name: 'Unassigned',
-            primaryKey: 'unassigned',
-            route: 'unassigned',
-            showOption: authorize(TicketAccessRights.Unassigned)
+            name: 'All Tickets',
+            primaryKey: 'all-tickets',
+            route: 'all-tickets',
+            showOption: authorize(TicketAccessRights.AllTickets)
         },
         {
             name: 'All Pending',
@@ -70,47 +63,35 @@ const useViewOptions = () => {
             showOption: authorize(TicketAccessRights.AllPending)
         },
         {
-            name: 'All Complete',
-            primaryKey: 'all-complete',
-            route: 'all-complete',
-            showOption: authorize(TicketAccessRights.AllComplete)
+            name: 'All Resolved',
+            primaryKey: 'all-resolved',
+            route: 'all-resolved',
+            showOption: authorize(TicketAccessRights.AllResolved)
         },
         {
-            name: 'All Junk',
-            primaryKey: 'all-junk',
-            route: 'all-junk',
-            showOption: authorize(TicketAccessRights.AllJunk)
+            name: 'All Closed',
+            primaryKey: 'all-closed',
+            route: 'all-closed',
+            showOption: authorize(TicketAccessRights.AllResolved)
         },
         {
-            name: 'Assigned To Me',
-            primaryKey: 'assigned-to-me',
-            route: 'assigned-to-me',
-            showOption: authorize(TicketAccessRights.AssignedToMe)
+            name: 'My Pending',
+            primaryKey: 'my-pending',
+            route: 'my-pending',
+            showOption: authorize(TicketAccessRights.MyPending)
         },
         {
-            name: 'Created By Me',
-            primaryKey: 'created-by-me',
-            route: 'created-by-me',
-            showOption: authorize(TicketAccessRights.CreatedByMe)
+            name: 'My Resolved',
+            primaryKey: 'my-resolved',
+            route: 'my-resolved',
+            showOption: authorize(TicketAccessRights.MyResolved)
         },
         {
-            name: 'Completed By Me',
-            primaryKey: 'completed-by-me',
-            route: 'completed-by-me',
-            showOption: authorize(TicketAccessRights.CompletedByMe)
-        },
-        {
-            name: 'Completed By Team',
-            primaryKey: 'completed-by-team',
-            route: 'completed-by-team',
-            showOption: authorize(TicketAccessRights.CompletedByTeam)
-        },
-        {
-            name: 'Pending By Team',
-            primaryKey: 'pending-by-team',
-            route: 'pending-by-team',
-            showOption: authorize(TicketAccessRights.PendingByTeam)
-        },
+            name: 'My Closed',
+            primaryKey: 'my-closed',
+            route: 'my-closed',
+            showOption: authorize(TicketAccessRights.MyClosed)
+        }
     ]
 
 }

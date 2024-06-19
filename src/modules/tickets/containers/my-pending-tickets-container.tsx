@@ -1,9 +1,9 @@
 import React from "react";
-import { useFetchMyResolvedTickets } from "../apis"
 import { DisplayTicketsGrid } from "../components";
+import { useFetchMyPendingTickets } from "../apis";
 
-export const MyResolvedTicketsContainer = React.memo(() => {
-    const { data, error, isLoading, isFetching } = useFetchMyResolvedTickets();
+export const MyPendingTicketsContainer = React.memo(() => {
+    const { data, isLoading, isFetching, error } = useFetchMyPendingTickets();
 
     if (data || isLoading) {
         const ticketsData = data?.data ?? [];

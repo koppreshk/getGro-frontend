@@ -13,16 +13,13 @@ enum AccessRightKeys {
 }
 
 export enum TicketAccessRights {
-    All = 'all',
-    Unassigned = 'unassigned',
+    AllTickets = 'all-tickets',
     AllPending = 'all-pending',
-    AllComplete = 'all-complete',
-    AllJunk = 'all-junk',
-    AssignedToMe = 'assigned-to-me',
-    CreatedByMe = 'created-by-me',
-    CompletedByMe = 'completed-by-me',
-    CompletedByTeam = 'completed-by-team',
-    PendingByTeam = 'pending-by-team',
+    AllResolved = 'all-resolved',
+    AllClosed = 'all-closed',
+    MyPending = 'my-pending',
+    MyResolved = 'my-resolved',
+    MyClosed = 'my-closed',
 }
 
 type IAccessRights = {
@@ -48,11 +45,7 @@ const accessRights = [
         mode: [Roles.Admin, Roles.Agent],
     },
     {
-        name: TicketAccessRights.All,
-        mode: [Roles.Admin],
-    },
-    {
-        name: TicketAccessRights.Unassigned,
+        name: TicketAccessRights.AllTickets,
         mode: [Roles.Admin],
     },
     {
@@ -60,33 +53,25 @@ const accessRights = [
         mode: [Roles.Admin],
     },
     {
-        name: TicketAccessRights.AllComplete,
+        name: TicketAccessRights.AllResolved,
         mode: [Roles.Admin],
     },
     {
-        name: TicketAccessRights.AllJunk,
+        name: TicketAccessRights.AllClosed,
         mode: [Roles.Admin],
     },
     {
-        name: TicketAccessRights.AssignedToMe,
+        name: TicketAccessRights.MyPending,
         mode: [Roles.Admin, Roles.Agent],
     },
     {
-        name: TicketAccessRights.CreatedByMe,
+        name: TicketAccessRights.MyResolved,
         mode: [Roles.Admin, Roles.Agent],
     },
     {
-        name: TicketAccessRights.CompletedByMe,
+        name: TicketAccessRights.MyClosed,
         mode: [Roles.Admin, Roles.Agent],
-    },
-    {
-        name: TicketAccessRights.CompletedByTeam,
-        mode: [Roles.Admin],
-    },
-    {
-        name: TicketAccessRights.PendingByTeam,
-        mode: [Roles.Admin],
-    },
+    }
 ] as IAccessRights[]
 
 export const useAutherization = () => {

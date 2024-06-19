@@ -10,16 +10,18 @@ export const useGetQueryEndPoint = () => {
 
     const getQueryEndPointByType = (): keyof typeof TicketsEndPoint => {
         switch (match?.params.ticketType || '') {
-            case 'assigned-to-me':
-                return 'FETCH_ALL_ASSIGNED';
-            case 'unassigned':
-                return 'FETCH_ALL_UNASSIGNED';
+            case 'all-closed':
+                return 'FETCH_ALL_CLOSED_TICKETS';
             case 'all-pending':
                 return 'FETCH_ALL_PENDING_TICKETS';
-            case 'all-complete':
-                return 'FETCH_ALL_COMPLETED_TICKETS';
-            case 'created-by-me':
-                return 'GET_CREATED_BY_ME_TICKETS';
+            case 'all-resolved':
+                return 'FETCH_ALL_RESOLVED_TICKETS';
+            case 'my-closed':
+                return 'FETCH_MY_CLOSED';
+            case 'my-pending':
+                return 'FETCH_MY_PENDING';
+            case 'my-resolved':
+                return 'FETCH_MY_RESOLVED'
             default: return 'FETCH_ALL_TICKETS';
         }
     }
