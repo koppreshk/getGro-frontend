@@ -51,7 +51,6 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
                     placeholder="Enter your remarks here..."
                     multiline
                     rows={4}
-                    maxRows={4}
                 />
                 <HorizontalSeparator $margin="8px 0px" />
                 <FlexBox flexDirection="column" gap="15px">

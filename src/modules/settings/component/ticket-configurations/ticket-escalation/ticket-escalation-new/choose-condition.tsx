@@ -17,8 +17,7 @@ export const ChooseCondition = () => {
                 <TextboxField name="chooseCondition.description"
                     label="Description" variant="outlined"
                     multiline
-                    rows={4}
-                    maxRows={4} />
+                    rows={4}/>
                 <FlexBox flexDirection="column">
                     <Typography variant="h6">Calculate SLA Evaluation (Resolution due) when conditions are met from</Typography>
                     <StyledRadioFields name="chooseCondition.slaEvalutaion" radioOptions={[{ key: 'ticket-creation-time', label: 'Ticket creation time' }, { key: 'time-when-conditions-are-met', label: 'Time when conditions are met' }]} />

@@ -7,6 +7,7 @@ import { Switch } from '@mui/material';
 import { ITicketEscalaltionLayoutProps } from '../ticket-escalation-layout';
 import { IEscalationsNew } from 'modules/settings/apis/escalations';
 import { DeleteEscalation } from '../delete-escalation';
+import { useNavigate } from 'react-router-dom';
 
 interface IAllEscalaltionsProps extends ITicketEscalaltionLayoutProps {
 
@@ -49,7 +50,7 @@ const useColumns = () => {
             cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
-                        <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: "Edit Escalation", arrow: true }} />
+                        <EditEscalation id={original.id} />
                         <DeleteEscalation id={original.id} />
                     </FlexBox>
                 )
@@ -59,6 +60,18 @@ const useColumns = () => {
     ]
 
     return columns;
+}
+
+const EditEscalation = (props: { id: number }) => {
+    const navigate = useNavigate();
+
+    const onEditClick = () => {
+        navigate(`edit-escalation?id=${props.id}`)
+    }
+
+    return (
+        <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: "Edit Escalation", arrow: true }} onClick={onEditClick} />
+    )
 }
 
 export const AllEscalations = (props: IAllEscalaltionsProps) => {

@@ -11,6 +11,7 @@ import { useAppDispatch } from "lib/hooks";
 import { setTotalPage } from "modules/settings/storage";
 import { AddEscalationLayout } from "./ticket-escalation-new/add-escalation-layout";
 import { AllEscalations } from "./ticket-escalation-new/all-escalations";
+import { EditEscalationsContainerNew } from "modules/settings/containers";
 
 export interface ITicketEscalaltionLayoutProps {
     isLoading: boolean;
@@ -50,6 +51,7 @@ export const TicketEscalationLayout = (props: ITicketEscalaltionLayoutProps) => 
                 <Routes>
                     <Route key='base-route' path="/" element={<EscalationLayoutContent {...props} />} />
                     <Route key='add-route' path="add-escalation" element={<AddEscalationLayout />} />
+                    <Route key='edit-route' path="edit-escalation" element={<EditEscalationsContainerNew />} />
                 </Routes>
             </div>
         </FlexBox>
