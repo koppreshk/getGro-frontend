@@ -8,13 +8,13 @@ export const useDeleteEscalation = () => {
     const queryClient = useQueryClient();
 
     const deleteEscalation = React.useCallback((args: { id: number }) =>
-        postData(`${EscalationEndPoint.DELETE_ESCALATION}?id=${args.id}`).then((res) => res.json()), [postData]);
+        postData(`${EscalationEndPoint.DELETE_ESCALATION_NEW}?id=${args.id}`).then((res) => res.json()), [postData]);
 
     return useMutation({
-        mutationKey: EscalationQueryKey.DELETE_ESCALATION,
+        mutationKey: EscalationQueryKey.DELETE_ESCALATION_NEW,
         mutationFn: deleteEscalation,
         onSuccess: () => {
-            queryClient.invalidateQueries(EscalationQueryKey.FETCH_ALL_ESCALATIONS);
+            queryClient.invalidateQueries(EscalationQueryKey.FETCH_ALL_ESCALATIONS_NEW);
         }
     });
 }

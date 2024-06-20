@@ -2,36 +2,31 @@ import { useAppSelector } from 'lib/hooks';
 import { createColumnHelper } from '@tanstack/react-table';
 import { ConfigDataGrid } from 'lib/ui-ux/configuration-data-grid';
 import { CustomIconButton, FlexBox } from 'lib/ui-ux';
-import { Delete, Edit } from '@mui/icons-material';
+import { Edit } from '@mui/icons-material';
 import { Switch } from '@mui/material';
+import { ITicketEscalaltionLayoutProps } from '../ticket-escalation-layout';
+import { IEscalationsNew } from 'modules/settings/apis/escalations';
+import { DeleteEscalation } from '../delete-escalation';
 
+interface IAllEscalaltionsProps extends ITicketEscalaltionLayoutProps {
 
-interface IAllEscalaltionsProps {
-
-}
-
-interface IEscalationConditions {
-    slaName: string;
-    lastModifiedBy: string;
-    lastModified: string;
-    isSLAActive: boolean;
 }
 
 const useColumns = () => {
-    const columnHelper = createColumnHelper<IEscalationConditions>();
+    const columnHelper = createColumnHelper<IEscalationsNew>();
 
     const columns = [
-        columnHelper.accessor("slaName", {
+        columnHelper.accessor("name", {
             id: 'slaName',
             cell: info => info.getValue(),
             header: () => 'SLA Name',
         }),
-        columnHelper.accessor("lastModifiedBy", {
+        columnHelper.accessor("last_modified_by", {
             id: 'lastModifiedBy',
             cell: info => info.getValue(),
             header: () => 'Last Modified By',
         }),
-        columnHelper.accessor("lastModified", {
+        columnHelper.accessor("last_modified_at", {
             id: 'lastModified',
             cell: info => info.getValue(),
             header: () => 'Last Modified',
@@ -42,7 +37,7 @@ const useColumns = () => {
             cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
-                        <Switch defaultChecked={original.isSLAActive} />
+                        <Switch defaultChecked={original.is_active} />
                     </FlexBox>
                 )
             },
@@ -51,11 +46,11 @@ const useColumns = () => {
         columnHelper.display({
             id: 'actions',
             header: () => <span>Actions</span>,
-            cell: () => {
+            cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
                         <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: "Edit Escalation", arrow: true }} />
-                        <CustomIconButton iconComponent={<Delete />} tooltipProps={{ title: "Edit Escalation", arrow: true }} />
+                        <DeleteEscalation id={original.id} />
                     </FlexBox>
                 )
             },
@@ -66,18 +61,17 @@ const useColumns = () => {
     return columns;
 }
 
-export const AllEscalations = (_props: IAllEscalaltionsProps) => {
+export const AllEscalations = (props: IAllEscalaltionsProps) => {
+    const { allEscalations, isLoading } = props;
     const columns = useColumns();
-
     const configTotalPages = useAppSelector((state) => state.configurations.totalPages);
-    const data = [{ isSLAActive: true, lastModified: '20/06/2024', lastModifiedBy: 'Koppresh', slaName: 'Test' },
-    { isSLAActive: true, lastModified: '19/06/2024', lastModifiedBy: 'Sanjay', slaName: 'Default' }] as IEscalationConditions[];
+
     return (
         <>
             <ConfigDataGrid
                 columns={columns}
-                isLoading={false}
-                data={data}
+                isLoading={isLoading}
+                data={allEscalations!}
                 totalPages={configTotalPages}
                 enableSerchField />
         </>

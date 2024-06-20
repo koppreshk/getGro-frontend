@@ -6,7 +6,7 @@ import { Add } from "@mui/icons-material"
 import { Button, Typography } from "@mui/material"
 import { BreadCrumbs, CustomIconButton, FlexBox } from "lib/ui-ux"
 // import { CreateTicketEscalationContainer } from "modules/settings/containers";
-import { EscalationConditions } from "modules/settings/apis/escalations";
+import { IEscalationsNew } from "modules/settings/apis/escalations";
 import { useAppDispatch } from "lib/hooks";
 import { setTotalPage } from "modules/settings/storage";
 import { AddEscalationLayout } from "./ticket-escalation-new/add-escalation-layout";
@@ -14,7 +14,7 @@ import { AllEscalations } from "./ticket-escalation-new/all-escalations";
 
 export interface ITicketEscalaltionLayoutProps {
     isLoading: boolean;
-    escalationConditions: EscalationConditions[];
+    allEscalations: IEscalationsNew[] | undefined
     totalPages: number;
 }
 

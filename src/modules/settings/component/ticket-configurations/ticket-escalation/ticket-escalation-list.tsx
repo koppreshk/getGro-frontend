@@ -1,17 +1,13 @@
 import { useCallback, useState } from 'react';
 import { useAppSelector } from 'lib/hooks';
 import { Row, createColumnHelper } from '@tanstack/react-table';
-import { ITicketEscalaltionLayoutProps } from './ticket-escalation-layout';
+// import { ITicketEscalaltionLayoutProps } from './ticket-escalation-layout';
 import { ConfigDataGrid } from 'lib/ui-ux/configuration-data-grid';
 import { EscalationConditions } from 'modules/settings/apis/escalations';
 import { CustomIconButton, DrawerExtended, FlexBox } from 'lib/ui-ux';
-import { DeleteEscalation } from './delete-escalation';
 import { EditEscalationContainer } from 'modules/settings/containers';
 import { Edit } from '@mui/icons-material';
 
-interface ITicketEscalationListProps extends ITicketEscalaltionLayoutProps {
-
-}
 
 const useColumns = () => {
     const columnHelper = createColumnHelper<EscalationConditions>();
@@ -50,11 +46,11 @@ const useColumns = () => {
         columnHelper.display({
             id: 'actions',
             header: () => <span>Actions</span>,
-            cell: ({ row: { original } }) => {
+            cell: () => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
                         <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: "Edit Escalation", arrow: true }} />
-                        <DeleteEscalation id={original.id} />
+                        {/* <DeleteEscalation id={original.id} /> */}
                     </FlexBox>
                 )
             },
@@ -65,7 +61,7 @@ const useColumns = () => {
     return columns;
 }
 
-function TicketEscalationList(props: ITicketEscalationListProps) {
+function TicketEscalationList(props: any) {
     const columns = useColumns();
     const { escalationConditions, isLoading } = props;
     const [openAddEscalationDrawer, setOpenAddEscalationDrawer] = useState(false);
