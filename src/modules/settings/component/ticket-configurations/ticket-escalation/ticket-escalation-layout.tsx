@@ -7,10 +7,10 @@ import { Button, Typography } from "@mui/material"
 import { BreadCrumbs, CustomIconButton, FlexBox } from "lib/ui-ux"
 // import { CreateTicketEscalationContainer } from "modules/settings/containers";
 import { EscalationConditions } from "modules/settings/apis/escalations";
-import TicketEscalationList from "./ticket-escalation-list";
 import { useAppDispatch } from "lib/hooks";
 import { setTotalPage } from "modules/settings/storage";
 import { AddEscalationLayout } from "./ticket-escalation-new/add-escalation-layout";
+import { AllEscalations } from "./ticket-escalation-new/all-escalations";
 
 export interface ITicketEscalaltionLayoutProps {
     isLoading: boolean;
@@ -73,7 +73,7 @@ const EscalationLayoutContent = (props: ITicketEscalaltionLayoutProps) => {
                 <Button variant="contained" onClick={toggleAddEscalationDrawer} startIcon={<Add />}>Add Escalation</Button>
                 {/* <AddNewEscalation openAddEscalationDrawer={openAddEscalationDrawer} toggleAddEscalationDrawer={toggleAddEscalationDrawer} /> */}
             </FlexBox>
-            <TicketEscalationList {...props} />
+            <AllEscalations {...props} />
         </>
     );
 }
