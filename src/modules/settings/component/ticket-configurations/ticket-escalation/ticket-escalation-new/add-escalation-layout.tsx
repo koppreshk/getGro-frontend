@@ -8,6 +8,7 @@ import { ChooseCondition } from "./choose-condition";
 import { FlexBox } from "lib/ui-ux";
 import { KeyboardArrowLeft, KeyboardArrowRight, Save } from "@mui/icons-material";
 import { SLATargets } from "./sla-targets";
+import { ISLAmetaData } from "modules/settings/apis/escalations";
 
 const steps = [
     {
@@ -62,7 +63,13 @@ interface IEscalationFormFields {
     }
 }
 
-export const AddEscalationLayout = () => {
+interface IAddEscalationLayoutProps {
+    data: ISLAmetaData;
+}
+
+export const AddEscalationLayout = (props: IAddEscalationLayoutProps) => {
+    const { data } = props;
+    console.log("SLA Data", data);
     const [activeStep, setActiveStep] = React.useState(0);
     const navigate = useNavigate();
     const form = useForm<IEscalationFormFields>({
