@@ -12,7 +12,7 @@ type IRadioGroupFieldProps = Omit<RadioGroupProps, 'error' | 'required'> & {
 }
 
 export const RadioGroupField = (props: IRadioGroupFieldProps) => {
-    const { name, rules, radioOptions } = props;
+    const { name, rules, radioOptions, ...rest } = props;
     const { control } = useFormContext();
 
     return (
@@ -23,8 +23,8 @@ export const RadioGroupField = (props: IRadioGroupFieldProps) => {
                         <RadioGroup
                             row
                             aria-labelledby="demo-row-radio-buttons-group-label"
-                            {...props} {...field}>
-                            {radioOptions.map((item) => <FormControlLabel value={item.key} control={<Radio size="small"/>} label={item.label} />)}
+                            {...rest} {...field}>
+                            {radioOptions.map((item) => <FormControlLabel key={item.key} value={item.key} control={<Radio size="small"/>} label={item.label} />)}
                         </RadioGroup>
                     </FormControl>
                 )}

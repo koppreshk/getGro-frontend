@@ -27,7 +27,7 @@ const steps = [
 
 interface ITimeBasedFormFields {
     timePrefix: string,
-    timeFields: string
+    timeFields: number,
 }
 
 interface IEscalationFormFields {
@@ -60,6 +60,28 @@ interface IEscalationFormFields {
             nextResponse: ITimeBasedFormFields,
             resolution: ITimeBasedFormFields
         }
+    },
+    addReminders: {
+        ftrDuration: string;
+        ftrGroup: string;
+        ftrAgent: string;
+        ntrDuration: string;
+        ntrGroup: string;
+        ntrAgent: string;
+        resolutionDuration: string;
+        resolutionGroup: string;
+        resolutionAgent: string;
+    },
+    addEscalation: {
+        ftrDuration: string;
+        ftrGroup: string;
+        ftrAgent: string;
+        ntrDuration: string;
+        ntrGroup: string;
+        ntrAgent: string;
+        resolutionDuration: string;
+        resolutionGroup: string;
+        resolutionAgent: string;
     }
 }
 
@@ -86,57 +108,57 @@ export const AddEscalationLayout = (props: IAddEscalationLayoutProps) => {
                 critical: {
                     firstResponse: {
                         timePrefix: '1',
-                        timeFields: 'minutes'
+                        timeFields:  1
                     },
                     nextResponse: {
                         timePrefix: '1',
-                        timeFields: 'minutes'
+                        timeFields: 1
                     },
                     resolution: {
                         timePrefix: '1',
-                        timeFields: 'minutes'
+                        timeFields: 1
                     }
                 },
                 high: {
                     firstResponse: {
                         timePrefix: '1',
-                        timeFields: 'minutes'
+                        timeFields: 1
                     },
                     nextResponse: {
                         timePrefix: '1',
-                        timeFields: 'minutes'
+                        timeFields: 1
                     },
                     resolution: {
                         timePrefix: '1',
-                        timeFields: 'minutes'
+                        timeFields: 1
                     }
                 },
                 normal: {
                     firstResponse: {
                         timePrefix: '1',
-                        timeFields: 'minutes'
+                        timeFields: 1
                     },
                     nextResponse: {
                         timePrefix: '1',
-                        timeFields: 'minutes'
+                        timeFields: 1
                     },
                     resolution: {
                         timePrefix: '1',
-                        timeFields: 'minutes'
+                        timeFields: 1
                     }
                 },
                 low: {
                     firstResponse: {
                         timePrefix: '1',
-                        timeFields: 'minutes'
+                        timeFields: 1
                     },
                     nextResponse: {
                         timePrefix: '1',
-                        timeFields: 'minutes'
+                        timeFields: 1
                     },
                     resolution: {
                         timePrefix: '1',
-                        timeFields: 'minutes'
+                        timeFields: 1
                     }
                 }
             }
@@ -159,12 +181,12 @@ export const AddEscalationLayout = (props: IAddEscalationLayoutProps) => {
     const renderBasedOnActiveStep = () => {
         switch (activeStep) {
             case 0:
-                return <ChooseCondition />;
+                return <ChooseCondition ticketField={data.ticket_fields} />;
             case 1:
-                return <SLATargets />;
+                return <SLATargets timeOptions={data.run_types} slaTargetPriorities={data.priorities}/>;
             case 2:
-                return <AddReminder />
-            default: return <AddEscalation />
+                return <AddReminder reminderTimes={data.reminder_times} queueList={data.queue_list} userList={data.user_list} />
+            default: return <AddEscalation escalationTimes={data.escalation_types} queueList={data.queue_list} userList={data.user_list} />
         }
     }
 

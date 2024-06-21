@@ -6,15 +6,16 @@ import { Add } from "@mui/icons-material"
 import { Button, Typography } from "@mui/material"
 import { BreadCrumbs, CustomIconButton, FlexBox } from "lib/ui-ux"
 // import { CreateTicketEscalationContainer } from "modules/settings/containers";
-import { EscalationConditions } from "modules/settings/apis/escalations";
+import { IEscalationsNew } from "modules/settings/apis/escalations";
 import { useAppDispatch } from "lib/hooks";
 import { setTotalPage } from "modules/settings/storage";
 import { AllEscalations } from "./ticket-escalation-new/all-escalations";
 import { CreateTicketSLAContainer } from "modules/settings/containers/ticket-sla";
+import { EditEscalationsContainerNew } from "modules/settings/containers";
 
 export interface ITicketEscalaltionLayoutProps {
     isLoading: boolean;
-    escalationConditions: EscalationConditions[];
+    allEscalations: IEscalationsNew[] | undefined
     totalPages: number;
 }
 
@@ -50,6 +51,7 @@ export const TicketEscalationLayout = (props: ITicketEscalaltionLayoutProps) => 
                 <Routes>
                     <Route key='base-route' path="/" element={<EscalationLayoutContent {...props} />} />
                     <Route key='add-route' path="add-escalation" element={<CreateTicketSLAContainer />} />
+                    <Route key='edit-route' path="edit-escalation" element={<EditEscalationsContainerNew />} />
                 </Routes>
             </div>
         </FlexBox>
