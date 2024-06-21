@@ -50,7 +50,7 @@ export interface IEscalationsNew {
 export const useFetchAllEscalationsNew = () => {
     const { getData } = useServiceClient();
 
-    const fetchAllEscalations = React.useCallback(() => getData(`${EscalationEndPoint.FETCH_ALL_ESCALATIONS_NEW}?type=active`).then((res) => res.json()), [getData])
+    const fetchAllEscalations = React.useCallback(() => getData(`${EscalationEndPoint.FETCH_ALL_ESCALATIONS_NEW}`).then((res) => res.json()), [getData])
 
     return useQuery<{ sla: IEscalationsNew[], total_pages: number }, { message: string }>({
         queryKey: EscalationQueryKey.FETCH_ALL_ESCALATIONS_NEW,
