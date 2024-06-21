@@ -1,11 +1,11 @@
 import { useCallback, useState } from 'react';
 import { useAppSelector } from 'lib/hooks';
-import { Row, createColumnHelper } from '@tanstack/react-table';
+import { createColumnHelper } from '@tanstack/react-table';
 // import { ITicketEscalaltionLayoutProps } from './ticket-escalation-layout';
 import { ConfigDataGrid } from 'lib/ui-ux/configuration-data-grid';
 import { EscalationConditions } from 'modules/settings/apis/escalations';
 import { CustomIconButton, DrawerExtended, FlexBox } from 'lib/ui-ux';
-import { EditEscalationContainer } from 'modules/settings/containers';
+// import { EditEscalationContainer } from 'modules/settings/containers';
 import { Edit } from '@mui/icons-material';
 
 
@@ -65,7 +65,7 @@ function TicketEscalationList(props: any) {
     const columns = useColumns();
     const { escalationConditions, isLoading } = props;
     const [openAddEscalationDrawer, setOpenAddEscalationDrawer] = useState(false);
-    const [escalationMetaData, setEscalationMetaData] = useState({});
+    // const [escalationMetaData, setEscalationMetaData] = useState({});
 
     const configTotalPages = useAppSelector((state) => state.configurations.totalPages);
 
@@ -73,9 +73,9 @@ function TicketEscalationList(props: any) {
         setOpenAddEscalationDrawer((prevValue) => !prevValue)
     }, []);
 
-    const onRowClick = (row: Row<EscalationConditions>) => {
+    const onRowClick = () => {
         toggleAddEscalationDrawer()
-        setEscalationMetaData(row.original);
+        // setEscalationMetaData(row.original);
     }
 
     return (
@@ -93,9 +93,7 @@ function TicketEscalationList(props: any) {
                 open={openAddEscalationDrawer}
                 header="View or Edit Escalation"
                 onRenderContent={() => (
-                    <EditEscalationContainer
-                        toggleAddEscalationDrawer={toggleAddEscalationDrawer}
-                        escalationMetadata={escalationMetaData as EscalationConditions} />
+                    <p>edit escalation</p>
                 )}
                 onClose={toggleAddEscalationDrawer} />
         </>
