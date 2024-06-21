@@ -8,6 +8,7 @@ import { ChooseCondition } from "./choose-condition";
 import { FlexBox } from "lib/ui-ux";
 import { KeyboardArrowLeft, KeyboardArrowRight, Save } from "@mui/icons-material";
 import { SLATargets } from "./sla-targets";
+import { ISLAmetaData } from "modules/settings/apis/escalations";
 
 const steps = [
     {
@@ -26,7 +27,7 @@ const steps = [
 
 interface ITimeBasedFormFields {
     timePrefix: string,
-    timeFields: string
+    timeFields: number,
 }
 
 interface IEscalationFormFields {
@@ -59,10 +60,38 @@ interface IEscalationFormFields {
             nextResponse: ITimeBasedFormFields,
             resolution: ITimeBasedFormFields
         }
+    },
+    addReminders: {
+        ftrDuration: string;
+        ftrGroup: string;
+        ftrAgent: string;
+        ntrDuration: string;
+        ntrGroup: string;
+        ntrAgent: string;
+        resolutionDuration: string;
+        resolutionGroup: string;
+        resolutionAgent: string;
+    },
+    addEscalation: {
+        ftrDuration: string;
+        ftrGroup: string;
+        ftrAgent: string;
+        ntrDuration: string;
+        ntrGroup: string;
+        ntrAgent: string;
+        resolutionDuration: string;
+        resolutionGroup: string;
+        resolutionAgent: string;
     }
 }
 
-export const AddEscalationLayout = () => {
+interface IAddEscalationLayoutProps {
+    data: ISLAmetaData;
+}
+
+export const AddEscalationLayout = (props: IAddEscalationLayoutProps) => {
+    const { data } = props;
+    console.log("SLA Data", data);
     const [activeStep, setActiveStep] = React.useState(0);
     const navigate = useNavigate();
     const form = useForm<IEscalationFormFields>({
@@ -79,57 +108,57 @@ export const AddEscalationLayout = () => {
                 critical: {
                     firstResponse: {
                         timePrefix: '1',
-                        timeFields: 'minutes'
+                        timeFields:  1
                     },
                     nextResponse: {
                         timePrefix: '1',
-                        timeFields: 'minutes'
+                        timeFields: 1
                     },
                     resolution: {
                         timePrefix: '1',
-                        timeFields: 'minutes'
+                        timeFields: 1
                     }
                 },
                 high: {
                     firstResponse: {
                         timePrefix: '1',
-                        timeFields: 'minutes'
+                        timeFields: 1
                     },
                     nextResponse: {
                         timePrefix: '1',
-                        timeFields: 'minutes'
+                        timeFields: 1
                     },
                     resolution: {
                         timePrefix: '1',
-                        timeFields: 'minutes'
+                        timeFields: 1
                     }
                 },
                 normal: {
                     firstResponse: {
                         timePrefix: '1',
-                        timeFields: 'minutes'
+                        timeFields: 1
                     },
                     nextResponse: {
                         timePrefix: '1',
-                        timeFields: 'minutes'
+                        timeFields: 1
                     },
                     resolution: {
                         timePrefix: '1',
-                        timeFields: 'minutes'
+                        timeFields: 1
                     }
                 },
                 low: {
                     firstResponse: {
                         timePrefix: '1',
-                        timeFields: 'minutes'
+                        timeFields: 1
                     },
                     nextResponse: {
                         timePrefix: '1',
-                        timeFields: 'minutes'
+                        timeFields: 1
                     },
                     resolution: {
                         timePrefix: '1',
-                        timeFields: 'minutes'
+                        timeFields: 1
                     }
                 }
             }
@@ -152,12 +181,12 @@ export const AddEscalationLayout = () => {
     const renderBasedOnActiveStep = () => {
         switch (activeStep) {
             case 0:
-                return <ChooseCondition />;
+                return <ChooseCondition ticketField={data.ticket_fields} />;
             case 1:
-                return <SLATargets />;
+                return <SLATargets timeOptions={data.run_types} slaTargetPriorities={data.priorities}/>;
             case 2:
-                return <AddReminder />
-            default: return <AddEscalation />
+                return <AddReminder reminderTimes={data.reminder_times} queueList={data.queue_list} userList={data.user_list} />
+            default: return <AddEscalation escalationTimes={data.escalation_types} queueList={data.queue_list} userList={data.user_list} />
         }
     }
 

@@ -1,7 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
 import { useFetchEscalationById } from "modules/settings/apis/escalations";
-import { AddEscalationLayout } from "modules/settings/component/ticket-configurations/ticket-escalation/ticket-escalation-new/add-escalation-layout"
 
 export const EditEscalationsContainerNew = () => {
     const [searchParams] = useSearchParams();
@@ -12,9 +11,10 @@ export const EditEscalationsContainerNew = () => {
     }
 
     if (data) {
+        console.log(data);
         return (
-            <AddEscalationLayout />
+            <p>edit esclation form here</p>
         )
     }
-    return <ErrorMessage statusCode={error?.message}/>
+    return <ErrorMessage statusCode={error?.message} />
 }
