@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { SelectField, TextboxField } from "lib/form-fields";
 import { FlexBox } from "lib/ui-ux"
-import { Field, IKeyValue, Priority } from "modules/settings/apis/escalations/fetch-sla-metadata";
+import { IField, IKeyValue, IPriority } from "modules/settings/apis/escalations/fetch-sla-metadata";
 import styled from 'styled-components';
 
 const PriorityLabel = styled(FlexBox)`
@@ -16,8 +16,8 @@ const Container = styled(FlexBox)`
     border-radius: ${({ theme }) => theme.semantics.borderRadius.xs};
 `;
 interface ISLATargetsProps {
-    timeOptions: Field[];
-    slaTargetPriorities: Priority[];
+    timeOptions: IField[];
+    slaTargetPriorities: IPriority[];
 }
 
 export const SLATargets = (props: ISLATargetsProps) => {

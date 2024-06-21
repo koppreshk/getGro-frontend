@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material"
 import { RadioGroupField, SelectField, TextboxField } from "lib/form-fields"
 import { FlexBox } from "lib/ui-ux";
-import { Field } from "modules/settings/apis/escalations";
+import { IField } from "modules/settings/apis/escalations";
 import styled from "styled-components";
 
 const StyledRadioFields = styled(RadioGroupField)`
@@ -16,12 +16,12 @@ interface IKeyValue {
 }
 
 interface IChooseConditionProps {
-    ticketField:  Field[];
+    ticketField: IField[];
 }
 
 export const ChooseCondition = (props: IChooseConditionProps) => {
     const { ticketField } = props;
-    const ticketFieldDropdownData = ticketField.map((data) => ({key: data.id.toString(), value: data.name})) 
+    const ticketFieldDropdownData = ticketField.map((data) => ({ key: data.id.toString(), value: data.name }))
     console.log(ticketField);
     return (
         <>
@@ -42,21 +42,21 @@ export const ChooseCondition = (props: IChooseConditionProps) => {
                     p={2}
                     sx={{ border: '1px solid #c4c4c4', borderRadius: '4px' }}>
                     <Typography variant="body2">Apply this SLA to the tickets that meet All of these conditions</Typography>
-                    <Conditions ticketFieldDropdownData={ticketFieldDropdownData}/>
+                    <Conditions ticketFieldDropdownData={ticketFieldDropdownData} />
                 </Box>
             </FlexBox>
         </>
     )
 }
 
-const Conditions = (props: {ticketFieldDropdownData: IKeyValue[]}) => {
+const Conditions = (props: { ticketFieldDropdownData: IKeyValue[] }) => {
     return (
         <Box
             display="flex"
             gap={4}
             p={2}
             sx={{ border: '1px solid #c4c4c4', borderRadius: '4px' }}>
-            <SelectField name="chooseCondition.ticketFields" menuOptions={props.ticketFieldDropdownData} sx={{ width: '33%' }} label="Select field"/>
+            <SelectField name="chooseCondition.ticketFields" menuOptions={props.ticketFieldDropdownData} sx={{ width: '33%' }} label="Select field" />
             <SelectField name="chooseCondition.condition" menuOptions={[{ key: 'is', value: 'Is' }, { key: 'isNot', value: 'Is not' }, { key: 'in', value: 'In' }, { key: 'not', value: 'Not in' }]} sx={{ width: '33%' }} />
             <SelectField name="chooseCondition.conditionValue" menuOptions={[{ key: 'new', value: 'New' }, { key: 'open', value: 'Open' }, { key: 'new', value: 'New' }, { key: 'solved', value: 'Solved' }]} sx={{ width: '33%' }} />
         </Box>

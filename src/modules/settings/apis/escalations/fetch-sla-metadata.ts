@@ -9,46 +9,46 @@ export interface IKeyValue {
     value: string;
 }
 
-export interface Field {
+export interface IField {
     id: number;
     name: string;
 }
 
-export interface Priority {
+export interface IPriority {
     id: number;
     name: string;
 }
 
-export interface ReminderTime {
+export interface IReminderTime {
     id: number;
     name: string;
 }
 
-export interface EscalationType {
+export interface IEscalationType {
     id: number;
     name: string;
 }
 
-export interface Queue {
+export interface IQueue {
     id: number;
     name: string;
     uniqueKey: string;
 }
 
-export interface User {
+export interface IUser {
     firstName: string;
     lastName: string;
     id: number;
 }
 
 export interface ISLAmetaData {
-    ticket_fields: Field[];
-    run_types: Field[];
-    priorities: Priority[];
-    reminder_times: ReminderTime[];
-    escalation_types: EscalationType[];
-    queue_list: Queue[];
-    user_list: User[];
+    ticket_fields: IField[];
+    run_types: IField[];
+    priorities: IPriority[];
+    reminder_times: IReminderTime[];
+    escalation_types: IEscalationType[];
+    queue_list: IQueue[];
+    user_list: IUser[];
 }
 
 export const useFetchSLAmetaData = () => {

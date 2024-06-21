@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@mui/material"
 import { AutocompleteField, SelectField } from "lib/form-fields";
 import { FlexBox } from "lib/ui-ux"
-import { Queue, ReminderTime, User } from "modules/settings/apis/escalations/fetch-sla-metadata";
+import { IQueue, IReminderTime, IUser } from "modules/settings/apis/escalations/fetch-sla-metadata";
 import styled from "styled-components";
 
 const Wrapper = styled(FlexBox)`
@@ -14,9 +14,9 @@ const HeaderLabel = styled(FlexBox)`
 `;
 
 interface IAddReminderProps {
-    reminderTimes: ReminderTime[];
-    queueList: Queue[];
-    userList: User[];
+    reminderTimes: IReminderTime[];
+    queueList: IQueue[];
+    userList: IUser[];
 }
 
 export const AddReminder = (props: IAddReminderProps) => {
