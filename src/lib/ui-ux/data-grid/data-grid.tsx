@@ -92,7 +92,6 @@ export function DataGrid<T extends object>(props: IDataGridProps<T>) {
         getSortedRowModel: getSortedRowModel()
     });
 
-    // console.log(table.getSelectedRowModel());
     return (
         <DndProvider backend={HTML5Backend}>
             <DataGridWrapper flexDirection='column' gap="10px" className={className}>

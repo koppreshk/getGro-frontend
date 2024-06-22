@@ -42,7 +42,6 @@ export const TicketDisposeForm = (props: ITicketDisposeFormProps) => {
 
     const onSubmitDisposeTicket = React.useCallback(async (getformvalues: IDispostionFormFields) => {
         submitDisposeTicket(getformvalues);
-        console.log(getformvalues);
     }, [submitDisposeTicket]);
 
     React.useEffect(() => {

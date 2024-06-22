@@ -1,6 +1,7 @@
-import { Box, Typography } from "@mui/material"
+import { Box, CircularProgress, Typography } from "@mui/material"
 import { RadioGroupField, SelectField, TextboxField } from "lib/form-fields"
 import { FlexBox } from "lib/ui-ux";
+import { useFetchAllStatuses } from "modules/settings/apis/disposition-types";
 import { IField } from "modules/settings/apis/escalations";
 import styled from "styled-components";
 
@@ -22,7 +23,7 @@ interface IChooseConditionProps {
 export const ChooseCondition = (props: IChooseConditionProps) => {
     const { ticketField } = props;
     const ticketFieldDropdownData = ticketField.map((data) => ({ key: data.id.toString(), value: data.name }))
-    console.log(ticketField);
+
     return (
         <>
             <FlexBox width="100%" flexDirection="column" gap="20px">
@@ -33,7 +34,7 @@ export const ChooseCondition = (props: IChooseConditionProps) => {
                     rows={4} />
                 <FlexBox flexDirection="column">
                     <Typography variant="h6">Calculate SLA Evaluation (Resolution due) when conditions are met from</Typography>
-                    <StyledRadioFields name="chooseCondition.slaEvalutaion" radioOptions={[{ key: 'ticket-creation-time', label: 'Ticket creation time' }, { key: 'time-when-conditions-are-met', label: 'Time when conditions are met' }]} />
+                    <StyledRadioFields name="chooseCondition.slaEvalutaion" radioOptions={[{ key: '0', label: 'Ticket creation time' }, { key: '1', label: 'Time when conditions are met' }]} />
                 </FlexBox>
                 <Box
                     display="flex"
@@ -50,6 +51,7 @@ export const ChooseCondition = (props: IChooseConditionProps) => {
 }
 
 const Conditions = (props: { ticketFieldDropdownData: IKeyValue[] }) => {
+    const { data, isLoading } = useFetchAllStatuses();
     return (
         <Box
             display="flex"
@@ -57,8 +59,8 @@ const Conditions = (props: { ticketFieldDropdownData: IKeyValue[] }) => {
             p={2}
             sx={{ border: '1px solid #c4c4c4', borderRadius: '4px' }}>
             <SelectField name="chooseCondition.ticketFields" menuOptions={props.ticketFieldDropdownData} sx={{ width: '33%' }} label="Select field" />
-            <SelectField name="chooseCondition.condition" menuOptions={[{ key: 'is', value: 'Is' }, { key: 'isNot', value: 'Is not' }, { key: 'in', value: 'In' }, { key: 'not', value: 'Not in' }]} sx={{ width: '33%' }} />
-            <SelectField name="chooseCondition.conditionValue" menuOptions={[{ key: 'new', value: 'New' }, { key: 'open', value: 'Open' }, { key: 'new', value: 'New' }, { key: 'solved', value: 'Solved' }]} sx={{ width: '33%' }} />
+            <SelectField name="chooseCondition.condition" menuOptions={[{ key: 'is', value: 'Is' }]} sx={{ width: '33%' }} />
+            {isLoading ? <CircularProgress /> : <SelectField name="chooseCondition.conditionValue" menuOptions={data!.map((item) => ({ key: item.id.toString(), value: item.name }))} sx={{ width: '33%' }} />}
         </Box>
     )
 }
