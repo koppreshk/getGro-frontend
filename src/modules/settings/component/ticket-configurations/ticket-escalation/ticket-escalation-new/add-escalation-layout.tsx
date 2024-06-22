@@ -9,6 +9,7 @@ import { FlexBox } from "lib/ui-ux";
 import { KeyboardArrowLeft, KeyboardArrowRight, Save } from "@mui/icons-material";
 import { SLATargets } from "./sla-targets";
 import { IKeyValue, ISLAmetaData, useCreateEscalationNew } from "modules/settings/apis/escalations";
+import { useNotifications } from "lib";
 
 const steps = [
     {
@@ -174,6 +175,7 @@ export const AddEscalationLayout = (props: IAddEscalationLayoutProps) => {
     });
 
     const { mutateAsync } = useCreateEscalationNew();
+    const { showNotification } = useNotifications();
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -200,9 +202,8 @@ export const AddEscalationLayout = (props: IAddEscalationLayoutProps) => {
         }
     }
 
-    const onSave = async (formData: IEscalationFormFields) => {
+    const onSave = (formData: IEscalationFormFields) => {
         const { addEscalation, addReminders, chooseCondition, slaTargets } = formData;
-        onClose();
         mutateAsync({
             name: chooseCondition.name,
             description: chooseCondition.description,
@@ -236,6 +237,8 @@ export const AddEscalationLayout = (props: IAddEscalationLayoutProps) => {
                 user_ids: addEscalation.ftrAgent.map((item) => item.key)
             }
         })
+            .then(() => showNotification({ message: 'SLA created successfully', type: 'success' }))
+            .catch(() => showNotification({ message: 'Failed to create SLA', type: 'error' }))
     }
 
     return (
