@@ -24,7 +24,7 @@ export const useCreateEscalations = () => {
 export interface ICreateEscalationPayload {
     name: string
     description: string
-    evaluation_type: string
+    evaluation_type: string | number
     ticket_fields: TicketField[]
     targets: Target[]
     reminder: Reminder

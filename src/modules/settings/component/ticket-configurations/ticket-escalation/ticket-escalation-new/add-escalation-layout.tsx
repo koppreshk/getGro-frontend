@@ -147,6 +147,28 @@ export const AddEscalationLayout = (props: IAddEscalationLayoutProps) => {
                         timeFields: '1'
                     }
                 }
+            },
+            addReminders: {
+                ftrAgent: [],
+                ftrDuration: data.reminder_times[0].id.toString(),
+                ftrGroup: [],
+                ntrAgent: [],
+                ntrDuration: data.reminder_times[0].id.toString(),
+                ntrGroup: [],
+                resolutionAgent: [],
+                resolutionDuration: data.reminder_times[0].id.toString(),
+                resolutionGroup: []
+            },
+            addEscalation: {
+                ftrAgent: [],
+                ftrDuration: data.escalation_types[0].id.toString(),
+                ftrGroup: [],
+                ntrAgent: [],
+                ntrDuration: data.escalation_types[0].id.toString(),
+                ntrGroup: [],
+                resolutionAgent: [],
+                resolutionDuration: data.escalation_types[0].id.toString(),
+                resolutionGroup: []
             }
         }
     });
@@ -184,7 +206,7 @@ export const AddEscalationLayout = (props: IAddEscalationLayoutProps) => {
         mutateAsync({
             name: chooseCondition.name,
             description: chooseCondition.description,
-            evaluation_type: chooseCondition.slaEvalutaion,
+            evaluation_type: Number(chooseCondition.slaEvalutaion),
             ticket_fields: [
                 { id: chooseCondition.ticketFields, value: chooseCondition.conditionValue },
             ],
