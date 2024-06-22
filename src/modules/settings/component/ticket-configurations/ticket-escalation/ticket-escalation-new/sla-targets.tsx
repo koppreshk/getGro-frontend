@@ -62,7 +62,7 @@ const TimeInputs = (props: ITimeInputsProps) => {
     const { timeFieldsName, timePrefixName, timeFieldOptions } = props;
     return (
         <FlexBox>
-            <TextboxField name={timePrefixName} type="number" sx={{ width: '70px' }} size="small" />
+            <TextboxField name={timePrefixName} type="number" sx={{ width: '70px' }} size="small" rules={{ min: 1 }} />
             <SelectField name={timeFieldsName} sx={{ width: '150px' }} size="small" menuOptions={timeFieldOptions} />
         </FlexBox>
     )

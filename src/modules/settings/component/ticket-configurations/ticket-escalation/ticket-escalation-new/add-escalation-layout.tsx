@@ -8,8 +8,7 @@ import { ChooseCondition } from "./choose-condition";
 import { FlexBox } from "lib/ui-ux";
 import { KeyboardArrowLeft, KeyboardArrowRight, Save } from "@mui/icons-material";
 import { SLATargets } from "./sla-targets";
-import { IKeyValue, ISLAmetaData, useCreateEscalationNew } from "modules/settings/apis/escalations";
-import { useNotifications } from "lib";
+import { IKeyValue, ISLAmetaData } from "modules/settings/apis/escalations";
 
 const steps = [
     {
@@ -31,7 +30,15 @@ interface ITimeBasedFormFields {
     timeFields: string,
 }
 
-interface IEscalationFormFields {
+export interface ISLATargetsFormFields {
+    [key: string]: {
+        firstResponse: ITimeBasedFormFields,
+        nextResponse: ITimeBasedFormFields,
+        resolution: ITimeBasedFormFields
+    }
+}
+
+export interface IEscalationFormFields {
     chooseCondition: {
         name: string;
         description: string;
@@ -40,13 +47,7 @@ interface IEscalationFormFields {
         condition: string,
         conditionValue: string
     }
-    slaTargets: {
-        [key: string]: {
-            firstResponse: ITimeBasedFormFields,
-            nextResponse: ITimeBasedFormFields,
-            resolution: ITimeBasedFormFields
-        }
-    },
+    slaTargets: ISLATargetsFormFields,
     addReminders: {
         ftrDuration: string;
         ftrGroup: IKeyValue[];
@@ -75,10 +76,11 @@ interface IAddEscalationLayoutProps {
     data: ISLAmetaData;
     defaultvalues?: IEscalationFormFields;
     mode?: 'add' | 'edit';
+    onFormSubmit: (formData: IEscalationFormFields) => Promise<void>
 }
 
 export const AddEscalationLayout = (props: IAddEscalationLayoutProps) => {
-    const { data, defaultvalues, mode = 'add' } = props;
+    const { data, defaultvalues, mode = 'add', onFormSubmit } = props;
     const [activeStep, setActiveStep] = React.useState(0);
     const navigate = useNavigate();
     const form = useForm<IEscalationFormFields>({
@@ -171,14 +173,15 @@ export const AddEscalationLayout = (props: IAddEscalationLayoutProps) => {
                 resolutionDuration: data.escalation_types[0].id.toString(),
                 resolutionGroup: []
             }
-        }
+        },
+        mode: 'onBlur'
     });
 
-    const { mutateAsync } = useCreateEscalationNew();
-    const { showNotification } = useNotifications();
-
-    const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    const handleNext = async () => {
+        const isFormValidated = await form.trigger();
+        if (isFormValidated) {
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        }
     };
 
     const handleBack = () => {
@@ -203,42 +206,7 @@ export const AddEscalationLayout = (props: IAddEscalationLayoutProps) => {
     }
 
     const onSave = (formData: IEscalationFormFields) => {
-        const { addEscalation, addReminders, chooseCondition, slaTargets } = formData;
-        mutateAsync({
-            name: chooseCondition.name,
-            description: chooseCondition.description,
-            evaluation_type: Number(chooseCondition.slaEvalutaion),
-            ticket_fields: [
-                { id: chooseCondition.ticketFields, value: chooseCondition.conditionValue },
-            ],
-            targets: data.priorities.map((item) => (
-                {
-                    priority_id: item.id,
-                    time_to_first_response: slaTargets[item.name.toLocaleLowerCase()].firstResponse.timePrefix,
-                    time_to_next_response: slaTargets[item.name.toLocaleLowerCase()].nextResponse.timePrefix,
-                    time_to_resolution: slaTargets[item.name.toLocaleLowerCase()].nextResponse.timePrefix,
-                    first_response_run_type_id: slaTargets[item.name.toLocaleLowerCase()].firstResponse.timeFields,
-                    next_response_run_type_id: slaTargets[item.name.toLocaleLowerCase()].nextResponse.timeFields,
-                    resolution_run_type_id: slaTargets[item.name.toLocaleLowerCase()].resolution.timeFields
-                }
-            )),
-            reminder: {
-                fr_reminder_id: addReminders.ftrDuration,
-                nr_reminder_id: addReminders.ntrDuration,
-                rs_reminder_id: addReminders.resolutionDuration,
-                queue_ids: addReminders.ftrGroup.map((item) => item.key),
-                user_ids: addReminders.ftrAgent.map((item) => item.key)
-            },
-            escalations: {
-                fr_escalation_id: addEscalation.ftrDuration,
-                nr_escalation_id: addEscalation.ntrDuration,
-                rs_escalation_id: addEscalation.resolutionDuration,
-                queue_ids: addEscalation.ftrGroup.map((item) => item.key),
-                user_ids: addEscalation.ftrAgent.map((item) => item.key)
-            }
-        })
-            .then(() => showNotification({ message: 'SLA created successfully', type: 'success' }))
-            .catch(() => showNotification({ message: 'Failed to create SLA', type: 'error' }))
+        onFormSubmit(formData);
     }
 
     return (

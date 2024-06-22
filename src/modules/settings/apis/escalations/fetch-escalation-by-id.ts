@@ -26,55 +26,34 @@ interface ByUser {
 }
 
 interface TicketField {
-  field: string
+  field_id: number
   value: number
-  name: string
 }
 
 interface Target {
-  priority_id: PriorityId
+  priority_id: number
   time_to_first_response: number
   time_to_next_response: number
   time_to_resolution: number
-  first_response_run_type: FirstResponseRunType
-  next_response_run_type: NextResponseRunType
-  resolution_run_type: ResolutionRunType
-}
-
-interface PriorityId {
-  name: string
-  id: number
-}
-
-interface FirstResponseRunType {
-  name: string
-  run_type: number
-}
-
-interface NextResponseRunType {
-  name: string
-  run_type: number
-}
-
-interface ResolutionRunType {
-  name: string
-  run_type: number
+  first_response_run_type_id: number
+  next_response_run_type_id: number
+  resolution_run_type_id: number
 }
 
 interface Reminder {
-  fr_reminder_in: string
-  nr_reminder_in: number
-  rs_reminder_in: number
-  queue_ids: number[]
-  user_ids: number[]
+  fr_reminder_id: number
+  nr_reminder_id: number
+  rs_reminder_id: number
+  queue_ids: string[]
+  user_ids: string[]
 }
 
 interface Escalations {
-  fr_escalation_type: string
-  nr_escalation_type: number
-  rs_escalation_type: number
-  queue_ids: number[]
-  user_ids: number[]
+  fr_escalation_id: number
+  nr_escalation_id: number
+  rs_escalation_id: number
+  queue_ids: string[]
+  user_ids: string[]
 }
 
 export const useFetchEscalationById = (id: number) => {

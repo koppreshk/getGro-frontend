@@ -56,7 +56,7 @@ export const useFetchSLAmetaData = () => {
 
     const getSLAmetadata = React.useCallback(() => getData(EscalationEndPoint.FETCH_SLA_METADATA).then(res => res.json()), [getData]);
 
-    return useQuery<ISLAmetaData>({
+    return useQuery<ISLAmetaData, { message: string }>({
         queryKey: EscalationQueryKey.FETCH_SLA_METADATA,
         queryFn: getSLAmetadata
     });
