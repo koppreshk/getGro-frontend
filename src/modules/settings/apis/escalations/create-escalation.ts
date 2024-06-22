@@ -19,47 +19,47 @@ export const useCreateEscalations = () => {
         }
     });
 }
-//Payload
 
+//Payload
 export interface ICreateEscalationPayload {
     name: string
     description: string
-    evaluation_type: number
+    evaluation_type: string | number
     ticket_fields: TicketField[]
     targets: Target[]
     reminder: Reminder
     escalations: Escalations
 }
 
-export interface TicketField {
-    field: number
-    value: number
+interface TicketField {
+    id: string
+    value: string
 }
 
-export interface Target {
+interface Target {
     priority_id: number
-    time_to_first_response: number
-    time_to_next_response: number
-    time_to_resolution: number
-    first_response_run_type: number
-    next_response_run_type: number
-    resolution_run_type: number
+    time_to_first_response: string
+    time_to_next_response: string
+    time_to_resolution: string
+    first_response_run_type_id: string
+    next_response_run_type_id: string
+    resolution_run_type_id: string
 }
 
-export interface Reminder {
-    fr_reminder_in: number
-    nr_reminder_in: number
-    rs_reminder_in: number
-    queue_ids: number[]
-    user_ids: number[]
+interface Reminder {
+    fr_reminder_id: string
+    nr_reminder_id: string
+    rs_reminder_id: string
+    queue_ids: string[]
+    user_ids: string[]
 }
 
-export interface Escalations {
-    fr_escalation_type: number
-    nr_escalation_type: number
-    rs_escalation_type: number
-    queue_ids: number[]
-    user_ids: number[]
+interface Escalations {
+    fr_escalation_id: string
+    nr_escalation_id: string
+    rs_escalation_id: string
+    queue_ids: string[]
+    user_ids: string[]
 }
 
 export const useCreateEscalationNew = () => {

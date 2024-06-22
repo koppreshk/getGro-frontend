@@ -11,7 +11,6 @@ export const EditEscalationsContainerNew = () => {
     }
 
     if (data) {
-        console.log(data);
         return (
             <p>edit esclation form here</p>
         )

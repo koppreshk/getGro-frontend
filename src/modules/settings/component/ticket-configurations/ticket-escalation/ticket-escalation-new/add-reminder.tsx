@@ -32,7 +32,7 @@ export const AddReminder = (props: IAddReminderProps) => {
                         <HeaderLabel >
                             <Typography variant="body2"> When First response target approches in </Typography>
                         </HeaderLabel>
-                        <SelectField name="addReminders.ftrDuration" menuOptions={reminderTimes.map((data) =>({key: data.id.toString(), value: data.name}))} sx={{ width: '100%' }} label="Duration" />
+                        <SelectField name="addReminders.ftrDuration" menuOptions={reminderTimes.map((data) => ({ key: data.id.toString(), value: data.name }))} sx={{ width: '100%' }} label="Duration" />
                     </Grid>
                     <Grid item xs={8}>
                         <HeaderLabel>
@@ -40,13 +40,13 @@ export const AddReminder = (props: IAddReminderProps) => {
                         </HeaderLabel>
                         <Grid container spacing={2}>
                             <Grid item xs={6}>
-                                <AutocompleteField label="Group" name="addReminders.ftrGroup"
-                                    options={queueList.map((data) =>({key: data.id.toString(), value: data.name}))}
-                                    placeholder="Group" />
+                                <AutocompleteField label="Queue" name="addReminders.ftrGroup"
+                                    options={queueList.map((data) => ({ key: data.id.toString(), value: data.name }))}
+                                    placeholder="Queue" />
                             </Grid>
                             <Grid item xs={6}>
                                 <AutocompleteField label="Agent" name="addReminders.ftrAgent"
-                                    options={userList.map((data) =>({key: data.id.toString(), value: `${data.firstName} ${data.lastName ?? ''}`}))}
+                                    options={userList.map((data) => ({ key: data.id.toString(), value: `${data.firstName} ${data.lastName ?? ''}` }))}
                                     placeholder="Agent" />
                             </Grid>
                         </Grid>
@@ -62,7 +62,7 @@ export const AddReminder = (props: IAddReminderProps) => {
                         <HeaderLabel >
                             <Typography variant="body2"> When Next response target approches in </Typography>
                         </HeaderLabel>
-                        <SelectField name="addReminders.ntrDuration" menuOptions={reminderTimes.map((data) =>({key: data.id.toString(), value: data.name}))} sx={{ width: '100%' }} label="Duration" />
+                        <SelectField name="addReminders.ntrDuration" menuOptions={reminderTimes.map((data) => ({ key: data.id.toString(), value: data.name }))} sx={{ width: '100%' }} label="Duration" />
                     </Grid>
                     <Grid item xs={8}>
                         <HeaderLabel>
@@ -70,13 +70,13 @@ export const AddReminder = (props: IAddReminderProps) => {
                         </HeaderLabel>
                         <Grid container spacing={2}>
                             <Grid item xs={6}>
-                                <AutocompleteField label="Group" name="addReminders.ntrGroup"
-                                    options={queueList.map((data) =>({key: data.id.toString(), value: data.name}))}
-                                    placeholder="Group" />
+                                <AutocompleteField label="Queue" name="addReminders.ntrGroup"
+                                    options={queueList.map((data) => ({ key: data.id.toString(), value: data.name }))}
+                                    placeholder="Queue" />
                             </Grid>
                             <Grid item xs={6}>
                                 <AutocompleteField label="Agent" name="addReminders.ntrAgent"
-                                    options={userList.map((data) =>({key: data.id.toString(), value: `${data.firstName} ${data.lastName ?? ''}`}))}
+                                    options={userList.map((data) => ({ key: data.id.toString(), value: `${data.firstName} ${data.lastName ?? ''}` }))}
                                     placeholder="Agent" />
                             </Grid>
                         </Grid>
@@ -92,7 +92,7 @@ export const AddReminder = (props: IAddReminderProps) => {
                         <HeaderLabel >
                             <Typography variant="body2"> When Resolution target approches in </Typography>
                         </HeaderLabel>
-                        <SelectField name="addReminders.resolutionDuration" menuOptions={reminderTimes.map((data) =>({key: data.id.toString(), value: data.name}))} sx={{ width: '100%' }} label="Duration" />
+                        <SelectField name="addReminders.resolutionDuration" menuOptions={reminderTimes.map((data) => ({ key: data.id.toString(), value: data.name }))} sx={{ width: '100%' }} label="Duration" />
                     </Grid>
                     <Grid item xs={8}>
                         <HeaderLabel>
@@ -100,13 +100,13 @@ export const AddReminder = (props: IAddReminderProps) => {
                         </HeaderLabel>
                         <Grid container spacing={2}>
                             <Grid item xs={6}>
-                                <AutocompleteField label="Group" name="addReminders.resolutionGroup"
-                                    options={queueList.map((data) =>({key: data.id.toString(), value: data.name}))}
-                                    placeholder="Group" />
+                                <AutocompleteField label="Queue" name="addReminders.resolutionGroup"
+                                    options={queueList.map((data) => ({ key: data.id.toString(), value: data.name }))}
+                                    placeholder="Queue" />
                             </Grid>
                             <Grid item xs={6}>
                                 <AutocompleteField label="Agent" name="addReminders.resolutionAgent"
-                                    options={userList.map((data) =>({key: data.id.toString(), value: `${data.firstName} ${data.lastName ?? ''}`}))}
+                                    options={userList.map((data) => ({ key: data.id.toString(), value: `${data.firstName} ${data.lastName ?? ''}` }))}
                                     placeholder="Agent" />
                             </Grid>
                         </Grid>

@@ -22,8 +22,8 @@ interface ISLATargetsProps {
 
 export const SLATargets = (props: ISLATargetsProps) => {
     const { timeOptions, slaTargetPriorities } = props;
-    const priorities = slaTargetPriorities.map((data) => ({key: data.id.toString(), value: data.name}));
-    const timeFieldOptions = timeOptions.map((data) => ({key: data.id.toString(), value: data.name}));
+    const priorities = slaTargetPriorities.map((data) => ({ key: data.id.toString(), value: data.name }));
+    const timeFieldOptions = timeOptions.map((data) => ({ key: data.id.toString(), value: data.name }));
 
     return (
         <FlexBox flexDirection="column" gap="20px">
@@ -35,15 +35,15 @@ export const SLATargets = (props: ISLATargetsProps) => {
                     <FlexBox padding="0 20px" gap={"10px"} >
                         <FlexBox padding="20px" flexDirection="column" gap="10px">
                             <Typography variant="body3">Time to first response</Typography>
-                            <TimeInputs timePrefixName={`slaTargets.${item.value.toLowerCase()}.firstResponse.timePrefix`} timeFieldsName={`slaTargets.${item.value.toLowerCase()}.firstResponse.timeFields`} timeFieldOptions={timeFieldOptions}/>
+                            <TimeInputs timePrefixName={`slaTargets.${item.value.toLowerCase()}.firstResponse.timePrefix`} timeFieldsName={`slaTargets.${item.value.toLowerCase()}.firstResponse.timeFields`} timeFieldOptions={timeFieldOptions} />
                         </FlexBox>
                         <FlexBox padding="20px" flexDirection="column" gap="10px">
                             <Typography variant="body3">Time to next response</Typography>
-                            <TimeInputs timePrefixName={`slaTargets.${item.value.toLowerCase()}.nextResponse.timePrefix`} timeFieldsName={`slaTargets.${item.value.toLowerCase()}.nextResponse.timeFields`} timeFieldOptions={timeFieldOptions}/>
+                            <TimeInputs timePrefixName={`slaTargets.${item.value.toLowerCase()}.nextResponse.timePrefix`} timeFieldsName={`slaTargets.${item.value.toLowerCase()}.nextResponse.timeFields`} timeFieldOptions={timeFieldOptions} />
                         </FlexBox>
                         <FlexBox padding="20px" flexDirection="column" gap="10px">
                             <Typography variant="body3">Time to resolution</Typography>
-                            <TimeInputs timePrefixName={`slaTargets.${item.value.toLowerCase()}.resolution.timePrefix`} timeFieldsName={`slaTargets.${item.value.toLowerCase()}.resolution.timeFields`} timeFieldOptions={timeFieldOptions}/>
+                            <TimeInputs timePrefixName={`slaTargets.${item.value.toLowerCase()}.resolution.timePrefix`} timeFieldsName={`slaTargets.${item.value.toLowerCase()}.resolution.timeFields`} timeFieldOptions={timeFieldOptions} />
                         </FlexBox>
                     </FlexBox>
                 </Container>

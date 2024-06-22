@@ -4,6 +4,7 @@ export enum EscalationEndPoint {
     FETCH_ALL_ESCALATIONS = 'escalation/fetch_all_escalations',
     EDIT_ESCALATION = 'escalation/edit_escalation',
     DELETE_ESCALATION = 'escalation/delete_escalation',
+    
     FETCH_SLA_METADATA = 'sla/fetch_options_for_sla',
     FETCH_ALL_ESCALATIONS_NEW = 'sla/all',
     DELETE_ESCALATION_NEW = 'sla/delete',

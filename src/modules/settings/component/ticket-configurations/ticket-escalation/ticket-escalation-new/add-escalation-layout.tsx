@@ -8,7 +8,8 @@ import { ChooseCondition } from "./choose-condition";
 import { FlexBox } from "lib/ui-ux";
 import { KeyboardArrowLeft, KeyboardArrowRight, Save } from "@mui/icons-material";
 import { SLATargets } from "./sla-targets";
-import { ISLAmetaData } from "modules/settings/apis/escalations";
+import { IKeyValue, ISLAmetaData, useCreateEscalationNew } from "modules/settings/apis/escalations";
+import { useNotifications } from "lib";
 
 const steps = [
     {
@@ -27,7 +28,7 @@ const steps = [
 
 interface ITimeBasedFormFields {
     timePrefix: string,
-    timeFields: number,
+    timeFields: string,
 }
 
 interface IEscalationFormFields {
@@ -40,22 +41,7 @@ interface IEscalationFormFields {
         conditionValue: string
     }
     slaTargets: {
-        critical: {
-            firstResponse: ITimeBasedFormFields,
-            nextResponse: ITimeBasedFormFields,
-            resolution: ITimeBasedFormFields
-        }
-        high: {
-            firstResponse: ITimeBasedFormFields,
-            nextResponse: ITimeBasedFormFields,
-            resolution: ITimeBasedFormFields
-        }
-        normal: {
-            firstResponse: ITimeBasedFormFields,
-            nextResponse: ITimeBasedFormFields,
-            resolution: ITimeBasedFormFields
-        }
-        low: {
+        [key: string]: {
             firstResponse: ITimeBasedFormFields,
             nextResponse: ITimeBasedFormFields,
             resolution: ITimeBasedFormFields
@@ -63,107 +49,133 @@ interface IEscalationFormFields {
     },
     addReminders: {
         ftrDuration: string;
-        ftrGroup: string;
-        ftrAgent: string;
+        ftrGroup: IKeyValue[];
+        ftrAgent: IKeyValue[];
         ntrDuration: string;
-        ntrGroup: string;
-        ntrAgent: string;
+        ntrGroup: IKeyValue[];
+        ntrAgent: IKeyValue[];
         resolutionDuration: string;
-        resolutionGroup: string;
-        resolutionAgent: string;
+        resolutionGroup: IKeyValue[];
+        resolutionAgent: IKeyValue[];
     },
     addEscalation: {
         ftrDuration: string;
-        ftrGroup: string;
-        ftrAgent: string;
+        ftrGroup: IKeyValue[];
+        ftrAgent: IKeyValue[];
         ntrDuration: string;
-        ntrGroup: string;
-        ntrAgent: string;
+        ntrGroup: IKeyValue[];
+        ntrAgent: IKeyValue[];
         resolutionDuration: string;
-        resolutionGroup: string;
-        resolutionAgent: string;
+        resolutionGroup: IKeyValue[];
+        resolutionAgent: IKeyValue[];
     }
 }
 
 interface IAddEscalationLayoutProps {
     data: ISLAmetaData;
+    defaultvalues?: IEscalationFormFields;
+    mode?: 'add' | 'edit';
 }
 
 export const AddEscalationLayout = (props: IAddEscalationLayoutProps) => {
-    const { data } = props;
-    console.log("SLA Data", data);
+    const { data, defaultvalues, mode = 'add' } = props;
     const [activeStep, setActiveStep] = React.useState(0);
     const navigate = useNavigate();
     const form = useForm<IEscalationFormFields>({
-        defaultValues: {
+        defaultValues: defaultvalues ?? {
             chooseCondition: {
                 name: '',
                 description: '',
-                slaEvalutaion: 'ticket-creation-time',
-                ticketFields: 'source',
+                slaEvalutaion: '0',
+                ticketFields: data.ticket_fields[0].id.toString(),
                 condition: 'is',
-                conditionValue: 'open'
+                conditionValue: ''
             },
             slaTargets: {
                 critical: {
                     firstResponse: {
                         timePrefix: '1',
-                        timeFields:  1
+                        timeFields: '1'
                     },
                     nextResponse: {
                         timePrefix: '1',
-                        timeFields: 1
+                        timeFields: '1'
                     },
                     resolution: {
                         timePrefix: '1',
-                        timeFields: 1
+                        timeFields: '1'
                     }
                 },
                 high: {
                     firstResponse: {
                         timePrefix: '1',
-                        timeFields: 1
+                        timeFields: '1'
                     },
                     nextResponse: {
                         timePrefix: '1',
-                        timeFields: 1
+                        timeFields: '1'
                     },
                     resolution: {
                         timePrefix: '1',
-                        timeFields: 1
+                        timeFields: '1'
                     }
                 },
                 normal: {
                     firstResponse: {
                         timePrefix: '1',
-                        timeFields: 1
+                        timeFields: '1'
                     },
                     nextResponse: {
                         timePrefix: '1',
-                        timeFields: 1
+                        timeFields: '1'
                     },
                     resolution: {
                         timePrefix: '1',
-                        timeFields: 1
+                        timeFields: '1'
                     }
                 },
                 low: {
                     firstResponse: {
                         timePrefix: '1',
-                        timeFields: 1
+                        timeFields: '1'
                     },
                     nextResponse: {
                         timePrefix: '1',
-                        timeFields: 1
+                        timeFields: '1'
                     },
                     resolution: {
                         timePrefix: '1',
-                        timeFields: 1
+                        timeFields: '1'
                     }
                 }
+            },
+            addReminders: {
+                ftrAgent: [],
+                ftrDuration: data.reminder_times[0].id.toString(),
+                ftrGroup: [],
+                ntrAgent: [],
+                ntrDuration: data.reminder_times[0].id.toString(),
+                ntrGroup: [],
+                resolutionAgent: [],
+                resolutionDuration: data.reminder_times[0].id.toString(),
+                resolutionGroup: []
+            },
+            addEscalation: {
+                ftrAgent: [],
+                ftrDuration: data.escalation_types[0].id.toString(),
+                ftrGroup: [],
+                ntrAgent: [],
+                ntrDuration: data.escalation_types[0].id.toString(),
+                ntrGroup: [],
+                resolutionAgent: [],
+                resolutionDuration: data.escalation_types[0].id.toString(),
+                resolutionGroup: []
             }
         }
     });
+
+    const { mutateAsync } = useCreateEscalationNew();
+    const { showNotification } = useNotifications();
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -183,11 +195,50 @@ export const AddEscalationLayout = (props: IAddEscalationLayoutProps) => {
             case 0:
                 return <ChooseCondition ticketField={data.ticket_fields} />;
             case 1:
-                return <SLATargets timeOptions={data.run_types} slaTargetPriorities={data.priorities}/>;
+                return <SLATargets timeOptions={data.run_types} slaTargetPriorities={data.priorities} />;
             case 2:
                 return <AddReminder reminderTimes={data.reminder_times} queueList={data.queue_list} userList={data.user_list} />
             default: return <AddEscalation escalationTimes={data.escalation_types} queueList={data.queue_list} userList={data.user_list} />
         }
+    }
+
+    const onSave = (formData: IEscalationFormFields) => {
+        const { addEscalation, addReminders, chooseCondition, slaTargets } = formData;
+        mutateAsync({
+            name: chooseCondition.name,
+            description: chooseCondition.description,
+            evaluation_type: Number(chooseCondition.slaEvalutaion),
+            ticket_fields: [
+                { id: chooseCondition.ticketFields, value: chooseCondition.conditionValue },
+            ],
+            targets: data.priorities.map((item) => (
+                {
+                    priority_id: item.id,
+                    time_to_first_response: slaTargets[item.name.toLocaleLowerCase()].firstResponse.timePrefix,
+                    time_to_next_response: slaTargets[item.name.toLocaleLowerCase()].nextResponse.timePrefix,
+                    time_to_resolution: slaTargets[item.name.toLocaleLowerCase()].nextResponse.timePrefix,
+                    first_response_run_type_id: slaTargets[item.name.toLocaleLowerCase()].firstResponse.timeFields,
+                    next_response_run_type_id: slaTargets[item.name.toLocaleLowerCase()].nextResponse.timeFields,
+                    resolution_run_type_id: slaTargets[item.name.toLocaleLowerCase()].resolution.timeFields
+                }
+            )),
+            reminder: {
+                fr_reminder_id: addReminders.ftrDuration,
+                nr_reminder_id: addReminders.ntrDuration,
+                rs_reminder_id: addReminders.resolutionDuration,
+                queue_ids: addReminders.ftrGroup.map((item) => item.key),
+                user_ids: addReminders.ftrAgent.map((item) => item.key)
+            },
+            escalations: {
+                fr_escalation_id: addEscalation.ftrDuration,
+                nr_escalation_id: addEscalation.ntrDuration,
+                rs_escalation_id: addEscalation.resolutionDuration,
+                queue_ids: addEscalation.ftrGroup.map((item) => item.key),
+                user_ids: addEscalation.ftrAgent.map((item) => item.key)
+            }
+        })
+            .then(() => showNotification({ message: 'SLA created successfully', type: 'success' }))
+            .catch(() => showNotification({ message: 'Failed to create SLA', type: 'error' }))
     }
 
     return (
@@ -211,7 +262,11 @@ export const AddEscalationLayout = (props: IAddEscalationLayoutProps) => {
                             <Button variant="outlined" onClick={onClose}>
                                 {'Cancel'}
                             </Button>
-                            <Button variant="contained" endIcon={isLastStep ? <Save /> : <KeyboardArrowRight />} onClick={isLastStep ? onClose : handleNext}>
+                            <Button
+                                disabled={isLastStep && mode === 'edit'}
+                                variant="contained"
+                                endIcon={isLastStep ? <Save /> : <KeyboardArrowRight />}
+                                onClick={isLastStep ? form.handleSubmit(onSave) : handleNext}>
                                 {isLastStep ? 'Save' : 'Next'}
                             </Button>
                         </FlexBox>
