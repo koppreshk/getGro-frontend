@@ -5,7 +5,7 @@ import { ErrorMessage } from '@hookform/error-message';
 
 type ITextboxFieldProps = Omit<TextFieldProps, 'error' | 'required'> & {
     name: string;
-    rules?: Omit<RegisterOptions<FieldValues, string>, "disabled" | "valueAsNumber" | "valueAsDate" | "setValueAs"> | undefined
+    rules?: Omit<RegisterOptions<FieldValues, string>, 'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'>
 }
 
 const StyledErrorMessage = styled.div`
@@ -23,7 +23,14 @@ export const TextboxField = (props: ITextboxFieldProps) => {
     return (
         <>
             <Controller
-                render={({ field }) => <TextField {...props} {...field} error={hasError} required={typeof rules?.required == 'string' ? rules?.required?.length > 0 : false} />}
+                render={({ field }) => <TextField
+                    {...props} {...field}
+                    error={hasError}
+                    inputProps={{
+                        min: rules?.min?.toString(),
+                        max: rules?.max?.toString(),
+                    }}
+                    required={typeof rules?.required == 'string' ? rules?.required?.length > 0 : false} />}
                 control={control}
                 name={name}
                 rules={rules}
