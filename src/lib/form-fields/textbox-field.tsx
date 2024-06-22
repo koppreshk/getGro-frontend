@@ -1,7 +1,8 @@
 import { TextField, TextFieldProps } from "@mui/material"
-import { Controller, FieldValues, RegisterOptions, useFormContext } from "react-hook-form"
+import { Controller, FieldValues, RegisterOptions, get, useFormContext } from "react-hook-form"
 import styled from "styled-components";
 import { ErrorMessage } from '@hookform/error-message';
+import { FlexBox } from "lib/ui-ux";
 
 type ITextboxFieldProps = Omit<TextFieldProps, 'error' | 'required'> & {
     name: string;
@@ -16,15 +17,15 @@ const StyledErrorMessage = styled.div`
 `;
 
 export const TextboxField = (props: ITextboxFieldProps) => {
-    const { name, rules } = props;
+    const { name, rules, ...rest } = props;
     const { formState: { errors }, control } = useFormContext();
-    const hasError = name in errors;
+    const hasError = get(errors, name) !== undefined;
 
     return (
-        <>
+        <FlexBox flexDirection="column">
             <Controller
                 render={({ field }) => <TextField
-                    {...props} {...field}
+                    {...rest} {...field}
                     error={hasError}
                     inputProps={{
                         min: rules?.min?.toString(),
@@ -36,6 +37,6 @@ export const TextboxField = (props: ITextboxFieldProps) => {
                 rules={rules}
             />
             <ErrorMessage errors={errors} name={name} as={StyledErrorMessage} />
-        </>
+        </FlexBox>
     )
 } 
