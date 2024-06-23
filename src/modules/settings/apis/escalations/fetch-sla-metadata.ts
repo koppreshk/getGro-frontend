@@ -38,7 +38,7 @@ export interface IQueue {
 export interface IUser {
     firstName: string;
     lastName: string;
-    id: number;
+    id: string;
 }
 
 export interface ISLAmetaData {

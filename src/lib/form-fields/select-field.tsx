@@ -2,7 +2,6 @@ import { FormControl, InputLabel, MenuItem, Select, SelectProps } from "@mui/mat
 import { Controller, FieldValues, RegisterOptions, useFormContext, get } from "react-hook-form"
 import styled from "styled-components";
 import { ErrorMessage } from '@hookform/error-message';
-import { FlexBox } from "lib/ui-ux";
 
 type ITextboxFieldProps = Omit<SelectProps<unknown>, 'error' | 'required'> & {
     name: string;
@@ -27,7 +26,7 @@ export const SelectField = (props: ITextboxFieldProps) => {
     const hasError = get(errors, name) !== undefined;
 
     return (
-        <FlexBox flexDirection="column">
+        <>
             <Controller
                 render={({ field }) => (
                     <FormControl sx={sx}>
@@ -51,6 +50,6 @@ export const SelectField = (props: ITextboxFieldProps) => {
                 rules={rules}
             />
             <ErrorMessage errors={errors} name={name} as={StyledErrorMessage} />
-        </FlexBox>
+        </>
     )
 } 

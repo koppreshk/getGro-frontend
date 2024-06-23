@@ -50,16 +50,24 @@ interface Reminder {
     fr_reminder_id: string
     nr_reminder_id: string
     rs_reminder_id: string
-    queue_ids: string[]
-    user_ids: string[]
+    fr_queue_ids: string[],
+    fr_user_ids: string[],
+    nr_queue_ids: string[],
+    nr_user_ids: string[],
+    rs_queue_ids: string[],
+    rs_user_ids: string[]
 }
 
 interface Escalations {
     fr_escalation_id: string
     nr_escalation_id: string
     rs_escalation_id: string
-    queue_ids: string[]
-    user_ids: string[]
+    fr_queue_ids: string[],
+    fr_user_ids: string[],
+    nr_queue_ids: string[],
+    nr_user_ids: string[],
+    rs_queue_ids: string[],
+    rs_user_ids: string[]
 }
 
 export const useCreateEscalationNew = () => {

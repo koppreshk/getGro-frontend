@@ -2,8 +2,11 @@ import { Box, CircularProgress, Typography } from "@mui/material"
 import { RadioGroupField, SelectField, TextboxField } from "lib/form-fields"
 import { FlexBox } from "lib/ui-ux";
 import { useFetchAllStatuses } from "modules/settings/apis/disposition-types";
-import { IField } from "modules/settings/apis/escalations";
+import { IField, IPriority, useFetchAllQueues } from "modules/settings/apis/escalations";
+import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
+import { IEscalationFormFields } from "./add-escalation-layout";
+import { useFetchAllChannels } from "modules/settings/apis/tags";
 
 const StyledRadioFields = styled(RadioGroupField)`
     .MuiFormControlLabel-label {
@@ -18,6 +21,7 @@ interface IKeyValue {
 
 interface IChooseConditionProps {
     ticketField: IField[];
+    priorities: IPriority[]
 }
 
 export const ChooseCondition = (props: IChooseConditionProps) => {
@@ -43,15 +47,15 @@ export const ChooseCondition = (props: IChooseConditionProps) => {
                     p={2}
                     sx={{ border: '1px solid #c4c4c4', borderRadius: '4px' }}>
                     <Typography variant="body2">Apply this SLA to the tickets that meet All of these conditions</Typography>
-                    <Conditions ticketFieldDropdownData={ticketFieldDropdownData} />
+                    <Conditions ticketFieldDropdownData={ticketFieldDropdownData} priorities={props.priorities} />
                 </Box>
             </FlexBox>
         </>
     )
 }
 
-const Conditions = (props: { ticketFieldDropdownData: IKeyValue[] }) => {
-    const { data, isLoading } = useFetchAllStatuses();
+const Conditions = (props: { ticketFieldDropdownData: IKeyValue[], priorities: IPriority[] }) => {
+
     return (
         <Box
             display="flex"
@@ -60,7 +64,48 @@ const Conditions = (props: { ticketFieldDropdownData: IKeyValue[] }) => {
             sx={{ border: '1px solid #c4c4c4', borderRadius: '4px' }}>
             <SelectField name="chooseCondition.ticketFields" menuOptions={props.ticketFieldDropdownData} sx={{ width: '33%' }} label="Select field" />
             <SelectField name="chooseCondition.condition" menuOptions={[{ key: 'is', value: 'Is' }]} sx={{ width: '33%' }} />
-            {isLoading ? <CircularProgress /> : <SelectField name="chooseCondition.conditionValue" menuOptions={data!.map((item) => ({ key: item.id.toString(), value: item.name }))} sx={{ width: '33%' }} />}
+            <ConditionValueContainer ticketFieldDropdownData={props.ticketFieldDropdownData} priorities={props.priorities} />
         </Box>
+    )
+}
+
+const ConditionValueContainer = (props: { ticketFieldDropdownData: IKeyValue[], priorities: IPriority[] }) => {
+    const { ticketFieldDropdownData, priorities } = props;
+    const { watch } = useFormContext<IEscalationFormFields>();
+    const ticketFieldValue = watch('chooseCondition.ticketFields');
+    const isSourceSelected = ticketFieldDropdownData.find((item) => item.key === ticketFieldValue)?.value.toLocaleLowerCase() === 'source';
+    const isPrioritySelected = ticketFieldDropdownData.find((item) => item.key === ticketFieldValue)?.value.toLocaleLowerCase() === 'priority';
+    const isQueueSelected = ticketFieldDropdownData.find((item) => item.key === ticketFieldValue)?.value.toLocaleLowerCase() === 'queue';
+    const isStutusSelected = ticketFieldDropdownData.find((item) => item.key === ticketFieldValue)?.value.toLocaleLowerCase() === 'status';
+
+    const { data, isLoading } = useFetchAllStatuses(isStutusSelected);
+    const { data: allSources, isLoading: isSourcesLoading } = useFetchAllChannels(isSourceSelected);
+    const { data: allQueues, isLoading: isQueueLoading } = useFetchAllQueues(isQueueSelected);
+
+    const getMenuOptions = () => {
+        if (isSourceSelected) {
+            return allSources!.map((item) => ({ key: item.channel_id.toString(), value: item.name }))
+        }
+        else if (isPrioritySelected) {
+            return priorities.map((item) => ({ key: item.id.toString(), value: item.name }))
+        }
+        else if (isQueueSelected) {
+            return allQueues!.map((item) => ({ key: item.id.toString(), value: item.name }))
+        }
+        else if (isStutusSelected) {
+            return data!.map((item) => ({ key: item.id.toString(), value: item.name }))
+        }
+        return [];
+    }
+
+    return (
+        <>
+            {isLoading || isSourcesLoading || isQueueLoading
+                ? <CircularProgress />
+                : <SelectField
+                    name="chooseCondition.conditionValue"
+                    menuOptions={getMenuOptions()} sx={{ width: '33%' }} />
+            }
+        </>
     )
 }

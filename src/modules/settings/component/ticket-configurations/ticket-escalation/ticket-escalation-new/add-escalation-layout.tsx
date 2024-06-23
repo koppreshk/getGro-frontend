@@ -79,8 +79,8 @@ interface IAddEscalationLayoutProps {
     onFormSubmit: (formData: IEscalationFormFields) => Promise<void>
 }
 
-export const AddEscalationLayout = (props: IAddEscalationLayoutProps) => {
-    const { data, defaultvalues, mode = 'add', onFormSubmit } = props;
+export const AddEscalationLayout = React.memo((props: IAddEscalationLayoutProps) => {
+    const { data, defaultvalues, onFormSubmit } = props;
     const [activeStep, setActiveStep] = React.useState(0);
     const navigate = useNavigate();
     const form = useForm<IEscalationFormFields>({
@@ -196,7 +196,7 @@ export const AddEscalationLayout = (props: IAddEscalationLayoutProps) => {
     const renderBasedOnActiveStep = () => {
         switch (activeStep) {
             case 0:
-                return <ChooseCondition ticketField={data.ticket_fields} />;
+                return <ChooseCondition ticketField={data.ticket_fields} priorities={data.priorities} />;
             case 1:
                 return <SLATargets timeOptions={data.run_types} slaTargetPriorities={data.priorities} />;
             case 2:
@@ -206,7 +206,7 @@ export const AddEscalationLayout = (props: IAddEscalationLayoutProps) => {
     }
 
     const onSave = (formData: IEscalationFormFields) => {
-        onFormSubmit(formData);
+        onFormSubmit(formData).finally(() => onClose());
     }
 
     return (
@@ -231,7 +231,6 @@ export const AddEscalationLayout = (props: IAddEscalationLayoutProps) => {
                                 {'Cancel'}
                             </Button>
                             <Button
-                                disabled={isLastStep && mode === 'edit'}
                                 variant="contained"
                                 endIcon={isLastStep ? <Save /> : <KeyboardArrowRight />}
                                 onClick={isLastStep ? form.handleSubmit(onSave) : handleNext}>
@@ -243,7 +242,7 @@ export const AddEscalationLayout = (props: IAddEscalationLayoutProps) => {
             </FormProvider>
         </Box>
     )
-}
+})
 
 const AddEscalaltionSteps = (props: { activeStep: number }) => {
     const { activeStep } = props;

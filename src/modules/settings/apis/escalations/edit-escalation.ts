@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { useServiceClient } from "lib";
 import { EscalationEndPoint, EscalationQueryKey } from "./api-enums";
 import { EscalationConditions } from "./fetch-all-escalations";
+import { ICreateEscalationPayload } from "./create-escalation";
 
 export type EscalationConditionsArgs = Omit<EscalationConditions, 'status' | 'sub_status' | 'queue_list_id' | 'escalate_to' | 'disposition_type' | 'priority' | 'channel' | 'tag'> & {
     status_id: number | null;
@@ -30,3 +31,19 @@ export const useEditEscalation = () => {
         }
     });
 }
+
+export const useEditEscalationNew = () => {
+    const { postData } = useServiceClient();
+    const queryClient = useQueryClient();
+
+    const editEscalation = React.useCallback((args: ICreateEscalationPayload & { id: number }) =>
+        postData(`${EscalationEndPoint.EDIT_ESCALATION_NEW}`, args).then((res) => res.json()), [postData]);
+
+    return useMutation({
+        mutationKey: EscalationQueryKey.EDIT_ESCALATION_NEW,
+        mutationFn: editEscalation,
+        onSuccess: () => {
+            queryClient.invalidateQueries(EscalationQueryKey.FETCH_ALL_ESCALATIONS_NEW);
+        }
+    });
+} 
