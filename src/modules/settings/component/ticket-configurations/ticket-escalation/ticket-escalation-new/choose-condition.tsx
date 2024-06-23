@@ -62,7 +62,7 @@ const Conditions = (props: { ticketFieldDropdownData: IKeyValue[], priorities: I
             gap={4}
             p={2}
             sx={{ border: '1px solid #c4c4c4', borderRadius: '4px' }}>
-            <SelectField name="chooseCondition.ticketFields" menuOptions={props.ticketFieldDropdownData} sx={{ width: '33%' }} label="Select field" />
+            <SelectField name="chooseCondition.ticketFields" menuOptions={props.ticketFieldDropdownData} sx={{ width: '33%' }} label="Ticket Fields" />
             <SelectField name="chooseCondition.condition" menuOptions={[{ key: 'is', value: 'Is' }]} sx={{ width: '33%' }} />
             <ConditionValueContainer ticketFieldDropdownData={props.ticketFieldDropdownData} priorities={props.priorities} />
         </Box>
@@ -102,9 +102,14 @@ const ConditionValueContainer = (props: { ticketFieldDropdownData: IKeyValue[], 
         <>
             {isLoading || isSourcesLoading || isQueueLoading
                 ? <CircularProgress />
-                : <SelectField
-                    name="chooseCondition.conditionValue"
-                    menuOptions={getMenuOptions()} sx={{ width: '33%' }} />
+                :
+                <div style={{width: '33%'}}>
+                    <SelectField
+                        name="chooseCondition.conditionValue"
+                        label="Field Options"
+                        rules={{ required: 'Please select an option' }}
+                        menuOptions={getMenuOptions()} sx={{ width: '100%' }} />
+                </div>
             }
         </>
     )

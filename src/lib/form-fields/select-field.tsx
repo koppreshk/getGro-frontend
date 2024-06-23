@@ -29,13 +29,13 @@ export const SelectField = (props: ITextboxFieldProps) => {
         <>
             <Controller
                 render={({ field }) => (
-                    <FormControl sx={sx}>
+                    <FormControl sx={sx} error={hasError} required={typeof rules?.required == 'string' ? rules?.required?.length > 0 : false}>
                         <InputLabel id="demo-select-small-label">{label}</InputLabel>
                         <Select
                             labelId="demo-select-small-label"
                             id="demo-select-small"
-                            label={label}
-                            {...rest} {...field} error={hasError} onChange={(e) => field.onChange(e.target.value)}>
+                            label={label} 
+                            {...rest} {...field} onChange={(e) => field.onChange(e.target.value)}>
                             {
                                 menuOptions.map((item) => (
                                     <MenuItem key={item.key} value={item.key}>
