@@ -8,7 +8,7 @@ export interface IChannels {
     name: string;
 }
 
-export const useFetchAllChannels = () => {
+export const useFetchAllChannels = (isEnabled = true) => {
     const { getData } = useServiceClient();
 
     const fetchAllChannels = React.useCallback(() => getData(`${ConfigurationsEndPoint.FETCH_ALL_CHANNELS}`).then((res) => res.json()), [getData])
@@ -16,5 +16,6 @@ export const useFetchAllChannels = () => {
     return useQuery<IChannels[]>({
         queryKey: [ConfigurationsQueryKey.FETCH_ALL_CHANNELS],
         queryFn: fetchAllChannels,
+        enabled: isEnabled
     });
 }

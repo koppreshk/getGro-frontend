@@ -33,15 +33,23 @@ export const CreateTicketSLAContainer = () => {
                 fr_reminder_id: addReminders.ftrDuration,
                 nr_reminder_id: addReminders.ntrDuration,
                 rs_reminder_id: addReminders.resolutionDuration,
-                queue_ids: addReminders.ftrGroup.map((item) => item.key),
-                user_ids: addReminders.ftrAgent.map((item) => item.key)
+                fr_queue_ids: addReminders.ftrGroup.map((item) => item.key),
+                fr_user_ids: addReminders.ftrAgent.map((item) => item.key),
+                nr_queue_ids: addReminders.ntrGroup.map((item) => item.key),
+                nr_user_ids: addReminders.ntrAgent.map((item) => item.key),
+                rs_queue_ids: addReminders.resolutionGroup.map((item) => item.key),
+                rs_user_ids: addReminders.resolutionAgent.map((item) => item.key),
             },
             escalations: {
                 fr_escalation_id: addEscalation.ftrDuration,
                 nr_escalation_id: addEscalation.ntrDuration,
                 rs_escalation_id: addEscalation.resolutionDuration,
-                queue_ids: addEscalation.ftrGroup.map((item) => item.key),
-                user_ids: addEscalation.ftrAgent.map((item) => item.key)
+                fr_queue_ids: addEscalation.ftrGroup.map((item) => item.key),
+                fr_user_ids: addEscalation.ftrAgent.map((item) => item.key),
+                nr_queue_ids: addEscalation.ntrGroup.map((item) => item.key),
+                nr_user_ids: addEscalation.ntrAgent.map((item) => item.key),
+                rs_queue_ids: addEscalation.resolutionGroup.map((item) => item.key),
+                rs_user_ids: addEscalation.resolutionAgent.map((item) => item.key),
             }
         })
             .then(() => showNotification({ message: 'SLA created successfully', type: 'success' }))

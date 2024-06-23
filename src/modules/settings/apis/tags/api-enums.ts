@@ -3,7 +3,7 @@ export enum ConfigurationsEndPoint {
   FETCH_TAGS_BY_CHANNEL = 'tags/fetch_tags_by_channel',
   DELETE_TAG = 'tags/delete',
   EDIT_TAG = 'tags/edit',
-  FETCH_ALL_CHANNELS = 'fetch_all_channels'
+  FETCH_ALL_CHANNELS = 'channels'
 }
 
 export enum ConfigurationsQueryKey {
