@@ -52,7 +52,13 @@ export const CreateTicketSLAContainer = () => {
                 rs_user_ids: addEscalation.resolutionAgent.map((item) => item.key),
             }
         })
-            .then(() => showNotification({ message: 'SLA created successfully', type: 'success' }))
+            .then((res) => {
+                if (res.status) {
+                    showNotification({ message: 'SLA created successfully', type: 'success' });
+                    return
+                }
+                showNotification({ message: res.message, type: 'error' })
+            })
             .catch(() => showNotification({ message: 'Failed to create SLA', type: 'error' }))
     }
 
