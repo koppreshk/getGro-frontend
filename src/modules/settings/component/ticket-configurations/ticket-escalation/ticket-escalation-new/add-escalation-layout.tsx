@@ -221,15 +221,18 @@ export const AddEscalationLayout = React.memo((props: IAddEscalationLayoutProps)
                 <DialogActions>
                     {isLastStep || isInBetween
                         ?
-                        <Button variant="outlined" startIcon={<KeyboardArrowLeft />} onClick={isLastStep || isInBetween ? handleBack : onClose}>
+                        <Button variant="contained" startIcon={<KeyboardArrowLeft />} onClick={isLastStep || isInBetween ? handleBack : onClose}>
                             Back
                         </Button>
                         : null}
                     <FlexBox justifyContent="flex-end" width='calc(100% - 94px)'>
                         <FlexBox gap='20px'>
-                            <Button variant="outlined" onClick={onClose}>
+                            <Button variant="contained" color="error" onClick={onClose}>
                                 {'Cancel'}
                             </Button>
+                            {props.mode === 'edit' ?
+                                <Button variant="outlined" size="large" type="button" onClick={() => form.reset()}>{'Reset'}</Button>
+                                : null}
                             <Button
                                 variant="contained"
                                 endIcon={isLastStep ? <Save /> : <KeyboardArrowRight />}
