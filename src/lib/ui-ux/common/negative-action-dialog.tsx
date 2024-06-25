@@ -7,7 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-interface INegativeActionDiaglogProps {
+interface INegativeActionDialogProps {
     title: string;
     content: string;
     open: boolean;
@@ -16,7 +16,7 @@ interface INegativeActionDiaglogProps {
     onNegativeActionClick?: (ev: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export const NegativeActionDiaglog = (props: INegativeActionDiaglogProps) => {
+export const NegativeActionDialog = (props: INegativeActionDialogProps) => {
     const { open, title, content, negativeActionLabel = 'Delete', onClose, onNegativeActionClick } = props;
 
     return (

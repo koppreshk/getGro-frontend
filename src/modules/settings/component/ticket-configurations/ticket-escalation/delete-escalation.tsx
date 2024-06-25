@@ -1,7 +1,7 @@
 import React from "react";
 import { Delete } from "@mui/icons-material";
 import { useNotifications } from "lib";
-import { CustomIconButton, NegativeActionDiaglog } from "lib/ui-ux";
+import { CustomIconButton, NegativeActionDialog } from "lib/ui-ux";
 import { useDeleteEscalation } from "modules/settings/apis/escalations";
 
 export const DeleteEscalation = (props: { id: number }) => {
@@ -26,7 +26,7 @@ export const DeleteEscalation = (props: { id: number }) => {
     return (
         <>
             <CustomIconButton onClick={toggleDeleteDialogBox} iconComponent={<Delete />} tooltipProps={{ title: "Delete Escalation", arrow: true }} />
-            <NegativeActionDiaglog
+            <NegativeActionDialog
                 open={open}
                 content='Do you want to delete this escalation permanently?'
                 title='Delete Escalation'
