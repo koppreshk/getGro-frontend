@@ -5,7 +5,6 @@ export interface ITicketDetails {
     ticketId: string;
     customerName: string;
     ticketStatus: string;
-    ticketSubStatus: string;
     createdAt: string;
     priority: string;
     status: boolean;

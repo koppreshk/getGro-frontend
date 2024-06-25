@@ -135,7 +135,6 @@ const RenderTask = (props: IRenderTaskProps) => {
 
     return (
         <TaskWrapper justifyContent="space-between" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} width="100%">
-
             {isEditing ?
                 <TextField
                     defaultValue={task}
