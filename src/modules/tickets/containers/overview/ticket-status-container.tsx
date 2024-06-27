@@ -1,5 +1,5 @@
 import { CircularProgress } from "@mui/material";
-import { useFetchAllStatuses } from "modules/settings/apis/disposition-types"
+import { useFetchAllStatuses } from "modules/settings/apis/ticket-status";
 import { ITicketDetails, useUpdateStatus } from "modules/tickets/apis";
 import { TicketStatus } from "modules/tickets/components/ticket-details/ticket-details-section/ticket-overview";
 

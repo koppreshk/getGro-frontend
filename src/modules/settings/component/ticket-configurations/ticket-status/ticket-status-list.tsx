@@ -57,8 +57,6 @@ export const TicketStatusList = (props: ITicketStatusListProps) => {
         toggleDrawer();
     }, [toggleDrawer]);
 
-    console.log("rowData", rowData);
-
     return (
         <>
             <ConfigDataGrid columns={columns} data={statusData!} isLoading={isLoading} onRowClick={onRowClick} />
