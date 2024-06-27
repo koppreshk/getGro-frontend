@@ -19,3 +19,4 @@ export * from './facebook-conversation-container';
 export * from './telephonic-conversations-container';
 export * from './add-ticket-container';
 export * from './my-closed-tickets-container';
+export * from './overview';

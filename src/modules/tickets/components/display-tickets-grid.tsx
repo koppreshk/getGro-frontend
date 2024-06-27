@@ -8,7 +8,6 @@ import { DataGrid, NoDataIllustration } from "lib/ui-ux"
 import { ITicketDetails } from "../apis";
 import { useAppDispatch, useAppSelector } from "lib/hooks";
 import { setTotalPages } from "../storage";
-import { getFormattedDate } from "lib/utils";
 
 interface IDisplayTicketsGridProps {
     data: ITicketDetails[];
@@ -107,7 +106,7 @@ const useColumns = () => {
         columnHelper.accessor('createdAt', {
             header: () => 'Created At',
             id: 'createdAt',
-            cell: info => getFormattedDate(info.getValue()!),
+            cell: info => info.getValue(),
             minSize: 200
         }),
         columnHelper.accessor('priority', {
@@ -117,7 +116,13 @@ const useColumns = () => {
             cell: info => {
                 return <Priority priority={info.getValue().toLocaleLowerCase()} />
             },
-        })
+        }),
+        columnHelper.accessor('resolutionDue', {
+            header: () => 'Resolution Due',
+            id: 'resolutionDue',
+            cell: info => info.getValue(),
+            minSize: 200
+        }),
     ];
 
     return columns;
