@@ -116,7 +116,13 @@ const useColumns = () => {
             cell: info => {
                 return <Priority priority={info.getValue().toLocaleLowerCase()} />
             },
-        })
+        }),
+        columnHelper.accessor('resolutionDue', {
+            header: () => 'Resolution Due',
+            id: 'resolutionDue',
+            cell: info => info.getValue(),
+            minSize: 200
+        }),
     ];
 
     return columns;
