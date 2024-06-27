@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
-import { getFormatedNumberByLocale, getFormattedDate } from "lib/utils";
+import { getFormatedNumberByLocale } from "lib/utils";
 import { IOrders } from "modules/tickets/apis";
 import { TextFieldValue } from "./order-item";
 
@@ -9,7 +9,7 @@ export const OrderDetailsDrawerContent = (props: { orderDetails: IOrders }) => {
 
     return (
         <FlexBox flexDirection="column" padding="20px" gap="10px">
-            <HeaderValue heading="Order placed on:" value={getFormattedDate(createdAt)} />
+            <HeaderValue heading="Order placed on:" value={createdAt} />
             {shippingAddress !== null
                 ? <HeaderValue heading="Shipping Address:"
                     value={

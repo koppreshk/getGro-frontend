@@ -4,7 +4,6 @@ import styled, { css } from "styled-components";
 import { Avatar, Typography } from "@mui/material"
 import { FlexBox } from "lib/ui-ux"
 import { ITicketDetails } from "modules/tickets/apis";
-import { getFormattedDate } from "lib/utils";
 import { useAppDispatch } from "lib/hooks";
 import { setTicketDetails } from "modules/tickets/storage";
 import { useSourceIcon } from "../../display-tickets-grid";
@@ -51,7 +50,8 @@ export const TicketList = (props: ITicketListProps) => {
     const { data } = props;
 
     const ticketViewDetails = data.map((item) => (
-        <TicketDetails createdAt={item.createdAt}
+        <TicketDetails
+            createdAt={item.createdAt}
             customerName={item.customerName}
             priority={item.priority}
             ticketId={item.ticketId}
@@ -61,7 +61,10 @@ export const TicketList = (props: ITicketListProps) => {
             status={item.status}
             pastTickets={item.pastTickets}
             customerInfo={item.customerInfo}
-            channelId={item.channelId} />
+            channelId={item.channelId}
+            resolutionDue={item.resolutionDue}
+            responseDue={item.responseDue}
+        />
     ));
 
     return (
@@ -73,7 +76,7 @@ interface ITicketDetailsProps extends ITicketDetails {
 }
 
 const TicketDetails = (props: ITicketDetailsProps) => {
-    const { createdAt, customerName, ticketId, source, priority, ticketStatus, status, pastTickets, customerInfo, channelId } = props;
+    const { createdAt, customerName, ticketId, source, priority, ticketStatus, status, pastTickets, customerInfo, channelId, resolutionDue, responseDue } = props;
     const params = useParams();
     const navigate = useNavigate();
     const match = useMatch(`/tickets/:ticketType/:ticketId`);
@@ -99,10 +102,13 @@ const TicketDetails = (props: ITicketDetailsProps) => {
                 status,
                 pastTickets,
                 customerInfo,
-                channelId
+                channelId,
+                responseDue,
+                resolutionDue
             }));
         }
-    }, [customerInfo, createdAt, customerName, dispatch, params.ticketId, priority, source, status, ticketId, ticketStatus, pastTickets, channelId]);
+    }, [customerInfo, createdAt, customerName, dispatch, params.ticketId, priority,
+        source, status, ticketId, ticketStatus, pastTickets, channelId, responseDue, resolutionDue]);
 
     const onTicketClick = React.useCallback(() => {
         navigate(`/tickets/${match?.params.ticketType}/${ticketId}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`);
@@ -116,7 +122,7 @@ const TicketDetails = (props: ITicketDetailsProps) => {
             <TicketDetailsSectionRight flexDirection="column" gap="6px">
                 <FlexBox justifyContent="space-between">
                     <Typography variant="h6">{customerName}</Typography>
-                    <Typography variant="caption">{getFormattedDate(createdAt)}</Typography>
+                    <Typography variant="caption">{createdAt}</Typography>
                 </FlexBox>
                 <FlexBox flexDirection="row" gap="10px" alignItems="center">
                     <>

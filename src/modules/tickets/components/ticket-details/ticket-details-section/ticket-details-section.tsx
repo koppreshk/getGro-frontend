@@ -5,7 +5,7 @@ import { OrderDetailsContainer, TicketOverviewContainer, PastTicketsContainer } 
 import { MenuOptions, TicketSideMenu } from "./ticket-side-menu";
 import { TicketNotes } from "./ticket-notes";
 import { useAppSelector } from "lib/hooks";
-import { TicketDispose } from "./dispose-ticket";
+// import { TicketDispose } from "./dispose-ticket";
 
 const StyledFlexBox = styled(FlexBox)`  
     background-color: ${({ theme }) => theme.pallete.white};
@@ -37,10 +37,10 @@ export const TicketDetailsSection = () => {
         <StyledFlexBox width={'100%'} justifyContent={'flex-end'}>
             {showHideTicketDetails ?
                 <FlexBox width='calc(100% - 52px)' flexDirection="column" height="100%">
-                    <div style={{ height: 'calc(100% - 47px)' }}>
-                        {renderBasedOnSelectedview()}
-                    </div>
-                    <TicketDispose />
+                    {/* <div style={{ height: 'calc(100% - 47px)' }}> */}
+                    {renderBasedOnSelectedview()}
+                    {/* </div> */}
+                    {/* <TicketDispose /> */}
                 </FlexBox>
                 : null}
             <TicketSideMenu onSetMenuOption={onMenuOptionClick} selectedMenuOption={selectedMenuOption} />

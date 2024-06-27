@@ -2,7 +2,6 @@ import { useState } from "react";
 import { ArrowDropDown } from "@mui/icons-material";
 import { IconButton, Popover, Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
-import { getFormattedDate } from "lib/utils";
 import { IEmailConversations } from "./email-conversations-layout";
 
 interface IEmailPopoverMetadataProps extends Pick<IEmailConversations, 'createdAt' | 'fromEmail' | 'toEmail'> {
@@ -24,7 +23,7 @@ export const EmailPopoverMetadata = (props: IEmailPopoverMetadataProps) => {
     };
 
     const popoverData = [{ name: 'From', value: fromEmail }, { name: 'To', value: toEmail },
-    { name: 'Subject', value: subject }, { name: 'Date', value: getFormattedDate(createdAt) }];
+    { name: 'Subject', value: subject }, { name: 'Date', value: createdAt }];
 
     return (
         <div>
