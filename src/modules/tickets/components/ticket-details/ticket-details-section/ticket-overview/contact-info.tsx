@@ -11,9 +11,9 @@ import { TelephonicDialer } from "../../ticket-conversation/telephonic-conversat
 
 const StyledAvatar = styled(Avatar)`
     && {
-        width: 100px;
-        height: 100px;
-        font-size: 2.5rem;
+        width: 80px;
+        height: 80px;
+        font-size: 2rem;
         text-transform: uppercase;
     }
 `;
@@ -120,12 +120,14 @@ export const ContactInfo = (props: IContactInfoProps) => {
 
     return (
         <FlexBox gap="20px" flexDirection="column">
-            <FlexBox gap="10px" alignItems="center" flexDirection="column">
+            <FlexBox gap="20px" alignItems="center" flexDirection="row">
                 {fullName === undefined ? <StyledAvatar /> : <StyledAvatar>{getInitialsByName(fullName)}</StyledAvatar>}
-                <Typography variant="h4" >{fullName}</Typography>
-                <ContactInfoActions email={email}
-                    phoneNumber={phoneNumber} toggleCallBtn={toggleCallBtn}
-                />
+                <FlexBox flexDirection="column" alignItems="center" gap="10px">
+                    <Typography variant="h4" >{fullName}</Typography>
+                    <ContactInfoActions email={email}
+                        phoneNumber={phoneNumber} toggleCallBtn={toggleCallBtn}
+                    />
+                </FlexBox>
             </FlexBox>
             <HorizontalSeparator />
             <FlexBox padding="0 20px" flexDirection="column" gap="15px">

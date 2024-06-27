@@ -3,7 +3,7 @@ import { PersonSearch } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import { CustomIconButton, FlexBox } from "lib/ui-ux";
 import { Platform } from "../../ticket-conversation/ticket-conversation-header";
-import { SearchCustomerContainer, TicketStatusContainer } from "modules/tickets/containers";
+import { ManageAssigneeContainer, SearchCustomerContainer, TicketStatusContainer } from "modules/tickets/containers";
 import { useAppSelector } from "lib/hooks";
 import { UnlinkCustomer } from "./unlink-customer";
 import { ITicketDetails } from "modules/tickets/apis";
@@ -39,6 +39,7 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
             <ContactInfo customerInfo={customerInfo} createdAt={createdAt} ticketId={ticketId} priority={priority} customerName={customerName} />
             <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} />
             <SearchCustomerContainer showSearchUserFlyout={showSearchUserFlyout} onSearchUserBtnClick={onSearchUserBtnClick} />
+            <ManageAssigneeContainer />
         </FlexBox>
     )
 }
