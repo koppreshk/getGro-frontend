@@ -44,24 +44,24 @@ interface Reminder {
   fr_reminder_id: number
   nr_reminder_id: number
   rs_reminder_id: number
-  fr_queue_ids: string[]
-  nr_queue_ids: string[]
-  rs_queue_ids: string[]
-  fr_user_ids: string[]
-  nr_user_ids: string[]
-  rs_user_ids: string[]
+  fr_queue_ids: string[] | number[];
+  nr_queue_ids: string[] | number[];
+  rs_queue_ids: string[] | number[];
+  fr_user_ids: string[] | number[];
+  nr_user_ids: string[] | number[];
+  rs_user_ids: string[] | number[];
 }
 
 interface Escalations {
   fr_escalation_id: number
   nr_escalation_id: number
   rs_escalation_id: number
-  fr_queue_ids: string[]
-  nr_queue_ids: string[]
-  rs_queue_ids: string[]
-  fr_user_ids: string[]
-  nr_user_ids: string[]
-  rs_user_ids: string[]
+  fr_queue_ids: string[] | number[]
+  nr_queue_ids: string[] | number[]
+  rs_queue_ids: string[] | number[]
+  fr_user_ids: string[] | number[];
+  nr_user_ids: string[] | number[];
+  rs_user_ids: string[] | number[];
 }
 
 export const useFetchEscalationById = (id: number) => {

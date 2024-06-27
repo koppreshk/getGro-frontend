@@ -103,7 +103,7 @@ const ConditionValueContainer = (props: { ticketFieldDropdownData: IKeyValue[], 
             {isLoading || isSourcesLoading || isQueueLoading
                 ? <CircularProgress />
                 :
-                <div style={{width: '33%'}}>
+                <div style={{ width: '33%' }}>
                     <SelectField
                         name="chooseCondition.conditionValue"
                         label="Field Options"

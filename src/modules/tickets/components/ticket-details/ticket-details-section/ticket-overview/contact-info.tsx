@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from "react";
 import styled from "styled-components";
 import { AccountCircleOutlined, CalendarToday, Call, ChecklistOutlined, ConfirmationNumberOutlined, Email, EmailOutlined, ImportExportRounded, Message, Phone } from "@mui/icons-material";
 import { Typography, Tooltip, Avatar } from "@mui/material";
-import { getFormattedDate, getInitialsByName } from "lib/utils";
+import { getInitialsByName } from "lib/utils";
 import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { commonStyles } from "lib/ui-ux/common-styles";
 import { ITicketDetails } from "modules/tickets/apis";
@@ -18,7 +18,7 @@ const StyledAvatar = styled(Avatar)`
     }
 `;
 
-const TypographyName = styled(Typography)`
+export const TypographyName = styled(Typography)`
     && {
         color: ${({ theme }) => theme.semantics.secondaryTextColor}
     }
@@ -85,12 +85,12 @@ const ContactInfoActions = (props: IContactInfoActionsProps) => {
     )
 };
 
-interface IContactInfoProps extends Pick<ITicketDetails, 'customerInfo' | 'ticketId' | 'createdAt' | 'ticketStatus' | 'priority' | 'customerName'> {
+interface IContactInfoProps extends Pick<ITicketDetails, 'customerInfo' | 'ticketId' | 'createdAt' | 'priority' | 'customerName'> {
 
 }
 
 export const ContactInfo = (props: IContactInfoProps) => {
-    const { customerInfo, createdAt, ticketId, priority, ticketStatus, customerName } = props;
+    const { customerInfo, createdAt, ticketId, priority, customerName } = props;
     const { email, fullName, omsCustomerId, phoneNumber } = useMemo(() => {
         if (customerInfo?.hasOwnProperty('email')) {
             return {
@@ -133,8 +133,7 @@ export const ContactInfo = (props: IContactInfoProps) => {
                 {contactInfoData('Phone', phoneNumber)}
                 {contactInfoData('Customer Id', omsCustomerId)}
                 {contactInfoData('Ticket Id', ticketId)}
-                {contactInfoData('Created At', getFormattedDate(createdAt))}
-                {contactInfoData('Ticket Status', ticketStatus)}
+                {contactInfoData('Created At', createdAt)}
                 {contactInfoData('Priority', onPriorityRender)}
             </FlexBox>
             {openCallPopUp ? <TelephonicDialer openCallPopUp={openCallPopUp} toggleCallBtn={toggleCallBtn} phoneNumber={phoneNumber} /> : <></>}

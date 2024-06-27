@@ -1,7 +1,6 @@
 import { RadioButtonCheckedOutlined } from "@mui/icons-material";
 import { Chip, Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
-import { getFormattedDate } from "lib/utils";
 import { ITicketDetails } from "modules/tickets/apis";
 import styled, { useTheme } from "styled-components";
 import { useSourceIcon } from "modules/tickets/components";
@@ -54,7 +53,7 @@ export const PastTicketCard = (props: { item: ITicketDetails; onPastTicketClick:
             <StyledContainer className="child-container" gap="10px" alignItems="center" onClick={() => onPastTicketClick(item.ticketId)}>
                 {getSourceIcon(item.source, { width: '1.5em', height: '1.5em' })}
                 <FlexBox flexDirection="column" width="calc(100% - 46px)">
-                    <StyledChip label={getFormattedDate(item.createdAt)} variant="filled" />
+                    <StyledChip label={item.createdAt} variant="filled" />
                     <Typography marginTop={'8px'} variant="caption">{item.ticketStatus}</Typography>
                     <Typography variant="body3" sx={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}>{item.ticketId}</Typography>
                 </FlexBox>

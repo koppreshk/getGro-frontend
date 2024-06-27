@@ -8,7 +8,6 @@ import { DataGrid, NoDataIllustration } from "lib/ui-ux"
 import { ITicketDetails } from "../apis";
 import { useAppDispatch, useAppSelector } from "lib/hooks";
 import { setTotalPages } from "../storage";
-import { getFormattedDate } from "lib/utils";
 
 interface IDisplayTicketsGridProps {
     data: ITicketDetails[];
@@ -81,7 +80,7 @@ const useColumns = () => {
             }
         }),
         columnHelper.accessor('ticketId', {
-            header: 'Ticket Id',
+            header: 'Id',
             id: 'ticketId',
             cell: info => info.getValue(),
             minSize: 200
@@ -99,7 +98,7 @@ const useColumns = () => {
             minSize: 120
         }),
         columnHelper.accessor('ticketStatus', {
-            header: () => 'Ticket Status',
+            header: () => 'Status',
             id: 'ticketStatus',
             cell: info => info.renderValue(),
             minSize: 190
@@ -107,12 +106,7 @@ const useColumns = () => {
         columnHelper.accessor('createdAt', {
             header: () => 'Created At',
             id: 'createdAt',
-            cell: info => getFormattedDate(info.getValue()!),
-            minSize: 200
-        }),
-        columnHelper.accessor('ticketSubStatus', {
-            header: () => 'Ticket Sub Status',
-            id: 'ticketSubStatus',
+            cell: info => info.getValue(),
             minSize: 200
         }),
         columnHelper.accessor('priority', {
@@ -122,7 +116,13 @@ const useColumns = () => {
             cell: info => {
                 return <Priority priority={info.getValue().toLocaleLowerCase()} />
             },
-        })
+        }),
+        columnHelper.accessor('resolutionDue', {
+            header: () => 'Resolution Due',
+            id: 'resolutionDue',
+            cell: info => info.getValue(),
+            minSize: 200
+        }),
     ];
 
     return columns;
@@ -132,23 +132,23 @@ const useColumns = () => {
 const PriorityIcon = styled.span<{ $priority: string }>`
     ${({ $priority }) => {
         switch ($priority.toLocaleLowerCase()) {
-            case 'high':
-                return css`
-                    background-color: #FFF4E5;
-                    color: #EF6C00;
-                    border: 1px solid #F2CF7D;
-                `;
             case 'low':
                 return css`
                     background-color: #E9F5CE;
                     color: #487307;
                     border: 1px solid #B9D674;
                 `;
-            case 'medium':
+            case 'normal':
                 return css`
                     background-color: #D9F5FD;
                     color: #0D60B7;
                     border: 1px solid #8DD4F3;
+                `;
+            case 'high':
+                return css`
+                    background-color: #FFF4E5;
+                    color: #EF6C00;
+                    border: 1px solid #F2CF7D;
                 `;
             case 'critical':
                 return css`
