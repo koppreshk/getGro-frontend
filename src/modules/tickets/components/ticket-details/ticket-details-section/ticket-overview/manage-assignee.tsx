@@ -7,6 +7,7 @@ import { SelectField } from "lib/form-fields";
 import { FlexBox, HorizontalSeparator } from "lib/ui-ux"
 import { ITicketQueues, Queue } from "modules/settings/apis";
 import { IChangeAsigneeArgs, ITicketDetails } from "modules/tickets/apis";
+import { TypographyName } from "./contact-info";
 
 const AssigneeValue = styled(FlexBox)`
     padding: 8px;
@@ -40,9 +41,9 @@ export const ManageAssignee = (props: IManageAssigneeProps) => {
     return (
         <div>
             <FlexBox flexDirection="column" padding="0px 20px" gap={'5px'}>
-                <Typography variant="h6">Assignee</Typography>
+                <TypographyName variant="h6">Assignee</TypographyName>
                 <AssigneeValue justifyContent="space-between" onClick={handleClick}>
-                    <Typography variant="body2">{`${assigneeInfo?.first_name} ${assigneeInfo?.last_name}`}</Typography>
+                    <Typography variant="h6">{`${assigneeInfo?.first_name} ${assigneeInfo?.last_name}`}</Typography>
                     <ExpandMore sx={{ width: 16, height: 16 }} />
                 </AssigneeValue>
             </FlexBox>

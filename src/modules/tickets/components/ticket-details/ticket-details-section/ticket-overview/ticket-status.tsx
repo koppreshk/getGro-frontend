@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { ExpandMore } from "@mui/icons-material"
-import { Menu, MenuItem, Typography } from "@mui/material"
+import { Menu, MenuItem } from "@mui/material"
 import { Button } from "@mui/material";
 import { FlexBox, HorizontalSeparator } from "lib/ui-ux"
 import { useState } from "react";
@@ -65,7 +65,7 @@ export const TicketStatus = (props: ITicketStatusProps) => {
         <div>
             <HorizontalSeparator $margin="0px 0px 10px 0px" />
             <FlexBox flexDirection="column" padding="0px 20px" gap={'5px'}>
-                <Typography variant="h6">Status</Typography>
+                <TypographyName variant="h6">Status</TypographyName>
                 <StyledButton
                     variant="contained"
                     onClick={handleClick}
