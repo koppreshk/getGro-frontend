@@ -3,9 +3,9 @@ import { ExpandMore } from "@mui/icons-material"
 import { Menu, MenuItem, Typography } from "@mui/material"
 import { Button } from "@mui/material";
 import { FlexBox, HorizontalSeparator } from "lib/ui-ux"
-import { IGenericResponse } from "modules/settings/apis/disposition-types/types";
 import { useState } from "react";
 import { TypographyName } from "./contact-info";
+import { IGenericResponse } from "modules/settings/apis/ticket-status/types";
 
 const StyledButton = styled(Button)`
     &&{
