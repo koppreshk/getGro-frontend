@@ -1,4 +1,5 @@
 import { CircularProgress } from "@mui/material";
+import { FlexBox } from "lib/ui-ux";
 import { useFetchAllStatuses } from "modules/settings/apis/ticket-status";
 import { ITicketDetails, useUpdateStatus } from "modules/tickets/apis";
 import { TicketStatus } from "modules/tickets/components/ticket-details/ticket-details-section/ticket-overview";
@@ -19,7 +20,7 @@ export const TicketStatusContainer = (props: ITicketStatusContainerProps) => {
     }
 
     if (isLoading) {
-        return <CircularProgress size={32} />
+        return <FlexBox width="100%" justifyContent="center"><CircularProgress size={32} /></FlexBox>
     }
 
     return (

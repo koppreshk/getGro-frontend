@@ -24,7 +24,7 @@ export const TypographyName = styled(Typography)`
     }
 `;
 
-const TypographyValue = styled(Typography)`
+export const TypographyValue = styled(Typography)`
     && {
         ${commonStyles.textOverflow};
     }
@@ -92,7 +92,7 @@ interface IContactInfoProps extends Pick<ITicketDetails, 'customerInfo' | 'ticke
 export const ContactInfo = (props: IContactInfoProps) => {
     const { customerInfo, createdAt, ticketId, priority, customerName } = props;
     const { email, fullName, omsCustomerId, phoneNumber } = useMemo(() => {
-        if (customerInfo?.hasOwnProperty('email')) {
+        if (customerInfo?.email) {
             return {
                 email: customerInfo.email,
                 fullName: customerInfo.firstName + ' ' + customerInfo.lastName,
