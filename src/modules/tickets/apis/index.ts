@@ -7,6 +7,7 @@ export * from './ticket-type-apis/fetch-my-resolved-tickets';
 export * from './ticket-type-apis/fetch-my-closed-tickets';
 export * from './ticket-type-apis/types';
 export * from './ticket-type-apis/update-status';
+export * from './ticket-type-apis/change-assignee';
 
 export * from './whatsapp-apis/fetch-whatsapp-messages';
 export * from './whatsapp-apis/send-whatsapp-messages';
