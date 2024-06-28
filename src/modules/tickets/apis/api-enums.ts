@@ -22,7 +22,8 @@ export enum TicketsEndPoint {
     CREATE_MANUAL_TICKET = 'create_manual_ticket',
     FETCH_PRIORITY_DROPDOWN_VALUES = 'fetch_priority_dropdown_values',
 
-    UPDATE_STATUS = 'update_status'
+    UPDATE_STATUS = 'update_status',
+    CHANGE_ASSIGNEE = 'change_assignee'
 }
 
 export enum TicketsQueryKey {
@@ -49,5 +50,6 @@ export enum TicketsQueryKey {
     CREATE_MANUAL_TICKET = 'CREATE_MANUAL_TICKET',
     FETCH_PRIORITY_DROPDOWN_VALUES = 'FETCH_PRIORITY_DROPDOWN_VALUES',
 
-    UPDATE_STATUS = 'UPDATE_STATUS'
+    UPDATE_STATUS = 'UPDATE_STATUS',
+    CHANGE_ASSIGNEE = 'CHANGE_ASSIGNEE'
 }

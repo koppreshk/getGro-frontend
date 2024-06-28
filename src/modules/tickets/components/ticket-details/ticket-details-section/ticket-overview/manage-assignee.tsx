@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import styled from 'styled-components';
-import { ExpandMore } from "@mui/icons-material";
-import { Popover, Typography } from "@mui/material"
+import { Close, Done, ExpandMore } from "@mui/icons-material";
+import { IconButton, Popover, Typography } from "@mui/material"
 import { SelectField } from "lib/form-fields";
 import { FlexBox, HorizontalSeparator } from "lib/ui-ux"
 import { ITicketQueues, Queue } from "modules/settings/apis";
+import { IChangeAsigneeArgs } from "modules/tickets/apis";
 
 const AssigneeValue = styled(FlexBox)`
     padding: 8px;
@@ -17,7 +18,7 @@ const AssigneeValue = styled(FlexBox)`
     }
 `;
 
-export const ManageAssignee = (props: { data: ITicketQueues }) => {
+export const ManageAssignee = (props: { data: ITicketQueues, onChangeAssignee: (args: IChangeAsigneeArgs) => Promise<void> }) => {
     const { queues } = props.data;
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -32,11 +33,10 @@ export const ManageAssignee = (props: { data: ITicketQueues }) => {
 
     return (
         <div>
-            <HorizontalSeparator $margin="0px 0px 10px 0px" />
             <FlexBox flexDirection="column" padding="0px 20px" gap={'5px'}>
                 <Typography variant="h6">Assignee</Typography>
                 <AssigneeValue justifyContent="space-between" onClick={handleClick}>
-                    <Typography variant="body3">Email/Admin</Typography>
+                    <Typography variant="body3">Harcoded</Typography>
                     <ExpandMore sx={{ width: 16, height: 16 }} />
                 </AssigneeValue>
             </FlexBox>
@@ -81,24 +81,44 @@ export const ManageAssignee = (props: { data: ITicketQueues }) => {
                     }
                 }}
             >
-                <PopoverContent queues={queues} />
+                <PopoverContent queues={queues} handleClose={handleClose} onChangeAssignee={props.onChangeAssignee} />
             </Popover>
+            <HorizontalSeparator $margin="20px 0px 0px 0px" />
         </div>
     )
 }
 
-const PopoverContent = (props: { queues: Queue[] }) => {
-    const { queues } = props;
-    const form = useForm();
+interface IFormFields {
+    assigneeQueue: string;
+    assigneeAgent?: string;
+}
+
+const PopoverContent = (props: { queues: Queue[], handleClose: () => void, onChangeAssignee: (args: IChangeAsigneeArgs) => Promise<void> }) => {
+    const { queues, handleClose, onChangeAssignee } = props;
+    const form = useForm<IFormFields>();
     const selectedQueue = form.watch('assigneeQueue');
     const agents = queues.find((item) => item.id.toString() === selectedQueue)?.assignedEmployees.map((item) => ({ key: item.id.toString(), value: item.firstName }))
 
+    const onSave = (formData: IFormFields) => {
+        onChangeAssignee({
+            queueId: formData.assigneeQueue,
+            agent: formData.assigneeAgent
+        }).finally(() => handleClose())
+    }
     return (
         <FormProvider {...form}>
             <FlexBox gap={'20px'} flexDirection="column" width="300px" padding='20px'>
                 <Typography variant="h6">Assignee</Typography>
-                <SelectField name="assigneeQueue" label="Queue" menuOptions={queues.map((item) => ({ key: item.id.toString(), value: item.name }))} />
+                <SelectField name="assigneeQueue" label="Queue" menuOptions={queues.map((item) => ({ key: item.id.toString(), value: item.name }))} rules={{ required: 'Please select a queue to change assignee' }} />
                 <SelectField name="assigneeAgent" label="Agent" menuOptions={agents || []} />
+                <FlexBox justifyContent="flex-end">
+                    <IconButton onClick={handleClose}>
+                        <Close />
+                    </IconButton>
+                    <IconButton onClick={form.handleSubmit(onSave)}>
+                        <Done />
+                    </IconButton>
+                </FlexBox>
             </FlexBox>
         </FormProvider>
     )

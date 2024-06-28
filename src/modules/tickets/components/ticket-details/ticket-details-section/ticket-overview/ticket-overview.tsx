@@ -39,7 +39,7 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
             <ContactInfo customerInfo={customerInfo} createdAt={createdAt} ticketId={ticketId} priority={priority} customerName={customerName} />
             <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} />
             <SearchCustomerContainer showSearchUserFlyout={showSearchUserFlyout} onSearchUserBtnClick={onSearchUserBtnClick} />
-            <ManageAssigneeContainer />
+            <ManageAssigneeContainer ticketId={ticketId} />
         </FlexBox>
     )
 }
