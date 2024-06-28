@@ -60,7 +60,7 @@ const DateInfo = (props: { label: string, date: string }) => {
 
     const { days, hours, minutes } = diff.shiftTo('days', 'hours', 'minutes').toObject();
 
-    const outputString = days ? `in ${days} days, ${hours} hours and ${Math.round(minutes)} minutes` : `in ${hours} hours and ${Math.round(minutes)} minutes`;
+    const outputString = days ? `in ${days} days, ${hours} hours and ${Math.round(minutes!)} minutes` : `in ${hours} hours and ${Math.round(minutes!)} minutes`;
 
     return (
         <FlexBox flexDirection="column">
