@@ -73,7 +73,7 @@ export const TicketStatus = (props: ITicketStatusProps) => {
                     sx={{ textTransform: 'unset' }}>
                     {ticketStatus}
                 </StyledButton>
-                <TypographyName variant="body3">Status changed 10 mins ago</TypographyName>
+                <TypographyName variant="subheading2">Status changed 10 mins ago</TypographyName>
             </FlexBox>
             <Menu
                 anchorEl={anchorEl}

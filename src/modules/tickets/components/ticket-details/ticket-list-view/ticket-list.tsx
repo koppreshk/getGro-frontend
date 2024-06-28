@@ -58,7 +58,7 @@ export const TicketList = (props: ITicketListProps) => {
             source={item.source}
             ticketStatus={item.ticketStatus}
             key={item.ticketId}
-            status={item.status}
+            assigneeInfo={item.assigneeInfo}
             pastTickets={item.pastTickets}
             customerInfo={item.customerInfo}
             channelId={item.channelId}
@@ -76,7 +76,7 @@ interface ITicketDetailsProps extends ITicketDetails {
 }
 
 const TicketDetails = (props: ITicketDetailsProps) => {
-    const { createdAt, customerName, ticketId, source, priority, ticketStatus, status, pastTickets, customerInfo, channelId, resolutionDue, responseDue } = props;
+    const { createdAt, customerName, ticketId, source, priority, ticketStatus, assigneeInfo, pastTickets, customerInfo, channelId, resolutionDue, responseDue } = props;
     const params = useParams();
     const navigate = useNavigate();
     const match = useMatch(`/tickets/:ticketType/:ticketId`);
@@ -99,7 +99,7 @@ const TicketDetails = (props: ITicketDetailsProps) => {
                 ticketStatus,
                 createdAt,
                 priority,
-                status,
+                assigneeInfo,
                 pastTickets,
                 customerInfo,
                 channelId,
@@ -107,8 +107,8 @@ const TicketDetails = (props: ITicketDetailsProps) => {
                 resolutionDue
             }));
         }
-    }, [customerInfo, createdAt, customerName, dispatch, params.ticketId, priority,
-        source, status, ticketId, ticketStatus, pastTickets, channelId, responseDue, resolutionDue]);
+    }, [customerInfo, createdAt, customerName, dispatch, params.ticketId,
+        priority, source, ticketId, ticketStatus, pastTickets, channelId, responseDue, resolutionDue, assigneeInfo]);
 
     const onTicketClick = React.useCallback(() => {
         navigate(`/tickets/${match?.params.ticketType}/${ticketId}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`);

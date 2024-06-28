@@ -15,7 +15,7 @@ export const useChangeAsignee = (ticketId: string) => {
     const queryKey = useGetQueryEndPoint();
 
     const changeAsignee = useCallback((args: IChangeAsigneeArgs) => {
-        const agentValue = args?.agent ? `&agent=${args.agent}` : '';
+        const agentValue = args?.agent ? `&employee_id=${args.agent}` : '';
         return postData(`${TicketsEndPoint.CHANGE_ASSIGNEE}?ticket_id=${ticketId}&queue_id=${args.queueId}${agentValue}`).then((res) => res.json());
     }, [postData, ticketId]);
 
