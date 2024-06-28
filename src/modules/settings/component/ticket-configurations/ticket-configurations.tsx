@@ -28,6 +28,13 @@ const configurations = [
         categoryIcon: () => <TaskOutlined color="primary" />,
         categoryOptions: [
             {
+                route: "ticket-status",
+                label: "Ticket Status",
+                uniqueKey: "ticket-status",
+                catOptionIcon: () => <AssignmentTurnedInOutlined />,
+                description: "Create your ticket status for efficient ticket routing"
+            },
+            {
                 route: "disposition-type",
                 label: "Disposition Type",
                 uniqueKey: "disposition-type",

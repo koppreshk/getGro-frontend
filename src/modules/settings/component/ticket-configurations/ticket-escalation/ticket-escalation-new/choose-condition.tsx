@@ -1,12 +1,12 @@
+import styled from "styled-components";
+import { useFormContext } from "react-hook-form";
+import { FlexBox } from "lib/ui-ux";
 import { Box, CircularProgress, Typography } from "@mui/material"
 import { RadioGroupField, SelectField, TextboxField } from "lib/form-fields"
-import { FlexBox } from "lib/ui-ux";
-import { useFetchAllStatuses } from "modules/settings/apis/disposition-types";
 import { IField, IPriority, useFetchAllQueues } from "modules/settings/apis/escalations";
-import { useFormContext } from "react-hook-form";
-import styled from "styled-components";
 import { IEscalationFormFields } from "./add-escalation-layout";
 import { useFetchAllChannels } from "modules/settings/apis/tags";
+import { useFetchAllStatuses } from "modules/settings/apis/ticket-status";
 
 const StyledRadioFields = styled(RadioGroupField)`
     .MuiFormControlLabel-label {
