@@ -17,5 +17,10 @@ export interface ITicketDetails {
     }
     responseDue: null | string;
     resolutionDue: string;
-    status: boolean; //not sure what is this, and it does not exist
+    assigneeInfo: {
+        id: 1,
+        first_name: string,
+        last_name: string,
+        email: string
+    }
 }

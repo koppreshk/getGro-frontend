@@ -2,11 +2,11 @@ import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import styled from 'styled-components';
 import { Close, Done, ExpandMore } from "@mui/icons-material";
-import { IconButton, Popover, Typography } from "@mui/material"
+import { Button, Popover, Typography } from "@mui/material"
 import { SelectField } from "lib/form-fields";
 import { FlexBox, HorizontalSeparator } from "lib/ui-ux"
 import { ITicketQueues, Queue } from "modules/settings/apis";
-import { IChangeAsigneeArgs } from "modules/tickets/apis";
+import { IChangeAsigneeArgs, ITicketDetails } from "modules/tickets/apis";
 
 const AssigneeValue = styled(FlexBox)`
     padding: 8px;
@@ -18,7 +18,13 @@ const AssigneeValue = styled(FlexBox)`
     }
 `;
 
-export const ManageAssignee = (props: { data: ITicketQueues, onChangeAssignee: (args: IChangeAsigneeArgs) => Promise<void> }) => {
+interface IManageAssigneeProps extends Pick<ITicketDetails, 'assigneeInfo'> {
+    data: ITicketQueues,
+    onChangeAssignee: (args: IChangeAsigneeArgs) => Promise<void>
+}
+
+export const ManageAssignee = (props: IManageAssigneeProps) => {
+    const { assigneeInfo } = props;
     const { queues } = props.data;
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -36,7 +42,7 @@ export const ManageAssignee = (props: { data: ITicketQueues, onChangeAssignee: (
             <FlexBox flexDirection="column" padding="0px 20px" gap={'5px'}>
                 <Typography variant="h6">Assignee</Typography>
                 <AssigneeValue justifyContent="space-between" onClick={handleClick}>
-                    <Typography variant="body3">Harcoded</Typography>
+                    <Typography variant="body2">{`${assigneeInfo?.first_name} ${assigneeInfo?.last_name}`}</Typography>
                     <ExpandMore sx={{ width: 16, height: 16 }} />
                 </AssigneeValue>
             </FlexBox>
@@ -95,9 +101,14 @@ interface IFormFields {
 
 const PopoverContent = (props: { queues: Queue[], handleClose: () => void, onChangeAssignee: (args: IChangeAsigneeArgs) => Promise<void> }) => {
     const { queues, handleClose, onChangeAssignee } = props;
-    const form = useForm<IFormFields>();
+    const form = useForm<IFormFields>({
+        defaultValues: {
+            assigneeAgent: '',
+            assigneeQueue: ''
+        }
+    });
     const selectedQueue = form.watch('assigneeQueue');
-    const agents = queues.find((item) => item.id.toString() === selectedQueue)?.assignedEmployees.map((item) => ({ key: item.id.toString(), value: item.firstName }))
+    const agents = queues.find((item) => item.id.toString() === selectedQueue)?.assignedEmployees.map((item) => ({ key: item.id.toString(), value: `${item.firstName} ${item.lastName}` }))
 
     const onSave = (formData: IFormFields) => {
         onChangeAssignee({
@@ -111,13 +122,20 @@ const PopoverContent = (props: { queues: Queue[], handleClose: () => void, onCha
                 <Typography variant="h6">Assignee</Typography>
                 <SelectField name="assigneeQueue" label="Queue" menuOptions={queues.map((item) => ({ key: item.id.toString(), value: item.name }))} rules={{ required: 'Please select a queue to change assignee' }} />
                 <SelectField name="assigneeAgent" label="Agent" menuOptions={agents || []} />
-                <FlexBox justifyContent="flex-end">
-                    <IconButton onClick={handleClose}>
-                        <Close />
-                    </IconButton>
-                    <IconButton onClick={form.handleSubmit(onSave)}>
-                        <Done />
-                    </IconButton>
+                <HorizontalSeparator />
+                <FlexBox justifyContent="flex-end" gap={'10px'}>
+                    <Button
+                        startIcon={<Close />}
+                        variant="outlined"
+                        onClick={handleClose}>
+                        Cancel
+                    </Button>
+                    <Button
+                        startIcon={<Done />}
+                        variant="contained"
+                        onClick={form.handleSubmit(onSave)}>
+                        Save
+                    </Button>
                 </FlexBox>
             </FlexBox>
         </FormProvider>

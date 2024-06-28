@@ -1,9 +1,13 @@
 import { CenteredCircularProgress } from "lib/ui-ux";
 import { useFetchAllTicketQueues } from "modules/settings/apis";
-import { IChangeAsigneeArgs, useChangeAsignee } from "modules/tickets/apis";
+import { IChangeAsigneeArgs, ITicketDetails, useChangeAsignee } from "modules/tickets/apis";
 import { ManageAssignee } from "modules/tickets/components/ticket-details/ticket-details-section/ticket-overview"
 
-export const ManageAssigneeContainer = (props: { ticketId: string }) => {
+interface IManageAssigneeContainerProps extends Pick<ITicketDetails, 'ticketId' | 'assigneeInfo'> {
+
+}
+
+export const ManageAssigneeContainer = (props: IManageAssigneeContainerProps) => {
     const { data, isLoading } = useFetchAllTicketQueues();
     const { mutateAsync } = useChangeAsignee(props.ticketId);
 
@@ -17,7 +21,7 @@ export const ManageAssigneeContainer = (props: { ticketId: string }) => {
 
     return (
         <>
-            <ManageAssignee data={data!} onChangeAssignee={onChangeAssignee} />
+            <ManageAssignee data={data!} assigneeInfo={props.assigneeInfo} onChangeAssignee={onChangeAssignee} />
         </>
     )
 }

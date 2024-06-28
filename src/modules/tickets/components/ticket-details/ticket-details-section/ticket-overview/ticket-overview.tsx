@@ -14,7 +14,7 @@ interface ITicketOverviewProps {
 
 export const TicketOverview = (props: ITicketOverviewProps) => {
     const { ticketDetails } = props;
-    const { customerName, source, createdAt, ticketId, ticketStatus, priority } = ticketDetails;
+    const { customerName, source, createdAt, ticketId, ticketStatus, priority, assigneeInfo } = ticketDetails;
     const [showSearchUserFlyout, setShowSearchUserFlyout] = React.useState(false);
     const onSearchUserBtnClick = React.useCallback(() => {
         setShowSearchUserFlyout((x) => !x);
@@ -36,10 +36,12 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
                     : <CustomIconButton tooltipProps={{ title: 'Search Customer', arrow: true, placement: "left" }} iconComponent={<PersonSearch />} onClick={onSearchUserBtnClick} />
                 }
             </FlexBox>
-            <ContactInfo customerInfo={customerInfo} createdAt={createdAt} ticketId={ticketId} priority={priority} customerName={customerName} />
-            <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} />
+            <FlexBox gap={'20px'} flexDirection="column">
+                <ContactInfo customerInfo={customerInfo} createdAt={createdAt} ticketId={ticketId} priority={priority} customerName={customerName} />
+                <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} />
+                <ManageAssigneeContainer ticketId={ticketId} assigneeInfo={assigneeInfo} />
+            </FlexBox>
             <SearchCustomerContainer showSearchUserFlyout={showSearchUserFlyout} onSearchUserBtnClick={onSearchUserBtnClick} />
-            <ManageAssigneeContainer ticketId={ticketId} />
         </FlexBox>
     )
 }
