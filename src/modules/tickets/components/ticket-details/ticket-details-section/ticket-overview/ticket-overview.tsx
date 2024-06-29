@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { PersonSearch } from "@mui/icons-material";
-import { Tooltip, Typography } from "@mui/material";
+import { Chip, Tooltip, Typography } from "@mui/material";
 import { CustomIconButton, FlexBox } from "lib/ui-ux";
 import { Platform } from "../../ticket-conversation/ticket-conversation-header";
 import { ManageAssigneeContainer, SearchCustomerContainer, TicketStatusContainer } from "modules/tickets/containers";
 import { useAppSelector } from "lib/hooks";
 import { UnlinkCustomer } from "./unlink-customer";
 import { ITicketDetails } from "modules/tickets/apis";
-import { ContactInfo, TypographyName, TypographyValue } from "./contact-info";
+import { ContactInfo, TypographyName } from "./contact-info";
 import { DateTime } from "luxon";
 
 interface ITicketOverviewProps {
@@ -40,8 +40,10 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
             </FlexBox>
             <FlexBox gap={'20px'} flexDirection="column">
                 <ContactInfo customerInfo={customerInfo} createdAt={createdAt} ticketId={ticketId} priority={priority} customerName={customerName} />
-                <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} />
-                <ManageAssigneeContainer ticketId={ticketId} assigneeInfo={assigneeInfo} />
+                <FlexBox flexDirection="column" gap="10px">
+                    <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} />
+                    <ManageAssigneeContainer ticketId={ticketId} assigneeInfo={assigneeInfo} />
+                </FlexBox>
                 <FlexBox padding="0px 20px" flexDirection="column" gap="10px">
                     {ticketDetails?.responseDue ? <DateInfo label="Response due: " date={ticketDetails.responseDue} /> : null}
                     {ticketDetails?.resolutionDue ? <DateInfo label="Resolution due: " date={ticketDetails.resolutionDue} /> : null}
@@ -60,13 +62,23 @@ const DateInfo = (props: { label: string, date: string }) => {
 
     const { days, hours, minutes } = diff.shiftTo('days', 'hours', 'minutes').toObject();
 
-    const outputString = days ? `in ${days} days, ${hours} hours and ${Math.round(minutes!)} minutes` : `in ${hours} hours and ${Math.round(minutes!)} minutes`;
+    const dateColor = useMemo(() => {
+        const completeMins = diff.shiftTo('minutes').minutes;
+        return completeMins < 0 ? 'error' : (completeMins >= 1 && completeMins <= 20 ? 'warning' : 'success')
+    }, [diff]);
+
+    const prefix = `${dateColor === 'error' ? 'Overdue since' : 'Overdue in'}`;
+    const daysValue = days! === 0 ? '' : `${Math.abs(days!)} days`;
+    const hoursValue = hours! === 0 ? '' : `${Math.abs(hours!)} hours`;
+    const minsValue = minutes! === 0 ? '' : `${Math.abs(Math.round(minutes!))} mins`;
+
+    const outputString = `${prefix} ${daysValue} ${hoursValue} ${minsValue}`;
 
     return (
-        <FlexBox flexDirection="column">
+        <FlexBox flexDirection="column" gap={'5px'}>
             <TypographyName variant="h6">{label}</TypographyName>
             <Tooltip title={date}>
-                <TypographyValue variant="body3">{outputString}</TypographyValue>
+                <Chip label={outputString} sx={{ borderRadius: '4px' }} color={dateColor} />
             </Tooltip>
         </FlexBox>
     )

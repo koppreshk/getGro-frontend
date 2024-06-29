@@ -11,7 +11,7 @@ import { TypographyName } from "./contact-info";
 
 const AssigneeValue = styled(FlexBox)`
     padding: 8px;
-    border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
+    border-radius: ${({ theme }) => theme.semantics.borderRadius.xs};
     border: ${({ theme }) => theme.semantics.standardBorder};
     cursor: pointer;
     &:hover {
