@@ -1,10 +1,4 @@
-export enum EscalationEndPoint {
-    FETCH_ESCALATION_METADATA = 'escalation/fetch_dropdown_values',
-    CREATE_ESCALATION = 'escalation/create_escalation',
-    FETCH_ALL_ESCALATIONS = 'escalation/fetch_all_escalations',
-    EDIT_ESCALATION = 'escalation/edit_escalation',
-    DELETE_ESCALATION = 'escalation/delete_escalation',
-    
+export enum EscalationEndPoint {    
     FETCH_SLA_METADATA = 'sla/fetch_options_for_sla',
     FETCH_ALL_ESCALATIONS_NEW = 'sla/all',
     DELETE_ESCALATION_NEW = 'sla/delete',
@@ -17,11 +11,6 @@ export enum EscalationEndPoint {
 }
 
 export enum EscalationQueryKey {
-    FETCH_ESCALATION_METADATA = 'FETCH_ESCALATION_METADATA',
-    CREATE_ESCALATION = 'CREATE_ESCALATION',
-    FETCH_ALL_ESCALATIONS = 'FETCH_ALL_ESCALATIONS',
-    EDIT_ESCALATION = 'EDIT_ESCALATION',
-    DELETE_ESCALATION = 'DELETE_ESCALATION',
     FETCH_SLA_METADATA = 'FETCH_SLA_METADATA',
     FETCH_ALL_ESCALATIONS_NEW = 'FETCH_ALL_ESCALATIONS_NEW',
     DELETE_ESCALATION_NEW = 'DELETE_ESCALATION_NEW',
