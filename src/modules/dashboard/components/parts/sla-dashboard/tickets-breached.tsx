@@ -4,6 +4,7 @@ import styled, { useTheme } from "styled-components";
 import ReactApexChart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
 import { IBreachedMetrics } from ".";
+import { ISLAValues } from "modules/dashboard/apis";
 
 const StyledLayout = styled(GridLayout)`
     background: ${({ theme }) => theme.pallete.white};
@@ -25,29 +26,31 @@ const StatsWrapper = styled(FlexBox)`
     padding-left: 30px;
 `;
 
-export const TicketsBreached = (props: { breachedData: IBreachedMetrics }) => {
-    const { breachedData } = props;
+export const TicketsBreached = (props: { breachedData: IBreachedMetrics, data: ISLAValues }) => {
+    const { breachedData, data } = props;
     const { pallete } = useTheme();
+    const { unique_ticket_count, sla_breach_percentage, sla_breached_count, sla_achieved_count, sla_achieved_percentage } = data.sla_applied_tickets;
+
     return (
         <GridLayout $gridTemplateColumns="repeat(2, 1fr)" $gridGap="20px">
 
             <StyledLayout $gridTemplateColumns="70% 30%" $padding="20px">
                 <FlexBox flexDirection="column" gap="14px">
                     <FlexBox gap="6px">
-                        <Typography variant="h5" sx={{ color: pallete.grayVariant3 }} >Tickets Breached</Typography>
-                        <Typography variant="body3" sx={{ color: pallete.grayNeutral }}>({breachedData.TicketsCount} Unique Tickets)</Typography>
+                        <Typography variant="h5" sx={{ color: pallete.grayVariant3 }} >SLA Applied Tickets</Typography>
+                        <Typography variant="body3" sx={{ color: pallete.grayNeutral }}>({unique_ticket_count} Unique Tickets)</Typography>
                     </FlexBox>
 
                     <DataGridLayout $gridTemplateColumns="repeat(2, 1fr)">
                         <StatsWrapper gap="8px" flexDirection="column" className="stats-wrapper">
                             <Typography variant="body2">SLA Breached</Typography >
-                            <Typography variant="h2">{breachedData.BreachedTicketsCountPercentage}%</Typography>
-                            <Typography variant="body3">{breachedData.BreachedTicketsCount} Tickets</Typography>
+                            <Typography variant="h2">{sla_breach_percentage || 0}%</Typography>
+                            <Typography variant="body3">{sla_breached_count} Tickets</Typography>
                         </StatsWrapper>
                         <StatsWrapper gap="8px" flexDirection="column" className="stats-wrapper">
                             <Typography variant="body2">SLA Achieved</Typography>
-                            <Typography variant="h2">{breachedData.AchievedTicketsCountPercentage}%</Typography>
-                            <Typography variant="body3">{breachedData.AchievedTicketsCount} Tickets</Typography>
+                            <Typography variant="h2">{sla_achieved_percentage || 0}%</Typography>
+                            <Typography variant="body3">{sla_achieved_count} Tickets</Typography>
                         </StatsWrapper>
                     </DataGridLayout>
 
@@ -61,19 +64,19 @@ export const TicketsBreached = (props: { breachedData: IBreachedMetrics }) => {
                 <FlexBox flexDirection="column" gap="14px">
                     <FlexBox gap="6px">
                         <Typography variant="h5" sx={{ color: pallete.grayVariant3 }} >SLA Breaches</Typography>
-                        <Typography variant="body3" sx={{ color: pallete.grayNeutral }}>({breachedData.BreachesCount} Unique Tickets)</Typography>
+                        <Typography variant="body3" sx={{ color: pallete.grayNeutral }}>({data.sla_breaches.unique_ticket_count} Unique Tickets)</Typography>
                     </FlexBox>
 
                     <DataGridLayout $gridTemplateColumns="repeat(2, 1fr)">
                         <StatsWrapper gap="8px" flexDirection="column" className="stats-wrapper">
                             <Typography variant="body2">Response Breaches</Typography >
-                            <Typography variant="h2">{breachedData.ResponseBreachedCountPercentage}%</Typography>
-                            <Typography variant="body3">{breachedData.ResponseBreachedCount} Tickets</Typography>
+                            <Typography variant="h2">{data.sla_breaches.response_breach_percentage || 0}%</Typography>
+                            <Typography variant="body3">{data.sla_breaches.response_breached_count} Tickets</Typography>
                         </StatsWrapper>
                         <StatsWrapper gap="8px" flexDirection="column" className="stats-wrapper">
                             <Typography variant="body2">Resolution Breaches</Typography>
-                            <Typography variant="h2">{breachedData.ResolutionBreachedCountPercentage}%</Typography>
-                            <Typography variant="body3">{breachedData.ResolutionBreachedCount} Times</Typography>
+                            <Typography variant="h2">{data.sla_breaches.resolution_breach_percentage || 0}%</Typography>
+                            <Typography variant="body3">{data.sla_breaches.resolution_breached_count} Times</Typography>
                         </StatsWrapper>
                     </DataGridLayout>
 

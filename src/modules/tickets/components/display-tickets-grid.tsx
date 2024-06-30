@@ -1,13 +1,14 @@
 import React, { MouseEventHandler } from "react";
 import { useMatch, useNavigate, useSearchParams } from "react-router-dom";
 import styled, { css, useTheme } from "styled-components";
-import { Checkbox, SxProps, Theme } from "@mui/material";
+import { Checkbox, Chip, SxProps, Theme, Tooltip } from "@mui/material";
 import { Row, createColumnHelper } from "@tanstack/react-table";
 import { Facebook, Email, WhatsApp, Twitter, LocalPhone, Instagram, Sms } from '@mui/icons-material';
 import { DataGrid, NoDataIllustration } from "lib/ui-ux"
 import { ITicketDetails } from "../apis";
 import { useAppDispatch, useAppSelector } from "lib/hooks";
 import { setTotalPages } from "../storage";
+import { useDateDifference } from "./ticket-details/ticket-details-section/ticket-overview";
 
 interface IDisplayTicketsGridProps {
     data: ITicketDetails[];
@@ -83,7 +84,7 @@ const useColumns = () => {
             header: 'Id',
             id: 'ticketId',
             cell: info => info.getValue(),
-            minSize: 200
+            minSize: 150
         }),
         columnHelper.accessor('customerName', {
             header: 'Customer Name',
@@ -101,7 +102,6 @@ const useColumns = () => {
             header: () => 'Status',
             id: 'ticketStatus',
             cell: info => info.renderValue(),
-            minSize: 190
         }),
         columnHelper.accessor('createdAt', {
             header: () => 'Created At',
@@ -120,7 +120,12 @@ const useColumns = () => {
         columnHelper.accessor('resolutionDue', {
             header: () => 'Resolution Due',
             id: 'resolutionDue',
-            cell: info => info.getValue(),
+            cell: info => (
+                <>
+                    {info.getValue() ? <ResDue date={info.getValue()} /> : <span>-</span>}
+                </>
+
+            ),
             minSize: 200
         }),
     ];
@@ -128,6 +133,17 @@ const useColumns = () => {
     return columns;
 }
 
+const ResDue = (props: { date: string }) => {
+    const { date } = props;
+    const { dateColor, parsedDateString } = useDateDifference(date);
+    return (
+        <>
+            <Tooltip title={date}>
+                {<Chip label={parsedDateString} color={dateColor as any} size="small" />}
+            </Tooltip>
+        </>
+    )
+}
 
 const PriorityIcon = styled.span<{ $priority: string }>`
     ${({ $priority }) => {

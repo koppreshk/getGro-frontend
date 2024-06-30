@@ -4,27 +4,21 @@ import { SLAmetricsChart, TicketsBreached } from ".";
 import { DashboardDateRangePicker } from "../dashboard-date-range-picker";
 import { DateRange } from "@matharumanpreet00/react-daterange-picker";
 import { DateTime } from "luxon";
-
+import { ISLAValues } from "modules/dashboard/apis";
 
 export interface IBreachedMetrics {
-    TicketsCount: number;
-    AchievedTicketsCount: number;
-    BreachedTicketsCount: number;
-    BreachesCount: number;
-    ResponseBreachedCount: number;
-    ResolutionBreachedCount: number;
-    AchievedTicketsCountPercentage: number;
     BreachedTicketsCountPercentage: number;
     ResponseBreachedCountPercentage: number;
     ResolutionBreachedCountPercentage: number;
 }
 
 interface ISLADashboardProps {
-    breachedData: IBreachedMetrics
+    breachedData: IBreachedMetrics;
+    data: ISLAValues;
 }
 
 export const SLADashboard = (props: ISLADashboardProps) => {
-    const { breachedData } = props;
+    const { breachedData, data } = props;
     const [dateRange, setDateRange] = React.useState<DateRange>({ startDate: DateTime.now().minus({ month: 1 }).toJSDate(), endDate: new Date() });
 
     return (
@@ -33,7 +27,7 @@ export const SLADashboard = (props: ISLADashboardProps) => {
                 <FlexBox justifyContent="flex-end" alignItems="center">
                     <DashboardDateRangePicker dateRange={dateRange} setDateRange={setDateRange} />
                 </FlexBox>
-                <TicketsBreached breachedData={breachedData} />
+                <TicketsBreached breachedData={breachedData} data={data} />
                 <SLAmetricsChart />
             </FlexBox>
         </>
