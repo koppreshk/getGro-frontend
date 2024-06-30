@@ -35,13 +35,6 @@ const configurations = [
                 description: "Create your ticket status for efficient ticket routing"
             },
             {
-                route: "disposition-type",
-                label: "Disposition Type",
-                uniqueKey: "disposition-type",
-                catOptionIcon: () => <AssignmentTurnedInOutlined />,
-                description: "Create your ticket dipositon type for efficient ticket routing"
-            },
-            {
                 route: "ticket-escalation",
                 label: "Ticket Escalation",
                 uniqueKey: "ticket-escalation",
