@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { DateTime } from "luxon";
 import { PersonSearch } from "@mui/icons-material";
 import { Chip, Tooltip, Typography } from "@mui/material";
 import { CustomIconButton, FlexBox } from "lib/ui-ux";
@@ -8,7 +9,6 @@ import { useAppSelector } from "lib/hooks";
 import { UnlinkCustomer } from "./unlink-customer";
 import { ITicketDetails } from "modules/tickets/apis";
 import { ContactInfo, TypographyName } from "./contact-info";
-import { DateTime } from "luxon";
 
 interface ITicketOverviewProps {
     ticketDetails: ITicketDetails;
@@ -54,9 +54,7 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
     )
 }
 
-const DateInfo = (props: { label: string, date: string }) => {
-    const { date, label } = props;
-
+export function useDateDifference(date: string) {
     const parsedDate = DateTime.fromFormat(date, 'yyyy-MM-dd hh:mm a');
     const diff = parsedDate.diffNow();
 
@@ -72,13 +70,19 @@ const DateInfo = (props: { label: string, date: string }) => {
     const hoursValue = hours! === 0 ? '' : `${Math.abs(hours!)} hours`;
     const minsValue = minutes! === 0 ? '' : `${Math.abs(Math.round(minutes!))} mins`;
 
-    const outputString = `${prefix} ${daysValue} ${hoursValue} ${minsValue}`;
+    return { parsedDateString: `${prefix} ${daysValue} ${hoursValue} ${minsValue}`, dateColor };
+}
+
+const DateInfo = (props: { label: string, date: string }) => {
+    const { date, label } = props;
+
+    const { parsedDateString, dateColor } = useDateDifference(date);
 
     return (
         <FlexBox flexDirection="column" gap={'5px'}>
             <TypographyName variant="h6">{label}</TypographyName>
             <Tooltip title={date}>
-                <Chip label={outputString} sx={{ borderRadius: '4px' }} color={dateColor} />
+                <Chip label={parsedDateString} sx={{ borderRadius: '4px' }} color={dateColor as any} />
             </Tooltip>
         </FlexBox>
     )
