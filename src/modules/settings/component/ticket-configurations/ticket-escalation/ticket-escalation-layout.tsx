@@ -17,24 +17,6 @@ export interface ITicketEscalaltionLayoutProps {
     totalPages: number;
 }
 
-// const AddNewEscalation = (props: {
-//     openAddEscalationDrawer: boolean;
-//     toggleAddEscalationDrawer: () => void
-// }) => {
-//     const { openAddEscalationDrawer, toggleAddEscalationDrawer } = props;
-//     return (
-//         <DrawerExtended
-//             width="800px"
-//             header="Add New Escalation"
-//             anchor="right"
-//             open={openAddEscalationDrawer}
-//             onRenderContent={() => (
-//                 <CreateTicketEscalationContainer toggleAddEscalationDrawer={toggleAddEscalationDrawer} />
-//             )}
-//             onClose={toggleAddEscalationDrawer} />
-//     )
-// }
-
 export const TicketEscalationLayout = (props: ITicketEscalaltionLayoutProps) => {
     const dispatch = useAppDispatch();
 
@@ -71,7 +53,6 @@ const EscalationLayoutContent = (props: ITicketEscalaltionLayoutProps) => {
                     <Typography variant="h5">Ticket Escalation</Typography>
                 </FlexBox>
                 <Button variant="contained" onClick={toggleAddEscalationDrawer} startIcon={<Add />}>Add Escalation</Button>
-                {/* <AddNewEscalation openAddEscalationDrawer={openAddEscalationDrawer} toggleAddEscalationDrawer={toggleAddEscalationDrawer} /> */}
             </FlexBox>
             <AllEscalations {...props} />
         </>
