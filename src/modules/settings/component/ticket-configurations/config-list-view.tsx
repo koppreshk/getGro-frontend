@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Typography } from "@mui/material";
 import { FlexBox, GridLayout } from "lib/ui-ux";
 import { useTheme } from "styled-components";
