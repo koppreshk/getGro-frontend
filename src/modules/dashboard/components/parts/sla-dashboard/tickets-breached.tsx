@@ -3,7 +3,6 @@ import { FlexBox, GridLayout } from "lib/ui-ux";
 import styled, { useTheme } from "styled-components";
 import ReactApexChart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
-import { IBreachedMetrics } from ".";
 import { ISLAValues } from "modules/dashboard/apis";
 
 const StyledLayout = styled(GridLayout)`
@@ -26,8 +25,8 @@ const StatsWrapper = styled(FlexBox)`
     padding-left: 30px;
 `;
 
-export const TicketsBreached = (props: { breachedData: IBreachedMetrics, data: ISLAValues }) => {
-    const { breachedData, data } = props;
+export const TicketsBreached = (props: { data: ISLAValues }) => {
+    const { data } = props;
     const { pallete } = useTheme();
     const { unique_ticket_count, sla_breach_percentage, sla_breached_count, sla_achieved_count, sla_achieved_percentage } = data.sla_applied_tickets;
 
@@ -56,7 +55,7 @@ export const TicketsBreached = (props: { breachedData: IBreachedMetrics, data: I
 
                 </FlexBox>
 
-                <TicketsBreachedChart breachedPercentage={breachedData.BreachedTicketsCountPercentage} />
+                <TicketsBreachedChart breachedPercentage={sla_breach_percentage} />
 
             </StyledLayout>
 
@@ -71,7 +70,7 @@ export const TicketsBreached = (props: { breachedData: IBreachedMetrics, data: I
                         <StatsWrapper gap="8px" flexDirection="column" className="stats-wrapper">
                             <Typography variant="body2">Response Breaches</Typography >
                             <Typography variant="h2">{data.sla_breaches.response_breach_percentage || 0}%</Typography>
-                            <Typography variant="body3">{data.sla_breaches.response_breached_count} Tickets</Typography>
+                            <Typography variant="body3">{data.sla_breaches.response_breached_count} Times</Typography>
                         </StatsWrapper>
                         <StatsWrapper gap="8px" flexDirection="column" className="stats-wrapper">
                             <Typography variant="body2">Resolution Breaches</Typography>
@@ -82,7 +81,7 @@ export const TicketsBreached = (props: { breachedData: IBreachedMetrics, data: I
 
                 </FlexBox>
                 <FlexBox alignItems='center' height='100%' padding="10px 0">
-                    <SLABreachedChart respBreachPercent={breachedData.ResponseBreachedCountPercentage} reslnBreachPercent={breachedData.ResolutionBreachedCountPercentage} />
+                    <SLABreachedChart respBreachPercent={data.sla_breaches.response_breach_percentage || 0} reslnBreachPercent={data.sla_breaches.resolution_breach_percentage || 0} />
                 </FlexBox>
             </StyledLayout>
         </GridLayout>
@@ -124,6 +123,7 @@ const SLABreachedChart = (props: { respBreachPercent: number, reslnBreachPercent
                 fontFamily: 'Poppins',
                 type: 'donut',
             },
+            labels: ['Response', 'Resolution'],
         } as ApexOptions
     };
 

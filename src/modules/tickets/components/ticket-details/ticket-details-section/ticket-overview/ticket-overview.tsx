@@ -23,7 +23,7 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
     }, []);
     const customerInfo = useAppSelector((state) => state.tickets.ticketDetails?.customerInfo)
 
-    return (
+return (
         <FlexBox gap="30px" padding="10px" flexDirection="column" height="100%" overflowY="auto">
             <FlexBox justifyContent="space-between">
                 <FlexBox flexDirection="column" maxWidth="calc(100% - 50px)">
@@ -65,7 +65,7 @@ export function useDateDifference(date: string) {
         return completeMins < 0 ? 'error' : (completeMins >= 1 && completeMins <= 20 ? 'warning' : 'success')
     }, [diff]);
 
-    const prefix = `${dateColor === 'error' ? 'Overdue since' : 'Overdue in'}`;
+    const prefix = `${dateColor === 'error' ? 'Due since' : 'Due in'}`;
     const daysValue = days! === 0 ? '' : `${Math.abs(days!)} days`;
     const hoursValue = hours! === 0 ? '' : `${Math.abs(hours!)} hours`;
     const minsValue = minutes! === 0 ? '' : `${Math.abs(Math.round(minutes!))} mins`;

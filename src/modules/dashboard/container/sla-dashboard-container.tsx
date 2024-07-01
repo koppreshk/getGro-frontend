@@ -1,15 +1,14 @@
-import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
+import React from "react";
+import { DateRange } from "@matharumanpreet00/react-daterange-picker";
+import { DateTime } from "luxon";
 import { useFetchSLAValues } from "../apis";
 import { SLADashboard } from "../components/parts/sla-dashboard"
+import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
 
 export const SLADashboardContainer = () => {
-    const breachedData = {
-        BreachedTicketsCountPercentage: 83.3,
-        ResponseBreachedCountPercentage: 80.0,
-        ResolutionBreachedCountPercentage: 20.0
-    }
+    const [dateRange, setDateRange] = React.useState<DateRange>({ startDate: DateTime.now().minus({ month: 1 }).toJSDate(), endDate: new Date() });
 
-    const { data, isLoading, error } = useFetchSLAValues();
+    const { data, isLoading, error } = useFetchSLAValues(dateRange);
 
     if (isLoading) {
         return <CenteredCircularProgress />
@@ -17,7 +16,7 @@ export const SLADashboardContainer = () => {
 
     if (data) {
         return (
-            <SLADashboard breachedData={breachedData} data={data} />
+            <SLADashboard data={data} setDateRange={setDateRange} dateRange={dateRange} />
         )
     }
 
