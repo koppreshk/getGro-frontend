@@ -122,8 +122,8 @@ export const ContactInfo = (props: IContactInfoProps) => {
         <FlexBox gap="20px" flexDirection="column">
             <FlexBox gap="20px" alignItems="center" flexDirection="row">
                 {fullName === undefined ? <StyledAvatar /> : <StyledAvatar>{getInitialsByName(fullName)}</StyledAvatar>}
-                <FlexBox flexDirection="column" alignItems="center" gap="10px">
-                    <Typography variant="h4" >{fullName}</Typography>
+                <FlexBox flexDirection="column" alignItems="center" gap="10px" width="calc(100% - 100px)">
+                    <Typography variant="h4" width={'96%'} sx={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}>{fullName}</Typography>
                     <ContactInfoActions email={email}
                         phoneNumber={phoneNumber} toggleCallBtn={toggleCallBtn}
                     />

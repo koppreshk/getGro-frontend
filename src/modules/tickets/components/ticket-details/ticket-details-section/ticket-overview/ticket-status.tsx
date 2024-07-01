@@ -80,9 +80,36 @@ export const TicketStatus = (props: ITicketStatusProps) => {
                 open={open}
                 onClose={handleClose}
                 onClick={handleClose}
-                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-            >
+                anchorOrigin={{
+                    vertical: 'center',
+                    horizontal: 'left',
+                }}
+                transformOrigin={{
+                    vertical: 'center',
+                    horizontal: 'right',
+                }}
+                slotProps={{
+                    paper: {
+                        elevation: 0,
+                        sx: {
+                            overflow: 'visible',
+                            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                            ml: '-6px',
+                            '&::before': {
+                                content: '""',
+                                display: 'block',
+                                position: 'absolute',
+                                top: '50%',
+                                right: '-5px',
+                                width: 10,
+                                height: 10,
+                                bgcolor: 'background.paper',
+                                transform: 'translateY(-50%) rotate(45deg)',
+                                zIndex: 0,
+                            },
+                        },
+                    }
+                }}>
                 {menuOptions.map((option, index) => (
                     <MenuItem
                         key={option.id}
