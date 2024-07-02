@@ -1,16 +1,11 @@
-import { useCallback, useMemo, useState } from "react";
+import { useMemo } from "react";
 import styled from "styled-components";
 import { Typography, Avatar } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { chooseRandomColors, getInitialsByName } from "lib/utils";
 import { EmailPopoverMetadata } from "./email-popover-metadata";
-import { EmailThreadOptions } from "./email-thread-options";
-import { EmailEditor } from "./email-editor";
 import { DownloadAttachments } from "./download-attachments";
-import { useFormContext } from "react-hook-form";
-import { IEmailFormFields } from "./email-conversations";
 import { IEmailConversations } from "./email-conversations-layout";
-import { useReplyToEmail } from "modules/tickets/apis";
 
 interface IEmailCardProps {
     emailProps: IEmailConversations & { subject: string; };
@@ -58,48 +53,9 @@ function strip(html: string) {
     return doc.body.textContent || "";
 }
 
-const useEmailActionHelpers = () => {
-    const [showEditor, setShowEditor] = useState(false);
-
-    const toggleEditorView = useCallback(() => {
-        setShowEditor(!showEditor);
-    }, [showEditor]);
-
-    return {
-        showEditor,
-        toggleEditorView
-    }
-}
-
 export const EmailCard = (props: IEmailCardProps) => {
     const { emailProps: { htmlContent, from, fromEmail, createdAt, messageId, subject, toEmail, isCollapsed, attachments }, onSingleEmailCollapseHandler } = props;
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(from)), [from]);
-    const { showEditor: showReplyEditor, toggleEditorView: toggleReplyEditorView } = useEmailActionHelpers();
-    const { showEditor, toggleEditorView } = useEmailActionHelpers();
-    const { handleSubmit, setValue } = useFormContext<IEmailFormFields>();
-    const { mutateAsync, isLoading: isMutationLoading } = useReplyToEmail();
-
-    const onReplyClick: React.MouseEventHandler<HTMLButtonElement> = useCallback((ev) => {
-        ev.stopPropagation();
-        toggleReplyEditorView();
-        showEditor && toggleEditorView();
-    }, [showEditor, toggleEditorView, toggleReplyEditorView])
-
-    const onForwardClick: React.MouseEventHandler<HTMLButtonElement> = useCallback((ev) => {
-        ev.stopPropagation();
-        setValue('forward.editor', htmlContent);
-        toggleEditorView();
-        showReplyEditor && toggleReplyEditorView();
-    }, [htmlContent, setValue, showReplyEditor, toggleEditorView, toggleReplyEditorView])
-
-    const onSendReply = useCallback((formValues: Pick<IEmailFormFields, 'reply'>) => {
-        const attachments = formValues.reply.attachments?.selectedFiles.map((item) => ({ file_name: item.name, file_type: item.type, file_content: (item.content as string).split(',')[1] }));
-        mutateAsync({
-            htmlContent: formValues.reply.editor,
-            messageId,
-            attachments: attachments
-        }).then(() => toggleReplyEditorView());
-    }, [mutateAsync, messageId, toggleReplyEditorView]);
 
     const onCardClick = () => onSingleEmailCollapseHandler({ messageId, isCollapsed: !isCollapsed });
 
@@ -112,10 +68,7 @@ export const EmailCard = (props: IEmailCardProps) => {
                         <StyledFlex flexDirection="column">
                             <FlexBox justifyContent="space-between">
                                 <Typography variant="h6">{from || fromEmail} <span className="print">{`<${fromEmail}>`}</span></Typography>
-                                <FlexBox gap="10px" justifyContent="space-between" alignItems="center">
-                                    <SubTextValue variant="caption">{(createdAt)}</SubTextValue>
-                                    {!isCollapsed ? <EmailThreadOptions onReplyClick={onReplyClick} onForwardClick={onForwardClick} /> : null}
-                                </FlexBox>
+                                <SubTextValue variant="caption">{(createdAt)}</SubTextValue>
                             </FlexBox>
                             {
                                 isCollapsed
@@ -130,25 +83,6 @@ export const EmailCard = (props: IEmailCardProps) => {
                 </FlexBox>
                 {!isCollapsed && <InnerHTML dangerouslySetInnerHTML={{ __html: htmlContent }} />}
                 {!isCollapsed && attachments.length > 0 && <DownloadAttachments attachments={attachments} />}
-                {
-                    showReplyEditor ?
-                        <EmailEditor
-                            from={from || fromEmail}
-                            editorType="reply"
-                            isMutationLoading={isMutationLoading}
-                            onCancelClick={toggleReplyEditorView}
-                            onSendClick={handleSubmit(onSendReply)}
-                        /> : null
-                }
-                {
-                    showEditor ?
-                        <EmailEditor
-                            from={from || fromEmail}
-                            editorType="forward"
-                            showEmailHeaderOptions
-                            onCancelClick={toggleEditorView} />
-                        : null
-                }
             </FlexBox >
         </StyledEmailCardContainer>
     )
