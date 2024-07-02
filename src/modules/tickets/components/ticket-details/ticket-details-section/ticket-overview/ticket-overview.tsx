@@ -4,7 +4,7 @@ import { PersonSearch } from "@mui/icons-material";
 import { Chip, Tooltip, Typography } from "@mui/material";
 import { CustomIconButton, FlexBox } from "lib/ui-ux";
 import { Platform } from "../../ticket-conversation/ticket-conversation-header";
-import { ManageAssigneeContainer, SearchCustomerContainer, TicketStatusContainer } from "modules/tickets/containers";
+import { ManageAssigneeContainer, ManagePriorityContainer, SearchCustomerContainer, TicketStatusContainer } from "modules/tickets/containers";
 import { useAppSelector } from "lib/hooks";
 import { UnlinkCustomer } from "./unlink-customer";
 import { ITicketDetails } from "modules/tickets/apis";
@@ -23,7 +23,7 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
     }, []);
     const customerInfo = useAppSelector((state) => state.tickets.ticketDetails?.customerInfo)
 
-return (
+    return (
         <FlexBox gap="30px" padding="10px" flexDirection="column" height="100%" overflowY="auto">
             <FlexBox justifyContent="space-between">
                 <FlexBox flexDirection="column" maxWidth="calc(100% - 50px)">
@@ -39,10 +39,11 @@ return (
                 }
             </FlexBox>
             <FlexBox gap={'20px'} flexDirection="column">
-                <ContactInfo customerInfo={customerInfo} createdAt={createdAt} ticketId={ticketId} priority={priority} customerName={customerName} />
+                <ContactInfo customerInfo={customerInfo} createdAt={createdAt} ticketId={ticketId} customerName={customerName} />
                 <FlexBox flexDirection="column" gap="10px">
                     <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} />
                     <ManageAssigneeContainer ticketId={ticketId} assigneeInfo={assigneeInfo} />
+                    <ManagePriorityContainer priority={priority} />
                 </FlexBox>
                 <FlexBox padding="0px 20px" flexDirection="column" gap="10px">
                     {ticketDetails?.responseDue ? <DateInfo label="Response due: " date={ticketDetails.responseDue} /> : null}

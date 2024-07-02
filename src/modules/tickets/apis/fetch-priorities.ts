@@ -4,7 +4,7 @@ import { TicketsEndPoint, TicketsQueryKey } from "./api-enums";
 import { useQuery } from "react-query";
 
 export interface IPriorities {
-    id: string;
+    id: number;
     name: string;
 }
 
