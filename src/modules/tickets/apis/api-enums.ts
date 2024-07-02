@@ -23,7 +23,8 @@ export enum TicketsEndPoint {
     FETCH_PRIORITY_DROPDOWN_VALUES = 'fetch_priority_dropdown_values',
 
     UPDATE_STATUS = 'update_status',
-    CHANGE_ASSIGNEE = 'change_assignee'
+    CHANGE_ASSIGNEE = 'change_assignee',
+    UPDATE_PRIORITY = 'update_priority'
 }
 
 export enum TicketsQueryKey {
@@ -51,5 +52,6 @@ export enum TicketsQueryKey {
     FETCH_PRIORITY_DROPDOWN_VALUES = 'FETCH_PRIORITY_DROPDOWN_VALUES',
 
     UPDATE_STATUS = 'UPDATE_STATUS',
-    CHANGE_ASSIGNEE = 'CHANGE_ASSIGNEE'
+    CHANGE_ASSIGNEE = 'CHANGE_ASSIGNEE',
+    UPDATE_PRIORITY = 'UPDATE_PRIORITY'
 }

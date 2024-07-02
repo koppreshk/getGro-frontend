@@ -43,7 +43,7 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
                 <FlexBox flexDirection="column" gap="10px">
                     <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} />
                     <ManageAssigneeContainer ticketId={ticketId} assigneeInfo={assigneeInfo} />
-                    <ManagePriorityContainer priority={priority} />
+                    <ManagePriorityContainer priority={priority} ticketId={ticketId} />
                 </FlexBox>
                 <FlexBox padding="0px 20px" flexDirection="column" gap="10px">
                     {ticketDetails?.responseDue ? <DateInfo label="Response due: " date={ticketDetails.responseDue} /> : null}

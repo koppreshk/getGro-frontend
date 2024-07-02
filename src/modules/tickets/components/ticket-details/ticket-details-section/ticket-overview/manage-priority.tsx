@@ -9,7 +9,7 @@ import { IPriorities } from "modules/tickets/apis"
 interface IManagePriorityProps {
     priority: string;
     allPriorities: IPriorities[];
-    onChangePriority: (newPriority: number) => void;
+    onChangePriority: (newPriority: number) => Promise<void>;
 }
 
 export const ManagePriority = (props: IManagePriorityProps) => {
