@@ -44,7 +44,7 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
             <FlexBox gap="15px" flexDirection="column" overflowY="auto" maxHeight="calc(100% - 45px)">
                 <FlexBox width="100%" gap="10px">
                     <TextboxField name="title" label="Title" sx={{ width: 'calc(50% - 10px)' }} />
-                    <SelectField name="priority" label="Priority" sx={{ width: '50%' }} menuOptions={priorities.map((item) => ({ key: item.id, value: item.name }))} />
+                    <SelectField name="priority" label="Priority" sx={{ width: '50%' }} menuOptions={priorities.map((item) => ({ key: item.id.toString(), value: item.name }))} />
                 </FlexBox>
                 <TextboxField
                     name="remarks" label="Remarks"

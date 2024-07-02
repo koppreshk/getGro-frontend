@@ -9,7 +9,7 @@ import { ITicketQueues, Queue } from "modules/settings/apis";
 import { IChangeAsigneeArgs, ITicketDetails } from "modules/tickets/apis";
 import { TypographyName } from "./contact-info";
 
-const AssigneeValue = styled(FlexBox)`
+export const StyledContainer = styled(FlexBox)`
     padding: 8px;
     border-radius: ${({ theme }) => theme.semantics.borderRadius.xs};
     border: ${({ theme }) => theme.semantics.standardBorder};
@@ -42,10 +42,10 @@ export const ManageAssignee = (props: IManageAssigneeProps) => {
         <div>
             <FlexBox flexDirection="column" padding="0px 20px" gap={'5px'}>
                 <TypographyName variant="h6">Assignee</TypographyName>
-                <AssigneeValue justifyContent="space-between" onClick={handleClick}>
+                <StyledContainer justifyContent="space-between" onClick={handleClick}>
                     <Typography variant="h6">{`${assigneeInfo?.first_name} ${assigneeInfo?.last_name}`}</Typography>
                     <ExpandMore sx={{ width: 16, height: 16 }} />
-                </AssigneeValue>
+                </StyledContainer>
             </FlexBox>
             <Popover
                 open={open}
@@ -84,7 +84,6 @@ export const ManageAssignee = (props: IManageAssigneeProps) => {
             >
                 <PopoverContent queues={queues} handleClose={handleClose} onChangeAssignee={props.onChangeAssignee} />
             </Popover>
-            <HorizontalSeparator $margin="20px 0px 0px 0px" />
         </div>
     )
 }

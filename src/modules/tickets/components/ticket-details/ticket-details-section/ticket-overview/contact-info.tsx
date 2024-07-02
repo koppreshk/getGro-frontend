@@ -6,7 +6,6 @@ import { getInitialsByName } from "lib/utils";
 import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { commonStyles } from "lib/ui-ux/common-styles";
 import { ITicketDetails } from "modules/tickets/apis";
-import { Priority } from "modules/tickets/components";
 import { TelephonicDialer } from "../../ticket-conversation/telephonic-conversations";
 
 const StyledAvatar = styled(Avatar)`
@@ -85,12 +84,12 @@ const ContactInfoActions = (props: IContactInfoActionsProps) => {
     )
 };
 
-interface IContactInfoProps extends Pick<ITicketDetails, 'customerInfo' | 'ticketId' | 'createdAt' | 'priority' | 'customerName'> {
+interface IContactInfoProps extends Pick<ITicketDetails, 'customerInfo' | 'ticketId' | 'createdAt' | 'customerName'> {
 
 }
 
 export const ContactInfo = (props: IContactInfoProps) => {
-    const { customerInfo, createdAt, ticketId, priority, customerName } = props;
+    const { customerInfo, createdAt, ticketId, customerName } = props;
     const { email, fullName, omsCustomerId, phoneNumber } = useMemo(() => {
         if (customerInfo?.email) {
             return {
@@ -114,16 +113,12 @@ export const ContactInfo = (props: IContactInfoProps) => {
         setOpenCallPopUp((prevValue) => !prevValue)
     }, []);
 
-    const onPriorityRender = useCallback(() => (
-        <Priority priority={priority} />
-    ), [priority]);
-
     return (
         <FlexBox gap="20px" flexDirection="column">
-            <FlexBox gap="20px" alignItems="center" flexDirection="row">
+            <FlexBox gap="20px" padding="0 20px" alignItems="center" flexDirection="row">
                 {fullName === undefined ? <StyledAvatar /> : <StyledAvatar>{getInitialsByName(fullName)}</StyledAvatar>}
-                <FlexBox flexDirection="column" alignItems="center" gap="10px" width="calc(100% - 100px)">
-                    <Typography variant="h4" width={'96%'} sx={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}>{fullName}</Typography>
+                <FlexBox flexDirection="column" alignItems="center" gap="10px">
+                    <Typography variant="h4">{fullName}</Typography>
                     <ContactInfoActions email={email}
                         phoneNumber={phoneNumber} toggleCallBtn={toggleCallBtn}
                     />
@@ -136,7 +131,6 @@ export const ContactInfo = (props: IContactInfoProps) => {
                 {contactInfoData('Customer Id', omsCustomerId)}
                 {contactInfoData('Ticket Id', ticketId)}
                 {contactInfoData('Created At', createdAt)}
-                {contactInfoData('Priority', onPriorityRender)}
             </FlexBox>
             {openCallPopUp ? <TelephonicDialer openCallPopUp={openCallPopUp} toggleCallBtn={toggleCallBtn} phoneNumber={phoneNumber} /> : <></>}
         </FlexBox>
