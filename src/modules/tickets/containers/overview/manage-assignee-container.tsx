@@ -1,4 +1,5 @@
-import { CenteredCircularProgress } from "lib/ui-ux";
+import { CircularProgress } from "@mui/material";
+import { FlexBox } from "lib/ui-ux";
 import { useFetchAllTicketQueues } from "modules/settings/apis";
 import { IChangeAsigneeArgs, ITicketDetails, useChangeAsignee } from "modules/tickets/apis";
 import { ManageAssignee } from "modules/tickets/components/ticket-details/ticket-details-section/ticket-overview"
@@ -16,7 +17,7 @@ export const ManageAssigneeContainer = (props: IManageAssigneeContainerProps) =>
     }
 
     if (isLoading) {
-        return <CenteredCircularProgress />
+        return <FlexBox width="100%" justifyContent="center"><CircularProgress size={32} /></FlexBox>
     }
 
     return (
