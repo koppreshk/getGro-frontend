@@ -3,7 +3,7 @@ import styled, { useTheme } from "styled-components";
 import { Box, Typography } from "@mui/material"
 import { FlexBox } from "lib/ui-ux";
 import { Widgets } from "@mui/icons-material";
-import { AgentPerformanceDashContainer, TicketMonitoringDashContainer, SupportMonitoringDashContainer, SLADashboardContainer } from "modules/dashboard/container";
+import { AgentPerformanceDashContainer, SupportMonitoringDashContainer, SLADashboardContainer } from "modules/dashboard/container";
 
 interface IDashboardCategories {
     id: number;
@@ -22,11 +22,11 @@ const StyledBox = styled(Box)`
 `;
 
 const dashboardCategories: IDashboardCategories[] = [
-    {
-        id: 1,
-        name: "Tickets Monitor",
-        component: <TicketMonitoringDashContainer />,
-    },
+    // {
+    //     id: 1,
+    //     name: "Tickets Monitor",
+    //     component: <TicketMonitoringDashContainer />,
+    // },
     {
         id: 2,
         name: 'Support Monitoring',
@@ -114,7 +114,7 @@ const TabPill = (props: ITabPillProps) => {
 }
 
 export const DashboardCategoriesPanel = () => {
-    const [value, setValue] = React.useState(1);
+    const [value, setValue] = React.useState(2);
     const { pallete } = useTheme();
 
     const onClickHandler = (id: number) => {
