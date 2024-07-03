@@ -21,7 +21,7 @@ export const SLADashboard = (props: ISLADashboardProps) => {
                     <DashboardDateRangePicker dateRange={dateRange} setDateRange={setDateRange} />
                 </FlexBox>
                 <TicketsBreached data={data} />
-                <SLAmetricsChart />
+                <SLAmetricsChart groupByPriorityData={data.sla_comparison_data}/>
             </FlexBox>
         </>
     )

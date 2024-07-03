@@ -43,19 +43,19 @@ export const TicketsBreached = (props: { data: ISLAValues }) => {
                     <DataGridLayout $gridTemplateColumns="repeat(2, 1fr)">
                         <StatsWrapper gap="8px" flexDirection="column" className="stats-wrapper">
                             <Typography variant="body2">SLA Breached</Typography >
-                            <Typography variant="h2">{sla_breach_percentage || 0}%</Typography>
+                            <Typography variant="h2">{Math.round(sla_breach_percentage) || 0}%</Typography>
                             <Typography variant="body3">{sla_breached_count} Tickets</Typography>
                         </StatsWrapper>
                         <StatsWrapper gap="8px" flexDirection="column" className="stats-wrapper">
                             <Typography variant="body2">SLA Achieved</Typography>
-                            <Typography variant="h2">{sla_achieved_percentage || 0}%</Typography>
+                            <Typography variant="h2">{Math.round(sla_achieved_percentage) || 0}%</Typography>
                             <Typography variant="body3">{sla_achieved_count} Tickets</Typography>
                         </StatsWrapper>
                     </DataGridLayout>
 
                 </FlexBox>
 
-                <TicketsBreachedChart breachedPercentage={sla_breach_percentage} />
+                <TicketsBreachedChart breachedPercentage={Math.round(sla_breach_percentage)} />
 
             </StyledLayout>
 
@@ -69,19 +69,19 @@ export const TicketsBreached = (props: { data: ISLAValues }) => {
                     <DataGridLayout $gridTemplateColumns="repeat(2, 1fr)">
                         <StatsWrapper gap="8px" flexDirection="column" className="stats-wrapper">
                             <Typography variant="body2">Response Breaches</Typography >
-                            <Typography variant="h2">{data.sla_breaches.response_breach_percentage || 0}%</Typography>
+                            <Typography variant="h2">{Math.round(data.sla_breaches.response_breach_percentage) || 0}%</Typography>
                             <Typography variant="body3">{data.sla_breaches.response_breached_count} Times</Typography>
                         </StatsWrapper>
                         <StatsWrapper gap="8px" flexDirection="column" className="stats-wrapper">
                             <Typography variant="body2">Resolution Breaches</Typography>
-                            <Typography variant="h2">{data.sla_breaches.resolution_breach_percentage || 0}%</Typography>
+                            <Typography variant="h2">{Math.round(data.sla_breaches.resolution_breach_percentage) || 0}%</Typography>
                             <Typography variant="body3">{data.sla_breaches.resolution_breached_count} Times</Typography>
                         </StatsWrapper>
                     </DataGridLayout>
 
                 </FlexBox>
                 <FlexBox alignItems='center' height='100%' padding="10px 0">
-                    <SLABreachedChart respBreachPercent={data.sla_breaches.response_breach_percentage || 0} reslnBreachPercent={data.sla_breaches.resolution_breach_percentage || 0} />
+                    <SLABreachedChart respBreachPercent={Math.round(data.sla_breaches.response_breach_percentage) || 0} reslnBreachPercent={Math.round(data.sla_breaches.resolution_breach_percentage) || 0} />
                 </FlexBox>
             </StyledLayout>
         </GridLayout>

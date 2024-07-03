@@ -12,7 +12,6 @@ const FilterContainer = styled(FlexBox)`
 `;
 
 export const SlaMetricFilter = () => {
-
     const [filterValue, setFilters] = useState('All');
 
     const onFilterChangeHandler = useCallback((value: string) => {

@@ -7,6 +7,7 @@ import { DateRange } from "@matharumanpreet00/react-daterange-picker";
 export interface ISLAValues {
     sla_applied_tickets: SlaAppliedTickets;
     sla_breaches: SlaBreaches;
+    sla_comparison_data: SlaComparisondata;
 }
 
 interface SlaBreaches {
@@ -23,6 +24,17 @@ interface SlaAppliedTickets {
     sla_breached_count: number;
     sla_achieved_count: number;
     sla_achieved_percentage: number;
+}
+
+export interface SlaComparisondata {
+    Low: Low;
+    High: Low;
+    Critical: Low;
+}
+interface Low {
+    achieved_count: number;
+    breach_count: number;
+    total_tickets: number;
 }
 
 export const useFetchSLAValues = (dateRange: DateRange) => {
