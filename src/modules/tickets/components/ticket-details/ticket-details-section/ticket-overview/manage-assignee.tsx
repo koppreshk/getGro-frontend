@@ -70,7 +70,7 @@ export const ManageAssignee = (props: IManageAssigneeProps) => {
                                 content: '""',
                                 display: 'block',
                                 position: 'absolute',
-                                top: '70%',
+                                top: '50%',
                                 right: '-5px',
                                 width: 10,
                                 height: 10,

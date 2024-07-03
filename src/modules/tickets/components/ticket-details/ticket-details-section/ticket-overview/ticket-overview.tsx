@@ -24,7 +24,7 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
     const customerInfo = useAppSelector((state) => state.tickets.ticketDetails?.customerInfo)
 
     return (
-        <FlexBox gap="30px" padding="10px" flexDirection="column" height="100%" overflowY="auto">
+        <FlexBox gap="20px" padding="10px" flexDirection="column" height="100%">
             <FlexBox justifyContent="space-between">
                 <FlexBox flexDirection="column" maxWidth="calc(100% - 50px)">
                     <Typography variant="h5" >{customerName}</Typography>
@@ -38,7 +38,7 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
                     : <CustomIconButton tooltipProps={{ title: 'Search Customer', arrow: true, placement: "left" }} iconComponent={<PersonSearch />} onClick={onSearchUserBtnClick} />
                 }
             </FlexBox>
-            <FlexBox gap={'20px'} flexDirection="column">
+            <FlexBox gap={'20px'} flexDirection="column" height="calc(100% - 62px)" overflowY="auto">
                 <ContactInfo customerInfo={customerInfo} createdAt={createdAt} ticketId={ticketId} customerName={customerName} />
                 <FlexBox flexDirection="column" gap="10px">
                     <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} />
