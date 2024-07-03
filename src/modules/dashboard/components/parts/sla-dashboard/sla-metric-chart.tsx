@@ -1,12 +1,18 @@
-import { SLAachivedVsBreachedTickets, SlaBreachedOnTimeChart, SlaMetricFilter } from "."
+import { SlaComparisondata } from "modules/dashboard/apis";
+import { SlaBreachedOnTimeChart } from "./sla-breached-on-time-chart"
+import { SlaMetricFilter } from "./sla-metric-filter"
 
+export interface ISLAmetricsChartProps {
+    groupByPriorityData: SlaComparisondata;
+}
 
-export const SLAmetricsChart = () => {
+export const SLAmetricsChart = (props: ISLAmetricsChartProps) => {
+    const { groupByPriorityData } = props;
     return (
         <>
             <SlaMetricFilter />
-            <SlaBreachedOnTimeChart />
-            <SLAachivedVsBreachedTickets />
+            <SlaBreachedOnTimeChart groupByPriorityData={groupByPriorityData}/>
+            {/* <SLAachivedVsBreachedTickets /> */}
         </>
     )
 }

@@ -5,7 +5,7 @@ import { FlexBox } from "lib/ui-ux";
 import ReactApexChart from "react-apexcharts"
 import { FormProvider, useForm } from "react-hook-form";
 import styled from "styled-components";
-
+import { ISLAmetricsChartProps } from "./sla-metric-chart";
 
 const ChartContainer = styled.div`
     background: ${({ theme }) => theme.pallete.white};
@@ -13,30 +13,28 @@ const ChartContainer = styled.div`
     border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
 `;
 
-export const SlaBreachedOnTimeChart = () => {
+export const SlaBreachedOnTimeChart = (props: ISLAmetricsChartProps) => {
+    const { groupByPriorityData } = props;
     const methods = useForm({
         defaultValues: {
-            groupBy: 'category'
+            groupBy: 'priority'
         }
     });
 
     const menuOptions = [
-        { key: 'category', value: 'Category' },
-        { key: 'brand', value: 'Catebrandgory' },
         { key: 'priority', value: 'Priority' },
     ];
 
     const data = {
-
         series: [{
-            name: 'SLA Achived Tickets',
-            data: [2, 3, 3, 4]
+            name: 'SLA Achieved Tickets',
+            data: Object.values(groupByPriorityData).map((item) => item.achieved_count)
         }, {
             name: 'SLA Breached Tickets',
-            data: [3, 3, 4, 3]
+            data: Object.values(groupByPriorityData).map((item) => item.breach_count)
         }, {
             name: 'Total SLA Tickets',
-            data: [3, 2, 3, 2]
+            data: Object.values(groupByPriorityData).map((item) => item.total_tickets)
         }],
         options: {
             chart: {
@@ -59,7 +57,7 @@ export const SlaBreachedOnTimeChart = () => {
                 colors: ['transparent']
             },
             xaxis: {
-                categories: ['Category 1', 'Category 2', 'Category 3', 'Category 4'],
+                categories: Object.keys(groupByPriorityData),
             },
             yaxis: {
                 title: {
@@ -69,20 +67,14 @@ export const SlaBreachedOnTimeChart = () => {
             fill: {
                 opacity: 1
             },
-            tooltip: {
-                y: {
-                    formatter: function (val) {
-                        return "$ " + val + " thousands"
-                    }
-                }
-            }
+           
         } as ApexOptions
     }
 
     return (
         <FormProvider {...methods}>
             <ChartContainer>
-                <FlexBox justifyContent="space-between" alignItems="center" style={{marginBottom: '24px'}}>
+                <FlexBox justifyContent="space-between" alignItems="center" style={{ marginBottom: '24px' }}>
                     <Typography variant="h5"> SLA Achieved vs Breached Tickets</Typography>
                     <SelectField menuOptions={menuOptions} name="groupBy" label="Group By" size="small" sx={{ width: '200px' }} />
                 </FlexBox>
