@@ -5,10 +5,10 @@ import { FlexBox } from "lib/ui-ux";
 import { EmailSkeletonLoader } from "lib/ui-ux/loader-components";
 import { EmailConversationLayout } from "../components/ticket-details/ticket-conversation/email-conversations/email-conversations-layout";
 
-interface ITicketConversationContainerProps {
+interface IEmailConversationContainerProps {
 }
 
-export const TicketConversationContainer = (_props: ITicketConversationContainerProps) => {
+export const EmailConversationContainer = (_props: IEmailConversationContainerProps) => {
     const { data: conversationsData, isLoading: conversationLoading, isError, refetch } = useFetchTicketById();
 
     if (conversationLoading) {
