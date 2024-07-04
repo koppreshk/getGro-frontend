@@ -1,17 +1,25 @@
-import { SlaComparisondata } from "modules/dashboard/apis";
+import { useFetchSLAComparisionValues } from "modules/dashboard/apis";
 import { SlaBreachedOnTimeChart } from "./sla-breached-on-time-chart"
 import { SlaMetricFilter } from "./sla-metric-filter"
+import { DateRange } from "@matharumanpreet00/react-daterange-picker";
+import { CenteredCircularProgress } from "lib/ui-ux";
 
 export interface ISLAmetricsChartProps {
-    groupByPriorityData: SlaComparisondata;
+    dateRange: DateRange;
 }
 
 export const SLAmetricsChart = (props: ISLAmetricsChartProps) => {
-    const { groupByPriorityData } = props;
+    const { dateRange } = props;
+    const { data, isLoading } = useFetchSLAComparisionValues(dateRange);
+
+    if (isLoading) {
+        return <CenteredCircularProgress />
+    }
+
     return (
         <>
             <SlaMetricFilter />
-            <SlaBreachedOnTimeChart groupByPriorityData={groupByPriorityData}/>
+            <SlaBreachedOnTimeChart groupByPriorityData={data!} />
             {/* <SLAachivedVsBreachedTickets /> */}
         </>
     )

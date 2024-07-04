@@ -122,7 +122,7 @@ const useColumns = () => {
             id: 'resolutionDue',
             cell: info => (
                 <>
-                    {info.getValue() ? <ResDue date={info.getValue()} /> : <span>-</span>}
+                    {info.getValue() ? <ResDue date={info.getValue()} /> : <span>N/A</span>}
                 </>
 
             ),

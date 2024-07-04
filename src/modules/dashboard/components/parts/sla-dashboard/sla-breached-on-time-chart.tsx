@@ -1,11 +1,11 @@
 import { Typography } from "@mui/material";
+import styled from "styled-components";
 import { ApexOptions } from "apexcharts"
 import { SelectField } from "lib/form-fields";
 import { FlexBox } from "lib/ui-ux";
 import ReactApexChart from "react-apexcharts"
 import { FormProvider, useForm } from "react-hook-form";
-import styled from "styled-components";
-import { ISLAmetricsChartProps } from "./sla-metric-chart";
+import { SlaComparisondata } from "modules/dashboard/apis";
 
 const ChartContainer = styled.div`
     background: ${({ theme }) => theme.pallete.white};
@@ -13,8 +13,13 @@ const ChartContainer = styled.div`
     border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
 `;
 
-export const SlaBreachedOnTimeChart = (props: ISLAmetricsChartProps) => {
+interface IgroupByPriorityDataProps {
+    groupByPriorityData: SlaComparisondata;
+}
+
+export const SlaBreachedOnTimeChart = (props: IgroupByPriorityDataProps) => {
     const { groupByPriorityData } = props;
+
     const methods = useForm({
         defaultValues: {
             groupBy: 'priority'
@@ -67,7 +72,7 @@ export const SlaBreachedOnTimeChart = (props: ISLAmetricsChartProps) => {
             fill: {
                 opacity: 1
             },
-           
+
         } as ApexOptions
     }
 
