@@ -41,9 +41,9 @@ export const AccountMenu = () => {
                     Settings
                 </MenuItem>
                 <Divider />
-                <MenuItem onClick={onLogout}>
+                <MenuItem onClick={onLogout} sx={{ color: '#d32f2f' }}>
                     <ListItemIcon>
-                        <Logout />
+                        <Logout sx={{ color: '#d32f2f' }} />
                     </ListItemIcon>
                     Logout
                 </MenuItem>
