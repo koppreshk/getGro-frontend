@@ -44,12 +44,13 @@ export const SlaBreachedOnTimeChart = (props: IgroupByPriorityDataProps) => {
         options: {
             chart: {
                 type: 'bar',
-                height: 350
+                height: 350,
+                fontFamily: 'poppins'
             },
             plotOptions: {
                 bar: {
                     horizontal: false,
-                    columnWidth: '55%',
+                    columnWidth: '45%',
                     endingShape: 'rounded'
                 },
             },
@@ -71,7 +72,7 @@ export const SlaBreachedOnTimeChart = (props: IgroupByPriorityDataProps) => {
             },
             fill: {
                 opacity: 1
-            },
+            }
 
         } as ApexOptions
     }

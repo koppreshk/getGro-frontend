@@ -15,6 +15,8 @@ export interface ITicketDetails {
         omsCustomerId: string;
         phoneNumber: string;
     }
+    statusUpdateString: string;
+    closedAt: null | string;
     responseDue: null | string;
     resolutionDue: string;
     assigneeInfo: {

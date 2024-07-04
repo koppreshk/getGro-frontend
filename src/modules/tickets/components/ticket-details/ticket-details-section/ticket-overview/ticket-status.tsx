@@ -36,12 +36,13 @@ const StyledButton = styled(Button)`
 
 interface ITicketStatusProps {
     ticketStatus: string;
+    statusUpdateString: string;
     menuOptions: IGenericResponse[];
     onStatusChange: (statusId: number) => Promise<void>;
 }
 
 export const TicketStatus = (props: ITicketStatusProps) => {
-    const { menuOptions, ticketStatus, onStatusChange } = props;
+    const { menuOptions, ticketStatus, statusUpdateString, onStatusChange } = props;
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [selectedIndex, setSelectedIndex] = useState(menuOptions.findIndex((item) => item.name.toLocaleLowerCase() === ticketStatus.toLocaleLowerCase()) || 0);
 
@@ -73,7 +74,7 @@ export const TicketStatus = (props: ITicketStatusProps) => {
                     sx={{ textTransform: 'unset' }}>
                     {ticketStatus}
                 </StyledButton>
-                <TypographyName variant="subheading2">Status changed 10 mins ago</TypographyName>
+                <TypographyName variant="subheading2">Status changed {statusUpdateString}</TypographyName>
             </FlexBox>
             <Menu
                 anchorEl={anchorEl}

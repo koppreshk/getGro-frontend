@@ -84,12 +84,12 @@ const ContactInfoActions = (props: IContactInfoActionsProps) => {
     )
 };
 
-interface IContactInfoProps extends Pick<ITicketDetails, 'customerInfo' | 'ticketId' | 'createdAt' | 'customerName'> {
+interface IContactInfoProps extends Pick<ITicketDetails, 'customerInfo' | 'ticketId' | 'createdAt' | 'closedAt' | 'customerName'> {
 
 }
 
 export const ContactInfo = (props: IContactInfoProps) => {
-    const { customerInfo, createdAt, ticketId, customerName } = props;
+    const { customerInfo, createdAt, ticketId, customerName, closedAt } = props;
     const { email, fullName, omsCustomerId, phoneNumber } = useMemo(() => {
         if (customerInfo?.email) {
             return {
@@ -131,6 +131,7 @@ export const ContactInfo = (props: IContactInfoProps) => {
                 {contactInfoData('Customer Id', omsCustomerId)}
                 {contactInfoData('Ticket Id', ticketId)}
                 {contactInfoData('Created At', createdAt)}
+                {closedAt ? contactInfoData('Created At', closedAt) : null}
             </FlexBox>
             {openCallPopUp ? <TelephonicDialer openCallPopUp={openCallPopUp} toggleCallBtn={toggleCallBtn} phoneNumber={phoneNumber} /> : <></>}
         </FlexBox>

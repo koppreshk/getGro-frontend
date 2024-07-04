@@ -16,7 +16,7 @@ interface ITicketOverviewProps {
 
 export const TicketOverview = (props: ITicketOverviewProps) => {
     const { ticketDetails } = props;
-    const { customerName, source, createdAt, ticketId, ticketStatus, priority, assigneeInfo } = ticketDetails;
+    const { customerName, source, createdAt, ticketId, ticketStatus, priority, assigneeInfo, statusUpdateString, closedAt } = ticketDetails;
     const [showSearchUserFlyout, setShowSearchUserFlyout] = React.useState(false);
     const onSearchUserBtnClick = React.useCallback(() => {
         setShowSearchUserFlyout((x) => !x);
@@ -39,9 +39,9 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
                 }
             </FlexBox>
             <FlexBox gap={'20px'} flexDirection="column" height="calc(100% - 62px)" overflowY="auto">
-                <ContactInfo customerInfo={customerInfo} createdAt={createdAt} ticketId={ticketId} customerName={customerName} />
+                <ContactInfo customerInfo={customerInfo} createdAt={createdAt} closedAt={closedAt} ticketId={ticketId} customerName={customerName} />
                 <FlexBox flexDirection="column" gap="10px">
-                    <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} />
+                    <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} statusUpdateString={statusUpdateString}/>
                     <ManageAssigneeContainer ticketId={ticketId} assigneeInfo={assigneeInfo} />
                     <ManagePriorityContainer priority={priority} ticketId={ticketId} />
                 </FlexBox>

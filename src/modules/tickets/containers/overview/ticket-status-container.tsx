@@ -4,11 +4,11 @@ import { useFetchAllStatuses } from "modules/settings/apis/ticket-status";
 import { ITicketDetails, useUpdateStatus } from "modules/tickets/apis";
 import { TicketStatus } from "modules/tickets/components/ticket-details/ticket-details-section/ticket-overview";
 
-interface ITicketStatusContainerProps extends Pick<ITicketDetails, 'ticketId' | 'ticketStatus'> {
+interface ITicketStatusContainerProps extends Pick<ITicketDetails, 'ticketId' | 'ticketStatus' | 'statusUpdateString'> {
 
 }
 export const TicketStatusContainer = (props: ITicketStatusContainerProps) => {
-    const { ticketId, ticketStatus } = props;
+    const { ticketId, ticketStatus, statusUpdateString } = props;
     const { data, isLoading } = useFetchAllStatuses();
     const { mutateAsync } = useUpdateStatus();
 
@@ -25,7 +25,7 @@ export const TicketStatusContainer = (props: ITicketStatusContainerProps) => {
 
     return (
         <>
-            <TicketStatus ticketStatus={ticketStatus} menuOptions={data!} onStatusChange={onStatusChange} />
+            <TicketStatus ticketStatus={ticketStatus} statusUpdateString={statusUpdateString} menuOptions={data!} onStatusChange={onStatusChange} />
         </>
     )
 }
