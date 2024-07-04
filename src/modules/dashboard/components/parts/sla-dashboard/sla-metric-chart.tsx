@@ -3,6 +3,7 @@ import { SlaBreachedOnTimeChart } from "./sla-breached-on-time-chart"
 import { SlaMetricFilter } from "./sla-metric-filter"
 import { DateRange } from "@matharumanpreet00/react-daterange-picker";
 import { CenteredCircularProgress } from "lib/ui-ux";
+import { useState, useCallback } from "react";
 
 export interface ISLAmetricsChartProps {
     dateRange: DateRange;
@@ -10,7 +11,23 @@ export interface ISLAmetricsChartProps {
 
 export const SLAmetricsChart = (props: ISLAmetricsChartProps) => {
     const { dateRange } = props;
-    const { data, isLoading } = useFetchSLAComparisionValues(dateRange);
+    const [filterValue, setFilters] = useState('All');
+
+    const onFilterChangeHandler = useCallback((value: string) => {
+        setFilters(value);
+    }, []);
+
+    return (
+        <>
+            <SlaMetricFilter filterValue={filterValue} onFilterChangeHandler={onFilterChangeHandler} />
+            <SlaMetricContainer dateRange={dateRange} filterValue={filterValue} />
+        </>
+    )
+}
+
+const SlaMetricContainer = (props: { dateRange: DateRange; filterValue: string }) => {
+    const { dateRange, filterValue } = props;
+    const { data, isLoading } = useFetchSLAComparisionValues(dateRange, filterValue);
 
     if (isLoading) {
         return <CenteredCircularProgress />
@@ -18,8 +35,7 @@ export const SLAmetricsChart = (props: ISLAmetricsChartProps) => {
 
     return (
         <>
-            <SlaMetricFilter />
-            <SlaBreachedOnTimeChart groupByPriorityData={data!} />
+            <SlaBreachedOnTimeChart groupByPriorityData={data!.data} />
             {/* <SLAachivedVsBreachedTickets /> */}
         </>
     )

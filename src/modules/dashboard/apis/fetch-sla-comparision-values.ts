@@ -16,15 +16,16 @@ interface PriorityTypes {
     total_tickets: number;
 }
 
-export const useFetchSLAComparisionValues = (dateRange: DateRange) => {
+export const useFetchSLAComparisionValues = (dateRange: DateRange, filterValue: string) => {
     const { getData } = useServiceClient();
     const parsedFromDate = dateRange.startDate!.toISOString();
     const parsedToDate = dateRange.endDate!.toISOString();
+    const slaMetrics = filterValue.split(' ').map(item => item.toLocaleLowerCase()).join('_')
+    
+    const fetchAllSLAComparisionValues = React.useCallback(() => getData(`${DashboardEndPoint.SLA_COMPARISION}?from=${parsedFromDate}&to=${parsedToDate}&sla_metrics=${slaMetrics}&group_by=priority`).then((res) => res.json()), [getData, parsedFromDate, parsedToDate, slaMetrics])
 
-    const fetchAllSLAComparisionValues = React.useCallback(() => getData(`${DashboardEndPoint.SLA_COMPARISION}?from=${parsedFromDate}&to=${parsedToDate}`).then((res) => res.json()), [getData, parsedFromDate, parsedToDate])
-
-    return useQuery<SlaComparisondata, { message: string }>({
-        queryKey: [DashboardQueryKeys.SLA_COMPARISION, dateRange],
+    return useQuery<{ data: SlaComparisondata, group_by: string, metric_type: string }, { message: string }>({
+        queryKey: [DashboardQueryKeys.SLA_COMPARISION, dateRange, filterValue],
         queryFn: fetchAllSLAComparisionValues
     });
 }

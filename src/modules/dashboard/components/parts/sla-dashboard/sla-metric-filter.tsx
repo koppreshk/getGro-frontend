@@ -1,4 +1,3 @@
-import { useState, useCallback } from "react";
 import styled from "styled-components";
 import { Typography } from "@mui/material"
 import { FlexBox } from "lib/ui-ux"
@@ -11,13 +10,8 @@ const FilterContainer = styled(FlexBox)`
     width: fit-content;
 `;
 
-export const SlaMetricFilter = () => {
-    const [filterValue, setFilters] = useState('All');
-
-    const onFilterChangeHandler = useCallback((value: string) => {
-        setFilters(value);
-    }, []);
-    
+export const SlaMetricFilter = (props: { filterValue: string, onFilterChangeHandler: (value: string) => void }) => {
+    const { filterValue, onFilterChangeHandler } = props;
     return (
         <FilterContainer alignItems="center" gap="20px">
             <Typography variant="h5">SLA Metrics</Typography>
