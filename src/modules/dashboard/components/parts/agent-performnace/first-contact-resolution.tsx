@@ -13,11 +13,10 @@ export const FirstContactResolution = (props: {
         count_str: string;
     }
 }) => {
-    const { pallete } = useTheme();
     return (
         <StyledFCRContainer padding="20px" flexDirection="column" gap="20px">
-            <Typography sx={{ color: pallete.grayNeutral }} variant="h6" textAlign="center">FCR(First Contact Resolution)</Typography>
-            <CustomCircularProgress value={props.fcr.percentage} subText={props.fcr.count_str} />
+            <Typography variant="h5" textAlign="center">FCR(First Contact Resolution)</Typography>
+            <CustomCircularProgress value={props.fcr.percentage} size={80} subText={props.fcr.count_str} />
         </StyledFCRContainer>
     )
 }
@@ -25,6 +24,7 @@ export const FirstContactResolution = (props: {
 export function CustomCircularProgress(props: CircularProgressProps & {
     subText?: string;
 }) {
+    const { size = 130, ...rest } = props;
     const { pallete } = useTheme();
     return (
         <FlexBox justifyContent="center" alignItems="center" flexDirection="column">
@@ -34,7 +34,7 @@ export function CustomCircularProgress(props: CircularProgressProps & {
                     sx={{
                         color: pallete.grayVariant5
                     }}
-                    size={130}
+                    size={size}
                     thickness={5}
                     value={100}
                 />
@@ -50,13 +50,13 @@ export function CustomCircularProgress(props: CircularProgressProps & {
                         top: 0,
                         left: 0
                     }}
-                    size={130}
+                    size={size}
                     thickness={5}
-                    {...props}
+                    {...rest}
                 />
                 <Typography variant="h5" sx={{ position: 'absolute', left: '50%', top: '50%', transform: `translate(-50%, -50%)` }}>{props.value + '%'}</Typography>
             </Box>
-            {props.subText && <Typography variant="h6" sx={{ mt: '20px', textAlign: 'center' }}>{props.subText}</Typography>}
+            {props.subText && <Typography variant="h6" sx={{ mt: '10px', textAlign: 'center' }}>{props.subText}</Typography>}
         </FlexBox>
     );
 }

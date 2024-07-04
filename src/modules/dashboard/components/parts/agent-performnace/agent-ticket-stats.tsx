@@ -4,6 +4,7 @@ import { FirstContactResolution } from "./first-contact-resolution";
 import { Typography } from "@mui/material";
 import { SLABreached } from "./sla-breached";
 import { IAgentPerformance } from "modules/dashboard/apis";
+import { SLAAchieved } from "./sla-achieved";
 
 interface ISingleStatProps {
     value: string;
@@ -20,6 +21,11 @@ export const StyledLayout = styled(GridLayout)`
     .single-stat-container:first-child {
         padding: 0;
     }
+`;
+
+const StyledGridContainer = styled(GridLayout)`
+    background: ${({ theme }) => theme.pallete.white};
+    border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
 `;
 
 export const AgentTicketStats = (props: { data: IAgentPerformance }) => {
@@ -61,13 +67,15 @@ export const AgentTicketStats = (props: { data: IAgentPerformance }) => {
             <StyledLayout $gridTemplateColumns="repeat(5, 1fr)" $padding="20px">
                 {ticketData.map((item) => <SingleStat subHeading={item.subHeading} value={item.value.toString()} key={item.subHeading} subTextValue={item.subTextValue} />)}
             </StyledLayout>
-            <GridLayout $gridTemplateColumns="3fr 1fr" $gridGap="20px">
-                <FlexBox flexDirection="column" gap="10px">
-                    <StyledLayout $gridTemplateColumns="repeat(3, 1fr)" $padding="20px">
+            <SLAAchieved />
+            <SLABreached slaBreached={sla_breached} />
+            <GridLayout $gridTemplateColumns="2fr 1fr" $gridGap="20px">
+                <StyledGridContainer $padding="20px" $gridGap="20px">
+                    <Typography variant="h5" >Average Figures</Typography>
+                    <StyledLayout $gridTemplateColumns="repeat(3, 1fr)" $alignItems="center">
                         {data2.map((item) => <SingleStat subHeading={item.subHeading} value={item.value.toString()} key={item.subHeading} />)}
                     </StyledLayout>
-                    <SLABreached slaBreached={sla_breached} />
-                </FlexBox>
+                </StyledGridContainer>
                 <FirstContactResolution fcr={fcr} />
             </GridLayout>
         </>

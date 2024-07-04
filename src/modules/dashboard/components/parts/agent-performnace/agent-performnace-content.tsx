@@ -1,7 +1,8 @@
 import { GridLayout } from "lib/ui-ux"
 import { AgentTicketStats } from "./agent-ticket-stats"
-import { CustomerSatifaction, TotalLoginHours } from "./customer-satifaction"
+import { CustomerSatifaction } from "./customer-satifaction"
 import { IAgentPerformance } from "modules/dashboard/apis"
+import { TotalLoginHours } from "./total-login-hours"
 
 export const AgentPerformanceContent = (props: { data: IAgentPerformance }) => {
     return (
