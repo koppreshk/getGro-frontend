@@ -50,20 +50,7 @@ export const TicketList = (props: ITicketListProps) => {
     const { data } = props;
 
     const ticketViewDetails = data.map((item) => (
-        <TicketDetails
-            createdAt={item.createdAt}
-            customerName={item.customerName}
-            priority={item.priority}
-            ticketId={item.ticketId}
-            source={item.source}
-            ticketStatus={item.ticketStatus}
-            key={item.ticketId}
-            assigneeInfo={item.assigneeInfo}
-            pastTickets={item.pastTickets}
-            customerInfo={item.customerInfo}
-            channelId={item.channelId}
-            resolutionDue={item.resolutionDue}
-            responseDue={item.responseDue}
+        <TicketDetails {...item}
         />
     ));
 
