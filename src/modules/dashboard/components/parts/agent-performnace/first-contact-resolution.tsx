@@ -24,7 +24,7 @@ export const FirstContactResolution = (props: {
 export function CustomCircularProgress(props: CircularProgressProps & {
     subText?: string;
 }) {
-    const { size = 130, ...rest } = props;
+    const { size = 130, subText, ...rest } = props;
     const { pallete } = useTheme();
     return (
         <FlexBox justifyContent="center" alignItems="center" flexDirection="column">
@@ -40,7 +40,6 @@ export function CustomCircularProgress(props: CircularProgressProps & {
                 />
                 <CircularProgress
                     variant="determinate"
-                    disableShrink
                     sx={{
                         animationDuration: '550ms',
                         [`& .${circularProgressClasses.circle}`]: {
@@ -56,7 +55,7 @@ export function CustomCircularProgress(props: CircularProgressProps & {
                 />
                 <Typography variant="h5" sx={{ position: 'absolute', left: '50%', top: '50%', transform: `translate(-50%, -50%)` }}>{props.value + '%'}</Typography>
             </Box>
-            {props.subText && <Typography variant="h6" sx={{ mt: '10px', textAlign: 'center' }}>{props.subText}</Typography>}
+            {subText && <Typography variant="h6" sx={{ mt: '10px', textAlign: 'center' }}>{subText}</Typography>}
         </FlexBox>
     );
 }

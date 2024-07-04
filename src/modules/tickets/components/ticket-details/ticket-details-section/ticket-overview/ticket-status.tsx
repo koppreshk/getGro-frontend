@@ -74,7 +74,7 @@ export const TicketStatus = (props: ITicketStatusProps) => {
                     sx={{ textTransform: 'unset' }}>
                     {ticketStatus}
                 </StyledButton>
-                {statusUpdateString ? <TypographyName variant="subheading2">Status changed {statusUpdateString}</TypographyName> : null}
+                {statusUpdateString ? <TypographyName variant="subheading2">{statusUpdateString}</TypographyName> : null}
             </FlexBox>
             <Menu
                 anchorEl={anchorEl}

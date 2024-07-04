@@ -50,7 +50,7 @@ export const TicketList = (props: ITicketListProps) => {
     const { data } = props;
 
     const ticketViewDetails = data.map((item) => (
-        <TicketDetails {...item}
+        <TicketDetails key={item.ticketId} {...item}
         />
     ));
 

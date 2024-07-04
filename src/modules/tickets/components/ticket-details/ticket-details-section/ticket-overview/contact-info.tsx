@@ -131,7 +131,7 @@ export const ContactInfo = (props: IContactInfoProps) => {
                 {contactInfoData('Customer Id', omsCustomerId)}
                 {contactInfoData('Ticket Id', ticketId)}
                 {contactInfoData('Created At', createdAt)}
-                {closedAt ? contactInfoData('Created At', closedAt) : null}
+                {closedAt ? contactInfoData('Closed At', closedAt) : null}
             </FlexBox>
             {openCallPopUp ? <TelephonicDialer openCallPopUp={openCallPopUp} toggleCallBtn={toggleCallBtn} phoneNumber={phoneNumber} /> : <></>}
         </FlexBox>
@@ -156,7 +156,7 @@ const contactInfoData = (name: string, value: string | number | (() => JSX.Eleme
             case 'Priority':
                 return <ImportExportRounded fontSize="small" sx={{ fill: '#787f83' }} />;
             default:
-                return <AccountCircleOutlined fontSize="small" sx={{ fill: '#787f83' }} />;
+                return <CalendarToday fontSize="small" sx={{ fill: '#787f83' }} />;
         }
     }
 
