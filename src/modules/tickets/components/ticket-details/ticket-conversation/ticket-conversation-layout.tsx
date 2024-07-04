@@ -7,7 +7,7 @@ import {
     FacebookConversationsContainer,
     InstagramConversationsContainer,
     TelephonicConversationContainer,
-    TicketConversationContainer,
+    EmailConversationContainer,
     WhatsAppConversationContainer
 } from "modules/tickets/containers";
 
@@ -25,7 +25,7 @@ export const TicketConversationLayout = () => {
     const renderConversation = React.useCallback(() => {
         switch (ticketSource) {
             case 'email':
-                return <TicketConversationContainer />
+                return <EmailConversationContainer />
             case 'telephonic':
                 return <TelephonicConversationContainer />
             case 'whatsapp':

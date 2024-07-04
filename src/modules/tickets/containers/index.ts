@@ -1,5 +1,5 @@
 export * from './ticket-list-view-container';
-export * from './ticket-conversation-container';
+export * from './email-conversation-container';
 export * from './search-customer-container';
 export * from './order-details-container';
 export * from './ticket-overview-container'
