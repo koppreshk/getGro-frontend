@@ -20,7 +20,7 @@ export const SLAmetricsChart = (props: ISLAmetricsChartProps) => {
     return (
         <>
             <SlaMetricFilter filterValue={filterValue} onFilterChangeHandler={onFilterChangeHandler} />
-            <SlaMetricContainer dateRange={dateRange} filterValue={filterValue} />
+            <div style={{minHeight: '450px'}}><SlaMetricContainer dateRange={dateRange} filterValue={filterValue} /></div>
         </>
     )
 }
