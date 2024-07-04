@@ -11,14 +11,21 @@ export const SLABreached = (props: { slaBreached: SlaBreached }) => {
         sectionHeading: 'First Response',
         value1: first_response.tickets_breached,
         postFixValue1: '(1 out 1 dummy)',
-        subText1: 'No of Tickets Breached',
+        subText1: 'No of Tickets breached',
         value2: first_response.sla_achieve,
         subText2: 'No of Tickets SLA achieved'
     }, {
         sectionHeading: 'Next Response',
         value1: second_response.tickets_breached,
         postFixValue1: '(1 out 3 dummy)',
-        subText1: 'No of Tickets Breached',
+        subText1: 'No of Tickets breached',
+        value2: second_response.sla_achieve,
+        subText2: 'No of Tickets SLA achieved'
+    },{
+        sectionHeading: 'Resolution',
+        value1: second_response.tickets_breached,
+        postFixValue1: '(1 out 3 dummy)',
+        subText1: 'No of Tickets breached',
         value2: second_response.sla_achieve,
         subText2: 'No of Tickets SLA achieved'
     }]
@@ -26,7 +33,7 @@ export const SLABreached = (props: { slaBreached: SlaBreached }) => {
     return (
         <FlexBox gap='20px' flexDirection="column" padding="20px" style={{ background: '#fff', borderRadius: '8px' }}>
             <Typography variant="h5">SLA Breached</Typography>
-            <StyledLayout $gridTemplateColumns={'1fr 1fr'} $gridGap={'20px'}>
+            <StyledLayout $gridTemplateColumns={'1fr 1fr 1fr'} $gridGap={'20px'}>
                 {data.map((item) => <SectionMetrics key={item.sectionHeading} {...item} />)}
             </StyledLayout>
         </FlexBox>
