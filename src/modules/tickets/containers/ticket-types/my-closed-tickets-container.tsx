@@ -1,9 +1,9 @@
+import { useFetchMyClosedTickets } from "modules/tickets/apis";
+import { DisplayTicketsGrid } from "modules/tickets/components";
 import React from "react";
-import { DisplayTicketsGrid } from "../components";
-import { useFetchAllPendingTickets } from "../apis";
 
-export const AllPendingTicketsContainer = React.memo(() => {
-    const { data, isLoading, isFetching, error } = useFetchAllPendingTickets();
+export const MyClosedTicketsContainer = React.memo(() => {
+    const { data, isLoading, isFetching, error } = useFetchMyClosedTickets();
 
     if (data || isLoading) {
         const ticketsData = data?.data ?? [];

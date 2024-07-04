@@ -4,11 +4,10 @@ import { Navigate, Route, Routes, useMatch } from "react-router-dom"
 import {
     AllResolvedTicketsContainer, MyResolvedTicketsContainer,
     AllPendingTicketsContainer, MyPendingTicketsContainer,
-    AllClosedTicketsContainer, MyClosedTicketsContainer
+    AllClosedTicketsContainer, MyClosedTicketsContainer, AllTicketsContainer
 } from "../containers"
 import { TicketDetailsLayout } from "../components/ticket-details"
 import { useAuth } from "modules/login";
-import { AllTicketsContainer } from "../containers/all-tickets-container"
 
 export default function TicketsPage() {
     const match = useMatch('/tickets/:type/:ticketId');

@@ -1,7 +1,7 @@
 import { FlexBox } from "lib/ui-ux";
-import { useTicketConversation } from "../apis";
+import { useTicketConversation } from "../../../apis";
 import { EmailSkeletonLoader } from "lib/ui-ux/loader-components";
-import { FacebookConversation } from "../components/ticket-details/ticket-conversation/facebook-conversation";
+import { FacebookConversation } from "../../../components/ticket-details/ticket-conversation/facebook-conversation";
 
 export const FacebookConversationsContainer = () => {
     const { isLoading, data } = useTicketConversation();

@@ -1,8 +1,8 @@
 import { ChatConversationLoader } from "lib/ui-ux/loader-components";
-import { useFetchWhatsAppMessages } from "../apis";
+import { useFetchWhatsAppMessages } from "../../../apis";
 import { FlexBox } from "lib/ui-ux";
 // import { useSocket } from "lib/providers/socket";
-import { WhatsAppConversations } from "../components/ticket-details/ticket-conversation/whatsapp-conversations";
+import { WhatsAppConversations } from "../../../components/ticket-details/ticket-conversation/whatsapp-conversations";
 import { Alert } from "@mui/material";
 
 export const WhatsAppConversationContainer = () => {

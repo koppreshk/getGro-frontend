@@ -1,7 +1,7 @@
 import { FlexBox } from "lib/ui-ux";
-import { useTicketConversation } from "../apis";
+import { useTicketConversation } from "../../../apis";
 import { EmailSkeletonLoader } from "lib/ui-ux/loader-components";
-import { InstagramConversation } from "../components/ticket-details/ticket-conversation/instagram-conversations/instagram-conversation";
+import { InstagramConversation } from "../../../components/ticket-details/ticket-conversation/instagram-conversations/instagram-conversation";
 
 export const InstagramConversationsContainer = () => {
     const { isLoading, data } = useTicketConversation();

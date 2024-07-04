@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { CircularProgress } from "@mui/material";
-import { CasedAttachmentResposne, IAttachments, useFetchAttachments } from "../apis"
+import { CasedAttachmentResposne, IAttachments, useFetchAttachments } from "../../../apis"
 import { FileDownloadOutlined } from "@mui/icons-material";
 import { saveFile, toCamelCasedKeysFromUnderScores } from "lib/utils";
 import { CustomIconButton } from "lib/ui-ux";

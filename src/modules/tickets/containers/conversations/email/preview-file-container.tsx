@@ -1,5 +1,5 @@
 import { CircularProgress, Dialog, IconButton } from "@mui/material";
-import { IAttachments, useFetchAttachments } from "../apis"
+import { IAttachments, useFetchAttachments } from "../../../apis"
 import { Close, Panorama } from "@mui/icons-material";
 import { toCamelCasedKeysFromUnderScores } from "lib/utils";
 import { useState } from "react";
