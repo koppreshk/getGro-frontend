@@ -8,6 +8,7 @@ import { RadioGroupField } from "lib/form-fields/radio-group-field";
 import { SelectField } from "lib/form-fields";
 import { IAgentPerformance } from "modules/dashboard/apis";
 import { AgentPerformancecontentContainer } from "modules/dashboard/container";
+import { DateTime } from "luxon";
 
 interface IAgentPerformanceProps {
     data: IAgentPerformance;
@@ -32,7 +33,7 @@ export interface IAgentPerformanceFormFields {
 export const AgentPerformance = (props: IAgentPerformanceProps) => {
     const { data } = props;
     const { queues, employees } = data;
-    const [dateRange, setDateRange] = React.useState<DateRange>({ startDate: new Date(), endDate: new Date() });
+    const [dateRange, setDateRange] = React.useState<DateRange>({ startDate: DateTime.now().minus({ month: 1 }).toJSDate(), endDate: new Date() });
     const form = useFormContext<IAgentPerformanceFormFields>();
 
     const filterType = form.watch('filterType');
