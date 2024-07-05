@@ -1,5 +1,6 @@
 import { Box, CircularProgress, CircularProgressProps, Typography, circularProgressClasses } from "@mui/material"
 import { FlexBox } from "lib/ui-ux";
+import { Datav1 } from "modules/dashboard/apis";
 import styled, { useTheme } from "styled-components";
 
 const StyledFCRContainer = styled(FlexBox)`
@@ -7,16 +8,12 @@ const StyledFCRContainer = styled(FlexBox)`
     border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
 `;
 
-export const FirstContactResolution = (props: {
-    fcr: {
-        percentage: number;
-        count_str: string;
-    }
-}) => {
+export const FirstContactResolution = (props: Pick<Datav1, 'fcr'>) => {
+    const { fcr } = props;
     return (
         <StyledFCRContainer padding="20px" flexDirection="column" gap="20px">
             <Typography variant="h5" textAlign="center">FCR(First Contact Resolution)</Typography>
-            <CustomCircularProgress value={props.fcr.percentage} size={80} subText={props.fcr.count_str} />
+            <CustomCircularProgress value={fcr.percentage || 0} size={80} subText={fcr.count_str} />
         </StyledFCRContainer>
     )
 }

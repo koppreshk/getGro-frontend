@@ -9,10 +9,41 @@ import { IAgentPerformanceFormFields } from "../components/parts/agent-performna
 export interface IAgentPerformance {
     queues: Queue[]
     employees: Employee[]
-    data: Data
+    data: Data;
+    data_v1: Datav1;
     type: string
 }
 
+export interface Datav1 {
+    first_response_achieved: number;
+    next_response_achieved: number;
+    resolution_achieved: number;
+    first_response_str: string;
+    next_response_str: string;
+    resolution_str: string;
+    first_response_breached: number;
+    next_response_breached: number;
+    resolution_breached: number;
+    first_response_breach_str: string;
+    next_response_breach_str: string;
+    resolution_breach_str: string;
+    average_first_response_time: number;
+    average_next_response_time: string;
+    average_resolution_time: number;
+    tickets_created: number;
+    tickets_assigned: number;
+    total_assigned_average: number;
+    tickets_resolved: number;
+    tickets_closed: number;
+    tickets_reopened: number;
+    average_assigned_per_day: number;
+    average_resolved_per_day: number;
+    fcr: Fcr2;
+}
+interface Fcr2 {
+    percentage?: null | number;
+    count_str: string;
+}
 export interface Queue {
     id: number
     name: string

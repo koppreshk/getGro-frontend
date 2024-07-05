@@ -2,31 +2,33 @@ import { Typography } from "@mui/material"
 import { FlexBox } from "lib/ui-ux";
 import { StyledLayout } from "./agent-ticket-stats";
 import styled, { useTheme } from "styled-components";
-import { SlaBreached } from "modules/dashboard/apis";
+import { Datav1 } from "modules/dashboard/apis";
 
-export const SLABreached = (props: { slaBreached: SlaBreached }) => {
-    const { first_response, second_response } = props.slaBreached;
+
+export const SLABreached = (props: Pick<Datav1, 'first_response_breached' | 'first_response_achieved' | 'first_response_breach_str' | 'next_response_breached' | 'next_response_achieved' | 'next_response_breach_str' |'resolution_achieved' | 'resolution_breached' | 'resolution_breach_str'>) => {
+    const { first_response_breached, first_response_achieved, next_response_breached, next_response_achieved, next_response_breach_str, resolution_achieved,
+        resolution_breached, resolution_breach_str, first_response_breach_str } = props;
 
     const data = [{
         sectionHeading: 'First Response',
-        value1: first_response.tickets_breached,
-        postFixValue1: '(1 out 1 dummy)',
+        value1: first_response_breached,
+        postFixValue1: first_response_breach_str,
         subText1: 'No of Tickets breached',
-        value2: first_response.sla_achieve,
+        value2: first_response_achieved,
         subText2: 'No of Tickets SLA achieved'
     }, {
         sectionHeading: 'Next Response',
-        value1: second_response.tickets_breached,
-        postFixValue1: '(1 out 3 dummy)',
+        value1: next_response_breached,
+        postFixValue1: next_response_breach_str,
         subText1: 'No of Tickets breached',
-        value2: second_response.sla_achieve,
+        value2: next_response_achieved,
         subText2: 'No of Tickets SLA achieved'
-    },{
+    }, {
         sectionHeading: 'Resolution',
-        value1: second_response.tickets_breached,
-        postFixValue1: '(1 out 3 dummy)',
+        value1: resolution_breached,
+        postFixValue1: resolution_breach_str,
         subText1: 'No of Tickets breached',
-        value2: second_response.sla_achieve,
+        value2: resolution_achieved,
         subText2: 'No of Tickets SLA achieved'
     }]
 
@@ -64,7 +66,7 @@ const SectionMetrics = (props: ISectionMetricsProps) => {
                 <FlexBox flexDirection="column" gap="15px">
                     <FlexBox gap="4px" alignItems="baseline">
                         <Typography variant="h4" color="#db6803">{value1}</Typography>
-                        <Typography variant="body3">{postFixValue1}</Typography>
+                        <Typography variant="body3">{`(${postFixValue1})`}</Typography>
                     </FlexBox>
                     <Typography variant="body2">{subText1}</Typography>
                 </FlexBox>

@@ -29,22 +29,25 @@ const StyledGridContainer = styled(GridLayout)`
 `;
 
 export const AgentTicketStats = (props: { data: IAgentPerformance }) => {
-    const { data: { tickets_created, ticket_assigned, total_resolved, total_closed, tickets_reopened,
-        avg_first_response_time, avg_response_time, avg_resolution_time, sla_breached, fcr } } = props.data;
+
+    const { first_response_achieved, resolution_achieved, next_response_achieved, first_response_breach_str, first_response_breached, next_response_breach_str, next_response_breached,
+        resolution_breach_str, resolution_breached, tickets_created, tickets_assigned, tickets_resolved, tickets_closed, tickets_reopened,
+        average_first_response_time, average_next_response_time, average_resolution_time, fcr, average_assigned_per_day, average_resolved_per_day, first_response_str
+        , next_response_str, resolution_str } = props.data.data_v1;
 
     const ticketData = [{
         value: tickets_created,
         subHeading: "Tickets Created"
     }, {
-        value: ticket_assigned,
-        subTextValue: "(0 avg per day dummy)",
+        value: tickets_assigned,
+        subTextValue: `(${average_assigned_per_day} avg per day)`,
         subHeading: "Tickets Assigned"
     }, {
-        value: total_resolved,
-        subTextValue: "(0 avg per day dummy)",
+        value: tickets_resolved,
+        subTextValue: `(${average_resolved_per_day} avg per day)`,
         subHeading: "Tickets Resolved"
     }, {
-        value: total_closed,
+        value: tickets_closed,
         subHeading: "Tickets Closed"
     }, {
         value: tickets_reopened,
@@ -52,23 +55,38 @@ export const AgentTicketStats = (props: { data: IAgentPerformance }) => {
     }];
 
     const data2 = [{
-        value: avg_first_response_time,
+        value: average_first_response_time,
         subHeading: "Avg First Response Time"
     }, {
-        value: avg_response_time,
-        subHeading: "Avg Response Time"
+        value: average_next_response_time,
+        subHeading: "Avg Next Response Time"
     }, {
-        value: avg_resolution_time,
+        value: average_resolution_time,
         subHeading: "Avg Resolution Time"
     }];
 
     return (
         <>
             <StyledLayout $gridTemplateColumns="repeat(5, 1fr)" $padding="20px">
-                {ticketData.map((item) => <SingleStat subHeading={item.subHeading} value={item.value.toString()} key={item.subHeading} subTextValue={item.subTextValue} />)}
+                {ticketData.map((item) => <SingleStat subHeading={item.subHeading} value={item.value.toString()} key={item.subHeading} subTextValue={item.subTextValue?.toString()} />)}
             </StyledLayout>
-            <SLAAchieved />
-            <SLABreached slaBreached={sla_breached} />
+            <SLAAchieved
+                first_response_achieved={first_response_achieved}
+                next_response_achieved={next_response_achieved}
+                resolution_achieved={resolution_achieved}
+                first_response_str={first_response_str}
+                next_response_str={next_response_str}
+                resolution_str={resolution_str} />
+            <SLABreached
+                first_response_achieved={first_response_achieved}
+                first_response_breach_str={first_response_breach_str}
+                first_response_breached={first_response_breached}
+                next_response_achieved={next_response_achieved}
+                next_response_breach_str={next_response_breach_str}
+                next_response_breached={next_response_breached}
+                resolution_achieved={resolution_achieved}
+                resolution_breach_str={resolution_breach_str}
+                resolution_breached={resolution_breached} />
             <GridLayout $gridTemplateColumns="2fr 1fr" $gridGap="20px">
                 <StyledGridContainer $padding="20px" $gridGap="20px">
                     <Typography variant="h5" >Average Figures</Typography>
