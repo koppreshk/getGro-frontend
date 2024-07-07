@@ -5,12 +5,39 @@ import { FlexBox, HorizontalSeparator } from "lib/ui-ux"
 import { TypographyName } from "./contact-info"
 import { StyledContainer } from "./manage-assignee"
 import { IPriorities } from "modules/tickets/apis"
+import styled, { css } from "styled-components"
 
 interface IManagePriorityProps {
     priority: string;
     allPriorities: IPriorities[];
     onChangePriority: (newPriority: number) => Promise<void>;
 }
+
+const PriorityIcon = styled.span<{ $priority: string }>`
+    ${({ $priority }) => {
+        switch ($priority.toLocaleLowerCase()) {
+            case 'low':
+                return css`
+                    background-color: #487307;
+                `;
+            case 'normal':
+                return css`
+                    background-color: #0D60B7;
+                `;
+            case 'high':
+                return css`
+                    background-color: #EF6C00;
+                `;
+            case 'critical':
+                return css`
+                    background-color: #BF363F;
+                `;
+        }
+    }};
+    border-radius: 50%;
+    height: 12px;
+    width: 12px
+`;
 
 export const ManagePriority = (props: IManagePriorityProps) => {
     const { priority, allPriorities, onChangePriority } = props;
@@ -38,7 +65,10 @@ export const ManagePriority = (props: IManagePriorityProps) => {
             <FlexBox flexDirection="column" padding="0px 20px" gap={'5px'}>
                 <TypographyName variant="h6">Priority</TypographyName>
                 <StyledContainer justifyContent="space-between" onClick={handleClick}>
-                    <Typography variant="h6">{priority}</Typography>
+                    <FlexBox alignItems="center" gap='5px'>
+                        <PriorityIcon $priority={priority} />
+                        <Typography variant="h6">{priority}</Typography>
+                    </FlexBox>
                     <ExpandMore sx={{ width: 16, height: 16 }} />
                 </StyledContainer>
             </FlexBox>

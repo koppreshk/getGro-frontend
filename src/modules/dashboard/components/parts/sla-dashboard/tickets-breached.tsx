@@ -80,7 +80,7 @@ export const TicketsBreached = (props: { data: ISLAValues }) => {
                     </DataGridLayout>
 
                 </FlexBox>
-                <FlexBox alignItems='center' height='100%' padding="10px 0">
+                <FlexBox alignItems='center' height='100%'>
                     <SLABreachedChart respBreachPercent={Math.round(data.sla_breaches.response_breach_percentage) || 0} reslnBreachPercent={Math.round(data.sla_breaches.resolution_breach_percentage) || 0} />
                 </FlexBox>
             </StyledLayout>
@@ -116,7 +116,7 @@ const TicketsBreachedChart = (prop: { breachedPercentage: number }) => {
 
 const SLABreachedChart = (props: { respBreachPercent: number, reslnBreachPercent: number }) => {
 
-    const data = {
+    const data = {  
         series: Object.values(props),
         options: {
             chart: {
@@ -124,6 +124,16 @@ const SLABreachedChart = (props: { respBreachPercent: number, reslnBreachPercent
                 type: 'donut',
             },
             labels: ['Response', 'Resolution'],
+            dataLabels: {
+                style: {
+                    fontSize: '10px'
+                }
+            },
+            plotOptions: {
+                pie: {
+                    customScale: 1.1    
+                }
+            }
         } as ApexOptions
     };
 
