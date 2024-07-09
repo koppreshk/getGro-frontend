@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import {
     TaskOutlined, Tag, AccountCircle, WorkHistory, LockPerson, Facebook, SellOutlined,
     GridViewRounded, StoreRounded, ThumbsUpDown, SettingsRounded, SupportAgentRounded,
-    Groups2Outlined, EventNoteOutlined, AssignmentTurnedInOutlined
+    Groups2Outlined, EventNoteOutlined, AssignmentTurnedInOutlined, Email
 } from "@mui/icons-material";
 import styled from "styled-components";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -67,6 +67,13 @@ const configurations = [
                 uniqueKey: 'facebook',
                 catOptionIcon: () => <Facebook />,
                 description: 'Configure facebook'
+            },
+            {
+                label: 'Email',
+                route: 'email',
+                uniqueKey: 'email',
+                catOptionIcon: () => <Email />,
+                description: 'Configure email'
             }
         ]
     },
