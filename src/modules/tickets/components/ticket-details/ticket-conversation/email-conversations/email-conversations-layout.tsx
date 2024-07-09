@@ -34,7 +34,7 @@ const useEmailActionHelpers = () => {
 
 export const EmailConversationLayout = (props: { conversationsData: ITicketById, fetchNewThreads: () => void; }) => {
     const { conversationsData, fetchNewThreads } = props;
-    const { subject, conversations } = conversationsData;
+    const { subject, conversations, thread_id: threadId } = conversationsData;
     const casedConversation = conversations.map(item => ({ ...toCamelCasedKeysFromUnderScores(item), isCollapsed: true })) as IEmailConversations[];
     // const { socket } = useSocket();
     const formContext = useForm<IEmailFormFields>();
@@ -112,6 +112,7 @@ export const EmailConversationLayout = (props: { conversationsData: ITicketById,
                     emailThreads={emailThreads}
                     showEditor={showEditor}
                     showReplyEditor={showReplyEditor}
+                    threadId={threadId}
                     toggleEditorView={toggleEditorView}
                     toggleReplyEditorView={toggleReplyEditorView}
                     onSingleEmailCollapseHandler={onSingleEmailCollapseHandler} />

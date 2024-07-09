@@ -1,12 +1,12 @@
 import { CircularProgress, Dialog, IconButton } from "@mui/material";
-import { IAttachments, useFetchAttachments } from "../../../apis"
+import { Conversations, IAttachments, useFetchAttachments } from "../../../apis"
 import { Close, Panorama } from "@mui/icons-material";
 import { toCamelCasedKeysFromUnderScores } from "lib/utils";
 import { useState } from "react";
 import { CustomIconButton } from "lib/ui-ux";
 
-export const PreviewFileContainer = (props: Pick<IAttachments, 'id' | 'contentType'>) => {
-    const { id, contentType } = props;
+export const PreviewFileContainer = (props: Pick<IAttachments, 'id' | 'contentType'> & Pick<Conversations, 'messageId'>) => {
+    const { id, contentType, messageId } = props;
     const [downloadAttachments, { isLoading, data }] = useFetchAttachments(id);
     const [showFilePreview, setFilePreviewDisplay] = useState(false);
 
@@ -14,7 +14,7 @@ export const PreviewFileContainer = (props: Pick<IAttachments, 'id' | 'contentTy
 
     const onDownloadClick = () => {
         toggleViewer()
-        downloadAttachments({ 'attachment_id': id })
+        downloadAttachments({ 'attachment_id': id, 'message_id': messageId })
     }
 
     if (isLoading) {
