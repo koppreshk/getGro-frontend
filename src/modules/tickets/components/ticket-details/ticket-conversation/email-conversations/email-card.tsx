@@ -82,7 +82,7 @@ export const EmailCard = (props: IEmailCardProps) => {
                     </FlexBox>
                 </FlexBox>
                 {!isCollapsed && <InnerHTML dangerouslySetInnerHTML={{ __html: htmlContent }} />}
-                {!isCollapsed && attachments.length > 0 && <DownloadAttachments attachments={attachments} />}
+                {!isCollapsed && attachments.length > 0 && <DownloadAttachments attachments={attachments} messageId={messageId}/>}
             </FlexBox >
         </StyledEmailCardContainer>
     )

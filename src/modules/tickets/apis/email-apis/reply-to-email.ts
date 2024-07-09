@@ -5,7 +5,8 @@ import { TicketsEndPoint, TicketsQueryKey } from "../api-enums";
 
 export interface IReplyToEmailArgs {
     messageId: string,
-    htmlContent: string
+    htmlContent: string,
+    threadId: string;
     attachments?: {
         file_name: string,
         file_content: string,
@@ -22,7 +23,8 @@ export const useReplyToEmail = () => {
         return postData(`${TicketsEndPoint.REPLY_TO_EMAIL}`, {
             body: args.htmlContent,
             message_id: args.messageId,
-            attachments: args.attachments
+            attachments: args.attachments,
+            thread_id: args.threadId
         })
             .then((res) => res.json())
             .then(() => showNotification({ message: 'Reply Sent', type: 'success' }))

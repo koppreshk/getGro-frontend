@@ -46,8 +46,8 @@ const StyledFlexBox = styled(FlexBox)`
     }
 `;
 
-export const DownloadAttachments = (props: Pick<IEmailConversations, 'attachments'>) => {
-    const { attachments } = props;
+export const DownloadAttachments = (props: Pick<IEmailConversations, 'attachments' | 'messageId'>) => {
+    const { attachments, messageId } = props;
 
     return (
         <StyledFlexBox gap="10px" flexWrap="wrap">
@@ -65,8 +65,8 @@ export const DownloadAttachments = (props: Pick<IEmailConversations, 'attachment
                         {attachment.filename}
                     </Typography>
                     <FlexBox alignItems="center">
-                        <PreviewFileContainer id={attachment.id} contentType={attachment.contentType} />
-                        <DownloadAttachmentsContainer id={attachment.id} />
+                        <PreviewFileContainer id={attachment.id} contentType={attachment.contentType} messageId={messageId} />
+                        <DownloadAttachmentsContainer id={attachment.id} messageId={messageId} />
                     </FlexBox>
                 </AttachmentPreviewContainer>
             ))}
