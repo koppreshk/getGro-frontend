@@ -79,10 +79,7 @@ export const CoreLayout = () => {
             </Route>
             <Route key="login" path="/login" element={<LoginPage />} />
             <Route key="not-found" path="*" element={<PageNotFound />} />
-            <Route
-                key="survey"
-                path="survey/*"
-                element={<CustomerSurveyPage />} />
+            <Route key="customer-feedback" path="customer-feedback/*" element={<CustomerSurveyPage />} />
         </Routes>
     )
 }
