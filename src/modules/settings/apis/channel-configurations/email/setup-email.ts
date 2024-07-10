@@ -1,0 +1,22 @@
+import React from "react";
+import { useServiceClient } from "lib"
+import { ConfigurationsEmailEndPoint, ConfigurationsEmailQueryKey } from "./api-enums";
+import { useMutation } from "react-query";
+
+export interface ISetupEmailArgs {
+    email: string;
+}
+
+export const useSetupEmail = () => {
+    const { postData } = useServiceClient();
+
+    const setupEmail = React.useCallback((args: ISetupEmailArgs) =>
+        postData(`${ConfigurationsEmailEndPoint.SETUP_EMAIL}`, {
+            email: args.email,
+        }).then((res) => res.json()), [postData]);
+
+    return useMutation({
+        mutationKey: ConfigurationsEmailQueryKey.SETUP_EMAIL,
+        mutationFn: setupEmail
+    });
+}
