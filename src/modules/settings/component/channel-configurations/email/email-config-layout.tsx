@@ -7,9 +7,11 @@ export interface IEmailConfigFormFields {
     emailAddress: string;
     displayName: string;
 }
+
 interface IEmailConfigLayoutProps {
     onSubmit: (formData: IEmailConfigFormFields) => void;
 }
+
 export const EmailConfigLayout = (props: IEmailConfigLayoutProps) => {
     const { onSubmit } = props;
     const form = useForm<IEmailConfigFormFields>();
@@ -26,7 +28,7 @@ export const EmailConfigLayout = (props: IEmailConfigLayoutProps) => {
                 </FlexBox>
                 <FlexBox gap={'50px'} alignItems="center">
                     <Typography variant="h6">Email Address</Typography>
-                    <TextboxField name="emailAddress" type="email" sx={{ width: '350px' }} />
+                    <TextboxField name="emailAddress" type="email" width='350px' rules={{ required: 'Email field is required' }} />
                 </FlexBox>
                 <HorizontalSeparator />
                 <Button variant="contained" sx={{ width: '350px', ml: '150px' }} onClick={form.handleSubmit(onSubmit)}>Submit</Button>

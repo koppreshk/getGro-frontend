@@ -6,6 +6,7 @@ import { FlexBox } from "lib/ui-ux";
 
 type ITextboxFieldProps = Omit<TextFieldProps, 'error' | 'required'> & {
     name: string;
+    width?: string;
     rules?: Omit<RegisterOptions<FieldValues, string>, 'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'>
 }
 
@@ -17,12 +18,12 @@ const StyledErrorMessage = styled.div`
 `;
 
 export const TextboxField = (props: ITextboxFieldProps) => {
-    const { name, rules, ...rest } = props;
+    const { name, rules, width = "100%", ...rest } = props;
     const { formState: { errors }, control } = useFormContext();
     const hasError = get(errors, name) !== undefined;
 
     return (
-        <FlexBox flexDirection="column" width="100%">
+        <FlexBox flexDirection="column" width={width}>
             <Controller
                 render={({ field }) => <TextField
                     {...rest} {...field}
