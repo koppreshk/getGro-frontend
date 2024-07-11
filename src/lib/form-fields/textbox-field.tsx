@@ -22,7 +22,7 @@ export const TextboxField = (props: ITextboxFieldProps) => {
     const hasError = get(errors, name) !== undefined;
 
     return (
-        <FlexBox flexDirection="column" width="100%">
+        <FlexBox flexDirection="column">
             <Controller
                 render={({ field }) => <TextField
                     {...rest} {...field}
