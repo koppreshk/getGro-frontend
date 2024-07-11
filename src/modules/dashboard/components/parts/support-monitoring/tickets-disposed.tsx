@@ -100,7 +100,7 @@ export const TicketsDisposed = () => {
     return (
         <FlexBox gap="20px" width="100%" flexDirection="column" style={{ background: '#fff' }} padding="20px">
             <Typography variant="h6">Tickets Disposed</Typography>
-            <ReactApexChart type="heatmap" height="350px" width={"100%"} options={state.options} series={state.series} />
+            <ReactApexChart type="heatmap" height="350px" options={state.options} series={state.series} />
         </FlexBox >
     )
 }
