@@ -18,12 +18,12 @@ const StyledErrorMessage = styled.div`
 `;
 
 export const TextboxField = (props: ITextboxFieldProps) => {
-    const { name, rules, width = "100%", ...rest } = props;
+    const { name, rules, ...rest } = props;
     const { formState: { errors }, control } = useFormContext();
     const hasError = get(errors, name) !== undefined;
 
     return (
-        <FlexBox flexDirection="column" width={width}>
+        <FlexBox flexDirection="column">
             <Controller
                 render={({ field }) => <TextField
                     {...rest} {...field}

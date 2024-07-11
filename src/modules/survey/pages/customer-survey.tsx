@@ -114,13 +114,11 @@ export const CustomerSurveyPage = () => {
                             {customerSatifaction.map((data) => (
                                 <StyledRating flexDirection="column" alignItems="center" onClick={() => updateRating(data.rating)} key={data.label}>
                                     {data.icon()}
-                                    <Typography variant="body2" > {data.label}</Typography>
+                                    <Typography variant="body2"> {data.label}</Typography>
                                 </StyledRating>
                             ))}
                         </FlexBox>
-                        <FlexBox width="50%">
-                            <TextboxField name="comment" label="Comments (Optional)" multiline rows={4} />
-                        </FlexBox>
+                        <TextboxField name="comment" label="Comments (Optional)" multiline rows={4} fullWidth />
                         <Button variant="contained" onClick={methods.handleSubmit(onSubmit)}>Submit</Button>
                     </RatingContentWrapper>
                 }
