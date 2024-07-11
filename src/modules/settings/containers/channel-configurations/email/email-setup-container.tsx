@@ -25,7 +25,7 @@ export const EmailSetupContainer = () => {
 
     const onSubmit = (formData: IEmailConfigFormFields) => {
         mutateAsync({ email: formData.emailAddress }).then((res) => {
-            window.open(res.auth_url);
+            window.open(res.auth_url, "_self");
         })
     }
 
