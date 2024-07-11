@@ -55,7 +55,7 @@ function strip(html: string) {
 
 export const EmailCard = (props: IEmailCardProps) => {
     const { emailProps: { htmlContent, from, fromEmail, createdAt, messageId, subject, toEmail, isCollapsed, attachments }, onSingleEmailCollapseHandler } = props;
-    const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(from)), [from]);
+    const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(from || fromEmail)), [from, fromEmail]);
 
     const onCardClick = () => onSingleEmailCollapseHandler({ messageId, isCollapsed: !isCollapsed });
 
@@ -82,7 +82,7 @@ export const EmailCard = (props: IEmailCardProps) => {
                     </FlexBox>
                 </FlexBox>
                 {!isCollapsed && <InnerHTML dangerouslySetInnerHTML={{ __html: htmlContent }} />}
-                {!isCollapsed && attachments.length > 0 && <DownloadAttachments attachments={attachments} />}
+                {!isCollapsed && attachments.length > 0 && <DownloadAttachments attachments={attachments} messageId={messageId}/>}
             </FlexBox >
         </StyledEmailCardContainer>
     )

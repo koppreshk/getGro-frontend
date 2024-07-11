@@ -6,6 +6,7 @@ import { FlexBox } from "lib/ui-ux";
 
 type ITextboxFieldProps = Omit<TextFieldProps, 'error' | 'required'> & {
     name: string;
+    width?: string;
     rules?: Omit<RegisterOptions<FieldValues, string>, 'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'>
 }
 

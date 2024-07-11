@@ -29,7 +29,7 @@ export interface Conversations {
 export interface ITicketById {
     subject: string;
     conversations: Conversations[];
-    threadId: string;
+    thread_id: string;
 }
 
 export const useFetchTicketById = () => {

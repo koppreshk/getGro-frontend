@@ -34,7 +34,7 @@ const useEmailActionHelpers = () => {
 
 export const EmailConversationLayout = (props: { conversationsData: ITicketById, fetchNewThreads: () => void; }) => {
     const { conversationsData, fetchNewThreads } = props;
-    const { subject, conversations } = conversationsData;
+    const { subject, conversations, thread_id: threadId } = conversationsData;
     const casedConversation = conversations.map(item => ({ ...toCamelCasedKeysFromUnderScores(item), isCollapsed: true })) as IEmailConversations[];
     // const { socket } = useSocket();
     const formContext = useForm<IEmailFormFields>();
@@ -96,13 +96,13 @@ export const EmailConversationLayout = (props: { conversationsData: ITicketById,
                 <FlexBox justifyContent="space-between" alignItems="center" padding="0px 16px 0px 0px">
                     <Typography variant="h5" title={subject} textOverflow={'ellipsis'} overflow={'hidden'} whiteSpace='nowrap' width={'calc(100% - 90px)'}>{subject}</Typography>
                     <FlexBox gap="10px">
+                        {!isCollapsedAll ? <EmailThreadOptions onReplyClick={onReplyClick} onForwardClick={onForwardClick} /> : null}
                         {
                             isCollapsedAll ?
                                 <CustomIconButton className="no-print" tooltipProps={{ title: 'Expand all' }} iconComponent={<UnfoldMore />} sx={{ width: '24px', height: '24px' }} onClick={onExpandAll} />
                                 :
                                 <CustomIconButton className="no-print" tooltipProps={{ title: 'Collapse all' }} iconComponent={<UnfoldLess />} sx={{ width: '24px', height: '24px' }} onClick={onCollapseAll} />
                         }
-                        {!isCollapsedAll ? <EmailThreadOptions onReplyClick={onReplyClick} onForwardClick={onForwardClick} /> : null}
                         <CustomIconButton tooltipProps={{ title: 'Print all' }} iconComponent={<Print />} sx={{ width: '24px', height: '24px' }} onClick={onPrintHandler} />
                     </FlexBox>
                 </FlexBox>
@@ -112,6 +112,7 @@ export const EmailConversationLayout = (props: { conversationsData: ITicketById,
                     emailThreads={emailThreads}
                     showEditor={showEditor}
                     showReplyEditor={showReplyEditor}
+                    threadId={threadId}
                     toggleEditorView={toggleEditorView}
                     toggleReplyEditorView={toggleReplyEditorView}
                     onSingleEmailCollapseHandler={onSingleEmailCollapseHandler} />

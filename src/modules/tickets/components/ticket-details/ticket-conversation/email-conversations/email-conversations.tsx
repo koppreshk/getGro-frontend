@@ -20,6 +20,7 @@ interface IEmailConversationsProps {
     emailThreads: IEmailConversations[];
     showReplyEditor: boolean,
     showEditor: boolean,
+    threadId: string;
     toggleEditorView: () => void;
     toggleReplyEditorView: () => void;
     onSingleEmailCollapseHandler: (args: {
@@ -43,7 +44,7 @@ export type IEmailFormFields = {
 };
 
 export const EmailConversations = (props: IEmailConversationsProps) => {
-    const { emailThreads, showReplyEditor, showEditor, toggleEditorView, toggleReplyEditorView } = props;
+    const { emailThreads, showReplyEditor, showEditor, threadId, toggleEditorView, toggleReplyEditorView } = props;
     const { mutateAsync, isLoading: isMutationLoading } = useReplyToEmail();
     const { handleSubmit } = useFormContext<IEmailFormFields>();
 
@@ -52,9 +53,10 @@ export const EmailConversations = (props: IEmailConversationsProps) => {
         mutateAsync({
             htmlContent: formValues.reply.editor,
             messageId: emailThreads[emailThreads.length - 1].messageId,
-            attachments: attachments
+            attachments: attachments,
+            threadId: threadId
         }).then(() => toggleReplyEditorView());
-    }, [mutateAsync, emailThreads, toggleReplyEditorView]);
+    }, [mutateAsync, emailThreads, threadId, toggleReplyEditorView]);
 
     return (
         <div style={{ overflow: 'auto', height: '100%' }}>

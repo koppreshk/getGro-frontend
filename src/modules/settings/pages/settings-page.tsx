@@ -7,16 +7,18 @@ import { AgentAvailabilityLayout } from "../component/general/agent-availability
 import { SatisfactionSurveyLayout } from "../component/general/satifaction-survey/satisfaction-survey-layout"
 import { MarketplaceRoutes } from "../component/apps/marketplace/marketplace-layout"
 import { TicketStatusContainer } from "../containers/ticket-status"
+import { EmailSetupContainer } from "../containers/channel-configurations/email/email-setup-container"
 
 export default function ConfigurationsPage() {
     return (
         <Routes>
             <Route key="configuration-home" path='/' element={<Configurations />} />
             <Route key="ticket-queue" path="/ticket-queue" element={<TicketQueuesContainer />} />
-            <Route key="ticket-escalation" path="/ticket-escalation/*" element={<AllEscalationsContainer />} /> 
+            <Route key="ticket-escalation" path="/ticket-escalation/*" element={<AllEscalationsContainer />} />
             <Route key="ticket-status" path="/ticket-status/*" element={<TicketStatusContainer />} />
             <Route key="ticket-tags" path="/tags" element={<FetchAllTagsContainer />} />
             <Route key="facebook-login" path="/facebook" element={<FacebookConfigurations />} />
+            <Route key="email-config" path="/email" element={<EmailSetupContainer />} />
             <Route key="add-user" path="/users" element={<UsersLayout />} />
             <Route key="agent-availability" path="/agent-availability" element={<AgentAvailabilityLayout />} />
             <Route key="satisfaction-survey" path="/satisfaction-survey" element={<SatisfactionSurveyLayout />} />
