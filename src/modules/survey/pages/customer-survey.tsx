@@ -118,7 +118,7 @@ export const CustomerSurveyPage = () => {
                                 </StyledRating>
                             ))}
                         </FlexBox>
-                        <TextboxField name="comment" label="Comments (Optional)" multiline rows={4} fullWidth />
+                        <TextboxField name="comment" label="Comments (Optional)" multiline rows={4} sx={{width: '100%'}} />
                         <Button variant="contained" onClick={methods.handleSubmit(onSubmit)}>Submit</Button>
                     </RatingContentWrapper>
                 }

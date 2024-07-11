@@ -1,7 +1,7 @@
 import { FlexBox, GridLayout } from "lib/ui-ux"
 import { DashboardDateRangePicker } from "../dashboard-date-range-picker"
 import { IncomingTickets } from "./incoming-tickets"
-import { TicketsBySource } from "./tickets-by-source"
+import { TicketsBySource } from "../support-monitoring/tickets-by-source"
 import { ToDoList } from "./to-do-list"
 import { TopFiveMetrics } from "./top-five-metrics"
 import { TotalDisposed } from "./total-disposed"

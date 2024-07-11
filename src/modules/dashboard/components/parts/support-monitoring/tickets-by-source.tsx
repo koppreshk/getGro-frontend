@@ -1,10 +1,15 @@
 import { Typography } from '@mui/material';
 import Chart from 'react-apexcharts';
-import { ChartContainer } from './total-disposed';
 import { ApexOptions } from 'apexcharts';
 import { FlexBox } from 'lib/ui-ux';
 import { ChannelsInfo } from 'modules/dashboard/apis';
-import { IDashboardColors, useTheme } from 'styled-components';
+import { IDashboardColors, useTheme, styled } from 'styled-components';
+
+const ChartContainer = styled(FlexBox)`
+    background: ${({ theme }) => theme.pallete.white};
+    padding: 20px;
+    border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
+`;
 
 const getChartMetadata = (channelsInfo: ChannelsInfo, theme: IDashboardColors) => {
     return {
@@ -41,7 +46,7 @@ export const TicketsBySource = (props: { channelsInfo: ChannelsInfo }) => {
     return (
         <>
             <ChartContainer flexDirection="column" justifyContent='space-between'>
-                <Typography variant='h4'>Channel Contribution</Typography>
+                <Typography variant='h5'>Channel Contribution</Typography>
                 <FlexBox alignItems='center' height='100%'>
                     <Chart options={chartMetadata.options} series={chartMetadata.series} type="pie" width={430} />
                 </FlexBox>
