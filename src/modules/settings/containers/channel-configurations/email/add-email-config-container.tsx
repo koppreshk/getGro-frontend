@@ -1,10 +1,10 @@
-import { EmailConfigLayout, IEmailConfigFormFields } from "modules/settings/component/channel-configurations";
+import { AddEmail, IAddEmailConfigFormFields } from "modules/settings/component/channel-configurations";
 import { useNylasOAuth, useSetupEmail } from "modules/settings/apis/channel-configurations/email";
 import { useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useNotifications } from "lib";
 
-export const EmailSetupContainer = () => {
+export const AddEmailConfigContainer = () => {
     const { mutateAsync } = useSetupEmail();
     const { mutateAsync: connectToNylasOAuth } = useNylasOAuth();
     const [searchParams, setSearchParams] = useSearchParams();
@@ -23,11 +23,11 @@ export const EmailSetupContainer = () => {
         }
     }, [code, connectToNylasOAuth, searchParams, setSearchParams, showNotification]);
 
-    const onSubmit = (formData: IEmailConfigFormFields) => {
+    const onSubmit = (formData: IAddEmailConfigFormFields) => {
         mutateAsync({ email: formData.emailAddress }).then((res) => {
             window.open(res.auth_url, "_self");
         })
     }
 
-    return <EmailConfigLayout onSubmit={onSubmit} />
+    return <AddEmail onSubmit={onSubmit} />
 }
