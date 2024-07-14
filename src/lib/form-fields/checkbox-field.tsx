@@ -13,7 +13,7 @@ export const CheckboxField = (props: ITextboxFieldCheckboxProps) => {
     return (
         <>
             <Controller
-                render={({ field }) => <Checkbox {...props} {...field} />}
+                render={({ field: { value, ...restFields } }) => <Checkbox {...props} {...restFields} checked={value} />}
                 control={control}
                 name={name}
                 rules={rules}

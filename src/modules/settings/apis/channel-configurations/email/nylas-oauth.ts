@@ -5,6 +5,8 @@ import { useMutation } from "react-query";
 
 export interface INylasOAuthArgs {
     code: string;
+    displayName: string;
+    isActive: boolean;
 }
 
 export const useNylasOAuth = () => {
@@ -13,6 +15,8 @@ export const useNylasOAuth = () => {
     const nylasOAuth = React.useCallback((args: INylasOAuthArgs) =>
         postData(`${ConfigurationsEmailEndPoint.NYLAS_OAUTH}`, {
             code: args.code,
+            display_name: args.displayName,
+            can_create_ticket: args.isActive
         }).then((res) => res.json()), [postData]);
 
     return useMutation({
