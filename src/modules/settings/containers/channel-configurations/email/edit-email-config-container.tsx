@@ -53,7 +53,7 @@ const EditEmailForm = (props: IEditEmailFormProps) => {
 
     return (
         <FormProvider {...form}>
-            <AddEmail onSubmit={props.onSubmit} />
+            <AddEmail onSubmit={props.onSubmit} formType="EDIT" />
         </FormProvider>
     )
 }
