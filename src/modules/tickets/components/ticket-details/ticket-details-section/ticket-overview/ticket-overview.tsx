@@ -1,5 +1,4 @@
-import React, { useMemo } from "react";
-import { DateTime } from "luxon";
+import React from "react";
 import { PersonSearch } from "@mui/icons-material";
 import { Chip, Tooltip, Typography } from "@mui/material";
 import { CustomIconButton, FlexBox } from "lib/ui-ux";
@@ -9,6 +8,8 @@ import { useAppSelector } from "lib/hooks";
 import { UnlinkCustomer } from "./unlink-customer";
 import { ITicketDetails } from "modules/tickets/apis";
 import { ContactInfo, TypographyName } from "./contact-info";
+import { Tags } from "./tags";
+import { useDateDifference } from "lib/utils";
 
 interface ITicketOverviewProps {
     ticketDetails: ITicketDetails;
@@ -41,7 +42,7 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
             <FlexBox gap={'20px'} flexDirection="column" height="calc(100% - 62px)" overflowY="auto">
                 <ContactInfo customerInfo={customerInfo} createdAt={createdAt} closedAt={closedAt} ticketId={ticketId} customerName={customerName} />
                 <FlexBox flexDirection="column" gap="10px">
-                    <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} statusUpdateString={statusUpdateString}/>
+                    <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} statusUpdateString={statusUpdateString} />
                     <ManageAssigneeContainer ticketId={ticketId} assigneeInfo={assigneeInfo} />
                     <ManagePriorityContainer priority={priority} ticketId={ticketId} />
                 </FlexBox>
@@ -49,29 +50,13 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
                     {ticketDetails?.responseDue ? <DateInfo label="Response due: " date={ticketDetails.responseDue} /> : null}
                     {ticketDetails?.resolutionDue ? <DateInfo label="Resolution due: " date={ticketDetails.resolutionDue} /> : null}
                 </FlexBox>
+                <FlexBox>
+                    <Tags />
+                </FlexBox>
             </FlexBox>
             <SearchCustomerContainer showSearchUserFlyout={showSearchUserFlyout} onSearchUserBtnClick={onSearchUserBtnClick} />
         </FlexBox>
     )
-}
-
-export function useDateDifference(date: string) {
-    const parsedDate = DateTime.fromFormat(date, 'yyyy-MM-dd hh:mm a');
-    const diff = parsedDate.diffNow();
-
-    const { days, hours, minutes } = diff.shiftTo('days', 'hours', 'minutes').toObject();
-
-    const dateColor = useMemo(() => {
-        const completeMins = diff.shiftTo('minutes').minutes;
-        return completeMins < 0 ? 'error' : (completeMins >= 1 && completeMins <= 20 ? 'warning' : 'success')
-    }, [diff]);
-
-    const prefix = `${dateColor === 'error' ? 'Due since' : 'Due in'}`;
-    const daysValue = days! === 0 ? '' : `${Math.abs(days!)} days`;
-    const hoursValue = hours! === 0 ? '' : `${Math.abs(hours!)} hours`;
-    const minsValue = minutes! === 0 ? '' : `${Math.abs(Math.round(minutes!))} mins`;
-
-    return { parsedDateString: `${prefix} ${daysValue} ${hoursValue} ${minsValue}`, dateColor };
 }
 
 const DateInfo = (props: { label: string, date: string }) => {

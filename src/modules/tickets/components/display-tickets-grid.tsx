@@ -8,7 +8,7 @@ import { DataGrid, NoDataIllustration } from "lib/ui-ux"
 import { ITicketDetails } from "../apis";
 import { useAppDispatch, useAppSelector } from "lib/hooks";
 import { setTotalPages } from "../storage";
-import { useDateDifference } from "./ticket-details/ticket-details-section/ticket-overview";
+import { useDateDifference } from "lib/utils";
 
 interface IDisplayTicketsGridProps {
     data: ITicketDetails[];

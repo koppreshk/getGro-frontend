@@ -13,6 +13,7 @@ export interface ITagInputProps extends React.InputHTMLAttributes<HTMLInputEleme
     tagInputs?: string[];
     width?: string;
     gap?: Property.Gap;
+    className?: string;
     onTagClick?: (item: string) => void;
     onTagInputChange?: (items: string[], item: string, reason: 'ON_ENTER_KEY' | 'ON_DELETE') => void;
 }
@@ -24,7 +25,7 @@ const StyledInput = styled.input`
 `;
 
 export const TagInput = (props: ITagInputProps) => {
-    const { onTagInputChange, onTagClick, tagInputs, width, gap, ...rest } = props;
+    const { onTagInputChange, onTagClick, tagInputs, width, gap, className, ...rest } = props;
     const [tagItems, setTagItems] = useState<string[]>([]);
     const [value, setInputValue] = useState('');
 
@@ -56,7 +57,7 @@ export const TagInput = (props: ITagInputProps) => {
     }, [onTagInputChange, tagItems]);
 
     return (
-        <FlexBox gap={gap ?? "10px"} flexWrap="wrap" width={width ?? "100%"}>
+        <FlexBox gap={gap ?? "10px"} flexWrap="wrap" width={width ?? "100%"} className={className}>
             {tagItems.map((item, index) => (
                 <Chip
                     key={index}
