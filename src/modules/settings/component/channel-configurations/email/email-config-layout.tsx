@@ -2,7 +2,7 @@ import { Add, ArrowBack } from "@mui/icons-material";
 import { Button, Typography } from "@mui/material"
 import { BreadCrumbs, CustomIconButton, FlexBox } from "lib/ui-ux"
 import { FetchAllEmailsContainer } from "modules/settings/containers/channel-configurations";
-import { AddEmailConfigContainer } from "modules/settings/containers/channel-configurations/email/add-email-config-container";
+import { AddEmailConfigContainer, EditEmailConfigContainer } from "modules/settings/containers/channel-configurations/email";
 import { useCallback } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 
@@ -14,6 +14,7 @@ export const EmailConfigLayout = () => {
                 <Routes>
                     <Route key='base-route' path="/" element={<EmailConfigContent />} />
                     <Route key='add-email-route' path="/add-email" element={<AddEmailConfigContainer />} />
+                    <Route key='edit-email-route' path="/edit-email" element={<EditEmailConfigContainer />} />
                 </Routes>
             </div>
         </FlexBox>

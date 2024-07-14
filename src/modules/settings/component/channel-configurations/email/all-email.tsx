@@ -29,10 +29,10 @@ const useColumns = () => {
             cell: info => info.getValue(),
             header: () => 'Email',
         }),
-        columnHelper.display({
-            id: 'isActive',
+        columnHelper.accessor('can_create_ticket', {
+            id: 'can_create_ticket',
             header: () => 'is Active',
-            cell: info => info.getValue(),
+            cell: info => info.getValue() ? 'Enabled' : 'Disabled',
             enableSorting: false,
         }),
         columnHelper.display({

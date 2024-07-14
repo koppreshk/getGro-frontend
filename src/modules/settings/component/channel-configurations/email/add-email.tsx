@@ -11,11 +11,12 @@ export interface IAddEmailConfigFormFields {
 }
 
 interface IAddEmailProps {
+    formType?: 'ADD' | 'EDIT'
     onSubmit: (formData: IAddEmailConfigFormFields) => void;
 }
 
 export const AddEmail = (props: IAddEmailProps) => {
-    const { onSubmit } = props;
+    const { formType = 'ADD', onSubmit } = props;
     const { handleSubmit } = useFormContext<IAddEmailConfigFormFields>();
     const navigate = useNavigate();
 
@@ -34,7 +35,7 @@ export const AddEmail = (props: IAddEmailProps) => {
             </GridLayout>
             <GridLayout $gridGap={'50px'} $alignItems="center" $gridTemplateColumns={'105px auto'}>
                 <Typography variant="h6">Email Address</Typography>
-                <TextboxField name="emailAddress" type="email" sx={{ width: '350px' }} size="small" rules={{ required: 'Email address is required' }} />
+                <TextboxField name="emailAddress" disabled={formType === 'EDIT'} type="email" sx={{ width: '350px' }} size="small" rules={{ required: 'Email address is required' }} />
             </GridLayout>
             <GridLayout $gridGap={'50px'} $alignItems="center" $gridTemplateColumns={'105px auto'}>
                 <Typography variant="h6">Email Active</Typography>
@@ -43,7 +44,7 @@ export const AddEmail = (props: IAddEmailProps) => {
             <HorizontalSeparator />
             <FlexBox gap={'50px'}>
                 <Button variant="outlined" sx={{ width: '100px' }} onClick={() => navigate(-1)}>Cancel</Button>
-                <Button variant="contained" sx={{ width: '150px' }}  onClick={handleSubmit(onSubmit)}>Add</Button>
+                <Button variant="contained" sx={{ width: '150px' }} onClick={handleSubmit(onSubmit)}>{formType === 'ADD' ? 'Add' : 'EDIT'}</Button>
             </FlexBox>
         </FlexBox>
     )

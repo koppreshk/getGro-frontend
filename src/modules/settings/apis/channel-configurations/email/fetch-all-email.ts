@@ -7,6 +7,7 @@ export interface IEmails {
     id: number;
     name: string;
     email: string;
+    can_create_ticket: boolean;
     updated_on: string;
 }
 
