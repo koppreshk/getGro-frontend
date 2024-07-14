@@ -1,6 +1,7 @@
 import { Add, ArrowBack } from "@mui/icons-material";
 import { Button, Typography } from "@mui/material"
 import { BreadCrumbs, CustomIconButton, FlexBox } from "lib/ui-ux"
+import { FetchAllEmailsContainer } from "modules/settings/containers/channel-configurations";
 import { AddEmailConfigContainer } from "modules/settings/containers/channel-configurations/email/add-email-config-container";
 import { useCallback } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
@@ -35,6 +36,7 @@ const EmailConfigContent = () => {
                 </FlexBox>
                 <Button variant="contained" onClick={toggleAddEscalationDrawer} startIcon={<Add />}>Add Email</Button>
             </FlexBox>
+            <FetchAllEmailsContainer />
         </>
     );
 }

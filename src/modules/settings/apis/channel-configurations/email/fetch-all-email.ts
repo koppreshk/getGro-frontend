@@ -5,16 +5,18 @@ import { ConfigurationsEmailQueryKey, ConfigurationsEmailEndPoint } from "./api-
 
 export interface IEmails {
     id: number;
+    name: string;
     email: string;
+    updated_on: string;
 }
 
 export const useFetchAllEmails = () => {
     const { getData } = useServiceClient();
 
-    const fetchAllEscalations = React.useCallback(() => getData(`${ConfigurationsEmailEndPoint.FETCH_ALL_EMAILS}`).then((res) => res.json()), [getData])
+    const fetchAllEmails = React.useCallback(() => getData(`${ConfigurationsEmailEndPoint.FETCH_ALL_EMAILS}`).then((res) => res.json()), [getData])
 
-    return useQuery<{ sla: IEmails[], total_pages: number }, { message: string }>({
+    return useQuery<IEmails[], { message: string }>({
         queryKey: ConfigurationsEmailQueryKey.FETCH_ALL_EMAILS,
-        queryFn: fetchAllEscalations
+        queryFn: fetchAllEmails
     });
 }
