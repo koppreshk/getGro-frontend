@@ -28,7 +28,7 @@ export const EditEmailConfigContainer = () => {
     if (data) {
         const emailConfigById = data.find((item) => item.id === Number(searchParams.get('id')!))
         const defaultValues = {
-            displayName: emailConfigById?.name ?? '',
+            displayName: emailConfigById?.display_name ?? '',
             emailAddress: emailConfigById?.email ?? '',
             isActive: emailConfigById?.can_create_ticket ?? false
         }

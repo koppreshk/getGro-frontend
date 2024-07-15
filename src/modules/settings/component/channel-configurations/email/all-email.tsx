@@ -14,15 +14,15 @@ const useColumns = () => {
     const columnHelper = createColumnHelper<IEmails>();
 
     const columns = [
-        columnHelper.accessor("name", {
-            id: 'slaName',
+        columnHelper.accessor("display_name", {
+            id: 'display_name',
             cell: info => info.getValue(),
             header: () => 'Name',
         }),
-        columnHelper.accessor("updated_on", {
-            id: 'updated_on',
+        columnHelper.accessor("updated_at", {
+            id: 'updated_at',
             cell: info => info.getValue(),
-            header: () => 'Updated On',
+            header: () => 'Updated At',
         }),
         columnHelper.accessor("email", {
             id: 'email',
