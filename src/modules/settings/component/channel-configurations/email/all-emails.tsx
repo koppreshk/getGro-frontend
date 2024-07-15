@@ -4,6 +4,7 @@ import { FlexBox } from 'lib/ui-ux';
 import { EditEmail } from './edit-email';
 import { DeleteEmail } from './delete-email';
 import { IEmails } from 'modules/settings/apis';
+import { getFormattedDate } from 'lib/utils';
 
 interface IAllEmailProps {
     data?: IEmails[];
@@ -21,7 +22,7 @@ const useColumns = () => {
         }),
         columnHelper.accessor("updated_at", {
             id: 'updated_at',
-            cell: info => info.getValue(),
+            cell: info => getFormattedDate(info.getValue()),
             header: () => 'Updated At',
         }),
         columnHelper.accessor("email", {

@@ -73,7 +73,7 @@ const configurations = [
                 route: 'email',
                 uniqueKey: 'email',
                 catOptionIcon: () => <Email />,
-                description: 'Configure email'
+                description: 'Setup support email inboxes for ticket automation'
             }
         ]
     },

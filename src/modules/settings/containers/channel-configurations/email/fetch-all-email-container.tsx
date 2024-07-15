@@ -1,6 +1,6 @@
 import { ErrorMessage } from "lib/ui-ux"
 import { useFetchAllEmails } from "modules/settings/apis"
-import { AllEmails } from "modules/settings/component/channel-configurations/email/all-email";
+import { AllEmails } from "modules/settings/component/channel-configurations/email/all-emails";
 
 export const FetchAllEmailsContainer = () => {
     const { data, isError, error, isLoading } = useFetchAllEmails();
