@@ -1,18 +1,16 @@
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
-import { TextboxField } from "lib/form-fields";
-import { FlexBox } from "lib/ui-ux";
-import { Close } from "@mui/icons-material";
 import styled from "styled-components";
+import { TextboxField } from "lib/form-fields";
+import { Box, Button, DialogActions, DialogContent, Divider, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
+import { FlexBox } from "lib/ui-ux";
 
-interface IAddStoreDialogProps {
-    open: boolean;
-    onClose: () => void;
+interface IAddShopifyStoreFormProps {
+    togglePopup: () => void;
 }
 
-export const AddStoreDialog = (props: IAddStoreDialogProps) => {
-    const { onClose, open } = props;
+export const AddShopifyStoreForm = (props: IAddShopifyStoreFormProps) => {
+    const { togglePopup } = props;
     const form = useForm();
 
     const [activeStep, setActiveStep] = React.useState(0);
@@ -28,38 +26,23 @@ export const AddStoreDialog = (props: IAddStoreDialogProps) => {
 
     return (
         <>
-            <Dialog onClose={onClose} open={open} PaperProps={{ sx: { width: '800px', maxWidth: 'unset' } }}>
-                <DialogTitle>Add Store</DialogTitle>
-                <IconButton
-                    aria-label="close"
-                    onClick={onClose}
-                    sx={{
-                        position: 'absolute',
-                        right: 8,
-                        top: 8,
-                        color: (theme) => theme.palette.grey[500],
-                    }}
-                >
-                    <Close />
-                </IconButton>
-                <FormProvider {...form}>
-                    <DialogContent>
-                        <FlexBox gap="20px">
-                            <ShopifyConfigSteps activeStep={activeStep} />
-                            <Divider orientation="vertical" variant="middle" flexItem />
-                            {activeStep === 0 ? <ShopifyDetailsForm /> : <span>Work in Progress..</span>}
-                        </FlexBox>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button variant="outlined" onClick={isLastStep ? handleBack : onClose}>
-                            {isLastStep ? 'Back' : 'Cancel'}
-                        </Button>
-                        <Button variant="contained" autoFocus onClick={isLastStep ? onClose : handleNext}>
-                            {isLastStep ? 'Save' : 'Next'}
-                        </Button>
-                    </DialogActions>
-                </FormProvider>
-            </Dialog>
+            <FormProvider {...form}>
+                <DialogContent>
+                    <FlexBox gap="20px">
+                        <ShopifyConfigSteps activeStep={activeStep} />
+                        <Divider orientation="vertical" variant="middle" flexItem />
+                        {activeStep === 0 ? <ShopifyDetailsForm /> : <span>Work in Progress..</span>}
+                    </FlexBox>
+                </DialogContent>
+                <DialogActions>
+                    <Button variant="outlined" onClick={isLastStep ? handleBack : togglePopup}>
+                        {isLastStep ? 'Back' : 'Cancel'}
+                    </Button>
+                    <Button variant="contained" autoFocus onClick={isLastStep ? togglePopup : handleNext}>
+                        {isLastStep ? 'Save' : 'Next'}
+                    </Button>
+                </DialogActions>
+            </FormProvider>
         </>
     )
 }
