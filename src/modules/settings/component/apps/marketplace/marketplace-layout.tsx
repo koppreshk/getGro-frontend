@@ -5,8 +5,10 @@ import { Card, CardContent, Typography } from "@mui/material";
 import { BreadCrumbs, FlexBox } from "lib/ui-ux"
 import ShopifyIcon from '../../../../../assets/svg/shopify-icon.svg?react';
 import ExotelIcon from '../../../../../assets/svg/exotel-icon.svg?react';
-import { ShopifyLayout } from "./shopify/shopify-layout";
+import WhatsAppIcon from '../../../../../assets/svg/whatsapp.svg?react';
+import { ShopifyLayout } from "./shopify/shopify-configuration";
 import { ExotelConfiguration } from "./exotel-configuration";
+import { WhatsAppGupshupConfiguration } from "./gupshup";
 
 const MarketPlaceLayout = () => {
     return (
@@ -26,22 +28,30 @@ export const MarketplaceRoutes = () => {
                 <Route key="marketplace-route" path="/" element={<MarketPlaceLayout />} />
                 <Route key="shopify-route" path="shopify" element={<ShopifyLayout />} />
                 <Route key="exotel-route" path="exotel" element={<ExotelConfiguration />} />
+                <Route key="whatsapp-route" path="whatsapp" element={<WhatsAppGupshupConfiguration />} />
             </Routes>
         </>
     )
 }
 
-const thirdPartyApps = [{
-    name: 'exotel',
-    label: 'Exotel',
-    description: 'Track and manage phone calls as tickets',
-    iconElement: () => <ExotelIcon width="40px" height="40px" />,
-}, {
-    name: 'shopify',
-    label: 'Shopify',
-    description: 'Connect your Shopify store and display customer order information',
-    iconElement: () => <ShopifyIcon width="40px" height="40px" />,
-}];
+const thirdPartyApps = [
+    {
+        name: 'exotel',
+        label: 'Exotel',
+        description: 'Track and manage phone calls as tickets',
+        iconElement: () => <ExotelIcon width="40px" height="40px" />,
+    }, {
+        name: 'shopify',
+        label: 'Shopify',
+        description: 'Connect your Shopify store and display customer order information',
+        iconElement: () => <ShopifyIcon width="40px" height="40px" />,
+    }, {
+        name: 'whatsapp',
+        label: 'WhatsApp',
+        description: 'Enhance customer engagement with WhatsApp integration with GupShup',
+        iconElement: () => <WhatsAppIcon width="40px" height="40px" />,
+    }
+];
 
 const ThirdPartyApplications = () => {
     return (

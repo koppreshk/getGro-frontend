@@ -1,53 +1,25 @@
-import styled from "styled-components";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton } from "@mui/material";
-import { Close } from "@mui/icons-material";
+import { Button, DialogActions, Grid } from "@mui/material";
 import { TextboxField } from "lib/form-fields";
 import { FormProvider, useForm } from "react-hook-form";
 
-interface IAddExotelDialogProps {
+interface IAddExotelConfigurationFormProps {
     togglePopup: () => void;
-    openPopup: boolean
 }
 
-const StyledDialogActions = styled(DialogActions)`
-    && {
-        padding: 8px 22px 22px;
-    }
-`;
-
-export const AddExotelDialog = (props: IAddExotelDialogProps) => {
-    const { openPopup, togglePopup } = props;
+export const AddExotelConfigurationForm = (props: IAddExotelConfigurationFormProps) => {
+    const { togglePopup } = props;
     const form = useForm();
 
     return (
-        <Dialog open={openPopup} onClose={togglePopup}>
-            <DialogTitle sx={{ fontSize: '16px' }}>
-                Exotel Configuration
-            </DialogTitle>
-            <IconButton
-                aria-label="close"
-                onClick={togglePopup}
-                sx={{
-                    position: 'absolute',
-                    right: 8,
-                    top: 8,
-                    color: (theme) => theme.palette.grey[500],
-                }}
-            >
-                <Close />
-            </IconButton>
-            <FormProvider {...form}>
-                <DialogContent>
-                    <form>
-                        {AddExotelConfigForm()}
-                    </form>
-                </DialogContent>
-            </FormProvider>
-            <StyledDialogActions>
+        <FormProvider {...form}>
+            <form>
+                {AddExotelConfigForm()}
+            </form>
+            <DialogActions>
                 <Button onClick={togglePopup} variant="outlined">Cancel</Button>
                 <Button onClick={togglePopup} variant="contained">Next</Button>
-            </StyledDialogActions>
-        </Dialog>
+            </DialogActions>
+        </FormProvider>
     )
 }
 

@@ -21,7 +21,18 @@ function tabAriaProps(index: number) {
     };
 }
 
-export const Content = () => {
+interface IAppContentProps {
+    version: string;
+    publishedOn: string;
+    lastUpdated: string;
+    website: string;
+    email: string;
+    OverviewContents(): JSX.Element;
+    InstallationContents(): JSX.Element;
+}
+
+export const AppContent = (props: IAppContentProps) => {
+    const { InstallationContents, OverviewContents, email, lastUpdated, publishedOn, version, website } = props;
 
     const [value, setValue] = React.useState(0);
 
@@ -46,12 +57,14 @@ export const Content = () => {
                 </CustomTabPanel>
             </FlexBox>
             <MoreInfoSection width="30%" padding="20px 16px">
-                {MoreInfoContent()}
+                <MoreInfoContent
+                    email={email} lastUpdated={lastUpdated}
+                    publishedOn={publishedOn} version={version}
+                    website={website} />
             </MoreInfoSection>
         </StyledFlexbox>
     )
 }
-
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -79,75 +92,44 @@ function CustomTabPanel(props: TabPanelProps) {
     );
 }
 
-
-function OverviewContents() {
-    return (
-        <>
-            <Typography variant="body2" paragraph>
-                Exotel is a cloud-based communication platform enabling businesses to manage customer interactions via calls.
-                It offers features such as virtual numbers and IVR systems for seamless communication.
-            </Typography>
-            <Typography variant="body2" paragraph>
-                Integrate Exotel into GetGro to streamline call management processes, enabling businesses to effortlessly make
-                and receive calls and tracking the call history in real-time.
-            </Typography>
-            <Typography variant="body2" paragraph>
-                The Exotel integration offers the following valuable features, Within the GetGro
-            </Typography>
-            <ul>
-                <li><b>Direct Call Functionality:</b> Users can initiate calls directly from the GetGro interface, boosting efficiency.</li>
-                <li><b>Number Assignment:</b> Allocate various Exotel numbers to distinct categories, streamlining call prioritization.</li>
-                <li><b>Call History Monitoring:</b> Keep track of call activities in real-time by agent, ensuring transparency and accountability.</li>
-                <li><b>Ticket Generation:</b> Simplify post-call actions with auto-created tickets for outbound, inbound, or missed calls.</li>
-                <li><b>Manual Ticket Creation: </b>Offer flexibility by allowing manual ticket logging based on call history, providing additional control.</li>
-            </ul>
-        </>
-    )
+interface IMoreInfoProps {
+    version: string;
+    publishedOn: string;
+    lastUpdated: string;
+    website: string;
+    email: string;
 }
 
-function InstallationContents() {
-    return (
-        <>
-            <Typography variant="body2" paragraph>
-                To install and connect Exotel with GetGro, follow the instructions in the following links:
-            </Typography>
-            <Typography component="a" variant="body2" href="https://support.GetGro.com/kb/article/15906/set-up-exotel-integration-with-GetGro">
-                https://support.GetGro.com/kb/article/15906/set-up-exotel-integration-with-GetGro
-            </Typography>
-        </>
-    )
-}
-
-function MoreInfoContent() {
+function MoreInfoContent(props: IMoreInfoProps) {
+    const { email, lastUpdated, publishedOn, version, website } = props;
     const { pallete } = useTheme();
     return (
         <FlexBox flexDirection="column" gap="8px">
-
             <Typography variant="h5">
                 More Info
             </Typography>
             <FlexBox flexDirection="column">
                 <Typography variant="body2" sx={{ color: pallete.grayNeutral }} >Version</Typography>
-                <Typography variant="body2" >1.0.0</Typography>
+                <Typography variant="body2" >{version}</Typography>
             </FlexBox>
             <FlexBox flexDirection="column">
                 <Typography variant="body2" sx={{ color: pallete.grayNeutral }} >Published on</Typography>
-                <Typography variant="body2" >May 12, 2024</Typography>
+                <Typography variant="body2" >{publishedOn}</Typography>
             </FlexBox>
             <FlexBox flexDirection="column">
                 <Typography variant="body2" sx={{ color: pallete.grayNeutral }} >Last Updated</Typography>
-                <Typography variant="body2" >May 12, 2024</Typography>
+                <Typography variant="body2" >{lastUpdated}</Typography>
             </FlexBox>
             <Typography variant="h5">
                 Support
             </Typography>
             <FlexBox flexDirection="column">
                 <Typography variant="body2" sx={{ color: pallete.grayNeutral }} >Website</Typography>
-                <Typography variant="body2" >https://intent.getgro.io/dashboard</Typography>
+                <Typography variant="body2" >{website}</Typography>
             </FlexBox>
             <FlexBox flexDirection="column">
                 <Typography variant="body2" sx={{ color: pallete.grayNeutral }} >Email</Typography>
-                <Typography variant="body2" >support@getgro.com</Typography>
+                <Typography variant="body2" >{email}</Typography>
             </FlexBox>
         </FlexBox>
     )
