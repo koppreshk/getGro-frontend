@@ -133,7 +133,7 @@ const useColumns = () => {
     return columns;
 }
 
-const ResDue = (props: { date: string }) => {
+export const ResDue = (props: { date: string }) => {
     const { date } = props;
     const { dateColor, parsedDateString } = useDateDifference(date);
     return (
