@@ -2,6 +2,11 @@
 // whatsapp_gupshup_api_key, 
 // whatsapp_gupshup_number
 
-export const AddWhatsAppGupShupConfigContainer = () => {
-    
+import { AddWhatsAppGupshupConfigForm } from "modules/settings/component/apps/marketplace/gupshup"
+
+
+export const AddWhatsAppGupShupConfigContainer = (props: { togglePopup: () => void; }) => {
+    return (
+        <AddWhatsAppGupshupConfigForm togglePopup={props.togglePopup}/>
+    )
 }

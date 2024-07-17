@@ -1,9 +1,10 @@
 /// <reference types="vite-plugin-svgr/client" />
 
+import { useCallback, useState } from "react";
 import { Typography } from "@mui/material";
 import { AddAppConfigurationDialog, AppConfigurationLayout } from "..";
 import WhatsAppIcon from '../../../../../../assets/svg/whatsapp.svg?react';
-import { useCallback, useState } from "react";
+import { AddWhatsAppGupShupConfigContainer } from "modules/settings/containers/marketplace/whatsApp";
 
 function OverviewContents() {
     return (
@@ -43,15 +44,6 @@ function InstallationContents() {
     )
 }
 
-const AddWhatsAppConfig = () => {
-    return (
-        <>
-            WhatApp config form
-        </>
-  
-    )
-}
-
 export const WhatsAppGupshupConfiguration = () => {
     const [openPopup, setOpenPopup] = useState(false);
     const togglePopup = useCallback(() => {
@@ -70,10 +62,10 @@ export const WhatsAppGupshupConfiguration = () => {
                 lastUpdated="May 12, 2024"
                 publishedOn="May 12, 2024"
                 version="1.0.0"
-                appIcon={() => <WhatsAppIcon width="60px" height="60px" />} 
-                togglePopup={togglePopup}/>
+                appIcon={() => <WhatsAppIcon width="60px" height="60px" />}
+                togglePopup={togglePopup} />
             <AddAppConfigurationDialog
-                dialogContent={() => AddWhatsAppConfig()}
+                dialogContent={() => <AddWhatsAppGupShupConfigContainer togglePopup={togglePopup} />}
                 openPopup={openPopup}
                 togglePopup={togglePopup}
                 title="WhatsApp - GupShup Configuration" />
