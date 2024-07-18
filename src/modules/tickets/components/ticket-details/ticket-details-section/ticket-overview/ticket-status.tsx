@@ -38,11 +38,12 @@ interface ITicketStatusProps {
     ticketStatus: string;
     statusUpdateString: string;
     menuOptions: IGenericResponse[];
+    renderMode?: string;
     onStatusChange: (statusId: number) => Promise<void>;
 }
 
 export const TicketStatus = (props: ITicketStatusProps) => {
-    const { menuOptions, ticketStatus, statusUpdateString, onStatusChange } = props;
+    const { menuOptions, ticketStatus, statusUpdateString, renderMode, onStatusChange } = props;
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [selectedIndex, setSelectedIndex] = useState(menuOptions.findIndex((item) => item.name.toLocaleLowerCase() === ticketStatus.toLocaleLowerCase()) || 0);
 
@@ -50,12 +51,14 @@ export const TicketStatus = (props: ITicketStatusProps) => {
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
+        event.stopPropagation();
     };
 
     const handleMenuItemClick = (_event: React.MouseEvent<HTMLElement>, index: number) => {
         setSelectedIndex(index);
         setAnchorEl(null);
         onStatusChange(menuOptions[index].id)
+        _event.stopPropagation();
     };
 
     const handleClose = () => {
@@ -64,17 +67,18 @@ export const TicketStatus = (props: ITicketStatusProps) => {
 
     return (
         <div>
-            <HorizontalSeparator $margin="0px 0px 10px 0px" />
+            {renderMode === 'card' ? null : <HorizontalSeparator $margin="0px 0px 10px 0px" />}
             <FlexBox flexDirection="column" padding="0px 20px" gap={'5px'}>
                 <TypographyName variant="h6">Status</TypographyName>
                 <StyledButton
                     variant="contained"
                     onClick={handleClick}
+                    size="small"
                     endIcon={<ExpandMore sx={{ width: 16, height: 16 }} />}
                     sx={{ textTransform: 'unset' }}>
                     {ticketStatus}
                 </StyledButton>
-                {statusUpdateString ? <TypographyName variant="subheading2">{statusUpdateString}</TypographyName> : null}
+                {<TypographyName variant="subheading2" sx={{ minWidth: renderMode === 'card' ? '175px' : 'unset', minHeight: renderMode === 'card' ? '18.4px' : 'unset' }}>{statusUpdateString}</TypographyName>}
             </FlexBox>
             <Menu
                 anchorEl={anchorEl}

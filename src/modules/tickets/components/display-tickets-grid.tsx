@@ -133,7 +133,7 @@ const useColumns = () => {
     return columns;
 }
 
-const ResDue = (props: { date: string }) => {
+export const ResDue = (props: { date: string }) => {
     const { date } = props;
     const { dateColor, parsedDateString } = useDateDifference(date);
     return (
@@ -178,7 +178,8 @@ const PriorityIcon = styled.span<{ $priority: string }>`
     border-radius: 16px;
     text-transform: uppercase;
     height: unset; 
-    font-size: 12px; 
+    font-size: 12px;
+    width: fit-content;
     font-weight: 600;
 `;
 

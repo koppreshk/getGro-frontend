@@ -25,7 +25,7 @@ export const TicketStatusContainer = (props: ITicketStatusContainerProps) => {
 
     return (
         <>
-            <TicketStatus ticketStatus={ticketStatus} statusUpdateString={statusUpdateString} menuOptions={data!} onStatusChange={onStatusChange} />
+            <TicketStatus ticketStatus={ticketStatus} statusUpdateString={statusUpdateString} menuOptions={data!} onStatusChange={onStatusChange} renderMode="card" />
         </>
     )
 }
