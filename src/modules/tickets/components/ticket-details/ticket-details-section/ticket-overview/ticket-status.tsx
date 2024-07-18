@@ -51,12 +51,14 @@ export const TicketStatus = (props: ITicketStatusProps) => {
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
+        event.stopPropagation();
     };
 
     const handleMenuItemClick = (_event: React.MouseEvent<HTMLElement>, index: number) => {
         setSelectedIndex(index);
         setAnchorEl(null);
         onStatusChange(menuOptions[index].id)
+        _event.stopPropagation();
     };
 
     const handleClose = () => {
