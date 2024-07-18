@@ -1,10 +1,10 @@
 import { FlexBox, GridLayout, VerticalSeparator } from "lib/ui-ux";
-import { ITicketDetails } from "../apis";
+import { ITicketDetails } from "../../apis";
 import styled from 'styled-components';
 import { Tooltip, Typography } from "@mui/material";
 import { AccountCircleOutlined, CalendarToday, ConfirmationNumberOutlined } from "@mui/icons-material";
-import { Priority, ResDue, useSourceIcon } from "./display-tickets-grid";
-import { TicketStatusContainer } from "../containers";
+import { Priority, ResDue, useSourceIcon } from "../display-tickets-grid";
+import { TicketStatusContainer } from "../../containers";
 import { useMatch, useNavigate } from "react-router-dom";
 import React from "react";
 
