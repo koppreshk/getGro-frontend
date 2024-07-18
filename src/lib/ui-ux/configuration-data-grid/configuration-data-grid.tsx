@@ -77,7 +77,7 @@ export const ConfigDataGrid = <T extends object>(props: IConfigDataGridProps<T>)
 
     return (
         <DataGridWrapper className="datagridwrapper" height="100%" flexDirection="column">
-            {hideTableControls ? null : <TableControls table={table} totalPages={totalPages} enableSerchField={enableSerchField} />}
+            {hideTableControls ? null : <TableControls totalPages={totalPages} enableSerchField={enableSerchField} />}
             <ScrollableDiv>
                 <StyledTable>
                     <thead>
