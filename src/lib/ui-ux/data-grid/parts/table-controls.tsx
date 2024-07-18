@@ -1,32 +1,34 @@
 import React, { useCallback, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
-import { IconButton, TextField, Tooltip, Typography } from "@mui/material";
+import { IconButton, Switch, TextField, Tooltip, Typography } from "@mui/material";
 import { FlexBox, VerticalSeparator } from "lib/ui-ux";
 import { ArchiveOutlined, AssignmentIndOutlined, ChevronLeft, ChevronRight, DeleteOutline, KeyboardDoubleArrowLeft, KeyboardDoubleArrowRight, MarkChatReadOutlined, MarkUnreadChatAltOutlined } from '@mui/icons-material';
-import { Table } from "@tanstack/react-table";
-import { IConfigDataGridProps } from "lib/ui-ux/configuration-data-grid";
 
 const StyledFlexBox = styled(FlexBox)`
     padding: 0px 20px 0 8px;  
 `;
 
-interface ITableControlProps<T> extends Pick<IConfigDataGridProps<T>, 'enableSerchField' | 'totalPages'> {
-    table: Table<T>;
+interface ITableControlProps {
+    isTableActionsvisible?: boolean;
+    enableSerchField?: boolean;
+    totalPages?: number
 }
 
-export const TableControls = <T extends object>(props: ITableControlProps<T>) => {
-    const { table, totalPages, enableSerchField } = props;
+export const TableControls = (props: ITableControlProps) => {
+    const { isTableActionsvisible, totalPages, enableSerchField } = props;
     const [searchParams, setSearchParams] = useSearchParams();
     const pageNumber = Number(searchParams.get('pageNumber')) || 1;
     const noOfRecords = searchParams.get('noOfRecords') || '10';
+    const gridMode = searchParams.get('gridMode') || 'true';
     const [noOfRows, setFilters] = useState(noOfRecords);
 
     React.useEffect(() => {
         searchParams.set('noOfRecords', noOfRecords);
         searchParams.set('pageNumber', pageNumber.toString());
+        searchParams.set('gridMode', gridMode);
         setSearchParams(searchParams);
-    }, [noOfRecords, pageNumber, searchParams, setSearchParams])
+    }, [gridMode, noOfRecords, pageNumber, searchParams, setSearchParams])
 
     const onFilterChangeHandler = useCallback((value: Rows) => {
         setFilters(value);
@@ -59,7 +61,10 @@ export const TableControls = <T extends object>(props: ITableControlProps<T>) =>
         setSearchParams(searchParams);
     }, [searchParams, setSearchParams]);
 
-    const isTableActionsvisible = table.getIsSomeRowsSelected() || table.getIsAllRowsSelected();
+    const onGridModeChange = (_event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+        searchParams.set('gridMode', checked ? 'true' : 'false');
+        setSearchParams(searchParams);
+    }
 
     return (
         <StyledFlexBox justifyContent="space-between" height="76px">
@@ -68,6 +73,10 @@ export const TableControls = <T extends object>(props: ITableControlProps<T>) =>
                 {enableSerchField ? <TextField placeholder="Input here..." size="small" label="Search" type="search" onChange={onSearchChange} /> : null}
             </FlexBox>
             <FlexBox gap="30px" alignItems="center">
+                <FlexBox alignItems="center">
+                    <Typography variant="subtitle2">Grid Mode</Typography>
+                    <Switch onChange={onGridModeChange} checked={gridMode === 'true'} />
+                </FlexBox>
                 <NoOfPages noOfRows={noOfRows as Rows} onFilterChangeHandler={onFilterChangeHandler} />
                 <VerticalSeparator />
                 <FlexBox>

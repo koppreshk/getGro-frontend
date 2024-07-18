@@ -58,7 +58,7 @@ const StyledTable = styled.table<{ $showPointerCursor: boolean; $isLoading?: boo
 `;
 
 export function DataGrid<T extends object>(props: IDataGridProps<T>) {
-   
+
     const { data, columns, isLoading, itemHeight, hideTableControls = false, className, onRowClick, totalPages } = props
     const memoizedData = useMemo(() => isLoading ? Array(10).fill({}) : data, [data, isLoading]);
     const memoizedColumns = useMemo(() =>
@@ -95,7 +95,7 @@ export function DataGrid<T extends object>(props: IDataGridProps<T>) {
     return (
         <DndProvider backend={HTML5Backend}>
             <DataGridWrapper flexDirection='column' gap="10px" className={className}>
-                {hideTableControls ? null : <TableControls table={table} totalPages={totalPages}/>}
+                {hideTableControls ? null : <TableControls totalPages={totalPages} isTableActionsvisible={table.getIsSomeRowsSelected() || table.getIsAllRowsSelected()} />}
                 <ColumnsConfiguration allColumns={table.getAllLeafColumns()} top={hideTableControls ? '-10px' : '86px'} resetColumnVisibility={table.resetColumnVisibility} />
                 <ScrollableDiv>
                     <TableWrapper>

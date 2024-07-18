@@ -1,12 +1,12 @@
-import { FlexBox, GridLayout, VerticalSeparator } from "lib/ui-ux";
-import { ITicketDetails } from "../../apis";
+import React from "react";
+import { useMatch, useNavigate, useSearchParams } from "react-router-dom";
 import styled from 'styled-components';
 import { Tooltip, Typography } from "@mui/material";
 import { AccountCircleOutlined, CalendarToday, ConfirmationNumberOutlined } from "@mui/icons-material";
+import { FlexBox, GridLayout, VerticalSeparator } from "lib/ui-ux";
+import { ITicketDetails } from "../../apis";
 import { Priority, ResDue, useSourceIcon } from "../display-tickets-grid";
 import { TicketStatusContainer } from "../../containers";
-import { useMatch, useNavigate } from "react-router-dom";
-import React from "react";
 
 const StyledCard = styled(GridLayout)`
     background: ${({ theme }) => theme.pallete.white};
@@ -28,10 +28,13 @@ export const CardView = (props: ITicketDetails) => {
     const getSourceIcon = useSourceIcon();
     const navigate = useNavigate();
     const match = useMatch('/:tickets/:ticketType')
+    const [searchParams] = useSearchParams();
+    const noOfRecords = searchParams.get('noOfRecords');
+    const pageNumber = searchParams.get('pageNumber');
 
     const onRowClick = React.useCallback(() => {
-        navigate(`${match?.pathname}/${ticketId}`, { replace: true });
-    }, [match?.pathname, navigate, ticketId]);
+        navigate(`${match?.pathname}/${ticketId}?noOfRecords=${noOfRecords}&pageNumber=${pageNumber}`, { replace: true });
+    }, [match?.pathname, navigate, noOfRecords, pageNumber, ticketId]);
 
     return (
         <StyledCard onClick={onRowClick} >
