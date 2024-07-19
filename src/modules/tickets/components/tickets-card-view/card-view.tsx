@@ -17,6 +17,13 @@ const StyledCard = styled(GridLayout)`
     align-items: center;
 `;
 
+const StyledTypography = styled(Typography)`
+    &&{
+        color: ${({ theme }) => theme.pallete.grayVariant3};
+
+    }
+`;
+
 const onRenderSeparator = () => {
     return (
         <VerticalSeparator />
@@ -42,7 +49,7 @@ export const CardView = (props: ITicketDetails) => {
                 <FlexBox gap={'5px'} alignItems="center">
                     <AccountCircleOutlined />
                     <Tooltip title={'Customer Name'}>
-                        <Typography variant="h5">{customerName}</Typography>
+                        <Typography variant="h5" >{customerName}</Typography>
                     </Tooltip>
                 </FlexBox>
                 <FlexBox gap={'10px'} flexDirection="column">
@@ -56,21 +63,21 @@ export const CardView = (props: ITicketDetails) => {
                         <ConfirmationNumberOutlined />
                         <Typography variant="body2" maxWidth={'200px'} sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>{ticketId}</Typography>
                     </FlexBox>
-                    <Typography variant="subtitle2">Ticket Id</Typography>
+                    <StyledTypography variant="subtitle2">Ticket Id</StyledTypography>
                 </FlexBox>
                 <FlexBox flexDirection="column" alignItems="center">
                     <FlexBox gap={'5px'} alignItems="center">
                         <CalendarToday />
                         <Typography variant="body2">{createdAt}</Typography>
                     </FlexBox>
-                    <Typography variant="subtitle2">Created At</Typography>
+                    <StyledTypography variant="subtitle2">Created At</StyledTypography>
                 </FlexBox>
                 <FlexBox flexDirection="column" alignItems="center">
                     <FlexBox gap={'5px'} alignItems="center">
                         {getSourceIcon(source)}
                         <Typography variant="body2">{source}</Typography>
                     </FlexBox>
-                    <Typography variant="subtitle2">Source</Typography>
+                    <StyledTypography variant="subtitle2">Source</StyledTypography>
                 </FlexBox>
             </FlexBox>
             <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} statusUpdateString={statusUpdateString} />
