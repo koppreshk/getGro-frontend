@@ -1,5 +1,5 @@
 import { useFetchMyPendingTickets } from "modules/tickets/apis";
-import { DisplayTicketsGrid } from "modules/tickets/components";
+import { TicketsByView } from "modules/tickets/components";
 import React from "react";
 
 export const MyPendingTicketsContainer = React.memo(() => {
@@ -12,7 +12,7 @@ export const MyPendingTicketsContainer = React.memo(() => {
         const modifiedTicketsData = ticketsData.map((data, idx) => ({ ...data, status: idx % 3 == 0 }));
 
         return (
-            <DisplayTicketsGrid isLoading={isLoading || isFetching} data={modifiedTicketsData} totalPages={totalTickets} />
+            <TicketsByView isLoading={isLoading || isFetching} data={modifiedTicketsData} totalPages={totalTickets} />
         )
     }
 

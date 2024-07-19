@@ -6,7 +6,7 @@ import { FlexBox, VerticalSeparator } from "lib/ui-ux";
 import { ArchiveOutlined, AssignmentIndOutlined, ChevronLeft, ChevronRight, DeleteOutline, KeyboardDoubleArrowLeft, KeyboardDoubleArrowRight, MarkChatReadOutlined, MarkUnreadChatAltOutlined } from '@mui/icons-material';
 
 const StyledFlexBox = styled(FlexBox)`
-    padding: 0px 20px 0 8px;  
+    padding: 0px 20px 0 20px;  
 `;
 
 interface ITableControlProps {
@@ -20,15 +20,15 @@ export const TableControls = (props: ITableControlProps) => {
     const [searchParams, setSearchParams] = useSearchParams();
     const pageNumber = Number(searchParams.get('pageNumber')) || 1;
     const noOfRecords = searchParams.get('noOfRecords') || '10';
-    const gridMode = searchParams.get('gridMode') || 'true';
+    const cardView = searchParams.get('cardView') || 'true';
     const [noOfRows, setFilters] = useState(noOfRecords);
 
     React.useEffect(() => {
         searchParams.set('noOfRecords', noOfRecords);
         searchParams.set('pageNumber', pageNumber.toString());
-        searchParams.set('gridMode', gridMode);
+        searchParams.set('cardView', cardView);
         setSearchParams(searchParams);
-    }, [gridMode, noOfRecords, pageNumber, searchParams, setSearchParams])
+    }, [cardView, noOfRecords, pageNumber, searchParams, setSearchParams])
 
     const onFilterChangeHandler = useCallback((value: Rows) => {
         setFilters(value);
@@ -62,7 +62,7 @@ export const TableControls = (props: ITableControlProps) => {
     }, [searchParams, setSearchParams]);
 
     const onGridModeChange = (_event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-        searchParams.set('gridMode', checked ? 'true' : 'false');
+        searchParams.set('cardView', checked ? 'true' : 'false');
         setSearchParams(searchParams);
     }
 
@@ -74,8 +74,8 @@ export const TableControls = (props: ITableControlProps) => {
             </FlexBox>
             <FlexBox gap="30px" alignItems="center">
                 <FlexBox alignItems="center">
-                    <Typography variant="subtitle2">Grid Mode</Typography>
-                    <Switch onChange={onGridModeChange} checked={gridMode === 'true'} />
+                    <Typography variant="subtitle2">Card View</Typography>
+                    <Switch onChange={onGridModeChange} checked={cardView === 'true'} />
                 </FlexBox>
                 <NoOfPages noOfRows={noOfRows as Rows} onFilterChangeHandler={onFilterChangeHandler} />
                 <VerticalSeparator />

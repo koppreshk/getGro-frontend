@@ -1,4 +1,4 @@
-import { CenteredCircularProgress, FlexBox, NoDataIllustration, TableControls } from "lib/ui-ux";
+import { CenteredCircularProgress, FlexBox, NoDataIllustration } from "lib/ui-ux";
 import { ITicketDetails } from "../../apis";
 import { CardView } from "./card-view";
 
@@ -17,10 +17,7 @@ export const TicketsCardview = (props: ITicketCardViewProps) => {
         <>
             {data.length > 0
                 ?
-                <FlexBox flexDirection="column" gap={'10px'} padding="20px" style={{ background: '#f1f1f1' }} overflowX="auto" height="100%">
-                    <div style={{ background: '#fff' }}>
-                        <TableControls totalPages={props.totalPages} enableSerchField />
-                    </div>
+                <FlexBox flexDirection="column" gap={'10px'} overflowY="auto" height="100%">
                     {data.map((item) => <CardView {...item} key={item.ticketId} />)}
                 </FlexBox>
                 : <NoDataIllustration message="No tickets to display" />}
