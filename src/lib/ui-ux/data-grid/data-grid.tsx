@@ -11,7 +11,6 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import styled, { css } from 'styled-components'
 import { TableHeader } from './parts/table-header'
 import { TableBody } from './parts/table-body'
-import { TableControls } from './parts/table-controls'
 import { FlexBox } from '../flexbox/flexbox'
 import { ColumnsConfiguration } from './parts/columns-configuration'
 
@@ -59,7 +58,7 @@ const StyledTable = styled.table<{ $showPointerCursor: boolean; $isLoading?: boo
 
 export function DataGrid<T extends object>(props: IDataGridProps<T>) {
 
-    const { data, columns, isLoading, itemHeight, hideTableControls = false, className, onRowClick, totalPages } = props
+    const { data, columns, isLoading, itemHeight, hideTableControls = false, className, onRowClick } = props
     const memoizedData = useMemo(() => isLoading ? Array(10).fill({}) : data, [data, isLoading]);
     const memoizedColumns = useMemo(() =>
         isLoading
@@ -95,7 +94,7 @@ export function DataGrid<T extends object>(props: IDataGridProps<T>) {
     return (
         <DndProvider backend={HTML5Backend}>
             <DataGridWrapper flexDirection='column' gap="10px" className={className}>
-                {hideTableControls ? null : <TableControls totalPages={totalPages} isTableActionsvisible={table.getIsSomeRowsSelected() || table.getIsAllRowsSelected()} />}
+                {/* {hideTableControls ? null : <TableControls totalPages={totalPages} isTableActionsvisible={table.getIsSomeRowsSelected() || table.getIsAllRowsSelected()} />} */}
                 <ColumnsConfiguration allColumns={table.getAllLeafColumns()} top={hideTableControls ? '-10px' : '86px'} resetColumnVisibility={table.resetColumnVisibility} />
                 <ScrollableDiv>
                     <TableWrapper>

@@ -1,7 +1,6 @@
 import React from "react";
 import { useFetchAllTickets } from "modules/tickets/apis";
-// import { DisplayTicketsGrid } from "modules/tickets/components";
-import { TicketsCardview } from "modules/tickets/components/tickets-card-view/tickets-card-view";
+import { TicketsByView } from "modules/tickets/components";
 
 export const AllTicketsContainer = React.memo(() => {
     const { data, isLoading, isFetching, error } = useFetchAllTickets();
@@ -13,7 +12,7 @@ export const AllTicketsContainer = React.memo(() => {
         const modifiedTicketsData = ticketsData.map((data, idx) => ({ ...data, status: idx % 3 == 0 }));
 
         return (
-            <TicketsCardview isLoading={isLoading || isFetching} data={modifiedTicketsData} totalPages={totalTickets} />
+            <TicketsByView isLoading={isLoading || isFetching} data={modifiedTicketsData} totalPages={totalTickets} />
         )
     }
 
