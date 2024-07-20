@@ -1,26 +1,25 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useMatch, useNavigate, useSearchParams } from "react-router-dom";
 import styled from 'styled-components';
-import { Tooltip, Typography } from "@mui/material";
-import { AccountCircleOutlined, CalendarToday, ConfirmationNumberOutlined } from "@mui/icons-material";
-import { FlexBox, GridLayout, VerticalSeparator } from "lib/ui-ux";
+import { Avatar, Tooltip, Typography } from "@mui/material";
+import { CalendarToday } from "@mui/icons-material";
+import { FlexBox, VerticalSeparator } from "lib/ui-ux";
 import { ITicketDetails } from "../../apis";
-import { Priority, ResDue, useSourceIcon } from "../display-tickets-grid";
+import { Priority, useSourceIcon } from "../display-tickets-grid";
 import { TicketStatusContainer } from "../../containers";
+import { DateTime } from "luxon";
+import { chooseRandomColors, getInitialsByName } from "lib/utils";
 
-const StyledCard = styled(GridLayout)`
+const StyledCard = styled(FlexBox)`
     background: ${({ theme }) => theme.pallete.white};
     border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
     cursor: pointer;
     padding: 10px 20px;
-    grid-template-columns: 1fr 2fr auto;
-    align-items: center;
 `;
 
 const StyledTypography = styled(Typography)`
     &&{
         color: ${({ theme }) => theme.pallete.grayVariant3};
-
     }
 `;
 
@@ -30,8 +29,16 @@ const onRenderSeparator = () => {
     )
 }
 
+const StyledPriority = styled(Priority)`
+    border-radius: 4px;
+    height: 31px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+`;
+
 export const CardView = (props: ITicketDetails) => {
-    const { ticketId, customerName, createdAt, source, ticketStatus, statusUpdateString, priority, resolutionDue } = props;
+    const { ticketId, customerName, createdAt, source, ticketStatus, priority } = props;
     const getSourceIcon = useSourceIcon();
     const navigate = useNavigate();
     const match = useMatch('/:tickets/:ticketType')
@@ -43,44 +50,59 @@ export const CardView = (props: ITicketDetails) => {
         navigate(`${match?.pathname}/${ticketId}?noOfRecords=${noOfRecords}&pageNumber=${pageNumber}`, { replace: true });
     }, [match?.pathname, navigate, noOfRecords, pageNumber, ticketId]);
 
+
     return (
-        <StyledCard onClick={onRowClick} >
-            <FlexBox flexDirection="column" gap={'10px'}>
-                <FlexBox gap={'5px'} alignItems="center">
-                    <AccountCircleOutlined />
-                    <Tooltip title={'Customer Name'}>
-                        <Typography variant="h5" >{customerName}</Typography>
-                    </Tooltip>
-                </FlexBox>
-                <FlexBox gap={'10px'} flexDirection="column">
-                    <Priority priority={priority} />
-                    {resolutionDue ? <ResDue date={resolutionDue} /> : null}
-                </FlexBox>
-            </FlexBox>
-            <FlexBox gap={'20px'} renderSeparator={onRenderSeparator}>
-                <FlexBox flexDirection="column" alignItems="center">
-                    <FlexBox gap={'5px'} alignItems="center">
-                        <ConfirmationNumberOutlined />
-                        <Typography variant="body2" maxWidth={'200px'} sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>{ticketId}</Typography>
-                    </FlexBox>
-                    <StyledTypography variant="subtitle2">Ticket Id</StyledTypography>
-                </FlexBox>
-                <FlexBox flexDirection="column" alignItems="center">
-                    <FlexBox gap={'5px'} alignItems="center">
-                        <CalendarToday />
-                        <Typography variant="body2">{createdAt}</Typography>
-                    </FlexBox>
-                    <StyledTypography variant="subtitle2">Created At</StyledTypography>
-                </FlexBox>
-                <FlexBox flexDirection="column" alignItems="center">
+        <StyledCard onClick={onRowClick} justifyContent="space-between">
+            <FlexBox gap={'5px'} flexDirection="column">
+                <Typography variant="h5">Product arrived late</Typography>
+                <FlexBox gap={'20px'} renderSeparator={onRenderSeparator} alignItems="center">
+                    <StyledTypography
+                        variant="body2"
+                        maxWidth={'80px'}>{'#' + ticketId.split('-')[0]}</StyledTypography>
+                    <CustomerName customerName={customerName} />
+                    <CreatedAt createdAt={createdAt} />
                     <FlexBox gap={'5px'} alignItems="center">
                         {getSourceIcon(source)}
-                        <Typography variant="body2">{source}</Typography>
+                        <StyledTypography variant="body2">{source}</StyledTypography>
                     </FlexBox>
-                    <StyledTypography variant="subtitle2">Source</StyledTypography>
                 </FlexBox>
             </FlexBox>
-            <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} statusUpdateString={statusUpdateString} />
+            <FlexBox alignItems="center">
+                <StyledPriority priority={priority} />
+                <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} statusUpdateString={''} renderMode="card" />
+            </FlexBox>
         </StyledCard>
     )
+}
+
+const CustomerName = (props: Pick<ITicketDetails, 'customerName'>) => {
+    const { customerName } = props;
+    const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(customerName)), [customerName]);
+
+    return (
+        <FlexBox gap={'5px'} alignItems="center">
+            <Avatar sx={{ color: textColor, bgcolor: backgroundColor, width: '24px', height: '24px', fontSize: '12px' }}>{getInitialsByName(customerName)}</Avatar>
+            <Tooltip title={'Customer Name'}>
+                <Typography variant="body2" >{customerName}</Typography>
+            </Tooltip>
+        </FlexBox>
+    )
+}
+
+const CreatedAt = (props: Pick<ITicketDetails, 'createdAt'>) => {
+    const parsedDate = DateTime.fromFormat(props.createdAt, 'yyyy-MM-dd hh:mm a');
+    const diff = parsedDate.diffNow();
+
+    const { days, hours, minutes } = diff.shiftTo('days', 'hours', 'minutes').toObject();
+    const parsedDateValue = Math.abs(days!) > 0 ? `${Math.abs(days!)} days` : (Math.abs(hours!) > 0 ? `${Math.abs(hours!)} hours` : `${Math.abs(minutes!)} minutes`);
+
+    return (
+        <>
+            <FlexBox gap={'5px'} alignItems="center">
+                <CalendarToday />
+                <StyledTypography variant="body2">{`Created ${parsedDateValue} ago`}</StyledTypography>
+            </FlexBox>
+        </>
+    )
+
 }

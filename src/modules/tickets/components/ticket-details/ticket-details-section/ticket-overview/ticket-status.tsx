@@ -54,14 +54,15 @@ export const TicketStatus = (props: ITicketStatusProps) => {
         event.stopPropagation();
     };
 
-    const handleMenuItemClick = (_event: React.MouseEvent<HTMLElement>, index: number) => {
+    const handleMenuItemClick = (event: React.MouseEvent<HTMLElement>, index: number) => {
+        event.stopPropagation();
         setSelectedIndex(index);
         setAnchorEl(null);
         onStatusChange(menuOptions[index].id)
-        _event.stopPropagation();
     };
 
-    const handleClose = () => {
+    const handleClose = (event: React.MouseEvent<HTMLElement>) => {
+        event.stopPropagation();
         setAnchorEl(null);
     };
 
@@ -69,7 +70,7 @@ export const TicketStatus = (props: ITicketStatusProps) => {
         <div>
             {renderMode === 'card' ? null : <HorizontalSeparator $margin="0px 0px 10px 0px" />}
             <FlexBox flexDirection="column" padding="0px 20px" gap={'5px'}>
-                <TypographyName variant="h6">Status</TypographyName>
+                {renderMode === 'card' ? null : <TypographyName variant="h6">Status</TypographyName>}
                 <StyledButton
                     variant="contained"
                     onClick={handleClick}
@@ -78,7 +79,7 @@ export const TicketStatus = (props: ITicketStatusProps) => {
                     sx={{ textTransform: 'unset' }}>
                     {ticketStatus}
                 </StyledButton>
-                {<TypographyName variant="subheading2" sx={{ minWidth: renderMode === 'card' ? '175px' : 'unset', minHeight: renderMode === 'card' ? '18.4px' : 'unset' }}>{statusUpdateString}</TypographyName>}
+                {renderMode === 'card' ? null : <TypographyName variant="subheading2">{statusUpdateString}</TypographyName>}
             </FlexBox>
             <Menu
                 anchorEl={anchorEl}
