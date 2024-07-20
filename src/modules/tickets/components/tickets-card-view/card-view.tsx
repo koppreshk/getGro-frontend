@@ -20,7 +20,6 @@ const StyledCard = styled(FlexBox)`
 const StyledTypography = styled(Typography)`
     &&{
         color: ${({ theme }) => theme.pallete.grayVariant3};
-
     }
 `;
 
@@ -70,7 +69,7 @@ export const CardView = (props: ITicketDetails) => {
             </FlexBox>
             <FlexBox alignItems="center">
                 <StyledPriority priority={priority} />
-                <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} statusUpdateString={''} renderMode="card"/>
+                <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} statusUpdateString={''} renderMode="card" />
             </FlexBox>
         </StyledCard>
     )
@@ -95,7 +94,7 @@ const CreatedAt = (props: Pick<ITicketDetails, 'createdAt'>) => {
     const diff = parsedDate.diffNow();
 
     const { days, hours, minutes } = diff.shiftTo('days', 'hours', 'minutes').toObject();
-    const parsedDateValue = Math.abs(days) > 0 ? `${Math.abs(days)} days` : (Math.abs(hours) > 0 ? `${Math.abs(hours)} hours` : `${Math.abs(minutes)} minutes`);
+    const parsedDateValue = Math.abs(days!) > 0 ? `${Math.abs(days!)} days` : (Math.abs(hours!) > 0 ? `${Math.abs(hours!)} hours` : `${Math.abs(minutes!)} minutes`);
 
     return (
         <>
