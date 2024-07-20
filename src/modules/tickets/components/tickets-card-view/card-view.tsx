@@ -93,8 +93,8 @@ const CreatedAt = (props: Pick<ITicketDetails, 'createdAt'>) => {
     const parsedDate = DateTime.fromFormat(props.createdAt, 'yyyy-MM-dd hh:mm a');
     const diff = parsedDate.diffNow();
 
-    const { days, hours, minutes } = diff.shiftTo('days', 'hours', 'minutes').toObject();
-    const parsedDateValue = Math.abs(days!) > 0 ? `${Math.abs(days!)} days` : (Math.abs(hours!) > 0 ? `${Math.abs(hours!)} hours` : `${Math.abs(minutes!)} minutes`);
+    const { days, hours, minutes, seconds } = diff.shiftTo('days', 'hours', 'minutes', 'seconds').toObject();
+    const parsedDateValue = Math.abs(days!) > 0 ? `${Math.abs(days!)} days` : Math.abs(hours!) > 0 ? `${Math.abs(hours!)} hours` : Math.abs(minutes!) > 0 ? `${Math.abs(Math.round(minutes!))} mins` : `${Math.abs(Math.round(seconds!))} seconds`;
 
     return (
         <>
