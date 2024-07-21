@@ -122,14 +122,13 @@ const configurations = [
         categoryName: "Apps",
         categoryIcon: () => <GridViewRounded color="primary" />,
         categoryOptions: [
-
-            {
-                route: "my-apps",
-                label: "My Apps",
-                uniqueKey: "my-apps",
-                description: "View and manage the installed marketplace and custom apps",
-                catOptionIcon: () => <GridViewRounded />
-            },
+            // {
+            //     route: "my-apps",
+            //     label: "My Apps",
+            //     uniqueKey: "my-apps",
+            //     description: "View and manage the installed marketplace and custom apps",
+            //     catOptionIcon: () => <GridViewRounded />
+            // },
             {
                 route: "marketplace",
                 label: "Marketplace",

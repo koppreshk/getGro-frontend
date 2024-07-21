@@ -46,10 +46,11 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
                     <ManageAssigneeContainer ticketId={ticketId} assigneeInfo={assigneeInfo} />
                     <ManagePriorityContainer priority={priority} ticketId={ticketId} />
                 </FlexBox>
-                <FlexBox padding="0px 20px" flexDirection="column" gap="10px">
-                    {ticketDetails?.responseDue ? <DateInfo label="Response due: " date={ticketDetails.responseDue} /> : null}
-                    {ticketDetails?.resolutionDue ? <DateInfo label="Resolution due: " date={ticketDetails.resolutionDue} /> : null}
-                </FlexBox>
+                {ticketDetails?.responseDue || ticketDetails?.resolutionDue ?
+                    <FlexBox padding="0px 20px" flexDirection="column" gap="10px">
+                        {ticketDetails?.responseDue ? <DateInfo label="Response due: " date={ticketDetails.responseDue} /> : null}
+                        {ticketDetails?.resolutionDue ? <DateInfo label="Resolution due: " date={ticketDetails.resolutionDue} /> : null}
+                    </FlexBox> : null}
                 <FlexBox>
                     <Tags />
                 </FlexBox>
