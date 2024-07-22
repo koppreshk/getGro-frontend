@@ -1,14 +1,14 @@
 import React, { MouseEventHandler } from "react";
 import { useMatch, useNavigate, useSearchParams } from "react-router-dom";
-import styled, { css, useTheme } from "styled-components";
-import { Checkbox, Chip, SxProps, Theme, Tooltip } from "@mui/material";
+import styled, { css } from "styled-components";
+import { Checkbox, Chip, Tooltip } from "@mui/material";
 import { Row, createColumnHelper } from "@tanstack/react-table";
-import { Facebook, Email, WhatsApp, Twitter, LocalPhone, Instagram, Sms } from '@mui/icons-material';
 import { DataGrid, NoDataIllustration } from "lib/ui-ux"
 import { ITicketDetails } from "../apis";
 import { useAppDispatch, useAppSelector } from "lib/hooks";
 import { setTotalPages } from "../storage";
 import { useDateDifference } from "lib/utils";
+import { useSourceIcon } from "../hooks/ticket-hooks";
 
 interface IDisplayTicketsGridProps {
     data: ITicketDetails[];
@@ -16,31 +16,6 @@ interface IDisplayTicketsGridProps {
     totalPages: number;
 }
 
-export const useSourceIcon = () => {
-    const theme = useTheme();
-    const getSourceIcon = (source: string, sx?: SxProps<Theme>) => {
-        switch (source.toLocaleLowerCase()) {
-            case 'facebook':
-                return <Facebook sx={{ fill: theme.channelSpecific.facebook + '!important', ...sx }} />
-            case 'email':
-                return <Email sx={{ fill: theme.channelSpecific.email + '!important', ...sx }} />
-            case 'whatsapp':
-                return <WhatsApp sx={{ fill: theme.channelSpecific.whatsApp + '!important', ...sx }} />
-            case 'twitter':
-                return <Twitter sx={{ fill: theme.channelSpecific.twitter + '!important', ...sx }} />
-            case 'telephonic':
-                return <LocalPhone sx={{ fill: theme.channelSpecific.telephonic + '!important', ...sx }} />
-            case 'instagram':
-                return <Instagram sx={{ fill: theme.channelSpecific.instagram + '!important', ...sx }} />
-            case 'sms':
-                return <Sms sx={{ fill: theme.channelSpecific.sms + '!important' }} />
-            default:
-                return <></>;
-        }
-    }
-
-    return getSourceIcon;
-}
 const useColumns = () => {
     const getSourceIcon = useSourceIcon();
 

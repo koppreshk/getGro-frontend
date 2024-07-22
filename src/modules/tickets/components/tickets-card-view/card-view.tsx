@@ -5,10 +5,11 @@ import { Avatar, Tooltip, Typography } from "@mui/material";
 import { CalendarToday } from "@mui/icons-material";
 import { FlexBox, VerticalSeparator } from "lib/ui-ux";
 import { ITicketDetails } from "../../apis";
-import { Priority, useSourceIcon } from "../display-tickets-grid";
+import { Priority } from "../display-tickets-grid";
 import { TicketStatusContainer } from "../../containers";
 import { DateTime } from "luxon";
 import { chooseRandomColors, getInitialsByName } from "lib/utils";
+import { useSourceIcon } from "modules/tickets/hooks";
 
 const StyledCard = styled(FlexBox)`
     background: ${({ theme }) => theme.pallete.white};
