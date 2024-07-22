@@ -1,7 +1,6 @@
 import { FlexBox } from "lib/ui-ux"
 import { TopFourMetrics } from "./top-four-metrics";
 import { TicketStats } from "./ticket-stats";
-import { TicketsDisposed } from "./tickets-disposed";
 import { TicketsBySource } from "./tickets-by-source";
 import { ChannelsInfo } from "modules/dashboard/apis";
 
@@ -28,11 +27,11 @@ export const SupportMonitoring = (props: ISupportMonitoringProps) => {
                     response_overdue={response_overdue}
                     hold_tickets={hold_tickets}
                     pending_tickets={pending_tickets} />
-                <TicketStats />
-                <FlexBox>
+                <FlexBox gap={'20px'} width="100%">
                     <TicketsBySource channelsInfo={channels_info!} />
+                    <TicketStats />
                 </FlexBox>
-                <TicketsDisposed />
+                {/* <TicketsDisposed /> */}
             </FlexBox>
         </>
     )

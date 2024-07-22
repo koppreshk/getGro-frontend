@@ -47,13 +47,13 @@ export const TicketStats = () => {
 
     return (
         <>
-            <StyledContainer padding="20px" flexDirection="column" gap="20px">
+            <StyledContainer padding="20px" flexDirection="column" gap="20px" width="calc(70% - 20px)">
                 <FlexBox justifyContent="space-between" alignItems="center">
                     <Typography variant="h5">Ticket Statistics</Typography>
                     <DateFilters onFilterChangeHandler={onFilterChangeHandler} filterValue={filterValue} dateFilterTypes={['Today', 'Yesterday', 'Last 7 Days', 'Last 30 Days', 'Last 90 Days']} />
                 </FlexBox>
                 <FlexBox width="100%">
-                    <FlexBox gap="20px" width="40%" padding="0px 0px 0px 50px" style={{ borderRight: `1px solid ${pallete.grayVariant1}` }}>
+                    <FlexBox gap="20px" width="40%" style={{ borderRight: `1px solid ${pallete.grayVariant1}` }}>
                         <FlexBox flexDirection="column" gap="60px" width="50%">
                             {quickStats1.map((item) => <QuickStats key={item.name} item={item} />)}
                         </FlexBox>
