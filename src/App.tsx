@@ -9,6 +9,8 @@ import { NotificationProvider, ServiceClientProvider } from "lib";
 import ticketsReducer from './modules/tickets/storage/tickets-slice';
 import configurationsReducer from './modules/settings/storage/configurations-slice';
 import { AuthProvider } from "modules/login/auth-provider-context";
+import { ErrorBoundary } from "react-error-boundary";
+import { ErrorFallback } from "lib/ui-ux";
 // import { SocketProvider } from "lib/providers/socket";
 
 const store = configureStore({
@@ -35,8 +37,9 @@ const queryClient = new QueryClient({
 export default function App() {
 
   return (
-    <MUIthemeProvider theme={defaultMUITheme}>
-      {/* <SocketProvider> */}
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <MUIthemeProvider theme={defaultMUITheme}>
+        {/* <SocketProvider> */}
         <QueryClientProvider client={queryClient}>
           <Provider store={store}>
             <NotificationProvider>
@@ -52,7 +55,8 @@ export default function App() {
             </NotificationProvider>
           </Provider>
         </QueryClientProvider>
-      {/* </SocketProvider> */}
-    </MUIthemeProvider>
+        {/* </SocketProvider> */}
+      </MUIthemeProvider>
+    </ErrorBoundary>
   )
 }
