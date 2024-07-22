@@ -38,7 +38,7 @@ const StyledPriority = styled(Priority)`
 `;
 
 export const CardView = (props: ITicketDetails) => {
-    const { ticketId, customerName, createdAt, source, ticketStatus, priority } = props;
+    const { ticketId, customerName, createdAt, source, ticketStatus, priority, description } = props;
     const getSourceIcon = useSourceIcon();
     const navigate = useNavigate();
     const match = useMatch('/:tickets/:ticketType')
@@ -54,7 +54,7 @@ export const CardView = (props: ITicketDetails) => {
     return (
         <StyledCard onClick={onRowClick} justifyContent="space-between">
             <FlexBox gap={'5px'} flexDirection="column">
-                <Typography variant="h5">Product arrived late</Typography>
+                <Typography variant="h5">{description}</Typography>
                 <FlexBox gap={'20px'} renderSeparator={onRenderSeparator} alignItems="center">
                     <StyledTypography
                         variant="body2"
