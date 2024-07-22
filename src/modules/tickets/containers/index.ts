@@ -4,7 +4,6 @@ export * from './ticket-types';
 export * from './search-customer-container';
 export * from './order-details-container';
 export * from './past-tickets-container';
-export * from './ticket-dispose-container';
 export * from './get-employees-by-queue-container';
 export * from './add-ticket-container';
 export * from './overview';

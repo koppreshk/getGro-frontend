@@ -21,12 +21,11 @@ export * from './telephonic-apis/fetch-calls-by-ticket-id';
 
 export * from './get-order-details';
 export * from './fetch-ticket-by-id';
-export * from './dispose-ticket';
+
 export * from './attach-customer';
 export * from './unlink-customer';
 export * from './get-data-by-key';
 export * from './fetch-ticket-by-id';
 export * from './get-ticket-conversations';
-export * from './fetch-ticket-disposition-options';
 export * from './create-manual-ticket';
 export * from './fetch-priorities';

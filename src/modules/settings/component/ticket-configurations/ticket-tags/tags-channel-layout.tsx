@@ -3,7 +3,7 @@ import { Box, Tab, Tabs, Typography } from "@mui/material";
 import { FlexBox, CustomIconButton, BreadCrumbs } from 'lib/ui-ux';
 import { IChannels } from 'modules/settings/apis/tags';
 import { TicketTagsContainer } from 'modules/settings/containers';
-import { useSourceIcon } from 'modules/tickets/components';
+import { useSourceIcon } from 'modules/tickets/hooks';
 import React from "react";
 import { useNavigate } from 'react-router-dom';
 

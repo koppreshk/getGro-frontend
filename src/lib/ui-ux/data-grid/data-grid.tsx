@@ -37,6 +37,7 @@ const DataGridWrapper = styled(FlexBox)`
     width: 100%;
     height: 100%;
     position: relative;
+    background: ${({ theme }) => theme.pallete.white};
 `;
 
 const StyledTable = styled.table<{ $showPointerCursor: boolean; $isLoading?: boolean, $itemHeight?: string }>`
@@ -57,7 +58,6 @@ const StyledTable = styled.table<{ $showPointerCursor: boolean; $isLoading?: boo
 `;
 
 export function DataGrid<T extends object>(props: IDataGridProps<T>) {
-
     const { data, columns, isLoading, itemHeight, hideTableControls = false, className, onRowClick } = props
     const memoizedData = useMemo(() => isLoading ? Array(10).fill({}) : data, [data, isLoading]);
     const memoizedColumns = useMemo(() =>
@@ -95,7 +95,7 @@ export function DataGrid<T extends object>(props: IDataGridProps<T>) {
         <DndProvider backend={HTML5Backend}>
             <DataGridWrapper flexDirection='column' gap="10px" className={className}>
                 {/* {hideTableControls ? null : <TableControls totalPages={totalPages} isTableActionsvisible={table.getIsSomeRowsSelected() || table.getIsAllRowsSelected()} />} */}
-                <ColumnsConfiguration allColumns={table.getAllLeafColumns()} top={hideTableControls ? '-10px' : '86px'} resetColumnVisibility={table.resetColumnVisibility} />
+                <ColumnsConfiguration allColumns={table.getAllLeafColumns()} top={hideTableControls ? '-10px' : '5px'} resetColumnVisibility={table.resetColumnVisibility} />
                 <ScrollableDiv>
                     <TableWrapper>
                         <StyledTable style={{ minWidth: table.getCenterTotalSize() }} $isLoading={isLoading} $showPointerCursor={onRowClick !== undefined} $itemHeight={itemHeight}>

@@ -6,7 +6,7 @@ import { FlexBox } from "lib/ui-ux"
 import { ITicketDetails } from "modules/tickets/apis";
 import { useAppDispatch } from "lib/hooks";
 import { setTicketDetails } from "modules/tickets/storage";
-import { useSourceIcon } from "../../display-tickets-grid";
+import { useSourceIcon } from "modules/tickets/hooks";
 
 interface ITicketListProps {
     data: ITicketDetails[];

@@ -6,9 +6,9 @@ import { IChannels, useFetchTagsByChannel } from "modules/settings/apis/tags";
 import { GetEmployeesByQueueContainer } from "modules/tickets/containers";
 import { Queue } from "modules/settings/apis";
 import { IAddTIcketFormFields } from "./add-ticket";
-import { useSourceIcon } from "../../display-tickets-grid";
 import { IPriorities, useCreateManualTicket } from "modules/tickets/apis";
 import { useNotifications } from "lib";
+import { useSourceIcon } from "modules/tickets/hooks";
 
 interface IAddTicketFormProps {
     queueData: Queue[];

@@ -3,7 +3,7 @@ import { Chip, Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { ITicketDetails } from "modules/tickets/apis";
 import styled, { useTheme } from "styled-components";
-import { useSourceIcon } from "modules/tickets/components";
+import { useSourceIcon } from "modules/tickets/hooks";
 
 const TimeLine = styled.div`
   width: 5px;
