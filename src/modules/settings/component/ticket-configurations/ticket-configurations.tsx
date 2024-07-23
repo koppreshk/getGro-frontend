@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import {
     TaskOutlined, Tag, AccountCircle, WorkHistory, LockPerson, Facebook, SellOutlined,
     GridViewRounded, StoreRounded, ThumbsUpDown, SettingsRounded, SupportAgentRounded,
-    Groups2Outlined, EventNoteOutlined, AssignmentTurnedInOutlined, Email
+    Groups2Outlined, EventNoteOutlined, AssignmentTurnedInOutlined, Email, ManageHistory, ConfirmationNumber, MoreTime
 } from "@mui/icons-material";
 import styled from "styled-components";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -75,6 +75,40 @@ const configurations = [
                 catOptionIcon: () => <Email />,
                 description: 'Setup support email inboxes for ticket automation'
             }
+        ]
+    },
+    {
+        categoryName: "Ticket Automation",
+        categoryIcon: () => <ManageHistory color="primary" />,
+        categoryOptions: [
+            {
+                route: "auto-assignments",
+                label: "Auto Assignments",
+                uniqueKey: "auto-assignments",
+                catOptionIcon: () => <ManageHistory />,
+                description: "Setup automatic agent assignment rules for a ticket"
+            },
+            {
+                route: "create-ticket-triggers",
+                label: "Create Ticket Triggers",
+                uniqueKey: "create-ticket-triggers",
+                catOptionIcon: () => <ConfirmationNumber />,
+                description: "Setup automation rules to perform actions on ticket creation"
+            },
+            {
+                route: "update-ticket-triggers",
+                label: "Update Ticket Triggers",
+                uniqueKey: "update-ticket-triggers",
+                catOptionIcon: () => <ConfirmationNumber />,
+                description: "Setup automation rules to perform actions on ticket update"
+            },
+            {
+                route: "time-triggers",
+                label: "Time Triggers",
+                uniqueKey: "time-triggers",
+                catOptionIcon: () => <MoreTime />,
+                description: "Setup automation rules to perform repeated actions over time"
+            },
         ]
     },
     {
