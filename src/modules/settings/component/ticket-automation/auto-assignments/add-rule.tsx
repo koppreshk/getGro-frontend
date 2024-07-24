@@ -5,8 +5,6 @@ import Box from '@mui/material/Box';
 import { CustomTabPanel, a11yProps } from 'lib/ui-ux';
 import { ChooseConditionForm } from './choose-condition-form';
 
-
-
 export const AddRule = () => {
     const [value, setValue] = React.useState(0);
 
@@ -16,7 +14,7 @@ export const AddRule = () => {
 
     return (
         <>
-            <Box sx={{ width: '100%', padding: '20px' }}>
+            <Box sx={{ width: '100%', padding: '20px', boxSizing: 'border-box', height: '100%' }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                         <Tab label="Choose Condition" {...a11yProps(0)} />

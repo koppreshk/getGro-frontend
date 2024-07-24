@@ -14,6 +14,7 @@ export function CustomTabPanel(props: TabPanelProps) {
             role="tabpanel"
             hidden={value !== index}
             id={`simple-tabpanel-${index}`}
+            style={{ boxSizing: 'border-box', overflow: 'auto', height: 'calc(100% - 49px)' }}
             aria-labelledby={`simple-tab-${index}`}
             {...other}
         >
