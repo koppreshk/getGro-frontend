@@ -11,9 +11,9 @@ const StyledRadioGroupFields = styled(RadioGroupField)`
 
 export const AssociateAgent = () => {
     return (
-        <FlexBox flexDirection="column" gap={'20px'}>
-            <ul>
-                <li>One active and available agent in the specified group will be selected for assignment</li>
+        <FlexBox flexDirection="column" gap={'24px'}>
+            <ul style={{ paddingLeft: '15px' }}>
+                <li style={{ marginBottom: '5px' }}>One active and available agent in the specified group will be selected for assignment</li>
                 <li>If the ticket, already has a Group/Agent set, this rule will not trigger</li>
             </ul>
             <FlexBox gap={'10px'} flexDirection="column">
@@ -27,9 +27,9 @@ export const AssociateAgent = () => {
                         { key: 'round-robin-lb', label: 'Round Robin(Load Based)', subText: 'Allocates tickets to agents based on their workload.' }]} />
             </FlexBox>
             <FlexBox flexDirection="column" gap={'5px'}>
-                <Typography>Choose a queue that is eligible for auto-assignment</Typography>
+                <Typography variant="h6">Choose a queue that is eligible for auto-assignment</Typography>
                 <SelectField name="selectedQueue" sx={{ width: '20%' }} menuOptions={[]} rules={{ required: 'Please select a queue' }} />
             </FlexBox>
-        </FlexBox>
+        </FlexBox >
     )
 }

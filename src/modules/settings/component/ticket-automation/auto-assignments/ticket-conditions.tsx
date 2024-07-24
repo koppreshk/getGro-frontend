@@ -41,7 +41,7 @@ export const TicketConditions = (props: TicketConditionsProps) => {
                                     name={`${fieldArrayName}.${index}.conditionValue`}
                                     label="Field Options"
                                     rules={{ required: 'Please select an option' }}
-                                    menuOptions={[]} sx={{ width: '100%' }} />
+                                    menuOptions={[{ key: 'email', value: 'Email' }]} sx={{ width: '100%' }} />
                             </div>
                         </FlexBox>
                         <IconButton onClick={() => remove(index)} sx={{ width: 'fit-content' }}>
