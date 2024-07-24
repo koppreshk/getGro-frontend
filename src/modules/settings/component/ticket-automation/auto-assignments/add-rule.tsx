@@ -4,6 +4,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { CustomTabPanel, a11yProps } from 'lib/ui-ux';
 import { ChooseConditionForm } from './choose-condition-form';
+import { AssociateAgent } from './associate-agent';
 
 export const AddRule = () => {
     const [value, setValue] = React.useState(0);
@@ -25,7 +26,7 @@ export const AddRule = () => {
                     <ChooseConditionForm />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
-                    Item Two
+                    <AssociateAgent />
                 </CustomTabPanel>
             </Box>
         </>

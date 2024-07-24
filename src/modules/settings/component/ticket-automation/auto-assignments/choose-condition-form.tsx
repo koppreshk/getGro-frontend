@@ -23,11 +23,11 @@ export const ChooseConditionForm = () => {
             <FlexBox flexDirection="column" alignItems="center" width="100%">
                 <TicketConditions
                     fieldArrayName="allTicketConditions"
-                    heading={<Typography variant="body2">Apply this SLA to the tickets that meet <b>All</b> of these conditions</Typography>} />
+                    heading={<Typography variant="body2">Apply this rule to the tickets that meet <b>All</b> of these conditions</Typography>} />
                 <ConditionCombiner />
                 <TicketConditions
                     fieldArrayName="anyTicketConditions"
-                    heading={<Typography variant="body2">Apply this SLA to the tickets that meet <b>Any</b> of these conditions</Typography>} />
+                    heading={<Typography variant="body2">Apply this rule to the tickets that meet <b>Any</b> of these conditions</Typography>} />
             </FlexBox>
         </FlexBox>
     )
