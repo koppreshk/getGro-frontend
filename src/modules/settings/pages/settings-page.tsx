@@ -7,6 +7,7 @@ import { AgentAvailabilityLayout } from "../component/general/agent-availability
 import { SatisfactionSurveyLayout } from "../component/general/satifaction-survey/satisfaction-survey-layout"
 import { MarketplaceRoutes } from "../component/apps/marketplace/marketplace-layout"
 import { TicketStatusContainer } from "../containers/ticket-status"
+import { AutoAssignmentsLayout } from "../component/ticket-automation"
 
 export default function ConfigurationsPage() {
     return (
@@ -19,6 +20,7 @@ export default function ConfigurationsPage() {
             <Route key="facebook-login" path="/facebook" element={<FacebookConfigurations />} />
             <Route key="email-config" path="/email/*" element={<EmailConfigLayout />} />
             <Route key="add-user" path="/users" element={<UsersLayout />} />
+            <Route key="auto-assignment" path="/auto-assignments/*" element={<AutoAssignmentsLayout />} />
             <Route key="agent-availability" path="/agent-availability" element={<AgentAvailabilityLayout />} />
             <Route key="satisfaction-survey" path="/satisfaction-survey" element={<SatisfactionSurveyLayout />} />
             <Route key="marketplace" path="/marketplace/*" element={<MarketplaceRoutes />} />
