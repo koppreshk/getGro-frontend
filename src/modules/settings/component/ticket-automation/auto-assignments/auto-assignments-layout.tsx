@@ -5,6 +5,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Add } from "@mui/icons-material"
 import { Button, Typography } from "@mui/material"
 import { BreadCrumbs, CustomIconButton, FlexBox, MoreInformation } from "lib/ui-ux";
+import { AddRuleContainer } from "modules/settings/containers/ticket-automation";
 
 export interface IAutoAssignmentsLayoutProps {
 
@@ -18,6 +19,7 @@ export const AutoAssignmentsLayout = (props: IAutoAssignmentsLayoutProps) => {
             <div style={{ height: 'calc(100% - 34px)' }}>
                 <Routes>
                     <Route key='base-route' path="/" element={<AutoAssignmentsContent {...props} />} />
+                    <Route key='base-route' path="/add-rule" element={<AddRuleContainer />} />
                 </Routes>
             </div>
         </FlexBox>
@@ -28,7 +30,7 @@ const AutoAssignmentsContent = () => {
     const navigate = useNavigate();
 
     const toggleAddAutoAssignmentsDrawer = useCallback(() => {
-        navigate('add-new-rule');
+        navigate('add-rule');
     }, [navigate]);
 
     return (
