@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 export interface IWhatsAppMessages {
     ticket_id: string;
     customer_name: string;
-    agent_name: string;
+    agent_name: string | null;
     conversations: Conversation[];
 }
 

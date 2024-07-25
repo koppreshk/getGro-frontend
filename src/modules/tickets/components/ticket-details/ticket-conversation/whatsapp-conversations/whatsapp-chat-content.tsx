@@ -61,7 +61,7 @@ const Wrapper = styled(FlexBox) <{ $isCustomerQuery: boolean }>`
 
 interface IChatContentProps {
     content: Conversation;
-    agentName: string;
+    agentName: string | null;
     customerName: string;
 }
 
@@ -69,7 +69,7 @@ export const WhatsAppChatContent = (props: IChatContentProps) => {
     const { content, agentName, customerName } = props;
     const isCustomerQuery = !content.is_agent_sent;
     const containerRef = React.useRef<HTMLDivElement>(null);
-    const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(isCustomerQuery ? customerName : agentName), [agentName, customerName, isCustomerQuery]);
+    const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(isCustomerQuery ? customerName : agentName || 'NA'), [agentName, customerName, isCustomerQuery]);
     const agtMsgDeliveryStatus = content.read ? 'read' : content.delivered ? 'delivered' : 'sent';
 
     React.useEffect(() => {
@@ -78,7 +78,7 @@ export const WhatsAppChatContent = (props: IChatContentProps) => {
 
     return (
         <Wrapper gap="10px" alignItems="center" ref={containerRef} $isCustomerQuery={isCustomerQuery} flexDirection={isCustomerQuery ? 'row' : 'row-reverse'}>
-            <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>{getInitialsByName(isCustomerQuery ? customerName : agentName)}</Avatar>
+            <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>{getInitialsByName(isCustomerQuery ? customerName : (agentName || 'NA'))}</Avatar>
             <Content $isCustomerQuery={isCustomerQuery} maxWidth="50%" flexDirection="column" >
                 {content.file_url ? <img src={content.file_url} loading="lazy" /> : null}
                 <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap', marginRight: '21px' }} >
