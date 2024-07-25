@@ -6,7 +6,7 @@ import { Typography } from "@mui/material";
 const StyledContainer = styled(FlexBox)`
     border: ${({ theme }) => theme.semantics.standardBorder};
     border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
-    background: ${({ theme }) => theme.pallete.white};
+    background: ${({ theme }) => theme.pallete.grayVariant5};
 `;
 
 interface MoreInformationProps {

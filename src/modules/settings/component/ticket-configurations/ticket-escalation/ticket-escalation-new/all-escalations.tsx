@@ -33,7 +33,7 @@ const useColumns = () => {
         }),
         columnHelper.display({
             id: 'isSLAActive',
-            header: () => <span>SLA Active</span>,
+            header: () => 'SLA Active',
             cell: ({ row: { original } }) => {
                 return (
                     <SLAStatus status={original.is_active} id={original.id} />
@@ -43,7 +43,7 @@ const useColumns = () => {
         }),
         columnHelper.display({
             id: 'actions',
-            header: () => <span>Actions</span>,
+            header: () => 'Actions',
             cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
