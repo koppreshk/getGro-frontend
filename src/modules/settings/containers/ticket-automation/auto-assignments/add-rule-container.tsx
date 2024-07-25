@@ -1,3 +1,5 @@
+import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
+import { useFetchFieldsAndConditions } from "modules/settings/apis/ticket-automation";
 import { AddRule } from "modules/settings/component/ticket-automation"
 import { FormProvider, useForm } from "react-hook-form"
 
@@ -5,12 +7,12 @@ export interface IAddRuleFormFields {
     ruleName: string;
     description: string;
     allTicketConditions: {
-        condition: string;
+        operator: string;
         conditionValue: string;
         ticketFields: string;
     }[];
     anyTicketConditions: {
-        condition: string;
+        operator: string;
         conditionValue: string;
         ticketFields: string;
     }[]
@@ -23,7 +25,7 @@ export const AddRuleContainer = () => {
         defaultValues: {
             allTicketConditions: [{
                 ticketFields: '',
-                condition: 'is',
+                operator: '',
                 conditionValue: ''
             }],
             description: '',
@@ -33,10 +35,19 @@ export const AddRuleContainer = () => {
             selectedQueue: ''
         }
     });
+    const { data, isLoading } = useFetchFieldsAndConditions();
 
-    return (
-        <FormProvider {...form}>
-            <AddRule />
-        </FormProvider>
-    )
+    if (isLoading) {
+        return <CenteredCircularProgress />
+    }
+
+    if (data) {
+        return (
+            <FormProvider {...form}>
+                <AddRule data={data} />
+            </FormProvider>
+        )
+    }
+
+    return <ErrorMessage />
 }

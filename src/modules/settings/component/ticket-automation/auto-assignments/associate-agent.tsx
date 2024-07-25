@@ -1,6 +1,7 @@
-import { Typography } from "@mui/material"
+import { CircularProgress, Typography } from "@mui/material"
 import { RadioGroupField, SelectField } from "lib/form-fields"
 import { FlexBox } from "lib/ui-ux"
+import { useFetchAllQueues } from "modules/settings/apis/escalations";
 import styled from "styled-components";
 
 const StyledRadioGroupFields = styled(RadioGroupField)`
@@ -10,6 +11,8 @@ const StyledRadioGroupFields = styled(RadioGroupField)`
 `;
 
 export const AssociateAgent = () => {
+    const { data: allQueues, isLoading: isQueueLoading } = useFetchAllQueues();
+
     return (
         <FlexBox flexDirection="column" gap={'24px'}>
             <ul style={{ paddingLeft: '15px' }}>
@@ -26,9 +29,11 @@ export const AssociateAgent = () => {
                         { key: 'round-robin-ed', label: 'Round Robin(Even Distribution)', subText: 'Evenly distributes tickets among agents.' },
                         { key: 'round-robin-lb', label: 'Round Robin(Load Based)', subText: 'Allocates tickets to agents based on their workload.' }]} />
             </FlexBox>
-            <FlexBox flexDirection="column" gap={'5px'}>
+            <FlexBox flexDirection="column" gap={'10px'}>
                 <Typography variant="h6">Choose a queue that is eligible for auto-assignment</Typography>
-                <SelectField name="selectedQueue" sx={{ width: '20%' }} menuOptions={[]} rules={{ required: 'Please select a queue' }} />
+                {isQueueLoading
+                    ? <CircularProgress />
+                    : <SelectField label="Queue " name="selectedQueue" sx={{ width: '20%' }} menuOptions={allQueues?.map((item) => ({ key: item.id.toString(), value: item.name })) || []} rules={{ required: 'Please select a queue' }} />}
             </FlexBox>
         </FlexBox >
     )
