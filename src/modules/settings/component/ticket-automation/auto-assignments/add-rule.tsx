@@ -7,16 +7,21 @@ import { KeyboardArrowLeft, Save, KeyboardArrowRight } from '@mui/icons-material
 import { useFormContext } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { FetchFieldsAndConditions } from 'modules/settings/apis/ticket-automation';
+import { IAddRuleFormFields } from 'modules/settings/containers/ticket-automation';
+import { useNotifications } from 'lib';
 
 interface AddRuleProps {
     mode?: string;
-    data: FetchFieldsAndConditions[]
+    data: FetchFieldsAndConditions[];
+    onSubmit: (formData: IAddRuleFormFields) => Promise<void>;
 }
 
 export const AddRule = (props: AddRuleProps) => {
+    const { onSubmit } = props;
     const [activeStep, setActiveStep] = React.useState(0);
-    const form = useFormContext();
+    const form = useFormContext<IAddRuleFormFields>();
     const navigate = useNavigate();
+    const { showNotification } = useNotifications();
 
     const renderBasedOnActiveStep = () => {
         switch (activeStep) {
@@ -43,8 +48,16 @@ export const AddRule = (props: AddRuleProps) => {
     const isLastStep = activeStep === steps.length - 1;
     const isInBetween = activeStep !== 0 || isLastStep;
 
-    const onSave = () => { }
     const onClose = () => navigate(-1);
+
+    const onSave = (formData: IAddRuleFormFields) => {
+        onSubmit(formData)
+            .then(() => {
+                onClose();
+                showNotification({ message: 'Successfully added the rules' })
+            })
+            .catch(() => showNotification({ message: 'Failed to add the rule', type: 'error' }));
+    }
 
     return (
         <FlexBox width='100%' padding='20px' height='100%' flexDirection='column' alignItems='center'>

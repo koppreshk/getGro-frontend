@@ -1,5 +1,5 @@
 import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
-import { useFetchFieldsAndConditions } from "modules/settings/apis/ticket-automation";
+import { useCreateAutoAssignment, useFetchFieldsAndConditions } from "modules/settings/apis/ticket-automation";
 import { AddRule } from "modules/settings/component/ticket-automation"
 import { FormProvider, useForm } from "react-hook-form"
 
@@ -21,6 +21,9 @@ export interface IAddRuleFormFields {
 }
 
 export const AddRuleContainer = () => {
+    const { data, isLoading } = useFetchFieldsAndConditions();
+    const { mutateAsync } = useCreateAutoAssignment();
+
     const form = useForm<IAddRuleFormFields>({
         defaultValues: {
             allTicketConditions: [{
@@ -31,11 +34,25 @@ export const AddRuleContainer = () => {
             description: '',
             ruleName: '',
             anyTicketConditions: [],
-            assignmentMode: 'round-robin-ed',
+            assignmentMode: 'even_distribution',
             selectedQueue: ''
         }
     });
-    const { data, isLoading } = useFetchFieldsAndConditions();
+
+    const onSubmit = (formData: IAddRuleFormFields) => {
+        const { ruleName, description, allTicketConditions, anyTicketConditions, assignmentMode, selectedQueue } = formData;
+        const modAllConditions = allTicketConditions.map((item) => ({ operator_id: item.operator, ticket_field_id: item.ticketFields, value: item.conditionValue, rule_type: 'type_all' }))
+        const modAnyConditions = anyTicketConditions.map((item) => ({ operator_id: item.operator, ticket_field_id: item.ticketFields, value: item.conditionValue, rule_type: 'type_any' }))
+        return mutateAsync({
+            name: ruleName,
+            description,
+            rules: modAllConditions.concat(modAnyConditions),
+            associate_agent: {
+                assignment_mode: assignmentMode,
+                queue_id: selectedQueue
+            }
+        })
+    }
 
     if (isLoading) {
         return <CenteredCircularProgress />
@@ -44,7 +61,7 @@ export const AddRuleContainer = () => {
     if (data) {
         return (
             <FormProvider {...form}>
-                <AddRule data={data} />
+                <AddRule data={data} onSubmit={onSubmit} />
             </FormProvider>
         )
     }
