@@ -1,26 +1,32 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import { CustomSteps, FlexBox } from 'lib/ui-ux';
 import { ChooseConditionForm } from './choose-condition-form';
 import { AssociateAgent } from './associate-agent';
-import { Button, DialogActions } from '@mui/material';
+import { Button } from '@mui/material';
 import { KeyboardArrowLeft, Save, KeyboardArrowRight } from '@mui/icons-material';
 import { useFormContext } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { FetchFieldsAndConditions } from 'modules/settings/apis/ticket-automation';
+import { IAddRuleFormFields } from 'modules/settings/containers/ticket-automation';
+import { useNotifications } from 'lib';
 
 interface AddRuleProps {
     mode?: string;
+    data: FetchFieldsAndConditions[];
+    onSubmit: (formData: IAddRuleFormFields) => Promise<void>;
 }
 
 export const AddRule = (props: AddRuleProps) => {
+    const { onSubmit } = props;
     const [activeStep, setActiveStep] = React.useState(0);
-    const form = useFormContext();
+    const form = useFormContext<IAddRuleFormFields>();
     const navigate = useNavigate();
+    const { showNotification } = useNotifications();
 
     const renderBasedOnActiveStep = () => {
         switch (activeStep) {
             case 0:
-                return <ChooseConditionForm />;
+                return <ChooseConditionForm data={props.data} />;
             case 1:
                 return <AssociateAgent />;
             default: return <></>
@@ -42,25 +48,33 @@ export const AddRule = (props: AddRuleProps) => {
     const isLastStep = activeStep === steps.length - 1;
     const isInBetween = activeStep !== 0 || isLastStep;
 
-    const onSave = () => { }
     const onClose = () => navigate(-1);
 
+    const onSave = (formData: IAddRuleFormFields) => {
+        onSubmit(formData)
+            .then(() => {
+                onClose();
+                showNotification({ message: 'Successfully added the rules' })
+            })
+            .catch(() => showNotification({ message: 'Failed to add the rule', type: 'error' }));
+    }
+
     return (
-        <Box sx={{ width: '100%', padding: '20px', boxSizing: 'border-box', height: '100%' }}>
-            <CustomSteps activeStep={activeStep} steps={steps} width='60%'/>
-            <div style={{ padding: '30px 60px', height: `calc(100% - 94px)`, boxSizing: 'border-box', overflow: 'auto' }}>
+        <FlexBox width='100%' padding='20px' height='100%' flexDirection='column' alignItems='center'>
+            <CustomSteps activeStep={activeStep} steps={steps} width='75%' />
+            <div style={{ padding: '30px 60px', height: `calc(100% - 94px)`, width: '75%', boxSizing: 'border-box', overflow: 'auto' }}>
                 {
                     renderBasedOnActiveStep()
                 }
             </div>
-            <DialogActions>
+            <FlexBox width='75%' justifyContent='space-between' padding='20px 0px 0px 0px'>
                 {isLastStep || isInBetween
                     ?
                     <Button variant="contained" startIcon={<KeyboardArrowLeft />} onClick={isLastStep || isInBetween ? handleBack : onClose}>
                         Back
                     </Button>
                     : null}
-                <FlexBox justifyContent="flex-end" width='calc(100% - 94px)'>
+                <FlexBox justifyContent="flex-end" width={isLastStep || isInBetween ? 'calc(100% - 95px)' : '100%'}>
                     <FlexBox gap='20px'>
                         <Button variant="contained" color="error" onClick={onClose}>
                             {'Cancel'}
@@ -76,7 +90,7 @@ export const AddRule = (props: AddRuleProps) => {
                         </Button>
                     </FlexBox>
                 </FlexBox>
-            </DialogActions>
-        </Box>
+            </FlexBox>
+        </FlexBox>
     )
 }
