@@ -7,6 +7,7 @@ import { BreadCrumbs, CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-u
 import { ITicketQueues } from "modules/settings/apis/queues"
 import { CreateTicketQueueContainer } from "modules/settings/containers"
 import { TicketQueueList } from "./ticket-queue-list"
+import { MoreInformation } from "lib/ui-ux/common/more-information";
 
 interface IAddNewQueueProps {
     openAddQueueDrawer: boolean;
@@ -46,15 +47,18 @@ export const TicketQueue = (props: ITicketQueueProps) => {
     return (
         <FlexBox width="100%" flexDirection="column">
             <BreadCrumbs />
-            <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
-                <FlexBox alignItems="center" gap="10px">
-                    <CustomIconButton onClick={() => navigate('/configurations')} iconComponent={<ArrowBackIcon />} tooltipProps={{ title: 'Back' }} />
-                    <Typography variant="h5">Ticket Queue</Typography>
+            <FlexBox flexDirection="column" gap={'20px'} padding="20px">
+                <MoreInformation information="Queues in an organization help associate the related agents. Queues can be utilized in auto-assignment, automation, ticket permission restrictions, and sharing filters" />
+                <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
+                    <FlexBox alignItems="center" gap="10px">
+                        <CustomIconButton onClick={() => navigate('/configurations')} iconComponent={<ArrowBackIcon />} tooltipProps={{ title: 'Back' }} />
+                        <Typography variant="h5">Ticket Queue</Typography>
+                    </FlexBox>
+                    <Button variant="contained" startIcon={<Add />} onClick={toggleAddQueueDrawer}>Add Queue</Button>
+                    <AddNewQueue openAddQueueDrawer={openAddQueueDrawer} toggleAddQueueDrawer={toggleAddQueueDrawer} />
                 </FlexBox>
-                <Button variant="contained" startIcon={<Add />} onClick={toggleAddQueueDrawer}>Add Queue</Button>
-                <AddNewQueue openAddQueueDrawer={openAddQueueDrawer} toggleAddQueueDrawer={toggleAddQueueDrawer} />
+                <TicketQueueList queueData={data.queues} isLoading={isLoading} totalPages={data.total_pages} />
             </FlexBox>
-            <TicketQueueList queueData={data.queues} isLoading={isLoading} totalPages={data.total_pages} />
         </FlexBox>
     )
 }

@@ -14,6 +14,8 @@ export interface IAddRuleFormFields {
         conditionValue: string;
         ticketFields: string;
     }[]
+    assignmentMode: string;
+    selectedQueue: string;
 }
 
 export const AddRuleContainer = () => {
@@ -25,7 +27,10 @@ export const AddRuleContainer = () => {
                 conditionValue: ''
             }],
             description: '',
-            ruleName: ''
+            ruleName: '',
+            anyTicketConditions: [],
+            assignmentMode: 'round-robin-ed',
+            selectedQueue: ''
         }
     });
 

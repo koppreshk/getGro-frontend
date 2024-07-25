@@ -10,6 +10,7 @@ import { useAppDispatch } from "lib/hooks";
 import { setTotalPage } from "modules/settings/storage";
 import { AllEscalations } from "./ticket-escalation-new/all-escalations";
 import { CreateTicketSLAContainer, EditTicketSLAContainer } from "modules/settings/containers/ticket-sla";
+import { MoreInformation } from "lib/ui-ux/common/more-information";
 
 export interface ITicketEscalaltionLayoutProps {
     isLoading: boolean;
@@ -46,7 +47,8 @@ const EscalationLayoutContent = (props: ITicketEscalaltionLayoutProps) => {
     }, [navigate]);
 
     return (
-        <>
+        <FlexBox flexDirection="column" gap={'20px'} padding="20px">
+            <MoreInformation information="SLAs help to set the response and resolution times in support tickets. Each SLA can be configured to operate either for calendar hours (24*7) or specific business hours. The first matching SLA from the specified order will be applied when a ticket is created or updated."/>
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
                     <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBackIcon />} tooltipProps={{ title: 'Back' }} />
@@ -55,6 +57,6 @@ const EscalationLayoutContent = (props: ITicketEscalaltionLayoutProps) => {
                 <Button variant="contained" onClick={toggleAddEscalationDrawer} startIcon={<Add />}>Add Escalation</Button>
             </FlexBox>
             <AllEscalations {...props} />
-        </>
+        </FlexBox>
     );
 }

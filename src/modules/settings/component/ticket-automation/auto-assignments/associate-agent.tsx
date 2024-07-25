@@ -13,8 +13,8 @@ export const AssociateAgent = () => {
     return (
         <FlexBox flexDirection="column" gap={'24px'}>
             <ul style={{ paddingLeft: '15px' }}>
-                <li style={{ marginBottom: '5px' }}>One active and available agent in the specified group will be selected for assignment</li>
-                <li>If the ticket, already has a Group/Agent set, this rule will not trigger</li>
+                <li style={{ marginBottom: '5px' }}>One active and available agent in the specified queue will be selected for assignment</li>
+                <li>If the ticket, already has a Queue/Agent set, this rule will not trigger</li>
             </ul>
             <FlexBox gap={'10px'} flexDirection="column">
                 <Typography variant="h4">Assignment Mode</Typography>
