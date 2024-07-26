@@ -59,7 +59,7 @@ export const CardView = (props: ITicketDetails) => {
                 <FlexBox gap={'20px'} renderSeparator={onRenderSeparator} alignItems="center">
                     <StyledTypography
                         variant="body2"
-                        maxWidth={'80px'}>{'#' + ticketId.split('-')[0]}</StyledTypography>
+                        width={'80px'}>{'#' + ticketId.split('-')[0]}</StyledTypography>
                     <CustomerName customerName={customerName} />
                     <CreatedAt createdAt={createdAt} />
                     <FlexBox gap={'5px'} alignItems="center">
@@ -81,7 +81,7 @@ const CustomerName = (props: Pick<ITicketDetails, 'customerName'>) => {
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(customerName)), [customerName]);
 
     return (
-        <FlexBox gap={'5px'} alignItems="center">
+        <FlexBox gap={'5px'} alignItems="center" width="150px" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
             <Avatar sx={{ color: textColor, bgcolor: backgroundColor, width: '24px', height: '24px', fontSize: '12px' }}>{getInitialsByName(customerName)}</Avatar>
             <Tooltip title={'Customer Name'}>
                 <Typography variant="body2" >{customerName}</Typography>
@@ -99,7 +99,7 @@ const CreatedAt = (props: Pick<ITicketDetails, 'createdAt'>) => {
 
     return (
         <>
-            <FlexBox gap={'5px'} alignItems="center">
+            <FlexBox gap={'5px'} alignItems="center" width="198px">
                 <CalendarToday />
                 <StyledTypography variant="body2">{`Created ${parsedDateValue} ago`}</StyledTypography>
             </FlexBox>
