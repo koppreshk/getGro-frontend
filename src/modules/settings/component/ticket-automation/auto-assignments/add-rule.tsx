@@ -4,7 +4,7 @@ import { ChooseConditionForm } from './choose-condition-form';
 import { AssociateAgent } from './associate-agent';
 import { Button } from '@mui/material';
 import { KeyboardArrowLeft, Save, KeyboardArrowRight } from '@mui/icons-material';
-import { useFormContext } from 'react-hook-form';
+import { FormProvider, useForm, useFormContext } from "react-hook-form"
 import { useNavigate } from 'react-router-dom';
 import { FetchFieldsAndConditions } from 'modules/settings/apis/ticket-automation';
 import { IAddRuleFormFields } from 'modules/settings/containers/ticket-automation';
@@ -12,11 +12,12 @@ import { useNotifications } from 'lib';
 
 interface AddRuleProps {
     mode?: string;
+    defaultValues?: IAddRuleFormFields;
     data: FetchFieldsAndConditions[];
     onSubmit: (formData: IAddRuleFormFields) => Promise<void>;
 }
 
-export const AddRule = (props: AddRuleProps) => {
+const AddRuleBase = (props: AddRuleProps) => {
     const { onSubmit } = props;
     const [activeStep, setActiveStep] = React.useState(0);
     const form = useFormContext<IAddRuleFormFields>();
@@ -54,9 +55,9 @@ export const AddRule = (props: AddRuleProps) => {
         onSubmit(formData)
             .then(() => {
                 onClose();
-                showNotification({ message: 'Successfully added the rules' })
+                showNotification({ message: `Successfully ${props.mode === 'edit' ? 'edited' : 'added'} the rules` })
             })
-            .catch(() => showNotification({ message: 'Failed to add the rule', type: 'error' }));
+            .catch(() => showNotification({ message: `Failed to ${props.mode === 'edit' ? 'edit' : 'add'} the rule`, type: 'error' }));
     }
 
     return (
@@ -92,5 +93,30 @@ export const AddRule = (props: AddRuleProps) => {
                 </FlexBox>
             </FlexBox>
         </FlexBox>
+    )
+}
+
+export const AddRule = (props: AddRuleProps) => {
+    const { defaultValues } = props;
+
+    const form = useForm<IAddRuleFormFields>({
+        defaultValues: defaultValues ?? {
+            allTicketConditions: [{
+                ticketFields: '',
+                operator: '',
+                conditionValue: ''
+            }],
+            description: '',
+            ruleName: '',
+            anyTicketConditions: [],
+            assignmentMode: 'even_distribution',
+            selectedQueue: ''
+        }
+    });
+
+    return (
+        <FormProvider {...form}>
+            <AddRuleBase {...props} />
+        </FormProvider>
     )
 }
