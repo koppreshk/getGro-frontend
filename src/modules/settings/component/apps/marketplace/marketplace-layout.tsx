@@ -8,7 +8,7 @@ import ExotelIcon from '../../../../../assets/svg/exotel-icon.svg?react';
 import WhatsAppIcon from '../../../../../assets/svg/whatsapp.svg?react';
 import { ShopifyLayout } from "./shopify/shopify-configuration";
 import { ExotelConfiguration } from "./exotel-configuration";
-import { WhatsAppGupshupConfiguration } from "./gupshup";
+import { WhatsAppConfigurationContainer } from "modules/settings/containers/marketplace/whatsApp/whatsApp-configuration-container";
 
 const MarketPlaceLayout = () => {
     return (
@@ -28,7 +28,7 @@ export const MarketplaceRoutes = () => {
                 <Route key="marketplace-route" path="/" element={<MarketPlaceLayout />} />
                 <Route key="shopify-route" path="shopify" element={<ShopifyLayout />} />
                 <Route key="exotel-route" path="exotel" element={<ExotelConfiguration />} />
-                <Route key="whatsapp-route" path="whatsapp" element={<WhatsAppGupshupConfiguration />} />
+                <Route key="whatsapp-route" path="whatsapp" element={<WhatsAppConfigurationContainer />} />
             </Routes>
         </>
     )

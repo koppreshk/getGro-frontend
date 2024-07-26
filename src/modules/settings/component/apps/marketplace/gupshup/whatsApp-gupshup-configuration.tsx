@@ -5,6 +5,9 @@ import { Typography } from "@mui/material";
 import { AddAppConfigurationDialog, AppConfigurationLayout } from "..";
 import WhatsAppIcon from '../../../../../../assets/svg/whatsapp.svg?react';
 import { AddWhatsAppGupShupConfigContainer } from "modules/settings/containers/marketplace/whatsApp";
+import { FlexBox } from "lib/ui-ux";
+import { IWhatsAppConfigDetails } from "modules/settings/apis/marketplace/whatsApp/gupshup";
+import { DeleteWhatsAppConfigurations } from "./delete-whatsapp-configurations";
 
 function OverviewContents() {
     return (
@@ -33,18 +36,19 @@ function OverviewContents() {
 
 function InstallationContents() {
     return (
-        <>
+        <FlexBox width="100%" flexDirection="column">
             <Typography variant="body2" paragraph>
                 To install and connect WhatsApp with GupShup integration with GetGro, follow the instructions in the following links:
             </Typography>
             <Typography component="a" variant="body2" href="https://support.GetGro.com/kb/article/15906/set-up-WhatsApp-with-GupShup">
                 https://support.GetGro.com/kb/article/15906/set-up-WhatsApp-with-GupShup
             </Typography>
-        </>
+        </FlexBox>
     )
 }
 
-export const WhatsAppGupshupConfiguration = () => {
+export const WhatsAppGupshupConfiguration = (props: { data: IWhatsAppConfigDetails, updateInstallation: () => void }) => {
+    const isInstalled = Object.keys(props.data).length > 0;
     const [openPopup, setOpenPopup] = useState(false);
     const togglePopup = useCallback(() => {
         setOpenPopup((prevValue) => !prevValue)
@@ -63,9 +67,12 @@ export const WhatsAppGupshupConfiguration = () => {
                 publishedOn="May 12, 2024"
                 version="1.0.0"
                 appIcon={() => <WhatsAppIcon width="60px" height="60px" />}
-                togglePopup={togglePopup} />
+                togglePopup={togglePopup}
+                isAppInstalled={isInstalled}
+                unInstallApp={() => <DeleteWhatsAppConfigurations />}
+            />
             <AddAppConfigurationDialog
-                dialogContent={() => <AddWhatsAppGupShupConfigContainer togglePopup={togglePopup} />}
+                dialogContent={() => <AddWhatsAppGupShupConfigContainer togglePopup={togglePopup} updateInstallation={props.updateInstallation}/>}
                 openPopup={openPopup}
                 togglePopup={togglePopup}
                 title="WhatsApp - GupShup Configuration" />

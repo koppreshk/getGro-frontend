@@ -44,11 +44,10 @@ export const ToDoList = () => {
     const [textValue, setTextValue] = useState("");
     const [list, setList] = useState<IToDoList[]>([]);
 
-
     const handleAddTask = useCallback(() => {
-        setList([...list, { task: textValue, id: generateId() }]);
+        setList((prevList) => [...prevList, { task: textValue, id: generateId() }]);
         setTextValue("");
-    }, [list, textValue]);
+    }, [textValue]);
 
     const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (ev) => {
         if (ev.key === KeyCodes.EnterKey) {
@@ -144,7 +143,7 @@ const RenderTask = (props: IRenderTaskProps) => {
                     onChange={(e) => {
                         setEditText(e.target.value);
                     }}
-                    inputProps={{style: {fontSize: '13px'}}}
+                    inputProps={{ style: { fontSize: '13px' } }}
                 />
                 :
                 <TaskContent>
