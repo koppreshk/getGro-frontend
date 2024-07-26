@@ -14,7 +14,7 @@ interface IAppConfigurationLayout {
     appIcon: () => JSX.Element;
     togglePopup: () => void;
     isAppInstalled?: boolean;
-    unInstallApp: () => JSX.Element;
+    unInstallApp?: () => JSX.Element;
 }
 
 export const AppConfigurationLayout = (props: IAppConfigurationLayout) => {

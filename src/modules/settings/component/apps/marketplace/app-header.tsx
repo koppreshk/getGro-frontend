@@ -13,7 +13,7 @@ interface IAppHeaderProps {
     appIcon: () => JSX.Element;
     togglePopup: () => void;
     isAppInstalled?: boolean;
-    unInstallApp: () => JSX.Element;
+    unInstallApp?: () => JSX.Element;
 }
 
 export const AppHeader = (props: IAppHeaderProps) => {
@@ -30,7 +30,7 @@ export const AppHeader = (props: IAppHeaderProps) => {
             </FlexBox>
             {isAppInstalled ?
                 <FlexBox gap="10px">
-                    {unInstallApp()}
+                    {unInstallApp ? unInstallApp() : <></>}
                     <Button variant="contained" size="medium" onClick={togglePopup}>Edit</Button>
                 </FlexBox> :
                 <Button variant="contained" size="medium" onClick={togglePopup}>Install</Button>
