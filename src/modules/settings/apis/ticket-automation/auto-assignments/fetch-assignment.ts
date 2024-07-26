@@ -2,6 +2,7 @@ import React from "react";
 import { useServiceClient } from "lib"
 import { useQuery } from "react-query";
 import { AutoAssignmentEndPoint, AutoAssignmentQueryKey } from "./api-enums";
+import { useSearchParams } from "react-router-dom";
 
 export interface IAssignment {
     id: number
@@ -28,11 +29,13 @@ interface AssociateAgent {
 
 export const useFetchAssignment = () => {
     const { getData } = useServiceClient();
+    const [searchParams] = useSearchParams();
+    const id = searchParams.get('id') || '';
 
-    const fetchAssignment = React.useCallback(() => getData(AutoAssignmentEndPoint.FETCH_ASSIGNMENT).then((res) => res.json()), [getData]);
+    const fetchAssignment = React.useCallback(() => getData(`${AutoAssignmentEndPoint.FETCH_ASSIGNMENT}?id=${id}`).then((res) => res.json()), [getData, id]);
 
     return useQuery<IAssignment, { message: string }>({
-        queryKey: AutoAssignmentQueryKey.FETCH_ASSIGNMENT,
+        queryKey: [AutoAssignmentQueryKey.FETCH_ASSIGNMENT, id],
         queryFn: fetchAssignment,
     })
 }

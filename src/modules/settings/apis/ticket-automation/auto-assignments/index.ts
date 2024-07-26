@@ -3,3 +3,5 @@ export * from './create-auto-assignment';
 export * from './fetch-all-assignemnts';
 export * from './delete-assignment';
 export * from './set-assigment-status';
+export * from './fetch-assignment';
+export * from './edit-auto-assignment';

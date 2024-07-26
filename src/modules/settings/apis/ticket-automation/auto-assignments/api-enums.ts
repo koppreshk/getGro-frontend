@@ -4,7 +4,8 @@ export enum AutoAssignmentEndPoint {
     FETCH_ALL_ASSIGNMENTS = 'automation/fetch_all_assignments',
     DELETE_ASSIGNMENT = 'automation/delete_assignment',
     TOGGLE_ASSIGNMENT = 'automation/toggle_assignment',
-    FETCH_ASSIGNMENT = 'automation/fetch_assignment'
+    FETCH_ASSIGNMENT = 'automation/fetch_assignment',
+    EDIT_ASSIGNMENT = 'automation/edit_assignment'
 }
 
 
@@ -14,5 +15,6 @@ export enum AutoAssignmentQueryKey {
     FETCH_ALL_ASSIGNMENTS = 'FETCH_ALL_ASSIGNMENTS',
     DELETE_ASSIGNMENT = 'DELETE_ASSIGNMENT',
     TOGGLE_ASSIGNMENT = 'TOGGLE_ASSIGNMENT',
-    FETCH_ASSIGNMENT = 'FETCH_ASSIGNMENT'
+    FETCH_ASSIGNMENT = 'FETCH_ASSIGNMENT',
+    EDIT_ASSIGNMENT = 'EDIT_ASSIGNMENT'
 }
