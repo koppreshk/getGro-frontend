@@ -13,6 +13,8 @@ interface IAppConfigurationLayout {
     InstallationContents(): JSX.Element;
     appIcon: () => JSX.Element;
     togglePopup: () => void;
+    isAppInstalled?: boolean;
+    unInstallApp?: () => JSX.Element;
 }
 
 export const AppConfigurationLayout = (props: IAppConfigurationLayout) => {
@@ -20,7 +22,13 @@ export const AppConfigurationLayout = (props: IAppConfigurationLayout) => {
         <>
             <BreadCrumbs />
             <FlexBox flexDirection="column" gap="14px" padding="24px">
-                <AppHeader appDescription={props.appDescription} appTitle={props.appTitle} appIcon={props.appIcon} togglePopup={props.togglePopup}/>
+                <AppHeader
+                    appDescription={props.appDescription}
+                    appTitle={props.appTitle}
+                    appIcon={props.appIcon}
+                    togglePopup={props.togglePopup}
+                    isAppInstalled={props.isAppInstalled} 
+                    unInstallApp={props.unInstallApp}/>
                 <AppContent
                     InstallationContents={props.InstallationContents}
                     OverviewContents={props.OverviewContents}

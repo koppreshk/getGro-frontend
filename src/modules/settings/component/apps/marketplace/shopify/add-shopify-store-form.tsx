@@ -2,7 +2,7 @@ import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import styled from "styled-components";
 import { TextboxField } from "lib/form-fields";
-import { Box, Button, DialogActions, DialogContent, Divider, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
+import { Box, Button, DialogActions, Divider, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 
 interface IAddShopifyStoreFormProps {
@@ -27,13 +27,11 @@ export const AddShopifyStoreForm = (props: IAddShopifyStoreFormProps) => {
     return (
         <>
             <FormProvider {...form}>
-                <DialogContent>
-                    <FlexBox gap="20px">
-                        <ShopifyConfigSteps activeStep={activeStep} />
-                        <Divider orientation="vertical" variant="middle" flexItem />
-                        {activeStep === 0 ? <ShopifyDetailsForm /> : <span>Work in Progress..</span>}
-                    </FlexBox>
-                </DialogContent>
+                <FlexBox gap="20px">
+                    <ShopifyConfigSteps activeStep={activeStep} />
+                    <Divider orientation="vertical" variant="middle" flexItem />
+                    {activeStep === 0 ? <ShopifyDetailsForm /> : <span>Work in Progress..</span>}
+                </FlexBox>
                 <DialogActions>
                     <Button variant="outlined" onClick={isLastStep ? handleBack : togglePopup}>
                         {isLastStep ? 'Back' : 'Cancel'}

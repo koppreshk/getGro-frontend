@@ -12,10 +12,12 @@ interface IAppHeaderProps {
     appDescription: string;
     appIcon: () => JSX.Element;
     togglePopup: () => void;
+    isAppInstalled?: boolean;
+    unInstallApp?: () => JSX.Element;
 }
 
 export const AppHeader = (props: IAppHeaderProps) => {
-    const { appDescription, appTitle, appIcon, togglePopup } = props;
+    const { appDescription, appTitle, appIcon, togglePopup, isAppInstalled = false, unInstallApp } = props;
 
     return (
         <StyledFlexbox justifyContent='space-between' alignItems='center' padding='4px 24px' height='90px'>
@@ -26,7 +28,13 @@ export const AppHeader = (props: IAppHeaderProps) => {
                     <Typography variant='caption'>{appDescription}</Typography>
                 </FlexBox>
             </FlexBox>
-            <Button variant="contained" size="medium" onClick={togglePopup}>Install</Button>
+            {isAppInstalled ?
+                <FlexBox gap="10px">
+                    {unInstallApp ? unInstallApp() : <></>}
+                    <Button variant="contained" size="medium" onClick={togglePopup}>Edit</Button>
+                </FlexBox> :
+                <Button variant="contained" size="medium" onClick={togglePopup}>Install</Button>
+            }
         </StyledFlexbox>
     )
 }
