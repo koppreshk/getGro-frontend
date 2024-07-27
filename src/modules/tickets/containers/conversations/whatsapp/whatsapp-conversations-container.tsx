@@ -6,7 +6,7 @@ import { WhatsAppConversations } from "../../../components/ticket-details/ticket
 import { Alert } from "@mui/material";
 
 export const WhatsAppConversationContainer = () => {
-    const { isLoading, data, isError } = useFetchWhatsAppMessages();
+    const { isLoading, data, isError, isRefetching } = useFetchWhatsAppMessages();
     // const { socket } = useSocket();
 
     // React.useEffect(() => {
@@ -20,7 +20,7 @@ export const WhatsAppConversationContainer = () => {
     //     }
     // }, [refetch, socket])
 
-    if (isLoading) {
+    if (isLoading || isRefetching) {
         return (
             <FlexBox width="100%" height="100%" flexDirection="column" padding="10px">
                 <ChatConversationLoader />

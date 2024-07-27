@@ -8,9 +8,9 @@ import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
 export const SLADashboardContainer = () => {
     const [dateRange, setDateRange] = React.useState<DateRange>({ startDate: DateTime.now().minus({ month: 1 }).toJSDate(), endDate: new Date() });
 
-    const { data, isLoading, error } = useFetchSLAValues(dateRange);
+    const { data, isLoading, isRefetching, error } = useFetchSLAValues(dateRange);
 
-    if (isLoading) {
+    if (isLoading || isRefetching) {
         return <CenteredCircularProgress />
     }
 

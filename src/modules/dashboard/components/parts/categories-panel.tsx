@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled, { useTheme } from "styled-components";
 import { Box, Typography } from "@mui/material"
-import { FlexBox } from "lib/ui-ux";
+import { FlexBox, RefreshButton } from "lib/ui-ux";
 import { Widgets } from "@mui/icons-material";
 import { AgentPerformanceDashContainer, SupportMonitoringDashContainer, SLADashboardContainer } from "modules/dashboard/container";
 
@@ -124,14 +124,17 @@ export const DashboardCategoriesPanel = () => {
     return (
         <>
             <StyledBox>
-                <FlexBox aria-label="dashboard categories tabs" gap='10px' flexDirection="row" alignItems="center">
-                    <FlexBox alignItems="center" gap="5px" padding="0 12px 0 0">
-                        <Widgets color="primary" />
-                        <Typography variant="h4" sx={{ color: pallete.grayVariant2 }} >Dashboards</Typography>
+                <FlexBox aria-label="dashboard categories tabs" alignItems="center" justifyContent="space-between">
+                    <FlexBox gap='10px' flexDirection="row" alignItems="center">
+                        <FlexBox alignItems="center" gap="5px" padding="0 12px 0 0">
+                            <Widgets color="primary" />
+                            <Typography variant="h4" sx={{ color: pallete.grayVariant2 }} >Dashboards</Typography>
+                        </FlexBox>
+                        {dashboardCategories.map((category) => {
+                            return <TabPill key={category.id} label={category.name} id={category.id} onClickHandler={onClickHandler} value={value} />
+                        })}
                     </FlexBox>
-                    {dashboardCategories.map((category) => {
-                        return <TabPill key={category.id} label={category.name} id={category.id} onClickHandler={onClickHandler} value={value} />
-                    })}
+                    <RefreshButton />
                 </FlexBox>
             </StyledBox>
             <Box sx={{ width: '100%', height: '100%' }}>

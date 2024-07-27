@@ -31,9 +31,9 @@ export const useGetQueryEndPoint = () => {
 
 export const TicketListViewContainer = () => {
     const queryEndPoint = useGetQueryEndPoint();
-    const { data, isLoading } = useGetTicketsDataByKey(queryEndPoint, queryEndPoint);
+    const { data, isLoading, isRefetching } = useGetTicketsDataByKey(queryEndPoint, queryEndPoint);
 
-    if (isLoading) {
+    if (isLoading || isRefetching) {
         return (
             <FlexBox flexDirection="column" width="100%">
                 <TicketListViewLoader />

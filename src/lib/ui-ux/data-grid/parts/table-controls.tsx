@@ -2,9 +2,8 @@ import React, { useCallback, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { IconButton, Switch, TextField, Tooltip, Typography } from "@mui/material";
-import { CustomIconButton, FlexBox, VerticalSeparator } from "lib/ui-ux";
-import { ArchiveOutlined, AssignmentIndOutlined, ChevronLeft, ChevronRight, DeleteOutline, KeyboardDoubleArrowLeft, KeyboardDoubleArrowRight, MarkChatReadOutlined, MarkUnreadChatAltOutlined, RefreshOutlined } from '@mui/icons-material';
-import { useQueryClient } from "react-query";
+import { FlexBox, RefreshButton, VerticalSeparator } from "lib/ui-ux";
+import { ArchiveOutlined, AssignmentIndOutlined, ChevronLeft, ChevronRight, DeleteOutline, KeyboardDoubleArrowLeft, KeyboardDoubleArrowRight, MarkChatReadOutlined, MarkUnreadChatAltOutlined } from '@mui/icons-material';
 
 const StyledFlexBox = styled(FlexBox)`
     padding: 0px 20px 0 20px;  
@@ -23,7 +22,6 @@ export const TableControls = (props: ITableControlProps) => {
     const noOfRecords = searchParams.get('noOfRecords') || '10';
     const cardView = searchParams.get('cardView') || 'true';
     const [noOfRows, setFilters] = useState(noOfRecords);
-    const queryClient = useQueryClient();
 
     React.useEffect(() => {
         searchParams.set('noOfRecords', noOfRecords);
@@ -68,10 +66,6 @@ export const TableControls = (props: ITableControlProps) => {
         setSearchParams(searchParams);
     }
 
-    const refreshPage = async () => {
-        await queryClient.refetchQueries({ stale: true })
-    }
-
     return (
         <StyledFlexBox justifyContent="space-between" height="76px">
             <FlexBox alignItems="center">
@@ -106,7 +100,7 @@ export const TableControls = (props: ITableControlProps) => {
                     </IconButton>
                 </FlexBox>
                 <VerticalSeparator />
-                <CustomIconButton onClick={refreshPage} iconComponent={<RefreshOutlined color="primary" />} tooltipProps={{ title: 'Refresh' }} />
+                <RefreshButton />
             </FlexBox>
         </StyledFlexBox>
     )
