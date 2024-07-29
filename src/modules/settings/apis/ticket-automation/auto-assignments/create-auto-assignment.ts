@@ -13,7 +13,7 @@ export interface ICreateAutoAssignmentArgs {
 export interface Rule {
     ticket_field_id: number | string
     operator_id: number | string
-    value: string;
+    value: string | string[];
     rule_type: string
 }
 

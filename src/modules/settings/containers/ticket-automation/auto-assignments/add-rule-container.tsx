@@ -41,8 +41,9 @@ export const AddRuleContainer = () => {
 
     const onSubmit = (formData: IAddRuleFormFields) => {
         const { ruleName, description, allTicketConditions, anyTicketConditions, assignmentMode, selectedQueue } = formData;
-        const modAllConditions = allTicketConditions.map((item) => ({ operator_id: item.operator, ticket_field_id: item.ticketFields, value: item.conditionValue, rule_type: 'type_all' }))
-        const modAnyConditions = anyTicketConditions.map((item) => ({ operator_id: item.operator, ticket_field_id: item.ticketFields, value: item.conditionValue, rule_type: 'type_any' }))
+        const modAllConditions = allTicketConditions.map((item) => ({ operator_id: item.operator, ticket_field_id: item.ticketFields, value: item.operator.toString() === '13' || item.operator.toString() === '14' ? [item.conditionValue] : item.conditionValue, rule_type: 'type_all' }))
+        const modAnyConditions = anyTicketConditions.map((item) => ({ operator_id: item.operator, ticket_field_id: item.ticketFields, value: item.operator.toString() === '13' || item.operator.toString() === '14' ? [item.conditionValue] : item.conditionValue, rule_type: 'type_any' }));
+
         return mutateAsync({
             name: ruleName,
             description,
