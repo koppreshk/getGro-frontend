@@ -8,7 +8,7 @@ import { SatisfactionSurveyLayout } from "../component/general/satifaction-surve
 import { MarketplaceRoutes } from "../component/apps/marketplace/marketplace-layout"
 import { TicketStatusContainer } from "../containers/ticket-status"
 import { AutoAssignmentsLayout } from "../component/ticket-automation"
-import { TimeTriggersLayout } from "../component/ticket-automation/time-triggers"
+import { UpdateTicketTriggersLayout } from "../component/ticket-automation/update-ticket-triggers"
 
 export default function ConfigurationsPage() {
     return (
@@ -23,7 +23,7 @@ export default function ConfigurationsPage() {
             <Route key="add-user" path="/users" element={<UsersLayout />} />
 
             <Route key="auto-assignment" path="/auto-assignments/*" element={<AutoAssignmentsLayout />} />
-            <Route key="time-triggers" path="/time-triggers/*" element={<TimeTriggersLayout />} />
+            <Route key="update-ticket-triggers" path="/update-ticket-triggers/*" element={<UpdateTicketTriggersLayout />} />
 
             <Route key="agent-availability" path="/agent-availability" element={<AgentAvailabilityLayout />} />
             <Route key="satisfaction-survey" path="/satisfaction-survey" element={<SatisfactionSurveyLayout />} />

@@ -7,7 +7,7 @@ import { KeyboardArrowLeft, Save, KeyboardArrowRight } from '@mui/icons-material
 import { FormProvider, useForm, useFormContext } from "react-hook-form"
 import { useNavigate } from 'react-router-dom';
 import { FetchFieldsAndConditions } from 'modules/settings/apis/ticket-automation/time-triggers';
-import { IAddRuleFormFields } from 'modules/settings/containers/ticket-automation/time-triggers';
+import { IAddRuleFormFields } from 'modules/settings/containers/ticket-automation/update-ticket-triggers';
 import { useNotifications } from 'lib';
 
 interface AddRuleProps {
