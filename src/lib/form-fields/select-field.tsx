@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select, SelectProps } from "@mui/material"
+import { Checkbox, FormControl, InputLabel, MenuItem, Select, SelectProps } from "@mui/material"
 import { Controller, FieldValues, RegisterOptions, useFormContext, get } from "react-hook-form"
 import styled from "styled-components";
 import { ErrorMessage } from '@hookform/error-message';
@@ -34,12 +34,15 @@ export const SelectField = (props: ITextboxFieldProps) => {
                         <Select
                             labelId="demo-select-small-label"
                             id="demo-select-small"
-                            label={label} 
-                            {...rest} {...field} onChange={(e) => field.onChange(e.target.value)}>
+                            label={label}
+                            {...rest} {...field}
+                            renderValue={rest.multiple ? (selected) => menuOptions.filter((item) => selected.includes(item.key)).map((i) => i.value).join(', ') : undefined}
+                            onChange={(e) => field.onChange(e.target.value)}>
                             {
                                 menuOptions.map((item) => (
                                     <MenuItem key={item.key} value={item.key}>
                                         {item.iconComponent ?? null}
+                                        {rest.multiple ? <Checkbox checked={field.value.includes(item.key)} /> : null}
                                         {item.value}
                                     </MenuItem>))
                             }
