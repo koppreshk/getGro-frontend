@@ -21,6 +21,7 @@ export default function ConfigurationsPage() {
             <Route key="email-config" path="/email/*" element={<EmailConfigLayout />} />
             <Route key="add-user" path="/users" element={<UsersLayout />} />
             <Route key="auto-assignment" path="/auto-assignments/*" element={<AutoAssignmentsLayout />} />
+            <Route key="create-triggers" path="/create-triggers*" element={<AutoAssignmentsLayout />} />
             <Route key="agent-availability" path="/agent-availability" element={<AgentAvailabilityLayout />} />
             <Route key="satisfaction-survey" path="/satisfaction-survey" element={<SatisfactionSurveyLayout />} />
             <Route key="marketplace" path="/marketplace/*" element={<MarketplaceRoutes />} />
