@@ -1,7 +1,7 @@
 import React from "react";
 import { useServiceClient } from "lib"
 import { useQuery } from "react-query";
-import { AutoAssignmentEndPoint, AutoAssignmentQueryKey } from "./api-enums";
+import { UpdateTicketTriggersEndPoint, UpdateTicketTriggersQueryKey } from "./api-enums";
 
 export interface IAllAssignments {
     id: number
@@ -14,10 +14,10 @@ export interface IAllAssignments {
 export const useFetchAllAssignments = () => {
     const { getData } = useServiceClient();
 
-    const fetchAllAssignments = React.useCallback(() => getData(AutoAssignmentEndPoint.FETCH_ALL_ASSIGNMENTS).then((res) => res.json()), [getData]);
+    const fetchAllAssignments = React.useCallback(() => getData(UpdateTicketTriggersEndPoint.FETCH_ALL_ASSIGNMENTS).then((res) => res.json()), [getData]);
 
     return useQuery<IAllAssignments[], { message: string }>({
-        queryKey: AutoAssignmentQueryKey.FETCH_ALL_ASSIGNMENTS,
+        queryKey: UpdateTicketTriggersQueryKey.FETCH_ALL_ASSIGNMENTS,
         queryFn: fetchAllAssignments,
     })
 }

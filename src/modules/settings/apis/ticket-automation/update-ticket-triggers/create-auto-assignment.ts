@@ -1,9 +1,9 @@
 import { useServiceClient } from "lib";
 import React from "react";
 import { useMutation } from "react-query";
-import { AutoAssignmentEndPoint, AutoAssignmentQueryKey } from "./api-enums";
+import { UpdateTicketTriggersEndPoint, UpdateTicketTriggersQueryKey } from "./api-enums";
 
-export interface ICreateAutoAssignmentArgs {
+export interface ICreateUpdateTicketTriggersArgs {
     name: string
     description: string
     rules: Rule[]
@@ -23,13 +23,13 @@ export interface AssociateAgent {
 }
 
 
-export const useCreateAutoAssignment = () => {
+export const useCreateTicketTriggers = () => {
     const { postData } = useServiceClient();
 
-    const createAutoAssignment = React.useCallback((args: ICreateAutoAssignmentArgs) => postData(AutoAssignmentEndPoint.CREATE_ASSIGNMENT, args).then((res) => res.json()), [postData]);
+    const createUpdateTicketTriggers = React.useCallback((args: ICreateUpdateTicketTriggersArgs) => postData(UpdateTicketTriggersEndPoint.CREATE_ASSIGNMENT, args).then((res) => res.json()), [postData]);
 
     return useMutation({
-        mutationKey: AutoAssignmentQueryKey.CREATE_ASSIGNMENT,
-        mutationFn: createAutoAssignment
+        mutationKey: UpdateTicketTriggersQueryKey.CREATE_ASSIGNMENT,
+        mutationFn: createUpdateTicketTriggers
     });
 }

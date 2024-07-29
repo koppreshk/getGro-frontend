@@ -1,7 +1,7 @@
 import React from "react";
 import { useServiceClient } from "lib"
 import { useQuery } from "react-query";
-import { AutoAssignmentEndPoint, AutoAssignmentQueryKey } from "./api-enums";
+import { UpdateTicketTriggersEndPoint, UpdateTicketTriggersQueryKey } from "./api-enums";
 import { useSearchParams } from "react-router-dom";
 
 export interface IAssignment {
@@ -32,10 +32,10 @@ export const useFetchAssignment = () => {
     const [searchParams] = useSearchParams();
     const id = searchParams.get('id') || '';
 
-    const fetchAssignment = React.useCallback(() => getData(`${AutoAssignmentEndPoint.FETCH_ASSIGNMENT}?id=${id}`).then((res) => res.json()), [getData, id]);
+    const fetchAssignment = React.useCallback(() => getData(`${UpdateTicketTriggersEndPoint.FETCH_ASSIGNMENT}?id=${id}`).then((res) => res.json()), [getData, id]);
 
     return useQuery<IAssignment, { message: string }>({
-        queryKey: [AutoAssignmentQueryKey.FETCH_ASSIGNMENT, id],
+        queryKey: [UpdateTicketTriggersQueryKey.FETCH_ASSIGNMENT, id],
         queryFn: fetchAssignment,
     })
 }

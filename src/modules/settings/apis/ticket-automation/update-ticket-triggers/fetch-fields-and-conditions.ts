@@ -1,7 +1,7 @@
 import React from "react";
 import { useServiceClient } from "lib"
 import { useQuery } from "react-query";
-import { AutoAssignmentEndPoint, AutoAssignmentQueryKey } from "./api-enums";
+import { UpdateTicketTriggersEndPoint, UpdateTicketTriggersQueryKey } from "./api-enums";
 
 export interface FetchFieldsAndConditions {
     ticketFieldId: number
@@ -24,10 +24,10 @@ export interface DropdownValue {
 export const useFetchFieldsAndConditions = () => {
     const { getData } = useServiceClient();
 
-    const fetchFieldsAndConditions = React.useCallback(() => getData(AutoAssignmentEndPoint.FIELDS_AND_CONDITIONS).then((res) => res.json()), [getData]);
+    const fetchFieldsAndConditions = React.useCallback(() => getData(UpdateTicketTriggersEndPoint.FIELDS_AND_CONDITIONS).then((res) => res.json()), [getData]);
 
     return useQuery<FetchFieldsAndConditions[]>({
-        queryKey: AutoAssignmentQueryKey.FIELDS_AND_CONDITIONS,
+        queryKey: UpdateTicketTriggersQueryKey.FIELDS_AND_CONDITIONS,
         queryFn: fetchFieldsAndConditions,
     })
 }

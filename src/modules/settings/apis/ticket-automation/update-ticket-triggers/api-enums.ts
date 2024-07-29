@@ -1,4 +1,4 @@
-export enum AutoAssignmentEndPoint {
+export enum UpdateTicketTriggersEndPoint {
     FIELDS_AND_CONDITIONS = 'fields/fields_and_conditions',
     CREATE_ASSIGNMENT = 'automation/create_assignment',
     FETCH_ALL_ASSIGNMENTS = 'automation/fetch_all_assignments',
@@ -9,7 +9,7 @@ export enum AutoAssignmentEndPoint {
 }
 
 
-export enum AutoAssignmentQueryKey {
+export enum UpdateTicketTriggersQueryKey {
     FIELDS_AND_CONDITIONS = 'FIELDS_AND_CONDITIONS',
     CREATE_ASSIGNMENT = 'CREATE_ASSIGNMENT',
     FETCH_ALL_ASSIGNMENTS = 'FETCH_ALL_ASSIGNMENTS',
