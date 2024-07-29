@@ -12,6 +12,7 @@ const StyledContainer = styled(FlexBox)`
 interface MoreInformationProps {
     information: string;
 }
+
 export const MoreInformation = (props: MoreInformationProps) => {
     const { information } = props;
 

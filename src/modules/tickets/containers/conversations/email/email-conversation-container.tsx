@@ -8,16 +8,16 @@ import { EmailConversationLayout } from "../../../components/ticket-details/tick
 interface IEmailConversationContainerProps {}
 
 export const EmailConversationContainer = (_props: IEmailConversationContainerProps) => {
-    const { data: conversationsData, isLoading: conversationLoading, isError, refetch } = useFetchTicketById();
+    const { data: conversationsData, isLoading: conversationLoading, isRefetching, isError, refetch } = useFetchTicketById();
 
-    if (conversationLoading) {
+    if (conversationLoading || isRefetching) {
         return (
             <FlexBox width="100%">
                 <EmailSkeletonLoader />
             </FlexBox>
         )
     }
-    //Temp code, should be removed!
+
     if (conversationsData?.subject === undefined || isError) {
         return (
             <FlexBox alignItems="center" justifyContent="center" width="100%" height="100%">

@@ -2,12 +2,13 @@ import { useMemo } from 'react';
 import {
     TaskOutlined, Tag, AccountCircle, WorkHistory, LockPerson, Facebook, SellOutlined,
     GridViewRounded, StoreRounded, ThumbsUpDown, SettingsRounded, SupportAgentRounded,
-    Groups2Outlined, EventNoteOutlined, AssignmentTurnedInOutlined, Email, ManageHistory, ConfirmationNumber, MoreTime
+    Groups2Outlined, EventNoteOutlined, AssignmentTurnedInOutlined, Email, ManageHistory, ConfirmationNumber
 } from "@mui/icons-material";
 import styled from "styled-components";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Typography } from "@mui/material";
 import { FlexBox, GridLayout } from "lib/ui-ux";
+
 interface ICategoryOptions {
     route: string;
     label: string;
@@ -102,13 +103,13 @@ const configurations = [
                 catOptionIcon: () => <ConfirmationNumber />,
                 description: "Setup automation rules to perform actions on ticket update"
             },
-            {
-                route: "time-triggers",
-                label: "Time Triggers",
-                uniqueKey: "time-triggers",
-                catOptionIcon: () => <MoreTime />,
-                description: "Setup automation rules to perform repeated actions over time"
-            },
+            // {
+            //     route: "time-triggers",
+            //     label: "Time Triggers",
+            //     uniqueKey: "time-triggers",
+            //     catOptionIcon: () => <MoreTime />,
+            //     description: "Setup automation rules to perform repeated actions over time"
+            // },
         ]
     },
     {
