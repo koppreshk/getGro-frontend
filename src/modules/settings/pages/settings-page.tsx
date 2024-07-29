@@ -9,6 +9,7 @@ import { MarketplaceRoutes } from "../component/apps/marketplace/marketplace-lay
 import { TicketStatusContainer } from "../containers/ticket-status"
 import { AutoAssignmentsLayout } from "../component/ticket-automation"
 import { UpdateTicketTriggersLayout } from "../component/ticket-automation/update-ticket-triggers"
+import { CreateTicketTriggersLayout } from "../component/ticket-automation/create-ticket-triggers"
 
 export default function ConfigurationsPage() {
     return (
@@ -23,7 +24,7 @@ export default function ConfigurationsPage() {
             <Route key="add-user" path="/users" element={<UsersLayout />} />
 
             <Route key="auto-assignment" path="/auto-assignments/*" element={<AutoAssignmentsLayout />} />
-            <Route key="create-triggers" path="/create-triggers*" element={<AutoAssignmentsLayout />} />
+            <Route key="create-ticket-triggers" path="/create-ticket-triggers/*" element={<CreateTicketTriggersLayout />} />
             <Route key="update-ticket-triggers" path="/update-ticket-triggers/*" element={<UpdateTicketTriggersLayout />} />
 
             <Route key="agent-availability" path="/agent-availability" element={<AgentAvailabilityLayout />} />
