@@ -10,11 +10,13 @@ export interface IAddRuleFormFields {
         operator: string;
         conditionValue: string;
         ticketFields: string;
+        multiSelectConditionValue: string[];
     }[];
     anyTicketConditions: {
         operator: string;
         conditionValue: string;
         ticketFields: string;
+        multiSelectConditionValue: string[];
     }[]
     assignmentMode: string;
     selectedQueue: string;

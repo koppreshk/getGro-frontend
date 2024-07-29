@@ -104,7 +104,8 @@ export const AddRule = (props: AddRuleProps) => {
             allTicketConditions: [{
                 ticketFields: '',
                 operator: '',
-                conditionValue: ''
+                conditionValue: '',
+                multiSelectConditionValue: []
             }],
             description: '',
             ruleName: '',
