@@ -32,7 +32,7 @@ export const useFetchAssignment = () => {
     const [searchParams] = useSearchParams();
     const id = searchParams.get('id') || '';
 
-    const fetchAssignment = React.useCallback(() => getData(`${AutoAssignmentEndPoint.FETCH_ASSIGNMENT}?id=${id}`).then((res) => res.json()), [getData, id]);
+    const fetchAssignment = React.useCallback(() => getData(`${AutoAssignmentEndPoint.FETCH_ASSIGNMENT}?id=${id}&automation_type=auto_assignment`).then((res) => res.json()), [getData, id]);
 
     return useQuery<IAssignment, { message: string }>({
         queryKey: [AutoAssignmentQueryKey.FETCH_ASSIGNMENT, id],
