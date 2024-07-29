@@ -3,6 +3,7 @@ import { useEditAutoAssignment, useFetchAssignment, useFetchFieldsAndConditions 
 import { AddRule } from "modules/settings/component/ticket-automation"
 import { IAddRuleFormFields } from "./add-rule-container";
 import { useSearchParams } from "react-router-dom";
+import { isArray } from "lib/utils";
 
 export const EditRuleContainer = () => {
     const { data, isLoading } = useFetchFieldsAndConditions();
@@ -13,8 +14,8 @@ export const EditRuleContainer = () => {
 
     const onSubmit = (formData: IAddRuleFormFields) => {
         const { ruleName, description, allTicketConditions, anyTicketConditions, assignmentMode, selectedQueue } = formData;
-        const modAllConditions = allTicketConditions.map((item) => ({ operator_id: item.operator, ticket_field_id: item.ticketFields, value: item.operator.toString() === '13' || item.operator.toString() === '14' ? [item.conditionValue] : item.conditionValue, rule_type: 'type_all' }))
-        const modAnyConditions = anyTicketConditions.map((item) => ({ operator_id: item.operator, ticket_field_id: item.ticketFields, value: item.operator.toString() === '13' || item.operator.toString() === '14' ? [item.conditionValue] : item.conditionValue, rule_type: 'type_any' }));
+        const modAllConditions = allTicketConditions.map((item) => ({ operator_id: item.operator, ticket_field_id: item.ticketFields, value: item.operator.toString() === '13' || item.operator.toString() === '14' ? item.multiSelectConditionValue : item.conditionValue, rule_type: 'type_all' }))
+        const modAnyConditions = anyTicketConditions.map((item) => ({ operator_id: item.operator, ticket_field_id: item.ticketFields, value: item.operator.toString() === '13' || item.operator.toString() === '14' ? item.multiSelectConditionValue : item.conditionValue, rule_type: 'type_any' }));
 
         return mutateAsync({
             id: id,
@@ -34,8 +35,24 @@ export const EditRuleContainer = () => {
 
     if (data && currentRuleData) {
         const defaultValues: IAddRuleFormFields = {
-            allTicketConditions: currentRuleData.rules.filter((item => item.rule_type === "type_all")).map((item) => ({ ticketFields: item.ticket_field_id.toString(), operator: item.operator_id.toString(), conditionValue: item.operator_id.toString() === '13' || item.operator_id.toString() === '14' ? item.value[0] : item.value })),
-            anyTicketConditions: currentRuleData.rules.filter((item => item.rule_type === "type_any")).map((item) => ({ ticketFields: item.ticket_field_id.toString(), operator: item.operator_id.toString(), conditionValue: item.operator_id.toString() === '13' || item.operator_id.toString() === '14' ? item.value[0] : item.value })),
+            allTicketConditions: currentRuleData.rules.filter((item => item.rule_type === "type_all")).map((item) => {
+                const parsedCondtValue = isArray(item.value) ? { multiSelectConditionValue: item.value.map((i) => i.toString()), conditionValue: '' } : { conditionValue: item.value, multiSelectConditionValue: [] }
+                return {
+                    ticketFields: item.ticket_field_id.toString(),
+                    operator: item.operator_id.toString(),
+                    ...parsedCondtValue
+                }
+            }
+            ),
+            anyTicketConditions: currentRuleData.rules.filter((item => item.rule_type === "type_any")).map((item) => {
+                const parsedCondtValue = isArray(item.value) ? { multiSelectConditionValue: item.value.map((i) => i.toString()), conditionValue: '' } : { conditionValue: item.value, multiSelectConditionValue: [] }
+                return {
+                    ticketFields: item.ticket_field_id.toString(),
+                    operator: item.operator_id.toString(),
+                    ...parsedCondtValue
+                }
+            }
+            ),
             assignmentMode: currentRuleData.associate_agent.assignment_mode,
             description: currentRuleData.description,
             ruleName: currentRuleData.name,
