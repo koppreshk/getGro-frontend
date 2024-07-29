@@ -17,7 +17,7 @@ interface Rule {
     id: number
     ticket_field_id: number
     operator_id: number
-    value: string
+    value: string | string[];
     rule_type: string
 }
 

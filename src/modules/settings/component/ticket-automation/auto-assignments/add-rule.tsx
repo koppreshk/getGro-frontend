@@ -102,6 +102,7 @@ export const AddRule = (props: AddRuleProps) => {
     const form = useForm<IAddRuleFormFields>({
         defaultValues: defaultValues ?? {
             allTicketConditions: [{
+                multiSelectConditionValue: [],
                 ticketFields: '',
                 operator: '',
                 conditionValue: ''
