@@ -25,7 +25,8 @@ export const EditRuleContainer = () => {
             associate_agent: {
                 assignment_mode: assignmentMode,
                 queue_id: selectedQueue
-            }
+            },
+            automation_type: 'update_trigger'
         })
     }
 

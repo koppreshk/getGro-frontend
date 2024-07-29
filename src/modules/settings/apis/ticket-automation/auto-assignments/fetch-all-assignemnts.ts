@@ -14,7 +14,7 @@ export interface IAllAssignments {
 export const useFetchAllAssignments = () => {
     const { getData } = useServiceClient();
 
-    const fetchAllAssignments = React.useCallback(() => getData(AutoAssignmentEndPoint.FETCH_ALL_ASSIGNMENTS).then((res) => res.json()), [getData]);
+    const fetchAllAssignments = React.useCallback(() => getData(`${AutoAssignmentEndPoint.FETCH_ALL_ASSIGNMENTS}?automation_type=auto_assignment`).then((res) => res.json()), [getData]);
 
     return useQuery<IAllAssignments[], { message: string }>({
         queryKey: AutoAssignmentQueryKey.FETCH_ALL_ASSIGNMENTS,

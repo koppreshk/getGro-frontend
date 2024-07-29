@@ -8,7 +8,7 @@ export const useDeleteAssignment = () => {
     const queryClient = useQueryClient();
 
     const deleteAssignment = React.useCallback((args: { id: number }) =>
-        postData(`${AutoAssignmentEndPoint.DELETE_ASSIGNMENT}?id=${args.id}`).then((res) => res.json()), [postData]);
+        postData(`${AutoAssignmentEndPoint.DELETE_ASSIGNMENT}?id=${args.id}&automation_type=auto_assignment`).then((res) => res.json()), [postData]);
 
     return useMutation({
         mutationKey: AutoAssignmentQueryKey.DELETE_ASSIGNMENT,

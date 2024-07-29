@@ -7,7 +7,7 @@ export const useSetAssignmentStatus = () => {
     const { postData } = useServiceClient();
 
     const setAssignmentStatus = React.useCallback((args: { id: number }) =>
-        postData(`${AutoAssignmentEndPoint.TOGGLE_ASSIGNMENT}?id=${args.id}`).then((res) => res.json()), [postData]);
+        postData(`${AutoAssignmentEndPoint.TOGGLE_ASSIGNMENT}?id=${args.id}&automation_type=auto_assignment`).then((res) => res.json()), [postData]);
 
     return useMutation({
         mutationKey: AutoAssignmentQueryKey.TOGGLE_ASSIGNMENT,

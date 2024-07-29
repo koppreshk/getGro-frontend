@@ -53,7 +53,8 @@ export const AddRuleContainer = () => {
             associate_agent: {
                 assignment_mode: assignmentMode,
                 queue_id: selectedQueue
-            }
+            },
+            automation_type: 'auto_assignment'
         })
     }
 

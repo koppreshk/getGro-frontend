@@ -7,7 +7,8 @@ export interface ICreateAutoAssignmentArgs {
     name: string
     description: string
     rules: Rule[]
-    associate_agent: AssociateAgent
+    associate_agent: AssociateAgent;
+    automation_type: 'auto_assignment' | 'create_trigger' | 'update_trigger';
 }
 
 export interface Rule {
