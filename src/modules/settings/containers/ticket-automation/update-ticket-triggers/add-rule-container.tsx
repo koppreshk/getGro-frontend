@@ -1,5 +1,5 @@
 import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
-import { useCreateAutoAssignment, useFetchFieldsAndConditions } from "modules/settings/apis/ticket-automation/time-triggers";
+import { useCreateTicketTriggers, useFetchFieldsAndConditions } from "modules/settings/apis/ticket-automation/update-ticket-triggers";
 import { AddRule } from "modules/settings/component/ticket-automation/update-ticket-triggers"
 import { FormProvider, useForm } from "react-hook-form"
 
@@ -22,7 +22,7 @@ export interface IAddRuleFormFields {
 
 export const AddRuleContainer = () => {
     const { data, isLoading } = useFetchFieldsAndConditions();
-    const { mutateAsync } = useCreateAutoAssignment();
+    const { mutateAsync } = useCreateTicketTriggers();
 
     const form = useForm<IAddRuleFormFields>({
         defaultValues: {

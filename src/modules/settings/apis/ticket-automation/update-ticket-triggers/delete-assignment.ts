@@ -1,20 +1,20 @@
 import React from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useServiceClient } from "lib";
-import { AutoAssignmentEndPoint, AutoAssignmentQueryKey } from "./api-enums";
+import { UpdateTicketTriggersEndPoint, UpdateTicketTriggersQueryKey } from "./api-enums";
 
 export const useDeleteAssignment = () => {
     const { postData } = useServiceClient();
     const queryClient = useQueryClient();
 
     const deleteAssignment = React.useCallback((args: { id: number }) =>
-        postData(`${AutoAssignmentEndPoint.DELETE_ASSIGNMENT}?id=${args.id}`).then((res) => res.json()), [postData]);
+        postData(`${UpdateTicketTriggersEndPoint.DELETE_ASSIGNMENT}?id=${args.id}`).then((res) => res.json()), [postData]);
 
     return useMutation({
-        mutationKey: AutoAssignmentQueryKey.DELETE_ASSIGNMENT,
+        mutationKey: UpdateTicketTriggersQueryKey.DELETE_ASSIGNMENT,
         mutationFn: deleteAssignment,
         onSuccess: () => {
-            queryClient.invalidateQueries(AutoAssignmentQueryKey.FETCH_ALL_ASSIGNMENTS);
+            queryClient.invalidateQueries(UpdateTicketTriggersQueryKey.FETCH_ALL_ASSIGNMENTS);
         }
     });
 }
