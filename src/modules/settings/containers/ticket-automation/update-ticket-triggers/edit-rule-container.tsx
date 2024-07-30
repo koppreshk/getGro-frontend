@@ -1,9 +1,9 @@
 import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
 import { useEditAutoAssignment, useFetchAssignment, useFetchFieldsAndConditions } from "modules/settings/apis/ticket-automation";
 import { AddRule } from "modules/settings/component/ticket-automation"
-import { IAddRuleFormFields } from "./add-rule-container";
 import { useSearchParams } from "react-router-dom";
 import { isArray } from "lib/utils";
+import { IAddRuleFormFields } from "../auto-assignments";
 
 export const EditRuleContainer = () => {
     const { data, isLoading } = useFetchFieldsAndConditions();
