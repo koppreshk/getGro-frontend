@@ -6,9 +6,9 @@ import { KeyboardArrowLeft, Save, KeyboardArrowRight } from '@mui/icons-material
 import { FormProvider, useForm, useFormContext } from "react-hook-form"
 import { useNavigate } from 'react-router-dom';
 import { FetchFieldsAndConditions } from 'modules/settings/apis/ticket-automation/update-ticket-triggers';
-import { IAddRuleFormFields } from 'modules/settings/containers/ticket-automation/update-ticket-triggers';
 import { useNotifications } from 'lib';
 import { CreateTriggerSetAction } from '.';
+import { IAddRuleFormFields } from 'modules/settings/containers/ticket-automation/auto-assignments';
 
 interface AddRuleProps {
     mode?: string;
@@ -104,7 +104,8 @@ export const AddCreateTriggerRule = (props: AddRuleProps) => {
             allTicketConditions: [{
                 ticketFields: '',
                 operator: '',
-                conditionValue: ''
+                conditionValue: '',
+                multiSelectConditionValue: []
             }],
             description: '',
             ruleName: '',
