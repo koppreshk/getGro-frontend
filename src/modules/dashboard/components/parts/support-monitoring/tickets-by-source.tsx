@@ -3,7 +3,7 @@ import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 import { FlexBox } from 'lib/ui-ux';
 import { ChannelsInfo } from 'modules/dashboard/apis';
-import { IDashboardColors, useTheme, styled } from 'styled-components';
+import { styled } from 'styled-components';
 
 const ChartContainer = styled(FlexBox)`
     background: ${({ theme }) => theme.pallete.white};
@@ -11,7 +11,7 @@ const ChartContainer = styled(FlexBox)`
     border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
 `;
 
-const getChartMetadata = (channelsInfo: ChannelsInfo, theme: IDashboardColors) => {
+const getChartMetadata = (channelsInfo: ChannelsInfo) => {
     return {
         series: Object.values(channelsInfo),
         options: {
@@ -33,15 +33,14 @@ const getChartMetadata = (channelsInfo: ChannelsInfo, theme: IDashboardColors) =
                     }
                 }
             }],
-            colors: [theme.graphBgColor2, theme.graphBgColor3, theme.graphBgColor4, theme.graphBgColor5, theme.graphBgColor6, theme.graphBgColor7],
+            // colors: [theme.graphBgColor2, theme.graphBgColor3, theme.graphBgColor4, theme.graphBgColor5, theme.graphBgColor6, theme.graphBgColor7],
         } as ApexOptions,
     }
 }
 
 export const TicketsBySource = (props: { channelsInfo: ChannelsInfo }) => {
     const { channelsInfo } = props;
-    const { dashboard } = useTheme();
-    const chartMetadata = getChartMetadata(channelsInfo, dashboard);
+    const chartMetadata = getChartMetadata(channelsInfo);
 
     return (
         <>

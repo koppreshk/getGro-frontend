@@ -91,7 +91,6 @@ const TicketsCreated = () => {
             groupBy: 'status'
         }
     });
-    const { dashboard } = useTheme();
 
     const data = {
         series: [{
@@ -114,8 +113,7 @@ const TicketsCreated = () => {
             },
             xaxis: {
                 categories: ['Unassgined', 'Pending', 'Completed']
-            },
-            colors: [dashboard.graphBgColor1]
+            }
         } as ApexOptions
     };
 
