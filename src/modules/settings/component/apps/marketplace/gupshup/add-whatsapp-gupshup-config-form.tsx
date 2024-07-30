@@ -1,14 +1,14 @@
 import React from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { FlexBox } from "lib/ui-ux";
 import { TextboxField } from "lib/form-fields";
 import { Box, Button, CircularProgress, DialogActions, Divider, Step, StepLabel, Stepper, Typography } from "@mui/material";
 import { useAppSelector } from "lib/hooks";
 
-interface IAddWhatsAppGupshupConfigFormProps {
+export interface IWhatsAppGupshupConfigFormProps {
     togglePopup: () => void;
     onSubmit: (formFields: IAddWhatsAppFormField) => void;
-    isMutationLoading: boolean;
+    isMutationLoading?: boolean;
     updateInstallation: () => void;
 }
 
@@ -67,9 +67,9 @@ const AccountWebhookDetails = () => {
     )
 }
 
-export const AddWhatsAppGupshupConfigForm = (props: IAddWhatsAppGupshupConfigFormProps) => {
+export const WhatsAppGupshupConfigForm = (props: IWhatsAppGupshupConfigFormProps) => {
     const { togglePopup, onSubmit, isMutationLoading, updateInstallation } = props;
-    const form = useForm<IAddWhatsAppFormField>();
+    const form = useFormContext<IAddWhatsAppFormField>()
     const [activeStep, setActiveStep] = React.useState(1);
     const webHookUrl = useAppSelector((state) => state.configurations.whatsAppWebhookUrl);
 
@@ -96,33 +96,51 @@ export const AddWhatsAppGupshupConfigForm = (props: IAddWhatsAppGupshupConfigFor
     const isLastStep = activeStep === steps.length;
 
     return (
-        <>
-            <FormProvider {...form}>
-                <form autoComplete="off">
-                    <FlexBox gap="20px">
-                        <ConfigSteps activeStep={activeStep} />
-                        <Divider orientation="vertical" variant="middle" flexItem />
-                        {activeStep === 1 ? <AccountDetailsForm /> : <AccountWebhookDetails />}
-                    </FlexBox>
-                    <DialogActions sx={{ justifyContent: 'space-between', paddingTop: '30px' }}>
-                        {activeStep > 1 ?
-                            <Button variant="outlined" onClick={handleBack}>
-                                Back
-                            </Button> : <div></div>
-                        }
-                        <FlexBox gap="10px">
-                            <Button variant="outlined" onClick={togglePopup}>
-                                Cancel
-                            </Button>
-                            <Button variant="contained" onClick={isLastStep ? onSaveHandler : form.handleSubmit(onSubmitForm)}>
-                                {isMutationLoading ? (
-                                    <CircularProgress size={24} />
-                                ) : isLastStep ? 'Save' : 'Next'}
-                            </Button>
-                        </FlexBox>
-                    </DialogActions>
-                </form>
-            </FormProvider>
-        </>
+
+        <form autoComplete="off">
+            <FlexBox gap="20px">
+                <ConfigSteps activeStep={activeStep} />
+                <Divider orientation="vertical" variant="middle" flexItem />
+                {activeStep === 1 ? <AccountDetailsForm /> : <AccountWebhookDetails />}
+            </FlexBox>
+            <DialogActions sx={{ justifyContent: 'space-between', paddingTop: '30px' }}>
+                {activeStep > 1 ?
+                    <Button variant="outlined" onClick={handleBack}>
+                        Back
+                    </Button> : <div></div>
+                }
+                <FlexBox gap="10px">
+                    <Button variant="outlined" onClick={togglePopup}>
+                        Cancel
+                    </Button>
+                    <Button variant="contained" onClick={isLastStep ? onSaveHandler : form.handleSubmit(onSubmitForm)}>
+                        {isMutationLoading ? (
+                            <CircularProgress size={24} />
+                        ) : isLastStep ? 'Save' : 'Next'}
+                    </Button>
+                </FlexBox>
+            </DialogActions>
+        </form>
+    )
+}
+
+
+interface IAddWhatsAppGupshupConfigFormProps extends IWhatsAppGupshupConfigFormProps { }
+
+export const AddWhatsAppGupshupConfigFormBase = (props: IAddWhatsAppGupshupConfigFormProps) => {
+    const form = useForm<IAddWhatsAppFormField>({
+        defaultValues: {
+            appAPIkey: '',
+            appId: '',
+            appName: '',
+            appNumber: '',
+            webhookURL: ''
+        }
+    });
+
+    return (
+        <FormProvider {...form}>
+            <WhatsAppGupshupConfigForm {...props} />
+        </FormProvider>
     )
 }

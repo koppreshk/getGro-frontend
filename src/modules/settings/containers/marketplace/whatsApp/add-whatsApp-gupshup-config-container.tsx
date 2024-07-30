@@ -1,6 +1,6 @@
 import { useAppDispatch } from "lib/hooks";
 import { useSetupWhatsAppConfigurations } from "modules/settings/apis/marketplace/whatsApp/gupshup";
-import { AddWhatsAppGupshupConfigForm, IAddWhatsAppFormField } from "modules/settings/component/apps/marketplace/gupshup";
+import { AddWhatsAppGupshupConfigFormBase, IAddWhatsAppFormField } from "modules/settings/component/apps/marketplace/gupshup";
 import { setWhatsAppWebhookUrl } from "modules/settings/storage";
 
 export const AddWhatsAppGupShupConfigContainer = (props: { togglePopup: () => void; updateInstallation: () => void }) => {
@@ -9,9 +9,9 @@ export const AddWhatsAppGupShupConfigContainer = (props: { togglePopup: () => vo
 
     const onSubmit = (formFields: IAddWhatsAppFormField) => {
         mutateAsync({
-            apiKey: formFields.appAPIkey,
-            appId: formFields.appId,
-            appName: formFields.appName,
+            api_key: formFields.appAPIkey,
+            app_id: formFields.appId,
+            app_name: formFields.appName,
             number: formFields.appNumber,
         })
             .then((res) => res.json())
@@ -22,7 +22,7 @@ export const AddWhatsAppGupShupConfigContainer = (props: { togglePopup: () => vo
     };
 
     return (
-        <AddWhatsAppGupshupConfigForm
+        <AddWhatsAppGupshupConfigFormBase
             togglePopup={props.togglePopup}
             onSubmit={onSubmit}
             isMutationLoading={isMutationLoading}
