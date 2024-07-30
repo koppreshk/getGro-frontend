@@ -5,10 +5,10 @@ import { Button } from '@mui/material';
 import { KeyboardArrowLeft, Save, KeyboardArrowRight } from '@mui/icons-material';
 import { FormProvider, useForm, useFormContext } from "react-hook-form"
 import { useNavigate } from 'react-router-dom';
-import { FetchFieldsAndConditions } from 'modules/settings/apis/ticket-automation/update-ticket-triggers';
 import { useNotifications } from 'lib';
-import { CreateTriggerSetAction } from '.';
-import { IAddRuleFormFields } from 'modules/settings/containers/ticket-automation/auto-assignments';
+import { FetchFieldsAndConditions } from 'modules/settings/apis/ticket-automation';
+import { IAddRuleFormFields } from 'modules/settings/containers/ticket-automation';
+import { CreateTriggerSetAction } from './create-trigger-set-action';
 
 interface AddRuleProps {
     mode?: string;

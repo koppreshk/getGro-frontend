@@ -7,7 +7,7 @@ import { isArray } from "lib/utils";
 
 export const EditRuleContainer = () => {
     const { data, isLoading } = useFetchFieldsAndConditions();
-    const { data: currentRuleData, isLoading: currentRuleLoading } = useFetchAssignment();
+    const { data: currentRuleData, isLoading: currentRuleLoading } = useFetchAssignment('auto_assignment');
     const { mutateAsync } = useEditAutoAssignment();
     const [searchParams] = useSearchParams();
     const id = searchParams.get('id') || '';

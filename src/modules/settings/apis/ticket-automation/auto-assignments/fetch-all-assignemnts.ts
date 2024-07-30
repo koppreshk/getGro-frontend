@@ -2,6 +2,7 @@ import React from "react";
 import { useServiceClient } from "lib"
 import { useQuery } from "react-query";
 import { AutoAssignmentEndPoint, AutoAssignmentQueryKey } from "./api-enums";
+import { AutoMationType } from ".";
 
 export interface IAllAssignments {
     id: number
@@ -11,13 +12,13 @@ export interface IAllAssignments {
     is_active: boolean
 }
 
-export const useFetchAllAssignments = () => {
+export const useFetchAllAssignments = (automationType: AutoMationType) => {
     const { getData } = useServiceClient();
 
-    const fetchAllAssignments = React.useCallback(() => getData(`${AutoAssignmentEndPoint.FETCH_ALL_ASSIGNMENTS}?automation_type=auto_assignment`).then((res) => res.json()), [getData]);
+    const fetchAllAssignments = React.useCallback(() => getData(`${AutoAssignmentEndPoint.FETCH_ALL_ASSIGNMENTS}?automation_type=${automationType}`).then((res) => res.json()), [automationType, getData]);
 
     return useQuery<IAllAssignments[], { message: string }>({
-        queryKey: AutoAssignmentQueryKey.FETCH_ALL_ASSIGNMENTS,
+        queryKey: [AutoAssignmentQueryKey.FETCH_ALL_ASSIGNMENTS, automationType],
         queryFn: fetchAllAssignments,
     })
 }

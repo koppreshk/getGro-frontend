@@ -5,7 +5,7 @@ import { CustomIconButton, NegativeActionDialog } from "lib/ui-ux";
 import { useDeleteAssignment } from "modules/settings/apis/ticket-automation";
 
 export const DeleteAssignment = (props: { id: number }) => {
-    const { mutateAsync } = useDeleteAssignment();
+    const { mutateAsync } = useDeleteAssignment('auto_assignment');
     const { showNotification } = useNotifications();
     const [open, setOpen] = React.useState(false);
 
