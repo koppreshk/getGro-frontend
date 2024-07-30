@@ -10,12 +10,12 @@ export interface FetchFieldsAndConditions {
     dropdownValues: DropdownValue[]
 }
 
-export interface Operator {
+interface Operator {
     operatorId: number
     operatorName: string
 }
 
-export interface DropdownValue {
+interface DropdownValue {
     channel_id: number
     name: string
 }

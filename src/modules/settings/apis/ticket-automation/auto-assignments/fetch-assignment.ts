@@ -12,6 +12,13 @@ export interface IAssignment {
     rules: Rule[]
     associate_agent: AssociateAgent
     is_active: boolean
+    trigger_actions: {
+        field_trigger_action_id: string;
+        value: string | {
+            queue_id: string;
+            assignee_id: string;
+        }
+    }[]
 }
 
 interface Rule {

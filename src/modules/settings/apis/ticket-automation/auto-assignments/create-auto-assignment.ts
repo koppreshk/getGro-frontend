@@ -8,7 +8,17 @@ export interface ICreateAutoAssignmentArgs {
     name: string
     description: string
     rules: Rule[]
-    associate_agent: AssociateAgent;
+    /**
+     * needed if automation_type type is auto_assignment
+     */
+    associate_agent?: AssociateAgent;
+    /**
+     * needed if automation_type type is not auto_assignment
+     */
+    trigger_actions?: {
+        field_trigger_action_id: string
+        value: string
+    }[]
     automation_type: AutoMationType
 }
 
