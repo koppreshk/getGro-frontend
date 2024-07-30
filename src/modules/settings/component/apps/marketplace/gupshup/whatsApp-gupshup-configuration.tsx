@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import { Typography } from "@mui/material";
 import { AddAppConfigurationDialog, AppConfigurationLayout } from "..";
 import WhatsAppIcon from '../../../../../../assets/svg/whatsapp.svg?react';
-import { AddWhatsAppGupShupConfigContainer } from "modules/settings/containers/marketplace/whatsApp";
+import { AddWhatsAppGupShupConfigContainer, UpdateWhatsAppGupshupConfigContainer } from "modules/settings/containers/marketplace/whatsApp";
 import { FlexBox } from "lib/ui-ux";
 import { IWhatsAppConfigDetails } from "modules/settings/apis/marketplace/whatsApp/gupshup";
 import { DeleteWhatsAppConfigurations } from "./delete-whatsapp-configurations";
@@ -54,6 +54,10 @@ export const WhatsAppGupshupConfiguration = (props: { data: IWhatsAppConfigDetai
         setOpenPopup((prevValue) => !prevValue)
     }, []);
 
+    const appConfigDialogContent = () => {
+        return isInstalled ? <UpdateWhatsAppGupshupConfigContainer togglePopup={togglePopup}/> : <AddWhatsAppGupShupConfigContainer togglePopup={togglePopup} updateInstallation={props.updateInstallation}/>
+    };
+
     return (
         <>
             <AppConfigurationLayout
@@ -72,10 +76,11 @@ export const WhatsAppGupshupConfiguration = (props: { data: IWhatsAppConfigDetai
                 unInstallApp={() => <DeleteWhatsAppConfigurations />}
             />
             <AddAppConfigurationDialog
-                dialogContent={() => <AddWhatsAppGupShupConfigContainer togglePopup={togglePopup} updateInstallation={props.updateInstallation}/>}
+                dialogContent={appConfigDialogContent}
                 openPopup={openPopup}
                 togglePopup={togglePopup}
-                title="WhatsApp - GupShup Configuration" />
+                title="WhatsApp - GupShup Configuration"
+                maxWidth="md" />
         </>
     )
 }
