@@ -5,7 +5,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Add } from "@mui/icons-material"
 import { Button, Typography } from "@mui/material"
 import { BreadCrumbs, CustomIconButton, FlexBox, MoreInformation } from "lib/ui-ux";
-import { AddRuleContainer, EditRuleContainer, FetchAllEmailsContainer } from "modules/settings/containers/ticket-automation";
+import { AddRuleContainer, EditRuleContainer, FetchAllAssignmentsContainer } from "modules/settings/containers/ticket-automation";
 
 export interface IAutoAssignmentsLayoutProps {
 
@@ -44,7 +44,7 @@ const AutoAssignmentsContent = () => {
                 </FlexBox>
                 <Button variant="contained" onClick={toggleAddAutoAssignmentsDrawer} startIcon={<Add />}>Add New Rule</Button>
             </FlexBox>
-            <FetchAllEmailsContainer />
+            <FetchAllAssignmentsContainer />
         </FlexBox>
     );
 }
