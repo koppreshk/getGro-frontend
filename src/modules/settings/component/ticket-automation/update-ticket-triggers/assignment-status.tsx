@@ -6,7 +6,7 @@ import { useState } from "react";
 
 export const AssignmentStatus = (props: { status: boolean, id: number }) => {
     const { status, id } = props;
-    const { mutateAsync } = useSetAssignmentStatus();
+    const { mutateAsync } = useSetAssignmentStatus('update_trigger');
     const [currentStatus, setCurrentStatus] = useState(status);
     const { showNotification } = useNotifications()
 

@@ -1,5 +1,5 @@
 import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
-import { useEditAutoAssignment, useFetchAssignment, useFetchFieldsAndConditions } from "modules/settings/apis/ticket-automation";
+import { useEditAutoAssignment, useFetchAssignment, useFetchFieldsAndConditions } from "modules/settings/apis/ticket-automation/auto-assignments";
 import { useSearchParams } from "react-router-dom";
 import { AddCreateTriggerRule } from "modules/settings/component/ticket-automation/create-ticket-triggers";
 import { isArray } from "lib/utils";
@@ -7,7 +7,7 @@ import { IAddRuleFormFields } from "../auto-assignments";
 
 export const EditCreateTriggerRuleContainer = () => {
     const { data, isLoading } = useFetchFieldsAndConditions();
-    const { data: currentRuleData, isLoading: currentRuleLoading } = useFetchAssignment();
+    const { data: currentRuleData, isLoading: currentRuleLoading } = useFetchAssignment('create_trigger');
     const { mutateAsync } = useEditAutoAssignment();
     const [searchParams] = useSearchParams();
     const id = searchParams.get('id') || '';

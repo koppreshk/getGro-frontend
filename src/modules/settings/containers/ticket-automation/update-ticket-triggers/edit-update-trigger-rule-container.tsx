@@ -5,9 +5,9 @@ import { useSearchParams } from "react-router-dom";
 import { isArray } from "lib/utils";
 import { IAddRuleFormFields } from "../auto-assignments";
 
-export const EditRuleContainer = () => {
+export const EditUpdateTriggerRuleContainer = () => {
     const { data, isLoading } = useFetchFieldsAndConditions();
-    const { data: currentRuleData, isLoading: currentRuleLoading } = useFetchAssignment();
+    const { data: currentRuleData, isLoading: currentRuleLoading } = useFetchAssignment('update_trigger');
     const { mutateAsync } = useEditAutoAssignment();
     const [searchParams] = useSearchParams();
     const id = searchParams.get('id') || '';

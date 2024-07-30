@@ -39,7 +39,7 @@ const CreateTicketTriggersContent = () => {
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
                     <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBackIcon />} tooltipProps={{ title: 'Back' }} />
-                    <Typography variant="h5">Update Triggers</Typography>
+                    <Typography variant="h5">Create Ticket Triggers</Typography>
                 </FlexBox>
                 <Button variant="contained" onClick={navigateToCreateTrigger} startIcon={<Add />}>Add New Rule</Button>
             </FlexBox>

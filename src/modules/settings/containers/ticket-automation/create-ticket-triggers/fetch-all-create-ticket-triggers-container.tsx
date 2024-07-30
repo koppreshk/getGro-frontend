@@ -3,7 +3,7 @@ import { useFetchAllAssignments } from "modules/settings/apis/ticket-automation"
 import { AllCreateTicketTriggers } from "modules/settings/component/ticket-automation/create-ticket-triggers";
 
 export const FetchAllCreateTicketTriggersContainer = () => {
-    const { data, isError, error, isLoading } = useFetchAllAssignments();
+    const { data, isError, error, isLoading } = useFetchAllAssignments('create_trigger');
 
     if (isError) return <ErrorMessage statusCode={error?.message} />
 

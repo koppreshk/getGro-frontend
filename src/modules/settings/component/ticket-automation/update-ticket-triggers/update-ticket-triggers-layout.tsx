@@ -5,7 +5,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Add } from "@mui/icons-material"
 import { Button, Typography } from "@mui/material"
 import { BreadCrumbs, CustomIconButton, FlexBox, MoreInformation } from "lib/ui-ux";
-import { AddRuleContainer, EditRuleContainer, FetchAllUpdateTicketTriggersContainer } from "modules/settings/containers/ticket-automation/update-ticket-triggers";
+import { AddUpdateTriggerRuleContainer, EditUpdateTriggerRuleContainer, FetchAllUpdateTicketTriggersContainer } from "modules/settings/containers/ticket-automation/update-ticket-triggers";
 
 export interface IUpdateTicketTriggersLayoutProps {
 
@@ -19,8 +19,8 @@ export const UpdateTicketTriggersLayout = (props: IUpdateTicketTriggersLayoutPro
             <div style={{ height: 'calc(100% - 34px)' }}>
                 <Routes>
                     <Route key='base-route' path="/" element={<UpdateTicketTriggersContent {...props} />} />
-                    <Route key='add-route' path="/add-rule" element={<AddRuleContainer />} />
-                    <Route key='edit-route' path="/edit-rule" element={<EditRuleContainer />} />
+                    <Route key='add-route' path="/add-rule" element={<AddUpdateTriggerRuleContainer />} />
+                    <Route key='edit-route' path="/edit-rule" element={<EditUpdateTriggerRuleContainer />} />
                 </Routes>
             </div>
         </FlexBox>
@@ -40,7 +40,7 @@ const UpdateTicketTriggersContent = () => {
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
                     <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBackIcon />} tooltipProps={{ title: 'Back' }} />
-                    <Typography variant="h5">Update Triggers</Typography>
+                    <Typography variant="h5">Update Ticket Triggers</Typography>
                 </FlexBox>
                 <Button variant="contained" onClick={toggleAddUpdateTicketTriggersDrawer} startIcon={<Add />}>Add New Rule</Button>
             </FlexBox>
