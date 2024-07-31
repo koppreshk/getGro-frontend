@@ -3,11 +3,11 @@ import { UseFieldArrayRemove, useFieldArray, useFormContext } from "react-hook-f
 import { DeleteOutline } from "@mui/icons-material";
 import { Button, IconButton } from "@mui/material";
 import { SelectField } from "lib/form-fields";
-import { CenteredCircularProgress, FlexBox } from "lib/ui-ux"
+import { CenteredCircularProgress, ErrorMessage, FlexBox } from "lib/ui-ux"
 import { TriggerActions, useFetchTriggerActions } from "modules/settings/apis/ticket-automation";
 
 export const CreateTriggerSetAction = () => {
-    const { data, isLoading } = useFetchTriggerActions();
+    const { data, isLoading, error } = useFetchTriggerActions();
     const { fields, append, remove } = useFieldArray({
         name: 'actions'
     });
@@ -20,23 +20,27 @@ export const CreateTriggerSetAction = () => {
         return <CenteredCircularProgress />
     }
 
-    return (
-        <FlexBox flexDirection="column" gap={'24px'}>
-            <FlexBox
-                flexDirection='column'
-                gap={'10px'}
-                padding={'20px'}
-                width="100%"
-                style={{ border: '1px solid #c4c4c4', borderRadius: '4px' }}>
-                <FlexBox flexDirection="column" gap={'10px'} width="100%">
-                    {fields.map((field, index) => (
-                        <Condition key={field.id} index={index} fieldArrayName="actions" remove={remove} data={data!} />
-                    ))}
+    if (data) {
+        return (
+            <FlexBox flexDirection="column" gap={'24px'}>
+                <FlexBox
+                    flexDirection='column'
+                    gap={'10px'}
+                    padding={'20px'}
+                    width="100%"
+                    style={{ border: '1px solid #c4c4c4', borderRadius: '4px' }}>
+                    <FlexBox flexDirection="column" gap={'10px'} width="100%">
+                        {fields.map((field, index) => (
+                            <Condition key={field.id} index={index} fieldArrayName="actions" remove={remove} data={data!} />
+                        ))}
+                    </FlexBox>
+                    <Button variant="contained" size="small" sx={{ width: 'fit-content' }} onClick={onAddCondition}>Add Condition</Button>
                 </FlexBox>
-                <Button variant="contained" size="small" sx={{ width: 'fit-content' }} onClick={onAddCondition}>Add Condition</Button>
-            </FlexBox>
-        </FlexBox >
-    )
+            </FlexBox >
+        )
+    }
+
+    return <ErrorMessage statusCode={error?.message}/>
 }
 
 interface ConditionProps {

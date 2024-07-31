@@ -2,6 +2,8 @@ import { useLocation, Link as RouterLink } from "react-router-dom";
 import { Breadcrumbs, Link, LinkProps, Typography } from "@mui/material"
 import { NavigateNext } from "@mui/icons-material";
 import styled, { useTheme } from "styled-components";
+import { FlexBox } from "../flexbox/flexbox";
+import { RefreshButton } from "..";
 
 const StyledTypography = styled(Typography)`
     &&{
@@ -22,34 +24,41 @@ const LinkRouter = (props: LinkRouterProps) => {
     return <Link {...props} component={RouterLink} />;
 }
 
-export const BreadCrumbs = () => {
+interface BreadCrumbsProps {
+    hideRefreshBtn?: boolean;
+}
+export const BreadCrumbs = (props: BreadCrumbsProps) => {
+    const { hideRefreshBtn } = props;
     const location = useLocation();
     const color = useTheme();
     const pathnames = location.pathname.split('/').filter((x) => x);
 
     return (
-        <Breadcrumbs aria-label="breadcrumb" separator={<NavigateNext fontSize="small" />} sx={{ padding: '5px 20px' }}>
-            {pathnames.map((value, index) => {
-                const last = index === pathnames.length - 1;
-                const to = `/${pathnames.slice(0, index + 1).join('/')}`;
+        <FlexBox justifyContent="space-between" padding="5px 20px">
+            <Breadcrumbs aria-label="breadcrumb" separator={<NavigateNext fontSize="small" />} >
+                {pathnames.map((value, index) => {
+                    const last = index === pathnames.length - 1;
+                    const to = `/${pathnames.slice(0, index + 1).join('/')}`;
 
-                return last ? (
-                    <StyledTypography color={color.pallete.primaryPurpleText} variant="caption" key={value} >
-                        {breadCrumbName(value)}
-                    </StyledTypography>
-                ) : (
-                    <LinkRouter
-                        underline="hover"
-                        key={value}
-                        color="inherit"
-                        to={to}
-                    >
-                        <StyledTypography variant="caption" color="inherit" key={value} >
+                    return last ? (
+                        <StyledTypography color={color.pallete.primaryPurpleText} variant="caption" key={value} >
                             {breadCrumbName(value)}
                         </StyledTypography>
-                    </LinkRouter>
-                )
-            })}
-        </Breadcrumbs>
+                    ) : (
+                        <LinkRouter
+                            underline="hover"
+                            key={value}
+                            color="inherit"
+                            to={to}
+                        >
+                            <StyledTypography variant="caption" color="inherit" key={value} >
+                                {breadCrumbName(value)}
+                            </StyledTypography>
+                        </LinkRouter>
+                    )
+                })}
+            </Breadcrumbs>
+            {hideRefreshBtn ? null : <RefreshButton />}
+        </FlexBox>
     )
 }

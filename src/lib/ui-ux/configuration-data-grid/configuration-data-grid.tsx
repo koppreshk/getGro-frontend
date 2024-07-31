@@ -111,7 +111,7 @@ export const ConfigDataGrid = <T extends object>(props: IConfigDataGridProps<T>)
                             <tr key={row.id} className="table-row-styles" onClick={isLoading ? undefined : onRowClick && (() => onRowClick(row))}>
                                 {row.getVisibleCells().map(cell => (
                                     <td key={cell.id} style={{ width: cell.column.getSize() }}>
-                                        <Typography padding="0px 10px" variant='body2' textOverflow={'ellipsis'} overflow="hidden" whiteSpace="nowrap" maxWidth={cell.column.getSize()}>
+                                        <Typography padding="0px 10px" component={'div'} variant='body2' textOverflow={'ellipsis'} overflow="hidden" whiteSpace="nowrap" maxWidth={cell.column.getSize()}>
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </Typography>
                                     </td>
