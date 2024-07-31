@@ -1,17 +1,18 @@
 import { createColumnHelper } from '@tanstack/react-table';
 import { ConfigDataGrid } from 'lib/ui-ux/configuration-data-grid';
 import { FlexBox } from 'lib/ui-ux';
-import { IAllAssignments } from 'modules/settings/apis/ticket-automation';
+import { AutoMationType, IAllAssignments } from 'modules/settings/apis/ticket-automation';
 import { EditTicketTriggers } from './edit-create-ticket-triggers';
 import { DeleteTicketTriggers } from './delete-create-ticket-trigger';
 import { AssignmentStatus } from '../auto-assignments/assignment-status';
 
-interface IAllEmailProps {
+interface IAllCreateTicketTriggersProps {
     data?: IAllAssignments[];
     isLoading: boolean;
+    autoMationType: AutoMationType;
 }
 
-const useColumns = () => {
+const useColumns = (autoMationType: AutoMationType) => {
     const columnHelper = createColumnHelper<IAllAssignments>();
 
     const columns = [
@@ -33,7 +34,7 @@ const useColumns = () => {
         columnHelper.accessor('is_active', {
             id: 'is_active',
             header: () => 'is Active',
-            cell: ({ row: { original } }) => < AssignmentStatus id={original.id} status={original.is_active} />,
+            cell: ({ row: { original } }) => < AssignmentStatus id={original.id} status={original.is_active} autoMationType={autoMationType} />,
             enableSorting: false,
         }),
         columnHelper.display({
@@ -43,7 +44,7 @@ const useColumns = () => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
                         <EditTicketTriggers id={original.id} />
-                        <DeleteTicketTriggers id={original.id} />
+                        <DeleteTicketTriggers id={original.id} autoMationType={autoMationType} />
                     </FlexBox>
                 )
             },
@@ -55,9 +56,9 @@ const useColumns = () => {
 }
 
 
-export const AllCreateTicketTriggers = (props: IAllEmailProps) => {
-    const { data, isLoading } = props;
-    const columns = useColumns();
+export const AllCreateTicketTriggers = (props: IAllCreateTicketTriggersProps) => {
+    const { data, isLoading, autoMationType } = props;
+    const columns = useColumns(autoMationType);
 
     return (
         <>

@@ -18,8 +18,8 @@ export const CreateTicketTriggersLayout = (props: ICreateTriggersLayoutProps) =>
             <div style={{ height: 'calc(100% - 34px)' }}>
                 <Routes>
                     <Route key='base-route' path="/" element={<CreateTicketTriggersContent {...props} />} />
-                    <Route key='add-route' path="/add-rule" element={<AddCreateTriggerRuleContainer />} />
-                    <Route key='edit-route' path="/edit-rule" element={<EditCreateTriggerRuleContainer />} />
+                    <Route key='add-route' path="/add-rule" element={<AddCreateTriggerRuleContainer autoMationType="create_trigger" />} />
+                    <Route key='edit-route' path="/edit-rule" element={<EditCreateTriggerRuleContainer autoMationType="create_trigger" />} />
                 </Routes>
             </div>
         </FlexBox>
@@ -43,7 +43,7 @@ const CreateTicketTriggersContent = () => {
                 </FlexBox>
                 <Button variant="contained" onClick={navigateToCreateTrigger} startIcon={<Add />}>Add New Rule</Button>
             </FlexBox>
-            <FetchAllCreateTicketTriggersContainer />
+            <FetchAllCreateTicketTriggersContainer autoMationType="create_trigger" />
         </FlexBox>
     );
 }

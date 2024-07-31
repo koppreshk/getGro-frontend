@@ -5,7 +5,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Add } from "@mui/icons-material"
 import { Button, Typography } from "@mui/material"
 import { BreadCrumbs, CustomIconButton, FlexBox, MoreInformation } from "lib/ui-ux";
-import { AddUpdateTriggerRuleContainer, EditUpdateTriggerRuleContainer, FetchAllUpdateTicketTriggersContainer } from "modules/settings/containers/ticket-automation/update-ticket-triggers";
+import { AddCreateTriggerRuleContainer, EditCreateTriggerRuleContainer, FetchAllCreateTicketTriggersContainer } from "modules/settings/containers/ticket-automation/create-ticket-triggers";
 
 export interface IUpdateTicketTriggersLayoutProps {
 
@@ -19,8 +19,8 @@ export const UpdateTicketTriggersLayout = (props: IUpdateTicketTriggersLayoutPro
             <div style={{ height: 'calc(100% - 34px)' }}>
                 <Routes>
                     <Route key='base-route' path="/" element={<UpdateTicketTriggersContent {...props} />} />
-                    <Route key='add-route' path="/add-rule" element={<AddUpdateTriggerRuleContainer />} />
-                    <Route key='edit-route' path="/edit-rule" element={<EditUpdateTriggerRuleContainer />} />
+                    <Route key='add-route' path="/add-rule" element={<AddCreateTriggerRuleContainer autoMationType="update_trigger" />} />
+                    <Route key='edit-route' path="/edit-rule" element={<EditCreateTriggerRuleContainer autoMationType="update_trigger" />} />
                 </Routes>
             </div>
         </FlexBox>
@@ -44,7 +44,7 @@ const UpdateTicketTriggersContent = () => {
                 </FlexBox>
                 <Button variant="contained" onClick={toggleAddUpdateTicketTriggersDrawer} startIcon={<Add />}>Add New Rule</Button>
             </FlexBox>
-            <FetchAllUpdateTicketTriggersContainer />
+            <FetchAllCreateTicketTriggersContainer autoMationType="update_trigger" />
         </FlexBox>
     );
 }
