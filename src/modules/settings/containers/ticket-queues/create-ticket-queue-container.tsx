@@ -17,8 +17,6 @@ export const CreateTicketQueueContainer = (props: ICreateTicketQueueContainerPro
         createTicketQueue({
             queueName: formData.queueName,
             queueKey: formData.queueKey,
-            autoAssignType: formData.autoAssignType,
-            queueType: formData.queueType,
             assigned_employees: formData.assignedEmployees.map((item) => ({
                 firstName: item.value.split(' ')[0],
                 lastName: item.value.split(' ')[1],
@@ -34,15 +32,12 @@ export const CreateTicketQueueContainer = (props: ICreateTicketQueueContainerPro
         return <CenteredCircularProgress />
     }
 
-    if (data) {
-        const { auto_assign_types, employees, queue_types } = data;
+    if (data) { 
         return (
             <TicketQueueForm
                 mode="create"
                 onFormSubmitHandler={submitCreateTicketQueue}
-                autoAssignTypes={auto_assign_types}
-                employees={employees}
-                queueTypes={queue_types} />
+                employees={data.employees} />
         )
     }
 }

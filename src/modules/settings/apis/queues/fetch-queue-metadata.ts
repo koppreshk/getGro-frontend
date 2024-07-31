@@ -5,8 +5,6 @@ import { ConfigurationsEndPoint, ConfigurationsQueryKey } from "./api-enums";
 import { Employee } from "./fetch-all-queues";
 
 export interface IQueueMetadata {
-    auto_assign_types: string[]
-    queue_types: string[]
     employees: Employee[]
 }
 
