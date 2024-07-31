@@ -3,7 +3,7 @@ import { Row, SortingState, TableOptions, flexRender, getCoreRowModel, getSorted
 import styled, { useTheme } from "styled-components";
 import { IconButton, Skeleton, Typography } from "@mui/material";
 import { ExpandLess, ExpandMore, UnfoldMore } from "@mui/icons-material";
-import { FlexBox, TableControls } from "..";
+import { FlexBox, NoDataIllustration, TableControls } from "..";
 
 const StyledTable = styled.table`
     border-collapse: collapse;
@@ -77,50 +77,61 @@ export const ConfigDataGrid = <T extends object>(props: IConfigDataGridProps<T>)
 
     return (
         <DataGridWrapper className="datagridwrapper" height="100%" flexDirection="column">
-            {hideTableControls ? null : <TableControls totalPages={totalPages} enableSerchField={enableSerchField} />}
-            <ScrollableDiv>
-                <StyledTable>
-                    <thead>
-                        {table.getHeaderGroups().map(headerGroup => (
-                            <tr key={headerGroup.id}>
-                                {headerGroup.headers.map(header => (
-                                    <StyledTableHeader key={header.id} style={{ width: header.getSize() }}>
-                                        <FlexBox justifyContent="space-between" flexDirection="row">
-                                            <FlexBox alignItems="center" flexDirection="row" padding="10px">
-                                                <Typography color={pallete.grayVariant2} variant="h6">
-                                                    {flexRender(
-                                                        header.column.columnDef.header,
-                                                        header.getContext()
-                                                    )}
-                                                </Typography>
+            <>
+                {memoizedData.length
+                    ?
+                    <>
+                        {hideTableControls ? null : <TableControls totalPages={totalPages} enableSerchField={enableSerchField} />}
+                        <ScrollableDiv>
+                            <StyledTable>
+                                <thead>
+                                    {table.getHeaderGroups().map(headerGroup => (
+                                        <tr key={headerGroup.id}>
+                                            {headerGroup.headers.map(header => (
+                                                <StyledTableHeader key={header.id} style={{ width: header.getSize() }}>
+                                                    <FlexBox justifyContent="space-between" flexDirection="row">
+                                                        <FlexBox alignItems="center" flexDirection="row" padding="10px">
+                                                            <Typography color={pallete.grayVariant2} variant="h6">
+                                                                {flexRender(
+                                                                    header.column.columnDef.header,
+                                                                    header.getContext()
+                                                                )}
+                                                            </Typography>
 
-                                                <IconButton onClick={header.column.getToggleSortingHandler()}>
-                                                    {header.column.getCanSort() ?
-                                                        header.column.getIsSorted() === false ? <UnfoldMore /> : header.column.getIsSorted() === 'asc' ? <ExpandLess /> : <ExpandMore />
-                                                        : null}
-                                                </IconButton>
-                                            </FlexBox>
-                                        </FlexBox>
-                                    </StyledTableHeader>
-                                ))}
-                            </tr>
-                        ))}
-                    </thead>
-                    <tbody>
-                        {table.getRowModel().rows.map(row => (
-                            <tr key={row.id} className="table-row-styles" onClick={isLoading ? undefined : onRowClick && (() => onRowClick(row))}>
-                                {row.getVisibleCells().map(cell => (
-                                    <td key={cell.id} style={{ width: cell.column.getSize() }}>
-                                        <Typography padding="0px 10px" component={'div'} variant='body2' textOverflow={'ellipsis'} overflow="hidden" whiteSpace="nowrap" maxWidth={cell.column.getSize()}>
-                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                        </Typography>
-                                    </td>
-                                ))}
-                            </tr>
-                        ))}
-                    </tbody>
-                </StyledTable>
-            </ScrollableDiv>
+                                                            <IconButton onClick={header.column.getToggleSortingHandler()}>
+                                                                {header.column.getCanSort() ?
+                                                                    header.column.getIsSorted() === false ? <UnfoldMore /> : header.column.getIsSorted() === 'asc' ? <ExpandLess /> : <ExpandMore />
+                                                                    : null}
+                                                            </IconButton>
+                                                        </FlexBox>
+                                                    </FlexBox>
+                                                </StyledTableHeader>
+                                            ))}
+                                        </tr>
+                                    ))}
+                                </thead>
+                                <tbody>
+                                    {table.getRowModel().rows.map(row => (
+                                        <tr key={row.id} className="table-row-styles" onClick={isLoading ? undefined : onRowClick && (() => onRowClick(row))}>
+                                            {row.getVisibleCells().map(cell => (
+                                                <td key={cell.id} style={{ width: cell.column.getSize() }}>
+                                                    <Typography padding="0px 10px" component={'div'} variant='body2' textOverflow={'ellipsis'} overflow="hidden" whiteSpace="nowrap" maxWidth={cell.column.getSize()}>
+                                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                                    </Typography>
+                                                </td>
+                                            ))}
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </StyledTable>
+                        </ScrollableDiv>
+                    </>
+                    :
+                    <div style={{ height: '100%', maxHeight: '445px' }}>
+                        <NoDataIllustration message="No data to display" />
+                    </div>
+                }
+            </>
         </DataGridWrapper >
     )
 }

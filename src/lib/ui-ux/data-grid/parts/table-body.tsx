@@ -25,7 +25,7 @@ export const TableBody = <T extends object>(props: ITableBodyProps<T>) => {
         <StyledTR onClick={onClick} className="table-row-group" $isRead={isread.status}>
             {row.getVisibleCells().map(cell => (
                 <td key={cell.id} style={{ width: cell.column.getSize() }}>
-                    <Typography variant='body2' textOverflow={'ellipsis'} overflow="hidden" whiteSpace="nowrap" maxWidth={cell.column.getSize()}>
+                    <Typography variant='body2' component={'div'} textOverflow={'ellipsis'} overflow="hidden" whiteSpace="nowrap" maxWidth={cell.column.getSize()}>
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </Typography>
                 </td>
