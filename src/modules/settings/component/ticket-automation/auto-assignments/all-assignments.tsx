@@ -33,7 +33,7 @@ const useColumns = () => {
         columnHelper.accessor('is_active', {
             id: 'is_active',
             header: () => 'is Active',
-            cell: ({ row: { original } }) => < AssignmentStatus id={original.id} status={original.is_active} />,
+            cell: ({ row: { original } }) => < AssignmentStatus id={original.id} status={original.is_active} autoMationType='auto_assignment' />,
             enableSorting: false,
         }),
         columnHelper.display({

@@ -19,7 +19,7 @@ export const TicketConditions = (props: TicketConditionsProps) => {
     });
 
     const onAddCondition = useCallback(() => {
-        append({ ticketFields: '', condition: 'is', conditionValue: '' })
+        append({ multiSelectConditionValue: [], ticketFields: '', condition: 'is', conditionValue: '' })
     }, [append]);
 
     return (
