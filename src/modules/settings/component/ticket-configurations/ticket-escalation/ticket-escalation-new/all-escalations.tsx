@@ -1,4 +1,3 @@
-import { useAppSelector } from 'lib/hooks';
 import { createColumnHelper } from '@tanstack/react-table';
 import { ConfigDataGrid } from 'lib/ui-ux/configuration-data-grid';
 import { FlexBox } from 'lib/ui-ux';
@@ -63,7 +62,7 @@ const useColumns = () => {
 export const AllEscalations = (props: IAllEscalaltionsProps) => {
     const { allEscalations, isLoading } = props;
     const columns = useColumns();
-    const configTotalPages = useAppSelector((state) => state.configurations.totalPages);
+    // const configTotalPages = useAppSelector((state) => state.configurations.totalPages);
 
     return (
         <>
@@ -71,7 +70,7 @@ export const AllEscalations = (props: IAllEscalaltionsProps) => {
                 columns={columns}
                 isLoading={isLoading}
                 data={allEscalations!}
-                totalPages={configTotalPages}
+                hideTableControls
                 enableSerchField />
         </>
     );

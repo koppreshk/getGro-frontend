@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Row, createColumnHelper } from "@tanstack/react-table";
 import { CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-ux";
 import { DeleteQueue } from "./delete-queue";
 import { Queue } from "modules/settings/apis/queues";
 import { AssignedEmployees } from "./assigned-employees";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
-import { useAppDispatch, useAppSelector } from "lib/hooks";
-import { setTotalPage } from "modules/settings/storage";
 import { EditQueueContainer } from "modules/settings/containers";
 import { Edit } from "@mui/icons-material";
 
@@ -56,7 +54,7 @@ const useColumns = () => {
 };
 
 export const TicketQueueList = (props: ITicketQueueListProps) => {
-    const { queueData, isLoading, totalPages } = props;
+    const { queueData, isLoading } = props;
     const colums = useColumns();
     const [showDrawer, setDrawerDisplay] = useState(false);
     const [queueMetadata, setQueueMetadata] = useState({});
@@ -65,13 +63,13 @@ export const TicketQueueList = (props: ITicketQueueListProps) => {
         setDrawerDisplay((preValue) => !preValue);
     }
 
-    const dispatch = useAppDispatch();
+    // const dispatch = useAppDispatch();
 
-    React.useEffect(() => {
-        dispatch(setTotalPage(totalPages));
-    }, [dispatch, totalPages]);
+    // React.useEffect(() => {
+    //     dispatch(setTotalPage(totalPages));
+    // }, [dispatch, totalPages]);
 
-    const configTotalPages = useAppSelector((state) => state.configurations.totalPages);
+    // const configTotalPages = useAppSelector((state) => state.configurations.totalPages);
 
     const onRowClick = (row: Row<Queue>) => {
         toggleQueueDrawer()
@@ -84,8 +82,8 @@ export const TicketQueueList = (props: ITicketQueueListProps) => {
                 columns={colums}
                 isLoading={isLoading}
                 data={queueData}
-                totalPages={configTotalPages}
-                enableSerchField
+                // totalPages={configTotalPages}
+                hideTableControls
                 onRowClick={onRowClick} />
             <DrawerExtended
                 anchor="right"

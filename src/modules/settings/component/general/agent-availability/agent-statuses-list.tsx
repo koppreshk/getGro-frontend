@@ -109,9 +109,14 @@ export const AgentStatusesList = (props: IStatusesListProps) => {
 
     return (
         <div style={{ height: '100%', overflow: 'auto' }}>
-            <ConfigDataGrid columns={columns} data={statuses!} enableSerchField onRowClick={onRowClick} initialState={{
-                rowSelection: getIntialSelectedRows()
-            }} />
+            <ConfigDataGrid
+                columns={columns}
+                data={statuses!}
+                hideTableControls
+                onRowClick={onRowClick}
+                initialState={{
+                    rowSelection: getIntialSelectedRows()
+                }} />
             <DrawerExtended
                 open={showDrawer}
                 anchor="right"

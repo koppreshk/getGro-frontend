@@ -76,7 +76,7 @@ export const UserList = (props: IUserListListProps) => {
 
     return (
         <div style={{ height: '100%', overflow: 'auto' }}>
-            <ConfigDataGrid columns={columns} data={usersData!} enableSerchField onRowClick={onRowClick} />
+            <ConfigDataGrid columns={columns} data={usersData!} hideTableControls onRowClick={onRowClick} />
             <DrawerExtended
                 open={showDrawer}
                 anchor="right"

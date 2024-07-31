@@ -59,7 +59,7 @@ export const TicketStatusList = (props: ITicketStatusListProps) => {
 
     return (
         <>
-            <ConfigDataGrid columns={columns} data={statusData!} isLoading={isLoading} onRowClick={onRowClick} />
+            <ConfigDataGrid columns={columns} data={statusData!} hideTableControls isLoading={isLoading} onRowClick={onRowClick} />
             <DrawerExtended
                 open={showDrawer}
                 anchor="right"

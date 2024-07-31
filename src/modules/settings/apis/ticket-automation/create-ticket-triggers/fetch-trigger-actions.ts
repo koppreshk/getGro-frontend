@@ -28,7 +28,7 @@ export const useFetchTriggerActions = () => {
 
     const fetchTriggerActions = React.useCallback(() => getData(CreateTicketTriggersEndPoint.TRIGGER_ACTIONS).then((res) => res.json()), [getData]);
 
-    return useQuery<TriggerActions[]>({
+    return useQuery<TriggerActions[], { message: string }>({
         queryKey: CreateTicketTriggersQueryKey.TRIGGER_ACTIONS,
         queryFn: fetchTriggerActions,
     })
