@@ -12,16 +12,17 @@ export const EditCreateTriggerRuleContainer = () => {
     const id = searchParams.get('id') || '';
 
     const onSubmit = (formData: IAddCreateTriggerRuleFormFields) => {
-        const { ruleName, description, allTicketConditions, anyTicketConditions } = formData;
-        const modAllConditions = allTicketConditions.map((item) => ({ operator_id: item.operator, ticket_field_id: item.ticketFields, value: item.conditionValue, rule_type: 'type_all' }))
-        const modAnyConditions = anyTicketConditions.map((item) => ({ operator_id: item.operator, ticket_field_id: item.ticketFields, value: item.conditionValue, rule_type: 'type_any' }));
+        const { ruleName, description, allTicketConditions, anyTicketConditions, actions } = formData;
+        const modAllConditions = allTicketConditions.map((item) => ({ operator_id: item.operator, ticket_field_id: item.ticketFields, value: item.operator.toString() === '13' || item.operator.toString() === '14' ? item.multiSelectConditionValue : item.conditionValue, rule_type: 'type_all' }))
+        const modAnyConditions = anyTicketConditions.map((item) => ({ operator_id: item.operator, ticket_field_id: item.ticketFields, value: item.operator.toString() === '13' || item.operator.toString() === '14' ? item.multiSelectConditionValue : item.conditionValue, rule_type: 'type_any' }));
 
         return mutateAsync({
             id: id,
             name: ruleName,
             description,
             rules: modAllConditions.concat(modAnyConditions),
-            automation_type: 'create_trigger'
+            automation_type: 'create_trigger',
+            trigger_actions: actions.map((item) => ({ field_trigger_action_id: item.ticketFields, value: item.conditionValue ? { assignee_id: item.conditionValue, queue_id: item.operator } : item.operator }))
         })
     }
 
@@ -52,7 +53,7 @@ export const EditCreateTriggerRuleContainer = () => {
             description: currentRuleData.description,
             ruleName: currentRuleData.name,
             actions: currentRuleData.trigger_actions.map((item) => ({
-                ticketFields: item.field_trigger_action_id,
+                ticketFields: item.field_trigger_action_id.toString(),
                 operator: typeof item.value === 'string' ? item.value : item.value.queue_id,
                 conditionValue: typeof item.value !== 'string' ? item.value.assignee_id : undefined
             }))

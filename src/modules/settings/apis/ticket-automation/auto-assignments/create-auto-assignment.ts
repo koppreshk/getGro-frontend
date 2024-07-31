@@ -17,7 +17,10 @@ export interface ICreateAutoAssignmentArgs {
      */
     trigger_actions?: {
         field_trigger_action_id: string
-        value: string
+        value: string | {
+            queue_id: string;
+            assignee_id: string;
+        }
     }[]
     automation_type: AutoMationType
 }
