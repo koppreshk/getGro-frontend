@@ -1,9 +1,8 @@
 import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
 import { useEditAutoAssignment, useFetchAssignment, useFetchFieldsAndConditions } from "modules/settings/apis/ticket-automation/auto-assignments";
 import { useSearchParams } from "react-router-dom";
-import { AddCreateTriggerRule } from "modules/settings/component/ticket-automation/create-ticket-triggers";
+import { AddCreateTriggerRule, IAddCreateTriggerRuleFormFields } from "modules/settings/component/ticket-automation/create-ticket-triggers";
 import { isArray } from "lib/utils";
-import { IAddRuleFormFields } from "../auto-assignments";
 
 export const EditCreateTriggerRuleContainer = () => {
     const { data, isLoading } = useFetchFieldsAndConditions();
@@ -12,21 +11,18 @@ export const EditCreateTriggerRuleContainer = () => {
     const [searchParams] = useSearchParams();
     const id = searchParams.get('id') || '';
 
-    const onSubmit = (formData: IAddRuleFormFields) => {
-        const { ruleName, description, allTicketConditions, anyTicketConditions, assignmentMode, selectedQueue } = formData;
-        const modAllConditions = allTicketConditions.map((item) => ({ operator_id: item.operator, ticket_field_id: item.ticketFields, value: item.conditionValue, rule_type: 'type_all' }))
-        const modAnyConditions = anyTicketConditions.map((item) => ({ operator_id: item.operator, ticket_field_id: item.ticketFields, value: item.conditionValue, rule_type: 'type_any' }));
+    const onSubmit = (formData: IAddCreateTriggerRuleFormFields) => {
+        const { ruleName, description, allTicketConditions, anyTicketConditions, actions } = formData;
+        const modAllConditions = allTicketConditions.map((item) => ({ operator_id: item.operator, ticket_field_id: item.ticketFields, value: item.operator.toString() === '13' || item.operator.toString() === '14' ? item.multiSelectConditionValue : item.conditionValue, rule_type: 'type_all' }))
+        const modAnyConditions = anyTicketConditions.map((item) => ({ operator_id: item.operator, ticket_field_id: item.ticketFields, value: item.operator.toString() === '13' || item.operator.toString() === '14' ? item.multiSelectConditionValue : item.conditionValue, rule_type: 'type_any' }));
 
         return mutateAsync({
             id: id,
             name: ruleName,
             description,
             rules: modAllConditions.concat(modAnyConditions),
-            associate_agent: {
-                assignment_mode: assignmentMode,
-                queue_id: selectedQueue
-            },
-            automation_type: 'create_trigger'
+            automation_type: 'create_trigger',
+            trigger_actions: actions.map((item) => ({ field_trigger_action_id: item.ticketFields, value: item.conditionValue ? { assignee_id: item.conditionValue, queue_id: item.operator } : item.operator }))
         })
     }
 
@@ -35,7 +31,7 @@ export const EditCreateTriggerRuleContainer = () => {
     }
 
     if (data && currentRuleData) {
-        const defaultValues: IAddRuleFormFields = {
+        const defaultValues: IAddCreateTriggerRuleFormFields = {
             allTicketConditions: currentRuleData.rules.filter((item => item.rule_type === "type_all")).map((item) => {
                 const parsedCondtValue = isArray(item.value) ? { multiSelectConditionValue: item.value.map((i) => i.toString()), conditionValue: '' } : { conditionValue: item.value, multiSelectConditionValue: [] }
                 return {
@@ -54,10 +50,13 @@ export const EditCreateTriggerRuleContainer = () => {
                 }
             }
             ),
-            assignmentMode: currentRuleData.associate_agent.assignment_mode,
             description: currentRuleData.description,
             ruleName: currentRuleData.name,
-            selectedQueue: currentRuleData.associate_agent.queue_id.toString()
+            actions: currentRuleData.trigger_actions.map((item) => ({
+                ticketFields: item.field_trigger_action_id.toString(),
+                operator: typeof item.value === 'string' ? item.value : item.value.queue_id,
+                conditionValue: typeof item.value !== 'string' ? item.value.assignee_id : undefined
+            }))
         }
 
         return (

@@ -7,20 +7,19 @@ import { FormProvider, useForm, useFormContext } from "react-hook-form"
 import { useNavigate } from 'react-router-dom';
 import { useNotifications } from 'lib';
 import { FetchFieldsAndConditions } from 'modules/settings/apis/ticket-automation';
-import { IAddRuleFormFields } from 'modules/settings/containers/ticket-automation';
 import { CreateTriggerSetAction } from './create-trigger-set-action';
 
 interface AddRuleProps {
     mode?: string;
-    defaultValues?: IAddRuleFormFields;
+    defaultValues?: IAddCreateTriggerRuleFormFields;
     data: FetchFieldsAndConditions[];
-    onSubmit: (formData: IAddRuleFormFields) => Promise<void>;
+    onSubmit: (formData: IAddCreateTriggerRuleFormFields) => Promise<void>;
 }
 
 const AddRuleBase = (props: AddRuleProps) => {
     const { onSubmit } = props;
     const [activeStep, setActiveStep] = React.useState(0);
-    const form = useFormContext<IAddRuleFormFields>();
+    const form = useFormContext<IAddCreateTriggerRuleFormFields>();
     const navigate = useNavigate();
     const { showNotification } = useNotifications();
 
@@ -51,7 +50,7 @@ const AddRuleBase = (props: AddRuleProps) => {
 
     const onClose = () => navigate(-1);
 
-    const onSave = (formData: IAddRuleFormFields) => {
+    const onSave = (formData: IAddCreateTriggerRuleFormFields) => {
         onSubmit(formData)
             .then(() => {
                 onClose();
@@ -96,10 +95,32 @@ const AddRuleBase = (props: AddRuleProps) => {
     )
 }
 
+export interface IAddCreateTriggerRuleFormFields {
+    ruleName: string;
+    description: string;
+    allTicketConditions: {
+        operator: string;
+        conditionValue: string;
+        ticketFields: string;
+        multiSelectConditionValue: string[]
+    }[];
+    anyTicketConditions: {
+        operator: string;
+        conditionValue: string;
+        ticketFields: string;
+        multiSelectConditionValue: string[];
+    }[]
+    actions: {
+        operator: string;
+        conditionValue?: string;
+        ticketFields: string;
+    }[]
+}
+
 export const AddCreateTriggerRule = (props: AddRuleProps) => {
     const { defaultValues } = props;
 
-    const form = useForm<IAddRuleFormFields>({
+    const form = useForm<IAddCreateTriggerRuleFormFields>({
         defaultValues: defaultValues ?? {
             allTicketConditions: [{
                 ticketFields: '',
@@ -110,8 +131,12 @@ export const AddCreateTriggerRule = (props: AddRuleProps) => {
             description: '',
             ruleName: '',
             anyTicketConditions: [],
-            assignmentMode: 'even_distribution',
-            selectedQueue: ''
+            actions: [
+                {
+                    operator: '',
+                    ticketFields: ''
+                }
+            ]
         }
     });
 

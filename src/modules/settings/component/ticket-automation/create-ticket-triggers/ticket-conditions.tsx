@@ -53,6 +53,27 @@ const Condition = (props: ConditionProps) => {
     const ticketFields = data.map((item) => ({ key: item.ticketFieldId.toString(), value: item.fieldName }));
     const operators = data.find((item) => item.ticketFieldId.toString() === watch(`${fieldArrayName}.${index}.ticketFields`))?.operators.map((item) => ({ key: item.operatorId.toString(), value: item.operatorName })) || [];
     const conditionValue = data.find((item) => item.ticketFieldId.toString() === watch(`${fieldArrayName}.${index}.ticketFields`))?.dropdownValues.map((item) => ({ key: item.channel_id.toString(), value: item.name })) || []
+    const isInOperatorSelected = watch(`${fieldArrayName}.${index}.operator`) === '13';
+    const isNotInOperatorSelected = watch(`${fieldArrayName}.${index}.operator`) === '14';
+
+    const renderFieldsByPrevSelection = () => {
+        if (isInOperatorSelected || isNotInOperatorSelected) {
+            return null;
+        }
+        else if (conditionValue.length) {
+            return (
+                <SelectField
+                    name={`${fieldArrayName}.${index}.conditionValue`}
+                    label="Condition Value"
+                    menuOptions={conditionValue} sx={{ width: '33%' }} />
+            )
+        }
+        else {
+            return (
+                <TextboxField name={`${fieldArrayName}.${index}.conditionValue`} label="Condition Value" placeholder="Comma separated values" />
+            )
+        }
+    }
 
     return (
         <>
@@ -61,14 +82,13 @@ const Condition = (props: ConditionProps) => {
                     gap={'32px'}
                     width="calc(100% - 36px)">
                     <SelectField name={`${fieldArrayName}.${index}.ticketFields`} menuOptions={ticketFields} sx={{ width: '33%' }} label="Ticket Fields" />
-                    <SelectField name={`${fieldArrayName}.${index}.operator`} menuOptions={operators} sx={{ width: '33%' }} label="Operator"/>
-                    {conditionValue.length ?
-                        <SelectField
-                            name={`${fieldArrayName}.${index}.conditionValue`}
-                            label="Condition Value"
-                            menuOptions={conditionValue} sx={{ width: '33%' }} />
-                        :
-                        <TextboxField name={`${fieldArrayName}.${index}.conditionValue`} label="Condition Value" placeholder="Comma separated values"/>}
+                    <SelectField name={`${fieldArrayName}.${index}.operator`} menuOptions={operators} sx={{ width: '33%' }} label="Operator" />
+                    {(isInOperatorSelected || isNotInOperatorSelected) ? <SelectField
+                        name={`${fieldArrayName}.${index}.multiSelectConditionValue`}
+                        multiple
+                        menuOptions={conditionValue}
+                        sx={{ width: '33%' }} label="Condition Value" /> : null}
+                    {renderFieldsByPrevSelection()}
                 </FlexBox>
                 <IconButton onClick={() => remove(index)} sx={{ width: 'fit-content' }}>
                     <DeleteOutline />

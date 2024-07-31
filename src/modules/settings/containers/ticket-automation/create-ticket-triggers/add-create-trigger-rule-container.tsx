@@ -1,41 +1,22 @@
 import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
 import { useCreateAutoAssignment, useFetchFieldsAndConditions } from "modules/settings/apis/ticket-automation/auto-assignments";
-import { AddCreateTriggerRule } from "modules/settings/component/ticket-automation/create-ticket-triggers";
-import { FormProvider, useForm } from "react-hook-form"
-import { IAddRuleFormFields } from "../auto-assignments";
+import { AddCreateTriggerRule, IAddCreateTriggerRuleFormFields } from "modules/settings/component/ticket-automation/create-ticket-triggers";
 
 export const AddCreateTriggerRuleContainer = () => {
     const { data, isLoading } = useFetchFieldsAndConditions();
     const { mutateAsync } = useCreateAutoAssignment();
 
-    const form = useForm<IAddRuleFormFields>({
-        defaultValues: {
-            allTicketConditions: [{
-                ticketFields: '',
-                operator: '',
-                conditionValue: ''
-            }],
-            description: '',
-            ruleName: '',
-            anyTicketConditions: [],
-            assignmentMode: 'even_distribution',
-            selectedQueue: ''
-        }
-    });
+    const onSubmit = (formData: IAddCreateTriggerRuleFormFields) => {
+        const { ruleName, description, allTicketConditions, anyTicketConditions, actions } = formData;
+        const modAllConditions = allTicketConditions.map((item) => ({ operator_id: item.operator, ticket_field_id: item.ticketFields, value: item.operator.toString() === '13' || item.operator.toString() === '14' ? item.multiSelectConditionValue : item.conditionValue, rule_type: 'type_all' }))
+        const modAnyConditions = anyTicketConditions.map((item) => ({ operator_id: item.operator, ticket_field_id: item.ticketFields, value: item.operator.toString() === '13' || item.operator.toString() === '14' ? item.multiSelectConditionValue : item.conditionValue, rule_type: 'type_any' }));
 
-    const onSubmit = (formData: IAddRuleFormFields) => {
-        const { ruleName, description, allTicketConditions, anyTicketConditions, assignmentMode, selectedQueue } = formData;
-        const modAllConditions = allTicketConditions.map((item) => ({ operator_id: item.operator, ticket_field_id: item.ticketFields, value: item.conditionValue, rule_type: 'type_all' }))
-        const modAnyConditions = anyTicketConditions.map((item) => ({ operator_id: item.operator, ticket_field_id: item.ticketFields, value: item.conditionValue, rule_type: 'type_any' }))
         return mutateAsync({
             name: ruleName,
             description,
             rules: modAllConditions.concat(modAnyConditions),
-            associate_agent: {
-                assignment_mode: assignmentMode,
-                queue_id: selectedQueue
-            },
-            automation_type: 'create_trigger'
+            automation_type: 'create_trigger',
+            trigger_actions: actions.map((item) => ({ field_trigger_action_id: item.ticketFields, value: item.conditionValue ? { assignee_id: item.conditionValue, queue_id: item.operator } : item.operator }))
         })
     }
 
@@ -45,9 +26,7 @@ export const AddCreateTriggerRuleContainer = () => {
 
     if (data) {
         return (
-            <FormProvider {...form}>
-                <AddCreateTriggerRule data={data} onSubmit={onSubmit} />
-            </FormProvider>
+            <AddCreateTriggerRule data={data} onSubmit={onSubmit} />
         )
     }
 
