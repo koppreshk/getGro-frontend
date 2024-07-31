@@ -2,10 +2,9 @@ import React, { memo, useMemo } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import styled from "styled-components";
 import { Grid, Button } from "@mui/material";
-import { TextboxField, AutocompleteField, SelectField } from "lib/form-fields";
+import { TextboxField, AutocompleteField } from "lib/form-fields";
 import { FlexBox } from "lib/ui-ux";
 import { Employee } from "modules/settings/apis/queues";
-import { capitalizeFirstLetter } from "lib/utils";
 
 const StlyedFlexBox = styled(FlexBox)`
     margin-top: 20px;
@@ -21,11 +20,7 @@ export interface IQueueFormFields {
     queueKey: string;
     assignedEmployees: IEmployeeList[];
     backUpEmployee: IEmployeeList[];
-    autoAssignType: string;
-    queueType: string;
-    timeout: number;
     backupEmployeeType: string;
-    maxAssignments: number;
 }
 
 const selectBackupEmployeeList = [
@@ -41,16 +36,14 @@ const selectBackupEmployeeList = [
 ] as IEmployeeList[]
 
 interface ITicketQueueFormProps {
-    autoAssignTypes: string[];
     employees: Employee[];
-    queueTypes: string[];
     defaultValues?: IQueueFormFields;
     mode: 'create' | 'edit'
     onFormSubmitHandler: (data: IQueueFormFields) => void;
 }
 
 export const TicketQueueForm = memo((props: ITicketQueueFormProps) => {
-    const { mode, defaultValues, autoAssignTypes, employees, queueTypes, onFormSubmitHandler } = props;
+    const { mode, defaultValues, employees, onFormSubmitHandler } = props;
     const isInEditMode = useMemo(() => mode === 'edit', [mode]);
 
     const methods = useForm<IQueueFormFields>({
@@ -59,10 +52,6 @@ export const TicketQueueForm = memo((props: ITicketQueueFormProps) => {
             queueName: '',
             assignedEmployees: [],
             backUpEmployee: [],
-            autoAssignType: autoAssignTypes[0],
-            queueType: queueTypes[0],
-            maxAssignments: 0,
-            timeout: 0
         }
     });
 
@@ -89,18 +78,6 @@ export const TicketQueueForm = memo((props: ITicketQueueFormProps) => {
                         <AutocompleteField label="Select Backup Employee" name="backUpEmployee"
                             options={selectBackupEmployeeList}
                             placeholder="Select Backup Employee" />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <SelectField name="autoAssignType" label="Auto Assign Type" menuOptions={autoAssignTypes.map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} sx={{ width: '100%' }} />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <SelectField name="queueType" label="Type" menuOptions={queueTypes.map((item) => ({ key: item, value: capitalizeFirstLetter(item, '_') }))} sx={{ width: '100%' }} />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TextboxField name="timeout" label="Timeout" fullWidth type="number" />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TextboxField name="maxAssignments" label="Max Assignments" fullWidth type="number" />
                     </Grid>
                 </Grid>
                 <StlyedFlexBox gap='10px' width="100%" justifyContent="flex-end">

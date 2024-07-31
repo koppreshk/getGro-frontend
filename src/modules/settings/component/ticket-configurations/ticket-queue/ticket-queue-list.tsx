@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Row, createColumnHelper } from "@tanstack/react-table";
-import { Typography } from "@mui/material";
 import { CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-ux";
 import { DeleteQueue } from "./delete-queue";
 import { Queue } from "modules/settings/apis/queues";
@@ -30,20 +29,6 @@ const useColumns = () => {
             id: 'uniqueKey',
             header: () => <span>Queue Key</span>,
             cell: info => info.getValue(),
-        }),
-        columnHelper.accessor("autoAssignType", {
-            id: 'autoAssignType',
-            header: () => <span>Auto Assign Type</span>,
-            cell: ({ row: { original } }) => {
-                return <Typography variant="body3" textTransform="capitalize">{original.autoAssignType.split('_').join(' ')}</Typography>
-            },
-        }),
-        columnHelper.accessor("queueType", {
-            id: 'queueType',
-            header: () => <span>Type</span>,
-            cell: ({ row: { original } }) => {
-                return <Typography variant="body3" textTransform="capitalize">{original.queueType.split('_').join(' ')}</Typography>
-            },
         }),
         columnHelper.accessor("assignedEmployees", {
             id: 'assignedEmployees',

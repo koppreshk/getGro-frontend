@@ -13,8 +13,6 @@ export interface Queue {
     id: number;
     name: string;
     uniqueKey: string;
-    autoAssignType: string;
-    queueType: string;
     assignedEmployees: Employee[];
 }
 

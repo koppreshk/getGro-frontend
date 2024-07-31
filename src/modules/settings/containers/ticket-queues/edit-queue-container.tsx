@@ -22,10 +22,8 @@ export const EditQueueContainer = (props: IEditQueueContainerProps) => {
                 lastName: item.value.split(' ')[1],
                 id: Number(item.key)
             })),
-            autoAssignType: formData.autoAssignType,
             id: queueMetadata.id,
             name: formData.queueName,
-            queueType: formData.queueType
         }).then(() => {
             showNotification({ message: 'Queue edited successfully', type: 'success' });
             toggleAddQueueDrawer();
@@ -36,25 +34,19 @@ export const EditQueueContainer = (props: IEditQueueContainerProps) => {
         return <CenteredCircularProgress />
     }
 
-    const { auto_assign_types, employees, queue_types } = data!;
+    const { employees } = data!;
 
     return (
         <TicketQueueForm
             mode="edit"
             onFormSubmitHandler={onEditQueue}
-            autoAssignTypes={auto_assign_types}
             employees={employees}
-            queueTypes={queue_types}
             defaultValues={{
-                autoAssignType: queueMetadata.autoAssignType,
                 backUpEmployee: [],
                 backupEmployeeType: '',
                 assignedEmployees: queueMetadata.assignedEmployees.map((item) => ({ key: item.id.toString(), value: `${item.firstName} ${item.lastName ?? ''}` })),
-                maxAssignments: 0,
                 queueKey: queueMetadata.uniqueKey,
-                queueName: queueMetadata.name,
-                queueType: queueMetadata.queueType,
-                timeout: 0
+                queueName: queueMetadata.name
             }} />
     )
 }

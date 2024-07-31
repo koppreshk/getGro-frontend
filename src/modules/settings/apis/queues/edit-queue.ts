@@ -12,8 +12,6 @@ export const useEditQueue = () => {
         postData(`${ConfigurationsEndPoint.EDIT_QUEUE}`, {
             name: args.name,
             id: args.id,
-            auto_assign_type: args.autoAssignType,
-            queue_type: args.queueType,
             assigned_employees: args.assignedEmployees
         }).then((res) => res.json()), [postData]);
 
