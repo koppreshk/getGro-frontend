@@ -65,13 +65,13 @@ export const AllEscalations = (props: IAllEscalaltionsProps) => {
     // const configTotalPages = useAppSelector((state) => state.configurations.totalPages);
 
     return (
-        <>
+        <div style={{ height: 'calc(100% - 179px)' }}>
             <ConfigDataGrid
                 columns={columns}
                 isLoading={isLoading}
                 data={allEscalations!}
                 hideTableControls
                 enableSerchField />
-        </>
+        </div>
     );
 }
