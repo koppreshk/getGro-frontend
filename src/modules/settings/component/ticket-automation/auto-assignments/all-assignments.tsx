@@ -43,7 +43,7 @@ const useColumns = () => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
                         <EditAssignment id={original.id} />
-                        <DeleteAssignment id={original.id} />
+                        <DeleteAssignment id={original.id} autoMationType='auto_assignment' />
                     </FlexBox>
                 )
             },

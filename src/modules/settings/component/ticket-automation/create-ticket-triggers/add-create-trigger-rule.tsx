@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { CustomSteps, FlexBox } from 'lib/ui-ux';
-import { ChooseConditionForm } from './choose-condition-form';
 import { Button } from '@mui/material';
 import { KeyboardArrowLeft, Save, KeyboardArrowRight } from '@mui/icons-material';
 import { FormProvider, useForm, useFormContext } from "react-hook-form"
@@ -8,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useNotifications } from 'lib';
 import { FetchFieldsAndConditions } from 'modules/settings/apis/ticket-automation';
 import { CreateTriggerSetAction } from './create-trigger-set-action';
+import { ChooseConditionForm } from '../auto-assignments/choose-condition-form';
 
 interface AddRuleProps {
     mode?: string;

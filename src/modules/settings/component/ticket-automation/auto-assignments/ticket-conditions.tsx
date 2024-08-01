@@ -53,8 +53,9 @@ const Condition = (props: ConditionProps) => {
     const ticketFields = data.map((item) => ({ key: item.ticketFieldId.toString(), value: item.fieldName }));
     const operators = data.find((item) => item.ticketFieldId.toString() === watch(`${fieldArrayName}.${index}.ticketFields`))?.operators.map((item) => ({ key: item.operatorId.toString(), value: item.operatorName })) || [];
     const conditionValue = data.find((item) => item.ticketFieldId.toString() === watch(`${fieldArrayName}.${index}.ticketFields`))?.dropdownValues.map((item) => ({ key: item.channel_id.toString(), value: item.name })) || []
-    const isInOperatorSelected = watch(`${fieldArrayName}.${index}.operator`) === '13';
-    const isNotInOperatorSelected = watch(`${fieldArrayName}.${index}.operator`) === '14';
+    const sourceArray = data.find((item) => item.fieldName.toLocaleLowerCase() === 'source');
+    const isInOperatorSelected = sourceArray?.operators.find((it) => it.operatorName.toLocaleLowerCase() === 'in')?.operatorId.toString() === watch(`${fieldArrayName}.${index}.operator`);
+    const isNotInOperatorSelected = sourceArray?.operators.find((it) => it.operatorName.toLocaleLowerCase() === 'not in')?.operatorId.toString() === watch(`${fieldArrayName}.${index}.operator`);
 
     const renderFieldsByPrevSelection = () => {
         if (isInOperatorSelected || isNotInOperatorSelected) {
