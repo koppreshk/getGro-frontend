@@ -18,6 +18,10 @@ const StyledTable = styled.table`
         cursor: pointer;
         background-color: ${({ theme }) => theme.pallete.grayVariant5};
     }
+
+    .table-header-row-styles {
+        background-color: ${({ theme }) => theme.pallete.grayVariant5};
+    }
 `;
 
 const DataGridWrapper = styled(FlexBox)`
@@ -86,7 +90,7 @@ export const ConfigDataGrid = <T extends object>(props: IConfigDataGridProps<T>)
                             <StyledTable>
                                 <thead>
                                     {table.getHeaderGroups().map(headerGroup => (
-                                        <tr key={headerGroup.id}>
+                                        <tr className="table-header-row-styles" key={headerGroup.id}>
                                             {headerGroup.headers.map(header => (
                                                 <StyledTableHeader key={header.id} style={{ width: header.getSize() }}>
                                                     <FlexBox justifyContent="space-between" flexDirection="row">

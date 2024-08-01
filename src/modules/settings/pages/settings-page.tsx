@@ -15,7 +15,7 @@ export default function ConfigurationsPage() {
     return (
         <Routes>
             <Route key="configuration-home" path='/' element={<Configurations />} />
-            <Route key="ticket-queue" path="/ticket-queue" element={<TicketQueuesContainer />} />
+            <Route key="queues" path="/queues" element={<TicketQueuesContainer />} />
             <Route key="ticket-escalation" path="/ticket-escalation/*" element={<AllEscalationsContainer />} />
             <Route key="ticket-status" path="/ticket-status/*" element={<TicketStatusContainer />} />
             <Route key="ticket-tags" path="/tags" element={<FetchAllTagsContainer />} />

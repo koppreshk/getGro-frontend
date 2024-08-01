@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Add, ArrowBack } from "@mui/icons-material";
 import { Button, Typography } from "@mui/material"
-import { BreadCrumbs, CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-ux"
+import { BreadCrumbs, CustomIconButton, DrawerExtended, FlexBox, MoreInformation } from "lib/ui-ux"
 import { AgentAvailabilityStatusesContainer, CreateNewStatusContainer } from "modules/settings/containers/agent-availability";
 
 const AddNewStatus = (props: {
@@ -32,8 +32,9 @@ export const AgentAvailabilityLayout = () => {
     }, []);
 
     return (
-        <FlexBox width="100%" height="100%" flexDirection="column">
+        <FlexBox width="100%" height="100%" flexDirection="column" padding="20px" gap={'20px'}>
             <BreadCrumbs />
+            <MoreInformation information="Agent availability statuses are used to indicate the current availability and readiness of agent to engage in specific tasks or responsibilities"/>
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
                     <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />

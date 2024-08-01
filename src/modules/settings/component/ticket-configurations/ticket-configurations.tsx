@@ -43,13 +43,6 @@ const configurations = [
                 description: "Streamline ticket management: Automate categorization and routing with custom rules"
             },
             {
-                route: "ticket-queue",
-                label: "Ticket Queue",
-                uniqueKey: "ticket-queue",
-                catOptionIcon: () => <Groups2Outlined />,
-                description: "Organizing agents based on their expertise to address specific ticket types"
-            },
-            {
                 route: "tags",
                 label: "Tags",
                 uniqueKey: "tags",
@@ -122,6 +115,13 @@ const configurations = [
                 uniqueKey: "users",
                 catOptionIcon: () => <SupportAgentRounded />,
                 description: "Add user and assign them roles"
+            },
+            {
+                route: "queues",
+                label: "Queues (Groups)",
+                uniqueKey: "queues",
+                catOptionIcon: () => <Groups2Outlined />,
+                description: "Organizing agents based on their expertise to address specific ticket types"
             },
             {
                 route: "roles-and-permissions",
