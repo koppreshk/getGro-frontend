@@ -1,6 +1,7 @@
 import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
 import { AutoMationType, useCreateAutoAssignment, useFetchFieldsAndConditions } from "modules/settings/apis/ticket-automation/auto-assignments";
 import { AddCreateTriggerRule, IAddCreateTriggerRuleFormFields } from "modules/settings/component/ticket-automation/create-ticket-triggers";
+import { ICondition } from "../auto-assignments";
 
 export const AddCreateTriggerRuleContainer = (props: {
     autoMationType: AutoMationType
@@ -11,8 +12,33 @@ export const AddCreateTriggerRuleContainer = (props: {
 
     const onSubmit = (formData: IAddCreateTriggerRuleFormFields) => {
         const { ruleName, description, allTicketConditions, anyTicketConditions, actions } = formData;
-        const modAllConditions = allTicketConditions.map((item) => ({ operator_id: item.operator, ticket_field_id: item.ticketFields, value: item.operator.toString() === '13' || item.operator.toString() === '14' ? item.multiSelectConditionValue : item.conditionValue, rule_type: 'type_all' }))
-        const modAnyConditions = anyTicketConditions.map((item) => ({ operator_id: item.operator, ticket_field_id: item.ticketFields, value: item.operator.toString() === '13' || item.operator.toString() === '14' ? item.multiSelectConditionValue : item.conditionValue, rule_type: 'type_any' }));
+        const sourceArray = data!.find((item) => item.fieldName.toLocaleLowerCase() === 'source');
+
+        const getIFMultiSelectOperatorsSelected = (item: ICondition) => {
+            const isInOperatorSelected = sourceArray!.operators.find((it) => it.operatorName.toLocaleLowerCase() === 'in')!.operatorId.toString() === item.operator.toString();
+            const isNotInOperatorSelected = sourceArray?.operators.find((it) => it.operatorName.toLocaleLowerCase() === 'not in')?.operatorId.toString() === item.operator.toString();
+            return { isInOperatorSelected, isNotInOperatorSelected }
+        }
+
+        const modAllConditions = allTicketConditions.map((item) => {
+            const { isInOperatorSelected, isNotInOperatorSelected } = getIFMultiSelectOperatorsSelected(item)
+            return {
+                operator_id: item.operator,
+                ticket_field_id: item.ticketFields,
+                value: isInOperatorSelected || isNotInOperatorSelected ? item.multiSelectConditionValue : item.conditionValue,
+                rule_type: 'type_all'
+            }
+        })
+        const modAnyConditions = anyTicketConditions.map((item) => {
+            const { isInOperatorSelected, isNotInOperatorSelected } = getIFMultiSelectOperatorsSelected(item)
+
+            return {
+                operator_id: item.operator,
+                ticket_field_id: item.ticketFields,
+                value: isInOperatorSelected || isNotInOperatorSelected ? item.multiSelectConditionValue : item.conditionValue,
+                rule_type: 'type_any'
+            }
+        });
 
         return mutateAsync({
             name: ruleName,

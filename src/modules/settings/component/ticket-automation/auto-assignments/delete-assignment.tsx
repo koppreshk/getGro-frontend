@@ -2,10 +2,10 @@ import React from "react";
 import { Delete } from "@mui/icons-material";
 import { useNotifications } from "lib";
 import { CustomIconButton, NegativeActionDialog } from "lib/ui-ux";
-import { useDeleteAssignment } from "modules/settings/apis/ticket-automation";
+import { AutoMationType, useDeleteAssignment } from "modules/settings/apis/ticket-automation";
 
-export const DeleteAssignment = (props: { id: number }) => {
-    const { mutateAsync } = useDeleteAssignment('auto_assignment');
+export const DeleteAssignment = (props: { id: number, autoMationType: AutoMationType }) => {
+    const { mutateAsync } = useDeleteAssignment(props.autoMationType);
     const { showNotification } = useNotifications();
     const [open, setOpen] = React.useState(false);
 

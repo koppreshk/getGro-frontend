@@ -2,9 +2,9 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { ConfigDataGrid } from 'lib/ui-ux/configuration-data-grid';
 import { FlexBox } from 'lib/ui-ux';
 import { AutoMationType, IAllAssignments } from 'modules/settings/apis/ticket-automation';
-import { EditTicketTriggers } from './edit-create-ticket-triggers';
-import { DeleteTicketTriggers } from './delete-create-ticket-trigger';
 import { AssignmentStatus } from '../auto-assignments/assignment-status';
+import { DeleteAssignment } from '../auto-assignments';
+import { EditAssignment } from '../auto-assignments/edit-assignment';
 
 interface IAllCreateTicketTriggersProps {
     data?: IAllAssignments[];
@@ -43,8 +43,8 @@ const useColumns = (autoMationType: AutoMationType) => {
             cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
-                        <EditTicketTriggers id={original.id} />
-                        <DeleteTicketTriggers id={original.id} autoMationType={autoMationType} />
+                        <EditAssignment id={original.id} />
+                        <DeleteAssignment id={original.id} autoMationType={autoMationType} />
                     </FlexBox>
                 )
             },
