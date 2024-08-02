@@ -75,7 +75,7 @@ export const UserList = (props: IUserListListProps) => {
     }, [])
 
     return (
-        <div style={{ height: '100%', overflow: 'auto' }}>
+        <div style={{ height: 'calc(100% - 173px)', overflow: 'auto' }}>
             <ConfigDataGrid columns={columns} data={usersData!} hideTableControls onRowClick={onRowClick} />
             <DrawerExtended
                 open={showDrawer}

@@ -1,8 +1,7 @@
 import React, { useCallback } from "react"
 import { useNavigate } from "react-router-dom";
-import { Add } from "@mui/icons-material"
+import { AddCircleOutline, ArrowBack } from "@mui/icons-material"
 import { Button, Typography } from "@mui/material"
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { BreadCrumbs, CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-ux"
 import { ITicketQueues } from "modules/settings/apis/queues"
 import { CreateTicketQueueContainer } from "modules/settings/containers"
@@ -51,10 +50,10 @@ export const TicketQueue = (props: ITicketQueueProps) => {
                 <MoreInformation information="Queues in an organization help associate the related agents. Queues can be utilized in auto-assignment, automation, ticket permission restrictions, and sharing filters" />
                 <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                     <FlexBox alignItems="center" gap="10px">
-                        <CustomIconButton onClick={() => navigate('/configurations')} iconComponent={<ArrowBackIcon />} tooltipProps={{ title: 'Back' }} />
+                        <CustomIconButton onClick={() => navigate('/configurations')} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
                         <Typography variant="h5">Ticket Queue</Typography>
                     </FlexBox>
-                    <Button variant="contained" startIcon={<Add />} onClick={toggleAddQueueDrawer}>Add Queue</Button>
+                    <Button variant="contained" startIcon={<AddCircleOutline />} onClick={toggleAddQueueDrawer}>Add Queue</Button>
                     <AddNewQueue openAddQueueDrawer={openAddQueueDrawer} toggleAddQueueDrawer={toggleAddQueueDrawer} />
                 </FlexBox>
                 <TicketQueueList queueData={data.queues} isLoading={isLoading} totalPages={data.total_pages} />

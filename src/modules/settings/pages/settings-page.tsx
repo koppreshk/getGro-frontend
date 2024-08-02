@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom"
 import { Configurations } from "../component"
 import { TicketQueuesContainer, AllEscalationsContainer, FetchAllTagsContainer } from "../containers"
 import { EmailConfigLayout, FacebookConfigurations } from "../component/channel-configurations"
-import { UsersLayout } from "../component/general"
+import { AgentsLayout } from "../component/general"
 import { AgentAvailabilityLayout } from "../component/general/agent-availability/agent-avilability-layout"
 import { SatisfactionSurveyLayout } from "../component/general/satifaction-survey/satisfaction-survey-layout"
 import { MarketplaceRoutes } from "../component/apps/marketplace/marketplace-layout"
@@ -21,7 +21,7 @@ export default function ConfigurationsPage() {
             <Route key="ticket-tags" path="/tags" element={<FetchAllTagsContainer />} />
             <Route key="facebook-login" path="/facebook" element={<FacebookConfigurations />} />
             <Route key="email-config" path="/email/*" element={<EmailConfigLayout />} />
-            <Route key="add-user" path="/users" element={<UsersLayout />} />
+            <Route key="add-agent" path="/agents" element={<AgentsLayout />} />
 
             <Route key="auto-assignment" path="/auto-assignments/*" element={<AutoAssignmentsLayout />} />
             <Route key="create-ticket-triggers" path="/create-ticket-triggers/*" element={<CreateTicketTriggersLayout />} />

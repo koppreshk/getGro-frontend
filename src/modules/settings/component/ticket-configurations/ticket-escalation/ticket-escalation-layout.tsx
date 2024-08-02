@@ -2,7 +2,7 @@
 import React, { useCallback } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Add } from "@mui/icons-material"
+import { AddCircleOutline } from "@mui/icons-material"
 import { Button, Typography } from "@mui/material"
 import { BreadCrumbs, CustomIconButton, FlexBox } from "lib/ui-ux";
 import { IEscalationsNew } from "modules/settings/apis/escalations";
@@ -54,7 +54,7 @@ const EscalationLayoutContent = (props: ITicketEscalaltionLayoutProps) => {
                     <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBackIcon />} tooltipProps={{ title: 'Back' }} />
                     <Typography variant="h5">Ticket Escalation</Typography>
                 </FlexBox>
-                <Button variant="contained" onClick={toggleAddEscalationDrawer} startIcon={<Add />}>Add Escalation</Button>
+                <Button variant="contained" onClick={toggleAddEscalationDrawer} startIcon={<AddCircleOutline />}>Add Escalation</Button>
             </FlexBox>
             <AllEscalations {...props} />
         </FlexBox>

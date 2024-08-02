@@ -110,11 +110,11 @@ const configurations = [
         categoryIcon: () => <AccountCircle color="primary" />,
         categoryOptions: [
             {
-                route: "users",
-                label: "Users",
-                uniqueKey: "users",
+                route: "agents",
+                label: "Agents",
+                uniqueKey: "Agents",
                 catOptionIcon: () => <SupportAgentRounded />,
-                description: "Add user and assign them roles"
+                description: "Add edit or deactivate an agent"
             },
             {
                 route: "queues",

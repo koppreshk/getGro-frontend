@@ -1,7 +1,6 @@
 import { useCallback } from "react"
 import { Route, Routes, useNavigate } from "react-router-dom"
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Add } from "@mui/icons-material"
+import { ArrowBack, AddCircleOutline } from "@mui/icons-material"
 import { Button, Typography } from "@mui/material"
 import { BreadCrumbs, CustomIconButton, FlexBox, MoreInformation } from "lib/ui-ux"
 import { AddCreateTriggerRuleContainer, EditCreateTriggerRuleContainer, FetchAllCreateTicketTriggersContainer } from "modules/settings/containers/ticket-automation/create-ticket-triggers";
@@ -38,10 +37,10 @@ const CreateTicketTriggersContent = () => {
             <MoreInformation information="Create ticket triggers helps in setting up automated rules to perform a predefined set of actions based on selected criteria, on a newly created ticket." />
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
-                    <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBackIcon />} tooltipProps={{ title: 'Back' }} />
+                    <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
                     <Typography variant="h5">Create Ticket Triggers</Typography>
                 </FlexBox>
-                <Button variant="contained" onClick={navigateToCreateTrigger} startIcon={<Add />}>Add New Rule</Button>
+                <Button variant="contained" onClick={navigateToCreateTrigger} startIcon={<AddCircleOutline />}>Add New Rule</Button>
             </FlexBox>
             <FetchAllCreateTicketTriggersContainer autoMationType="create_trigger" />
         </FlexBox>

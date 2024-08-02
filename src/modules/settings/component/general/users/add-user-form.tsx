@@ -55,7 +55,7 @@ export const AddUserForm = (props: IUserFormProps) => {
                 </Grid>
                 <FlexBox gap='10px' width="100%" justifyContent="flex-end">
                     {isInEditMode ? <Button variant="text" size="large" type="button" onClick={() => methods.reset()}>{'Reset'}</Button> : null}
-                    <Button variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>{isInEditMode ? 'Edit User' : 'Add User'}</Button>
+                    <Button variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>{isInEditMode ? 'Edit Agent' : 'Add Agent'}</Button>
                 </FlexBox>
             </FlexBox>
         </FormProvider>

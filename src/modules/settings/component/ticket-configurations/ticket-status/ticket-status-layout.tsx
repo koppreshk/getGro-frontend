@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { Button, Typography } from "@mui/material";
 import { BreadCrumbs, CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-ux"
 import { useNavigate } from "react-router-dom";
-import { Add, ArrowBack } from "@mui/icons-material";
+import { AddCircleOutline, ArrowBack } from "@mui/icons-material";
 import { TicketStatusList } from "modules/settings/component/ticket-configurations/ticket-status";
 import { IGenericResponse } from "modules/settings/apis/ticket-status/types";
 import { CreateTicketStatusContainer } from "../../../containers/ticket-status/create-ticket-status-container";
@@ -49,7 +49,7 @@ export const TicketStatusLayout = (props: ITicketStatusLayoutProps) => {
                     <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
                     <Typography variant="h5">Ticket Status</Typography>
                 </FlexBox>
-                <Button variant="contained" onClick={toggleAddStatusDrawer} startIcon={<Add />}>Add Ticket Status</Button>
+                <Button variant="contained" onClick={toggleAddStatusDrawer} startIcon={<AddCircleOutline />}>Add Ticket Status</Button>
                 <AddNewTicketStatus openAddStatusDrawer={openAddStatusDrawer} toggleAddStatusDrawer={toggleAddStatusDrawer} />
             </FlexBox>
             <TicketStatusList isLoading={props.isLoading} statusData={props.data} />

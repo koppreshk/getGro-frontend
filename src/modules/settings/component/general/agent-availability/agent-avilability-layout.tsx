@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { Add, ArrowBack } from "@mui/icons-material";
+import { AddCircleOutline, ArrowBack } from "@mui/icons-material";
 import { Button, Typography } from "@mui/material"
 import { BreadCrumbs, CustomIconButton, DrawerExtended, FlexBox, MoreInformation } from "lib/ui-ux"
 import { AgentAvailabilityStatusesContainer, CreateNewStatusContainer } from "modules/settings/containers/agent-availability";
@@ -40,7 +40,7 @@ export const AgentAvailabilityLayout = () => {
                     <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
                     <Typography variant="h5">Agent Availability Statuses</Typography>
                 </FlexBox>
-                <Button variant="contained" onClick={toggleAddStatusDrawer} startIcon={<Add />}>Add Status</Button>
+                <Button variant="contained" onClick={toggleAddStatusDrawer} startIcon={<AddCircleOutline />}>Add Status</Button>
                 <AddNewStatus openAddStatusDrawer={openAddStatusDrawer} toggleAddStatusDrawer={toggleAddStatusDrawer} />
             </FlexBox>
             <AgentAvailabilityStatusesContainer />
