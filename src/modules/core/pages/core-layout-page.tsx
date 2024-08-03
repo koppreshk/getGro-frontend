@@ -9,6 +9,7 @@ import { useAuth } from "modules/login"
 import { commonStyles } from "lib/ui-ux/common-styles";
 import { IncomingCallMain } from "modules/tickets/components/ticket-details/ticket-conversation/telephonic-conversations"
 import LoginPage from '../../login/login';
+import SetNewAgentPassword from '../../login/set-new-agent-password';
 import { CustomerSurveyPage } from "modules/survey/pages"
 
 const DashboardPage = lazy(() => import('../../dashboard/pages/dashboard-page'));
@@ -78,8 +79,9 @@ export const CoreLayout = () => {
                 </Route>
             </Route>
             <Route key="login" path="/login" element={<LoginPage />} />
-            <Route key="not-found" path="*" element={<PageNotFound />} />
+            <Route key="set-new-agent-password" path="/account/verify" element={<SetNewAgentPassword />} />
             <Route key="customer-feedback" path="customer-feedback/*" element={<CustomerSurveyPage />} />
+            <Route key="not-found" path="*" element={<PageNotFound />} />
         </Routes>
     )
 }
