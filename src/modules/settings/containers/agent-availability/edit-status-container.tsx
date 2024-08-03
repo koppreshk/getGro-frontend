@@ -1,6 +1,6 @@
 import React from "react";
-import { IStatusesList } from "modules/settings/component/general/agent-availability/agent-statuses-list";
-import { AddNewStatusForm } from "modules/settings/component/general/agent-availability/add-new status-form";
+import { IStatusesList } from "modules/settings/component/user-and-permissions/agent-availability/agent-statuses-list";
+import { AddNewStatusForm } from "modules/settings/component/user-and-permissions/agent-availability/add-new status-form";
 
 interface IEditUserContainerProps {
     onSelectRowMetaData: IStatusesList;

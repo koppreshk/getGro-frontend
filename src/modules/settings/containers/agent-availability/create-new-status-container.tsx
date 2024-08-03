@@ -1,4 +1,4 @@
-import { AddNewStatusForm } from "modules/settings/component/general/agent-availability/add-new status-form";
+import { AddNewStatusForm } from "modules/settings/component/user-and-permissions/agent-availability/add-new status-form";
 
 export const CreateNewStatusContainer = (props: { toggleAddStatusDrawer: () => void }) => {
     const { toggleAddStatusDrawer } = props;
