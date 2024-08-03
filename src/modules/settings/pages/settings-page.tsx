@@ -10,6 +10,7 @@ import { TicketStatusContainer } from "../containers/ticket-status"
 import { AutoAssignmentsLayout } from "../component/ticket-automation"
 import { UpdateTicketTriggersLayout } from "../component/ticket-automation/update-ticket-triggers"
 import { CreateTicketTriggersLayout } from "../component/ticket-automation/create-ticket-triggers"
+import { RolesAndPermissionsContainer } from "../containers/roles-and-permissions"
 
 export default function ConfigurationsPage() {
     return (
@@ -30,6 +31,8 @@ export default function ConfigurationsPage() {
             <Route key="agent-availability" path="/agent-availability" element={<AgentAvailabilityLayout />} />
             <Route key="satisfaction-survey" path="/satisfaction-survey" element={<SatisfactionSurveyLayout />} />
             <Route key="marketplace" path="/marketplace/*" element={<MarketplaceRoutes />} />
+
+            <Route key="roles-and-permissions" path="/roles-and-permissions/*" element={<RolesAndPermissionsContainer />} />
         </Routes>
     )
 }
