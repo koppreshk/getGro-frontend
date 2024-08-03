@@ -1,5 +1,5 @@
+import { TicketQueue } from "modules/settings/component/user-and-permissions/ticket-queue";
 import { useFetchAllTicketQueues } from "../../apis/queues";
-import { TicketQueue } from "../../component";
 
 export const TicketQueuesContainer = () => {
     const { data, isLoading, error } = useFetchAllTicketQueues();
