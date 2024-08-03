@@ -1,6 +1,6 @@
 import React from "react";
-import { AddAgentForm } from "modules/settings/component/general";
-import { IUserList } from "modules/settings/component/general/agents/user-list";
+import { IUserList } from "modules/settings/component/user-and-permissions/agents/user-list";
+import { AddAgentForm } from "modules/settings/component/user-and-permissions";
 
 interface IEditUserContainerProps {
     onSelectRowMetaData: IUserList;

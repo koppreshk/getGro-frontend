@@ -1,4 +1,4 @@
-import { UserList } from "modules/settings/component/general/agents/user-list"
+import { UserList } from "modules/settings/component/user-and-permissions/agents/user-list"
 
 export const GetAgentsContainer = () => {
     return (
