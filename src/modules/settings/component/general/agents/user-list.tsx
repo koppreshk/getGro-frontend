@@ -2,13 +2,14 @@ import { Edit } from "@mui/icons-material";
 import { Row, createColumnHelper } from "@tanstack/react-table";
 import { CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-ux";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
-import { DeleteUserContainer, EditUserContainer } from "modules/settings/containers";
+import { DeleteAgentContainer, EditAgentContainer } from "modules/settings/containers";
 import { useCallback, useState } from "react";
 
 export interface IUserList {
-    firstName: string;
-    lastName: string;
+    name: string;
+    displayName: string;
     email: string;
+    phoneNumber: string;
     role: string;
     userId: number;
 }
@@ -17,15 +18,15 @@ const useColumns = () => {
     const columnHelper = createColumnHelper<IUserList>();
 
     const columns = [
-        columnHelper.accessor("firstName", {
-            id: 'firstName',
+        columnHelper.accessor("name", {
+            id: 'name',
             cell: info => info.getValue(),
-            header: () => 'First Name',
+            header: () => 'Name',
         }),
-        columnHelper.accessor("lastName", {
-            id: 'lastName',
+        columnHelper.accessor("displayName", {
+            id: 'displayName',
             cell: info => info.getValue(),
-            header: () => 'Last name',
+            header: () => 'displayName',
         }),
         columnHelper.accessor("email", {
             id: 'email',
@@ -44,7 +45,7 @@ const useColumns = () => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
                         <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: 'Edit' }} />
-                        <DeleteUserContainer userId={original.userId} />
+                        <DeleteAgentContainer userId={original.userId} />
                     </FlexBox>
                 )
             },
@@ -83,7 +84,7 @@ export const UserList = (props: IUserListListProps) => {
                 width="500px"
                 header="View or Edit Disposition Type"
                 onRenderContent={() => (
-                    <EditUserContainer onSelectRowMetaData={rowMetaData} toggleUserDrawer={toggleUserDrawer} />
+                    <EditAgentContainer onSelectRowMetaData={rowMetaData} toggleUserDrawer={toggleUserDrawer} />
                 )}
                 onClose={toggleUserDrawer}
             />

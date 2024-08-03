@@ -1,2 +1,2 @@
-export * from './users/agents-layout';
-export * from './users/add-user-form';
+export * from './agents/agents-layout';
+export * from './agents/add-agent-form';

@@ -5,8 +5,10 @@ import { useCallback, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form"
 
 export interface IUserFormFields {
-    firstName: string;
-    lastName: string;
+    name: string;
+    displayName: string;
+    email: string;
+    phoneNumber: string;
     role: string;
     userId?: number;
 }
@@ -14,17 +16,18 @@ export interface IUserFormFields {
 interface IUserFormProps {
     mode: 'create' | 'edit';
     defaultValues?: IUserFormFields;
+    toggleUserDrawer: () => void;
     onFormSubmitHandler: (data: IUserFormFields) => void;
 }
 
-export const AddUserForm = (props: IUserFormProps) => {
-    const { mode, defaultValues, onFormSubmitHandler } = props;
+export const AddAgentForm = (props: IUserFormProps) => {
+    const { mode, defaultValues, toggleUserDrawer, onFormSubmitHandler } = props;
     const isInEditMode = useMemo(() => mode === 'edit', [mode]);
 
     const methods = useForm<IUserFormFields>({
         defaultValues: defaultValues ?? {
-            firstName: '',
-            lastName: '',
+            name: '',
+            displayName: '',
             role: 'agent'
         }
     });
@@ -37,11 +40,17 @@ export const AddUserForm = (props: IUserFormProps) => {
         <FormProvider {...methods}>
             <FlexBox padding="20px" width="100%" height="calc(100% - 77px)" flexDirection="column" justifyContent="space-between">
                 <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                        <TextboxField name="firstName" label="First Name" fullWidth rules={{ required: 'First name is required' }} />
+                    <Grid item xs={12}>
+                        <TextboxField name="name" label="Name" rules={{ required: 'First name is required' }} />
                     </Grid>
-                    <Grid item xs={6}>
-                        <TextboxField name="lastName" label="Last Name" fullWidth />
+                    <Grid item xs={12}>
+                        <TextboxField name="displayName" label="Display Name" rules={{ required: 'Display name is required' }} />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextboxField name="email" label="Email" rules={{ required: 'Email is required' }} />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextboxField name="phoneNumber" label="Phone Number" />
                     </Grid>
                     <Grid item xs={12}>
                         <SelectField sx={{ width: '100%' }} name="role" label="Role" menuOptions={[{ key: 'admin', value: 'Admin' }, { key: 'agent', value: 'Agent' }]} fullWidth rules={{ required: 'Selection is required' }} />
@@ -54,6 +63,7 @@ export const AddUserForm = (props: IUserFormProps) => {
                     </Grid>
                 </Grid>
                 <FlexBox gap='10px' width="100%" justifyContent="flex-end">
+                    <Button variant="outlined" onClick={toggleUserDrawer}>Cancel</Button>
                     {isInEditMode ? <Button variant="text" size="large" type="button" onClick={() => methods.reset()}>{'Reset'}</Button> : null}
                     <Button variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>{isInEditMode ? 'Edit Agent' : 'Add Agent'}</Button>
                 </FlexBox>
