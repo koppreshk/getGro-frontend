@@ -13,7 +13,7 @@ export const useFetchMyPendingTickets = () => {
     const _pageNumber = pageNumber === undefined ? '' : `page=${pageNumber ?? '1'}&`;
 
     const fetchMyPendingData = React.useCallback(() => getData(`${TicketsEndPoint.FETCH_MY_PENDING}?${_pageNumber}items_per_page=${itemsPerPage ?? '10'}`).then((res) => res.json()), [_pageNumber, getData, itemsPerPage]);
-    return useQuery<{ data: ITicketDetails[], total_pages: number }>({
+    return useQuery<{ data: ITicketDetails[], total_pages: number }, { message: string }>({
         queryKey: [TicketsQueryKey.FETCH_MY_PENDING, pageNumber, itemsPerPage],
         queryFn: fetchMyPendingData,
         keepPreviousData: true

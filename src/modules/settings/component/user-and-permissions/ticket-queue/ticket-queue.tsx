@@ -44,9 +44,9 @@ export const TicketQueue = (props: ITicketQueueProps) => {
     }, []);
 
     return (
-        <FlexBox width="100%" flexDirection="column">
+        <FlexBox width="100%" flexDirection="column" height="100%">
             <BreadCrumbs />
-            <FlexBox flexDirection="column" gap={'20px'} padding="20px">
+            <FlexBox flexDirection="column" gap={'20px'} padding="20px" height="calc(100% - 46px)">
                 <MoreInformation information="Queues in an organization help associate the related agents. Queues can be utilized in auto-assignment, automation, ticket permission restrictions, and sharing filters" />
                 <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                     <FlexBox alignItems="center" gap="10px">
