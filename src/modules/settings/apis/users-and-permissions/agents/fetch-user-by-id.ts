@@ -15,10 +15,10 @@ export interface IUserById {
 export const useFetchUserById = (id: number | string) => {
     const { getData } = useServiceClient();
 
-    const fetchUserById = React.useCallback(() => getData(`${AgentsEndPoint.FETCH_USER_BY_ID}?id=${id}`).then((res) => res.json()), [getData]);
+    const fetchUserById = React.useCallback(() => getData(`${AgentsEndPoint.FETCH_USER_BY_ID}?id=${id}`).then((res) => res.json()), [getData, id]);
 
     return useQuery<IUserById, { message: string }>({
-        queryKey: AgentsQueryKey.FETCH_USER_BY_ID,
+        queryKey: [id, AgentsQueryKey.FETCH_USER_BY_ID],
         queryFn: fetchUserById
     })
 }
