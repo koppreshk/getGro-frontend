@@ -9,7 +9,7 @@ export const useFetchAllStatuses = (isEnabled = true) => {
 
     const fetchAllStatuses = React.useCallback(() => getData(StatusTypeEndPoint.FETCH_ALL_STATUSES).then((res) => res.json()), [getData]);
 
-    return useQuery<IGenericResponse[]>({
+    return useQuery<IGenericResponse[], { message: string }>({
         queryKey: StatusTypeQueryKey.FETCH_ALL_STATUSES,
         queryFn: fetchAllStatuses,
         enabled: isEnabled

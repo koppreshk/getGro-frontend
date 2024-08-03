@@ -1,5 +1,6 @@
 import { TicketQueue } from "modules/settings/component/user-and-permissions/ticket-queue";
 import { useFetchAllTicketQueues } from "../../apis/queues";
+import { ErrorMessage } from "lib/ui-ux";
 
 export const TicketQueuesContainer = () => {
     const { data, isLoading, error } = useFetchAllTicketQueues();
@@ -10,5 +11,5 @@ export const TicketQueuesContainer = () => {
         )
     }
 
-    return <span>Error: {error as string}</span>
+    return <ErrorMessage statusCode={error?.message}/>
 }

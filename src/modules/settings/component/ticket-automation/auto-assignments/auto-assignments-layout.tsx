@@ -15,7 +15,7 @@ export const AutoAssignmentsLayout = (props: IAutoAssignmentsLayoutProps) => {
     return (
         <FlexBox width="100%" height="100%" flexDirection="column">
             <BreadCrumbs />
-            <div style={{ height: 'calc(100% - 34px)' }}>
+            <div style={{ height: 'calc(100% - 46px)' }}>
                 <Routes>
                     <Route key='base-route' path="/" element={<AutoAssignmentsContent {...props} />} />
                     <Route key='add-route' path="/add-rule" element={<AddRuleContainer />} />
@@ -34,7 +34,7 @@ const AutoAssignmentsContent = () => {
     }, [navigate]);
 
     return (
-        <FlexBox padding="20px" flexDirection="column" gap={'20px'}>
+        <FlexBox padding="20px" flexDirection="column" gap={'20px'} height="100%">
             <MoreInformation information="Auto assignments help to automatically assign tickets to the agents in a group in the round-robin fashion. When a ticket is created or updated first matching rule in a specified order is selected for assignment of the agent. " />
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
@@ -43,7 +43,9 @@ const AutoAssignmentsContent = () => {
                 </FlexBox>
                 <Button variant="contained" onClick={toggleAddAutoAssignmentsDrawer} startIcon={<AddCircleOutline />}>Add New Rule</Button>
             </FlexBox>
-            <FetchAllAssignmentsContainer />
+            <div style={{ height: 'calc(100% - 179px)' }}>
+                <FetchAllAssignmentsContainer />
+            </div>
         </FlexBox>
     );
 }

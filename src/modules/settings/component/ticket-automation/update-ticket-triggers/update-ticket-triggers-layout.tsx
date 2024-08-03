@@ -15,7 +15,7 @@ export const UpdateTicketTriggersLayout = (props: IUpdateTicketTriggersLayoutPro
     return (
         <FlexBox width="100%" height="100%" flexDirection="column">
             <BreadCrumbs />
-            <div style={{ height: 'calc(100% - 34px)' }}>
+            <div style={{ height: 'calc(100% - 46px)' }}>
                 <Routes>
                     <Route key='base-route' path="/" element={<UpdateTicketTriggersContent {...props} />} />
                     <Route key='add-route' path="/add-rule" element={<AddCreateTriggerRuleContainer autoMationType="update_trigger" />} />
@@ -34,7 +34,7 @@ const UpdateTicketTriggersContent = () => {
     }, [navigate]);
 
     return (
-        <FlexBox padding="20px" flexDirection="column" gap={'20px'}>
+        <FlexBox padding="20px" flexDirection="column" gap={'20px'} height="100%">
             <MoreInformation information="Update ticket triggers help in setting up automated rules to perform a predefined set of actions based on selected criteria when an existing ticket is updated." />
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
@@ -43,7 +43,9 @@ const UpdateTicketTriggersContent = () => {
                 </FlexBox>
                 <Button variant="contained" onClick={toggleAddUpdateTicketTriggersDrawer} startIcon={<AddCircleOutline />}>Add New Rule</Button>
             </FlexBox>
-            <FetchAllCreateTicketTriggersContainer autoMationType="update_trigger" />
+            <div style={{ height: 'calc(100% - 179px)' }}>
+                <FetchAllCreateTicketTriggersContainer autoMationType="update_trigger" />
+            </div>
         </FlexBox>
     );
 }

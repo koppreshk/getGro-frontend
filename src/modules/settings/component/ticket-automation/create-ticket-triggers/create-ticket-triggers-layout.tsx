@@ -14,7 +14,7 @@ export const CreateTicketTriggersLayout = (props: ICreateTriggersLayoutProps) =>
     return (
         <FlexBox width="100%" height="100%" flexDirection="column">
             <BreadCrumbs />
-            <div style={{ height: 'calc(100% - 34px)' }}>
+            <div style={{ height: 'calc(100% - 46px)' }}>
                 <Routes>
                     <Route key='base-route' path="/" element={<CreateTicketTriggersContent {...props} />} />
                     <Route key='add-route' path="/add-rule" element={<AddCreateTriggerRuleContainer autoMationType="create_trigger" />} />
@@ -33,7 +33,7 @@ const CreateTicketTriggersContent = () => {
     }, [navigate]);
 
     return (
-        <FlexBox padding="20px" flexDirection="column" gap={'20px'}>
+        <FlexBox padding="20px" flexDirection="column" gap={'20px'} height="100%">
             <MoreInformation information="Create ticket triggers helps in setting up automated rules to perform a predefined set of actions based on selected criteria, on a newly created ticket." />
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
@@ -42,7 +42,9 @@ const CreateTicketTriggersContent = () => {
                 </FlexBox>
                 <Button variant="contained" onClick={navigateToCreateTrigger} startIcon={<AddCircleOutline />}>Add New Rule</Button>
             </FlexBox>
-            <FetchAllCreateTicketTriggersContainer autoMationType="create_trigger" />
+            <div style={{ height: 'calc(100% - 179px)' }}>
+                <FetchAllCreateTicketTriggersContainer autoMationType="create_trigger" />
+            </div>
         </FlexBox>
     );
 }

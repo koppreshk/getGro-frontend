@@ -27,7 +27,7 @@ export const useFetchAllTicketQueues = () => {
 
     const fetchAllTicketsQueue = React.useCallback(() => getData(`${ConfigurationsEndPoint.FETCH_ALL_TICKETS_QUEUE}?page=1&items_per_page=10`).then((res) => res.json()), [getData])
 
-    return useQuery<ITicketQueues>({
+    return useQuery<ITicketQueues, { message: string }>({
         queryKey: ConfigurationsQueryKey.FETCH_ALL_TICKETS_QUEUE,
         queryFn: fetchAllTicketsQueue,
         keepPreviousData: true
