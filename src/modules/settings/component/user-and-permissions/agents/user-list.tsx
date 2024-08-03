@@ -1,37 +1,24 @@
+import { useState } from "react";
 import { Edit } from "@mui/icons-material";
-import { Row, createColumnHelper } from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 import { CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-ux";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
+import { IUsers } from "modules/settings/apis/users-and-permissions";
 import { DeleteAgentContainer, EditAgentContainer } from "modules/settings/containers";
-import { useCallback, useState } from "react";
-
-export interface IUserList {
-    name: string;
-    displayName: string;
-    email: string;
-    phoneNumber: string;
-    role: string;
-    userId: number;
-}
 
 const useColumns = () => {
-    const columnHelper = createColumnHelper<IUserList>();
+    const columnHelper = createColumnHelper<IUsers>();
 
     const columns = [
+        columnHelper.accessor("id", {
+            id: 'id',
+            cell: info => info.getValue(),
+            header: () => 'Id',
+        }),
         columnHelper.accessor("name", {
             id: 'name',
             cell: info => info.getValue(),
             header: () => 'Name',
-        }),
-        columnHelper.accessor("displayName", {
-            id: 'displayName',
-            cell: info => info.getValue(),
-            header: () => 'displayName',
-        }),
-        columnHelper.accessor("email", {
-            id: 'email',
-            cell: info => info.getValue(),
-            header: () => 'Email',
         }),
         columnHelper.accessor("role", {
             id: 'role',
@@ -44,8 +31,8 @@ const useColumns = () => {
             cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
-                        <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: 'Edit' }} />
-                        <DeleteAgentContainer userId={original.userId} />
+                        <DeleteAgentContainer id={original.id} />
+                        <EditAgent id={original.id} />
                     </FlexBox>
                 )
             },
@@ -56,38 +43,45 @@ const useColumns = () => {
     return columns;
 }
 
-interface IUserListListProps {
-    usersData: IUserList[];
-}
-
-export const UserList = (props: IUserListListProps) => {
-    const { usersData } = props;
-    const [showDrawer, setShowDrawer] = useState(false)
-    const [rowMetaData, setRowMetaData] = useState({} as IUserList);
-    const columns = useColumns();
+const EditAgent = (props: { id: number }) => {
+    const [showDrawer, setShowDrawer] = useState(false);
 
     const toggleUserDrawer = () => {
         setShowDrawer((preValue) => !preValue);
     }
 
-    const onRowClick = useCallback((row: Row<IUserList>) => {
-        setShowDrawer(true);
-        setRowMetaData(row.original);
-    }, [])
-
     return (
-        <div style={{ height: 'calc(100% - 173px)', overflow: 'auto' }}>
-            <ConfigDataGrid columns={columns} data={usersData!} hideTableControls onRowClick={onRowClick} />
+        <>
+            <CustomIconButton
+                iconComponent={<Edit />}
+                tooltipProps={{ title: 'Edit' }}
+                onClick={toggleUserDrawer} />
             <DrawerExtended
                 open={showDrawer}
                 anchor="right"
                 width="500px"
-                header="View or Edit Disposition Type"
+                header="View or Edit Agent"
                 onRenderContent={() => (
-                    <EditAgentContainer onSelectRowMetaData={rowMetaData} toggleUserDrawer={toggleUserDrawer} />
+                    <EditAgentContainer toggleUserDrawer={toggleUserDrawer} id={props.id} />
                 )}
                 onClose={toggleUserDrawer}
             />
+        </>
+    )
+}
+
+interface IUserListListProps {
+    usersData?: IUsers[];
+    isLoading: boolean;
+}
+
+export const UserList = (props: IUserListListProps) => {
+    const { usersData, isLoading } = props;
+    const columns = useColumns();
+
+    return (
+        <div style={{ height: 'calc(100% - 173px)', overflow: 'auto' }}>
+            <ConfigDataGrid columns={columns} data={usersData!} isLoading={isLoading} hideTableControls />
         </div>
     )
 } 

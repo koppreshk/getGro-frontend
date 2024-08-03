@@ -1,32 +1,41 @@
 import React from "react";
-import { IUserList } from "modules/settings/component/user-and-permissions/agents/user-list";
 import { AddAgentForm } from "modules/settings/component/user-and-permissions";
+import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
+import { useFetchUserById } from "modules/settings/apis/users-and-permissions";
 
 interface IEditUserContainerProps {
-    onSelectRowMetaData: IUserList;
+    id: number;
     toggleUserDrawer: () => void;
 }
 
 export const EditAgentContainer = (props: IEditUserContainerProps) => {
-    const { onSelectRowMetaData, toggleUserDrawer } = props;
+    const { id, toggleUserDrawer } = props;
+    const { data, isLoading, error } = useFetchUserById(id);
 
     const onEditUser = React.useCallback(() => {
         toggleUserDrawer();
     }, [toggleUserDrawer]);
 
-    return (
-        <AddAgentForm
-            mode="edit"
-            toggleUserDrawer={toggleUserDrawer}
-            onFormSubmitHandler={onEditUser}
-            defaultValues={{
-                name: onSelectRowMetaData.name,
-                displayName: onSelectRowMetaData.displayName,
-                role: onSelectRowMetaData.role.toLocaleLowerCase(),
-                userId: onSelectRowMetaData.userId,
-                email: onSelectRowMetaData.email,
-                phoneNumber: ''
-            }}
-        />
-    )
+    if (isLoading) {
+        return <CenteredCircularProgress />
+    }
+
+    if (data) {
+        return (
+            <AddAgentForm
+                mode="edit"
+                toggleUserDrawer={toggleUserDrawer}
+                onFormSubmitHandler={onEditUser}
+                defaultValues={{
+                    name: data.name,
+                    displayName: '',
+                    role: data.role_id.toString(),
+                    userId: data.id,
+                    email: data.email,
+                    phoneNumber: data.phone_number
+                }}
+            />
+        )
+    }
+    return <ErrorMessage statusCode={error?.message} />
 }

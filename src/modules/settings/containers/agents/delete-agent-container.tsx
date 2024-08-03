@@ -3,7 +3,7 @@ import { Delete } from "@mui/icons-material";
 import { CustomIconButton } from "lib/ui-ux";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const DeleteAgentContainer = (_props: { userId: number }) => {
+export const DeleteAgentContainer = (_props: { id: number }) => {
 
     const onDeleteHandler = React.useCallback(() => {
 
