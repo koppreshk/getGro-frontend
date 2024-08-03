@@ -51,7 +51,7 @@ const StyledFlexBox = styled.div<CSSFlexProperties>`
     ${({ $overflowY }) => $overflowY && css`overflow-y: ${$overflowY};`}
 `;
 
-type IFlexBoxProps = IFlex & Omit<JSX.IntrinsicElements["div"], 'ref'> & {
+export type IFlexBoxProps = IFlex & Omit<JSX.IntrinsicElements["div"], 'ref'> & {
     children?: React.ReactNode;
     className?: string;
     renderSeparator?: () => React.ReactNode;

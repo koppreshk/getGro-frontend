@@ -1,8 +1,8 @@
-import { TextField, TextFieldProps } from "@mui/material"
+import { TextField, TextFieldProps, Typography } from "@mui/material"
 import { Controller, FieldValues, RegisterOptions, get, useFormContext } from "react-hook-form"
 import styled from "styled-components";
 import { ErrorMessage } from '@hookform/error-message';
-import { FlexBox } from "lib/ui-ux";
+import { FlexBox, IFlexBoxProps } from "lib/ui-ux";
 
 type ITextboxFieldProps = Omit<TextFieldProps, 'error' | 'required'> & {
     name: string;
@@ -40,4 +40,14 @@ export const TextboxField = (props: ITextboxFieldProps) => {
             <ErrorMessage errors={errors} name={name} as={StyledErrorMessage} />
         </FlexBox>
     )
-} 
+}
+
+export const TextboxFieldWithLabel = (props: ITextboxFieldProps & IFlexBoxProps) => {
+    const { flexDirection = 'column', gap = '5px', label, ...rest } = props;
+    return (
+        <FlexBox flexDirection={flexDirection} gap={gap}>
+            <Typography variant="h6">{label}</Typography>
+            <TextboxField {...rest} />
+        </FlexBox>
+    )
+}

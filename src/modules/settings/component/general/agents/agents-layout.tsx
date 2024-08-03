@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { ArrowBack, AddCircleOutline } from "@mui/icons-material";
 import { Button, Typography } from "@mui/material"
 import { BreadCrumbs, CustomIconButton, DrawerExtended, FlexBox, MoreInformation } from "lib/ui-ux"
-import { CreateNewUserContainer } from "modules/settings/containers";
-import { GetUsersContainer } from "modules/settings/containers/users/get-users-container";
+import { CreateNewAgentContainer } from "modules/settings/containers";
+import { GetAgentsContainer } from "modules/settings/containers/agents/get-agents-container";
 
-const AddNewUser = (props: {
+const AddNewAgent = (props: {
     openAddUserDrawer: boolean;
     toggleAddUserDrawer: () => void
 }) => {
@@ -18,7 +18,7 @@ const AddNewUser = (props: {
             anchor="right"
             open={openAddUserDrawer}
             onRenderContent={() => (
-                <CreateNewUserContainer toggleAddUserDrawer={toggleAddUserDrawer} />
+                <CreateNewAgentContainer toggleAddUserDrawer={toggleAddUserDrawer} />
             )}
             onClose={toggleAddUserDrawer} />
     )
@@ -43,9 +43,9 @@ export const AgentsLayout = () => {
                         <Typography variant="h5">Agents</Typography>
                     </FlexBox>
                     <Button variant="contained" onClick={toggleAddUserDrawer} startIcon={<AddCircleOutline />}>Add Agent</Button>
-                    <AddNewUser openAddUserDrawer={openAddUserDrawer} toggleAddUserDrawer={toggleAddUserDrawer} />
+                    <AddNewAgent openAddUserDrawer={openAddUserDrawer} toggleAddUserDrawer={toggleAddUserDrawer} />
                 </FlexBox>
-                <GetUsersContainer />
+                <GetAgentsContainer />
             </FlexBox>
         </FlexBox>
     )
