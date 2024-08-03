@@ -1,5 +1,5 @@
 import { Statuses } from "modules/core/components/parts/agent-status";
-import { AgentStatusesList, IStatusesList } from "modules/settings/component/general/agent-availability/agent-statuses-list"
+import { AgentStatusesList, IStatusesList } from "modules/settings/component/user-and-permissions/agent-availability/agent-statuses-list"
 
 const statuses = [{
     color: '#ffef0e',

@@ -1,4 +1,4 @@
-import { AddAgentForm } from "modules/settings/component/general"
+import { AddAgentForm } from "modules/settings/component/user-and-permissions";
 
 export const CreateNewAgentContainer = (props: { toggleAddUserDrawer: () => void }) => {
     const { toggleAddUserDrawer } = props;
