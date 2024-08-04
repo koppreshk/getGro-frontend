@@ -1,7 +1,7 @@
 import React from "react";
 import { AddAgentForm } from "modules/settings/component/user-and-permissions";
 import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
-import { useFetchUserById } from "modules/settings/apis/users-and-permissions";
+import { useFetchAllRoles, useFetchUserById } from "modules/settings/apis/users-and-permissions";
 
 interface IEditUserContainerProps {
     id: number;
@@ -10,20 +10,22 @@ interface IEditUserContainerProps {
 
 export const EditAgentContainer = (props: IEditUserContainerProps) => {
     const { id, toggleUserDrawer } = props;
+    const { data: roles, isLoading: rolesLoading, error: rolesError } = useFetchAllRoles();
     const { data, isLoading, error } = useFetchUserById(id);
 
     const onEditUser = React.useCallback(() => {
         toggleUserDrawer();
     }, [toggleUserDrawer]);
 
-    if (isLoading) {
+    if (isLoading || rolesLoading) {
         return <CenteredCircularProgress />
     }
 
-    if (data) {
+    if (data && roles) {
         return (
             <AddAgentForm
                 mode="edit"
+                roles={roles}
                 toggleUserDrawer={toggleUserDrawer}
                 onFormSubmitHandler={onEditUser}
                 defaultValues={{
@@ -37,5 +39,5 @@ export const EditAgentContainer = (props: IEditUserContainerProps) => {
             />
         )
     }
-    return <ErrorMessage statusCode={error?.message} />
+    return <ErrorMessage statusCode={error?.message || rolesError?.message} />
 }

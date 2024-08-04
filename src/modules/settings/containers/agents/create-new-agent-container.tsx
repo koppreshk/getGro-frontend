@@ -1,15 +1,38 @@
-import { AddAgentForm } from "modules/settings/component/user-and-permissions";
+import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
+import { useCreateUser, useFetchAllRoles } from "modules/settings/apis/users-and-permissions";
+import { AddAgentForm, IUserFormFields } from "modules/settings/component/user-and-permissions";
 
 export const CreateNewAgentContainer = (props: { toggleAddUserDrawer: () => void }) => {
     const { toggleAddUserDrawer } = props;
+    const { mutateAsync } = useCreateUser();
+    const { data, isLoading, error } = useFetchAllRoles();
 
-    const onFormSubmitHandler = () => {
-        toggleAddUserDrawer()
+    const onFormSubmitHandler = (formData: IUserFormFields) => {
+        mutateAsync({
+            display_name: formData.displayName,
+            email_address: formData.email,
+            name: formData.name,
+            phone_number: formData.phoneNumber,
+            role_id: formData.role
+        })
+        toggleAddUserDrawer();
     }
 
-    return (
-        <>
-            <AddAgentForm mode="create" onFormSubmitHandler={onFormSubmitHandler} toggleUserDrawer={toggleAddUserDrawer} />
-        </>
-    )
+    if (isLoading) {
+        return <CenteredCircularProgress />
+    }
+
+    if (data) {
+        return (
+            <>
+                <AddAgentForm
+                    mode="create"
+                    roles={data}
+                    onFormSubmitHandler={onFormSubmitHandler}
+                    toggleUserDrawer={toggleAddUserDrawer} />
+            </>
+        )
+    }
+
+    return <ErrorMessage statusCode={error?.message} />
 }

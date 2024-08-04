@@ -1,6 +1,7 @@
 import { Button, Grid } from "@mui/material";
 import { SelectField, TextboxField } from "lib/form-fields";
 import { FlexBox } from "lib/ui-ux";
+import { IRoles } from "modules/settings/apis/users-and-permissions";
 import { useCallback, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form"
 
@@ -15,13 +16,14 @@ export interface IUserFormFields {
 
 interface IUserFormProps {
     mode: 'create' | 'edit';
+    roles: IRoles[];
     defaultValues?: IUserFormFields;
     toggleUserDrawer: () => void;
     onFormSubmitHandler: (data: IUserFormFields) => void;
 }
 
 export const AddAgentForm = (props: IUserFormProps) => {
-    const { mode, defaultValues, toggleUserDrawer, onFormSubmitHandler } = props;
+    const { mode, defaultValues, roles, toggleUserDrawer, onFormSubmitHandler } = props;
     const isInEditMode = useMemo(() => mode === 'edit', [mode]);
 
     const methods = useForm<IUserFormFields>({
@@ -53,7 +55,7 @@ export const AddAgentForm = (props: IUserFormProps) => {
                         <TextboxField name="phoneNumber" label="Phone Number" />
                     </Grid>
                     <Grid item xs={12}>
-                        <SelectField sx={{ width: '100%' }} name="role" label="Role" menuOptions={[{ key: 'admin', value: 'Admin' }, { key: 'agent', value: 'Agent' }]} fullWidth rules={{ required: 'Selection is required' }} />
+                        <SelectField sx={{ width: '100%' }} name="role" label="Role" menuOptions={roles.map((item) => ({ key: item.id.toString(), value: item.name }))} fullWidth rules={{ required: 'Selection is required' }} />
                     </Grid>
                     <Grid item xs={12}>
                         {isInEditMode ?
