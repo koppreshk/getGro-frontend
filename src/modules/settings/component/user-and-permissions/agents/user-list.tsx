@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Edit } from "@mui/icons-material";
 import { createColumnHelper } from "@tanstack/react-table";
 import { CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-ux";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
 import { IUsers } from "modules/settings/apis/users-and-permissions";
 import { DeleteAgentContainer, EditAgentContainer } from "modules/settings/containers";
+import { Avatar, Typography } from "@mui/material";
+import { chooseRandomColors, getInitialsByName } from "lib/utils";
 
 const useColumns = () => {
     const columnHelper = createColumnHelper<IUsers>();
@@ -17,7 +19,7 @@ const useColumns = () => {
         }),
         columnHelper.accessor("name", {
             id: 'name',
-            cell: info => info.getValue(),
+            cell: info => <Name name={info.getValue()} />,
             header: () => 'Name',
         }),
         columnHelper.accessor("role", {
@@ -41,6 +43,27 @@ const useColumns = () => {
     ]
 
     return columns;
+}
+
+const Name = (props: { name: string }) => {
+    const { name } = props;
+    const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(name)), [name]);
+
+    return (
+        <FlexBox gap="10px" flexDirection="row" alignItems="center">
+            <Avatar sx={{
+                color: textColor,
+                bgcolor: backgroundColor,
+                width: '32px',
+                height: '32px',
+                fontSize: '13px',
+                fontWeight: 500
+            }}>
+                {getInitialsByName(name)}
+            </Avatar>
+            <Typography variant="body2">{name}</Typography>
+        </FlexBox>
+    );
 }
 
 const EditAgent = (props: { id: number }) => {
