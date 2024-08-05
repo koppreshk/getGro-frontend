@@ -1,43 +1,25 @@
 import React, { useCallback } from "react";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
-import styled from "styled-components";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Grid, Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { useNotifications } from "lib";
 import { useUpdatePassword } from "./apis";
 import { TextboxField } from "lib/form-fields";
 import LoginImage from '../../assets/png/getgro-login-illus.png';
 import GetGroLogoImg from '../../assets/png/getGroLogoWname.png';
+import { ArrowForwardRounded } from "@mui/icons-material";
+import { LoginSectionLeft, IllustrationImg, LoginSectionRight, GetGroLogoWrapper } from "./login";
 
 interface ISetNewPwdFormFields {
     newPassword: string;
     confirmNewPassword: string;
 }
 
-const LoginSectionLeft = styled(FlexBox)`
-    background-color: ${({ theme }) => theme.pallete.purpleLight};
-`;
-
-const LoginSectionRight = styled(FlexBox)`
-    
-`;
-
-const GetGroLogoWrapper = styled(FlexBox)`
-    padding-top: 32px;
-`;
-
-const IllustrationImg = styled.img`
-    width: 80%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-`;
-
 const SetNewAgentPasswordForm = () => {
     const { handleSubmit, watch } = useFormContext<ISetNewPwdFormFields>();
-    const { mutateAsync } = useUpdatePassword();
+    const { mutateAsync, isLoading } = useUpdatePassword();
     const { showNotification } = useNotifications();
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
@@ -79,8 +61,8 @@ const SetNewAgentPasswordForm = () => {
                     <Grid item md={12}>
                         <Button
                             onClick={handleSubmit(onSignIn)} variant="contained" fullWidth size="large" type="submit"
-                        // disabled={isLoading}
-                        // endIcon={isLoading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : <ArrowForwardRounded />}
+                            disabled={isLoading}
+                            endIcon={isLoading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : <ArrowForwardRounded />}
                         >
                             Submit
                         </Button>

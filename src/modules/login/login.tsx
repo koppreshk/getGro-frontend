@@ -19,19 +19,19 @@ interface ILoginFields {
     password: string;
 }
 
-const LoginSectionLeft = styled(FlexBox)`
+export const LoginSectionLeft = styled(FlexBox)`
     background-color: ${({ theme }) => theme.pallete.purpleLight};
 `;
 
-const LoginSectionRight = styled(FlexBox)`
+export const LoginSectionRight = styled(FlexBox)`
     
 `;
 
-const GetGroLogoWrapper = styled(FlexBox)`
+export const GetGroLogoWrapper = styled(FlexBox)`
     padding-top: 32px;
 `;
 
-const IllustrationImg = styled.img`
+export const IllustrationImg = styled.img`
     width: 80%;
     display: block;
     margin-left: auto;
