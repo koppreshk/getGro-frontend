@@ -8,7 +8,8 @@ export interface IUserById {
     name: string
     role_id: number
     email: string
-    phone_number: string
+    phone_number: string;
+    display_name: string;
     last_seen_at: string | null
 }
 

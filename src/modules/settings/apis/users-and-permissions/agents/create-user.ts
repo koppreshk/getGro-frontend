@@ -3,7 +3,7 @@ import React from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { AgentsQueryKey, AgentsEndPoint } from "./api-enums";
 
-interface ICreateUserArgs {
+export interface ICreateUserArgs {
     name: string
     display_name: string
     email_address: string

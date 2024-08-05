@@ -1,3 +1,4 @@
+import { useNotifications } from "lib";
 import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
 import { useCreateUser, useFetchAllRoles } from "modules/settings/apis/users-and-permissions";
 import { AddAgentForm, IUserFormFields } from "modules/settings/component/user-and-permissions";
@@ -6,6 +7,7 @@ export const CreateNewAgentContainer = (props: { toggleAddUserDrawer: () => void
     const { toggleAddUserDrawer } = props;
     const { mutateAsync } = useCreateUser();
     const { data, isLoading, error } = useFetchAllRoles();
+    const { showNotification } = useNotifications();
 
     const onFormSubmitHandler = (formData: IUserFormFields) => {
         mutateAsync({
@@ -14,8 +16,10 @@ export const CreateNewAgentContainer = (props: { toggleAddUserDrawer: () => void
             name: formData.name,
             phone_number: formData.phoneNumber,
             role_id: formData.role
-        })
-        toggleAddUserDrawer();
+        }).then(() => {
+            showNotification({ message: 'Successfully created new user', type: 'success' })
+            toggleAddUserDrawer();
+        }).catch(() => showNotification({ message: 'Failed to create new user', type: 'error' }))
     }
 
     if (isLoading) {
