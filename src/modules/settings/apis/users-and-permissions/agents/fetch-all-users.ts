@@ -8,15 +8,18 @@ export interface IUsers {
   name: string
   role: string
   last_seen_at: null | string;
+  verification_status: string;
 }
 
-export const useFetchAllUsers = () => {
-    const { getData } = useServiceClient();
+export type UserType = 'all' | 'active' | 'unverified' | 'verified' | 'deactivated';
 
-    const fetchAllUsers = React.useCallback(() => getData(AgentsEndPoint.FETCH_ALL_USERS).then((res) => res.json()), [getData]);
+export const useFetchAllUsers = (type: UserType) => {
+  const { getData } = useServiceClient();
 
-    return useQuery<IUsers[], { message: string }>({
-        queryKey: AgentsQueryKey.FETCH_ALL_USERS,
-        queryFn: fetchAllUsers
-    })
+  const fetchAllUsers = React.useCallback(() => getData(`${AgentsEndPoint.FETCH_ALL_USERS}?type=${type}`).then((res) => res.json()), [getData, type]);
+
+  return useQuery<IUsers[], { message: string }>({
+    queryKey: [AgentsQueryKey.FETCH_ALL_USERS, type],
+    queryFn: fetchAllUsers
+  })
 }

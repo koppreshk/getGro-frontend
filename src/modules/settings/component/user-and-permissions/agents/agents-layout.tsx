@@ -1,10 +1,11 @@
 import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowBack, AddCircleOutline } from "@mui/icons-material";
-import { Button, Typography } from "@mui/material"
-import { BreadCrumbs, CustomIconButton, DrawerExtended, FlexBox, MoreInformation } from "lib/ui-ux"
+import { Button, Tab, Tabs, Typography } from "@mui/material"
+import { BreadCrumbs, CustomIconButton, DrawerExtended, FlexBox, MoreInformation, a11yProps } from "lib/ui-ux"
 import { CreateNewAgentContainer } from "modules/settings/containers";
 import { GetAgentsContainer } from "modules/settings/containers/agents/get-agents-container";
+import { UserType } from "modules/settings/apis/users-and-permissions";
 
 const AddNewAgent = (props: {
     openAddUserDrawer: boolean;
@@ -32,10 +33,16 @@ export const AgentsLayout = () => {
         setOpenAddUserDrawer((prevValue) => !prevValue);
     }, []);
 
+    const [value, setValue] = React.useState<UserType>('active');
+
+    const handleChange = (_event: React.SyntheticEvent, newValue: UserType) => {
+        setValue(newValue);
+    };
+
     return (
         <FlexBox width="100%" height="100%" flexDirection="column">
             <BreadCrumbs />
-            <FlexBox padding="20px" gap={'20px'} flexDirection="column">
+            <FlexBox padding="20px" gap={'20px'} flexDirection="column" height="calc(100% - 46px)">
                 <MoreInformation information="Agents are the users in charge of handling tickets and dealing with customer issues. You can add many agents based on your purchased license." />
                 <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                     <FlexBox alignItems="center" gap="10px">
@@ -45,7 +52,14 @@ export const AgentsLayout = () => {
                     <Button variant="contained" onClick={toggleAddUserDrawer} startIcon={<AddCircleOutline />}>Add Agent</Button>
                     <AddNewAgent openAddUserDrawer={openAddUserDrawer} toggleAddUserDrawer={toggleAddUserDrawer} />
                 </FlexBox>
-                <GetAgentsContainer />
+                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                    <Tab label="Active" value="active" {...a11yProps(0)} />
+                    <Tab label="All" value="all" {...a11yProps(1)} />
+                    <Tab label="Verified" value="verified" {...a11yProps(2)} />
+                    <Tab label="Unverified" value="unverified" {...a11yProps(3)} />
+                    <Tab label="Deactivated" value="deactivated" {...a11yProps(4)} />
+                </Tabs>
+                <GetAgentsContainer type={value} />
             </FlexBox>
         </FlexBox>
     )

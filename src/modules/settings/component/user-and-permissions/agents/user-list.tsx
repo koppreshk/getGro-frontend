@@ -27,9 +27,14 @@ const useColumns = () => {
             cell: info => info.getValue(),
             header: () => 'role',
         }),
+        columnHelper.accessor("verification_status", {
+            id: 'verification_status',
+            cell: info => info.getValue(),
+            header: () => 'Status',
+        }),
         columnHelper.display({
             id: 'actions',
-            header: () => <span>Actions</span>,
+            header: () => 'Actions',
             cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
