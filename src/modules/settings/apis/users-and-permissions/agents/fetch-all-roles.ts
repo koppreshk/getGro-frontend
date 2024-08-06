@@ -4,9 +4,11 @@ import { useQuery } from "react-query";
 import { AgentsEndPoint, AgentsQueryKey } from "./api-enums";
 
 export interface IRoles {
-  id: number
-  name: string
-  description: string
+  id: number;
+  name: string;
+  description: string;
+  role_type: string;
+  agents: number;
 }
 
 export const useFetchAllRoles = () => {

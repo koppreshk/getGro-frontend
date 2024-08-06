@@ -3,22 +3,22 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { FlexBox } from "lib/ui-ux";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
 import { chooseRandomColors, getInitialsByName } from "lib/utils";
-import { IRolesAndPermissions } from "modules/settings/containers/roles-and-permissions";
+import { IRoles } from "modules/settings/apis/users-and-permissions";
 import { useMemo } from "react";
 
 interface IRolesAndPermissionsListProps {
-    rolesData: IRolesAndPermissions[];
+    rolesData: IRoles[];
 }
 
 const useColumns = () => {
-    const columnHelper = createColumnHelper<IRolesAndPermissions>();
+    const columnHelper = createColumnHelper<IRoles>();
 
     const columns = [
-        columnHelper.accessor("roleName", {
+        columnHelper.accessor("name", {
             id: "roleName",
             header: () => <span>Role Name</span>,
             cell: ({ row: { original } }) => {
-                return <RoleNames roleName={original.roleName} roleType={original.roleType} />
+                return <RoleNames roleName={original.name} roleType={original.role_type} />
             },
             minSize: 250
         }),
@@ -26,6 +26,7 @@ const useColumns = () => {
             id: 'description',
             header: () => <span>Description</span>,
             cell: info => info.getValue(),
+            minSize: 550
         }),
         columnHelper.accessor("agents", {
             id: 'agents',

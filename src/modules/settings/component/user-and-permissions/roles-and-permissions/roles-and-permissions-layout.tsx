@@ -3,9 +3,9 @@ import { ArrowBack } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import { BreadCrumbs, CustomIconButton, FlexBox, MoreInformation } from "lib/ui-ux";
 import { RolesAndPermissionList } from ".";
-import { IRolesAndPermissions } from "modules/settings/containers/roles-and-permissions";
+import { IRoles } from "modules/settings/apis/users-and-permissions";
 
-export const RolesAndPermissionsLayout = (props: { rolesData: IRolesAndPermissions[] }) => {
+export const RolesAndPermissionsLayout = (props: { rolesData: IRoles[] }) => {
     const navigate = useNavigate();
 
     return (

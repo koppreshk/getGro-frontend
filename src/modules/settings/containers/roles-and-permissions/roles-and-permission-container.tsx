@@ -1,3 +1,5 @@
+import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
+import { useFetchAllRoles } from "modules/settings/apis/users-and-permissions";
 import { RolesAndPermissionsLayout } from "modules/settings/component/user-and-permissions/roles-and-permissions"
 
 export interface IRolesAndPermissions {
@@ -7,24 +9,17 @@ export interface IRolesAndPermissions {
     roleType: string;
 }
 
-const rolesData: IRolesAndPermissions[] = [
-    {
-        agents: 1,
-        description: "qweqwe qweqwe",
-        roleName: "Admin",
-        roleType: "System"
-    },
-    {
-        agents: 2,
-        description: "qweqwe qweqwe",
-        roleName: "System Admin",
-        roleType: "System"
-    }
-]
-
 export const RolesAndPermissionsContainer = () => {
 
-    return (
-        <RolesAndPermissionsLayout rolesData={rolesData || []} />
-    )
+    const { data, isLoading } = useFetchAllRoles();
+
+    if (isLoading) {
+        return <CenteredCircularProgress />
+    }
+
+    if (data) {
+        return <RolesAndPermissionsLayout rolesData={data || []} />
+    }
+
+    return <ErrorMessage />
 }  
