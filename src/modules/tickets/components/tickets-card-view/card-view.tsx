@@ -1,9 +1,9 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { useMatch, useNavigate, useSearchParams } from "react-router-dom";
 import styled from 'styled-components';
-import { Avatar, Tooltip, Typography } from "@mui/material";
-import { CalendarToday } from "@mui/icons-material";
-import { FlexBox, VerticalSeparator } from "lib/ui-ux";
+import { Avatar, Checkbox, Tooltip, Typography, SxProps } from "@mui/material";
+import { AccessTime, CalendarToday } from "@mui/icons-material";
+import { CircularSeparator, FlexBox, VerticalSeparator } from "lib/ui-ux";
 import { ITicketDetails } from "../../apis";
 import { Priority } from "../display-tickets-grid";
 import { TicketStatusContainer } from "../../containers";
@@ -14,8 +14,13 @@ import { useSourceIcon } from "modules/tickets/hooks";
 const StyledCard = styled(FlexBox)`
     background: ${({ theme }) => theme.pallete.white};
     border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
+    border: 1px solid #F1F2F4;
     cursor: pointer;
-    padding: 10px 20px;
+    padding: 10px 20px 15px 5px;
+
+    &:hover {
+        background: #F1F2F4;
+    }
 `;
 
 const StyledTypography = styled(Typography)`
@@ -38,41 +43,71 @@ const StyledPriority = styled(Priority)`
     align-items: center;
 `;
 
+const NameAndSourceContent = styled(FlexBox)`
+    margin-top: 10px;
+`;
+
+const iconStyles: SxProps = { height: '16px', width: '16px', fill: '#787f83' }
+
 export const CardView = (props: ITicketDetails) => {
-    const { ticketId, customerName, createdAt, source, ticketStatus, priority, description } = props;
+    const { ticketId, customerName, createdAt, source, ticketStatus, priority, description, resolutionDue } = props;
     const getSourceIcon = useSourceIcon();
     const navigate = useNavigate();
     const match = useMatch('/:tickets/:ticketType')
     const [searchParams] = useSearchParams();
     const noOfRecords = searchParams.get('noOfRecords');
     const pageNumber = searchParams.get('pageNumber');
+    const [isChecked, setIsChecked] = useState(false);
 
     const onRowClick = React.useCallback(() => {
         navigate(`${match?.pathname}/${ticketId}?noOfRecords=${noOfRecords}&pageNumber=${pageNumber}`, { replace: true });
     }, [match?.pathname, navigate, noOfRecords, pageNumber, ticketId]);
 
+    const checkBoxOnChange = useCallback((e: React.MouseEvent<HTMLElement>) => {
+        e.stopPropagation();
+        setIsChecked((prevVal) => !prevVal);
+    }, [])
+
 
     return (
-        <StyledCard onClick={onRowClick} justifyContent="space-between">
-            <FlexBox gap={'5px'} flexDirection="column">
-                <Typography variant="h5">{description}</Typography>
-                <FlexBox gap={'20px'} renderSeparator={onRenderSeparator} alignItems="center">
-                    <StyledTypography
-                        variant="body2"
-                        width={'80px'}>{'#' + ticketId.split('-')[0]}</StyledTypography>
-                    <CustomerName customerName={customerName} />
-                    <CreatedAt createdAt={createdAt} />
-                    <FlexBox gap={'5px'} alignItems="center">
-                        {getSourceIcon(source)}
-                        <StyledTypography variant="body2">{source}</StyledTypography>
+        <StyledCard onClick={onRowClick} alignItems="center" justifyContent="space-between">
+
+            <FlexBox alignItems="center" gap="10px">
+                <Checkbox checked={isChecked} size="small" onClick={checkBoxOnChange} />
+                <CustomerName customerName={customerName} />
+
+                <FlexBox flexDirection="column" gap="14px">
+                    <div>
+                        <Typography variant="h5">{description}</Typography>
+
+                        <NameAndSourceContent gap="10px" alignItems="center" renderSeparator={() => <CircularSeparator />}>
+                            <Tooltip title={'Customer Name'}>
+                                <Typography variant="body2" >{customerName}</Typography>
+                            </Tooltip>
+                            <FlexBox gap={'5px'} alignItems="center">
+                                <StyledTypography variant="subheading1" >via</StyledTypography>
+                                {getSourceIcon(source)}
+                                <StyledTypography variant="body2">{source}</StyledTypography>
+                            </FlexBox>
+                        </NameAndSourceContent>
+                    </div>
+
+                    <FlexBox gap={'20px'} renderSeparator={onRenderSeparator} alignItems="center">
+                        <StyledTypography
+                            variant="body2"
+                            width={'80px'}>{'#' + ticketId.split('-')[0]}</StyledTypography>
+                        <CreatedAt createdAt={createdAt} />
+                        <ResolutionDue resolutionDue={resolutionDue} />
                     </FlexBox>
+
                 </FlexBox>
             </FlexBox>
+
             <FlexBox alignItems="center">
                 <StyledPriority priority={priority} />
                 <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} statusUpdateString={''} renderMode="card" />
             </FlexBox>
-        </StyledCard>
+        </StyledCard >
     )
 }
 
@@ -81,12 +116,7 @@ const CustomerName = (props: Pick<ITicketDetails, 'customerName'>) => {
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(customerName)), [customerName]);
 
     return (
-        <FlexBox gap={'5px'} alignItems="center" width="150px" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-            <Avatar sx={{ color: textColor, bgcolor: backgroundColor, width: '24px', height: '24px', fontSize: '12px' }}>{getInitialsByName(customerName)}</Avatar>
-            <Tooltip title={'Customer Name'}>
-                <Typography variant="body2" >{customerName}</Typography>
-            </Tooltip>
-        </FlexBox>
+        <Avatar sx={{ color: textColor, bgcolor: backgroundColor, width: '42px', height: '42px', fontSize: '16px' }}>{getInitialsByName(customerName)}</Avatar>
     )
 }
 
@@ -98,12 +128,22 @@ const CreatedAt = (props: Pick<ITicketDetails, 'createdAt'>) => {
     const parsedDateValue = Math.abs(days!) > 0 ? `${Math.abs(days!)} days` : Math.abs(hours!) > 0 ? `${Math.abs(hours!)} hours` : Math.abs(minutes!) > 0 ? `${Math.abs(Math.round(minutes!))} mins` : `${Math.abs(Math.round(seconds!))} seconds`;
 
     return (
-        <>
+        <Tooltip title={`Created ${parsedDateValue} ago`}>
             <FlexBox gap={'5px'} alignItems="center" width="198px">
-                <CalendarToday />
+                <CalendarToday sx={iconStyles} />
                 <StyledTypography variant="body2">{`Created ${parsedDateValue} ago`}</StyledTypography>
             </FlexBox>
-        </>
+        </Tooltip>
     )
+}
 
+const ResolutionDue = (props: Pick<ITicketDetails, 'resolutionDue'>) => {
+    return (
+        <Tooltip title={`Resolution time: ${props.resolutionDue ? props.resolutionDue : '--'}`}>
+            <FlexBox gap={'5px'} alignItems="center" width="198px">
+                <AccessTime sx={iconStyles} />
+                <StyledTypography variant="body2">{props.resolutionDue ? props.resolutionDue : '--'}</StyledTypography>
+            </FlexBox>
+        </Tooltip>
+    )
 }
