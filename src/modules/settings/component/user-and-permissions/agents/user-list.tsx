@@ -40,7 +40,8 @@ const useColumns = () => {
             cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
-                        {original.is_deactivated ? <DeactivateAgentContainer id={original.id} /> : <ActivateAgentContainer id={original.id} />}
+                        {original.role !== 'account_owner' && <DeactivateAgentContainer id={original.id} />}
+                        {original.verification_status === 'deactivated' && <ActivateAgentContainer id={original.id} />}
                         <EditAgent id={original.id} />
                     </FlexBox>
                 )

@@ -1,10 +1,12 @@
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { Typography } from '@mui/material';
 import { FlexBox } from 'lib/ui-ux';
+import { VerificationStatusType } from 'modules/settings/apis/users-and-permissions';
 
 interface VerificationStatusProps {
-    status: 'verified' | 'unverified';
+    status: VerificationStatusType;
 }
 
 export const VerificationStatus = (props: VerificationStatusProps) => {
@@ -16,9 +18,9 @@ export const VerificationStatus = (props: VerificationStatusProps) => {
                 {
                     status === 'verified'
                         ? <CheckCircleOutlineIcon sx={{ color: '#079455' }} />
-                        : <HighlightOffOutlinedIcon sx={{ color: '#475467' }} />
+                        : (status === 'unverified' ? <HighlightOffOutlinedIcon sx={{ color: '#475467' }} /> : <RemoveCircleOutlineIcon sx={{ color: '#dc6803' }} />)
                 }
-                <Typography variant='body3' sx={{ color: status === 'verified' ? '#067647' : '#3b4455' }}>{status.charAt(0).toUpperCase() + status.slice(1)}</Typography>
+                <Typography variant='body3' sx={{ color: status === 'verified' ? '#067647' : status === 'unverified' ? '#3b4455' : '#dc6803' }}>{status.charAt(0).toUpperCase() + status.slice(1)}</Typography>
             </FlexBox>
 
         </>
