@@ -4,9 +4,11 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-ux";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
 import { IUsers } from "modules/settings/apis/users-and-permissions";
-import { DeleteAgentContainer, EditAgentContainer } from "modules/settings/containers";
+import { DeactivateAgentContainer, EditAgentContainer } from "modules/settings/containers";
 import { Avatar, Typography } from "@mui/material";
 import { chooseRandomColors, getInitialsByName } from "lib/utils";
+import { VerificationStatus } from "./verification-status";
+import { ActivateAgentContainer } from "modules/settings/containers/agents/activate-agent-container";
 
 const useColumns = () => {
     const columnHelper = createColumnHelper<IUsers>();
@@ -29,7 +31,7 @@ const useColumns = () => {
         }),
         columnHelper.accessor("verification_status", {
             id: 'verification_status',
-            cell: info => info.getValue(),
+            cell: info => <VerificationStatus status={info.getValue()} />,
             header: () => 'Status',
         }),
         columnHelper.display({
@@ -38,7 +40,8 @@ const useColumns = () => {
             cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
-                        <DeleteAgentContainer id={original.id} />
+                        {original.role !== 'account_owner' && <DeactivateAgentContainer id={original.id} />}
+                        {original.verification_status === 'deactivated' && <ActivateAgentContainer id={original.id} />}
                         <EditAgent id={original.id} />
                     </FlexBox>
                 )
