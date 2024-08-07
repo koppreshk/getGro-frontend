@@ -8,7 +8,8 @@ export interface IUsers {
   name: string
   role: string
   last_seen_at: null | string;
-  verification_status: string;
+  is_deactivated?: boolean;
+  verification_status: 'verified' | 'unverified';
 }
 
 export type UserType = 'all' | 'active' | 'unverified' | 'verified' | 'deactivated';
