@@ -1,7 +1,7 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { useMatch, useNavigate, useSearchParams } from "react-router-dom";
 import styled from 'styled-components';
-import { Avatar, Checkbox, Tooltip, Typography, SxProps } from "@mui/material";
+import { Avatar, Tooltip, Typography, SxProps } from "@mui/material";
 import { AccessTime, CalendarToday } from "@mui/icons-material";
 import { CircularSeparator, FlexBox, VerticalSeparator } from "lib/ui-ux";
 import { ITicketDetails } from "../../apis";
@@ -16,7 +16,7 @@ const StyledCard = styled(FlexBox)`
     border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
     border: 1px solid #F1F2F4;
     cursor: pointer;
-    padding: 10px 20px 15px 5px;
+    padding: 15px 20px 15px;
 
     &:hover {
         background: #F1F2F4;
@@ -44,7 +44,7 @@ const StyledPriority = styled(Priority)`
 `;
 
 const NameAndSourceContent = styled(FlexBox)`
-    margin-top: 10px;
+    margin-top: 14px;
 `;
 
 const iconStyles: SxProps = { height: '16px', width: '16px', fill: '#787f83' }
@@ -57,23 +57,15 @@ export const CardView = (props: ITicketDetails) => {
     const [searchParams] = useSearchParams();
     const noOfRecords = searchParams.get('noOfRecords');
     const pageNumber = searchParams.get('pageNumber');
-    const [isChecked, setIsChecked] = useState(false);
 
     const onRowClick = React.useCallback(() => {
         navigate(`${match?.pathname}/${ticketId}?noOfRecords=${noOfRecords}&pageNumber=${pageNumber}`, { replace: true });
     }, [match?.pathname, navigate, noOfRecords, pageNumber, ticketId]);
 
-    const checkBoxOnChange = useCallback((e: React.MouseEvent<HTMLElement>) => {
-        e.stopPropagation();
-        setIsChecked((prevVal) => !prevVal);
-    }, [])
-
-
     return (
         <StyledCard onClick={onRowClick} alignItems="center" justifyContent="space-between">
 
-            <FlexBox alignItems="center" gap="10px">
-                <Checkbox checked={isChecked} size="small" onClick={checkBoxOnChange} />
+            <FlexBox alignItems="center" gap="18px">
                 <CustomerName customerName={customerName} />
 
                 <FlexBox flexDirection="column" gap="14px">
@@ -116,7 +108,14 @@ const CustomerName = (props: Pick<ITicketDetails, 'customerName'>) => {
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(customerName)), [customerName]);
 
     return (
-        <Avatar sx={{ color: textColor, bgcolor: backgroundColor, width: '42px', height: '42px', fontSize: '16px' }}>{getInitialsByName(customerName)}</Avatar>
+        <Avatar sx={{ 
+            color: textColor, 
+            bgcolor: backgroundColor, 
+            width: '52px', 
+            height: '52px', 
+            fontSize: '20px',
+            borderRadius: '20%'
+         }}>{getInitialsByName(customerName)}</Avatar>
     )
 }
 
