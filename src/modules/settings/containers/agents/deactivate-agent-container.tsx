@@ -1,7 +1,7 @@
 import React from "react";
 import { NotInterestedOutlined } from "@mui/icons-material";
 import { CustomIconButton } from "lib/ui-ux";
-import { useDeactivateUser } from "modules/settings/apis/users-and-permissions/agents/deactivate-USER";
+import { useDeactivateUser } from "modules/settings/apis/users-and-permissions/agents/deactivate-user";
 
 export const DeactivateAgentContainer = (props: { id: number | string }) => {
     const { mutateAsync } = useDeactivateUser();
