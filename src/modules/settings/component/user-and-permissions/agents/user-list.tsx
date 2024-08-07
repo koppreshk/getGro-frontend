@@ -29,8 +29,8 @@ const useColumns = () => {
             cell: info => info.getValue(),
             header: () => 'role',
         }),
-        columnHelper.accessor("verification_status", {
-            id: 'verification_status',
+        columnHelper.accessor("fetch_verification_status", {
+            id: 'fetch_verification_status',
             cell: info => <VerificationStatus status={info.getValue()} />,
             header: () => 'Status',
         }),
@@ -40,8 +40,8 @@ const useColumns = () => {
             cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
-                        {original.role !== 'account_owner' && <DeactivateAgentContainer id={original.id} />}
-                        {original.verification_status === 'deactivated' && <ActivateAgentContainer id={original.id} />}
+                        {original.fetch_verification_status !== 'Deactivated' && original.role !== 'Account Owner' && <DeactivateAgentContainer id={original.id} />}
+                        {original.fetch_verification_status === 'Deactivated' && <ActivateAgentContainer id={original.id} />}
                         <EditAgent id={original.id} />
                     </FlexBox>
                 )

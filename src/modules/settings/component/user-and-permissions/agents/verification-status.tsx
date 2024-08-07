@@ -16,11 +16,11 @@ export const VerificationStatus = (props: VerificationStatusProps) => {
 
             <FlexBox gap={'5px'} alignItems='center'>
                 {
-                    status === 'verified'
+                    status === 'Verified'
                         ? <CheckCircleOutlineIcon sx={{ color: '#079455' }} />
-                        : (status === 'unverified' ? <HighlightOffOutlinedIcon sx={{ color: '#475467' }} /> : <RemoveCircleOutlineIcon sx={{ color: '#dc6803' }} />)
+                        : (status === 'Unverified' ? <HighlightOffOutlinedIcon sx={{ color: '#475467' }} /> : <RemoveCircleOutlineIcon sx={{ color: '#dc6803' }} />)
                 }
-                <Typography variant='body3' sx={{ color: status === 'verified' ? '#067647' : status === 'unverified' ? '#3b4455' : '#dc6803' }}>{status.charAt(0).toUpperCase() + status.slice(1)}</Typography>
+                <Typography variant='body3' sx={{ color: status === 'Verified' ? '#067647' : status === 'Unverified' ? '#3b4455' : '#dc6803' }}>{status.charAt(0).toUpperCase() + status.slice(1)}</Typography>
             </FlexBox>
 
         </>

@@ -8,9 +8,10 @@ export interface IUsers {
   name: string
   role: string
   last_seen_at: null | string;
-  verification_status: VerificationStatusType;
+  fetch_verification_status: VerificationStatusType;
 }
-export type VerificationStatusType = 'verified' | 'unverified' | 'deactivated';
+export type VerificationStatusType = 'Verified' | 'Unverified' | 'Deactivated';
+
 export type UserType = 'all' | 'active' | 'unverified' | 'verified' | 'deactivated';
 
 export const useFetchAllUsers = (type: UserType) => {
