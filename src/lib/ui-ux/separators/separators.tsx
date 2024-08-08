@@ -15,3 +15,14 @@ export const HorizontalSeparator = styled.div<{ $margin?: string }>`
   margin: ${({ $margin }) => $margin ? $margin : 'unset'};
   background-color:#E9EBED;
 `;
+
+export const CircularSeparator = styled.div`
+  align-self: center;
+  background-color: #98a1b2;
+  border: 1px solid #98a1b2 !important;
+  border-radius: 50%;
+  height: 4px;
+  width: 4px;
+  margin-top: 2px;
+  min-width: 4px !important;
+`;
