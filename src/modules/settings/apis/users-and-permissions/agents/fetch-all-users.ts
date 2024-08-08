@@ -8,6 +8,7 @@ export interface IUsers {
   name: string
   role: string
   last_seen_at: null | string;
+  can_deactivate: boolean;
   fetch_verification_status: VerificationStatusType;
 }
 export type VerificationStatusType = 'Verified' | 'Unverified' | 'Deactivated';
