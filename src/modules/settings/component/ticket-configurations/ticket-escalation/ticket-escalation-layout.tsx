@@ -28,7 +28,7 @@ export const TicketEscalationLayout = (props: ITicketEscalaltionLayoutProps) => 
     return (
         <FlexBox width="100%" height="100%" flexDirection="column">
             <BreadCrumbs />
-            <FlexBox height='calc(100% - 46px)'>
+            <FlexBox height='calc(100% - 46px)' >
                 <Routes>
                     <Route key='base-route' path="/" element={<EscalationLayoutContent {...props} />} />
                     <Route key='add-route' path="add-escalation" element={<CreateTicketSLAContainer />} />

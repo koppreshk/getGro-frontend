@@ -67,6 +67,7 @@ export const RolesAndPermissionList = (props: IRolesAndPermissionsListProps) => 
         <ConfigDataGrid
             columns={colums}
             data={rolesData}
+            hideTableControls
         />
     )
 }

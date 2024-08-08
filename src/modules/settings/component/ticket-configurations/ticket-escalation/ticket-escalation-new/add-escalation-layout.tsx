@@ -210,7 +210,7 @@ export const AddEscalationLayout = React.memo((props: IAddEscalationLayoutProps)
     }
 
     return (
-        <Box sx={{ p: '20px 120px', height: '100%', boxSizing: 'border-box' }}>
+        <Box sx={{ p: '20px 120px', height: '100%', boxSizing: 'border-box', width: '100%' }}>
             <FormProvider {...form}>
                 <AddEscalaltionSteps activeStep={activeStep} />
                 <div style={{ padding: '30px 60px', height: `calc(100% - 94px)`, boxSizing: 'border-box', overflow: 'auto' }}>
