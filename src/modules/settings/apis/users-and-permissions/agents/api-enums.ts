@@ -5,7 +5,10 @@ export enum AgentsEndPoint {
     FETCH_ALL_ROLES = 'fields/roles',
     EDIT_USER = 'user/edit',
     DEACTIVATE_USER = 'user/deactivate',
-    ACTIVATE_USER = 'user/activate'
+    ACTIVATE_USER = 'user/activate',
+    CURRENT_STATUS = 'user/current_status',
+    AVAILABILITY_STATUSES = 'user/availability_statuses',
+    UPDATE_STATUS = 'user/status'
 }
 
 export enum AgentsQueryKey {
@@ -15,5 +18,8 @@ export enum AgentsQueryKey {
     FETCH_ALL_ROLES = 'FETCH_ALL_ROLES',
     EDIT_USER = 'EDIT_USER',
     DEACTIVATE_USER = 'DEACTIVATE_USER',
-    ACTIVATE_USER = 'ACTIVATE_USER'
+    ACTIVATE_USER = 'ACTIVATE_USER',
+    CURRENT_STATUS = 'CURRENT_STATUS',
+    AVAILABILITY_STATUSES = 'AVAILABILITY_STATUSES',
+    UPDATE_STATUS = 'UPDATE_STATUS'
 }
