@@ -9,24 +9,28 @@ const statuses = [{
 }, {
     color: '#17e254',
     enable: true,
-    statusCategory: Statuses.Active,
-    statusName: Statuses.Active
-}, {
-    color: '#ec3427',
-    enable: true,
-    statusCategory: Statuses.Busy,
-    statusName: Statuses.Busy
-}, {
+    statusCategory: Statuses.Online,
+    statusName: Statuses.Online
+},
+// {
+//     color: '#ec3427',
+//     enable: true,
+//     statusCategory: Statuses.Busy,
+//     statusName: Statuses.Busy
+// },
+{
     color: '#c9c2c2',
     enable: true,
     statusCategory: Statuses.Offline,
     statusName: Statuses.Offline
-}, {
-    color: '#d80e00',
-    enable: false,
-    statusCategory: Statuses.DoNotDisturb,
-    statusName: Statuses.DoNotDisturb
-}] as IStatusesList[];
+},
+    //  {
+    //     color: '#d80e00',
+    //     enable: false,
+    //     statusCategory: Statuses.DoNotDisturb,
+    //     statusName: Statuses.DoNotDisturb
+    // }
+] as IStatusesList[];
 
 export const AgentAvailabilityStatusesContainer = () => {
     return (

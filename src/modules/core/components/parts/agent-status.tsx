@@ -1,15 +1,14 @@
-import { Button, Menu, MenuItem, Typography } from "@mui/material"
+import { Button, CircularProgress, Menu, MenuItem, Typography } from "@mui/material"
 import styled from "styled-components";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useState } from "react";
 import { convertCamelCaseStringToSpaceSeparated } from "lib/utils";
+import { useFetchAvailabilityStatuses, useFetchCurrentStatus, useUpdateStatus } from "modules/settings/apis/users-and-permissions";
 
 export enum Statuses {
-    Active = 'active',
-    Busy = 'busy',
-    Away = 'away',
-    DoNotDisturb = 'doNotDisturb',
-    Offline = 'offline'
+    Online = 'Online',
+    Away = 'Away',
+    Offline = 'Offline'
 }
 
 const Status = styled.div<{ $status?: string }>`
@@ -18,14 +17,14 @@ const Status = styled.div<{ $status?: string }>`
     border-radius: 100%;
     background-color: ${({ $status }) => {
         switch ($status) {
-            case Statuses.Active:
+            case Statuses.Online:
                 return '#17e254';
-            case Statuses.Busy:
-                return '#ec3427';
+            // case Statuses.Busy:
+            //     return '#ec3427';
             case Statuses.Away:
                 return '#ffef0e';
-            case Statuses.DoNotDisturb:
-                return '#d80e00';
+            // case Statuses.DoNotDisturb:
+            //     return '#d80e00';
             default: return '#c9c2c2'
         }
     }};
@@ -40,11 +39,11 @@ const StyledButton = styled(Button)`
     }
 `;
 
-const options = [Statuses.Active, Statuses.Busy, Statuses.Away, Statuses.DoNotDisturb, Statuses.Offline];
-
 export const AgentStatus = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const [selectedIndex, setSelectedIndex] = useState(0);
+    const { data, isLoading: dataLoading } = useFetchAvailabilityStatuses();
+    const { data: currentStatus, isLoading } = useFetchCurrentStatus();
+    const { mutateAsync } = useUpdateStatus();
 
     const open = Boolean(anchorEl);
 
@@ -52,21 +51,27 @@ export const AgentStatus = () => {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleMenuItemClick = (_event: React.MouseEvent<HTMLElement>, index: number) => {
-        setSelectedIndex(index);
+    const handleMenuItemClick = (_event: React.MouseEvent<HTMLElement>, menuITemID: number) => {
         setAnchorEl(null);
+        mutateAsync({
+            availability_status_id: menuITemID
+        })
     };
 
     const handleClose = () => {
         setAnchorEl(null);
     };
 
+    if (isLoading || dataLoading) {
+        return <CircularProgress size={'24'} />
+    }
+
     return (
         <>
             <StyledButton variant="text" onClick={handleClick} sx={{ textTransform: 'unset', gap: '6px' }}>
-                <Status $status={options[selectedIndex]} />
+                <Status $status={currentStatus?.name} />
                 <Typography variant="h6" color="#fff">
-                    {convertCamelCaseStringToSpaceSeparated(options[selectedIndex])}
+                    {convertCamelCaseStringToSpaceSeparated(currentStatus?.name ?? '')}
                 </Typography>
                 <ExpandMoreIcon sx={{ width: 16, height: 16, color: '#fff' }} />
             </StyledButton>
@@ -105,12 +110,12 @@ export const AgentStatus = () => {
                         },
                     }
                 }}>
-                {options.map((option, index) => (
+                {data?.map((option) => (
                     <MenuItem
-                        key={option}
-                        selected={index === selectedIndex}
-                        onClick={(event) => handleMenuItemClick(event, index)}>
-                        {convertCamelCaseStringToSpaceSeparated(option)}
+                        key={option.availability_status_id}
+                        selected={option.availability_status_id === currentStatus?.id}
+                        onClick={(event) => handleMenuItemClick(event, option.availability_status_id)}>
+                        {convertCamelCaseStringToSpaceSeparated(option.name)}
                     </MenuItem>))}
             </Menu>
         </>
