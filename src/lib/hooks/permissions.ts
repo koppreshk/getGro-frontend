@@ -2,7 +2,8 @@ import { useAuth } from "modules/login";
 
 export enum Roles {
     Admin = 'Admin',
-    Agent = 'Agent'
+    Agent = 'Agent',
+    AccountOwner = 'Account Owner'
 }
 
 enum AccessRightKeys {
@@ -30,47 +31,47 @@ type IAccessRights = {
 const accessRights = [
     {
         name: AccessRightKeys.ViewDashboard,
-        mode: [Roles.Admin]
+        mode: [Roles.Admin, Roles.AccountOwner]
     },
     {
         name: AccessRightKeys.ViewCustomers,
-        mode: [Roles.Admin]
+        mode: [Roles.Admin, Roles.AccountOwner]
     },
     {
         name: AccessRightKeys.ViewSettings,
-        mode: [Roles.Admin]
+        mode: [Roles.Admin, Roles.AccountOwner]
     },
     {
         name: AccessRightKeys.ViewTickets,
-        mode: [Roles.Admin, Roles.Agent],
+        mode: [Roles.Admin, Roles.Agent, Roles.AccountOwner],
     },
     {
         name: TicketAccessRights.AllTickets,
-        mode: [Roles.Admin],
+        mode: [Roles.Admin, Roles.AccountOwner],
     },
     {
         name: TicketAccessRights.AllPending,
-        mode: [Roles.Admin],
+        mode: [Roles.Admin, Roles.AccountOwner],
     },
     {
         name: TicketAccessRights.AllResolved,
-        mode: [Roles.Admin],
+        mode: [Roles.Admin, Roles.AccountOwner],
     },
     {
         name: TicketAccessRights.AllClosed,
-        mode: [Roles.Admin],
+        mode: [Roles.Admin, Roles.AccountOwner],
     },
     {
         name: TicketAccessRights.MyPending,
-        mode: [Roles.Admin, Roles.Agent],
+        mode: [Roles.Admin, Roles.Agent, Roles.AccountOwner],
     },
     {
         name: TicketAccessRights.MyResolved,
-        mode: [Roles.Admin, Roles.Agent],
+        mode: [Roles.Admin, Roles.Agent, Roles.AccountOwner],
     },
     {
         name: TicketAccessRights.MyClosed,
-        mode: [Roles.Admin, Roles.Agent],
+        mode: [Roles.Admin, Roles.Agent, Roles.AccountOwner],
     }
 ] as IAccessRights[]
 
