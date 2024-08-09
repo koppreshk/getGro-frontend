@@ -10,7 +10,7 @@ import { ReassignForm } from "./reassign-form";
 
 interface DeactivateAgentDialogProps {
     canDeactivate: boolean;
-    onDeleteHandler: () => void;
+    onDeleteHandler: (formData: DeactivateAgentDialogFormFields) => void;
 }
 
 export const DeactivateAgent = (props: DeactivateAgentDialogProps) => {
@@ -32,14 +32,22 @@ export const DeactivateAgent = (props: DeactivateAgentDialogProps) => {
 }
 
 export interface DeactivateAgentDialogFormFields {
-    deactivateAgent: string;
-    reassignQueue: string;
-    reassignUser: string;
+    deactivateAgent: 'remove_assignee_and_groups' | 'deactivate_and_reassign_tickets' | 'remove_assignee_only';
+    queue_id: string;
+    reassign_to: string;
 }
 
 const DeactivateAgentDialog = (props: DeactivateAgentDialogProps & { open: boolean, toggleDeleteDialogBox: () => void }) => {
     const { open, canDeactivate, onDeleteHandler, toggleDeleteDialogBox } = props;
-    const form = useForm<DeactivateAgentDialogFormFields>();
+    const form = useForm<DeactivateAgentDialogFormFields>({
+        defaultValues: {
+            deactivateAgent: 'remove_assignee_and_groups'
+        }
+    });
+
+    const onNegativeActionClick = (formData: DeactivateAgentDialogFormFields) => {
+        onDeleteHandler(formData)
+    }
 
     return (
         <FormProvider {...form}>
@@ -48,7 +56,7 @@ const DeactivateAgentDialog = (props: DeactivateAgentDialogProps & { open: boole
                 content={canDeactivate ? <DeactivateAgentWithNoTickets /> : <DeactivateAgentForm />}
                 title='Deactivate Agent'
                 negativeActionLabel="Deactivate"
-                onNegativeActionClick={onDeleteHandler}
+                onNegativeActionClick={form.handleSubmit(onNegativeActionClick)}
                 onClose={toggleDeleteDialogBox} />
         </FormProvider>
     )
@@ -84,16 +92,16 @@ const DeactivateAgentForm = () => {
                 row={false}
                 radioOptions={[
                     {
-                        key: 'remove-agent-group',
+                        key: 'remove_assignee_and_groups',
                         label: 'Remove assignee (agent and assosicated group) from the existing unclosed tickets'
                     },
                     {
-                        key: 'reassign',
+                        key: 'deactivate_and_reassign_tickets',
                         label: 'Reassign the unclosed tickets',
-                        renderContentBelowLabel: () => watch('deactivateAgent') === 'reassign' ? <ReassignForm /> : null
+                        renderContentBelowLabel: () => watch('deactivateAgent') === 'deactivate_and_reassign_tickets' ? <ReassignForm /> : null
                     },
                     {
-                        key: 'remove-agent-only',
+                        key: 'remove_assignee_only',
                         label: 'Remove agent only'
                     }
                 ]} />
