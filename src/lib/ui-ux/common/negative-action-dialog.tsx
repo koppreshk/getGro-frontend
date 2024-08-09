@@ -9,7 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 interface INegativeActionDialogProps {
     title: string;
-    content: string;
+    content: string | React.ReactNode;
     open: boolean;
     negativeActionLabel?: string;
     onClose: () => void;
@@ -26,12 +26,14 @@ export const NegativeActionDialog = (props: INegativeActionDialogProps) => {
                 onClose={onClose}>
                 <DialogTitle variant='h5'>{title}</DialogTitle>
                 <DialogContent>
-                    <DialogContentText variant='body3'>
-                        {content}
-                    </DialogContentText>
+                    {typeof content === 'string' ?
+                        <DialogContentText variant='body3'>
+                            {content}
+                        </DialogContentText>
+                        : content}
                 </DialogContent>
-                <DialogActions>
-                    <Button onClick={onClose}>Cancel</Button>
+                <DialogActions sx={{ padding: '16px 24px' }}>
+                    <Button onClick={onClose} variant='outlined' sx={{ mr: '8px' }}>Cancel</Button>
                     <Button type="submit" variant='contained' color='error' onClick={onNegativeActionClick}>{negativeActionLabel}</Button>
                 </DialogActions>
             </Dialog>
