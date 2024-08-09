@@ -21,13 +21,13 @@ export const ReassignForm = () => {
 
     if (data) {
         const { queues } = data;
-        const selectedQueue = watch('reassignQueue');
+        const selectedQueue = watch('queue_id');
         const agents = queues.find((item) => item.id.toString() === selectedQueue)?.assignedEmployees.map((item) => ({ key: item.id.toString(), value: `${item.firstName} ${item.lastName}` }))
 
         return (
             <FlexBox gap={'20px'} style={{ marginLeft: '26px' }}>
-                <StyledSelectFields name="reassignQueue" sx={{ width: '200px' }} size="small" menuOptions={queues.map((item) => ({ key: item.id.toString(), value: item.name }))} />
-                <StyledSelectFields name="reassignUser" sx={{ width: '200px' }} size="small" menuOptions={agents || []} />
+                <StyledSelectFields name="queue_id" sx={{ width: '200px' }} size="small" menuOptions={queues.map((item) => ({ key: item.id.toString(), value: item.name }))} rules={{ required: 'Please select a queue to change assignee' }} />
+                <StyledSelectFields name="reassign_to" sx={{ width: '200px' }} size="small" menuOptions={agents || []} />
             </FlexBox>
         )
     }

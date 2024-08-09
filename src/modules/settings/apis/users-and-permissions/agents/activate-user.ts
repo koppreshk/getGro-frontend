@@ -13,7 +13,7 @@ export const useActivateUser = () => {
         mutationKey: AgentsQueryKey.ACTIVATE_USER,
         mutationFn: activateUser,
         onSuccess: () => {
-            queryClient.invalidateQueries(AgentsQueryKey.FETCH_ALL_ROLES);
+            queryClient.invalidateQueries(AgentsQueryKey.FETCH_ALL_USERS);
         }
     });
 }
