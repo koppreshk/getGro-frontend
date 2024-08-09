@@ -2,10 +2,11 @@ import { FlexBox, NegativeActionDialog } from "lib/ui-ux"
 import React from "react";
 import { NotInterestedOutlined } from "@mui/icons-material";
 import { CustomIconButton } from "lib/ui-ux";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, useFormContext, } from "react-hook-form";
 import { Typography } from "@mui/material";
 import { RadioGroupField } from "lib/form-fields";
 import styled from "styled-components";
+import { ReassignForm } from "./reassign-form";
 
 interface DeactivateAgentDialogProps {
     canDeactivate: boolean;
@@ -30,9 +31,15 @@ export const DeactivateAgent = (props: DeactivateAgentDialogProps) => {
     )
 }
 
+export interface DeactivateAgentDialogFormFields {
+    deactivateAgent: string;
+    reassignQueue: string;
+    reassignUser: string;
+}
+
 const DeactivateAgentDialog = (props: DeactivateAgentDialogProps & { open: boolean, toggleDeleteDialogBox: () => void }) => {
     const { open, canDeactivate, onDeleteHandler, toggleDeleteDialogBox } = props;
-    const form = useForm();
+    const form = useForm<DeactivateAgentDialogFormFields>();
 
     return (
         <FormProvider {...form}>
@@ -67,6 +74,8 @@ const DeactivateAgentWithNoTickets = () => {
 }
 
 const DeactivateAgentForm = () => {
+    const { watch } = useFormContext();
+
     return (
         <FlexBox gap={'15px'} flexDirection="column" width="500px">
             <Typography variant="body2">The agent has some tickets which are not closed, please select an action to perform before deactivation</Typography>
@@ -80,7 +89,8 @@ const DeactivateAgentForm = () => {
                     },
                     {
                         key: 'reassign',
-                        label: 'Reassign the unclosed tickets'
+                        label: 'Reassign the unclosed tickets',
+                        renderContentBelowLabel: () => watch('deactivateAgent') === 'reassign' ? <ReassignForm /> : null
                     },
                     {
                         key: 'remove-agent-only',

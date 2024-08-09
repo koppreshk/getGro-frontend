@@ -9,9 +9,11 @@ import { Avatar, Typography } from "@mui/material";
 import { chooseRandomColors, getInitialsByName } from "lib/utils";
 import { VerificationStatus } from "./verification-status";
 import { ActivateAgentContainer } from "modules/settings/containers/agents/activate-agent-container";
+import { useAuth } from "modules/login";
 
 const useColumns = () => {
     const columnHelper = createColumnHelper<IUsers>();
+    const { user } = useAuth();
 
     const columns = [
         columnHelper.accessor("id", {
@@ -38,9 +40,10 @@ const useColumns = () => {
             id: 'actions',
             header: () => 'Actions',
             cell: ({ row: { original } }) => {
+                const showDeactivateDialog = original.fetch_verification_status !== 'Deactivated' && original.role !== 'Account Owner' && user?.role !== original.role;
                 return (
                     <FlexBox flexDirection="row" gap="5px">
-                        {original.fetch_verification_status !== 'Deactivated' && original.role !== 'Account Owner' && <DeactivateAgentContainer id={original.id} canDeactivate={original.can_deactivate} />}
+                        {showDeactivateDialog && <DeactivateAgentContainer id={original.id} canDeactivate={original.can_deactivate} />}
                         {original.fetch_verification_status === 'Deactivated' && <ActivateAgentContainer id={original.id} />}
                         <EditAgent id={original.id} />
                     </FlexBox>

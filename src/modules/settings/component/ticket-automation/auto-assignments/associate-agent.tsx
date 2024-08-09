@@ -26,8 +26,8 @@ export const AssociateAgent = () => {
                     row={false}
                     sx={{ gap: '10px' }}
                     radioOptions={[
-                        { key: 'even_distribution', label: 'Round Robin(Even Distribution)', subText: 'Evenly distributes tickets among agents.' },
-                        { key: 'load_based', label: 'Round Robin(Load Based)', subText: 'Allocates tickets to agents based on their workload.' }]} />
+                        { key: 'even_distribution', label: 'Round Robin(Even Distribution)', renderContentBelowLabel: 'Evenly distributes tickets among agents.' },
+                        { key: 'load_based', label: 'Round Robin(Load Based)', renderContentBelowLabel: 'Allocates tickets to agents based on their workload.' }]} />
             </FlexBox>
             <FlexBox flexDirection="column" gap={'10px'}>
                 <Typography variant="h6">Choose a queue that is eligible for auto-assignment</Typography>

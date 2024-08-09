@@ -7,7 +7,7 @@ type IRadioGroupFieldProps = Omit<RadioGroupProps, 'error' | 'required'> & {
     name: string;
     radioOptions: {
         label: string;
-        subText?: string;
+        renderContentBelowLabel?: string | (() => React.ReactNode);
         key: string;
     }[];
     rules?: Omit<RegisterOptions<FieldValues, string>, "disabled" | "valueAsNumber" | "valueAsDate" | "setValueAs"> | undefined
@@ -29,7 +29,9 @@ export const RadioGroupField = (props: IRadioGroupFieldProps) => {
                             {radioOptions.map((item) => (
                                 <FlexBox key={item.key} flexDirection="column">
                                     <FormControlLabel value={item.key} control={<Radio size="small" />} label={item.label} />
-                                    {item.subText ? <Typography variant="body3" sx={{ pl: '27px' }}>{item.subText}</Typography> : null}
+                                    {item.renderContentBelowLabel
+                                        ? typeof item.renderContentBelowLabel === 'string' ? <Typography variant="body3" sx={{ pl: '27px' }}>{item.renderContentBelowLabel}</Typography>
+                                            : item.renderContentBelowLabel() : null}
                                 </FlexBox>
                             )
                             )}
