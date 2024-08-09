@@ -5,7 +5,7 @@ import { toCamelCasedKeysFromUnderScores } from "lib/utils";
 
 export type LoginResult = {
     authToken: string;
-    role: 'Agent' | 'Admin'
+    role: 'Agent' | 'Admin' | 'Account Owner'
 }
 
 export const useLoginUser = () => {
