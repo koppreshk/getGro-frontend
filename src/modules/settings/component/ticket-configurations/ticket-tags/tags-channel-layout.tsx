@@ -1,6 +1,6 @@
 import { ArrowBack } from '@mui/icons-material';
 import { Box, Tab, Tabs, Typography } from "@mui/material";
-import { FlexBox, CustomIconButton, BreadCrumbs } from 'lib/ui-ux';
+import { FlexBox, CustomIconButton, BreadCrumbs, MoreInformation } from 'lib/ui-ux';
 import { IChannels } from 'modules/settings/apis/tags';
 import { TicketTagsContainer } from 'modules/settings/containers';
 import { useSourceIcon } from 'modules/tickets/hooks';
@@ -18,8 +18,9 @@ export const TagsChannelLayout = (props: { channels: IChannels[] }) => {
     };
 
     return (
-        <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
+        <FlexBox flexDirection='column' gap={'20px'} padding='10px 20px'>
             <BreadCrumbs />
+            <MoreInformation information='A tag is used to attach a label to tickets, contacts, or contact groups. Tags can be used for categorization, filtering, or automation' />
             <FlexBox alignItems="center" gap="10px" padding='10px'>
                 <CustomIconButton onClick={() => navigate('/configurations')} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
                 <Typography variant="h5">Ticket Tags</Typography>
@@ -32,7 +33,7 @@ export const TagsChannelLayout = (props: { channels: IChannels[] }) => {
             <CustomTabPanel index={value} value={value}>
                 <TicketTagsContainer channelId={value} />
             </CustomTabPanel>
-        </Box>
+        </FlexBox>
     );
 }
 

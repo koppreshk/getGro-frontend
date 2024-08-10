@@ -19,7 +19,7 @@ const StyledCard = styled(FlexBox)`
     padding: 15px 20px 15px;
 
     &:hover {
-        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     }
 `;
 
