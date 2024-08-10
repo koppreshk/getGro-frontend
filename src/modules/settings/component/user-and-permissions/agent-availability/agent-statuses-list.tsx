@@ -1,123 +1,73 @@
-import { MouseEventHandler } from "react";
-import { Edit } from "@mui/icons-material";
-import { Checkbox } from "@mui/material";
-import { Row, createColumnHelper } from "@tanstack/react-table";
-import { CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-ux";
+import { createColumnHelper } from "@tanstack/react-table";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
-import { DeleteStatusContainer } from "modules/settings/containers/agent-availability/delete-status-container";
-import { EditStatusContainer } from "modules/settings/containers/agent-availability/edit-status-container";
-import { useCallback, useState } from "react";
-
-export interface IStatusesList {
-    color: string;
-    statusName: string;
-    statusCategory: string;
-    enable: boolean;
-}
+import { AvailabilityStatuses } from "modules/settings/apis/users-and-permissions";
 
 const useColumns = () => {
-    const columnHelper = createColumnHelper<IStatusesList>();
+    const columnHelper = createColumnHelper<AvailabilityStatuses>();
 
     const columns = [
-        columnHelper.accessor("color", {
+        columnHelper.display({
             id: 'color',
-            cell: (info) => <div style={{ background: info.getValue(), width: '20px', height: '20px', borderRadius: '8px' }} />,
+            cell: ({ row: { original } }) => <div style={{ background: original.name === 'Away' ? '#ffef0e' : (original.name === 'Online' ? '#17e254' : '#c9c2c2'), width: '20px', height: '20px', borderRadius: '8px' }} />,
             header: () => 'Color',
         }),
-        columnHelper.accessor("statusName", {
-            id: 'statusName',
+        columnHelper.accessor("name", {
+            id: 'name',
             cell: info => info.getValue(),
-            header: () => 'Status name',
+            header: () => 'Status Name',
         }),
-        columnHelper.accessor("statusCategory", {
-            id: 'statusCategory',
+        columnHelper.accessor("description", {
+            id: 'description',
             cell: info => info.getValue(),
-            header: () => 'Status Category',
+            header: () => 'Description',
+            minSize: 400
         }),
-        columnHelper.display({
-            id: 'select',
-            header: () => 'Enable',
-            cell: ({ row }) => {
-                const onClick: MouseEventHandler<HTMLButtonElement> = (event) => {
-                    event.stopPropagation();
-                }
-                return (
-                    <Checkbox onClick={onClick}
-                        {...{
-                            checked: row.getIsSelected(),
-                            disabled: !row.getCanSelect(),
-                            indeterminate: row.getIsSomeSelected(),
-                            onChange: row.getToggleSelectedHandler()
-                        }}
-                    />
-                )
-            },
-            maxSize: 58,
-            enableResizing: false,
-            enableHiding: false,
-            meta: {
-                disableColReorder: true
-            }
-        }),
-        columnHelper.display({
-            id: 'actions',
-            header: () => <span>Actions</span>,
-            cell: ({ row: { original } }) => {
-                return (
-                    <FlexBox flexDirection="row" gap="5px">
-                        <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: 'Edit' }} />
-                        <DeleteStatusContainer statusName={original.statusName} />
-                    </FlexBox>
-                )
-            },
-            enableSorting: false,
-        })
+        // columnHelper.display({
+        //     id: 'actions',
+        //     header: () => <span>Actions</span>,
+        //     cell: ({ row: { original } }) => {
+        //         return (
+        //             <FlexBox flexDirection="row" gap="5px">
+        //                 <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: 'Edit' }} />
+        //                 <DeleteStatusContainer statusName={original.statusName} />
+        //             </FlexBox>
+        //         )
+        //     },
+        //     enableSorting: false,
+        // })
     ]
 
     return columns;
 }
 
 interface IStatusesListProps {
-    statuses: IStatusesList[];
+    statuses?: AvailabilityStatuses[];
+    isLoading: boolean;
 }
 
 export const AgentStatusesList = (props: IStatusesListProps) => {
-    const { statuses } = props;
-    const [showDrawer, setShowDrawer] = useState(false)
-    const [rowMetaData, setRowMetaData] = useState({} as IStatusesList);
+    const { statuses, isLoading } = props;
     const columns = useColumns();
+    // const [showDrawer, setShowDrawer] = useState(false)
 
-    const toggleStatusDrawer = () => {
-        setShowDrawer((preValue) => !preValue);
-    }
+    // const toggleStatusDrawer = () => {
+    //     setShowDrawer((preValue) => !preValue);
+    // }
 
-    const onRowClick = useCallback((row: Row<IStatusesList>) => {
-        setShowDrawer(true);
-        setRowMetaData(row.original);
-    }, [])
-
-    const getIntialSelectedRows = () => {
-        return statuses.reduce((acc, curr, index) => {
-            if (curr.enable) {
-                acc[index] = curr.enable
-            }
-            return acc;
-        }, {} as {
-            [key: number]: boolean
-        })
-    }
+    // const onRowClick = useCallback(() => {
+    //     setShowDrawer(true);
+    // }, []);
 
     return (
         <div style={{ height: '100%', overflow: 'auto' }}>
             <ConfigDataGrid
                 columns={columns}
                 data={statuses!}
+                isLoading={isLoading}
                 hideTableControls
-                onRowClick={onRowClick}
-                initialState={{
-                    rowSelection: getIntialSelectedRows()
-                }} />
-            <DrawerExtended
+                // onRowClick={onRowClick}
+            />
+            {/* <DrawerExtended
                 open={showDrawer}
                 anchor="right"
                 width="500px"
@@ -126,7 +76,7 @@ export const AgentStatusesList = (props: IStatusesListProps) => {
                     <EditStatusContainer onSelectRowMetaData={rowMetaData} toggleStatusDrawer={toggleStatusDrawer} />
                 )}
                 onClose={toggleStatusDrawer}
-            />
+            /> */}
         </div>
     )
 } 

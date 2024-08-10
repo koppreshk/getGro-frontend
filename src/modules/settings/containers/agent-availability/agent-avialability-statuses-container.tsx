@@ -1,41 +1,11 @@
-import { Statuses } from "modules/core/components/parts/agent-status";
-import { AgentStatusesList, IStatusesList } from "modules/settings/component/user-and-permissions/agent-availability/agent-statuses-list"
-
-const statuses = [{
-    color: '#ffef0e',
-    enable: true,
-    statusCategory: Statuses.Away,
-    statusName: Statuses.Away
-}, {
-    color: '#17e254',
-    enable: true,
-    statusCategory: Statuses.Online,
-    statusName: Statuses.Online
-},
-// {
-//     color: '#ec3427',
-//     enable: true,
-//     statusCategory: Statuses.Busy,
-//     statusName: Statuses.Busy
-// },
-{
-    color: '#c9c2c2',
-    enable: true,
-    statusCategory: Statuses.Offline,
-    statusName: Statuses.Offline
-},
-    //  {
-    //     color: '#d80e00',
-    //     enable: false,
-    //     statusCategory: Statuses.DoNotDisturb,
-    //     statusName: Statuses.DoNotDisturb
-    // }
-] as IStatusesList[];
+import { useFetchAvailabilityStatuses } from "modules/settings/apis/users-and-permissions";
+import { AgentStatusesList } from "modules/settings/component/user-and-permissions/agent-availability/agent-statuses-list"
 
 export const AgentAvailabilityStatusesContainer = () => {
+    const { data, isLoading } = useFetchAvailabilityStatuses()
     return (
         <>
-            <AgentStatusesList statuses={statuses} />
+            <AgentStatusesList statuses={data} isLoading={isLoading} />
         </>
     )
 }

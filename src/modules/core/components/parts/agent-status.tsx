@@ -2,8 +2,8 @@ import { Button, CircularProgress, Menu, MenuItem, Typography } from "@mui/mater
 import styled from "styled-components";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useState } from "react";
-import { convertCamelCaseStringToSpaceSeparated } from "lib/utils";
 import { useFetchAvailabilityStatuses, useFetchCurrentStatus, useUpdateStatus } from "modules/settings/apis/users-and-permissions";
+import { FlexBox } from "lib/ui-ux";
 
 export enum Statuses {
     Online = 'Online',
@@ -71,7 +71,7 @@ export const AgentStatus = () => {
             <StyledButton variant="text" onClick={handleClick} sx={{ textTransform: 'unset', gap: '6px' }}>
                 <Status $status={currentStatus?.name} />
                 <Typography variant="h6" color="#fff">
-                    {convertCamelCaseStringToSpaceSeparated(currentStatus?.name ?? '')}
+                    {currentStatus?.name ?? ''}
                 </Typography>
                 <ExpandMoreIcon sx={{ width: 16, height: 16, color: '#fff' }} />
             </StyledButton>
@@ -115,7 +115,12 @@ export const AgentStatus = () => {
                         key={option.availability_status_id}
                         selected={option.availability_status_id === currentStatus?.id}
                         onClick={(event) => handleMenuItemClick(event, option.availability_status_id)}>
-                        {convertCamelCaseStringToSpaceSeparated(option.name)}
+                        <FlexBox gap={'8px'} alignItems="center">
+                            <Status $status={option?.name} style={{ width: '12px', height: '12px' }} />
+                            <Typography variant="h6">
+                                {option?.name}
+                            </Typography>
+                        </FlexBox>
                     </MenuItem>))}
             </Menu>
         </>

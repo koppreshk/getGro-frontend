@@ -1,14 +1,14 @@
 import React from "react";
-import { IStatusesList } from "modules/settings/component/user-and-permissions/agent-availability/agent-statuses-list";
 import { AddNewStatusForm } from "modules/settings/component/user-and-permissions/agent-availability/add-new status-form";
+import { AvailabilityStatuses } from "modules/settings/apis/users-and-permissions";
 
 interface IEditUserContainerProps {
-    onSelectRowMetaData: IStatusesList;
+    onSelectRowMetaData: AvailabilityStatuses;
     toggleStatusDrawer: () => void;
 }
 
 export const EditStatusContainer = (props: IEditUserContainerProps) => {
-    const { onSelectRowMetaData, toggleStatusDrawer } = props;
+    const { toggleStatusDrawer } = props;
 
     const onEditUser = React.useCallback(() => {
         toggleStatusDrawer();
@@ -18,10 +18,6 @@ export const EditStatusContainer = (props: IEditUserContainerProps) => {
         <AddNewStatusForm
             mode="edit"
             onFormSubmitHandler={onEditUser}
-            defaultValues={{
-                statusCategory: onSelectRowMetaData.statusCategory,
-                statusName: onSelectRowMetaData.statusName
-            }}
         />
     )
 }
