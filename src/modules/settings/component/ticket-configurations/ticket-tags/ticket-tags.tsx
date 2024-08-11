@@ -65,3 +65,11 @@ export const TicketTags = (props: ITicketTagsProps) => {
         </FlexBox>
     )
 }
+
+export const TicketTagsList = () => {
+    return (
+        <>
+            <span>New</span>
+        </>
+    )
+}
