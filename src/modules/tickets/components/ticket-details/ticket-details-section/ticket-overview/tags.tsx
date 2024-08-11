@@ -3,7 +3,7 @@ import { useState } from "react";
 import { TypographyName } from "./contact-info";
 import styled from "styled-components";
 
-const StyledTags = styled(TagInput)`
+export const StyledTags = styled(TagInput)`
     padding: 8px;
     border-radius: ${({ theme }) => theme.semantics.borderRadius.xs};
     border: ${({ theme }) => theme.semantics.standardBorder};
