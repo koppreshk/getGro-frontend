@@ -2,6 +2,7 @@ import { FlexBox, TagInput } from "lib/ui-ux"
 import { useState } from "react";
 import { TypographyName } from "./contact-info";
 import styled from "styled-components";
+import { ITag } from "modules/settings/apis/tags";
 
 export const StyledTags = styled(TagInput)`
     padding: 8px;
@@ -10,11 +11,20 @@ export const StyledTags = styled(TagInput)`
     width: 100%;
 `;
 
-export const Tags = () => {
-    const [tags, setTags] = useState<string[]>([]);
+interface IManageTagsProps {
+    associatedTags: ITag[];
+    allTags: ITag[];
+    onTagsChange: (tags: number[]) => Promise<void>
+}
+
+export const ManageTags = (props: IManageTagsProps) => {
+    const { associatedTags, allTags, onTagsChange } = props;
+    const [tags, setTags] = useState<string[]>(associatedTags.map((item => item.name)));
 
     const onTagInputChange = (items: string[]) => {
-        setTags(items)
+        setTags(items);
+        const tagsIds = allTags.filter((it) => items.includes(it.name)).map(i => i.id);
+        onTagsChange(tagsIds);
     }
 
     return (
@@ -23,7 +33,9 @@ export const Tags = () => {
             <StyledTags
                 tagInputs={tags}
                 gap={"15px"}
-                placeholder="Add your tags here..."
+                allowToAddTagsViaText={false}
+                allowSuggestions
+                suggestedTags={allTags.map((item) => item.name)}
                 onTagInputChange={onTagInputChange} />
         </FlexBox>
     )

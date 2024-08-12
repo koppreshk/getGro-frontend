@@ -9,7 +9,7 @@ export interface ITag {
     tickets: number;
 }
 
-export const useFetchTagsById = (id: string) => {
+export const useFetchTagsById = (id: number) => {
     const { getData } = useServiceClient();
 
     const fetchTagsById = React.useCallback(() => getData(`${ConfigurationsEndPoint.FETCH_TAGS_BY_ID}?id=${id}`).then((res) => res.json()), [getData, id])
