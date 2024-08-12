@@ -114,7 +114,7 @@ export const ResDue = (props: { date: string }) => {
     return (
         <>
             <Tooltip title={date}>
-                {<Chip label={parsedDateString} color={dateColor as any} size="small" />}
+                {<Chip label={parsedDateString} color={dateColor} size="small" />}
             </Tooltip>
         </>
     )

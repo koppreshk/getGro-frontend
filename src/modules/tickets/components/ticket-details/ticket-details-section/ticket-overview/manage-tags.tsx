@@ -2,6 +2,7 @@ import { FlexBox, TagInput } from "lib/ui-ux"
 import { useState } from "react";
 import { TypographyName } from "./contact-info";
 import styled from "styled-components";
+import { ITag } from "modules/settings/apis/tags";
 
 export const StyledTags = styled(TagInput)`
     padding: 8px;
@@ -10,8 +11,14 @@ export const StyledTags = styled(TagInput)`
     width: 100%;
 `;
 
-export const Tags = () => {
-    const [tags, setTags] = useState<string[]>([]);
+interface IManageTagsProps {
+    associatedTags: ITag;
+    onTagsChange: (tags: number[]) => Promise<void>
+}
+
+export const ManageTags = (props: IManageTagsProps) => {
+    const { associatedTags } = props;
+    const [tags, setTags] = useState<string[]>([associatedTags.name]);
 
     const onTagInputChange = (items: string[]) => {
         setTags(items)

@@ -2,7 +2,7 @@
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from "@mui/material";
 import { useNotifications } from "lib";
 import { useCreateTags } from "modules/settings/apis/tags";
-import { StyledTags } from "modules/tickets/components/ticket-details/ticket-details-section/ticket-overview/tags";
+import { StyledTags } from "modules/tickets/components/ticket-details/ticket-details-section/ticket-overview/manage-tags";
 import { useCallback, useState } from "react";
 
 interface ICreateTagProps {

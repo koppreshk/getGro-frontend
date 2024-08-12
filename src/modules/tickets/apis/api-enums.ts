@@ -22,7 +22,8 @@ export enum TicketsEndPoint {
 
     UPDATE_STATUS = 'update_status',
     CHANGE_ASSIGNEE = 'change_assignee',
-    UPDATE_PRIORITY = 'update_priority'
+    UPDATE_PRIORITY = 'update_priority',
+    UPDATE_TAGS = 'update_tags'
 }
 
 export enum TicketsQueryKey {
@@ -49,5 +50,6 @@ export enum TicketsQueryKey {
 
     UPDATE_STATUS = 'UPDATE_STATUS',
     CHANGE_ASSIGNEE = 'CHANGE_ASSIGNEE',
-    UPDATE_PRIORITY = 'UPDATE_PRIORITY'
+    UPDATE_PRIORITY = 'UPDATE_PRIORITY',
+    UPDATE_TAGS = 'UPDATE_TAGS'
 }

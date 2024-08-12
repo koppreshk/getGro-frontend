@@ -3,12 +3,11 @@ import { PersonSearch } from "@mui/icons-material";
 import { Chip, Tooltip, Typography } from "@mui/material";
 import { CustomIconButton, FlexBox } from "lib/ui-ux";
 import { Platform } from "../../ticket-conversation/ticket-conversation-header";
-import { ManageAssigneeContainer, ManagePriorityContainer, SearchCustomerContainer, TicketStatusContainer } from "modules/tickets/containers";
+import { ManageAssigneeContainer, ManagePriorityContainer, SearchCustomerContainer, TicketStatusContainer, ManageTagsContainer } from "modules/tickets/containers";
 import { useAppSelector } from "lib/hooks";
 import { UnlinkCustomer } from "./unlink-customer";
 import { ITicketDetails } from "modules/tickets/apis";
 import { ContactInfo, TypographyName } from "./contact-info";
-import { Tags } from "./tags";
 import { useDateDifference } from "lib/utils";
 
 interface ITicketOverviewProps {
@@ -17,7 +16,7 @@ interface ITicketOverviewProps {
 
 export const TicketOverview = (props: ITicketOverviewProps) => {
     const { ticketDetails } = props;
-    const { customerName, source, createdAt, ticketId, ticketStatus, priority, assigneeInfo, statusUpdateString, closedAt } = ticketDetails;
+    const { customerName, source, createdAt, ticketId, ticketStatus, priority, assigneeInfo, statusUpdateString, closedAt, tags } = ticketDetails;
     const [showSearchUserFlyout, setShowSearchUserFlyout] = React.useState(false);
     const onSearchUserBtnClick = React.useCallback(() => {
         setShowSearchUserFlyout((x) => !x);
@@ -45,15 +44,13 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
                     <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} statusUpdateString={statusUpdateString} />
                     <ManageAssigneeContainer ticketId={ticketId} assigneeInfo={assigneeInfo} />
                     <ManagePriorityContainer priority={priority} ticketId={ticketId} />
+                    <ManageTagsContainer ticketId={ticketId} tags={tags} />
                 </FlexBox>
                 {ticketDetails?.responseDue || ticketDetails?.resolutionDue ?
                     <FlexBox padding="0px 20px" flexDirection="column" gap="10px">
                         {ticketDetails?.responseDue ? <DateInfo label="Response due: " date={ticketDetails.responseDue} /> : null}
                         {ticketDetails?.resolutionDue ? <DateInfo label="Resolution due: " date={ticketDetails.resolutionDue} /> : null}
                     </FlexBox> : null}
-                <FlexBox>
-                    <Tags />
-                </FlexBox>
             </FlexBox>
             <SearchCustomerContainer showSearchUserFlyout={showSearchUserFlyout} onSearchUserBtnClick={onSearchUserBtnClick} />
         </FlexBox>
@@ -69,7 +66,7 @@ const DateInfo = (props: { label: string, date: string }) => {
         <FlexBox flexDirection="column" gap={'5px'}>
             <TypographyName variant="h6">{label}</TypographyName>
             <Tooltip title={date}>
-                <Chip label={parsedDateString} sx={{ borderRadius: '4px' }} color={dateColor as any} />
+                <Chip label={parsedDateString} sx={{ borderRadius: '4px' }} color={dateColor} />
             </Tooltip>
         </FlexBox>
     )

@@ -26,4 +26,5 @@ export interface ITicketDetails {
         last_name: string,
         email: string
     }
+    tags: number[];
 }

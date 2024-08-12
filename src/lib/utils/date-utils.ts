@@ -17,7 +17,7 @@ export function useDateDifference(date: string) {
 
     const { days, hours, minutes } = diff.shiftTo('days', 'hours', 'minutes').toObject();
 
-    const dateColor = useMemo(() => {
+    const dateColor: 'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning' = useMemo(() => {
         const completeMins = diff.shiftTo('minutes').minutes;
         return completeMins < 0 ? 'error' : (completeMins >= 1 && completeMins <= 20 ? 'warning' : 'success')
     }, [diff]);
