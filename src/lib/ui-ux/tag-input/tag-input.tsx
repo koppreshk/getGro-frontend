@@ -113,8 +113,8 @@ export const TagInput = (props: ITagInputProps) => {
 
     return (
         <>
-            <FlexBox className={className} justifyContent="space-between" width={width ?? "100%"} alignItems="center" onClick={allowSuggestions ? handleClick : undefined}>
-                <FlexBox gap={gap ?? "10px"} flexWrap="wrap">
+            <FlexBox className={className} justifyContent="space-between" width={width ?? "100%"} alignItems="center" onClick={allowSuggestions ? handleClick : undefined} style={{ cursor: allowSuggestions ? 'pointer' : 'unset' }}>
+                <FlexBox gap={gap ?? "10px"} flexWrap="wrap" width={allowSuggestions ? 'calc(100% - 16px)' : 'inherit'}>
                     {tagItems.map((item, index) => (
                         <Chip
                             key={index}

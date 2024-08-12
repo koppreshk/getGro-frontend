@@ -1,5 +1,4 @@
 import { FlexBox, TagInput } from "lib/ui-ux"
-import { useState } from "react";
 import { TypographyName } from "./contact-info";
 import styled from "styled-components";
 import { ITag } from "modules/settings/apis/tags";
@@ -19,10 +18,8 @@ interface IManageTagsProps {
 
 export const ManageTags = (props: IManageTagsProps) => {
     const { associatedTags, allTags, onTagsChange } = props;
-    const [tags, setTags] = useState<string[]>(associatedTags.map((item => item.name)));
 
     const onTagInputChange = (items: string[]) => {
-        setTags(items);
         const tagsIds = allTags.filter((it) => items.includes(it.name)).map(i => i.id);
         onTagsChange(tagsIds);
     }
@@ -31,7 +28,7 @@ export const ManageTags = (props: IManageTagsProps) => {
         <FlexBox flexDirection="column" padding="0px 20px" gap={'5px'} width="100%">
             <TypographyName variant="h6">Tags</TypographyName>
             <StyledTags
-                tagInputs={tags}
+                tagInputs={associatedTags.map((item => item.name))}
                 gap={"15px"}
                 allowToAddTagsViaText={false}
                 allowSuggestions

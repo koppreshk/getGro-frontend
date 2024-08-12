@@ -1,5 +1,5 @@
 export enum ConfigurationsEndPoint {
-  CREATE_TICKET_TAGS = 'tags/create',
+  CREATE_TICKET_TAGS = 'tag/create',
   FETCH_TAGS_BY_ID = 'tag',
   DELETE_TAG = 'tag/delete',
   EDIT_TAG = 'tag/edit',

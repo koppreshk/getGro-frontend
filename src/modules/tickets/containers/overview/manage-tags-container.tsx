@@ -16,7 +16,7 @@ export const ManageTagsContainer = (props: IManageTagsContainerProps) => {
     const onTagsChange = (tags: number[]) => {
         return mutateAsync({
             tags,
-            ticketId: ticketId
+            ticket_id: ticketId
         })
     }
 
