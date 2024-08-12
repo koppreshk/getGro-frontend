@@ -1,8 +1,8 @@
 import { useFormContext } from "react-hook-form";
-import { Grid, Button, CircularProgress } from "@mui/material";
-import { TextboxField, SelectField, AutocompleteField } from "lib/form-fields";
+import { Grid, Button } from "@mui/material";
+import { TextboxField, SelectField } from "lib/form-fields";
 import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
-import { IChannels, useFetchTagsByChannel } from "modules/settings/apis/tags";
+import { IChannels } from "modules/settings/apis/tags";
 import { GetEmployeesByQueueContainer } from "modules/tickets/containers";
 import { Queue } from "modules/settings/apis";
 import { IAddTIcketFormFields } from "./add-ticket";
@@ -62,7 +62,6 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
                     {watch('channel') ?
                         (
                             <>
-                                <TagsByChannelIdContainer channelId={watch('channel')} />
                                 <HorizontalSeparator $margin="8px 0px" />
                             </>
                         ) : null}
@@ -77,20 +76,3 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
         </FlexBox>
     )
 }
-
-const TagsByChannelIdContainer = (props: { channelId: string }) => {
-    const { data, isLoading } = useFetchTagsByChannel(props.channelId.toString());
-
-    if (isLoading) {
-        return (
-            <FlexBox justifyContent="center">
-                <CircularProgress />
-            </FlexBox>
-        )
-    }
-
-    return (
-        <AutocompleteField name="tag" label="Select Tags" options={data?.map((item) => ({ key: item?.tag_id?.toString(), value: item?.tag }))} placeholder="Select Tags" />
-    )
-
-} 

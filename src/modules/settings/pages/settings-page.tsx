@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom"
 import { Configurations } from "../component"
-import { TicketQueuesContainer, AllEscalationsContainer, FetchAllTagsContainer } from "../containers"
+import { TicketQueuesContainer, AllEscalationsContainer } from "../containers"
 import { EmailConfigLayout, FacebookConfigurations } from "../component/channel-configurations"
 import { AgentsLayout } from "../component/user-and-permissions/agents/agents-layout"
 import { AgentAvailabilityLayout } from "../component/user-and-permissions/agent-availability/agent-avilability-layout"
@@ -11,6 +11,7 @@ import { AutoAssignmentsLayout } from "../component/ticket-automation"
 import { UpdateTicketTriggersLayout } from "../component/ticket-automation/update-ticket-triggers"
 import { CreateTicketTriggersLayout } from "../component/ticket-automation/create-ticket-triggers"
 import { RolesAndPermissionsContainer } from "../containers/roles-and-permissions"
+import { TagsLayout } from "../component/ticket-configurations"
 
 export default function ConfigurationsPage() {
     return (
@@ -19,7 +20,7 @@ export default function ConfigurationsPage() {
             <Route key="queues" path="/queues" element={<TicketQueuesContainer />} />
             <Route key="ticket-escalation" path="/ticket-escalation/*" element={<AllEscalationsContainer />} />
             <Route key="ticket-status" path="/ticket-status/*" element={<TicketStatusContainer />} />
-            <Route key="ticket-tags" path="/tags" element={<FetchAllTagsContainer />} />
+            <Route key="ticket-tags" path="/tags" element={<TagsLayout />} />
             <Route key="facebook-login" path="/facebook" element={<FacebookConfigurations />} />
             <Route key="email-config" path="/email/*" element={<EmailConfigLayout />} />
             <Route key="add-agent" path="/agents" element={<AgentsLayout />} />

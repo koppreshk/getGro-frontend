@@ -4,7 +4,7 @@ import { ConfigurationsEndPoint, ConfigurationsQueryKey } from "./api-enums";
 import { useMutation, useQueryClient } from "react-query";
 
 export interface IDeleteTagArgs {
-    id: string;
+    id: number;
 }
 
 export const useDeleteTag = () => {
@@ -20,7 +20,7 @@ export const useDeleteTag = () => {
         mutationKey: ConfigurationsQueryKey.DELETE_TAG,
         mutationFn: deleteTag,
         onSuccess: () => {
-            queryClient.invalidateQueries(ConfigurationsQueryKey.FETCH_TAGS_BY_CHANNEL);
+            queryClient.invalidateQueries(ConfigurationsQueryKey.FETCH_ALL_TAGS);
         }
     });
 }

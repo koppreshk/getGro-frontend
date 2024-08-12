@@ -1,64 +1,33 @@
 import { ArrowBack } from '@mui/icons-material';
-import { Box, Tab, Tabs, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { FlexBox, CustomIconButton, BreadCrumbs, MoreInformation } from 'lib/ui-ux';
-import { IChannels } from 'modules/settings/apis/tags';
 import { TicketTagsContainer } from 'modules/settings/containers';
-import { useSourceIcon } from 'modules/tickets/hooks';
-import React from "react";
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CreateTag } from './create-tag';
 
-export const TagsChannelLayout = (props: { channels: IChannels[] }) => {
-    const { channels } = props;
-    const [value, setValue] = React.useState(1);
+export const TagsLayout = () => {
     const navigate = useNavigate();
-    const getIcon = useSourceIcon();
+    const [showDialog, setShowDialogBox] = useState(false);
 
-    const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
-    };
+    const toggleCreateTagDialog = () => setShowDialogBox((prev) => !prev);
 
     return (
         <FlexBox flexDirection='column' gap={'20px'} padding='10px 20px'>
             <BreadCrumbs />
             <MoreInformation information='A tag is used to attach a label to tickets, contacts, or contact groups. Tags can be used for categorization, filtering, or automation' />
-            <FlexBox alignItems="center" gap="10px" padding='10px'>
-                <CustomIconButton onClick={() => navigate('/configurations')} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
-                <Typography variant="h5">Ticket Tags</Typography>
+            <FlexBox justifyContent='space-between' width='100%' alignItems="center">
+                <FlexBox alignItems='center' gap="10px">
+                    <CustomIconButton onClick={() => navigate('/configurations')} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
+                    <Typography variant="h5">Ticket Tags</Typography>
+                </FlexBox>
+                <Button
+                    variant="contained"
+                    onClick={toggleCreateTagDialog}
+                >Create Tags</Button>
             </FlexBox>
-            <Tabs value={value} onChange={handleChange} centered>
-                {channels.map((channel) => {
-                    return <Tab icon={getIcon(channel.name)} key={channel.channel_id} label={channel.name} value={channel.channel_id} />
-                })}
-            </Tabs>
-            <CustomTabPanel index={value} value={value}>
-                <TicketTagsContainer channelId={value} />
-            </CustomTabPanel>
+            <TicketTagsContainer />
+            <CreateTag handleClose={toggleCreateTagDialog} open={showDialog} />
         </FlexBox>
-    );
-}
-
-interface TabPanelProps {
-    children?: React.ReactNode;
-    index: number;
-    value: number;
-}
-
-export function CustomTabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`simple-tabpanel-${index}`}
-            aria-labelledby={`simple-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box sx={{ p: 3, display: 'flex', justifyContent: 'center' }}>
-                    {children}
-                </Box>
-            )}
-        </div>
     );
 }
