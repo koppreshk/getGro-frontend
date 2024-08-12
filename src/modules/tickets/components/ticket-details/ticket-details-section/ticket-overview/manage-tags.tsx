@@ -12,16 +12,19 @@ export const StyledTags = styled(TagInput)`
 `;
 
 interface IManageTagsProps {
-    associatedTags: ITag;
+    associatedTags: ITag[];
+    allTags: ITag[];
     onTagsChange: (tags: number[]) => Promise<void>
 }
 
 export const ManageTags = (props: IManageTagsProps) => {
-    const { associatedTags } = props;
-    const [tags, setTags] = useState<string[]>([associatedTags.name]);
+    const { associatedTags, allTags, onTagsChange } = props;
+    const [tags, setTags] = useState<string[]>(associatedTags.map((item => item.name)));
 
     const onTagInputChange = (items: string[]) => {
-        setTags(items)
+        setTags(items);
+        const tagsIds = allTags.filter((it) => items.includes(it.name)).map(i => i.id);
+        onTagsChange(tagsIds);
     }
 
     return (
@@ -30,7 +33,9 @@ export const ManageTags = (props: IManageTagsProps) => {
             <StyledTags
                 tagInputs={tags}
                 gap={"15px"}
-                placeholder="Add your tags here..."
+                allowToAddTagsViaText={false}
+                allowSuggestions
+                suggestedTags={allTags.map((item) => item.name)}
                 onTagInputChange={onTagInputChange} />
         </FlexBox>
     )
