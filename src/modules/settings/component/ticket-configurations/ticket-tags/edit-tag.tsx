@@ -5,6 +5,9 @@ import { FormProvider, useForm } from "react-hook-form";
 import { TextboxField } from "lib/form-fields";
 import { useEditTag } from "modules/settings/apis/tags";
 import { useNotifications } from "lib";
+import { Edit } from "@mui/icons-material";
+import { CustomIconButton } from "lib/ui-ux";
+import { useState, useCallback } from "react";
 
 interface IEditTagProps {
     open: boolean
@@ -12,7 +15,7 @@ interface IEditTagProps {
     handleClose: () => void;
 }
 
-export const EditTag = (props: IEditTagProps) => {
+const EditTagDialog = (props: IEditTagProps) => {
     const { open, handleClose, clickedTagDetails } = props;
     const form = useForm<{ editTagName: string }>({
         shouldUnregister: true,
@@ -61,5 +64,20 @@ export const EditTag = (props: IEditTagProps) => {
                 </DialogActions>
             </Dialog>
         </FormProvider>
+    )
+}
+
+export const EditTag = (props: { id: number; name: string }) => {
+    const [isDialogShown, setDialogDisplay] = useState(false);
+
+    const toggleDrawer = useCallback(() => {
+        setDialogDisplay((preValue) => !preValue);
+    }, []);
+
+    return (
+        <>
+            <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: "Edit tag", arrow: true }} onClick={toggleDrawer} />
+            <EditTagDialog handleClose={toggleDrawer} open={isDialogShown} clickedTagDetails={props} />
+        </>
     )
 }
