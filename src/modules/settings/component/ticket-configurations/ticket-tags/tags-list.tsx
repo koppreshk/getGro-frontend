@@ -4,6 +4,7 @@ import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
 import { ITag } from "modules/settings/apis/tags";
 import { DeleteTicketStatusContainer } from "modules/settings/containers/ticket-status";
 import { EditTag } from "./edit-tag";
+import { Chip } from "@mui/material";
 
 interface ITagsListProps {
     data: ITag[] | undefined;
@@ -22,7 +23,7 @@ const useColumns = () => {
         columnHelper.accessor("name", {
             id: 'name',
             header: () => 'Name',
-            cell: info => info.getValue(),
+            cell: info => <Chip label={info.getValue()}/>,
         }),
         columnHelper.accessor("tickets", {
             id: 'tickets',
