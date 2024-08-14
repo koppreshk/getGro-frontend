@@ -10,6 +10,7 @@ import { chooseRandomColors, getInitialsByName } from "lib/utils";
 import { VerificationStatus } from "./verification-status";
 import { ActivateAgentContainer } from "modules/settings/containers/agents/activate-agent-container";
 import { useAuth } from "modules/login";
+import { useTheme } from "styled-components";
 
 const useColumns = () => {
     const columnHelper = createColumnHelper<IUsers>();
@@ -23,7 +24,7 @@ const useColumns = () => {
         }),
         columnHelper.accessor("name", {
             id: 'name',
-            cell: info => <Name name={info.getValue()} />,
+            cell: info => <Name name={info.getValue()} loggedInUserName={user!.name} />,
             header: () => 'Name',
         }),
         columnHelper.accessor("role", {
@@ -40,12 +41,12 @@ const useColumns = () => {
             id: 'actions',
             header: () => 'Actions',
             cell: ({ row: { original } }) => {
-                const showDeactivateDialog = original.fetch_verification_status !== 'Deactivated' && original.role !== 'Account Owner' && user?.role !== original.role;
+                const showDeactivateDialog = original.fetch_verification_status !== 'Deactivated' && original.role !== 'Account Owner' && user?.name !== original.name;
                 return (
                     <FlexBox flexDirection="row" gap="5px">
                         {showDeactivateDialog && <DeactivateAgentContainer id={original.id} canDeactivate={original.can_deactivate} />}
                         {original.fetch_verification_status === 'Deactivated' && <ActivateAgentContainer id={original.id} />}
-                        <EditAgent id={original.id} />
+                        {<EditAgent id={original.id} />}
                     </FlexBox>
                 )
             },
@@ -56,24 +57,30 @@ const useColumns = () => {
     return columns;
 }
 
-const Name = (props: { name: string }) => {
-    const { name } = props;
+const Name = (props: { name: string, loggedInUserName: string }) => {
+    const { name, loggedInUserName } = props;
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(name)), [name]);
+    const { pallete } = useTheme();
 
     return (
-        <FlexBox gap="10px" flexDirection="row" alignItems="center">
-            <Avatar sx={{
-                color: textColor,
-                bgcolor: backgroundColor,
-                width: '32px',
-                height: '32px',
-                fontSize: '13px',
-                fontWeight: 500
-            }}>
-                {getInitialsByName(name)}
-            </Avatar>
-            <Typography variant="body2">{name}</Typography>
-        </FlexBox>
+        <>
+            <FlexBox gap="10px" flexDirection="row" alignItems="center">
+                <Avatar sx={{
+                    color: textColor,
+                    bgcolor: backgroundColor,
+                    width: '32px',
+                    height: '32px',
+                    fontSize: '13px',
+                    fontWeight: 500
+                }}>
+                    {getInitialsByName(name)}
+                </Avatar>
+                <FlexBox flexDirection="column">
+                    <Typography variant="body2">{name}</Typography>
+                    {loggedInUserName === name ? <Typography variant="subheading2" sx={{ color: pallete.grayNeutral }}>You</Typography> : null}
+                </FlexBox>
+            </FlexBox>
+        </>
     );
 }
 

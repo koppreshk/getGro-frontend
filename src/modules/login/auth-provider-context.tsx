@@ -4,15 +4,15 @@ import { clearCookies, useCookieStorage } from "./hooks/use-cookie-storage";
 import { Roles } from "lib/hooks";
 
 type User = {
-    user: null | { email: string, authToken: string, rememberMe?: boolean, role: Roles }
-    login: (_data: { email: string, authToken: string, rememberMe?: boolean, role: Roles }) => void,
+    user: null | { email: string, authToken: string, rememberMe?: boolean, role: Roles, name: string }
+    login: (_data: { email: string, authToken: string, rememberMe?: boolean, role: Roles, name: string }) => void,
     logout: () => void
 };
 
 export const AuthContext = createContext<User>({
     user: null,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    login: (_data: { email: string, authToken: string, rememberMe?: boolean }) => { },
+    login: (_data: { email: string, authToken: string, rememberMe?: boolean, name: string }) => { },
     logout: () => { }
 });
 
@@ -26,7 +26,7 @@ export const AuthProvider = (props: IAuthProviderProps) => {
     const navigate = useNavigate();
 
     // call this function when you want to authenticate the user
-    const login = useCallback((data: { email: string, authToken: string, rememberMe?: boolean, role: Roles }) => {
+    const login = useCallback((data: { email: string, authToken: string, rememberMe?: boolean, role: Roles, name: string }) => {
         setUser(data, 14, data.rememberMe);
         navigate(data.role === 'Admin' ? "/dashboard" : '/tickets', { replace: true });
     }, [navigate, setUser]);
