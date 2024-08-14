@@ -47,7 +47,7 @@ const LoginForm = () => {
     const onSignIn = useCallback((data: ILoginFields) => {
         mutateAsync({ email: data.email, password: data.password })
             .then((res: LoginResult) => {
-                login({ authToken: res.authToken, email: data.email, rememberMe: data.rememberMe, role: res.role as Roles });
+                login({ authToken: res.authToken, email: data.email, rememberMe: data.rememberMe, role: res.role as Roles, name: res.name });
             }).catch((err) => {
                 console.error(err);
                 showNotification({ message: 'Failed to login, please check email or password', type: 'error' })

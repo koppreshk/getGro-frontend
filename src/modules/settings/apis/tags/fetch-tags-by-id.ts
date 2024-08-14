@@ -7,6 +7,7 @@ export interface ITag {
     id: number;
     name: string;
     tickets: number;
+    can_delete: boolean;
 }
 
 export const useFetchTagsById = (id: number) => {

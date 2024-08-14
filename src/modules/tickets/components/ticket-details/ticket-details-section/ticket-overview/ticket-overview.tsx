@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { PersonSearch } from "@mui/icons-material";
 import { Chip, Tooltip, Typography } from "@mui/material";
 import { CustomIconButton, FlexBox } from "lib/ui-ux";
@@ -9,9 +9,31 @@ import { UnlinkCustomer } from "./unlink-customer";
 import { ITicketDetails } from "modules/tickets/apis";
 import { ContactInfo, TypographyName } from "./contact-info";
 import { useDateDifference } from "lib/utils";
+import { MoreActions } from "./more-actions";
+import { MergeTicket } from "./more-actions/merge-ticket";
 
 interface ITicketOverviewProps {
     ticketDetails: ITicketDetails;
+}
+
+interface MenuRendererProps {
+    selectedMenu?: string;
+    showDrawer: DrawerDisplayTypes;
+    toggleDrawerDisplay: (key: string) => void
+}
+
+const MenuRenderer = (props: MenuRendererProps) => {
+    const { selectedMenu, showDrawer, toggleDrawerDisplay } = props;
+
+    switch (selectedMenu) {
+        case 'mergeTicket':
+            return <MergeTicket showMergeTicketDrawer={showDrawer.mergeTicket} onCloseDrawer={() => toggleDrawerDisplay('mergeTicket')} />;
+        default: return <></>
+    }
+}
+
+type DrawerDisplayTypes = {
+    mergeTicket: boolean;
 }
 
 export const TicketOverview = (props: ITicketOverviewProps) => {
@@ -22,6 +44,19 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
         setShowSearchUserFlyout((x) => !x);
     }, []);
     const customerInfo = useAppSelector((state) => state.tickets.ticketDetails?.customerInfo)
+    const [selectedMenu, setSelectedMenu] = useState<string | undefined>();
+    const [showDrawer, setDrawerDisplay] = useState<DrawerDisplayTypes>({
+        mergeTicket: false
+    });
+
+    const toggleDrawerDisplay = (key: string) => {
+        setDrawerDisplay((prev) => ({ ...prev, [key]: !prev[key as keyof DrawerDisplayTypes] }))
+    }
+
+    const onMenuItemSelect = (key: string) => {
+        setSelectedMenu(key);
+        toggleDrawerDisplay(key)
+    }
 
     return (
         <FlexBox gap="20px" padding="10px" flexDirection="column" height="100%">
@@ -33,10 +68,13 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
                         <Platform variant="body3" $platform={source.toLocaleLowerCase()}>{source}</Platform>
                     </FlexBox>
                 </FlexBox>
-                {customerInfo?.omsCustomerId
-                    ? <UnlinkCustomer ticketId={ticketId} />
-                    : <CustomIconButton tooltipProps={{ title: 'Search Customer', arrow: true, placement: "left" }} iconComponent={<PersonSearch />} onClick={onSearchUserBtnClick} />
-                }
+                <FlexBox>
+                    {customerInfo?.omsCustomerId
+                        ? <UnlinkCustomer ticketId={ticketId} />
+                        : <CustomIconButton tooltipProps={{ title: 'Search Customer', arrow: true, placement: "left" }} iconComponent={<PersonSearch />} onClick={onSearchUserBtnClick} />
+                    }
+                    <MoreActions onMenuItemSelect={onMenuItemSelect} />
+                </FlexBox>
             </FlexBox>
             <FlexBox gap={'20px'} flexDirection="column" height="calc(100% - 62px)" overflowY="auto">
                 <ContactInfo customerInfo={customerInfo} createdAt={createdAt} closedAt={closedAt} ticketId={ticketId} customerName={customerName} />
@@ -53,6 +91,7 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
                     </FlexBox> : null}
             </FlexBox>
             <SearchCustomerContainer showSearchUserFlyout={showSearchUserFlyout} onSearchUserBtnClick={onSearchUserBtnClick} />
+            <MenuRenderer selectedMenu={selectedMenu} showDrawer={showDrawer} toggleDrawerDisplay={toggleDrawerDisplay} />
         </FlexBox>
     )
 }

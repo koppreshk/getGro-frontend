@@ -15,19 +15,16 @@ const useColumns = () => {
     const columnHelper = createColumnHelper<ITag>();
 
     const columns = [
-        columnHelper.accessor("id", {
-            id: 'id',
-            header: () => 'ID',
-            cell: info => info.getValue(),
-        }),
         columnHelper.accessor("name", {
             id: 'name',
             header: () => 'Name',
-            cell: info => <Chip label={info.getValue()}/>,
+            cell: ({ row: { original } }) => (
+                <Chip label={!original.can_delete ? `${original.name} (System)` : original.name} color={!original.can_delete ? "info" : 'default'} variant={!original.can_delete ? "filled" : "outlined"} />
+            ),
         }),
         columnHelper.accessor("tickets", {
             id: 'tickets',
-            header: () => 'Tickets',
+            header: () => 'Tickets Associated',
             cell: info => info.getValue(),
         }),
         columnHelper.display({
@@ -35,10 +32,15 @@ const useColumns = () => {
             header: () => 'Actions',
             cell: ({ row: { original } }) => {
                 return (
-                    <FlexBox flexDirection="row" gap="5px">
-                        <EditTag id={original.id} name={original.name} />
-                        <DeleteTicketStatusContainer id={original.id} />
-                    </FlexBox>
+                    <>
+                        {
+                            original.can_delete ?
+                                <FlexBox flexDirection="row" gap="5px">
+                                    <EditTag id={original.id} name={original.name} />
+                                    <DeleteTicketStatusContainer id={original.id} />
+                                </FlexBox> : null
+                        }
+                    </>
                 )
             },
             enableSorting: false,
