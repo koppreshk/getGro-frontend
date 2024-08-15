@@ -26,6 +26,14 @@ export function useDateDifference(date: string) {
     const daysValue = days! === 0 ? '' : `${Math.abs(days!)} days`;
     const hoursValue = hours! === 0 ? '' : `${Math.abs(hours!)} hours`;
     const minsValue = minutes! === 0 ? '' : `${Math.abs(Math.round(minutes!))} mins`;
+    const parsedDateString = `${prefix} ${daysValue} ${hoursValue} ${minsValue}`;
 
-    return { parsedDateString: `${prefix} ${daysValue} ${hoursValue} ${minsValue}`, dateColor };
+    return {
+        parsedDateString,
+        dateColor,
+        prefix,
+        daysValue,
+        hoursValue,
+        minsValue
+    };
 }
