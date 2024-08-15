@@ -17,7 +17,7 @@ export const TicketsCardview = (props: ITicketCardViewProps) => {
         <>
             {data.length > 0
                 ?
-                <FlexBox flexDirection="column" gap={'10px'} overflowY="auto" height="100%">
+                <FlexBox flexDirection="column" gap={'20px'} overflowY="auto" height="100%">
                     {data.map((item) => <CardView {...item} key={item.ticketId} />)}
                 </FlexBox>
                 : <NoDataIllustration message="No tickets to display" />}

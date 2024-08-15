@@ -12,7 +12,7 @@ interface TicketsByViewProps {
 }
 
 const ContentContainer = styled.div`
-    padding: 20px;
+    padding-top: 20px;
     background: ${({ theme }) => theme.pallete.grayVariant6};
     height: calc(100% - 76px);
     box-sizing: border-box;

@@ -1,14 +1,14 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useMatch, useNavigate, useSearchParams } from "react-router-dom";
 import styled from 'styled-components';
-import { Avatar, Tooltip, Typography, SxProps } from "@mui/material";
-import { AccessTime, CalendarToday } from "@mui/icons-material";
+import { Avatar, Tooltip, Typography, SxProps, Chip } from "@mui/material";
+import { AccessTime, CalendarToday, SupportAgent } from "@mui/icons-material";
 import { CircularSeparator, FlexBox, VerticalSeparator } from "lib/ui-ux";
 import { ITicketDetails } from "../../apis";
 import { Priority } from "../display-tickets-grid";
 import { TicketStatusContainer } from "../../containers";
 import { DateTime } from "luxon";
-import { chooseRandomColors, getInitialsByName } from "lib/utils";
+import { chooseRandomColors, getInitialsByName, useDateDifference } from "lib/utils";
 import { useSourceIcon } from "modules/tickets/hooks";
 
 const StyledCard = styled(FlexBox)`
@@ -17,10 +17,10 @@ const StyledCard = styled(FlexBox)`
     border: 1px solid #F1F2F4;
     cursor: pointer;
     padding: 15px 20px 15px;
+    margin: 0 20px;
 
     &:hover {
-        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    }
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;    }
 `;
 
 const StyledTypography = styled(Typography)`
@@ -35,14 +35,6 @@ const onRenderSeparator = () => {
     )
 }
 
-const StyledPriority = styled(Priority)`
-    border-radius: 4px;
-    height: 31px;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-`;
-
 const NameAndSourceContent = styled(FlexBox)`
     margin-top: 14px;
 `;
@@ -50,7 +42,7 @@ const NameAndSourceContent = styled(FlexBox)`
 const iconStyles: SxProps = { height: '16px', width: '16px', fill: '#787f83' }
 
 export const CardView = (props: ITicketDetails) => {
-    const { ticketId, customerName, createdAt, source, ticketStatus, priority, description, resolutionDue } = props;
+    const { ticketId, customerName, createdAt, source, ticketStatus, priority, description, resolutionDue, assigneeInfo, responseDue } = props;
     const getSourceIcon = useSourceIcon();
     const navigate = useNavigate();
     const match = useMatch('/:tickets/:ticketType')
@@ -69,20 +61,23 @@ export const CardView = (props: ITicketDetails) => {
                 <CustomerName customerName={customerName} />
 
                 <FlexBox flexDirection="column" gap="14px">
-                    <div>
+                    <FlexBox flexDirection="column">
                         <Typography variant="h5">{description}</Typography>
 
-                        <NameAndSourceContent gap="10px" alignItems="center" renderSeparator={() => <CircularSeparator />}>
-                            <Tooltip title={'Customer Name'}>
-                                <Typography variant="body2" >{customerName}</Typography>
-                            </Tooltip>
-                            <FlexBox gap={'5px'} alignItems="center">
-                                <StyledTypography variant="subheading1" >via</StyledTypography>
-                                {getSourceIcon(source)}
-                                <StyledTypography variant="body2">{source}</StyledTypography>
-                            </FlexBox>
-                        </NameAndSourceContent>
-                    </div>
+                        <FlexBox alignItems="baseline" gap="20px">
+                            <NameAndSourceContent gap="10px" alignItems="center" renderSeparator={() => <CircularSeparator />}>
+                                <Tooltip title={'Customer Name'}>
+                                    <Typography variant="body2" >{customerName}</Typography>
+                                </Tooltip>
+                                <FlexBox gap={'5px'} alignItems="center">
+                                    <StyledTypography variant="subheading1" >via</StyledTypography>
+                                    {getSourceIcon(source)}
+                                    <StyledTypography variant="body2">{source}</StyledTypography>
+                                </FlexBox>
+                            </NameAndSourceContent>
+                            {responseDue ? <ResponseDueIndicator responseDue={responseDue} /> : <></>}
+                        </FlexBox>
+                    </FlexBox>
 
                     <FlexBox gap={'20px'} renderSeparator={onRenderSeparator} alignItems="center">
                         <StyledTypography
@@ -90,13 +85,14 @@ export const CardView = (props: ITicketDetails) => {
                             width={'80px'}>{'#' + ticketId.split('-')[0]}</StyledTypography>
                         <CreatedAt createdAt={createdAt} />
                         <ResolutionDue resolutionDue={resolutionDue} />
+                        <AgentAssigned assigneeInfo={assigneeInfo} />
                     </FlexBox>
 
                 </FlexBox>
             </FlexBox>
 
             <FlexBox alignItems="center">
-                <StyledPriority priority={priority} />
+                <Priority priority={priority} />
                 <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} statusUpdateString={''} renderMode="card" />
             </FlexBox>
         </StyledCard >
@@ -108,14 +104,14 @@ const CustomerName = (props: Pick<ITicketDetails, 'customerName'>) => {
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(customerName)), [customerName]);
 
     return (
-        <Avatar sx={{ 
-            color: textColor, 
-            bgcolor: backgroundColor, 
-            width: '52px', 
-            height: '52px', 
+        <Avatar sx={{
+            color: textColor,
+            bgcolor: backgroundColor,
+            width: '52px',
+            height: '52px',
             fontSize: '20px',
             borderRadius: '20%'
-         }}>{getInitialsByName(customerName)}</Avatar>
+        }}>{getInitialsByName(customerName)}</Avatar>
     )
 }
 
@@ -128,7 +124,7 @@ const CreatedAt = (props: Pick<ITicketDetails, 'createdAt'>) => {
 
     return (
         <Tooltip title={`Created ${parsedDateValue} ago`}>
-            <FlexBox gap={'5px'} alignItems="center" width="198px">
+            <FlexBox gap={'10px'} alignItems="center" width="198px">
                 <CalendarToday sx={iconStyles} />
                 <StyledTypography variant="body2">{`Created ${parsedDateValue} ago`}</StyledTypography>
             </FlexBox>
@@ -139,10 +135,53 @@ const CreatedAt = (props: Pick<ITicketDetails, 'createdAt'>) => {
 const ResolutionDue = (props: Pick<ITicketDetails, 'resolutionDue'>) => {
     return (
         <Tooltip title={`Resolution time: ${props.resolutionDue ? props.resolutionDue : '--'}`}>
-            <FlexBox gap={'5px'} alignItems="center" width="198px">
+            <FlexBox gap={'10px'} alignItems="center" width="198px">
                 <AccessTime sx={iconStyles} />
                 <StyledTypography variant="body2">{props.resolutionDue ? props.resolutionDue : '--'}</StyledTypography>
             </FlexBox>
         </Tooltip>
     )
+}
+
+const AgentAssigned = (props: Pick<ITicketDetails, 'assigneeInfo'>) => {
+    const { assigneeInfo: { email, first_name, last_name } } = props;
+
+    const assignedAgentInfo = useCallback(() =>
+        <>
+            {
+                email ?
+                    <FlexBox flexDirection="column">
+                        <Typography variant="subheading1">Assignee</Typography>
+                        <Typography variant="subheading1">
+                            Name: {first_name} {last_name}
+                        </Typography>
+                        <Typography variant="subheading1">
+                            Email: {email}
+                        </Typography>
+                    </FlexBox>
+                    : '--'
+            }
+        </>, [email, first_name, last_name]);
+
+    return (
+        <Tooltip title={assignedAgentInfo()}>
+            <FlexBox gap={'10px'} alignItems="center" width="198px">
+                <SupportAgent sx={iconStyles} />
+                <StyledTypography variant="body2">{email ? `${first_name} ${last_name}` : '--'}</StyledTypography>
+            </FlexBox>
+        </Tooltip>
+    )
+}
+
+const ResponseDueIndicator = (props: Pick<ITicketDetails, 'responseDue'>) => {
+    const { responseDue } = props;
+    const { dateColor, prefix, parsedDateString } = useDateDifference(responseDue!);
+    return (
+        <>
+            <Tooltip title={`Response ${prefix} ${responseDue}`}>
+                {<Chip label={parsedDateString} color={dateColor} size="small" />}
+            </Tooltip>
+        </>
+    )
+
 }
