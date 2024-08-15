@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const VerticalSeparator = styled.span`
   width: 2px;
-  height: 30px;
+  height: auto;
   padding: 10px 0px;
   box-sizing: border-box;
   background-color:#E9EBED;

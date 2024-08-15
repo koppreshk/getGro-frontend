@@ -10,7 +10,7 @@ import { ITicketDetails } from "modules/tickets/apis";
 import { ContactInfo, TypographyName } from "./contact-info";
 import { useDateDifference } from "lib/utils";
 import { MoreActions } from "./more-actions";
-import { MergeTicket } from "./more-actions/merge-ticket";
+import { MergeTicket } from "./more-actions/merge-ticket/merge-ticket";
 
 interface ITicketOverviewProps {
     ticketDetails: ITicketDetails;
