@@ -30,3 +30,4 @@ export * from './fetch-ticket-by-id';
 export * from './get-ticket-conversations';
 export * from './create-manual-ticket';
 export * from './fetch-priorities';
+export * from './merge-tickets/merge-tickets';

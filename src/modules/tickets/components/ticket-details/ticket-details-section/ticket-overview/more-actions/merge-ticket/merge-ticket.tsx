@@ -15,7 +15,7 @@ export const MergeTicket = (props: MergeTicketProps) => {
             open={showMergeTicketDrawer}
             onRenderContent={() => (
                 <>
-
+                
                 </>
             )}
             onClose={onCloseDrawer} />
