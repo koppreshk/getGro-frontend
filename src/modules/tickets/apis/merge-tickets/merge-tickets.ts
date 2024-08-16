@@ -15,7 +15,8 @@ interface IMergeTicketsData {
 export const useMergeTickets = () => {
     const { postData } = useServiceClient();
 
-    const mergeTickets = React.useCallback((args: IMergeTicketsData) => postData(TicketsEndPoint.MERGE_TICKETS, args), [postData])
+    const mergeTickets = React.useCallback((args: IMergeTicketsData) => 
+        postData(TicketsEndPoint.MERGE_TICKETS, args).then((res) => res.json()), [postData])
 
     return useMutation({
         mutationKey: TicketsQueryKey.MERGE_TICKETS,
