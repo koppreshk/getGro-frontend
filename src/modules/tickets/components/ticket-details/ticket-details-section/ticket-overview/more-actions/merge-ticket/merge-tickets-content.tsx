@@ -3,6 +3,9 @@ import { CheckboxField, RadioGroupField } from "lib/form-fields";
 import { FlexBox } from "lib/ui-ux"
 import { FormProvider, useForm } from "react-hook-form"
 import styled from "styled-components"
+import { PrimaryTicketDetails } from "./primary-ticket-details";
+import { useSearchTickets } from "modules/tickets/apis";
+import { useAppSelector } from "lib/hooks";
 
 const StyledFooter = styled(FlexBox)`
     border-top:  ${({ theme }) => theme.semantics.standardBorder};
@@ -27,6 +30,17 @@ interface IMergeTicketsContentProps {
 
 export const MergeTicketsContent = (props: IMergeTicketsContentProps) => {
     const { submitMergeTicketHandler } = props;
+    const { mutateAsync, data, isLoading } = useSearchTickets();
+    const ticketDetails = useAppSelector(state => state.tickets.ticketDetails);
+    const { description, ticketId, ticketStatus, customerName } = ticketDetails!;
+
+    const onChange: React.ChangeEventHandler<HTMLInputElement> = (ev) => {
+        mutateAsync({
+            search_text: ev.target.value,
+            current_ticket_id: ticketId
+        });
+    }
+
     const methods = useForm<IMergeTicketsFormFields>({
         defaultValues: {
             addSecondaryTicketMessage: "last_message",
@@ -38,10 +52,13 @@ export const MergeTicketsContent = (props: IMergeTicketsContentProps) => {
     return (
         <FormProvider {...methods}>
             <FlexBox flexDirection="column" justifyContent="space-between" height="calc(100% - 77px)">
-                <FlexBox>
-                    {/* search tickets content */}
-                </FlexBox>
-
+                <PrimaryTicketDetails
+                    onChange={onChange}
+                    data={data}
+                    isLoading={isLoading}
+                    ticketDetails={{
+                        description, ticketId, ticketStatus, customerName
+                    }} />
                 <StyledFooter padding="20px" width="100%" gap="12px" flexDirection="column">
                     <AdditionalOptions />
                     <FlexBox gap='10px' width="100%" justifyContent="flex-end">

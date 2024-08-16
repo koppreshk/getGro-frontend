@@ -25,7 +25,8 @@ export enum TicketsEndPoint {
     UPDATE_PRIORITY = 'update_priority',
     UPDATE_TAGS = 'update_tags',
 
-    MERGE_TICKETS = 'merge_tickets'
+    MERGE_TICKETS = 'merge_tickets',
+    SEARCH_TICKETS = 'search_ticket'
 }
 
 export enum TicketsQueryKey {
@@ -55,5 +56,6 @@ export enum TicketsQueryKey {
     UPDATE_PRIORITY = 'UPDATE_PRIORITY',
     UPDATE_TAGS = 'UPDATE_TAGS',
 
-    MERGE_TICKETS = 'MERGE_TICKETS'
+    MERGE_TICKETS = 'MERGE_TICKETS',
+    SEARCH_TICKETS = 'SEARCH_TICKETS'
 }
