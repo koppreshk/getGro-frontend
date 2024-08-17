@@ -25,7 +25,7 @@ export const PrimaryTicketDetails = (props: IPrimaryTicketDetailsProps) => {
 
     return (
         <FlexBox padding="20px" flexDirection="column" gap={'20px'}>
-            <TicketInfo ticketDetails={ticketDetails} isPrimary />
+            <StyledTicketInfo ticketDetails={ticketDetails} isPrimary />
             <HorizontalSeparator />
             <SearchTickets data={data} isLoading={isLoading} onChange={onChange} />
             {selectedTickets
