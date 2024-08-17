@@ -20,7 +20,7 @@ export interface ITicketDetails {
     closedAt: null | string;
     responseDue: null | string;
     resolutionDue: string;
-    assigneeInfo: {
+    assigneeInfo?: {
         id: 1,
         first_name: string,
         last_name: string,

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { PersonSearch } from "@mui/icons-material";
 import { Chip, Tooltip, Typography } from "@mui/material";
-import { CustomIconButton, FlexBox } from "lib/ui-ux";
+import { CustomIconButton, FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { Platform } from "../../ticket-conversation/ticket-conversation-header";
 import { ManageAssigneeContainer, ManagePriorityContainer, SearchCustomerContainer, TicketStatusContainer, ManageTagsContainer } from "modules/tickets/containers";
 import { useAppSelector } from "lib/hooks";
@@ -83,6 +83,7 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
                     <ManageAssigneeContainer ticketId={ticketId} assigneeInfo={assigneeInfo} />
                     <ManagePriorityContainer priority={priority} ticketId={ticketId} />
                     <ManageTagsContainer ticketId={ticketId} tags={tags} />
+                    <HorizontalSeparator $margin="10px 0px 0px 0px" />
                 </FlexBox>
                 {ticketDetails?.responseDue || ticketDetails?.resolutionDue ?
                     <FlexBox padding="0px 20px" flexDirection="column" gap="10px">

@@ -144,30 +144,30 @@ const ResolutionDue = (props: Pick<ITicketDetails, 'resolutionDue'>) => {
 }
 
 const AgentAssigned = (props: Pick<ITicketDetails, 'assigneeInfo'>) => {
-    const { assigneeInfo: { email, first_name, last_name } } = props;
+    const { assigneeInfo } = props;
 
     const assignedAgentInfo = useCallback(() =>
         <>
             {
-                email ?
+                assigneeInfo?.email ?
                     <FlexBox flexDirection="column">
                         <Typography variant="subheading1">Assignee</Typography>
                         <Typography variant="subheading1">
-                            Name: {first_name} {last_name}
+                            Name: {assigneeInfo?.first_name} {assigneeInfo?.last_name}
                         </Typography>
                         <Typography variant="subheading1">
-                            Email: {email}
+                            Email: {assigneeInfo?.email}
                         </Typography>
                     </FlexBox>
                     : '--'
             }
-        </>, [email, first_name, last_name]);
+        </>, [assigneeInfo?.email, assigneeInfo?.first_name, assigneeInfo?.last_name]);
 
     return (
         <Tooltip title={assignedAgentInfo()}>
             <FlexBox gap={'10px'} alignItems="center" width="198px">
                 <SupportAgent sx={iconStyles} />
-                <StyledTypography variant="body2">{email ? `${first_name} ${last_name}` : '--'}</StyledTypography>
+                <StyledTypography variant="body2">{assigneeInfo?.email ? `${assigneeInfo?.first_name} ${assigneeInfo?.last_name}` : '--'}</StyledTypography>
             </FlexBox>
         </Tooltip>
     )

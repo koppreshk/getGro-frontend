@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { ExpandMore } from "@mui/icons-material"
 import { Menu, MenuItem, Typography } from "@mui/material"
-import { FlexBox, HorizontalSeparator } from "lib/ui-ux"
+import { FlexBox } from "lib/ui-ux"
 import { TypographyName } from "./contact-info"
 import { StyledContainer } from "./manage-assignee"
 import { IPriorities } from "modules/tickets/apis"
@@ -72,7 +72,6 @@ export const ManagePriority = (props: IManagePriorityProps) => {
                     <ExpandMore sx={{ width: 16, height: 16 }} />
                 </StyledContainer>
             </FlexBox>
-            <HorizontalSeparator $margin="20px 0px 0px 0px" />
             <Menu
                 anchorEl={anchorEl}
                 open={open}
