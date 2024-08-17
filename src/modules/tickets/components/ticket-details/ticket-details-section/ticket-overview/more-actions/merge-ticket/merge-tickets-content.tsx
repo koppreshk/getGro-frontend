@@ -52,7 +52,8 @@ export const MergeTicketsContent = (props: IMergeTicketsContentProps) => {
             closeSecondaryTicket: true,
             searchTickets: [],
             sendMail: false
-        }
+        },
+        mode: 'onBlur'
     })
 
     const onSubmit = (formData: IMergeTicketsFormFields) => {

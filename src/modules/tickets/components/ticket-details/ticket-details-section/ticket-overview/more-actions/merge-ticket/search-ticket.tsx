@@ -3,11 +3,20 @@ import { Autocomplete, CircularProgress, TextField, Typography } from "@mui/mate
 import { FlexBox } from "lib/ui-ux"
 import { TicketInfo } from "./ticket-info";
 import { IPrimaryTicketDetailsProps } from "./primary-ticket-details";
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, get, useFormContext } from "react-hook-form";
+import { StyledErrorMessage } from "lib/form-fields";
+import { ErrorMessage } from "@hookform/error-message";
 
 export const SearchTickets = (props: Pick<IPrimaryTicketDetailsProps, 'data' | 'isLoading' | 'onChange'>) => {
     const { data, isLoading, onChange } = props;
-    const { control } = useFormContext();
+    const { formState: { errors }, control } = useFormContext();
+    const hasError = get(errors, 'searchTickets') !== undefined;
+
+    const validateField = (val: []) => {
+        if (val.length <= 0) {
+            return 'Please make at least 1 selection to merge tickets'
+        }
+    }
 
     return (
         <FlexBox flexDirection="column" gap={'5px'}>
@@ -31,6 +40,8 @@ export const SearchTickets = (props: Pick<IPrimaryTicketDetailsProps, 'data' | '
                                 placeholder="Search a secondary ticket by ID or Subject"
                                 size="small"
                                 autoFocus
+                                error={hasError}
+                                required={true}
                                 InputProps={{
                                     ...params.InputProps,
                                     endAdornment: (
@@ -61,7 +72,9 @@ export const SearchTickets = (props: Pick<IPrimaryTicketDetailsProps, 'data' | '
                     />
                 )}
                 control={control}
-                name={'searchTickets'} />
+                name={'searchTickets'}
+                rules={{ validate: validateField }} />
+            <ErrorMessage errors={errors} name={'searchTickets'} as={StyledErrorMessage} />
             <Typography variant="body3">Search and add secondary tickets that you want to merge with primary tickets</Typography>
         </FlexBox>
     )

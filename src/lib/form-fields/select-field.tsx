@@ -13,7 +13,7 @@ type ITextboxFieldProps = Omit<SelectProps<unknown>, 'error' | 'required'> & {
     rules?: Omit<RegisterOptions<FieldValues, string>, "disabled" | "valueAsNumber" | "valueAsDate" | "setValueAs"> | undefined
 }
 
-const StyledErrorMessage = styled.div`
+export const StyledErrorMessage = styled.div`
   &&{
     color: #d32f2f;
     font-size: 13px;
