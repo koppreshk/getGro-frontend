@@ -3,6 +3,10 @@ import { CheckboxField, RadioGroupField } from "lib/form-fields";
 import { FlexBox } from "lib/ui-ux"
 import { FormProvider, useForm } from "react-hook-form"
 import styled from "styled-components"
+import { PrimaryTicketDetails } from "./primary-ticket-details";
+import { ITicketDetails, useSearchTickets } from "modules/tickets/apis";
+import { useAppSelector } from "lib/hooks";
+import { useNotifications } from "lib";
 
 const StyledFooter = styled(FlexBox)`
     border-top:  ${({ theme }) => theme.semantics.standardBorder};
@@ -14,39 +18,70 @@ const StyledRadioFields = styled(RadioGroupField)`
     }
 `;
 
-interface IMergeTicketsFormFields {
+export interface IMergeTicketsFormFields {
     addSecondaryTicketMessage: "first_message" | "last_message";
     closeSecondaryTicket: boolean;
     addSecondaryLinkInPrimary: boolean
     sendMail: boolean;
+    searchTickets?: Pick<ITicketDetails, 'customerName' | 'ticketId' | 'ticketStatus' | 'description'>[];
 }
 
 interface IMergeTicketsContentProps {
-    submitMergeTicketHandler: () => void;
+    onCloseDrawer: () => void;
+    submitMergeTicketHandler: (formData: IMergeTicketsFormFields & { primaryTicketId: string }) => Promise<{ status: boolean }>;
 }
 
 export const MergeTicketsContent = (props: IMergeTicketsContentProps) => {
-    const { submitMergeTicketHandler } = props;
+    const { submitMergeTicketHandler, onCloseDrawer } = props;
+    const { mutateAsync, data, isLoading } = useSearchTickets();
+    const ticketDetails = useAppSelector(state => state.tickets.ticketDetails);
+    const { description, ticketId, ticketStatus, customerName } = ticketDetails!;
+    const { showNotification } = useNotifications();
+
+    const onChange: React.ChangeEventHandler<HTMLInputElement> = (ev) => {
+        mutateAsync({
+            search_text: ev.target.value,
+            current_ticket_id: ticketId
+        });
+    }
+
     const methods = useForm<IMergeTicketsFormFields>({
         defaultValues: {
             addSecondaryTicketMessage: "last_message",
             addSecondaryLinkInPrimary: true,
-            closeSecondaryTicket: true
-        }
+            closeSecondaryTicket: true,
+            searchTickets: [],
+            sendMail: false
+        },
+        mode: 'onBlur'
     })
+
+    const onSubmit = (formData: IMergeTicketsFormFields) => {
+        submitMergeTicketHandler({ ...formData, primaryTicketId: ticketId })
+            .then((res) => {
+                if (res.status) {
+                    onCloseDrawer();
+                    showNotification({ message: 'Ticket merge was successfull', type: 'success' })
+                }
+                return Promise.reject()
+            }).catch(() => showNotification({ message: 'Failed to merge tickets', type: 'error' }))
+    }
 
     return (
         <FormProvider {...methods}>
             <FlexBox flexDirection="column" justifyContent="space-between" height="calc(100% - 77px)">
-                <FlexBox>
-                    {/* search tickets content */}
-                </FlexBox>
-
+                <PrimaryTicketDetails
+                    onChange={onChange}
+                    data={data}
+                    isLoading={isLoading}
+                    ticketDetails={{
+                        description, ticketId, ticketStatus, customerName
+                    }} />
                 <StyledFooter padding="20px" width="100%" gap="12px" flexDirection="column">
                     <AdditionalOptions />
                     <FlexBox gap='10px' width="100%" justifyContent="flex-end">
-                        <Button variant="outlined" >Cancel</Button>
-                        <Button variant="contained" size="large" type="submit" onClick={methods.handleSubmit(submitMergeTicketHandler)}>Merge Tickets</Button>
+                        <Button variant="outlined" onClick={onCloseDrawer}>Cancel</Button>
+                        <Button variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>Merge Tickets</Button>
                     </FlexBox>
                 </StyledFooter>
             </FlexBox>
@@ -74,7 +109,6 @@ const AdditionalOptions = () => {
                 <Typography variant="h6">Add Secondary Ticket:</Typography>
                 <StyledRadioFields name="addSecondaryTicketMessage" radioOptions={[{ key: 'first_message', label: 'First Message' }, { key: 'last_message', label: 'Last Message' }]} />
             </FlexBox>
-
         </FlexBox>
     )
 }
