@@ -15,16 +15,18 @@ interface TicketInfoProps {
     ticketDetails: Pick<ITicketDetails, 'description' | 'ticketStatus' | 'customerName' | 'ticketId'>
     isPrimary?: boolean;
     checked?: boolean;
+    className?: string;
     multiSelect?: boolean;
+    onSetAsPrimary?: () => void;
 }
 
 export const TicketInfo = (props: TicketInfoProps) => {
-    const { isPrimary, checked, multiSelect } = props;
+    const { isPrimary, checked, multiSelect, className } = props;
     const { description, ticketStatus, customerName, ticketId } = props.ticketDetails
     const { pallete } = useTheme();
     
     return (
-        <FlexBox gap={'10px'} width="100%" alignItems="flex-start" padding="8px" style={{ borderBottom: multiSelect ? '1px solid' + pallete.grayVariant1 : 'unset' }}>
+        <FlexBox className={className} gap={'10px'} width="100%" alignItems="flex-start" padding="8px" style={{ borderBottom: multiSelect ? '1px solid' + pallete.grayVariant1 : 'unset' }}>
             {multiSelect ?
                 <Checkbox
                     icon={<CheckBoxOutlineBlank fontSize="small" />}
