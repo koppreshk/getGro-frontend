@@ -1,5 +1,5 @@
 import React from "react";
-import { Autocomplete, CircularProgress, TextField, Typography } from "@mui/material"
+import { Autocomplete, CircularProgress, TextField, Typography, debounce } from "@mui/material"
 import { FlexBox } from "lib/ui-ux"
 import { TicketInfo } from "./ticket-info";
 import { IPrimaryTicketDetailsProps } from "./primary-ticket-details";
@@ -17,6 +17,8 @@ export const SearchTickets = (props: Pick<IPrimaryTicketDetailsProps, 'data' | '
             return 'Please make at least 1 selection to merge tickets'
         }
     }
+
+    const debouncedChange = debounce(onChange, 500);
 
     return (
         <FlexBox flexDirection="column" gap={'5px'}>
@@ -51,7 +53,7 @@ export const SearchTickets = (props: Pick<IPrimaryTicketDetailsProps, 'data' | '
                                         </React.Fragment>
                                     ),
                                 }}
-                                onChange={onChange} />
+                                onChange={debouncedChange} />
                         )}
                         renderOption={(props, option, { selected }) => {
                             return (

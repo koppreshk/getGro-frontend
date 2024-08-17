@@ -1,3 +1,5 @@
+/* eslint-disable no-prototype-builtins */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { isObject, isFunction, isArray } from './common-utils';
 
 interface IMemoizeNode {
@@ -39,7 +41,7 @@ export function memoizeFunction<T extends (...args: any[]) => R, R>(callback: T,
         }
 
         args.forEach((rawArg) => {
-            let arg = normalizeArg(rawArg);
+            const arg = normalizeArg(rawArg);
 
             if (!currentNode.map.has(arg)) {
                 currentNode.map.set(arg, createNode());
@@ -55,4 +57,14 @@ export function memoizeFunction<T extends (...args: any[]) => R, R>(callback: T,
 
         return currentNode.value;
     } as T;
+}
+
+export function debounce<Params extends any[]>(callback: (...args: Params) => any, wait: number) {
+    let timeoutId: number | undefined = undefined;
+    return (...args: any) => {
+        window.clearTimeout(timeoutId);
+        timeoutId = window.setTimeout(() => {
+            callback(...args);
+        }, wait);
+    };
 }
