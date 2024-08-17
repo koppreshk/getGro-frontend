@@ -8,8 +8,8 @@ export interface ITicketStatusFormFields {
     ticketStatusId?: number;
 }
 
-export const CreateTicketStatusContainer = (props: {toggleAddStatusDrawer: () => void}) => {
-    const { mutateAsync: createTicketStatus } = useCreateTicketStatus();
+export const CreateTicketStatusContainer = (props: { toggleAddStatusDrawer: () => void }) => {
+    const { mutateAsync: createTicketStatus, isLoading } = useCreateTicketStatus();
     const { showNotification } = useNotifications();
 
     const submitTicketStatus = React.useCallback((fromValues: ITicketStatusFormFields) => {
@@ -22,6 +22,6 @@ export const CreateTicketStatusContainer = (props: {toggleAddStatusDrawer: () =>
     }, [createTicketStatus, props, showNotification]);
 
     return (
-        <TicketStatusForm mode="create" onFormSubmitHandler={submitTicketStatus} />
+        <TicketStatusForm mode="create" onFormSubmitHandler={submitTicketStatus} mutationLoading={isLoading} />
     )
 }

@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form"
-import { FlexBox } from "lib/ui-ux";
+import { FlexBox, LoadingButton } from "lib/ui-ux";
 import { Button, Grid } from "@mui/material";
 import { TextboxField } from "lib/form-fields";
 import { ITicketStatusFormFields } from "modules/settings/containers/ticket-status";
@@ -8,11 +8,12 @@ import { ITicketStatusFormFields } from "modules/settings/containers/ticket-stat
 interface ITicketStatusFormProps {
     mode: 'create' | 'edit';
     defaultValues?: ITicketStatusFormFields;
+    mutationLoading: boolean;
     onFormSubmitHandler: (data: ITicketStatusFormFields) => void;
 }
 
 export const TicketStatusForm = (props: ITicketStatusFormProps) => {
-    const { mode, defaultValues, onFormSubmitHandler } = props;
+    const { mode, defaultValues, mutationLoading, onFormSubmitHandler } = props;
     const isInEditMode = useMemo(() => mode === 'edit', [mode]);
 
     const methods = useForm<ITicketStatusFormFields>({
@@ -41,7 +42,7 @@ export const TicketStatusForm = (props: ITicketStatusFormProps) => {
                 </Grid>
                 <FlexBox gap='10px' width="100%" justifyContent="flex-end">
                     {isInEditMode ? <Button variant="text" size="large" type="button" onClick={() => methods.reset()}>{'Reset'}</Button> : null}
-                    <Button variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>{isInEditMode ? 'Edit Ticket Status' : 'Add Ticket Status'}</Button>
+                    <LoadingButton isLoading={mutationLoading} variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>{isInEditMode ? 'Edit Ticket Status' : 'Add Ticket Status'}</LoadingButton>
                 </FlexBox>
             </FlexBox>
         </FormProvider>

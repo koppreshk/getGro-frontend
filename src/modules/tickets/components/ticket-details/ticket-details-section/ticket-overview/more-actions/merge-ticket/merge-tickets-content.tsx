@@ -1,6 +1,6 @@
 import { Button, Typography } from "@mui/material"
 import { CheckboxField, RadioGroupField } from "lib/form-fields";
-import { FlexBox } from "lib/ui-ux"
+import { FlexBox, LoadingButton } from "lib/ui-ux"
 import { FormProvider, useForm } from "react-hook-form"
 import styled from "styled-components"
 import { PrimaryTicketDetails } from "./primary-ticket-details";
@@ -27,12 +27,13 @@ export interface IMergeTicketsFormFields {
 }
 
 interface IMergeTicketsContentProps {
+    mutationLoading: boolean;
     onCloseDrawer: () => void;
-    submitMergeTicketHandler: (formData: IMergeTicketsFormFields & { primaryTicketId: string }) => Promise<{ status: boolean }>;
+    submitMergeTicketHandler: (formData: IMergeTicketsFormFields & { primaryTicketId: string }) => Promise<{ status: boolean, message: string }>;
 }
 
 export const MergeTicketsContent = (props: IMergeTicketsContentProps) => {
-    const { submitMergeTicketHandler, onCloseDrawer } = props;
+    const { mutationLoading, submitMergeTicketHandler, onCloseDrawer } = props;
     const { mutateAsync, data, isLoading } = useSearchTickets();
     const ticketDetails = useAppSelector(state => state.tickets.ticketDetails);
     const { description, ticketId, ticketStatus, customerName } = ticketDetails!;
@@ -63,7 +64,9 @@ export const MergeTicketsContent = (props: IMergeTicketsContentProps) => {
                     onCloseDrawer();
                     showNotification({ message: 'Ticket merge was successfull', type: 'success' })
                 }
-                return Promise.reject()
+                else {
+                    showNotification({ message: res.message, type: 'error' })
+                }
             }).catch(() => showNotification({ message: 'Failed to merge tickets', type: 'error' }))
     }
 
@@ -81,7 +84,7 @@ export const MergeTicketsContent = (props: IMergeTicketsContentProps) => {
                     <AdditionalOptions />
                     <FlexBox gap='10px' width="100%" justifyContent="flex-end">
                         <Button variant="outlined" onClick={onCloseDrawer}>Cancel</Button>
-                        <Button variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>Merge Tickets</Button>
+                        <LoadingButton isLoading={mutationLoading} variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>Merge Tickets</LoadingButton>
                     </FlexBox>
                 </StyledFooter>
             </FlexBox>

@@ -12,7 +12,7 @@ interface IEditTicketStatusContainerProps {
 
 export const EditTicketStatusContainer = (props: IEditTicketStatusContainerProps) => {
     const { onSelectRowMetaData, toggleDrawer } = props;
-    const { mutateAsync: editTicketStatus } = useEditTicketStatus();
+    const { mutateAsync: editTicketStatus, isLoading } = useEditTicketStatus();
     const { showNotification } = useNotifications();
 
     const onEditStatusTicket = React.useCallback((data: ITicketStatusFormFields) => {
@@ -29,6 +29,7 @@ export const EditTicketStatusContainer = (props: IEditTicketStatusContainerProps
         <TicketStatusForm
             mode="edit"
             onFormSubmitHandler={onEditStatusTicket}
+            mutationLoading={isLoading}
             defaultValues={{
                 ticketStatusName: onSelectRowMetaData.name,
                 ticketStatusId: onSelectRowMetaData.id
