@@ -28,7 +28,7 @@ export interface IMergeTicketsFormFields {
 
 interface IMergeTicketsContentProps {
     onCloseDrawer: () => void;
-    submitMergeTicketHandler: (formData: IMergeTicketsFormFields & { primaryTicketId: string }) => Promise<void>;
+    submitMergeTicketHandler: (formData: IMergeTicketsFormFields & { primaryTicketId: string }) => Promise<{ status: boolean }>;
 }
 
 export const MergeTicketsContent = (props: IMergeTicketsContentProps) => {
@@ -58,9 +58,12 @@ export const MergeTicketsContent = (props: IMergeTicketsContentProps) => {
 
     const onSubmit = (formData: IMergeTicketsFormFields) => {
         submitMergeTicketHandler({ ...formData, primaryTicketId: ticketId })
-            .then(() => {
-                onCloseDrawer();
-                showNotification({ message: 'Ticket mere was successfull', type: 'success' })
+            .then((res) => {
+                if (res.status) {
+                    onCloseDrawer();
+                    showNotification({ message: 'Ticket merge was successfull', type: 'success' })
+                }
+                return Promise.reject()
             }).catch(() => showNotification({ message: 'Failed to merge tickets', type: 'error' }))
     }
 
