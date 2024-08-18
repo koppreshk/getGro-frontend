@@ -12,7 +12,6 @@ import { FormProvider, useForm } from "react-hook-form";
 // import { useSocket } from "lib/providers/socket";
 
 const LayoutWrapper = styled(FlexBox)`
-    padding: 15px 0px 15px 10px;
 `;
 
 export interface IEmailConversations extends Conversations {
