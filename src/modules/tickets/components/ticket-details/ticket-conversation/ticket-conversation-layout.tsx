@@ -72,7 +72,7 @@ export const TicketConversationLayout = () => {
     return (
         <LayoutWrapper width="100%" flexDirection="column">
             <TicketConversationHeader ticketDetailsById={ticketDetailsById!} />
-            <Tabs value={value} onChange={handleChange} aria-label="ticket-tabs" sx={{ minHeight: 'unset' }}>
+            <Tabs value={value} onChange={handleChange} variant="fullWidth" aria-label="ticket-tabs" sx={{ minHeight: 'unset' }}>
                 <StyledTab label="Conversations" />
                 <StyledTab label="Links" />
                 <StyledTab label="History" />
