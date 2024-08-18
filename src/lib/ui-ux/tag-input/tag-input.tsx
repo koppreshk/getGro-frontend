@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import { Property } from 'csstype';
 import styled from "styled-components";
 import { FlexBox } from "../flexbox/flexbox";
-import { Avatar, Chip, MenuItem } from "@mui/material";
+import { Avatar, Chip, MenuItem, Typography } from "@mui/material";
 import { styled as MUIStyled, alpha } from '@mui/material/styles';
 import Menu, { MenuProps } from '@mui/material/Menu';
 import { ExpandMore } from "@mui/icons-material";
@@ -115,15 +115,16 @@ export const TagInput = (props: ITagInputProps) => {
         <>
             <FlexBox className={className} justifyContent="space-between" width={width ?? "100%"} alignItems="center" onClick={allowSuggestions ? handleClick : undefined} style={{ cursor: allowSuggestions ? 'pointer' : 'unset' }}>
                 <FlexBox gap={gap ?? "10px"} flexWrap="wrap" width={allowSuggestions ? 'calc(100% - 16px)' : 'inherit'}>
-                    {tagItems.map((item, index) => (
-                        <Chip
-                            key={index}
-                            label={item}
-                            size="small"
-                            onClick={() => onTagClick && onTagClick(item)}
-                            avatar={<Avatar>{item[0].toLocaleUpperCase()}</Avatar>}
-                            onDelete={() => __onTagDeleteHandler(item)} />)
-                    )}
+                    {tagItems.length ?
+                        tagItems.map((item, index) => (
+                            <Chip
+                                key={index}
+                                label={item}
+                                size="small"
+                                onClick={() => onTagClick && onTagClick(item)}
+                                avatar={<Avatar>{item[0].toLocaleUpperCase()}</Avatar>}
+                                onDelete={() => __onTagDeleteHandler(item)} />)
+                        ) : <Typography variant="h6">--</Typography>}
                     {allowToAddTagsViaText
                         ? <StyledInput
                             autoFocus
