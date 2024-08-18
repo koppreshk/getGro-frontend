@@ -14,7 +14,7 @@ export const MergeTicketsContainer = (props: { onCloseDrawer: () => void }) => {
             primary_ticket_id: primaryTicketId,
             close_secondary_ticket: closeSecondaryTicket,
             add_secondary_ticket_message: addSecondaryTicketMessage,
-            send_email: sendMail,
+            send_email: !sendMail,
             add_secondary_link_in_primary: addSecondaryLinkInPrimary,
         })
     }, [mutateAsync]);
