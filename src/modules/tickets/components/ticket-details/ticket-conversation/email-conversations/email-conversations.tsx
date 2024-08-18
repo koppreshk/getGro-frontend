@@ -11,7 +11,6 @@ const EmailConversationsContainer = styled(FlexBox)`
   .email-card-container:last-child {
     border-bottom: none;
   }
-  padding-right: 10px;
 `;
 
 interface IEmailConversationsProps {

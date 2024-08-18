@@ -1,27 +1,30 @@
-import { Box } from "@mui/system";
+import { FlexBox, IFlex } from "../flexbox/flexbox";
 
-interface TabPanelProps {
+interface TabPanelProps extends IFlex {
     children?: React.ReactNode;
     index: number;
     value: number;
-    height?: string;
 }
 
 export function CustomTabPanel(props: TabPanelProps) {
-    const { children, value, index, height = 'calc(100% - 49px)', ...other } = props;
+    const { children, value, index, height = 'calc(100% - 49px)', width = "100%", flexDirection = 'row', padding = '16px', ...other } = props;
 
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`simple-tabpanel-${index}`}
-            style={{ boxSizing: 'border-box', overflow: 'auto', height }}
-            aria-labelledby={`simple-tab-${index}`}
-            {...other}
-        >
-            {value === index && <Box sx={{ p: '15px 0px 15px 10px' }}>{children}</Box>}
-        </div>
-    );
+    if (value === index) {
+        return (
+            <FlexBox
+                role="tabpanel"
+                hidden={value !== index}
+                height={height}
+                width={width}
+                padding={padding}
+                flexDirection={flexDirection}
+                aria-labelledby={`simple-tab-${index}`}
+                {...other}
+            >
+                {children}
+            </FlexBox>
+        );
+    }
 }
 
 export function a11yProps(index: number) {

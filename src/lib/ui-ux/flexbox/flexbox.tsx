@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { Property } from 'csstype';
 import React, { Children, ForwardedRef } from 'react';
 
-type IFlex = {
+export type IFlex = {
     inline?: boolean;
     flexDirection?: Property.FlexDirection;
     flexFlow?: Property.FlexFlow;

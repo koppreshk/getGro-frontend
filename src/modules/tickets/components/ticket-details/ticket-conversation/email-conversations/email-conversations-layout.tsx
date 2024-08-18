@@ -92,7 +92,7 @@ export const EmailConversationLayout = (props: { conversationsData: ITicketById,
     return (
         <FormProvider {...formContext}>
             <LayoutWrapper id="printable-content" flexDirection="column" gap="10px" width="100%" height="100%">
-                <FlexBox justifyContent="space-between" alignItems="center" padding="0px 16px 0px 0px">
+                <FlexBox justifyContent="space-between" alignItems="center">
                     <Typography variant="h5" title={subject} textOverflow={'ellipsis'} overflow={'hidden'} whiteSpace='nowrap' width={'calc(100% - 90px)'}>{subject}</Typography>
                     <FlexBox gap="10px">
                         {!isCollapsedAll ? <EmailThreadOptions onReplyClick={onReplyClick} onForwardClick={onForwardClick} /> : null}
