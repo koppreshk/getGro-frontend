@@ -7,3 +7,5 @@ export * from './past-tickets-container';
 export * from './get-employees-by-queue-container';
 export * from './add-ticket-container';
 export * from './overview';
+export * from './links';
+export * from './history';

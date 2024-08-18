@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { CustomTabPanel, FlexBox } from "lib/ui-ux"
 import styled from "styled-components"
 import { TicketConversationHeader } from "./ticket-conversation-header";
@@ -8,7 +8,9 @@ import {
     InstagramConversationsContainer,
     TelephonicConversationContainer,
     EmailConversationContainer,
-    WhatsAppConversationContainer
+    WhatsAppConversationContainer,
+    EmailLinksContainer,
+    EmailHistoryContainer
 } from "modules/tickets/containers";
 import { Tabs, Tab } from "@mui/material";
 
@@ -53,10 +55,24 @@ export const TicketConversationLayout = () => {
         }
     }, [ticketSource]);
 
+    const renderLinks = useCallback(() => {
+        switch (ticketSource) {
+            case 'email':
+                return <EmailLinksContainer />
+        }
+    }, [ticketSource])
+
+    const renderHistory = useCallback(() => {
+        switch (ticketSource) {
+            case 'email':
+                return <EmailHistoryContainer />
+        }
+    }, [ticketSource])
+
     return (
         <LayoutWrapper width="100%" flexDirection="column">
             <TicketConversationHeader ticketDetailsById={ticketDetailsById!} />
-            <Tabs value={value} onChange={handleChange} aria-label="ticket-tabs" sx={{ minHeight: 'unset' }}>
+            <Tabs value={value} onChange={handleChange} variant="fullWidth" aria-label="ticket-tabs" sx={{ minHeight: 'unset' }}>
                 <StyledTab label="Conversations" />
                 <StyledTab label="Links" />
                 <StyledTab label="History" />
@@ -64,6 +80,12 @@ export const TicketConversationLayout = () => {
             <div style={{ height: 'calc(100% - 114px)' }}>
                 <CustomTabPanel value={value} index={0} height="100%">
                     {renderConversations()}
+                </CustomTabPanel>
+                <CustomTabPanel value={value} index={1} height="100%">
+                    {renderLinks()}
+                </CustomTabPanel>
+                <CustomTabPanel value={value} index={2} height="100%">
+                    {renderHistory()}
                 </CustomTabPanel>
             </div>
         </LayoutWrapper>
