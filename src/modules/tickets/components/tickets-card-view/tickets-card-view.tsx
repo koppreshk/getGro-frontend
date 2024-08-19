@@ -1,6 +1,7 @@
-import { CenteredCircularProgress, FlexBox, NoDataIllustration } from "lib/ui-ux";
+import { FlexBox, NoDataIllustration } from "lib/ui-ux";
 import { ITicketDetails } from "../../apis";
 import { CardView } from "./card-view";
+import { TicketsCardViewLoader } from "lib/ui-ux/loader-components";
 
 interface ITicketCardViewProps {
     data: ITicketDetails[];
@@ -11,7 +12,7 @@ interface ITicketCardViewProps {
 export const TicketsCardview = (props: ITicketCardViewProps) => {
     const { data, isLoading } = props;
 
-    if (isLoading) return <CenteredCircularProgress />;
+    if (isLoading) return <TicketsCardViewLoader />;
 
     return (
         <>
