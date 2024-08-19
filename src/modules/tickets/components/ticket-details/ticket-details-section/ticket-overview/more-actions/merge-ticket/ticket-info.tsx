@@ -7,7 +7,7 @@ import { CheckBoxOutlineBlank, CheckBox } from "@mui/icons-material";
 
 const StyledTypography = styled(Typography)`
     &&{
-        color: ${({ theme }) => theme.pallete.grayVariant3};
+        color: ${({ theme }) => theme.pallete.grayTextVariant5};
     }
 `;
 

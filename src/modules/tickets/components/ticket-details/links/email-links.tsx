@@ -1,7 +1,8 @@
 import { ConfirmationNumberOutlined } from "@mui/icons-material";
 import { Typography } from "@mui/material"
 import { FlexBox } from "lib/ui-ux"
-import { Link, useParams } from "react-router-dom";
+import { LinkedTickets } from "modules/tickets/apis";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components"
 
 const StyledContainer = styled(FlexBox)`
@@ -12,9 +13,16 @@ const StyledContainer = styled(FlexBox)`
     align-items: center;
 `;
 
-export const EmailLinks = () => {
-    const links = [{ ticketId: '1', description: 'Refund related', status: 'Closed' }];
-    const params = useParams()
+export const EmailLinks = (props: { data: LinkedTickets[] }) => {
+    const { data } = props;
+    const location = useLocation()
+
+    const getURL = (ticketId: string) => {
+        const pathNameParts = location.pathname.split('/');
+        pathNameParts[3] = ticketId;
+        return `${pathNameParts.join('/')}${location.search}`;
+    }
+
     return (
         <FlexBox flexDirection="column" width="100%" style={{ border: '1px solid #f1f2f4' }}>
             <StyledContainer>
@@ -24,15 +32,20 @@ export const EmailLinks = () => {
                 </FlexBox>
             </StyledContainer>
             <FlexBox flexDirection="column">
-                {links.map((item) => (
-                    <FlexBox key={item.ticketId} padding="20px">
-                        <Link to={params} target="_blank">
-                            <Typography variant="body2" sx={{ width: '80px' }}>{item.ticketId}</Typography>
-                        </Link>
-                        <Typography variant="body2" sx={{ width: 'calc(100% - 80px)' }}>{item.description}</Typography>
-                        <Typography variant="body2">{item.status}</Typography>
-                    </FlexBox>
-                ))}
+                {data.length
+                    ? data.map((item) => (
+                        <FlexBox key={item.ticket_id} padding="20px" gap={'10px'}>
+                            <Link to={getURL(item.ticket_id)} target="_blank">
+                                <Typography variant="body2" sx={{ width: '80px' }} color={'#6969ff'}>{'#' + item.ticket_id.split('-')[0]}</Typography>
+                            </Link>
+                            <Typography variant="body2" sx={{ width: 'calc(100% - 90px)' }}>{item.description}</Typography>
+                            <Typography variant="body2">{item.status}</Typography>
+                        </FlexBox>
+                    )) : (
+                        <FlexBox padding="20px">
+                            <Typography variant="body2">{'No tickets found'}</Typography>
+                        </FlexBox>
+                    )}
             </FlexBox>
         </FlexBox>
     )

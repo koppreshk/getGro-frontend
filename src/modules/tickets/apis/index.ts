@@ -32,3 +32,4 @@ export * from './create-manual-ticket';
 export * from './fetch-priorities';
 export * from './merge-tickets/search-ticket';
 export * from './merge-tickets/merge-tickets';
+export * from './linked-tickets';

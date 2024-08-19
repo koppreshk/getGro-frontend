@@ -1,9 +1,9 @@
-import { EmailLinks } from "modules/tickets/components/ticket-details"
+import { EmailHistory } from "modules/tickets/components/ticket-details"
 
-export const EmailLinksContainer = () => {
+export const EmailHistoryContainer = () => {
     return (
         <>
-            <EmailLinks />
+            <EmailHistory />
         </>
     )
 }
