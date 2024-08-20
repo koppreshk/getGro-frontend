@@ -5,7 +5,7 @@ export const DeleteTicketContent = () => {
         <FlexBox flexDirection="column" gap={'10px'}>
             <MoreInformation information="When you delete a ticket, the following actions will happen" type="error" />
             <ul>
-                <li>The ticket will be soft deleted.</li>
+                <li style={{ marginBottom: '5px' }}>The ticket will be soft deleted.</li>
                 <li>The ticket can be restored within 30 days from the Deleted Tickets view.</li>
             </ul>
         </FlexBox>

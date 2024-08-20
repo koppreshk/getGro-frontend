@@ -1,7 +1,7 @@
-import { Delete, Merge, MoreVert } from "@mui/icons-material";
+import { DeleteOutlined, MergeOutlined, MoreVert, ReportOutlined } from "@mui/icons-material";
 import { IconButton, Menu, MenuItem, ListItemIcon } from "@mui/material";
 import { useState } from "react";
-import { MoreOptionEnum } from "../ticket-overview";
+import { MoreActionsEnum } from "../ticket-overview";
 
 export const MoreActions = (props: { onMenuItemSelect: (key: string) => void }) => {
     const { onMenuItemSelect } = props;
@@ -20,8 +20,9 @@ export const MoreActions = (props: { onMenuItemSelect: (key: string) => void }) 
     }
 
     const menuItems = [
-        { key: MoreOptionEnum.mergeTicket, label: 'Merge Ticket', icon: <Merge /> },
-        { key: MoreOptionEnum.deleteTicket, label: 'Delete Ticket', icon: <Delete /> }
+        { key: MoreActionsEnum.mergeTicket, label: 'Merge Ticket', icon: <MergeOutlined /> },
+        { key: MoreActionsEnum.deleteTicket, label: 'Delete Ticket', icon: <DeleteOutlined /> },
+        { key: MoreActionsEnum.spamTicket, label: 'Mark as Spam', icon: <ReportOutlined /> },
     ];
 
     return (
