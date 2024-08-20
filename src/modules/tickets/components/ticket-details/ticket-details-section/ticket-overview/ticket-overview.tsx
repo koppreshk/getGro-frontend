@@ -11,6 +11,8 @@ import { ContactInfo, TypographyName } from "./contact-info";
 import { useDateDifference } from "lib/utils";
 import { MoreActions } from "./more-actions";
 import { MergeTicket } from "./more-actions/merge-ticket/merge-ticket";
+import { DeleteTicket } from "./more-actions/delete-ticket/delete-ticket";
+import { SpamTicket } from "./more-actions/spam-ticket/spam-ticket";
 
 interface ITicketOverviewProps {
     ticketDetails: ITicketDetails;
@@ -28,12 +30,22 @@ const MenuRenderer = (props: MenuRendererProps) => {
     switch (selectedMenu) {
         case 'mergeTicket':
             return <MergeTicket showMergeTicketDrawer={showDrawer.mergeTicket} onCloseDrawer={() => toggleDrawerDisplay('mergeTicket')} />;
+        case 'deleteTicket':
+            return <DeleteTicket showDialog={showDrawer.deleteTicket} onCloseDrawer={() => toggleDrawerDisplay('deleteTicket')} />
+        case 'spamTicket':
+            return <SpamTicket showDialog={showDrawer.spamTicket} onCloseDrawer={() => toggleDrawerDisplay('spamTicket')} />
         default: return <></>
     }
 }
 
+export enum MoreActionsEnum {
+    mergeTicket = 'mergeTicket',
+    deleteTicket = 'deleteTicket',
+    spamTicket = 'spamTicket'
+}
+
 type DrawerDisplayTypes = {
-    mergeTicket: boolean;
+    [key in MoreActionsEnum]: boolean;
 }
 
 export const TicketOverview = (props: ITicketOverviewProps) => {
@@ -46,7 +58,9 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
     const customerInfo = useAppSelector((state) => state.tickets.ticketDetails?.customerInfo)
     const [selectedMenu, setSelectedMenu] = useState<string | undefined>();
     const [showDrawer, setDrawerDisplay] = useState<DrawerDisplayTypes>({
-        mergeTicket: false
+        mergeTicket: false,
+        deleteTicket: false,
+        spamTicket: false
     });
 
     const toggleDrawerDisplay = (key: string) => {
