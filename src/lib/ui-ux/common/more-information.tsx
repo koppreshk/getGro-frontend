@@ -23,7 +23,7 @@ interface MoreInformationProps {
 }
 
 export const MoreInformation = (props: MoreInformationProps) => {
-    const { information, type = 'info' } = props;
+    const { information, type = 'action' } = props;
 
     return (
         <>
