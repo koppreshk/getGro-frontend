@@ -94,24 +94,26 @@ export const MergeTicketsContent = (props: IMergeTicketsContentProps) => {
 
 const AdditionalOptions = () => {
     return (
-        <FlexBox flexDirection="column">
+        <>
 
-            <FlexBox alignItems="center" >
-                <CheckboxField name="addSecondaryLinkInPrimary" />
-                <Typography variant="body2">Add a secondary ticket link to the primary ticket.</Typography>
-            </FlexBox>
-            <FlexBox alignItems="center">
-                <CheckboxField name="closeSecondaryTicket" />
-                <Typography variant="body2">After the merge, close all secondary tickets.</Typography>
-            </FlexBox>
-            <FlexBox alignItems="center">
-                <CheckboxField name="sendMail" />
-                <Typography variant="body2">Don't send an email notification to customer</Typography>
+            <FlexBox flexDirection="column">
+                <FlexBox alignItems="center" >
+                    <CheckboxField name="addSecondaryLinkInPrimary" sx={{ padding: '6px 9px' }} />
+                    <Typography variant="body2">Add a secondary ticket link to the primary ticket.</Typography>
+                </FlexBox>
+                <FlexBox alignItems="center">
+                    <CheckboxField name="closeSecondaryTicket" sx={{ padding: '6px 9px' }} />
+                    <Typography variant="body2">After the merge, close all secondary tickets.</Typography>
+                </FlexBox>
+                <FlexBox alignItems="center">
+                    <CheckboxField name="sendMail" sx={{ padding: '6px 9px' }} />
+                    <Typography variant="body2">Don't send an email notification to customer</Typography>
+                </FlexBox>
             </FlexBox>
             <FlexBox flexDirection="column" style={{ marginLeft: '14px' }}>
                 <Typography variant="h6">Add Secondary Ticket:</Typography>
                 <StyledRadioFields name="addSecondaryTicketMessage" radioOptions={[{ key: 'first_message', label: 'First Message' }, { key: 'last_message', label: 'Last Message' }]} />
             </FlexBox>
-        </FlexBox>
+        </>
     )
 }
