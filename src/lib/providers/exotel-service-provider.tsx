@@ -1,0 +1,107 @@
+import ExotelCRMWebSDK, { ExotelWebPhoneSDK, CallListenerCallback, RegisterListenerCallback, MakeCallCallback } from "exotel-ip-calling-crm-websdk";
+import React, { useContext, useEffect, useRef, useState } from "react";
+
+const defaultContextValues = {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    dial: (_obj: { phoneNumber: string }) => { },
+    hangup: () => { },
+    isDeviceRegistered: false,
+    callActive: false,
+    isIncomingCall: false
+}
+
+const ExotelServiceContext = React.createContext(defaultContextValues);
+
+export const ExotelServiceProvider = (props: { children?: React.ReactNode; }) => {
+    const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6ImM5ZWM0NTEwLTgyMTQtNDUwMi1hODQ4LTQ5MWNlMmIyMTVlMCIsImV4cCI6MTczMTg1NDc3MX0.e41nVuTOF8kpm8SQKjMiA-Ym4ZvWpNnTF9MKkeXTpcQ";
+    const userId = "koppresh@getgro.io";
+    
+    const webPhone = useRef<ExotelWebPhoneSDK | null>(null);
+    const [isDeviceRegistered, setIsDeviceRegistered] = useState(false);
+    const [callActive, setCallActive] = useState(false);
+    const [isIncomingCall, setIsIncomingCall] = useState(false);
+
+    const handleCallEvents: CallListenerCallback = (eventType, otherINfo) => {
+        console.log('otherINfo: ', otherINfo)
+        switch (eventType) {
+            case "incoming":
+                setIsIncomingCall(true);
+                break;
+            case "connected":
+                setCallActive(true);
+                break;
+            case "callEnded":
+                setCallActive(false);
+                setIsIncomingCall(false);
+                break;
+            // eslint-disable-next-line no-fallthrough
+            default:
+                break;
+        }
+    };
+
+    const registerationEvent: RegisterListenerCallback = (event) => {
+        if (event === "registered") {
+            setIsDeviceRegistered(true);
+            return;
+        }
+        if (event === "unregistered") {
+            setIsDeviceRegistered(false);
+        }
+    };
+
+    const dialCallback: MakeCallCallback = (status, data) => {
+        console.log("Inside dialCallback", status, data);
+        if (status === "success") {
+            webPhone.current?.AcceptCall();
+            setCallActive(true);
+            return;
+        }
+        setCallActive(false);
+    };
+
+    const dial = (obj: { phoneNumber: string }) => {
+        setCallActive(true);
+        setIsIncomingCall(false);
+        webPhone?.current?.MakeCall(obj.phoneNumber, dialCallback);
+    }
+
+    const hangup = () => {
+        webPhone?.current?.HangupCall();
+        setCallActive(false);
+    };
+
+    useEffect(() => {
+        async function init() {
+            if (webPhone.current) {
+                return;
+            }
+            const crmWebSDK = new ExotelCRMWebSDK(accessToken, userId, true);
+            const crmWebPhone = await crmWebSDK.Initialize(
+                handleCallEvents,
+                registerationEvent
+            );
+            console.log("Initialised CRMWebPhone", crmWebPhone);
+            webPhone.current = crmWebPhone;
+        }
+
+        init();
+
+        return () => webPhone.current?.UnRegisterDevice()
+    });
+
+    const valueObject = {
+        dial,
+        hangup,
+        isDeviceRegistered,
+        callActive,
+        isIncomingCall
+    }
+    return (
+        <ExotelServiceContext.Provider value={valueObject}>
+            {props.children}
+        </ExotelServiceContext.Provider>
+    )
+}
+
+export const useExotelServices = () => useContext(ExotelServiceContext);
