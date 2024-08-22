@@ -39,7 +39,6 @@ export const TicketViewActionButtons = () => {
             </FlexBox>
             <TelephonicDialer openCallPopUp={openCallPopUp} toggleCallBtn={toggleCallBtn} />
             <AddTicket openAddTicketDrawer={openAddTicketDrawer} toggleAddTicketDrawer={toggleAddTicketDrawer} />
-
         </>
     )
 }

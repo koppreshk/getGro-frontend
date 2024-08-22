@@ -1,28 +1,18 @@
 
 import styled from "styled-components";
 import { FormProvider, useForm } from "react-hook-form";
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material"
-import { SelectField, TextboxField } from "lib/form-fields";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Typography, } from "@mui/material"
+import { TextboxField } from "lib/form-fields";
 import { FlexBox } from "lib/ui-ux";
 import { Call } from "@mui/icons-material";
 import { useExotelServices } from "lib";
+import CloseIcon from '@mui/icons-material/Close';
 
 const StyledDialogActions = styled(DialogActions)`
     && {
         padding: 8px 22px 22px;
     }
 `;
-
-const menuOptions = [
-    {
-        key: 'exotel-call',
-        value: 'Exotel'
-    },
-    {
-        key: 'ozonetel-call',
-        value: 'Ozonetel'
-    }
-];
 
 interface ITelephonicDialerProps {
     openCallPopUp: boolean;
@@ -36,7 +26,7 @@ interface TelephonicDialerFormFields {
 
 export const TelephonicDialer = (props: ITelephonicDialerProps) => {
     const { openCallPopUp, phoneNumber, toggleCallBtn } = props;
-    const methods = useForm<TelephonicDialerFormFields>({ defaultValues: { 'phoneNumber': phoneNumber } });
+    const methods = useForm<TelephonicDialerFormFields>({ defaultValues: { 'phoneNumber': phoneNumber }, shouldUnregister: true });
     const { callActive, isDeviceRegistered, dial, hangup } = useExotelServices();
 
     const validatePhoneNum = (num: string) => {
@@ -47,9 +37,12 @@ export const TelephonicDialer = (props: ITelephonicDialerProps) => {
     }
 
     return (
-        <Dialog open={openCallPopUp} onClose={toggleCallBtn} maxWidth="xs" fullWidth={true}>
-            <DialogTitle sx={{ fontSize: '16px' }}>
+        <Dialog open={openCallPopUp} maxWidth="xs" fullWidth={true}>
+            <DialogTitle sx={{ fontSize: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 Make manual call
+                <IconButton onClick={toggleCallBtn}>
+                    <CloseIcon />
+                </IconButton>
             </DialogTitle>
             {
                 !isDeviceRegistered ? (
@@ -62,18 +55,16 @@ export const TelephonicDialer = (props: ITelephonicDialerProps) => {
                     (
                         <FormProvider {...methods}>
                             <DialogContent>
-                                <DialogContentText id="alert-dialog-description">
-                                    Make a manual call to the customer
-                                </DialogContentText>
-                            </DialogContent>
-                            <DialogContent>
-                                <FlexBox width="100%" flexDirection="column" gap="20px" >
-                                    <TextboxField name="phoneNumber" label="Phone Number" fullWidth rules={{ validate: validatePhoneNum }} />
-                                    <SelectField name="telephoneVendor" menuOptions={menuOptions} label="Select Vendor" fullWidth />
+                                <FlexBox width="100%" flexDirection="column" gap="20px">
+                                    {callActive ? <Typography>Call Active</Typography> : null}
+                                    <TextboxField
+                                        name="phoneNumber"
+                                        sx={{ mt: '10px' }}
+                                        label="Phone Number"
+                                        fullWidth rules={{ validate: validatePhoneNum }} />
                                 </FlexBox>
                             </DialogContent>
                             <StyledDialogActions>
-                                <Button onClick={toggleCallBtn} variant="outlined">Cancel</Button>
                                 <Button onClick={methods.handleSubmit(dial)} variant="contained" fullWidth startIcon={<Call />}>Dial</Button>
                                 <Button onClick={hangup} disabled={!callActive} variant="contained" fullWidth startIcon={<Call />}>Hangup</Button>
                             </StyledDialogActions>

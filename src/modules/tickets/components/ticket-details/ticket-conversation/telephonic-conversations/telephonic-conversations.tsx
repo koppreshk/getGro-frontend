@@ -77,7 +77,7 @@ const TelephonicConversationCard = (props: { data: Call }) => {
 export const TelephonicConversationsLayout = (props: { data: ICallsByTicketId }) => {
     const { data } = props;
     return (
-        <FlexBox flexDirection="column" width="100%">
+        <FlexBox flexDirection="column" width="100%" overflowY="auto">
             {data.calls.map((data, index) => <TelephonicConversationCard data={data} key={index} />)}
         </FlexBox>
     )

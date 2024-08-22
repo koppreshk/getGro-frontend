@@ -5,17 +5,18 @@ const defaultContextValues = {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     dial: (_obj: { phoneNumber: string }) => { },
     hangup: () => { },
+    accept: () => { },
     isDeviceRegistered: false,
     callActive: false,
-    isIncomingCall: false
+    isIncomingCall: false,
 }
 
 const ExotelServiceContext = React.createContext(defaultContextValues);
 
 export const ExotelServiceProvider = (props: { children?: React.ReactNode; }) => {
-    const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6ImM5ZWM0NTEwLTgyMTQtNDUwMi1hODQ4LTQ5MWNlMmIyMTVlMCIsImV4cCI6MTczMTg1NDc3MX0.e41nVuTOF8kpm8SQKjMiA-Ym4ZvWpNnTF9MKkeXTpcQ";
+    const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6ImZmYjk2YmYwLTI1YmEtNDY1NC04ZTU4LTBiMjVmMTQ0YmU5YSIsImV4cCI6MTczMjAyOTY4OH0.WTVUb0qGhtHqsboUv_kwJYa6LMna13UlrUUO2N70E2w";
     const userId = "koppresh@getgro.io";
-    
+
     const webPhone = useRef<ExotelWebPhoneSDK | null>(null);
     const [isDeviceRegistered, setIsDeviceRegistered] = useState(false);
     const [callActive, setCallActive] = useState(false);
@@ -71,6 +72,10 @@ export const ExotelServiceProvider = (props: { children?: React.ReactNode; }) =>
         setCallActive(false);
     };
 
+    const accept = () => {
+        webPhone?.current?.AcceptCall();
+    }
+
     useEffect(() => {
         async function init() {
             if (webPhone.current) {
@@ -81,18 +86,15 @@ export const ExotelServiceProvider = (props: { children?: React.ReactNode; }) =>
                 handleCallEvents,
                 registerationEvent
             );
-            console.log("Initialised CRMWebPhone", crmWebPhone);
             webPhone.current = crmWebPhone;
         }
-
-        init();
-
-        return () => webPhone.current?.UnRegisterDevice()
+        init()
     });
 
     const valueObject = {
         dial,
         hangup,
+        accept,
         isDeviceRegistered,
         callActive,
         isIncomingCall
