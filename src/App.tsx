@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ThemeProvider as MUIthemeProvider } from "@mui/material";
 import { CoreLayout } from "./modules/core/pages/core-layout-page";
 import { ThemeProvider, defaultMUITheme } from "themes";
-import { NotificationProvider, ServiceClientProvider } from "lib";
+import { ExotelServiceProvider, NotificationProvider, ServiceClientProvider } from "lib";
 import ticketsReducer from './modules/tickets/storage/tickets-slice';
 import configurationsReducer from './modules/settings/storage/configurations-slice';
 import { AuthProvider } from "modules/login/auth-provider-context";
@@ -47,7 +47,9 @@ export default function App() {
                 <ThemeProvider>
                   <AuthProvider>
                     <ServiceClientProvider>
-                      <CoreLayout />
+                      <ExotelServiceProvider>
+                        <CoreLayout />
+                      </ExotelServiceProvider>
                     </ServiceClientProvider>
                   </AuthProvider>
                 </ThemeProvider>

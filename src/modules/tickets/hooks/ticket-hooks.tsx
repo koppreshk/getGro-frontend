@@ -15,7 +15,7 @@ export const useSourceIcon = () => {
                 return <WhatsApp sx={{ fill: theme.channelSpecific.whatsApp + '!important', ...sx }} />
             case 'twitter':
                 return <Twitter sx={{ fill: theme.channelSpecific.twitter + '!important', ...sx }} />
-            case 'telephonic':
+            case 'ivr':
                 return <LocalPhone sx={{ fill: theme.channelSpecific.telephonic + '!important', ...sx }} />
             case 'instagram':
                 return <Instagram sx={{ fill: theme.channelSpecific.instagram + '!important', ...sx }} />

@@ -42,7 +42,7 @@ export const TicketConversationLayout = () => {
         switch (ticketSource) {
             case 'email':
                 return <EmailConversationContainer />
-            case 'telephonic':
+            case 'ivr':
                 return <TelephonicConversationContainer />
             case 'whatsapp':
                 return <WhatsAppConversationContainer />

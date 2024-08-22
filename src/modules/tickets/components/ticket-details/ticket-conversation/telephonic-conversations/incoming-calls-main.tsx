@@ -1,6 +1,7 @@
 
 import { AppsRounded, Mic, Phone, PhonePaused, RadioButtonChecked } from "@mui/icons-material";
 import { Avatar, Button, Tooltip, Typography } from "@mui/material";
+import { useExotelServices } from "lib";
 // import { useSocket } from "lib/providers/socket";
 import { FlexBox } from "lib/ui-ux";
 import React from "react";
@@ -91,12 +92,12 @@ interface IIncomingCall {
 }
 
 interface IIncomingCallCardComponent {
-    OnClickEndCall: () => void;
+    onClickEndCall: () => void;
     callData: IIncomingCall | undefined
 }
 
 const CardComponent = (props: IIncomingCallCardComponent) => {
-    const { OnClickEndCall, callData } = props;
+    const { onClickEndCall, callData } = props;
     const { pallete } = useTheme();
     const [isCallAnswered, setIsCallAnswered] = React.useState(false);
 
@@ -145,7 +146,7 @@ const CardComponent = (props: IIncomingCallCardComponent) => {
                     </FlexBox>
 
                     <Tooltip title="End Call" arrow placement="bottom">
-                        <IconWrapper alignItems="center" justifyContent="center" $buttonType="phone" onClick={OnClickEndCall}>
+                        <IconWrapper alignItems="center" justifyContent="center" $buttonType="phone" onClick={onClickEndCall}>
                             <Phone sx={{ transform: 'rotate(135deg)' }} />
                         </IconWrapper>
                     </Tooltip>
@@ -153,7 +154,7 @@ const CardComponent = (props: IIncomingCallCardComponent) => {
                 </IncomingCallFooter>
                 :
                 <IncomingCallFooter flexDirection="row" gap="10px">
-                    <Button variant="contained" color="error" fullWidth startIcon={<Phone sx={{ transform: 'rotate(135deg)' }} />} onClick={OnClickEndCall}>
+                    <Button variant="contained" color="error" fullWidth startIcon={<Phone sx={{ transform: 'rotate(135deg)' }} />} onClick={onClickEndCall}>
                         Reject
                     </Button>
                     <Button variant="contained" color="success" fullWidth startIcon={<Phone />} onClick={() => setIsCallAnswered(true)}>
@@ -168,7 +169,7 @@ const CardComponent = (props: IIncomingCallCardComponent) => {
 
 export const IncomingCallMain = () => {
     // const { socket } = useSocket();
-    const [showIncomingCallDialog, setDialogDisplay] = useState(false);
+    const { isIncomingCall, hangup } = useExotelServices();
     const [callData] = useState<IIncomingCall | undefined>();
     // const { user } = useAuth();
 
@@ -188,13 +189,13 @@ export const IncomingCallMain = () => {
     //     }
     // }, [socket]);
 
-    const OnClickEndCall = () => {
-        setDialogDisplay(!showIncomingCallDialog);
+    const onClickEndCall = () => {
+        hangup();
     };
 
     return (
         <>
-            {showIncomingCallDialog && <CardComponent OnClickEndCall={OnClickEndCall} callData={callData} />}
+            {isIncomingCall && <CardComponent onClickEndCall={onClickEndCall} callData={callData} />}
         </>
     )
 }

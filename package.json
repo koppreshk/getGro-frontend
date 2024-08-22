@@ -20,6 +20,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "@tanstack/react-table": "^8.10.1",
     "apexcharts": "^3.46.0",
+    "exotel-ip-calling-crm-websdk": "git+https://github.com/exotel/exotel-ip-calling-crm-websdk#v1.1.1",
     "luxon": "^3.4.4",
     "mui-color-input": "^2.0.3",
     "react": "^18.2.0",
