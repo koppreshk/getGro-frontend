@@ -1,11 +1,9 @@
-
+import React from "react";
+import styled, { css, useTheme } from "styled-components"
 import { AppsRounded, Mic, Phone, PhonePaused, RadioButtonChecked } from "@mui/icons-material";
 import { Avatar, Button, Tooltip, Typography } from "@mui/material";
 import { useExotelServices } from "lib";
 import { FlexBox } from "lib/ui-ux";
-import React from "react";
-import { useState } from "react";
-import styled, { css, useTheme } from "styled-components"
 
 
 const Card = styled(FlexBox)`
@@ -79,39 +77,24 @@ const IconWrapper = styled(FlexBox) <{ $buttonType: string }>`
     position: relative;
 `;
 
-interface IIncomingCall {
-    call_from: string;
-    call_to: string;
-    direction: string;
-    current_time: string;
-    dial_whom_number: string;
-    status: string;
-    event_type: string;
-    agent_email: string;
-}
-
-interface IIncomingCallCardComponent {
-    callData: IIncomingCall | undefined
-}
-
-const CardComponent = (props: IIncomingCallCardComponent) => {
-    const { callData } = props;
+const CardComponent = () => {
     const { pallete } = useTheme();
     const [isCallAnswered, setIsCallAnswered] = React.useState(false);
-    const { accept, hangup } = useExotelServices();
+    const { accept, hangup, incomingCallDetails } = useExotelServices();
 
     const onAcceptCall = () => {
         setIsCallAnswered((prev) => !prev);
         accept();
     }
 
+    console.log('incomingCallDetails: ', incomingCallDetails)
+
     return (
         <Card flexDirection="column" gap="16px">
-
             <IncomingCallHeader flexDirection='row' gap="12px" alignItems="center">
                 <Avatar sx={{ color: '#ffff', bgcolor: '#a7a7a7', width: 56, height: 56 }}>MO</Avatar>
                 <FlexBox flexDirection="column">
-                    <Typography variant="body1" color={pallete.white} sx={{ fontSize: '18px' }}>{callData?.call_from}</Typography>
+                    <Typography variant="body1" color={pallete.white} sx={{ fontSize: '18px' }}>{incomingCallDetails?.callFromNumber}</Typography>
                     <Typography variant="h6" color={pallete.white}>Michelle O'Connor</Typography>
                     {isCallAnswered ?
                         <Typography variant="subheading2" color={pallete.grayVariant4}>Call in progress 00:30</Typography>
@@ -125,7 +108,7 @@ const CardComponent = (props: IIncomingCallCardComponent) => {
                 <IncomingCallFooter flexDirection="row" justifyContent="space-between">
 
                     <Tooltip title="Mute/Un-mute" arrow placement="bottom">
-                        <IconWrapper alignItems="center" justifyContent="center" $buttonType="mic" >
+                        <IconWrapper alignItems="center" justifyContent="center" $buttonType="mic" onClick={() => incomingCallDetails?.MuteToggle()}>
                             <Mic />
                         </IconWrapper>
                     </Tooltip>
@@ -143,7 +126,7 @@ const CardComponent = (props: IIncomingCallCardComponent) => {
                             </IconWrapper>
                         </Tooltip>
                         <Tooltip title="Hold call" arrow placement="bottom">
-                            <IconWrapper alignItems="center" justifyContent="center" $buttonType="normal">
+                            <IconWrapper alignItems="center" justifyContent="center" $buttonType="normal" onClick={() => incomingCallDetails?.HoldToggle()}>
                                 <PhonePaused />
                             </IconWrapper>
                         </Tooltip>
@@ -173,11 +156,10 @@ const CardComponent = (props: IIncomingCallCardComponent) => {
 
 export const IncomingCallMain = () => {
     const { isIncomingCall } = useExotelServices();
-    const [callData] = useState<IIncomingCall | undefined>();
 
     return (
         <>
-            {isIncomingCall && <CardComponent callData={callData} />}
+            {isIncomingCall && <CardComponent />}
         </>
     )
 }

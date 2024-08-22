@@ -1,4 +1,4 @@
-import ExotelCRMWebSDK, { ExotelWebPhoneSDK, CallListenerCallback, RegisterListenerCallback, MakeCallCallback } from "exotel-ip-calling-crm-websdk";
+import ExotelCRMWebSDK, { ExotelWebPhoneSDK, CallListenerCallback, RegisterListenerCallback, MakeCallCallback, IncomingCallDetails } from "exotel-ip-calling-crm-websdk";
 import React, { useContext, useEffect, useRef, useState } from "react";
 
 const defaultContextValues = {
@@ -9,6 +9,17 @@ const defaultContextValues = {
     isDeviceRegistered: false,
     callActive: false,
     isIncomingCall: false,
+    incomingCallDetails: null
+} as IExotelServices
+
+interface IExotelServices {
+    dial: (obj: { phoneNumber: string }) => void;
+    hangup: () => void;
+    accept: () => void;
+    isDeviceRegistered: boolean;
+    callActive: boolean;
+    isIncomingCall: boolean;
+    incomingCallDetails: null | IncomingCallDetails;
 }
 
 const ExotelServiceContext = React.createContext(defaultContextValues);
@@ -21,12 +32,18 @@ export const ExotelServiceProvider = (props: { children?: React.ReactNode; }) =>
     const [isDeviceRegistered, setIsDeviceRegistered] = useState(false);
     const [callActive, setCallActive] = useState(false);
     const [isIncomingCall, setIsIncomingCall] = useState(false);
+    const [incomingCallDetails, setIncomingCallDetails] = useState<IncomingCallDetails | null>(null);
 
-    const handleCallEvents: CallListenerCallback = (eventType, otherINfo) => {
-        console.log('otherINfo: ', otherINfo)
+    const handleCallEvents: CallListenerCallback = (eventType, moreInfo) => {
+        console.log('moreInfo: ', moreInfo)
+        const details = moreInfo as IncomingCallDetails[];
+
         switch (eventType) {
             case "incoming":
-                setIsIncomingCall(true);
+                if (!details[0].callFromNumber.toString().includes('sip')) { //checking if its not the outgoing leg1 logic
+                    setIsIncomingCall(true);
+                    setIncomingCallDetails(details[0]); //for incoming calls, need to access array of 0 index
+                }
                 break;
             case "connected":
                 setCallActive(true);
@@ -34,6 +51,7 @@ export const ExotelServiceProvider = (props: { children?: React.ReactNode; }) =>
             case "callEnded":
                 setCallActive(false);
                 setIsIncomingCall(false);
+                setIncomingCallDetails(null);
                 break;
             // eslint-disable-next-line no-fallthrough
             default:
@@ -70,6 +88,7 @@ export const ExotelServiceProvider = (props: { children?: React.ReactNode; }) =>
     const hangup = () => {
         webPhone?.current?.HangupCall();
         setCallActive(false);
+        setIncomingCallDetails(null);
     };
 
     const accept = () => {
@@ -97,7 +116,8 @@ export const ExotelServiceProvider = (props: { children?: React.ReactNode; }) =>
         accept,
         isDeviceRegistered,
         callActive,
-        isIncomingCall
+        isIncomingCall,
+        incomingCallDetails
     }
     return (
         <ExotelServiceContext.Provider value={valueObject}>
