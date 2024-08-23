@@ -1,5 +1,20 @@
 declare module 'exotel-ip-calling-crm-websdk' {
 
+    interface CallEventData {
+        callId: string;
+        remoteId: string;
+        remoteDisplayName: string;
+        callDirection: string;
+        callState: string;
+        callDuration: string;
+        callStartedTime: string;
+        callEstablishedTime: string;
+        callEndedTime: string;
+        callAnswerTime: string;
+        callEndReason: string;
+        sessionId: string;
+    }
+    
     export interface IncomingCallDetails {
         Answer: () => void,
         Hangup: () => void,
@@ -9,7 +24,7 @@ declare module 'exotel-ip-calling-crm-websdk' {
         MuteToggle: () => void,
         UnHold: () => void,
         UnMute: () => void,
-        callDetails: () => void,
+        callDetails: () => CallEventData,
         callFromNumber: number,
         sendDTMF: (num: number) => void
     }
@@ -47,28 +62,13 @@ declare module 'exotel-ip-calling-crm-websdk' {
     export interface MakeCallCallback {
         (status: "success" | "failed", data: Root): void;
     }
-    export interface CallEventData {
-        callId: string;
-        remoteId: string;
-        remoteDisplayName: string;
-        callDirection: string;
-        callState: string;
-        callDuration: string;
-        callStartedTime: string;
-        callEstablishedTime: string;
-        callEndedTime: string;
-        callAnswerTime: string;
-        callEndReason: string;
-        sessionId: string;
-        callFromNumber?: string;
-        status?: string;
-    }
+
     export type CallEvent = "incoming" | "connected" | "callEnded" | "holdtoggle" | "mutetoggle";
     /**
      * CallListenerCallback is to handle incoming call event
      */
     export interface CallListenerCallback {
-        (event: CallEvent, callData: IncomingCallDetails[] | CallEventData): void;
+        (event: CallEvent, callData: IncomingCallDetails): void;
     }
     export interface RegisterListenerCallback {
         (event: string): void;

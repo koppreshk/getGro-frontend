@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css, useTheme } from "styled-components"
-import { AppsRounded, Mic, Phone, PhonePaused, RadioButtonChecked } from "@mui/icons-material";
+import { Mic, MicOff, Phone, PhonePaused, RadioButtonChecked } from "@mui/icons-material";
 import { Avatar, Button, Tooltip, Typography } from "@mui/material";
 import { useExotelServices } from "lib";
 import { FlexBox } from "lib/ui-ux";
@@ -87,10 +87,22 @@ const CardComponent = () => {
     const { pallete } = useTheme();
     const [isCallAnswered, setIsCallAnswered] = React.useState(false);
     const { accept, hangup, incomingCallDetails } = useExotelServices();
+    const [isMuted, setIsMuted] = React.useState(false);
+    const [isCallOnHold, setCallOnHold] = React.useState(false);
 
     const onAcceptCall = () => {
         setIsCallAnswered((prev) => !prev);
         accept();
+    }
+
+    const onMute = () => {
+        incomingCallDetails?.MuteToggle();
+        setIsMuted(pre => !pre);
+    }
+
+    const onHold = () => {
+        incomingCallDetails?.HoldToggle();
+        setCallOnHold(pre => !pre);
     }
 
     return (
@@ -112,8 +124,8 @@ const CardComponent = () => {
                 <IncomingCallFooter flexDirection="row" justifyContent="space-between">
 
                     <Tooltip title="Mute/Un-mute" arrow placement="bottom">
-                        <IconWrapper alignItems="center" justifyContent="center" $buttonType="mic" onClick={() => incomingCallDetails?.MuteToggle()}>
-                            <Mic />
+                        <IconWrapper alignItems="center" justifyContent="center" $buttonType="mic" onClick={onMute}>
+                            {isMuted ? <MicOff /> : <Mic />}
                         </IconWrapper>
                     </Tooltip>
 
@@ -124,14 +136,14 @@ const CardComponent = () => {
                             </IconWrapper>
                         </Tooltip>
 
-                        <Tooltip title="Keypad" arrow placement="bottom">
+                        {/* <Tooltip title="Keypad" arrow placement="bottom">
                             <IconWrapper alignItems="center" justifyContent="center" $buttonType="normal">
                                 <AppsRounded />
                             </IconWrapper>
-                        </Tooltip>
+                        </Tooltip> */}
                         <Tooltip title="Hold call" arrow placement="bottom">
-                            <IconWrapper alignItems="center" justifyContent="center" $buttonType="normal" onClick={() => incomingCallDetails?.HoldToggle()}>
-                                <PhonePaused />
+                            <IconWrapper alignItems="center" justifyContent="center" $buttonType="normal" onClick={onHold}>
+                                {isCallOnHold ? <Phone /> : <PhonePaused />}
                             </IconWrapper>
                         </Tooltip>
                     </FlexBox>

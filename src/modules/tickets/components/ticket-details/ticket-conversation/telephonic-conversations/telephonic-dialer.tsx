@@ -27,7 +27,7 @@ interface TelephonicDialerFormFields {
 
 export const TelephonicDialer = (props: ITelephonicDialerProps) => {
     const { openCallPopUp, phoneNumber, toggleCallBtn } = props;
-    const methods = useForm<TelephonicDialerFormFields>({ defaultValues: { 'phoneNumber': phoneNumber }, shouldUnregister: true });
+    const methods = useForm<TelephonicDialerFormFields>({ defaultValues: { phoneNumber: phoneNumber } });
     const { callActive, isDeviceRegistered, dial, hangup } = useExotelServices();
 
     const validatePhoneNum = (num: string) => {
@@ -59,7 +59,7 @@ export const TelephonicDialer = (props: ITelephonicDialerProps) => {
                                 <FlexBox width="100%" flexDirection="column" gap="20px">
                                     {callActive ?
                                         <FlexBox alignItems="center" flexDirection="column" gap={'10px'}>
-                                            <Typography variant="subheading2">Outgoing call...</Typography>
+                                            <Typography variant="h6">Calling {methods.watch('phoneNumber')}</Typography>
                                             <Timer />
                                         </FlexBox> :
                                         <TextboxField
