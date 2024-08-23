@@ -57,17 +57,20 @@ export const TelephonicDialer = (props: ITelephonicDialerProps) => {
                         <FormProvider {...methods}>
                             <DialogContent>
                                 <FlexBox width="100%" flexDirection="column" gap="20px">
-                                    {callActive ? <Typography>Call Active</Typography> : null}
-                                    <Timer />
-                                    <TextboxField
-                                        name="phoneNumber"
-                                        sx={{ mt: '10px' }}
-                                        label="Phone Number"
-                                        fullWidth rules={{ validate: validatePhoneNum }} />
+                                    {callActive ?
+                                        <FlexBox alignItems="center" flexDirection="column" gap={'10px'}>
+                                            <Typography variant="subheading2">Outgoing call...</Typography>
+                                            <Timer />
+                                        </FlexBox> :
+                                        <TextboxField
+                                            name="phoneNumber"
+                                            sx={{ mt: '10px' }}
+                                            label="Phone Number"
+                                            fullWidth rules={{ validate: validatePhoneNum }} />}
                                 </FlexBox>
                             </DialogContent>
                             <StyledDialogActions>
-                                <Button onClick={methods.handleSubmit(dial)} variant="contained" fullWidth startIcon={<Call />}>Dial</Button>
+                                <Button onClick={methods.handleSubmit(dial)} disabled={callActive} variant="contained" fullWidth startIcon={<Call />}>Dial</Button>
                                 <Button onClick={hangup} disabled={!callActive} variant="contained" fullWidth startIcon={<Call />}>Hangup</Button>
                             </StyledDialogActions>
                         </FormProvider>

@@ -4,7 +4,7 @@ import { AppsRounded, Mic, Phone, PhonePaused, RadioButtonChecked } from "@mui/i
 import { Avatar, Button, Tooltip, Typography } from "@mui/material";
 import { useExotelServices } from "lib";
 import { FlexBox } from "lib/ui-ux";
-
+import { Timer } from "./timer";
 
 const Card = styled(FlexBox)`
     position: fixed;
@@ -77,6 +77,12 @@ const IconWrapper = styled(FlexBox) <{ $buttonType: string }>`
     position: relative;
 `;
 
+const StyledTimer = styled(Timer)`
+    &&{
+        color: ${({ theme }) => theme.pallete.grayVariant4};
+    }
+`;
+
 const CardComponent = () => {
     const { pallete } = useTheme();
     const [isCallAnswered, setIsCallAnswered] = React.useState(false);
@@ -87,17 +93,15 @@ const CardComponent = () => {
         accept();
     }
 
-    console.log('incomingCallDetails: ', incomingCallDetails)
-
     return (
         <Card flexDirection="column" gap="16px">
             <IncomingCallHeader flexDirection='row' gap="12px" alignItems="center">
-                <Avatar sx={{ color: '#ffff', bgcolor: '#a7a7a7', width: 56, height: 56 }}>MO</Avatar>
+                <Avatar sx={{ color: '#ffff', bgcolor: '#a7a7a7', width: 56, height: 56 }}></Avatar>
                 <FlexBox flexDirection="column">
-                    <Typography variant="body1" color={pallete.white} sx={{ fontSize: '18px' }}>{incomingCallDetails?.callFromNumber}</Typography>
-                    <Typography variant="h6" color={pallete.white}>Michelle O'Connor</Typography>
+                    <Typography variant="body1" color={pallete.white} sx={{ fontSize: '18px' }}>{incomingCallDetails?.callFromNumber || 'Phone Number'}</Typography>
+                    {/* <Typography variant="h6" color={pallete.white}>Michelle O'Connor</Typography> */}
                     {isCallAnswered ?
-                        <Typography variant="subheading2" color={pallete.grayVariant4}>Call in progress 00:30</Typography>
+                        <StyledTimer />
                         :
                         <Typography variant="subheading2" color={pallete.grayVariant4}>Incoming call...</Typography>
                     }
