@@ -19,5 +19,8 @@ export default defineConfig({
     })],
   server: {
     open: true
+  },
+  build: {
+    commonjsOptions: { transformMixedEsModules: true } // Change
   }
 })
