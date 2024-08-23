@@ -7,6 +7,7 @@ import { FlexBox } from "lib/ui-ux";
 import { Call } from "@mui/icons-material";
 import { useExotelServices } from "lib";
 import CloseIcon from '@mui/icons-material/Close';
+import { Timer } from "./timer";
 
 const StyledDialogActions = styled(DialogActions)`
     && {
@@ -57,6 +58,7 @@ export const TelephonicDialer = (props: ITelephonicDialerProps) => {
                             <DialogContent>
                                 <FlexBox width="100%" flexDirection="column" gap="20px">
                                     {callActive ? <Typography>Call Active</Typography> : null}
+                                    <Timer />
                                     <TextboxField
                                         name="phoneNumber"
                                         sx={{ mt: '10px' }}
