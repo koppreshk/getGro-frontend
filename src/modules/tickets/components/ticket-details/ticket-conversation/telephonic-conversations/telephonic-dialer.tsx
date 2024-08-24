@@ -66,7 +66,7 @@ export const TelephonicDialer = (props: ITelephonicDialerProps) => {
                                     {callActive ?
                                         <FlexBox flexDirection="column" gap={'20px'} alignItems="center">
                                             <Typography variant="h6" >Calling {methods.watch('phoneNumber')}</Typography>
-                                            <MoreInformation information="Once the call is connected, the current dialog will be  closed and a different incoming call dialog box will appear, you need to accept thar call to connect with customer" />
+                                            <MoreInformation information="Once the call is connected, the current dialog box will be closed and a different incoming call dialog box will appear, you need to accept that call to connect with customer" />
                                         </FlexBox> :
                                         <TextboxField
                                             name="phoneNumber"
