@@ -3,11 +3,11 @@ import styled from "styled-components";
 import { FormProvider, useForm } from "react-hook-form";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Typography, } from "@mui/material"
 import { TextboxField } from "lib/form-fields";
-import { FlexBox } from "lib/ui-ux";
+import { FlexBox, MoreInformation } from "lib/ui-ux";
 import { Call } from "@mui/icons-material";
 import { useExotelServices } from "lib";
 import CloseIcon from '@mui/icons-material/Close';
-import { Timer } from "./timer";
+import { useEffect } from "react";
 
 const StyledDialogActions = styled(DialogActions)`
     && {
@@ -28,7 +28,7 @@ interface TelephonicDialerFormFields {
 export const TelephonicDialer = (props: ITelephonicDialerProps) => {
     const { openCallPopUp, phoneNumber, toggleCallBtn } = props;
     const methods = useForm<TelephonicDialerFormFields>({ defaultValues: { phoneNumber: phoneNumber } });
-    const { callActive, isDeviceRegistered, dial, hangup } = useExotelServices();
+    const { callActive, isDeviceRegistered, dial, hangup, isIncomingCall } = useExotelServices();
 
     const validatePhoneNum = (num: string) => {
         if (/^\+?[0-9]{10,14}$/.test(num)) {
@@ -36,6 +36,12 @@ export const TelephonicDialer = (props: ITelephonicDialerProps) => {
         }
         return 'Please input valid number'
     }
+
+    useEffect(() => {
+        if (isIncomingCall) {
+            toggleCallBtn()
+        }
+    }, [isIncomingCall, toggleCallBtn])
 
     return (
         <Dialog open={openCallPopUp} maxWidth="xs" fullWidth={true}>
@@ -58,9 +64,9 @@ export const TelephonicDialer = (props: ITelephonicDialerProps) => {
                             <DialogContent>
                                 <FlexBox width="100%" flexDirection="column" gap="20px">
                                     {callActive ?
-                                        <FlexBox alignItems="center" flexDirection="column" gap={'10px'}>
-                                            <Typography variant="h6">Calling {methods.watch('phoneNumber')}</Typography>
-                                            <Timer />
+                                        <FlexBox flexDirection="column" gap={'20px'} alignItems="center">
+                                            <Typography variant="h6" >Calling {methods.watch('phoneNumber')}</Typography>
+                                            <MoreInformation information="Once the call is connected, the current dialog will be  closed and a different incoming call dialog box will appear, you need to accept thar call to connect with customer" />
                                         </FlexBox> :
                                         <TextboxField
                                             name="phoneNumber"
@@ -79,3 +85,4 @@ export const TelephonicDialer = (props: ITelephonicDialerProps) => {
         </Dialog>
     )
 }
+

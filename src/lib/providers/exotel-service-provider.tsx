@@ -37,10 +37,8 @@ export const ExotelServiceProvider = (props: { children?: React.ReactNode; }) =>
     const handleCallEvents: CallListenerCallback = (eventType, moreInfo) => {
         switch (eventType) {
             case "incoming":
-                if (!moreInfo.callFromNumber.toString().includes('sip')) { //checking if its not the outgoing leg1 logic
-                    setIsIncomingCall(true);
-                    setIncomingCallDetails(moreInfo); //for incoming calls, need to access array of 0 index
-                }
+                setIsIncomingCall(true);
+                setIncomingCallDetails(moreInfo);
                 break;
             case "connected":
                 setCallActive(true);

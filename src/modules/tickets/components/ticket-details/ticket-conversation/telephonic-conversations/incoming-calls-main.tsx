@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import styled, { css, useTheme } from "styled-components"
 import { Mic, MicOff, Phone, PhonePaused, RadioButtonChecked } from "@mui/icons-material";
 import { Avatar, Button, Tooltip, Typography } from "@mui/material";
@@ -52,9 +52,6 @@ const IconWrapper = styled(FlexBox) <{ $buttonType: string }>`
         ` : $buttonType === 'recording' ? css`
             background-color: #666768;
             color: #be0000;
-            &:hover {
-                background-color: #5a5b5c;
-            }
         ` : $buttonType === 'phone' ? css`
             background-color: #d32f2f;
             color: #ffff;
@@ -83,53 +80,15 @@ const StyledTimer = styled(Timer)`
     }
 `;
 
-
-const useAudio = (url: string) => {
-    const audioRef = useRef(new Audio(url));
-
-    const [playing, setPlaying] = useState(false);
-
-    const toggle = () => setPlaying((prev) => !prev);
-
-    useEffect(() => {
-        // Create the audio element and set it to mute
-        audioRef.current.muted = true;
-
-        if (playing) {
-            audioRef.current.play().then(() => {
-                // Unmute the audio after it starts playing
-                audioRef.current.muted = false;
-            }).catch(error => {
-                console.error('Autoplay failed:', error);
-            });
-        }
-        else {
-            audioRef.current.pause()
-        }
-        // Attempt to play the audio
-    }, [playing]);
-
-    return { playing, toggle, audioRef };
-};
-
-const CardComponent = (props: { isIncomingCall: boolean }) => {
+const CardComponent = () => {
     const { pallete } = useTheme();
     const [isCallAnswered, setIsCallAnswered] = React.useState(false);
     const { accept, hangup, incomingCallDetails } = useExotelServices();
     const [isMuted, setIsMuted] = React.useState(false);
     const [isCallOnHold, setCallOnHold] = React.useState(false);
-    const { toggle, audioRef } = useAudio('https://dl.prokerala.com/downloads/ringtones/files/mp3/skype-ringtones-17418.mp3');
-
-    useEffect(() => {
-        if (props.isIncomingCall) {
-            toggle();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     const onAcceptCall = () => {
         setIsCallAnswered((prev) => !prev);
-        toggle();
         accept();
     }
 
@@ -144,18 +103,15 @@ const CardComponent = (props: { isIncomingCall: boolean }) => {
     }
 
     const onReject = () => {
-        toggle();
         hangup();
     }
 
     return (
         <Card flexDirection="column" gap="16px" >
-            <audio ref={audioRef} muted={true} />
             <IncomingCallHeader flexDirection='row' gap="12px" alignItems="center">
                 <Avatar sx={{ color: '#ffff', bgcolor: '#a7a7a7', width: 56, height: 56 }}></Avatar>
                 <FlexBox flexDirection="column">
                     <Typography variant="body1" color={pallete.white} sx={{ fontSize: '18px' }}>{incomingCallDetails?.callFromNumber || 'Phone Number'}</Typography>
-                    {/* <Typography variant="h6" color={pallete.white}>Michelle O'Connor</Typography> */}
                     {isCallAnswered ?
                         <StyledTimer />
                         :
@@ -167,7 +123,7 @@ const CardComponent = (props: { isIncomingCall: boolean }) => {
             {isCallAnswered ?
                 <IncomingCallFooter flexDirection="row" justifyContent="space-between">
 
-                    <Tooltip title="Mute/Un-mute" arrow placement="bottom">
+                    <Tooltip title={isMuted ? "Un-mute" : "Mute"} arrow placement="bottom">
                         <IconWrapper alignItems="center" justifyContent="center" $buttonType="mic" onClick={onMute}>
                             {isMuted ? <MicOff /> : <Mic />}
                         </IconWrapper>
@@ -185,7 +141,7 @@ const CardComponent = (props: { isIncomingCall: boolean }) => {
                                 <AppsRounded />
                             </IconWrapper>
                         </Tooltip> */}
-                        <Tooltip title="Hold call" arrow placement="bottom">
+                        <Tooltip title={isCallOnHold ? "Unhold call" : "Hold call"} arrow placement="bottom">
                             <IconWrapper alignItems="center" justifyContent="center" $buttonType="normal" onClick={onHold}>
                                 {isCallOnHold ? <Phone /> : <PhonePaused />}
                             </IconWrapper>
@@ -219,7 +175,7 @@ export const IncomingCallMain = () => {
 
     return (
         <>
-            {isIncomingCall && <CardComponent isIncomingCall={isIncomingCall} />}
+            {isIncomingCall && <CardComponent />}
         </>
     )
 }
