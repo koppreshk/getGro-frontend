@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled, { css, useTheme } from "styled-components"
 import { Mic, MicOff, Phone, PhonePaused, RadioButtonChecked } from "@mui/icons-material";
 import { Avatar, Button, Tooltip, Typography } from "@mui/material";
@@ -83,15 +83,53 @@ const StyledTimer = styled(Timer)`
     }
 `;
 
-const CardComponent = () => {
+
+const useAudio = (url: string) => {
+    const audioRef = useRef(new Audio(url));
+
+    const [playing, setPlaying] = useState(false);
+
+    const toggle = () => setPlaying((prev) => !prev);
+
+    useEffect(() => {
+        // Create the audio element and set it to mute
+        audioRef.current.muted = true;
+
+        if (playing) {
+            audioRef.current.play().then(() => {
+                // Unmute the audio after it starts playing
+                audioRef.current.muted = false;
+            }).catch(error => {
+                console.error('Autoplay failed:', error);
+            });
+        }
+        else {
+            audioRef.current.pause()
+        }
+        // Attempt to play the audio
+    }, [playing]);
+
+    return { playing, toggle, audioRef };
+};
+
+const CardComponent = (props: { isIncomingCall: boolean }) => {
     const { pallete } = useTheme();
     const [isCallAnswered, setIsCallAnswered] = React.useState(false);
     const { accept, hangup, incomingCallDetails } = useExotelServices();
     const [isMuted, setIsMuted] = React.useState(false);
     const [isCallOnHold, setCallOnHold] = React.useState(false);
+    const { toggle, audioRef } = useAudio('https://dl.prokerala.com/downloads/ringtones/files/mp3/skype-ringtones-17418.mp3');
+
+    useEffect(() => {
+        if (props.isIncomingCall) {
+            toggle();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const onAcceptCall = () => {
         setIsCallAnswered((prev) => !prev);
+        toggle();
         accept();
     }
 
@@ -105,8 +143,14 @@ const CardComponent = () => {
         setCallOnHold(pre => !pre);
     }
 
+    const onReject = () => {
+        toggle();
+        hangup();
+    }
+
     return (
-        <Card flexDirection="column" gap="16px">
+        <Card flexDirection="column" gap="16px" >
+            <audio ref={audioRef} muted={true} />
             <IncomingCallHeader flexDirection='row' gap="12px" alignItems="center">
                 <Avatar sx={{ color: '#ffff', bgcolor: '#a7a7a7', width: 56, height: 56 }}></Avatar>
                 <FlexBox flexDirection="column">
@@ -157,7 +201,7 @@ const CardComponent = () => {
                 </IncomingCallFooter>
                 :
                 <IncomingCallFooter flexDirection="row" gap="10px">
-                    <Button variant="contained" color="error" fullWidth startIcon={<Phone sx={{ transform: 'rotate(135deg)' }} />} onClick={hangup}>
+                    <Button variant="contained" color="error" fullWidth startIcon={<Phone sx={{ transform: 'rotate(135deg)' }} />} onClick={onReject}>
                         Reject
                     </Button>
                     <Button variant="contained" color="success" fullWidth startIcon={<Phone />} onClick={onAcceptCall}>
@@ -175,7 +219,7 @@ export const IncomingCallMain = () => {
 
     return (
         <>
-            {isIncomingCall && <CardComponent />}
+            {isIncomingCall && <CardComponent isIncomingCall={isIncomingCall} />}
         </>
     )
 }
