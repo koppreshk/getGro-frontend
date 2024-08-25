@@ -65,7 +65,7 @@ export const TelephonicDialer = (props: ITelephonicDialerProps) => {
                             <DialogContent>
                                 <FlexBox width="100%" flexDirection="column" gap="20px">
                                     {callActive ?
-                                        <FlexBox flexDirection="column" gap={'20px'} alignItems="center">
+                                        <FlexBox flexDirection="column" gap={'20px'}>
                                             <FlexBox gap={'10px'} alignItems="center">
                                                 <CallStatusIconWrapper justifyContent="center" alignItems="center" $callStatus={'outgoing'}>
                                                     {getCallStatusIcon('outgoing')}
