@@ -8,6 +8,7 @@ import { Call } from "@mui/icons-material";
 import { useExotelServices } from "lib";
 import CloseIcon from '@mui/icons-material/Close';
 import { useEffect } from "react";
+import { CallStatusIconWrapper, getCallStatusIcon } from "./telephonic-conversations";
 
 const StyledDialogActions = styled(DialogActions)`
     && {
@@ -65,7 +66,15 @@ export const TelephonicDialer = (props: ITelephonicDialerProps) => {
                                 <FlexBox width="100%" flexDirection="column" gap="20px">
                                     {callActive ?
                                         <FlexBox flexDirection="column" gap={'20px'} alignItems="center">
-                                            <Typography variant="h6" >Calling {methods.watch('phoneNumber')}</Typography>
+                                            <FlexBox gap={'10px'} alignItems="center">
+                                                <CallStatusIconWrapper justifyContent="center" alignItems="center" $callStatus={'outgoing'}>
+                                                    {getCallStatusIcon('outgoing')}
+                                                </CallStatusIconWrapper>
+                                                <FlexBox flexDirection="column">
+                                                    <Typography variant="body2" >Calling</Typography>
+                                                    <Typography variant="h6" >{methods.watch('phoneNumber')}</Typography>
+                                                </FlexBox>
+                                            </FlexBox>
                                             <MoreInformation information="Once the call is connected, the current dialog box will be closed and a different incoming call dialog box will appear, you need to accept that call to connect with customer" />
                                         </FlexBox> :
                                         <TextboxField
