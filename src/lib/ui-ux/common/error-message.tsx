@@ -29,7 +29,7 @@ export const ErrorMessage = (props: { statusCode?: string }) => {
                         <Typography sx={{ color: 'red' }}>{parsedStatusCode}: </Typography>
                         <Typography sx={{ color: 'red' }}>{parsedMessage}</Typography>
                     </FlexBox>
-                    : null}
+                    : <Typography sx={{ color: 'red' }}>{parsedMessage}</Typography>}
             </FlexBox>
         </Suspense>
     )

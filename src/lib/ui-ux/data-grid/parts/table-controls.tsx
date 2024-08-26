@@ -1,9 +1,10 @@
 import React, { useCallback, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
-import { IconButton, Switch, TextField, Tooltip, Typography } from "@mui/material";
+import { IconButton, TextField, Tooltip, Typography } from "@mui/material";
 import { FlexBox, RefreshButton, VerticalSeparator } from "lib/ui-ux";
 import { ArchiveOutlined, AssignmentIndOutlined, ChevronLeft, ChevronRight, DeleteOutline, KeyboardDoubleArrowLeft, KeyboardDoubleArrowRight, MarkChatReadOutlined, MarkUnreadChatAltOutlined } from '@mui/icons-material';
+import { ContentViewMode } from "./content-view-mode";
 
 const StyledFlexBox = styled(FlexBox)`
     padding: 0px 20px 0 20px;  
@@ -61,8 +62,8 @@ export const TableControls = (props: ITableControlProps) => {
         setSearchParams(searchParams);
     }, [searchParams, setSearchParams]);
 
-    const onGridModeChange = (_event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-        searchParams.set('cardView', checked ? 'true' : 'false');
+    const onGridModeChange = (selectedValue: string) => {
+        searchParams.set('cardView', selectedValue === 'card' ? 'true' : 'false');
         setSearchParams(searchParams);
     }
 
@@ -73,10 +74,8 @@ export const TableControls = (props: ITableControlProps) => {
                 {enableSerchField ? <TextField placeholder="Input here..." size="small" label="Search" type="search" onChange={onSearchChange} /> : null}
             </FlexBox>
             <FlexBox gap="30px" alignItems="center">
-                <FlexBox alignItems="center">
-                    <Typography variant="subtitle2">Card View</Typography>
-                    <Switch onChange={onGridModeChange} checked={cardView === 'true'} />
-                </FlexBox>
+                <ContentViewMode onGridModeChange={onGridModeChange} selectedValue={cardView === 'true' ? 'card' : 'grid'} />
+                <VerticalSeparator />
                 <NoOfPages noOfRows={noOfRows as Rows} onFilterChangeHandler={onFilterChangeHandler} />
                 <VerticalSeparator />
                 <FlexBox>
