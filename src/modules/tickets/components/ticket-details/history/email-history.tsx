@@ -1,10 +1,13 @@
 import { Avatar, Typography } from "@mui/material";
 import { FlexBox, HorizontalSeparator } from "lib/ui-ux"
 import { chooseRandomColors, getInitialsByName } from "lib/utils";
+import { TicketsHistory } from "modules/tickets/apis";
 import { useMemo } from "react";
 import { useTheme } from "styled-components";
 
-export const EmailHistory = () => {
+export const EmailHistory = (props: { data: TicketsHistory[] }) => {
+    const { data } = props;
+    console.log(data);
     const history = [{ name: 'System Automation', content: 'SLA Violated - First Response Due' }, { name: 'System Automation', content: 'SLA Violated - First Response Due' }];
 
     return (
