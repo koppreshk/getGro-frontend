@@ -2,8 +2,9 @@ import React, { useMemo } from "react";
 import styled from "styled-components";
 import { Avatar, Box, Tab, Tabs, Typography } from "@mui/material";
 import { chooseRandomColors, getInitialsByName } from "lib/utils";
-import { FlexBox } from "lib/ui-ux";
+import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { ChangePassword, GeneralInfo, GenerateAPIKeys } from ".";
+import { Status } from "modules/core/components/parts/agent-status";
 
 const StyledLayoutPage = styled(FlexBox)`
     background-color: ${({ theme }) => theme.pallete.grayVariant5};
@@ -19,8 +20,10 @@ export const UserProfileLayout = () => {
     return (
         <StyledLayoutPage width="100%" height="100%" flexDirection="column" gap="14px" padding="24px">
             <Typography variant="h4" textTransform={"capitalize"}>Personal Settings</Typography>
-            <ProfileHeader />
-            <ProfileDetails />
+            <FlexBox gap="20px" width="100%" height="calc(100% - 40px)">
+                <ProfileHeader />
+                <ProfileDetails />
+            </FlexBox>
         </StyledLayoutPage>
     )
 }
@@ -28,12 +31,19 @@ export const UserProfileLayout = () => {
 const ProfileHeader = () => {
 
     return (
-        <StyledFlexbox justifyContent='space-between' alignItems='center' padding='4px 24px' height='145px'>
-            <FlexBox alignItems='center' gap="12px">
+        <StyledFlexbox style={{ flex: '1' }} height="400px" >
+            <FlexBox gap="12px" flexDirection="column" width="100%">
                 <CustomerAvatar customerName="Jon Snow" />
-                <FlexBox flexDirection='column'>
+                <FlexBox flexDirection='column' padding='0 0 0 20px' gap="6px">
                     <Typography variant='h5'>Jon Snow</Typography>
                     <Typography variant='caption'>jonsnow@getgro.io</Typography>
+
+                    <FlexBox style={{ textTransform: 'unset', gap: '6px' }} flexDirection="row" alignItems="center">
+                        <Status $status="Online" />
+                        <Typography variant="h6">
+                            Online
+                        </Typography>
+                    </FlexBox>
                 </FlexBox>
             </FlexBox>
         </StyledFlexbox>
@@ -55,7 +65,7 @@ const ProfileDetails = () => {
     };
 
     return (
-        <StyledFlexbox>
+        <StyledFlexbox style={{ flex: '5' }}>
             <FlexBox flexDirection="column" width="100%">
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
@@ -115,15 +125,19 @@ const CustomerAvatar = (props: { customerName: string }) => {
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(customerName)), [customerName]);
 
     return (
-        <Avatar sx={{
-            color: textColor,
-            bgcolor: backgroundColor,
-            width: '52px',
-            height: '52px',
-            fontSize: '20px',
-            borderRadius: '20%'
-        }}>
-            {getInitialsByName(customerName)}
-        </Avatar>
+        <FlexBox flexDirection="row" width="100%" alignItems="center" padding="30px 0">
+            <HorizontalSeparator />
+            <Avatar sx={{
+                color: textColor,
+                bgcolor: backgroundColor,
+                width: '120px',
+                height: '120px',
+                fontSize: '4rem',
+            }}>
+                {getInitialsByName(customerName)}
+            </Avatar>
+            <HorizontalSeparator />
+        </FlexBox>
+
     )
 }

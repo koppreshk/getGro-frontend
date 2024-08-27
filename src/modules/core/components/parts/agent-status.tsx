@@ -11,7 +11,7 @@ export enum Statuses {
     Offline = 'Offline'
 }
 
-const Status = styled.div<{ $status?: string }>`
+export const Status = styled.div<{ $status?: string }>`
     width: 8px;
     height: 8px;
     border-radius: 100%;
