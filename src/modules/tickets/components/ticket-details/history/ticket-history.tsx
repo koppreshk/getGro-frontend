@@ -7,25 +7,40 @@ const useColumns = () => {
     const columnHelper = createColumnHelper<TicketsHistory>();
 
     const columns = [
-        columnHelper.accessor("activityType", {
-            id: 'activityType',
+        columnHelper.accessor("description", {
+            id: 'description',
             cell: info => info.getValue(),
-            header: () => 'Activity Type',
+            header: () => 'Description',
+            meta: {
+                disableColReorder: true
+            }
         }),
         columnHelper.accessor("createdAt", {
             id: 'createdAt',
-            cell: info => getFormattedDate(info.getValue()),
+            cell: info => getFormattedDate(info.getValue(), { dateStyle: 'short', timeStyle: 'short' }),
             header: () => 'Created At',
+            enableResizing: false,
+            meta: {
+                disableColReorder: true
+            }
         }),
         columnHelper.accessor("oldValue", {
             id: 'oldValue',
             cell: info => info.getValue() ?? '-',
             header: () => 'Old Value',
+            enableResizing: false,
+            meta: {
+                disableColReorder: true
+            }
         }),
         columnHelper.accessor("newValue", {
             id: 'newValue',
             cell: info => info.getValue() ?? '-',
             header: () => 'New Value',
+            enableResizing: false,
+            meta: {
+                disableColReorder: true
+            }
         })
     ]
 
