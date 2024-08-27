@@ -1,58 +1,81 @@
 
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from "@mui/material";
 import { useNotifications } from "lib";
-import { useCreateTags } from "modules/settings/apis/tags";
-import { StyledTags } from "modules/tickets/components/ticket-details/ticket-details-section/ticket-overview/manage-tags";
-import { useCallback, useState } from "react";
+import { TagInputField } from "lib/form-fields";
+import { ITag, useCreateTags } from "modules/settings/apis/tags";
+import { FormProvider, useForm } from "react-hook-form";
+import styled from "styled-components";
 
 interface ICreateTagProps {
-    open: boolean
+    open: boolean;
+    createdTags?: ITag[];
     handleClose: () => void;
 }
 
-export const CreateTag = (props: ICreateTagProps) => {
-    const { open, handleClose } = props;
-    const { mutateAsync } = useCreateTags()
-    const [tags, setTags] = useState<string[]>([]);
-    const { showNotification } = useNotifications();
+interface IFormFields {
+    createdTags: string[];
+}
 
-    const onCreateTagSubmit = () => {
+const StyledTags = styled(TagInputField)`
+    padding: 8px;
+    border-radius: ${({ theme }) => theme.semantics.borderRadius.xs};
+    border: ${({ theme }) => theme.semantics.standardBorder};
+    width: 100%;
+`;
+
+export const CreateTag = (props: ICreateTagProps) => {
+    const { open, createdTags, handleClose } = props;
+    const { mutateAsync } = useCreateTags()
+    const { showNotification } = useNotifications();
+    const form = useForm<IFormFields>({
+        mode: 'onChange'
+    });
+
+    const onCreateTagSubmit = (formData: IFormFields) => {
         mutateAsync({
-            tags: tags
+            tags: formData.createdTags
         })
             .then(() => showNotification({ message: 'Successfully created Tags', type: 'success' }))
             .catch(() => showNotification({ message: 'Failed to create tags', type: 'error' }))
             .finally(() => handleClose())
     }
-    const onTagInputChange = useCallback((items: string[]) => {
-        setTags(items);
-    }, []);
+
+    const validateInput = (values: string[]) => {
+        const someTagExists = createdTags?.some((item) => values.includes(item.name));
+        if (someTagExists) {
+            return 'One or more tags already exists, please remove and continue'
+        }
+    }
 
     return (
-        <Dialog
-            open={open}
-            onClose={handleClose}
-            fullWidth
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-        >
-            <DialogTitle id="alert-dialog-title">
-                <Typography variant="h5">Create Tags</Typography>
-            </DialogTitle>
-            <DialogContent >
-                <StyledTags
-                    tagInputs={tags}
-                    gap={"15px"}
-                    autoFocus
-                    placeholder="Add your tags here..."
-                    onTagInputChange={onTagInputChange} />
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={handleClose} variant="outlined">Close</Button>
-                <Button autoFocus variant="contained" onClick={onCreateTagSubmit}>
-                    Save
-                </Button>
-            </DialogActions>
-        </Dialog>
+        <FormProvider {...form}>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                fullWidth
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    <Typography variant="h5">Create Tags</Typography>
+                </DialogTitle>
+                <DialogContent >
+                    <StyledTags
+                        gap={"15px"}
+                        autoFocus
+                        name="createdTags"
+                        dontShowDashes
+                        placeholder="Add your tags here..."
+                        rules={{ validate: validateInput }} />
+                    <Typography variant="body3" sx={{ mt: '10px !important' }}><b>Note:</b> Add tags by pressing enter key and then save</Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} variant="outlined">Close</Button>
+                    <Button autoFocus variant="contained" onClick={form.handleSubmit(onCreateTagSubmit)}>
+                        Save
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </FormProvider>
     )
 }

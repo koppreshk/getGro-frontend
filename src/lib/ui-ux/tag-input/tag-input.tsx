@@ -20,6 +20,7 @@ export interface ITagInputProps extends React.InputHTMLAttributes<HTMLInputEleme
     allowToAddTagsViaText?: boolean;
     allowSuggestions?: boolean;
     suggestedTags?: string[];
+    dontShowDashes?: boolean;
     onTagClick?: (item: string) => void;
     onTagInputChange?: (items: string[], item: string, reason: 'ON_ENTER_KEY' | 'ON_DELETE' | 'ON_SUGGESTION') => void;
 }
@@ -64,7 +65,7 @@ const StyledMenu = MUIStyled((props: MenuProps) => (
 }));
 
 export const TagInput = (props: ITagInputProps) => {
-    const { onTagInputChange, onTagClick, tagInputs, width, gap, className, allowToAddTagsViaText = true, allowSuggestions, suggestedTags = [], ...rest } = props;
+    const { onTagInputChange, onTagClick, tagInputs, width, gap, className, allowToAddTagsViaText = true, allowSuggestions, suggestedTags = [], dontShowDashes = false, ...rest } = props;
     const [tagItems, setTagItems] = useState<string[]>([]);
     const [value, setInputValue] = useState('');
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -124,7 +125,7 @@ export const TagInput = (props: ITagInputProps) => {
                                 onClick={() => onTagClick && onTagClick(item)}
                                 avatar={<Avatar>{item[0].toLocaleUpperCase()}</Avatar>}
                                 onDelete={() => __onTagDeleteHandler(item)} />)
-                        ) : <Typography variant="h6">--</Typography>}
+                        ) : dontShowDashes ? null : <Typography variant="h6">--</Typography>}
                     {allowToAddTagsViaText
                         ? <StyledInput
                             autoFocus

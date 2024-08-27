@@ -1,13 +1,16 @@
+import { ErrorMessage } from "@hookform/error-message";
 import { ITagInputProps, TagInput } from "lib/ui-ux";
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, FieldValues, RegisterOptions, useFormContext } from "react-hook-form";
+import { StyledErrorMessage } from "./select-field";
 
 interface ITagInputFieldProps extends ITagInputProps {
     name: string;
+    rules?: Omit<RegisterOptions<FieldValues, string>, 'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'>
 }
 
 export const TagInputField = (props: ITagInputFieldProps) => {
-    const { name } = props;
-    const { control } = useFormContext();
+    const { name, rules } = props;
+    const { formState: { errors }, control } = useFormContext();
 
     return (
         <>
@@ -23,7 +26,9 @@ export const TagInputField = (props: ITagInputFieldProps) => {
                 )}
                 control={control}
                 name={name}
+                rules={rules}
             />
+            <ErrorMessage errors={errors} name={name} as={StyledErrorMessage} />
         </>
     );
 }
