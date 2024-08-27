@@ -4,6 +4,7 @@ import { AccountCircle, Settings, Logout } from '@mui/icons-material';
 import { useAuth } from "modules/login";
 import { getInitialsByName } from "lib/utils";
 import { useTheme } from "styled-components";
+import { Link } from "react-router-dom";
 
 export const AccountMenu = () => {
     const [anchor, setAnchor] = useState<unknown>(null);
@@ -21,18 +22,20 @@ export const AccountMenu = () => {
         logout();
         handleClose()
     }
-
+ 
     return (
         <>
             <IconButton onClick={handleOpen}>
                 <Avatar sx={{ width: 32, height: 32, fontSize: '1rem', background: pallete.primaryPurple }}>{getInitialsByName(user?.email || 'M')}</Avatar>
             </IconButton>
             <Menu open={Boolean(anchor)} onClose={handleClose} anchorEl={anchor as Element} slotProps={{ paper: { sx: { width: '200px' } } }}>
-                <MenuItem >
-                    <ListItemIcon>
-                        <AccountCircle />
-                    </ListItemIcon>
-                    User Profile
+                <MenuItem onClick={handleClose}>
+                    <Link to='/userProfile' style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <ListItemIcon>
+                            <AccountCircle />
+                        </ListItemIcon>
+                        User Profile
+                    </Link>
                 </MenuItem>
                 <MenuItem >
                     <ListItemIcon>

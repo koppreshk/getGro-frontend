@@ -16,6 +16,7 @@ const DashboardPage = lazy(() => import('../../dashboard/pages/dashboard-page'))
 const TicketsPage = lazy(() => import('../../tickets/pages/tickets-page'));
 const CustomersPage = lazy(() => import('../../customers/pages/customers-page'));
 const ConfigurationsPage = lazy(() => import('../../settings/pages/settings-page'));
+const UserProfilePage = lazy(() => import('../../user-profile/pages/user-profile-page'));
 const PageNotFound = lazy(() => import('./page-not-found'));
 
 const PageContainer = styled(FlexBox)`
@@ -75,7 +76,10 @@ export const CoreLayout = () => {
                         key="configurations"
                         path="configurations/*"
                         element={<ConfigurationsPage />} />
-
+                    <Route
+                        key="userProfile"
+                        path="userProfile/"
+                        element={<UserProfilePage />} />
                 </Route>
             </Route>
             <Route key="login" path="/login" element={<LoginPage />} />
