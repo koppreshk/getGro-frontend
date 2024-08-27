@@ -5,6 +5,7 @@ import { AddAppConfigurationDialog, AppConfigurationLayout } from "..";
 import ExotelIcon from '../../../../../../assets/svg/exotel-icon.svg?react';
 import { useCallback, useState } from "react";
 import { AddExotelConfigurationContainer } from "modules/settings/containers/marketplace/exotel";
+import { IExotelConfigDetails } from "modules/settings/apis/marketplace/exotel";
 
 function OverviewContents() {
     return (
@@ -44,11 +45,18 @@ function InstallationContents() {
     )
 }
 
-export const ExotelConfiguration = () => {
+export const ExotelConfiguration = (props: { data: IExotelConfigDetails, updateInstallation: () => void }) => {
+    const { data } = props;
+    const isInstalled = Object.keys(data).length > 0;
+
     const [openPopup, setOpenPopup] = useState(false);
     const togglePopup = useCallback(() => {
         setOpenPopup((prevValue) => !prevValue)
     }, []);
+
+    const appConfigDialogContent = () => {
+        return isInstalled ? <></> : <AddExotelConfigurationContainer togglePopup={togglePopup} />
+    };
 
     return (
         <>
@@ -63,9 +71,11 @@ export const ExotelConfiguration = () => {
                 publishedOn="May 12, 2024"
                 version="1.0.0"
                 appIcon={() => <ExotelIcon width="60px" height="60px" />}
-                togglePopup={togglePopup} />
+                togglePopup={togglePopup}
+                isAppInstalled={isInstalled}
+            />
             <AddAppConfigurationDialog
-                dialogContent={() => <AddExotelConfigurationContainer togglePopup={togglePopup}/>}
+                dialogContent={appConfigDialogContent}
                 openPopup={openPopup}
                 togglePopup={togglePopup}
                 title="Exotel Configuration" />
