@@ -1,8 +1,8 @@
 import { CenteredCircularProgress } from "lib/ui-ux";
 import { useTicketsHistory } from "modules/tickets/apis";
-import { EmailHistory } from "modules/tickets/components/ticket-details"
+import { TicketHistory } from "modules/tickets/components/ticket-details"
 
-export const EmailHistoryContainer = () => {
+export const TicketHistoryContainer = () => {
     const { data, isLoading } = useTicketsHistory();
 
     if (isLoading) {
@@ -12,7 +12,7 @@ export const EmailHistoryContainer = () => {
     if (data) {
         return (
             <>
-                <EmailHistory data={data} />
+                <TicketHistory data={data} />
             </>
         )
     }

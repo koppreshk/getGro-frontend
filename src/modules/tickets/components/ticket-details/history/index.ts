@@ -1,1 +1,1 @@
-export * from './email-history';
+export * from './ticket-history';
