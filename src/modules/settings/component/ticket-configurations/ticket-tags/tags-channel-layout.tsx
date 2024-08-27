@@ -13,7 +13,7 @@ export const TagsLayout = () => {
     const toggleCreateTagDialog = () => setShowDialogBox((prev) => !prev);
 
     return (
-        <FlexBox flexDirection='column' gap={'20px'} padding='10px 20px'>
+        <FlexBox flexDirection='column' gap={'20px'} height="100%" padding='10px 20px'>
             <BreadCrumbs />
             <MoreInformation information='A tag is used to attach a label to tickets, contacts, or contact groups. Tags can be used for categorization, filtering, or automation' />
             <FlexBox justifyContent='space-between' width='100%' alignItems="center">

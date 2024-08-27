@@ -54,8 +54,8 @@ export const TagsList = (props: ITagsListProps) => {
     const columns = useColumns();
 
     return (
-        <>
+        <div style={{ height: 'calc(100% - 209px)' }}>
             <ConfigDataGrid columns={columns} data={data!} hideTableControls isLoading={isLoading} />
-        </>
+        </div>
     )
 }
