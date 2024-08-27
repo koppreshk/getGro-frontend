@@ -1,6 +1,6 @@
 
 import React from "react";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { FlexBox } from "lib/ui-ux";
 import { Popover, Tooltip, Typography, Badge } from "@mui/material";
@@ -128,19 +128,18 @@ const PrimaryOption = React.memo((props: IPrimaryOptionProps) => {
     const { item, selectedMenu, onMenuOptionClick } = props;
     const { iconComponent, primaryKey, route, title } = item;
     const isOptionsSelected = React.useMemo(() => selectedMenu === primaryKey, [primaryKey, selectedMenu]);
-    const navigate = useNavigate();
-
 
     const onClick = React.useCallback(() => {
         onMenuOptionClick(primaryKey);
-        navigate(route);
-    }, [navigate, onMenuOptionClick, primaryKey, route]);
+    }, [onMenuOptionClick, primaryKey]);
 
     return (
         <Tooltip title={title} arrow placement="right">
-            <IconWrapper $isOptionsSelected={isOptionsSelected} alignItems="center" justifyContent="center" onClick={onClick}>
-                {iconComponent()}
-            </IconWrapper>
+            <Link to={route}>
+                <IconWrapper $isOptionsSelected={isOptionsSelected} alignItems="center" justifyContent="center" onClick={onClick}>
+                    {iconComponent()}
+                </IconWrapper>
+            </Link>
         </Tooltip>
     )
 })
