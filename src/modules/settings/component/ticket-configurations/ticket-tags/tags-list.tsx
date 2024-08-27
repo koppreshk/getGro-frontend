@@ -6,12 +6,12 @@ import { DeleteTicketStatusContainer } from "modules/settings/containers/ticket-
 import { EditTag } from "./edit-tag";
 import { Chip } from "@mui/material";
 
-interface ITagsListProps {
+export interface ITagsListProps {
     data: ITag[] | undefined;
     isLoading: boolean;
 }
 
-const useColumns = () => {
+const useColumns = (data: ITag[] | undefined) => {
     const columnHelper = createColumnHelper<ITag>();
 
     const columns = [
@@ -36,7 +36,7 @@ const useColumns = () => {
                         {
                             original.can_delete ?
                                 <FlexBox flexDirection="row" gap="5px">
-                                    <EditTag id={original.id} name={original.name} />
+                                    <EditTag id={original.id} name={original.name} data={data!} />
                                     <DeleteTicketStatusContainer id={original.id} />
                                 </FlexBox> : null
                         }
@@ -51,11 +51,11 @@ const useColumns = () => {
 
 export const TagsList = (props: ITagsListProps) => {
     const { isLoading, data } = props;
-    const columns = useColumns();
+    const columns = useColumns(data);
 
     return (
-        <>
+        <div style={{ height: 'calc(100% - 209px' }}>
             <ConfigDataGrid columns={columns} data={data!} hideTableControls isLoading={isLoading} />
-        </>
+        </div>
     )
 }

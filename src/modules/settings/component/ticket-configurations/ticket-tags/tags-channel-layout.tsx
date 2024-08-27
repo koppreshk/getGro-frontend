@@ -1,19 +1,19 @@
 import { ArrowBack } from '@mui/icons-material';
 import { Button, Typography } from "@mui/material";
 import { FlexBox, CustomIconButton, BreadCrumbs, MoreInformation } from 'lib/ui-ux';
-import { TicketTagsContainer } from 'modules/settings/containers';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CreateTag } from './create-tag';
+import { ITagsListProps, TagsList } from './tags-list';
 
-export const TagsLayout = () => {
+export const TagsLayout = (props: ITagsListProps) => {
     const navigate = useNavigate();
     const [showDialog, setShowDialogBox] = useState(false);
 
     const toggleCreateTagDialog = () => setShowDialogBox((prev) => !prev);
 
     return (
-        <FlexBox flexDirection='column' gap={'20px'} padding='10px 20px'>
+        <FlexBox flexDirection='column' gap={'20px'} padding='10px 20px' height='100%'>
             <BreadCrumbs />
             <MoreInformation information='A tag is used to attach a label to tickets, contacts, or contact groups. Tags can be used for categorization, filtering, or automation' />
             <FlexBox justifyContent='space-between' width='100%' alignItems="center">
@@ -26,8 +26,8 @@ export const TagsLayout = () => {
                     onClick={toggleCreateTagDialog}
                 >Create Tags</Button>
             </FlexBox>
-            <TicketTagsContainer />
-            <CreateTag handleClose={toggleCreateTagDialog} open={showDialog} />
+            <TagsList {...props} />
+            <CreateTag handleClose={toggleCreateTagDialog} open={showDialog} createdTags={props.data} />
         </FlexBox>
     );
 }

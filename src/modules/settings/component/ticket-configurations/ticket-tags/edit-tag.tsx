@@ -3,7 +3,7 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Chip, Avatar
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import { FormProvider, useForm } from "react-hook-form";
 import { TextboxField } from "lib/form-fields";
-import { useEditTag } from "modules/settings/apis/tags";
+import { ITag, useEditTag } from "modules/settings/apis/tags";
 import { useNotifications } from "lib";
 import { Edit } from "@mui/icons-material";
 import { CustomIconButton } from "lib/ui-ux";
@@ -11,7 +11,7 @@ import { useState, useCallback } from "react";
 
 interface IEditTagProps {
     open: boolean
-    clickedTagDetails: { name: string, id: number }
+    clickedTagDetails: { name: string, id: number, data: ITag[] }
     handleClose: () => void;
 }
 
@@ -36,6 +36,13 @@ const EditTagDialog = (props: IEditTagProps) => {
             .finally(() => handleClose());
     }
 
+    const onValidate = (value: string) => {
+        const doesTagExist = clickedTagDetails.data.some((item) => item.name === value);
+        if (doesTagExist) {
+            return `${value} already exists, please input a diiferent one`;
+        }
+    }
+
     return (
         <FormProvider {...form}>
             <Dialog
@@ -54,7 +61,7 @@ const EditTagDialog = (props: IEditTagProps) => {
                         size="medium"
                         avatar={<Avatar>{clickedTagDetails.name[0]?.toLocaleUpperCase()}</Avatar>} />
                     <ArrowRightAltIcon />
-                    <TextboxField name="editTagName" id="outlined-basic" variant="standard" size="small" />
+                    <TextboxField name="editTagName" id="outlined-basic" variant="standard" size="small" rules={{ validate: onValidate }} />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Close</Button>
@@ -67,7 +74,7 @@ const EditTagDialog = (props: IEditTagProps) => {
     )
 }
 
-export const EditTag = (props: { id: number; name: string }) => {
+export const EditTag = (props: { id: number; name: string, data: ITag[] }) => {
     const [isDialogShown, setDialogDisplay] = useState(false);
 
     const toggleDrawer = useCallback(() => {
