@@ -61,7 +61,7 @@ export const WhatsAppConversations = (props: { data: IWhatsAppMessages }) => {
     }), [chatData]);
 
     return (
-        <ConversationWrapper height="100%" flexDirection="column">
+        <ConversationWrapper height="100%" width="100%" flexDirection="column">
             <Container>
                 <FlexBox height="calc(100% - 150px)" flexDirection="column" gap="10px" overflowY="auto" padding="10px">
                     {

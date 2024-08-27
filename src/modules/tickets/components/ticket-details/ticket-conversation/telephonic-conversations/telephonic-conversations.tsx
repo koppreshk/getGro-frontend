@@ -13,14 +13,14 @@ const CardWrapper = styled(FlexBox)`
     box-sizing: border-box;
 `;
 
-const IconWrapper = styled(FlexBox) <{ $callStatus: string }>`
+export const CallStatusIconWrapper = styled(FlexBox) <{ $callStatus: string }>`
   border-radius: 50%;
   height: 50px;
   width: 50px;
   background-color: ${({ $callStatus }) => $callStatus === 'incoming' || $callStatus === 'outgoing' ? '#D4EDDA' : $callStatus === 'missed' ? '#F8D7DA' : '#ffff'};
 `;
 
-const CallStatusIcon = (callStatus: string) => {
+export const getCallStatusIcon = (callStatus: string) => {
     if (callStatus === 'incoming') {
         return (
             <CallMade sx={{ fill: '#47A83B' }} />
@@ -45,9 +45,9 @@ const TelephonicConversationCard = (props: { data: Call }) => {
         <CardWrapper gap="10px">
             <FlexBox justifyContent="center" alignItems="center" width="10%">
                 <Tooltip title={`${direction} call`} arrow placement="bottom">
-                    <IconWrapper justifyContent="center" alignItems="center" $callStatus={direction}>
-                        {CallStatusIcon(direction)}
-                    </IconWrapper>
+                    <CallStatusIconWrapper justifyContent="center" alignItems="center" $callStatus={direction}>
+                        {getCallStatusIcon(direction)}
+                    </CallStatusIconWrapper>
                 </Tooltip>
             </FlexBox>
             <FlexBox flexDirection="column" gap="5px" width="88%">

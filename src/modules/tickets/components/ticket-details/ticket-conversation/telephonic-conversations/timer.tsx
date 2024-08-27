@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material"
 import { useEffect, useState } from "react";
 
-export const Timer = () => {
+export const Timer = (props: { className?: string }) => {
     const [time, setTime] = useState(0); // time in seconds
 
     useEffect(() => {
@@ -22,7 +22,7 @@ export const Timer = () => {
     };
 
     return (
-        <Typography variant="body2" textAlign={'center'}>
+        <Typography variant="subheading2" className={props.className}>
             {formatTime()}
         </Typography>
     );

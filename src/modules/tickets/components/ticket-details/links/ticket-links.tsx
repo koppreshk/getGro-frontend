@@ -13,7 +13,7 @@ const StyledContainer = styled(FlexBox)`
     align-items: center;
 `;
 
-export const EmailLinks = (props: { data: LinkedTickets[] }) => {
+export const TicketLinks = (props: { data: LinkedTickets[] }) => {
     const { data } = props;
     const location = useLocation()
 

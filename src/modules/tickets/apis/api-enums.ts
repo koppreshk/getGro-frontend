@@ -28,7 +28,8 @@ export enum TicketsEndPoint {
     MERGE_TICKETS = 'merge_tickets',
     SEARCH_TICKETS = 'search_ticket',
 
-    LINKED_TICKETS = 'linked_tickets'
+    LINKED_TICKETS = 'linked_tickets',
+    TICKET_HISTORY = 'history'
 }
 
 export enum TicketsQueryKey {
@@ -60,5 +61,6 @@ export enum TicketsQueryKey {
 
     MERGE_TICKETS = 'MERGE_TICKETS',
     SEARCH_TICKETS = 'SEARCH_TICKETS',
-    LINKED_TICKETS = 'LINKED_TICKETS'
+    LINKED_TICKETS = 'LINKED_TICKETS',
+    TICKET_HISTORY = 'TICKET_HISTORY'
 }

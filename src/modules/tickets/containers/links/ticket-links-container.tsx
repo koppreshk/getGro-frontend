@@ -1,8 +1,8 @@
 import { CenteredCircularProgress } from "lib/ui-ux";
 import { useLinkedTickets } from "modules/tickets/apis";
-import { EmailLinks } from "modules/tickets/components/ticket-details"
+import { TicketLinks } from "modules/tickets/components/ticket-details"
 
-export const EmailLinksContainer = () => {
+export const TicketLinksContainer = () => {
     const { data, isLoading } = useLinkedTickets();
 
     if (isLoading) {
@@ -12,7 +12,7 @@ export const EmailLinksContainer = () => {
     if (data) {
         return (
             <>
-                <EmailLinks data={data.linked_tickets} />
+                <TicketLinks data={data.linked_tickets} />
             </>
         )
     }

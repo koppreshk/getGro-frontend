@@ -35,15 +35,10 @@ export const ExotelServiceProvider = (props: { children?: React.ReactNode; }) =>
     const [incomingCallDetails, setIncomingCallDetails] = useState<IncomingCallDetails | null>(null);
 
     const handleCallEvents: CallListenerCallback = (eventType, moreInfo) => {
-        console.log('moreInfo: ', moreInfo)
-        const details = moreInfo as IncomingCallDetails[];
-
         switch (eventType) {
             case "incoming":
-                if (!details[0].callFromNumber.toString().includes('sip')) { //checking if its not the outgoing leg1 logic
-                    setIsIncomingCall(true);
-                    setIncomingCallDetails(details[0]); //for incoming calls, need to access array of 0 index
-                }
+                setIsIncomingCall(true);
+                setIncomingCallDetails(moreInfo);
                 break;
             case "connected":
                 setCallActive(true);
@@ -88,6 +83,7 @@ export const ExotelServiceProvider = (props: { children?: React.ReactNode; }) =>
     const hangup = () => {
         webPhone?.current?.HangupCall();
         setCallActive(false);
+        setIsIncomingCall(false);
         setIncomingCallDetails(null);
     };
 
@@ -107,7 +103,7 @@ export const ExotelServiceProvider = (props: { children?: React.ReactNode; }) =>
             );
             webPhone.current = crmWebPhone;
         }
-        init()
+        init();
     });
 
     const valueObject = {

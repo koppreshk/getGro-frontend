@@ -1,1 +1,1 @@
-export * from './email-links';
+export * from './ticket-links';

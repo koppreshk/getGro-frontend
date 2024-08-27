@@ -1,11 +1,14 @@
+/// <reference types="vite-plugin-svgr/client" />
 
-import React from "react";
+import React, { useCallback } from "react";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { FlexBox } from "lib/ui-ux";
 import { Popover, Tooltip, Typography, Badge } from "@mui/material";
 import { EventOutlined, GroupOutlined, InsertChartOutlined, SettingsOutlined, TaskOutlined } from "@mui/icons-material";
 import { usePermissions } from "lib/hooks";
+import ExotelSmallIcon from '../../../assets/svg/exotel-icon-small.svg?react';
+import { TelephonicDialer } from "modules/tickets/components/ticket-details/ticket-conversation/telephonic-conversations";
 
 interface IPrimaryOptionProps {
     item: {
@@ -146,6 +149,11 @@ const PrimaryOption = React.memo((props: IPrimaryOptionProps) => {
 
 const SecondaryOption = React.memo(() => {
     const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | null>(null);
+    const [openCallPopUp, setOpenCallPopUp] = React.useState(false);
+
+    const toggleCallBtn = useCallback(() => {
+        setOpenCallPopUp((prevValue) => !prevValue)
+    }, []);
 
     const handleClick: React.MouseEventHandler<HTMLDivElement> = (event) => {
         setAnchorEl(event.currentTarget);
@@ -159,6 +167,12 @@ const SecondaryOption = React.memo(() => {
 
     return (
         <>
+            <Tooltip title="Exotel" arrow placement="right">
+                <SecondaryIconWrapper alignItems="center" justifyContent="center" onClick={toggleCallBtn}>
+                    <ExotelSmallIcon width={'20px'} height={'20px'} />
+                </SecondaryIconWrapper>
+            </Tooltip>
+            <TelephonicDialer openCallPopUp={openCallPopUp} toggleCallBtn={toggleCallBtn} />
             <SecondaryIconWrapper onClick={handleClick} alignItems="center" justifyContent="center">
                 <Tooltip title="Reminders" arrow placement="right">
                     <EventOutlined />

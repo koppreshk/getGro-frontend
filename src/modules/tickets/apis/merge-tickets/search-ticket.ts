@@ -12,6 +12,9 @@ export interface ISearchTickets {
 
 type SearchTicketArgs = {
     search_text: string;
+    /**
+     *We need to pass current ticket id because while searching during merge current ticket should not be shown, if current_ticket_id is removed from param you will get all the tickets containing specific word 
+     */
     current_ticket_id: string
 }
 
