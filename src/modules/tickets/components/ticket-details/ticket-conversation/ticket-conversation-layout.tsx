@@ -9,8 +9,8 @@ import {
     TelephonicConversationContainer,
     EmailConversationContainer,
     WhatsAppConversationContainer,
-    EmailLinksContainer,
-    EmailHistoryContainer
+    TicketLinksContainer,
+    TicketHistoryContainer
 } from "modules/tickets/containers";
 import { Tabs, Tab } from "@mui/material";
 
@@ -56,18 +56,12 @@ export const TicketConversationLayout = () => {
     }, [ticketSource]);
 
     const renderLinks = useCallback(() => {
-        switch (ticketSource) {
-            case 'email':
-                return <EmailLinksContainer />
-        }
-    }, [ticketSource])
+        return <TicketLinksContainer />
+    }, [])
 
     const renderHistory = useCallback(() => {
-        switch (ticketSource) {
-            case 'email':
-                return <EmailHistoryContainer />
-        }
-    }, [ticketSource])
+        return <TicketHistoryContainer />
+    }, [])
 
     return (
         <LayoutWrapper width="100%" flexDirection="column">
