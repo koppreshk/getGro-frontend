@@ -1,10 +1,10 @@
 import { useSearchParams } from "react-router-dom";
 import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
-import { useEditEscalationNew, useFetchEscalationById, useFetchSLAmetaData } from "modules/settings/apis/escalations";
+import { IEscalationsNew, useEditEscalationNew, useFetchEscalationById, useFetchSLAmetaData } from "modules/settings/apis/escalations";
 import { AddEscalationLayout, IEscalationFormFields, ISLATargetsFormFields } from "modules/settings/component/ticket-configurations/ticket-escalation/ticket-escalation-new/add-escalation-layout";
 import { useNotifications } from "lib";
 
-export const EditTicketSLAContainer = () => {
+export const EditTicketSLAContainer = (props: { allEscalations?: IEscalationsNew[] }) => {
     const [searchParams] = useSearchParams();
     const { data, isLoading, error } = useFetchSLAmetaData();
     const id = Number(searchParams.get('id')!);
@@ -143,7 +143,7 @@ export const EditTicketSLAContainer = () => {
         } as IEscalationFormFields;
 
         return (
-            <AddEscalationLayout data={data} mode="edit" defaultvalues={defaultValues} onFormSubmit={onFormSubmit} />
+            <AddEscalationLayout data={data} mode="edit" defaultvalues={defaultValues} onFormSubmit={onFormSubmit} allEscalations={props.allEscalations} />
         )
     }
     return <ErrorMessage statusCode={error?.message || slaError?.message} />

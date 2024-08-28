@@ -1,9 +1,9 @@
 import { useNotifications } from "lib";
 import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
-import { useCreateEscalationNew, useFetchSLAmetaData } from "modules/settings/apis/escalations"
+import { IEscalationsNew, useCreateEscalationNew, useFetchSLAmetaData } from "modules/settings/apis/escalations"
 import { AddEscalationLayout, IEscalationFormFields } from "modules/settings/component/ticket-configurations/ticket-escalation/ticket-escalation-new/add-escalation-layout";
 
-export const CreateTicketSLAContainer = () => {
+export const CreateTicketSLAContainer = (props: { allEscalations?: IEscalationsNew[] }) => {
     const { data, isLoading, error } = useFetchSLAmetaData();
     const { mutateAsync } = useCreateEscalationNew();
     const { showNotification } = useNotifications();
@@ -67,7 +67,7 @@ export const CreateTicketSLAContainer = () => {
     }
 
     if (data) {
-        return <AddEscalationLayout data={data} onFormSubmit={onFormSubmit} />
+        return <AddEscalationLayout data={data} onFormSubmit={onFormSubmit} allEscalations={props.allEscalations} />
     }
 
     return <ErrorMessage statusCode={error?.message} />
