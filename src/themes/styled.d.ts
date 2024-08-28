@@ -19,6 +19,7 @@ declare module 'styled-components' {
       white: string,
       black: string,
       blue: string,
+      standardBorderColor: string,
       green: string,
       powderBlue: string,
       grayVariant1: string,

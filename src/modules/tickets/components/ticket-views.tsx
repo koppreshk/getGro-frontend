@@ -1,10 +1,11 @@
 import { Typography } from "@mui/material";
 import { TicketAccessRights, useAutherization } from "lib/hooks";
-import { FlexBox } from "lib/ui-ux"
+import { FlexBox, HorizontalSeparator } from "lib/ui-ux"
 import React from "react";
 import { useMatch, useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components"
 import { TicketViewActionButtons } from "./ticket-details/ticket-list-view";
+import { DeleteOutlined, ReportOutlined } from '@mui/icons-material/';
 
 const ViewsWrapper = styled(FlexBox)`
     width: 200px;
@@ -34,7 +35,7 @@ const Wrapper = styled.div<{ $isOptionSelected: boolean }>`
     `}
 `;
 
-const OptionWrapper = styled.div`
+const OptionWrapper = styled(FlexBox)`
   padding: 12px 14px;
   cursor: pointer;
   box-sizing: border-box;
@@ -49,65 +50,90 @@ export const HeaderWrapper = styled(FlexBox)`
 const useViewOptions = () => {
     const authorize = useAutherization();
 
-    return [
-        {
-            name: 'All Tickets',
-            primaryKey: 'all-tickets',
-            route: 'all-tickets',
-            showOption: authorize(TicketAccessRights.AllTickets)
-        },
-        {
-            name: 'All Pending',
-            primaryKey: 'all-pending',
-            route: 'all-pending',
-            showOption: authorize(TicketAccessRights.AllPending)
-        },
-        {
-            name: 'All Resolved',
-            primaryKey: 'all-resolved',
-            route: 'all-resolved',
-            showOption: authorize(TicketAccessRights.AllResolved)
-        },
-        {
-            name: 'All Closed',
-            primaryKey: 'all-closed',
-            route: 'all-closed',
-            showOption: authorize(TicketAccessRights.AllResolved)
-        },
-        {
-            name: 'My Pending',
-            primaryKey: 'my-pending',
-            route: 'my-pending',
-            showOption: authorize(TicketAccessRights.MyPending)
-        },
-        {
-            name: 'My Resolved',
-            primaryKey: 'my-resolved',
-            route: 'my-resolved',
-            showOption: authorize(TicketAccessRights.MyResolved)
-        },
-        {
-            name: 'My Closed',
-            primaryKey: 'my-closed',
-            route: 'my-closed',
-            showOption: authorize(TicketAccessRights.MyClosed)
-        }
-    ]
+    const res = {
+        primaryOptions: [
+            {
+                name: 'All Tickets',
+                primaryKey: 'all-tickets',
+                route: 'all-tickets',
+                showOption: authorize(TicketAccessRights.AllTickets)
+            },
+            {
+                name: 'All Pending',
+                primaryKey: 'all-pending',
+                route: 'all-pending',
+                showOption: authorize(TicketAccessRights.AllPending)
+            },
+            {
+                name: 'All Resolved',
+                primaryKey: 'all-resolved',
+                route: 'all-resolved',
+                showOption: authorize(TicketAccessRights.AllResolved)
+            },
+            {
+                name: 'All Closed',
+                primaryKey: 'all-closed',
+                route: 'all-closed',
+                showOption: authorize(TicketAccessRights.AllResolved)
+            },
+            {
+                name: 'My Pending',
+                primaryKey: 'my-pending',
+                route: 'my-pending',
+                showOption: authorize(TicketAccessRights.MyPending)
+            },
+            {
+                name: 'My Resolved',
+                primaryKey: 'my-resolved',
+                route: 'my-resolved',
+                showOption: authorize(TicketAccessRights.MyResolved)
+            },
+            {
+                name: 'My Closed',
+                primaryKey: 'my-closed',
+                route: 'my-closed',
+                showOption: authorize(TicketAccessRights.MyClosed)
+            }
+        ],
+        secondaryOptions: [
+            {
+                name: 'Deleted Tickets',
+                primaryKey: 'deleted-tickets',
+                route: 'deleted-tickets',
+                renderIcon: () => <DeleteOutlined />
+            },
+            {
+                name: 'Spam Tickets',
+                primaryKey: 'spam-tickets',
+                route: 'spam-tickets',
+                renderIcon: () => <ReportOutlined />
+            },
+        ]
+    }
 
+    return res;
 }
 
 export const TicketViews = () => {
-    const viewOptions = useViewOptions();
+    const { primaryOptions, secondaryOptions } = useViewOptions();
     return (
         <ViewsWrapper flexDirection="column">
             <HeaderWrapper width="100%">
                 <TicketViewActionButtons />
             </HeaderWrapper>
-            {viewOptions.map((item) => (
+            {primaryOptions.map((item) => (
                 <React.Fragment key={item.primaryKey}>
                     {item.showOption ? <TicketViewOptions name={item.name} route={item.route} /> : null}
                 </React.Fragment>
             ))}
+            <HorizontalSeparator />
+            {
+                secondaryOptions.map((item) => (
+                    <React.Fragment key={item.primaryKey}>
+                        <TicketViewOptions {...item} />
+                    </React.Fragment>
+                ))
+            }
         </ViewsWrapper>
     )
 };
@@ -115,10 +141,11 @@ export const TicketViews = () => {
 interface ITicketViewOptionsProps {
     name: string;
     route: string;
+    renderIcon?: () => React.ReactElement;
 }
 
 const TicketViewOptions = (props: ITicketViewOptionsProps) => {
-    const { name, route } = props;
+    const { name, route, renderIcon } = props;
     const navigate = useNavigate();
     const match = useMatch(`/tickets/:route`);
     const selectedMenu = match?.params.route;
@@ -130,7 +157,8 @@ const TicketViewOptions = (props: ITicketViewOptionsProps) => {
 
     return (
         <Wrapper onClick={onLinkClick} $isOptionSelected={isOptionSelected}>
-            <OptionWrapper>
+            <OptionWrapper gap={'10px'}>
+                {renderIcon ? renderIcon() : <></>}
                 <Typography variant="h6" color="inherit">
                     {name}
                 </Typography>

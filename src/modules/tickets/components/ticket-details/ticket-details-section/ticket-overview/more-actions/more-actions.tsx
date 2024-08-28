@@ -30,7 +30,9 @@ export const MoreActions = (props: { onMenuItemSelect: (key: string) => void }) 
             <IconButton onClick={handleOpen}>
                 <MoreVert />
             </IconButton>
-            <Menu open={Boolean(anchor)} onClose={handleClose} anchorEl={anchor as Element} slotProps={{ paper: { sx: { width: '200px' } } }}>
+            <Menu open={Boolean(anchor)} onClose={handleClose} anchorEl={anchor as Element} slotProps={{ paper: { sx: { width: '200px' } } }}
+                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
                 {menuItems.map(item => (
                     <MenuItem key={item.key} onClick={() => onMenuSelection(item.key)}>
                         <ListItemIcon>

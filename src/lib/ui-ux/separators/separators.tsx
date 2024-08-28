@@ -5,7 +5,7 @@ export const VerticalSeparator = styled.span`
   height: 30px;
   padding: 10px 0px;
   box-sizing: border-box;
-  background-color:#E9EBED;
+  background-color: ${({ theme }) => theme.pallete.standardBorderColor};
 `;
 
 export const HorizontalSeparator = styled.div<{ $margin?: string }>`
@@ -13,7 +13,7 @@ export const HorizontalSeparator = styled.div<{ $margin?: string }>`
   height: 1px;
   box-sizing: border-box;
   margin: ${({ $margin }) => $margin ? $margin : 'unset'};
-  background-color:#E9EBED;
+  background-color: ${({ theme }) => theme.pallete.standardBorderColor};
 `;
 
 export const CircularSeparator = styled.div`
