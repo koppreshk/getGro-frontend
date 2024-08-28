@@ -8,7 +8,7 @@ import { ChooseCondition } from "./choose-condition";
 import { FlexBox } from "lib/ui-ux";
 import { KeyboardArrowLeft, KeyboardArrowRight, Save } from "@mui/icons-material";
 import { SLATargets } from "./sla-targets";
-import { IKeyValue, ISLAmetaData } from "modules/settings/apis/escalations";
+import { IEscalationsNew, IKeyValue, ISLAmetaData } from "modules/settings/apis/escalations";
 
 const steps = [
     {
@@ -75,12 +75,13 @@ export interface IEscalationFormFields {
 interface IAddEscalationLayoutProps {
     data: ISLAmetaData;
     defaultvalues?: IEscalationFormFields;
+    allEscalations?: IEscalationsNew[]
     mode?: 'add' | 'edit';
     onFormSubmit: (formData: IEscalationFormFields) => Promise<void>
 }
 
 export const AddEscalationLayout = React.memo((props: IAddEscalationLayoutProps) => {
-    const { data, defaultvalues, onFormSubmit } = props;
+    const { data, defaultvalues, allEscalations, onFormSubmit } = props;
     const [activeStep, setActiveStep] = React.useState(0);
     const navigate = useNavigate();
     const form = useForm<IEscalationFormFields>({
@@ -196,7 +197,7 @@ export const AddEscalationLayout = React.memo((props: IAddEscalationLayoutProps)
     const renderBasedOnActiveStep = () => {
         switch (activeStep) {
             case 0:
-                return <ChooseCondition ticketField={data.ticket_fields} priorities={data.priorities} />;
+                return <ChooseCondition ticketField={data.ticket_fields} priorities={data.priorities} allEscalations={allEscalations} mode={props.mode} slaName={defaultvalues?.chooseCondition.name}/>;
             case 1:
                 return <SLATargets timeOptions={data.run_types} slaTargetPriorities={data.priorities} />;
             case 2:

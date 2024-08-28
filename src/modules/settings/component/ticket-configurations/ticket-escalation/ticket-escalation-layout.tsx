@@ -31,8 +31,8 @@ export const TicketEscalationLayout = (props: ITicketEscalaltionLayoutProps) => 
             <FlexBox height='calc(100% - 46px)' >
                 <Routes>
                     <Route key='base-route' path="/" element={<EscalationLayoutContent {...props} />} />
-                    <Route key='add-route' path="add-escalation" element={<CreateTicketSLAContainer />} />
-                    <Route key='edit-route' path="edit-escalation" element={<EditTicketSLAContainer />} />
+                    <Route key='add-route' path="add-escalation" element={<CreateTicketSLAContainer allEscalations={props.allEscalations} />} />
+                    <Route key='edit-route' path="edit-escalation" element={<EditTicketSLAContainer allEscalations={props.allEscalations} />} />
                 </Routes>
             </FlexBox>
         </FlexBox>

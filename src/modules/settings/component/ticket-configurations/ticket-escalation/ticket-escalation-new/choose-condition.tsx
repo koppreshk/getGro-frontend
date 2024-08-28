@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { FlexBox } from "lib/ui-ux";
 import { Box, CircularProgress, Typography } from "@mui/material"
 import { RadioGroupField, SelectField, TextboxField } from "lib/form-fields"
-import { IField, IPriority, useFetchAllQueues } from "modules/settings/apis/escalations";
+import { IEscalationsNew, IField, IPriority, useFetchAllQueues } from "modules/settings/apis/escalations";
 import { IEscalationFormFields } from "./add-escalation-layout";
 import { useFetchAllChannels } from "modules/settings/apis/tags";
 import { useFetchAllStatuses } from "modules/settings/apis/ticket-status";
@@ -21,17 +21,28 @@ interface IKeyValue {
 
 interface IChooseConditionProps {
     ticketField: IField[];
-    priorities: IPriority[]
+    priorities: IPriority[];
+    mode?: 'add' | 'edit';
+    slaName?: string;
+    allEscalations?: IEscalationsNew[];
 }
 
 export const ChooseCondition = (props: IChooseConditionProps) => {
-    const { ticketField } = props;
+    const { ticketField, allEscalations, mode, slaName } = props;
     const ticketFieldDropdownData = ticketField.map((data) => ({ key: data.id.toString(), value: data.name }))
+
+    const validateEscalationName = (value: string) => {
+        const modifiedData = mode === 'edit' ? allEscalations?.filter((item) => item.name !== slaName) : allEscalations;
+        const doesNameExist = modifiedData?.some((item) => item.name === value);
+        if (doesNameExist) {
+            return `${value} already exists, please use a different name to continue`;
+        }
+    }
 
     return (
         <>
             <FlexBox width="100%" flexDirection="column" gap="20px">
-                <TextboxField name="chooseCondition.name" label="Name" variant="outlined" rules={{ required: 'Name is required' }} />
+                <TextboxField name="chooseCondition.name" label="Name" variant="outlined" rules={{ required: 'Name is required', validate: validateEscalationName }} />
                 <TextboxField name="chooseCondition.description"
                     label="Description" variant="outlined"
                     multiline

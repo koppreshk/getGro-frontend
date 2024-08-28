@@ -2,6 +2,7 @@
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from "@mui/material";
 import { useNotifications } from "lib";
 import { TagInputField } from "lib/form-fields";
+import { FlexBox } from "lib/ui-ux";
 import { ITag, useCreateTags } from "modules/settings/apis/tags";
 import { FormProvider, useForm } from "react-hook-form";
 import styled from "styled-components";
@@ -60,14 +61,18 @@ export const CreateTag = (props: ICreateTagProps) => {
                     <Typography variant="h5">Create Tags</Typography>
                 </DialogTitle>
                 <DialogContent >
-                    <StyledTags
-                        gap={"15px"}
-                        autoFocus
-                        name="createdTags"
-                        dontShowDashes
-                        placeholder="Add your tags here..."
-                        rules={{ validate: validateInput }} />
-                    <Typography variant="body3" sx={{ mt: '10px !important' }}><b>Note:</b> Add tags by pressing enter key and then save</Typography>
+                    <FlexBox gap={'15px'} flexDirection="column">
+                        <div>
+                            <StyledTags
+                                gap={"15px"}
+                                autoFocus
+                                name="createdTags"
+                                dontShowDashes
+                                placeholder="Add your tags here..."
+                                rules={{ validate: validateInput }} />
+                        </div>
+                        <Typography variant="body3"><b>Note:</b> Add tags by pressing enter key and then save</Typography>
+                    </FlexBox>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} variant="outlined">Close</Button>
