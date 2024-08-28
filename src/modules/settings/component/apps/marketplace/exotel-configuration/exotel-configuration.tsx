@@ -4,8 +4,9 @@ import { Typography } from "@mui/material";
 import { AddAppConfigurationDialog, AppConfigurationLayout } from "..";
 import ExotelIcon from '../../../../../../assets/svg/exotel-icon.svg?react';
 import { useCallback, useState } from "react";
-import { AddExotelConfigurationContainer } from "modules/settings/containers/marketplace/exotel";
+import { AddExotelConfigurationContainer, UpdateExotelConfigContainer } from "modules/settings/containers/marketplace/exotel";
 import { IExotelConfigDetails } from "modules/settings/apis/marketplace/exotel";
+import { DeleteExotelConfigurations } from "./delete-exotel-configurations";
 
 function OverviewContents() {
     return (
@@ -50,12 +51,13 @@ export const ExotelConfiguration = (props: { data: IExotelConfigDetails, updateI
     const isInstalled = Object.keys(data).length > 0;
 
     const [openPopup, setOpenPopup] = useState(false);
+
     const togglePopup = useCallback(() => {
         setOpenPopup((prevValue) => !prevValue)
     }, []);
 
     const appConfigDialogContent = () => {
-        return isInstalled ? <></> : <AddExotelConfigurationContainer togglePopup={togglePopup} />
+        return isInstalled ? <UpdateExotelConfigContainer togglePopup={togglePopup} /> : <AddExotelConfigurationContainer togglePopup={togglePopup} updateInstallation={props.updateInstallation} />
     };
 
     return (
@@ -73,12 +75,14 @@ export const ExotelConfiguration = (props: { data: IExotelConfigDetails, updateI
                 appIcon={() => <ExotelIcon width="60px" height="60px" />}
                 togglePopup={togglePopup}
                 isAppInstalled={isInstalled}
+                unInstallApp={() => <DeleteExotelConfigurations/>}
             />
             <AddAppConfigurationDialog
                 dialogContent={appConfigDialogContent}
                 openPopup={openPopup}
                 togglePopup={togglePopup}
-                title="Exotel Configuration" />
+                title="Exotel Configuration"
+                maxWidth="md" />
         </>
     )
 }
