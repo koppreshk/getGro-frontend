@@ -37,7 +37,7 @@ const ConfigSteps = (props: { activeStep: number }) => {
             <Stepper activeStep={activeStep} orientation="vertical">
                 {steps.map((step) => (
                     <Step key={step.label}>
-                        <StepLabel                        >
+                        <StepLabel>
                             {step.label}
                         </StepLabel>
                     </Step>

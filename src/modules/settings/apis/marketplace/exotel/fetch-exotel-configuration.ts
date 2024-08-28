@@ -2,14 +2,7 @@ import React from "react";
 import { useServiceClient } from "lib"
 import { useQuery } from "react-query";
 import { ExotelConfigurationEndPoint, ExotelConfigurationQueryKey } from "./api-enums";
-
-export interface IExotelConfigDetails {
-    exotel_subdomain: string
-    exotel_api_key: string
-    exotel_api_token: string
-    exotel_account_sid: string
-    webhook_url: string
-}
+import { IExotelConfigDetails } from "./setup-exotel-configurations";
 
 export const useFetchExotelConfiguration = () => {
     const { getData } = useServiceClient();
