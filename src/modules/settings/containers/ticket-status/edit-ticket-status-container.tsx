@@ -7,11 +7,12 @@ import { TicketStatusForm } from "modules/settings/component/ticket-configuratio
 
 interface IEditTicketStatusContainerProps {
     onSelectRowMetaData: IGenericResponse;
+    statusData: IGenericResponse[] | undefined;
     toggleDrawer: () => void;
 }
 
 export const EditTicketStatusContainer = (props: IEditTicketStatusContainerProps) => {
-    const { onSelectRowMetaData, toggleDrawer } = props;
+    const { onSelectRowMetaData, statusData, toggleDrawer } = props;
     const { mutateAsync: editTicketStatus, isLoading } = useEditTicketStatus();
     const { showNotification } = useNotifications();
 
@@ -30,6 +31,7 @@ export const EditTicketStatusContainer = (props: IEditTicketStatusContainerProps
             mode="edit"
             onFormSubmitHandler={onEditStatusTicket}
             mutationLoading={isLoading}
+            statusData={statusData}
             defaultValues={{
                 ticketStatusName: onSelectRowMetaData.name,
                 ticketStatusId: onSelectRowMetaData.id

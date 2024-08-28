@@ -13,6 +13,5 @@ export const useFetchAllStatuses = (isEnabled = true) => {
         queryKey: StatusTypeQueryKey.FETCH_ALL_STATUSES,
         queryFn: fetchAllStatuses,
         enabled: isEnabled
-
     })
 }

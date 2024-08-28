@@ -9,11 +9,12 @@ import { CreateTicketStatusContainer } from "../../../containers/ticket-status/c
 
 interface IAddNewTicketStatusProps {
     openAddStatusDrawer: boolean;
+    statusData?: IGenericResponse[]
     toggleAddStatusDrawer: () => void
 }
 
 const AddNewTicketStatus = (props: IAddNewTicketStatusProps) => {
-    const { openAddStatusDrawer, toggleAddStatusDrawer } = props;
+    const { openAddStatusDrawer, statusData, toggleAddStatusDrawer } = props;
 
     return (
         <DrawerExtended
@@ -22,7 +23,7 @@ const AddNewTicketStatus = (props: IAddNewTicketStatusProps) => {
             anchor="right"
             open={openAddStatusDrawer}
             onRenderContent={() => (
-                <CreateTicketStatusContainer toggleAddStatusDrawer={toggleAddStatusDrawer}/>
+                <CreateTicketStatusContainer toggleAddStatusDrawer={toggleAddStatusDrawer} statusData={statusData} />
             )}
             onClose={toggleAddStatusDrawer} />
     )
@@ -50,7 +51,7 @@ export const TicketStatusLayout = (props: ITicketStatusLayoutProps) => {
                     <Typography variant="h5">Ticket Status</Typography>
                 </FlexBox>
                 <Button variant="contained" onClick={toggleAddStatusDrawer} startIcon={<AddCircleOutline />}>Add Ticket Status</Button>
-                <AddNewTicketStatus openAddStatusDrawer={openAddStatusDrawer} toggleAddStatusDrawer={toggleAddStatusDrawer} />
+                <AddNewTicketStatus openAddStatusDrawer={openAddStatusDrawer} toggleAddStatusDrawer={toggleAddStatusDrawer} statusData={props.data} />
             </FlexBox>
             <TicketStatusList isLoading={props.isLoading} statusData={props.data} />
         </FlexBox>

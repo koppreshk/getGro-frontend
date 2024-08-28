@@ -66,7 +66,7 @@ export const TicketStatusList = (props: ITicketStatusListProps) => {
                 width="500px"
                 header="View or Edit Ticket Status"
                 onRenderContent={() => (
-                    <EditTicketStatusContainer onSelectRowMetaData={rowData as IGenericResponse} toggleDrawer={toggleDrawer} />
+                    <EditTicketStatusContainer onSelectRowMetaData={rowData as IGenericResponse} toggleDrawer={toggleDrawer} statusData={statusData}/>
                 )}
                 onClose={toggleDrawer}
             />

@@ -2,13 +2,14 @@ import React from "react";
 import { useNotifications } from "lib";
 import { useCreateTicketStatus } from "modules/settings/apis/ticket-status"
 import { TicketStatusForm } from "modules/settings/component/ticket-configurations/ticket-status";
+import { IGenericResponse } from "modules/settings/apis/ticket-status/types";
 
 export interface ITicketStatusFormFields {
     ticketStatusName: string;
     ticketStatusId?: number;
 }
 
-export const CreateTicketStatusContainer = (props: { toggleAddStatusDrawer: () => void }) => {
+export const CreateTicketStatusContainer = (props: { toggleAddStatusDrawer: () => void, statusData?: IGenericResponse[] }) => {
     const { mutateAsync: createTicketStatus, isLoading } = useCreateTicketStatus();
     const { showNotification } = useNotifications();
 
@@ -22,6 +23,6 @@ export const CreateTicketStatusContainer = (props: { toggleAddStatusDrawer: () =
     }, [createTicketStatus, props, showNotification]);
 
     return (
-        <TicketStatusForm mode="create" onFormSubmitHandler={submitTicketStatus} mutationLoading={isLoading} />
+        <TicketStatusForm mode="create" onFormSubmitHandler={submitTicketStatus} mutationLoading={isLoading} statusData={props.statusData} />
     )
 }
