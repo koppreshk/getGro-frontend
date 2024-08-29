@@ -6,7 +6,7 @@ import { Button } from '@mui/material';
 import { KeyboardArrowLeft, Save, KeyboardArrowRight } from '@mui/icons-material';
 import { FormProvider, useForm, useFormContext } from "react-hook-form"
 import { useNavigate } from 'react-router-dom';
-import { FetchFieldsAndConditions } from 'modules/settings/apis/ticket-automation';
+import { FetchFieldsAndConditions, IAllAssignments } from 'modules/settings/apis/ticket-automation';
 import { IAddRuleFormFields } from 'modules/settings/containers/ticket-automation';
 import { useNotifications } from 'lib';
 
@@ -14,11 +14,12 @@ interface AddRuleProps {
     mode?: string;
     defaultValues?: IAddRuleFormFields;
     data: FetchFieldsAndConditions[];
+    allAssignments?: IAllAssignments[];
     onSubmit: (formData: IAddRuleFormFields) => Promise<void>;
 }
 
 const AddRuleBase = (props: AddRuleProps) => {
-    const { onSubmit } = props;
+    const { onSubmit, allAssignments } = props;
     const [activeStep, setActiveStep] = React.useState(0);
     const form = useFormContext<IAddRuleFormFields>();
     const navigate = useNavigate();
@@ -27,7 +28,7 @@ const AddRuleBase = (props: AddRuleProps) => {
     const renderBasedOnActiveStep = () => {
         switch (activeStep) {
             case 0:
-                return <ChooseConditionForm data={props.data} />;
+                return <ChooseConditionForm data={props.data} allAssignments={allAssignments} mode={props.mode} ruleName={props.defaultValues?.ruleName} />;
             case 1:
                 return <AssociateAgent />;
             default: return <></>

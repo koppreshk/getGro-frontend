@@ -4,10 +4,13 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { ArrowBack, AddCircleOutline } from "@mui/icons-material"
 import { Button, Typography } from "@mui/material"
 import { BreadCrumbs, CustomIconButton, FlexBox, MoreInformation } from "lib/ui-ux";
-import { AddRuleContainer, EditRuleContainer, FetchAllAssignmentsContainer } from "modules/settings/containers/ticket-automation";
+import { AddRuleContainer, EditRuleContainer } from "modules/settings/containers/ticket-automation";
+import { AllAssignments } from "./all-assignments";
+import { IAllAssignments } from "modules/settings/apis/ticket-automation";
 
 export interface IAutoAssignmentsLayoutProps {
-
+    data?: IAllAssignments[];
+    isLoading: boolean;
 }
 
 export const AutoAssignmentsLayout = (props: IAutoAssignmentsLayoutProps) => {
@@ -18,15 +21,15 @@ export const AutoAssignmentsLayout = (props: IAutoAssignmentsLayoutProps) => {
             <div style={{ height: 'calc(100% - 46px)' }}>
                 <Routes>
                     <Route key='base-route' path="/" element={<AutoAssignmentsContent {...props} />} />
-                    <Route key='add-route' path="/add-rule" element={<AddRuleContainer />} />
-                    <Route key='edit-route' path="/edit-rule" element={<EditRuleContainer />} />
+                    <Route key='add-route' path="/add-rule" element={<AddRuleContainer allAssignments={props.data} />} />
+                    <Route key='edit-route' path="/edit-rule" element={<EditRuleContainer allAssignments={props.data} />} />
                 </Routes>
             </div>
         </FlexBox>
     )
 }
 
-const AutoAssignmentsContent = () => {
+const AutoAssignmentsContent = (props: IAutoAssignmentsLayoutProps) => {
     const navigate = useNavigate();
 
     const toggleAddAutoAssignmentsDrawer = useCallback(() => {
@@ -44,7 +47,7 @@ const AutoAssignmentsContent = () => {
                 <Button variant="contained" onClick={toggleAddAutoAssignmentsDrawer} startIcon={<AddCircleOutline />}>Add New Rule</Button>
             </FlexBox>
             <div style={{ height: 'calc(100% - 179px)' }}>
-                <FetchAllAssignmentsContainer />
+                <AllAssignments data={props.data} isLoading={props.isLoading} />
             </div>
         </FlexBox>
     );

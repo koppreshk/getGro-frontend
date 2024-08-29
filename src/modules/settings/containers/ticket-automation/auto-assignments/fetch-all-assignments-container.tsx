@@ -1,6 +1,6 @@
 import { ErrorMessage } from "lib/ui-ux"
 import { useFetchAllAssignments } from "modules/settings/apis/ticket-automation";
-import { AllAssignments } from "modules/settings/component/ticket-automation/auto-assignments/all-assignments";
+import { AutoAssignmentsLayout } from "modules/settings/component/ticket-automation";
 
 export const FetchAllAssignmentsContainer = () => {
     const { data, isError, error, isLoading } = useFetchAllAssignments("auto_assignment");
@@ -9,7 +9,7 @@ export const FetchAllAssignmentsContainer = () => {
 
     return (
         <>
-            <AllAssignments data={data} isLoading={isLoading} />
+            <AutoAssignmentsLayout isLoading={isLoading} data={data} />
         </>
     )
 }
