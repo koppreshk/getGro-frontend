@@ -6,7 +6,7 @@ import { AssignmentStatus } from '../auto-assignments/assignment-status';
 import { DeleteAssignment } from '../auto-assignments';
 import { EditAssignment } from '../auto-assignments/edit-assignment';
 
-interface IAllCreateTicketTriggersProps {
+export interface IAllCreateTicketTriggersProps {
     data?: IAllAssignments[];
     isLoading: boolean;
     autoMationType: AutoMationType;

@@ -3,9 +3,10 @@ import { Route, Routes, useNavigate } from "react-router-dom"
 import { ArrowBack, AddCircleOutline } from "@mui/icons-material"
 import { Button, Typography } from "@mui/material"
 import { BreadCrumbs, CustomIconButton, FlexBox, MoreInformation } from "lib/ui-ux"
-import { AddCreateTriggerRuleContainer, EditCreateTriggerRuleContainer, FetchAllCreateTicketTriggersContainer } from "modules/settings/containers/ticket-automation/create-ticket-triggers";
+import { AddCreateTriggerRuleContainer, EditCreateTriggerRuleContainer } from "modules/settings/containers/ticket-automation/create-ticket-triggers";
+import { AllCreateTicketTriggers, IAllCreateTicketTriggersProps } from "./all-create-ticket-triggers"
 
-export interface ICreateTriggersLayoutProps {
+export interface ICreateTriggersLayoutProps extends IAllCreateTicketTriggersProps {
 
 }
 
@@ -17,15 +18,15 @@ export const CreateTicketTriggersLayout = (props: ICreateTriggersLayoutProps) =>
             <div style={{ height: 'calc(100% - 46px)' }}>
                 <Routes>
                     <Route key='base-route' path="/" element={<CreateTicketTriggersContent {...props} />} />
-                    <Route key='add-route' path="/add-rule" element={<AddCreateTriggerRuleContainer autoMationType="create_trigger" />} />
-                    <Route key='edit-route' path="/edit-rule" element={<EditCreateTriggerRuleContainer autoMationType="create_trigger" />} />
+                    <Route key='add-route' path="/add-rule" element={<AddCreateTriggerRuleContainer autoMationType="create_trigger" allTriggers={props.data} />} />
+                    <Route key='edit-route' path="/edit-rule" element={<EditCreateTriggerRuleContainer autoMationType="create_trigger" allTriggers={props.data} />} />
                 </Routes>
             </div>
         </FlexBox>
     )
 }
 
-const CreateTicketTriggersContent = () => {
+const CreateTicketTriggersContent = (props: ICreateTriggersLayoutProps) => {
     const navigate = useNavigate();
 
     const navigateToCreateTrigger = useCallback(() => {
@@ -43,7 +44,7 @@ const CreateTicketTriggersContent = () => {
                 <Button variant="contained" onClick={navigateToCreateTrigger} startIcon={<AddCircleOutline />}>Add New Rule</Button>
             </FlexBox>
             <div style={{ height: 'calc(100% - 179px)' }}>
-                <FetchAllCreateTicketTriggersContainer autoMationType="create_trigger" />
+                <AllCreateTicketTriggers {...props} />
             </div>
         </FlexBox>
     );
