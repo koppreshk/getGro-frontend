@@ -5,7 +5,7 @@ import { KeyboardArrowLeft, Save, KeyboardArrowRight } from '@mui/icons-material
 import { FormProvider, useForm, useFormContext } from "react-hook-form"
 import { useNavigate } from 'react-router-dom';
 import { useNotifications } from 'lib';
-import { FetchFieldsAndConditions } from 'modules/settings/apis/ticket-automation';
+import { FetchFieldsAndConditions, IAllAssignments } from 'modules/settings/apis/ticket-automation';
 import { CreateTriggerSetAction } from './create-trigger-set-action';
 import { ChooseConditionForm } from '../auto-assignments/choose-condition-form';
 
@@ -13,6 +13,7 @@ interface AddRuleProps {
     mode?: string;
     defaultValues?: IAddCreateTriggerRuleFormFields;
     data: FetchFieldsAndConditions[];
+    allTriggers?: IAllAssignments[] | undefined;
     onSubmit: (formData: IAddCreateTriggerRuleFormFields) => Promise<void>;
 }
 
@@ -26,7 +27,7 @@ const AddRuleBase = (props: AddRuleProps) => {
     const renderBasedOnActiveStep = () => {
         switch (activeStep) {
             case 0:
-                return <ChooseConditionForm data={props.data} />;
+                return <ChooseConditionForm data={props.data} allAssignments={props.allTriggers} mode={props.mode} ruleName={props.defaultValues?.ruleName} />;
             case 1:
                 return <CreateTriggerSetAction />;
             default: return <></>

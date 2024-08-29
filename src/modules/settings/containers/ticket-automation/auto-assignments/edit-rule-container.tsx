@@ -1,11 +1,11 @@
 import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
-import { useEditAutoAssignment, useFetchAssignment, useFetchFieldsAndConditions } from "modules/settings/apis/ticket-automation";
+import { IAllAssignments, useEditAutoAssignment, useFetchAssignment, useFetchFieldsAndConditions } from "modules/settings/apis/ticket-automation";
 import { AddRule } from "modules/settings/component/ticket-automation"
 import { IAddRuleFormFields, ICondition } from "./add-rule-container";
 import { useSearchParams } from "react-router-dom";
 import { isArray } from "lib/utils";
 
-export const EditRuleContainer = () => {
+export const EditRuleContainer = (props: { allAssignments?: IAllAssignments[]; }) => {
     const { data, isLoading } = useFetchFieldsAndConditions();
     const { data: currentRuleData, isLoading: currentRuleLoading } = useFetchAssignment('auto_assignment');
     const { mutateAsync } = useEditAutoAssignment();
@@ -87,7 +87,7 @@ export const EditRuleContainer = () => {
         }
 
         return (
-            <AddRule data={data} onSubmit={onSubmit} defaultValues={defaultValues} mode="edit" />
+            <AddRule data={data} onSubmit={onSubmit} defaultValues={defaultValues} mode="edit" allAssignments={props.allAssignments} />
         )
     }
 

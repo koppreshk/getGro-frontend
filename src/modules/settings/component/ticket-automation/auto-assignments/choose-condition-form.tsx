@@ -2,16 +2,31 @@ import { Chip, Typography } from "@mui/material"
 import { TextboxField } from "lib/form-fields"
 import { FlexBox, VerticalSeparator } from "lib/ui-ux"
 import { TicketConditions } from "./ticket-conditions"
-import { FetchFieldsAndConditions } from "modules/settings/apis/ticket-automation";
+import { FetchFieldsAndConditions, IAllAssignments } from "modules/settings/apis/ticket-automation";
 
-export const ChooseConditionForm = (props: { data: FetchFieldsAndConditions[] }) => {
-    const { data } = props;
+interface ChooseConditionFormProps {
+    data: FetchFieldsAndConditions[],
+    allAssignments?: IAllAssignments[];
+    mode?: string;
+    ruleName?: string
+}
+
+export const ChooseConditionForm = (props: ChooseConditionFormProps) => {
+    const { data, allAssignments, mode, ruleName } = props;
+
+    const validateRuleName = (value: string) => {
+        const modifiedData = mode === 'edit' ? allAssignments?.filter((item) => item.name !== ruleName) : allAssignments;
+        const doesNameExist = modifiedData?.some((item) => item.name === value);
+        if (doesNameExist) {
+            return `${value} already exists, please use a different name to continue`;
+        }
+    }
 
     return (
         <FlexBox flexDirection="column" gap={'20px'}>
             <FlexBox flexDirection="column" gap={'5px'}>
                 <Typography variant="h6">Rule Name</Typography>
-                <TextboxField name="ruleName" size="small" rules={{ required: 'Rule name is required' }} placeholder="Enter text here..." />
+                <TextboxField name="ruleName" size="small" rules={{ required: 'Rule name is required', validate: validateRuleName }} placeholder="Enter text here..." />
             </FlexBox>
             <FlexBox flexDirection="column" gap={'5px'}>
                 <Typography variant="h6">Description</Typography>

@@ -1,5 +1,5 @@
 import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
-import { useCreateAutoAssignment, useFetchFieldsAndConditions } from "modules/settings/apis/ticket-automation";
+import { IAllAssignments, useCreateAutoAssignment, useFetchFieldsAndConditions } from "modules/settings/apis/ticket-automation";
 import { AddRule } from "modules/settings/component/ticket-automation"
 import { FormProvider, useForm } from "react-hook-form"
 
@@ -19,7 +19,7 @@ export interface IAddRuleFormFields {
     selectedQueue: string;
 }
 
-export const AddRuleContainer = () => {
+export const AddRuleContainer = (props: { allAssignments?: IAllAssignments[] }) => {
     const { data, isLoading } = useFetchFieldsAndConditions();
     const { mutateAsync } = useCreateAutoAssignment();
 
@@ -87,7 +87,7 @@ export const AddRuleContainer = () => {
     if (data) {
         return (
             <FormProvider {...form}>
-                <AddRule data={data} onSubmit={onSubmit} />
+                <AddRule data={data} onSubmit={onSubmit} allAssignments={props.allAssignments} />
             </FormProvider>
         )
     }

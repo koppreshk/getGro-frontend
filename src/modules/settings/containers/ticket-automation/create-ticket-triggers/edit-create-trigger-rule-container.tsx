@@ -1,5 +1,5 @@
 import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
-import { AutoMationType, useEditAutoAssignment, useFetchAssignment, useFetchFieldsAndConditions } from "modules/settings/apis/ticket-automation/auto-assignments";
+import { AutoMationType, IAllAssignments, useEditAutoAssignment, useFetchAssignment, useFetchFieldsAndConditions } from "modules/settings/apis/ticket-automation/auto-assignments";
 import { useSearchParams } from "react-router-dom";
 import { AddCreateTriggerRule, IAddCreateTriggerRuleFormFields } from "modules/settings/component/ticket-automation/create-ticket-triggers";
 import { isArray } from "lib/utils";
@@ -7,6 +7,7 @@ import { ICondition } from "../auto-assignments";
 
 export const EditCreateTriggerRuleContainer = (props: {
     autoMationType: AutoMationType;
+    allTriggers?: IAllAssignments[] | undefined;
 }) => {
     const { autoMationType } = props;
     const { data, isLoading } = useFetchFieldsAndConditions();
@@ -90,7 +91,7 @@ export const EditCreateTriggerRuleContainer = (props: {
         }
 
         return (
-            <AddCreateTriggerRule data={data} onSubmit={onSubmit} defaultValues={defaultValues} mode="edit" />
+            <AddCreateTriggerRule data={data} onSubmit={onSubmit} defaultValues={defaultValues} mode="edit" allTriggers={props.allTriggers} />
         )
     }
 

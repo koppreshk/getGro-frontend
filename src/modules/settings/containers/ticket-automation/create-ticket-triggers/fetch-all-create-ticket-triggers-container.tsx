@@ -1,6 +1,7 @@
 import { ErrorMessage } from "lib/ui-ux";
 import { AutoMationType, useFetchAllAssignments } from "modules/settings/apis/ticket-automation";
-import { AllCreateTicketTriggers } from "modules/settings/component/ticket-automation/create-ticket-triggers";
+import { CreateTicketTriggersLayout } from "modules/settings/component/ticket-automation/create-ticket-triggers";
+import { UpdateTicketTriggersLayout } from "modules/settings/component/ticket-automation/update-ticket-triggers";
 
 export const FetchAllCreateTicketTriggersContainer = (props: {
     autoMationType: AutoMationType;
@@ -11,7 +12,11 @@ export const FetchAllCreateTicketTriggersContainer = (props: {
 
     return (
         <>
-            <AllCreateTicketTriggers data={data} isLoading={isLoading} autoMationType={props.autoMationType} />
+            {
+                props.autoMationType === 'create_trigger'
+                    ? <CreateTicketTriggersLayout data={data} isLoading={isLoading} autoMationType={props.autoMationType} />
+                    : <UpdateTicketTriggersLayout data={data} isLoading={isLoading} autoMationType={props.autoMationType} />
+            }
         </>
     )
 }

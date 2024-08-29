@@ -7,10 +7,9 @@ import { AgentAvailabilityLayout } from "../component/user-and-permissions/agent
 import { SatisfactionSurveyLayout } from "../component/general/satifaction-survey/satisfaction-survey-layout"
 import { MarketplaceRoutes } from "../component/apps/marketplace/marketplace-layout"
 import { TicketStatusContainer } from "../containers/ticket-status"
-import { AutoAssignmentsLayout } from "../component/ticket-automation"
-import { UpdateTicketTriggersLayout } from "../component/ticket-automation/update-ticket-triggers"
-import { CreateTicketTriggersLayout } from "../component/ticket-automation/create-ticket-triggers"
 import { RolesAndPermissionsContainer } from "../containers/roles-and-permissions"
+import { FetchAllAssignmentsContainer } from "../containers/ticket-automation"
+import { FetchAllCreateTicketTriggersContainer } from "../containers/ticket-automation/create-ticket-triggers"
 
 export default function ConfigurationsPage() {
     return (
@@ -24,9 +23,9 @@ export default function ConfigurationsPage() {
             <Route key="email-config" path="/email/*" element={<EmailConfigLayout />} />
             <Route key="add-agent" path="/agents" element={<AgentsLayout />} />
 
-            <Route key="auto-assignment" path="/auto-assignments/*" element={<AutoAssignmentsLayout />} />
-            <Route key="create-ticket-triggers" path="/create-ticket-triggers/*" element={<CreateTicketTriggersLayout />} />
-            <Route key="update-ticket-triggers" path="/update-ticket-triggers/*" element={<UpdateTicketTriggersLayout />} />
+            <Route key="auto-assignment" path="/auto-assignments/*" element={<FetchAllAssignmentsContainer />} />
+            <Route key="create-ticket-triggers" path="/create-ticket-triggers/*" element={<FetchAllCreateTicketTriggersContainer autoMationType="create_trigger" />} />
+            <Route key="update-ticket-triggers" path="/update-ticket-triggers/*" element={<FetchAllCreateTicketTriggersContainer autoMationType="update_trigger" />} />
 
             <Route key="agent-availability" path="/agent-availability" element={<AgentAvailabilityLayout />} />
             <Route key="satisfaction-survey" path="/satisfaction-survey" element={<SatisfactionSurveyLayout />} />

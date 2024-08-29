@@ -1,10 +1,11 @@
 import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
-import { AutoMationType, useCreateAutoAssignment, useFetchFieldsAndConditions } from "modules/settings/apis/ticket-automation/auto-assignments";
+import { AutoMationType, IAllAssignments, useCreateAutoAssignment, useFetchFieldsAndConditions } from "modules/settings/apis/ticket-automation/auto-assignments";
 import { AddCreateTriggerRule, IAddCreateTriggerRuleFormFields } from "modules/settings/component/ticket-automation/create-ticket-triggers";
 import { ICondition } from "../auto-assignments";
 
 export const AddCreateTriggerRuleContainer = (props: {
-    autoMationType: AutoMationType
+    autoMationType: AutoMationType;
+    allTriggers?: IAllAssignments[] | undefined;
 }) => {
     const { autoMationType } = props;
     const { data, isLoading } = useFetchFieldsAndConditions();
@@ -55,7 +56,7 @@ export const AddCreateTriggerRuleContainer = (props: {
 
     if (data) {
         return (
-            <AddCreateTriggerRule data={data} onSubmit={onSubmit} />
+            <AddCreateTriggerRule data={data} onSubmit={onSubmit} allTriggers={props.allTriggers} />
         )
     }
 
