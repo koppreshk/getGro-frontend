@@ -34,7 +34,8 @@ const useEmailActionHelpers = () => {
 export const EmailConversationLayout = (props: { conversationsData: ITicketById, fetchNewThreads: () => void; }) => {
     const { conversationsData, fetchNewThreads } = props;
     const { subject, conversations, thread_id: threadId } = conversationsData;
-    const casedConversation = conversations.map(item => ({ ...toCamelCasedKeysFromUnderScores(item), isCollapsed: true })) as IEmailConversations[];
+    const casedConversation = conversations.map((item) => ({ ...toCamelCasedKeysFromUnderScores(item), isCollapsed: true })) as IEmailConversations[];
+    casedConversation[casedConversation.length - 1].isCollapsed = false //making the last thread open 
     // const { socket } = useSocket();
     const formContext = useForm<IEmailFormFields>();
     const [emailThreads, setEmailThreads] = useState(casedConversation);
