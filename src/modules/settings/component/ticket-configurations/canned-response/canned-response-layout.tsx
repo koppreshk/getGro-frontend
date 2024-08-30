@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { Button, Typography } from "@mui/material";
-import { BreadCrumbs, CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-ux"
+import { BreadCrumbs, CustomIconButton, DrawerExtended, FlexBox, MoreInformation } from "lib/ui-ux"
 import { useNavigate } from "react-router-dom";
 import { AddCircleOutline, ArrowBack } from "@mui/icons-material";
 import { IGenericResponse } from "modules/settings/apis/canned-response/types";
@@ -43,8 +43,9 @@ export const CannedResponseLayout = (props: ICannedResponseLayoutProps) => {
     }, []);
 
     return (
-        <FlexBox width="100%" flexDirection="column">
+        <FlexBox width="100%" height="100%" padding="20px" gap={'10px'} flexDirection="column">
             <BreadCrumbs />
+            <MoreInformation information="Canned responses are a set of prewritten response templates for frequently asked questions in the support tickets" />
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
                     <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />

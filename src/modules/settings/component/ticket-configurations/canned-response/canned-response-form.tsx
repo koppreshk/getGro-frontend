@@ -2,7 +2,7 @@ import { useCallback, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form"
 import { FlexBox, LoadingButton } from "lib/ui-ux";
 import { Button, Grid, Typography } from "@mui/material";
-import { RichTextEditorField, TextboxFieldWithLabel } from "lib/form-fields";
+import { RadioGroupField, RichTextEditorField, TextboxFieldWithLabel } from "lib/form-fields";
 import { IGenericResponse } from "modules/settings/apis/canned-response/types";
 import { ICannedResponseFormFields } from "modules/settings/containers/canned-responses";
 import styled from "styled-components";
@@ -18,6 +18,18 @@ interface ICannedResponseFormProps {
 const StyledRichTextEditor = styled(RichTextEditorField)`
     border: 1px solid #c4c4c4;
     border-radius: 4px;
+    &:hover {
+        .ql-toolbar {
+            border-color: #212121;
+        }
+        border-color: #212121;
+    };
+    &:focus-within {
+        .ql-toolbar {
+            border-bottom: 2px solid ${({ theme }) => theme.pallete.primaryPurple};;
+        }
+        border: 2px solid ${({ theme }) => theme.pallete.primaryPurple};
+    }
 `;
 
 export const CannedResponseForm = (props: ICannedResponseFormProps) => {
@@ -36,7 +48,7 @@ export const CannedResponseForm = (props: ICannedResponseFormProps) => {
         // onFormSubmitHandler(formvalues);
     }, []);
 
-    const validateStatus = (value: string) => {
+    const validateTitle = (value: string) => {
         const modifiedData = mode === 'edit' ? statusData?.filter((item) => item.name !== defaultValues?.name) : statusData;
         const doesNameExist = modifiedData?.some((item) => item.name === value);
         if (doesNameExist) {
@@ -49,11 +61,20 @@ export const CannedResponseForm = (props: ICannedResponseFormProps) => {
             <FlexBox padding="20px" width="100%" height="calc(100% - 77px)" flexDirection="column" justifyContent="space-between">
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        <TextboxFieldWithLabel name="name" label="Name" fullWidth rules={{ required: 'Name is required', validate: validateStatus }} />
+                        <TextboxFieldWithLabel name="name" label="Title" fullWidth rules={{ required: 'Title is required', validate: validateTitle }} />
                     </Grid>
                     <Grid item xs={12}>
                         <Typography variant="h6" sx={{ mb: '5px' }}>Description</Typography>
                         <StyledRichTextEditor name={`template`} />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="h6" sx={{ mb: '5px' }}>Access Scope</Typography>
+                        <RadioGroupField
+                            name="accessScope"
+                            sx={{ gap: '10px' }}
+                            radioOptions={[
+                                { key: 'private', label: 'Private' },
+                                { key: 'public', label: 'Public' }]} />
                     </Grid>
                 </Grid>
                 <FlexBox gap='10px' width="100%" justifyContent="flex-end">
