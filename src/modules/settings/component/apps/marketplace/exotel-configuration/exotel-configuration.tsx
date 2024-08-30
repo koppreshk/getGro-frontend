@@ -72,10 +72,16 @@ export const ExotelConfiguration = (props: { data: IExotelConfigDetails, updateI
                 lastUpdated="May 12, 2024"
                 publishedOn="May 12, 2024"
                 version="1.0.0"
-                appIcon={() => <ExotelIcon width="60px" height="60px" />}
                 togglePopup={togglePopup}
                 isAppInstalled={isInstalled}
-                unInstallApp={() => <DeleteExotelConfigurations/>}
+                showManageBtn
+                secondaryBtnActions={{
+                    secondaryBtnLabel: 'Add Exotel Number',
+                    onSecondaryBtnClk: () => {}
+                }}
+                onManageRenderContent={() => <></>}
+                appIcon={() => <ExotelIcon width="60px" height="60px" />}
+                unInstallApp={() => <DeleteExotelConfigurations />}
             />
             <AddAppConfigurationDialog
                 dialogContent={appConfigDialogContent}
