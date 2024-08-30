@@ -27,12 +27,14 @@ interface IAppContentProps {
     lastUpdated: string;
     website: string;
     email: string;
+    manageBtnClicked: boolean;
+    onManageRenderContent?: () => React.ReactNode;
     OverviewContents(): JSX.Element;
     InstallationContents(): JSX.Element;
 }
 
 export const AppContent = (props: IAppContentProps) => {
-    const { InstallationContents, OverviewContents, email, lastUpdated, publishedOn, version, website } = props;
+    const { InstallationContents, OverviewContents, email, lastUpdated, publishedOn, version, website, manageBtnClicked, onManageRenderContent } = props;
 
     const [value, setValue] = React.useState(0);
 
@@ -42,26 +44,32 @@ export const AppContent = (props: IAppContentProps) => {
 
     return (
         <StyledFlexbox>
-            <FlexBox flexDirection="column" width="70%">
-                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                        <Tab label="Overview" {...tabAriaProps(0)} />
-                        <Tab label="Installation" {...tabAriaProps(1)} />
-                    </Tabs>
-                </Box>
-                <CustomTabPanel value={value} index={0}>
-                    {OverviewContents()}
-                </CustomTabPanel>
-                <CustomTabPanel value={value} index={1}>
-                    {InstallationContents()}
-                </CustomTabPanel>
-            </FlexBox>
-            <MoreInfoSection width="30%" padding="20px 16px">
-                <MoreInfoContent
-                    email={email} lastUpdated={lastUpdated}
-                    publishedOn={publishedOn} version={version}
-                    website={website} />
-            </MoreInfoSection>
+            {
+                manageBtnClicked && onManageRenderContent
+                    ? onManageRenderContent()
+                    :
+                    <>
+                        <FlexBox flexDirection="column" width="70%">
+                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                                    <Tab label="Overview" {...tabAriaProps(0)} />
+                                    <Tab label="Installation" {...tabAriaProps(1)} />
+                                </Tabs>
+                            </Box>
+                            <CustomTabPanel value={value} index={0}>
+                                {OverviewContents()}
+                            </CustomTabPanel>
+                            <CustomTabPanel value={value} index={1}>
+                                {InstallationContents()}
+                            </CustomTabPanel>
+                        </FlexBox>
+                        <MoreInfoSection width="30%" padding="20px 16px">
+                            <MoreInfoContent
+                                email={email} lastUpdated={lastUpdated}
+                                publishedOn={publishedOn} version={version}
+                                website={website} />
+                        </MoreInfoSection>
+                    </>}
         </StyledFlexbox>
     )
 }
