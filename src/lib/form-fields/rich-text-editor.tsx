@@ -19,7 +19,7 @@ const EditorContainer = styled(FlexBox)`
     .ql-toolbar, .ql-container {
         border-left: 0;
         border-right: 0;
-        border-bottom: 1px solid #cccc;
+        border-bottom: 1px solid #c4c4c4;
         border-top: none;
     }
     .ql-container {
@@ -53,7 +53,7 @@ const formats = [
 ]
 
 export const RichTextEditorField = (props: IRichTextEditorFieldProps) => {
-    const { name, className } = props;
+    const { name, className, ...restProps } = props;
     const { control } = useFormContext();
     const quillRef: React.LegacyRef<ReactQuill> | undefined = React.createRef();
 
@@ -69,7 +69,7 @@ export const RichTextEditorField = (props: IRichTextEditorFieldProps) => {
             render={({ field: { onChange, value, ref, ...rest } }) => (
                 <EditorContainer className={className}>
                     <ReactQuill
-                        {...props}
+                        {...restProps}
                         {...rest}
                         theme="snow"
                         value={value}
