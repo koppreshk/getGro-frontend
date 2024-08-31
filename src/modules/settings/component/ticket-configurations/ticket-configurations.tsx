@@ -34,21 +34,21 @@ const configurations = [
                 label: "Ticket Status",
                 uniqueKey: "ticket-status",
                 catOptionIcon: () => <AssignmentTurnedInOutlined />,
-                description: "Create your ticket status for efficient ticket routing"
+                description: "Define your ticket statuses to streamline and optimize the routing of support tickets"
             },
             {
                 route: "tags",
                 label: "Tags",
                 uniqueKey: "tags",
                 catOptionIcon: () => <SellOutlined />,
-                description: "Label your tickets for better organizing and reporting"
+                description: "Tag your tickets to enhance organization and improve reporting."
             },
             {
-                route: "canned-response",
-                label: "Canned Responses",
-                uniqueKey: "canned-response",
+                route: "templates",
+                label: "Templates",
+                uniqueKey: "templates",
                 catOptionIcon: () => <AddCommentOutlined />,
-                description: "Manage the prewritten collection of templates for ticket responses."
+                description: "Maintain and organize a library of predefined templates for responding to tickets."
             }
         ]
     },
