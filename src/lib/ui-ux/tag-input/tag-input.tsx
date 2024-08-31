@@ -145,6 +145,14 @@ export const TagInput = (props: ITagInputProps) => {
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
+                slotProps={{
+                    paper: {
+                        style: {
+                            maxHeight: 48 * 4.5,
+                            width: '20ch',
+                        },
+                    },
+                }}
             >
                 {suggestedTags.filter((it) => !tagItems.includes(it)).map(item => (
                     <MenuItem key={item} onClick={() => onMenuItemClick(item)}>
