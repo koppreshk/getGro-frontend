@@ -3,16 +3,16 @@ import { FormProvider, useForm } from "react-hook-form"
 import { FlexBox, LoadingButton } from "lib/ui-ux";
 import { Button, Grid, Typography } from "@mui/material";
 import { RadioGroupField, RichTextEditorField, TextboxFieldWithLabel } from "lib/form-fields";
-import { IGenericResponse } from "modules/settings/apis/canned-response/types";
-import { ICannedResponseFormFields } from "modules/settings/containers/canned-responses";
+import { IGenericResponse } from "modules/settings/apis/templates/types";
+import { ITemplatesFormFields } from "modules/settings/containers/templates";
 import styled from "styled-components";
 
-interface ICannedResponseFormProps {
+interface ITemplatesFormProps {
     mode: 'create' | 'edit';
-    defaultValues?: ICannedResponseFormFields;
+    defaultValues?: ITemplatesFormFields;
     mutationLoading: boolean;
     statusData?: IGenericResponse[];
-    onFormSubmitHandler: (data: ICannedResponseFormFields) => void;
+    onFormSubmitHandler: (data: ITemplatesFormFields) => void;
 }
 
 const StyledRichTextEditor = styled(RichTextEditorField)`
@@ -32,18 +32,18 @@ const StyledRichTextEditor = styled(RichTextEditorField)`
     }
 `;
 
-export const CannedResponseForm = (props: ICannedResponseFormProps) => {
+export const TemplatesForm = (props: ITemplatesFormProps) => {
     const { mode, defaultValues, mutationLoading, statusData } = props;
     const isInEditMode = useMemo(() => mode === 'edit', [mode]);
 
-    const methods = useForm<ICannedResponseFormFields>({
+    const methods = useForm<ITemplatesFormFields>({
         defaultValues: defaultValues ?? {
             name: '',
             template: ''
         }
     });
 
-    const onSubmit = useCallback(async (formvalues: ICannedResponseFormFields) => {
+    const onSubmit = useCallback(async (formvalues: ITemplatesFormFields) => {
         console.log(formvalues);
         // onFormSubmitHandler(formvalues);
     }, []);

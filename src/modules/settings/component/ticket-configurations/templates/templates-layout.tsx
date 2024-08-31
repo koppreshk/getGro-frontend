@@ -3,17 +3,17 @@ import { Button, Typography } from "@mui/material";
 import { BreadCrumbs, CustomIconButton, DrawerExtended, FlexBox, MoreInformation } from "lib/ui-ux"
 import { useNavigate } from "react-router-dom";
 import { AddCircleOutline, ArrowBack } from "@mui/icons-material";
-import { IGenericResponse } from "modules/settings/apis/canned-response/types";
-import { CreateCannedResponseContainer } from "modules/settings/containers/canned-responses";
-import { CannedResponseList } from "./canned-response-list";
+import { IGenericResponse } from "modules/settings/apis/templates/types";
+import { CreateTemplatesContainer } from "modules/settings/containers/templates";
+import { TemplatesList } from "./templates-list";
 
-interface IAddNewCannedResponseProps {
+interface IAddNewTemplatesProps {
     openAddStatusDrawer: boolean;
     statusData?: IGenericResponse[]
     toggleAddStatusDrawer: () => void
 }
 
-const AddNewCannedResponse = (props: IAddNewCannedResponseProps) => {
+const AddNewTemplates = (props: IAddNewTemplatesProps) => {
     const { openAddStatusDrawer, statusData, toggleAddStatusDrawer } = props;
 
     return (
@@ -23,18 +23,18 @@ const AddNewCannedResponse = (props: IAddNewCannedResponseProps) => {
             anchor="right"
             open={openAddStatusDrawer}
             onRenderContent={() => (
-                <CreateCannedResponseContainer toggleAddStatusDrawer={toggleAddStatusDrawer} statusData={statusData} />
+                <CreateTemplatesContainer toggleAddStatusDrawer={toggleAddStatusDrawer} statusData={statusData} />
             )}
             onClose={toggleAddStatusDrawer} />
     )
 }
 
-interface ICannedResponseLayoutProps {
+interface ITemplatesLayoutProps {
     data: IGenericResponse[] | undefined;
     isLoading: boolean;
 }
 
-export const CannedResponseLayout = (props: ICannedResponseLayoutProps) => {
+export const TemplatesLayout = (props: ITemplatesLayoutProps) => {
     const [openAddStatusDrawer, setOpenAddStatusDrawer] = React.useState(false);
     const navigate = useNavigate();
 
@@ -52,9 +52,9 @@ export const CannedResponseLayout = (props: ICannedResponseLayoutProps) => {
                     <Typography variant="h5">Canned Response</Typography>
                 </FlexBox>
                 <Button variant="contained" onClick={toggleAddStatusDrawer} startIcon={<AddCircleOutline />}>Add Canned Response</Button>
-                <AddNewCannedResponse openAddStatusDrawer={openAddStatusDrawer} toggleAddStatusDrawer={toggleAddStatusDrawer} statusData={props.data} />
+                <AddNewTemplates openAddStatusDrawer={openAddStatusDrawer} toggleAddStatusDrawer={toggleAddStatusDrawer} statusData={props.data} />
             </FlexBox>
-            <CannedResponseList isLoading={props.isLoading} statusData={props.data} />
+            <TemplatesList isLoading={props.isLoading} statusData={props.data} />
         </FlexBox>
     )
 }

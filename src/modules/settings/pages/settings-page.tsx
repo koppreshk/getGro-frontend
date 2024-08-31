@@ -10,7 +10,7 @@ import { TicketStatusContainer } from "../containers/ticket-status"
 import { RolesAndPermissionsContainer } from "../containers/roles-and-permissions"
 import { FetchAllAssignmentsContainer } from "../containers/ticket-automation"
 import { FetchAllCreateTicketTriggersContainer } from "../containers/ticket-automation/create-ticket-triggers"
-import { CannedResponseContainer } from "../containers/canned-responses"
+import { TemplatesContainer } from "../containers/templates/templates-container"
 
 export default function ConfigurationsPage() {
     return (
@@ -18,7 +18,7 @@ export default function ConfigurationsPage() {
             <Route key="configuration-home" path='/' element={<Configurations />} />
             <Route key="queues" path="/queues" element={<TicketQueuesContainer />} />
             <Route key="ticket-escalation" path="/ticket-escalation/*" element={<AllEscalationsContainer />} />
-            <Route key="canned-response" path="/canned-response/*" element={<CannedResponseContainer />} />
+            <Route key="templates" path="/templates/*" element={<TemplatesContainer />} />
             <Route key="ticket-status" path="/ticket-status/*" element={<TicketStatusContainer />} />
             <Route key="ticket-tags" path="/tags" element={<TicketTagsContainer />} />
             <Route key="facebook-login" path="/facebook" element={<FacebookConfigurations />} />

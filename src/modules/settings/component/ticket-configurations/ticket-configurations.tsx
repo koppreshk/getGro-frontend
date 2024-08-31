@@ -34,21 +34,21 @@ const configurations = [
                 label: "Ticket Status",
                 uniqueKey: "ticket-status",
                 catOptionIcon: () => <AssignmentTurnedInOutlined />,
-                description: "Create your ticket status for efficient ticket routing"
+                description: "Define your ticket statuses to streamline and optimize the routing of support tickets"
             },
             {
                 route: "tags",
                 label: "Tags",
                 uniqueKey: "tags",
                 catOptionIcon: () => <SellOutlined />,
-                description: "Label your tickets for better organizing and reporting"
+                description: "Tag your tickets to enhance organization and improve reporting."
             },
             {
-                route: "canned-response",
-                label: "Canned Responses",
-                uniqueKey: "canned-response",
+                route: "templates",
+                label: "Templates",
+                uniqueKey: "templates",
                 catOptionIcon: () => <AddCommentOutlined />,
-                description: "Manage the prewritten collection of templates for ticket responses."
+                description: "Maintain and organize a library of predefined templates for responding to tickets."
             }
         ]
     },
@@ -61,14 +61,14 @@ const configurations = [
                 route: 'facebook',
                 uniqueKey: 'facebook',
                 catOptionIcon: () => <Facebook />,
-                description: 'Configure facebook'
+                description: 'Set up your Facebook integration.'
             },
             {
                 label: 'Email',
                 route: 'email',
                 uniqueKey: 'email',
                 catOptionIcon: () => <Email />,
-                description: 'Setup support email inboxes for ticket automation'
+                description: 'Configure support email inboxes to automate ticket creation and management.'
             }
         ]
     },
@@ -81,28 +81,28 @@ const configurations = [
                 label: "Ticket Escalation",
                 uniqueKey: "ticket-escalation",
                 catOptionIcon: () => <EventNoteOutlined />,
-                description: "Streamline ticket management: Automate categorization and routing with custom rules"
+                description: "Simplify ticket handling: Use custom rules to automatically categorize and route tickets."
             },
             {
                 route: "auto-assignments",
                 label: "Auto Assignments",
                 uniqueKey: "auto-assignments",
                 catOptionIcon: () => <ManageHistory />,
-                description: "Setup automatic agent assignment rules for a ticket"
+                description: "Establish automated rules to assign tickets to agents efficiently"
             },
             {
                 route: "create-ticket-triggers",
                 label: "Create Ticket Triggers",
                 uniqueKey: "create-ticket-triggers",
                 catOptionIcon: () => <ConfirmationNumber />,
-                description: "Setup automation rules to perform actions on ticket creation"
+                description: "Configure automation rules to trigger actions automatically when a ticket is created"
             },
             {
                 route: "update-ticket-triggers",
                 label: "Update Ticket Triggers",
                 uniqueKey: "update-ticket-triggers",
                 catOptionIcon: () => <ConfirmationNumber />,
-                description: "Setup automation rules to perform actions on ticket update"
+                description: "Configure automation rules to trigger actions whenever a ticket is updated."
             },
             // {
             //     route: "time-triggers",
@@ -122,28 +122,28 @@ const configurations = [
                 label: "Agents",
                 uniqueKey: "Agents",
                 catOptionIcon: () => <SupportAgentRounded />,
-                description: "Add edit or deactivate an agent"
+                description: "Modify, add, or deactivate an agent as needed."
             },
             {
                 route: "queues",
                 label: "Queues (Groups)",
                 uniqueKey: "queues",
                 catOptionIcon: () => <Groups2Outlined />,
-                description: "Organizing agents based on their expertise to address specific ticket types"
+                description: "Arrange agents according to their areas of expertise to handle specific types of tickets more effectively."
             },
             {
                 route: "roles-and-permissions",
                 label: "Roles and Permissions",
                 uniqueKey: "roles-and-permissions",
                 catOptionIcon: () => <LockPerson />,
-                description: "Create custom roles for agents with specific permissions"
+                description: "Establish custom roles for agents with tailored permissions to meet your needs."
             },
             {
                 route: "agent-availability",
                 label: "Agent Availability Status",
                 uniqueKey: "agent-availability",
                 catOptionIcon: () => <WorkHistory />,
-                description: "Add, edit or remove an agents avaibilility status"
+                description: "Manage an agent's availability by adding, editing, or removing their status."
             },
         ]
     },
@@ -156,7 +156,7 @@ const configurations = [
                 route: "satisfaction-survey",
                 label: "Satisfaction Survey",
                 uniqueKey: "satisfaction-survey",
-                description: "Set up customer satisfaction survey for the ticket",
+                description: "Implement a customer satisfaction survey for each ticket to gather feedback and measure service quality.",
                 catOptionIcon: () => <ThumbsUpDown />
             }
         ]
@@ -177,7 +177,7 @@ const configurations = [
                 label: "Marketplace",
                 uniqueKey: "marketplace",
                 catOptionIcon: () => <StoreRounded />,
-                description: "Manage and integrate third-party applications"
+                description: "Handle and integrate external applications seamlessly."
             }
         ]
     },

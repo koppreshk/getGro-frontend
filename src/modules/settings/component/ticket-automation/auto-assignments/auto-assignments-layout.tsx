@@ -38,7 +38,7 @@ const AutoAssignmentsContent = (props: IAutoAssignmentsLayoutProps) => {
 
     return (
         <FlexBox padding="20px" flexDirection="column" gap={'20px'} height="100%">
-            <MoreInformation information="Auto assignments help to automatically assign tickets to the agents in a group in the round-robin fashion. When a ticket is created or updated first matching rule in a specified order is selected for assignment of the agent. " />
+            <MoreInformation information="Automatic assignments ensure tickets are distributed to agents in a group using a round-robin approach. When a ticket is created or updated, the system applies the first matching rule in the designated order to determine the appropriate agent for assignment." />
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
                     <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />

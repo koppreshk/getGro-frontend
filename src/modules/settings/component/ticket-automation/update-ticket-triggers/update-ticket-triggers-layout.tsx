@@ -36,7 +36,7 @@ const UpdateTicketTriggersContent = (props: IUpdateTicketTriggersLayoutProps) =>
 
     return (
         <FlexBox padding="20px" flexDirection="column" gap={'20px'} height="100%">
-            <MoreInformation information="Update ticket triggers help in setting up automated rules to perform a predefined set of actions based on selected criteria when an existing ticket is updated." />
+            <MoreInformation information="Configure ticket triggers to automate a series of actions based on specified criteria whenever an existing ticket is modified." />
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
                     <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />

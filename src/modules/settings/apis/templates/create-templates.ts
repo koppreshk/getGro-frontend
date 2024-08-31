@@ -1,27 +1,27 @@
 import { useServiceClient } from "lib";
 import React from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { CannedResponseTypeEndPoint, CannedResponseTypeQueryKey } from "./api-enums";
+import { TemplatesTypeEndPoint, TemplatesTypeQueryKey } from "./api-enums";
 
 interface ICreateStatusArgs {
     name: string;
 }
 
-export const useCreateCannedResponse = () => {
+export const useCreateTemplates = () => {
     const { postData } = useServiceClient();
     const queryClient = useQueryClient();
 
-    const createticketStatus = React.useCallback((args: ICreateStatusArgs) => postData(CannedResponseTypeEndPoint.CREATE_STATUS,
+    const createticketStatus = React.useCallback((args: ICreateStatusArgs) => postData(TemplatesTypeEndPoint.CREATE_STATUS,
         {
             name: args.name
         }
     ).then((res) => res.json()), [postData]);
 
     return useMutation({
-        mutationKey: CannedResponseTypeQueryKey.CREATE_STATUS,
+        mutationKey: TemplatesTypeQueryKey.CREATE_STATUS,
         mutationFn: createticketStatus,
         onSuccess: () => {
-            queryClient.invalidateQueries(CannedResponseTypeQueryKey.FETCH_ALL_STATUSES);
+            queryClient.invalidateQueries(TemplatesTypeQueryKey.FETCH_ALL_STATUSES);
         }
     });
 }

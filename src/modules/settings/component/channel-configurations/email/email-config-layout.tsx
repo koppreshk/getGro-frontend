@@ -1,6 +1,6 @@
 import { Add, ArrowBack } from "@mui/icons-material";
 import { Button, Typography } from "@mui/material"
-import { BreadCrumbs, CustomIconButton, FlexBox } from "lib/ui-ux"
+import { BreadCrumbs, CustomIconButton, FlexBox, MoreInformation } from "lib/ui-ux"
 import { FetchAllEmailsContainer } from "modules/settings/containers/channel-configurations";
 import { AddEmailConfigContainer, EditEmailConfigContainer } from "modules/settings/containers/channel-configurations/email";
 import { useCallback } from "react";
@@ -8,8 +8,9 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 
 export const EmailConfigLayout = () => {
     return (
-        <FlexBox width="100%" height="100%" flexDirection="column">
+        <FlexBox width="100%" height="100%" flexDirection="column" padding="20px" gap={'10px'}>
             <BreadCrumbs />
+            <MoreInformation information="Set up the support email address that users will use to reach out for assistance. Emails sent to this address will automatically be turned into support tickets." />
             <div style={{ height: 'calc(100% - 34px)' }}>
                 <Routes>
                     <Route key='base-route' path="/" element={<EmailConfigContent />} />

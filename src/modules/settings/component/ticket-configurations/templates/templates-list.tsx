@@ -2,11 +2,11 @@ import { Edit } from "@mui/icons-material";
 import { Row, createColumnHelper } from "@tanstack/react-table";
 import { CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-ux";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
-import { IGenericResponse } from "modules/settings/apis/canned-response/types";
-import { DeleteCannedResponseContainer, EditCannedResponseContainer } from "modules/settings/containers/canned-responses";
+import { IGenericResponse } from "modules/settings/apis/templates/types";
+import { DeleteTemplatesContainer, EditTemplatesContainer } from "modules/settings/containers/templates";
 import { useCallback, useState } from "react";
 
-interface ICannedResponseListProps {
+interface ITemplatesListProps {
     statusData: IGenericResponse[] | undefined;
     isLoading: boolean;
 }
@@ -32,7 +32,7 @@ const useColumns = () => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
                         <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: "Edit Status", arrow: true }} />
-                        <DeleteCannedResponseContainer id={original.id} />
+                        <DeleteTemplatesContainer id={original.id} />
                     </FlexBox>
                 )
             },
@@ -42,7 +42,7 @@ const useColumns = () => {
     return columns;
 }
 
-export const CannedResponseList = (props: ICannedResponseListProps) => {
+export const TemplatesList = (props: ITemplatesListProps) => {
     const { isLoading, statusData } = props;
     const columns = useColumns();
     const [rowData, setRowData] = useState({});
@@ -66,7 +66,7 @@ export const CannedResponseList = (props: ICannedResponseListProps) => {
                 width="500px"
                 header="View or Edit Ticket Status"
                 onRenderContent={() => (
-                    <EditCannedResponseContainer onSelectRowMetaData={rowData as IGenericResponse} toggleDrawer={toggleDrawer} statusData={statusData}/>
+                    <EditTemplatesContainer onSelectRowMetaData={rowData as IGenericResponse} toggleDrawer={toggleDrawer} statusData={statusData}/>
                 )}
                 onClose={toggleDrawer}
             />

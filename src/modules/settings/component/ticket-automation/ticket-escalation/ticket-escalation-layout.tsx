@@ -48,7 +48,7 @@ const EscalationLayoutContent = (props: ITicketEscalaltionLayoutProps) => {
 
     return (
         <FlexBox flexDirection="column" gap={'20px'} padding="20px" width="100%" height="100%">
-            <MoreInformation information="SLAs help to set the response and resolution times in support tickets. Each SLA can be configured to operate either for calendar hours (24*7) or specific business hours. The first matching SLA from the specified order will be applied when a ticket is created or updated." />
+            <MoreInformation information="Service Level Agreements (SLAs) define the response and resolution times for support tickets. You can configure each SLA to function based on calendar hours (24/7) or specific business hours. When a ticket is created or updated, the system applies the first applicable SLA from the defined order." />
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
                     <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBackIcon />} tooltipProps={{ title: 'Back' }} />

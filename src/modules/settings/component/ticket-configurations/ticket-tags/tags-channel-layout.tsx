@@ -15,7 +15,7 @@ export const TagsLayout = (props: ITagsListProps) => {
     return (
         <FlexBox flexDirection='column' gap={'20px'} padding='10px 20px' height='100%'>
             <BreadCrumbs />
-            <MoreInformation information='A tag is used to attach a label to tickets, contacts, or contact groups. Tags can be used for categorization, filtering, or automation' />
+            <MoreInformation information='Tags are labels that you can assign to tickets. They help with categorizing, filtering, and automating processes.' />
             <FlexBox justifyContent='space-between' width='100%' alignItems="center">
                 <FlexBox alignItems='center' gap="10px">
                     <CustomIconButton onClick={() => navigate('/configurations')} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />

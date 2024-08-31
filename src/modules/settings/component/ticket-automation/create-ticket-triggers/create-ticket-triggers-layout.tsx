@@ -35,7 +35,7 @@ const CreateTicketTriggersContent = (props: ICreateTriggersLayoutProps) => {
 
     return (
         <FlexBox padding="20px" flexDirection="column" gap={'20px'} height="100%">
-            <MoreInformation information="Create ticket triggers helps in setting up automated rules to perform a predefined set of actions based on selected criteria, on a newly created ticket." />
+            <MoreInformation information="Set up ticket triggers to automate actions based on specific criteria for newly created tickets. This allows you to define rules that execute predefined tasks automatically." />
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
                     <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
