@@ -1,3 +1,4 @@
+import { KeyboardArrowLeft } from "@mui/icons-material";
 import { Button, ButtonProps, CircularProgress } from "@mui/material"
 
 interface LoadingButtonProps extends ButtonProps {
@@ -11,6 +12,17 @@ export const LoadingButton = (props: LoadingButtonProps) => {
             {...rest}
             disabled={isLoading}
             endIcon={isLoading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : endIcon}>
+            {children}
+        </Button>
+    )
+}
+
+export const BackButton = (props: Omit<LoadingButtonProps, 'isLoading'>) => {
+    const { children, ...rest } = props
+    return (
+        <Button
+            {...rest}
+            startIcon={<KeyboardArrowLeft />}>
             {children}
         </Button>
     )

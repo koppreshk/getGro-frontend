@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { FlexBox } from 'lib/ui-ux'
+import { BackButton, FlexBox } from 'lib/ui-ux'
 import { Button, Typography } from '@mui/material'
 import { IAppConfigurationLayout } from './app-configuration-layout';
 
@@ -29,7 +29,12 @@ export const AppHeader = (props: IAppHeaderProps) => {
             {isAppInstalled ?
                 <FlexBox gap="12px">
                     {manageBtnClicked
-                        ? <Button variant="contained" size="medium" onClick={secondaryBtnActions?.onSecondaryBtnClk}>{secondaryBtnActions?.secondaryBtnLabel}</Button>
+                        ? (
+                            <>
+                                <BackButton variant="outlined" size="medium" onClick={onManageBtnClick}>Back</BackButton>
+                                <Button variant="contained" size="medium" onClick={secondaryBtnActions?.onSecondaryBtnClk}>{secondaryBtnActions?.secondaryBtnLabel}</Button>
+                            </>
+                        )
                         : (showManageBtn ? <Button variant="outlined" size="medium" onClick={onManageBtnClick}>Manage</Button> : null)}
                     {manageBtnClicked ? null
                         :

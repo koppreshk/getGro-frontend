@@ -2,7 +2,7 @@ import React from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { Box, Button, CircularProgress, DialogActions, Divider, Grid, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
 import { TextboxField } from "lib/form-fields";
-import { CenteredCircularProgress, FlexBox } from "lib/ui-ux";
+import { BackButton, CenteredCircularProgress, FlexBox } from "lib/ui-ux";
 import { IAddExotelFormFields } from "modules/settings/containers/marketplace/exotel";
 import { useAppSelector } from "lib/hooks";
 
@@ -115,9 +115,9 @@ export const AddExotelConfigurationForm = (props: IAddExotelConfigurationFormPro
             </FlexBox>
             <DialogActions sx={{ justifyContent: 'space-between', paddingTop: '30px' }}>
                 {activeStep > 0 ?
-                    <Button variant="outlined" onClick={handleBack}>
+                    <BackButton variant="outlined" onClick={handleBack}>
                         Back
-                    </Button> : <div></div>
+                    </BackButton> : <div></div>
                 }
                 <FlexBox gap="10px">
                     <Button variant="outlined" onClick={togglePopup}>

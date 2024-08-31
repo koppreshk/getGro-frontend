@@ -9,5 +9,5 @@ export * from './more-information';
 export * from './custom-tab-panel';
 export * from './custom-stepper';
 export * from './refresh-button';
-export * from './loading-button';
+export * from './action-buttons';
 

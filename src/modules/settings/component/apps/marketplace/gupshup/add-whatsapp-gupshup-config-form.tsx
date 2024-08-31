@@ -1,6 +1,6 @@
 import React from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
-import { FlexBox } from "lib/ui-ux";
+import { BackButton, FlexBox } from "lib/ui-ux";
 import { TextboxField } from "lib/form-fields";
 import { Box, Button, CircularProgress, DialogActions, Divider, Step, StepLabel, Stepper, Typography } from "@mui/material";
 import { useAppSelector } from "lib/hooks";
@@ -105,9 +105,9 @@ export const WhatsAppGupshupConfigForm = (props: IWhatsAppGupshupConfigFormProps
             </FlexBox>
             <DialogActions sx={{ justifyContent: 'space-between', paddingTop: '30px' }}>
                 {activeStep > 0 ?
-                    <Button variant="outlined" onClick={handleBack}>
+                    <BackButton variant="outlined" onClick={handleBack}>
                         Back
-                    </Button> : <div></div>
+                    </BackButton> : <div></div>
                 }
                 <FlexBox gap="10px">
                     <Button variant="outlined" onClick={togglePopup}>
