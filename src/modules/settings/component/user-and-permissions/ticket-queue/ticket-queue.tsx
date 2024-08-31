@@ -47,7 +47,7 @@ export const TicketQueue = (props: ITicketQueueProps) => {
         <FlexBox width="100%" flexDirection="column" height="100%">
             <BreadCrumbs />
             <FlexBox flexDirection="column" gap={'20px'} padding="20px" height="calc(100% - 46px)">
-                <MoreInformation information="Queues in an organization help associate the related agents. Queues can be utilized in auto-assignment, automation, ticket permission restrictions, and sharing filters" />
+                <MoreInformation information="Queues in an organization link related agents together, facilitating tasks such as automatic assignment, automation, ticket permission management, and sharing filters." />
                 <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                     <FlexBox alignItems="center" gap="10px">
                         <CustomIconButton onClick={() => navigate('/configurations')} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />

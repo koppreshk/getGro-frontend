@@ -43,7 +43,7 @@ export const AgentsLayout = () => {
         <FlexBox width="100%" height="100%" flexDirection="column">
             <BreadCrumbs />
             <FlexBox padding="20px" gap={'20px'} flexDirection="column" height="calc(100% - 46px)">
-                <MoreInformation information="Agents are the users in charge of handling tickets and dealing with customer issues. You can add many agents based on your purchased license." />
+                <MoreInformation information="Agents are responsible for managing tickets and addressing customer issues. You can add as many agents as your license allows." />
                 <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                     <FlexBox alignItems="center" gap="10px">
                         <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
