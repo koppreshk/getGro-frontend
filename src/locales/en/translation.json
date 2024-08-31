@@ -1,0 +1,8 @@
+{
+    "modules": {
+        "dashboard": {
+            "hi": "Hi",
+            "welcomeBack": "Welcome back!"
+        }
+    }
+}
