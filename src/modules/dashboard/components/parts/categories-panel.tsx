@@ -4,6 +4,7 @@ import { Box, Typography } from "@mui/material"
 import { FlexBox, RefreshButton } from "lib/ui-ux";
 import { Widgets } from "@mui/icons-material";
 import { AgentPerformanceDashContainer, SupportMonitoringDashContainer, SLADashboardContainer } from "modules/dashboard/container";
+import { Trans, useTranslation } from "react-i18next";
 
 interface IDashboardCategories {
     id: number;
@@ -29,17 +30,17 @@ const dashboardCategories: IDashboardCategories[] = [
     // },
     {
         id: 2,
-        name: 'Support Monitoring',
+        name: 'supportMonitoring',
         component: <SupportMonitoringDashContainer />
     },
     {
         id: 3,
-        name: "Agent Performance",
+        name: "agentPerformance",
         component: <AgentPerformanceDashContainer />,
     },
     {
         id: 4,
-        name: "SLA Dashboard",
+        name: "slaDashboard",
         component: <SLADashboardContainer />,
     },
     // {
@@ -116,6 +117,7 @@ const TabPill = (props: ITabPillProps) => {
 export const DashboardCategoriesPanel = () => {
     const [value, setValue] = React.useState(2);
     const { pallete } = useTheme();
+    const { t } = useTranslation();
 
     const onClickHandler = (id: number) => {
         setValue(id);
@@ -128,10 +130,10 @@ export const DashboardCategoriesPanel = () => {
                     <FlexBox gap='10px' flexDirection="row" alignItems="center">
                         <FlexBox alignItems="center" gap="5px" padding="0 12px 0 0">
                             <Widgets color="primary" />
-                            <Typography variant="h4" sx={{ color: pallete.grayVariant2 }} >Dashboards</Typography>
+                            <Typography variant="h4" sx={{ color: pallete.grayVariant2 }} ><Trans i18nKey="modules.dashboard.moduleHeading" /></Typography>
                         </FlexBox>
                         {dashboardCategories.map((category) => {
-                            return <TabPill key={category.id} label={category.name} id={category.id} onClickHandler={onClickHandler} value={value} />
+                            return <TabPill key={category.id} label={t(`modules.dashboard.sectionHeadings.${category.name}`)} id={category.id} onClickHandler={onClickHandler} value={value} />
                         })}
                     </FlexBox>
                     <RefreshButton />

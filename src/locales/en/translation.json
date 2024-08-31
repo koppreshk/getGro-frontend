@@ -2,7 +2,13 @@
     "modules": {
         "dashboard": {
             "hi": "Hi",
-            "welcomeBack": "Welcome back!"
+            "welcomeBack": "Welcome back!",
+            "moduleHeading": "Dashboards",
+            "sectionHeadings": {
+                "supportMonitoring": "Support Monitoring",
+                "agentPerformance": "Agent Performance",
+                "slaDashboard": "SLA Dashboard"
+            }
         }
     }
 }
