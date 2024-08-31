@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { FlexBox } from "lib/ui-ux";
 import { Box, CircularProgress, Typography } from "@mui/material"
 import { RadioGroupField, SelectField, TextboxField } from "lib/form-fields"
-import { IEscalationsNew, IField, IPriority, useFetchAllQueues } from "modules/settings/apis/escalations";
+import { IEscalationsNew, IField, IPriority, useFetchAllQueues } from "modules/settings/apis/ticket-automation/escalations";
 import { IEscalationFormFields } from "./add-escalation-layout";
 import { useFetchAllChannels } from "modules/settings/apis/tags";
 import { useFetchAllStatuses } from "modules/settings/apis/ticket-status";

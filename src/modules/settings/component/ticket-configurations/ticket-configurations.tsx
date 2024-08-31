@@ -37,13 +37,6 @@ const configurations = [
                 description: "Create your ticket status for efficient ticket routing"
             },
             {
-                route: "ticket-escalation",
-                label: "Ticket Escalation",
-                uniqueKey: "ticket-escalation",
-                catOptionIcon: () => <EventNoteOutlined />,
-                description: "Streamline ticket management: Automate categorization and routing with custom rules"
-            },
-            {
                 route: "tags",
                 label: "Tags",
                 uniqueKey: "tags",
@@ -83,6 +76,13 @@ const configurations = [
         categoryName: "Ticket Automation",
         categoryIcon: () => <ManageHistory color="primary" />,
         categoryOptions: [
+            {
+                route: "ticket-escalation",
+                label: "Ticket Escalation",
+                uniqueKey: "ticket-escalation",
+                catOptionIcon: () => <EventNoteOutlined />,
+                description: "Streamline ticket management: Automate categorization and routing with custom rules"
+            },
             {
                 route: "auto-assignments",
                 label: "Auto Assignments",

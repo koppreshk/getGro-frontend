@@ -2,7 +2,7 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { ConfigDataGrid } from 'lib/ui-ux/configuration-data-grid';
 import { FlexBox } from 'lib/ui-ux';
 import { ITicketEscalaltionLayoutProps } from '../ticket-escalation-layout';
-import { IEscalationsNew } from 'modules/settings/apis/escalations';
+import { IEscalationsNew } from 'modules/settings/apis/ticket-automation/escalations';
 import { DeleteEscalation } from '../delete-escalation';
 import { SLAStatus } from './sla-status';
 import { EditEscalation } from './edit-escalation';

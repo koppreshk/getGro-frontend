@@ -5,11 +5,11 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { AddCircleOutline } from "@mui/icons-material"
 import { Button, Typography } from "@mui/material"
 import { BreadCrumbs, CustomIconButton, FlexBox } from "lib/ui-ux";
-import { IEscalationsNew } from "modules/settings/apis/escalations";
+import { IEscalationsNew } from "modules/settings/apis/ticket-automation/escalations";
 import { useAppDispatch } from "lib/hooks";
 import { setTotalPage } from "modules/settings/storage";
 import { AllEscalations } from "./ticket-escalation-new/all-escalations";
-import { CreateTicketSLAContainer, EditTicketSLAContainer } from "modules/settings/containers/ticket-sla";
+import { CreateTicketSLAContainer, EditTicketSLAContainer } from "modules/settings/containers";
 import { MoreInformation } from "lib/ui-ux/common/more-information";
 
 export interface ITicketEscalaltionLayoutProps {

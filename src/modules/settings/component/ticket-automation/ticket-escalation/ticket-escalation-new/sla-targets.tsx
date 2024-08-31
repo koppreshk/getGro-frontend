@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { SelectField, TextboxField } from "lib/form-fields";
 import { FlexBox } from "lib/ui-ux"
-import { IField, IKeyValue, IPriority } from "modules/settings/apis/escalations/fetch-sla-metadata";
+import { IField, IKeyValue, IPriority } from "modules/settings/apis/ticket-automation/escalations/fetch-sla-metadata";
 import styled from 'styled-components';
 
 const PriorityLabel = styled(FlexBox)`

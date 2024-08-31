@@ -8,7 +8,7 @@ import { ChooseCondition } from "./choose-condition";
 import { FlexBox } from "lib/ui-ux";
 import { KeyboardArrowLeft, KeyboardArrowRight, Save } from "@mui/icons-material";
 import { SLATargets } from "./sla-targets";
-import { IEscalationsNew, IKeyValue, ISLAmetaData } from "modules/settings/apis/escalations";
+import { IEscalationsNew, IKeyValue, ISLAmetaData } from "modules/settings/apis/ticket-automation/escalations";
 
 const steps = [
     {
