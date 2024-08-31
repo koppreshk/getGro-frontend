@@ -16,7 +16,7 @@ export interface IAddExotelConfigurationFormProps {
 const steps = [
     {
         label: 'Account',
-        description: `Set up an Exotel account to link Exotel with BoldDesk.`,
+        description: `Set up an Exotel account to link Exotel with GetGro`,
     },
     {
         label: 'Webhook',
@@ -81,7 +81,7 @@ const AccountWebhookDetails = (props: { isMutationLoading: boolean | undefined }
 export const AddExotelConfigurationForm = (props: IAddExotelConfigurationFormProps) => {
     const { togglePopup, onSubmit, isMutationLoading, updateInstallation } = props;
     const form = useFormContext<IAddExotelFormFields>()
-    const [activeStep, setActiveStep] = React.useState(1);
+    const [activeStep, setActiveStep] = React.useState(0);
     const webHookUrl = useAppSelector((state) => state.configurations.exotelWebhookUrl);
 
     React.useEffect(() => {
@@ -104,17 +104,17 @@ export const AddExotelConfigurationForm = (props: IAddExotelConfigurationFormPro
         updateInstallation();
     };
 
-    const isLastStep = activeStep === steps.length;
+    const isLastStep = activeStep === steps.length - 1;
 
     return (
         <form autoComplete="off">
             <FlexBox gap="20px">
                 <ConfigSteps activeStep={activeStep} />
                 <Divider orientation="vertical" variant="middle" flexItem />
-                {activeStep === 1 ? <AddExotelConfigForm /> : <AccountWebhookDetails isMutationLoading={isMutationLoading} />}
+                {activeStep === 0 ? <AddExotelConfigForm /> : <AccountWebhookDetails isMutationLoading={isMutationLoading} />}
             </FlexBox>
             <DialogActions sx={{ justifyContent: 'space-between', paddingTop: '30px' }}>
-                {activeStep > 1 ?
+                {activeStep > 0 ?
                     <Button variant="outlined" onClick={handleBack}>
                         Back
                     </Button> : <div></div>

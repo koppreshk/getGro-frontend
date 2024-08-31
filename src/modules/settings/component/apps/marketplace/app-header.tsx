@@ -27,10 +27,10 @@ export const AppHeader = (props: IAppHeaderProps) => {
                 </FlexBox>
             </FlexBox>
             {isAppInstalled ?
-                <FlexBox gap="10px">
+                <FlexBox gap="12px">
                     {manageBtnClicked
                         ? <Button variant="contained" size="medium" onClick={secondaryBtnActions?.onSecondaryBtnClk}>{secondaryBtnActions?.secondaryBtnLabel}</Button>
-                        : (showManageBtn ? <Button variant="contained" size="medium" onClick={onManageBtnClick}>Manage</Button> : null)}
+                        : (showManageBtn ? <Button variant="outlined" size="medium" onClick={onManageBtnClick}>Manage</Button> : null)}
                     {manageBtnClicked ? null
                         :
                         <>

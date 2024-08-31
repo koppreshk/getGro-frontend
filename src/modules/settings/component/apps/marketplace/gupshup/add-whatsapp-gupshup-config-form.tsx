@@ -70,7 +70,7 @@ const AccountWebhookDetails = () => {
 export const WhatsAppGupshupConfigForm = (props: IWhatsAppGupshupConfigFormProps) => {
     const { togglePopup, onSubmit, isMutationLoading, updateInstallation } = props;
     const form = useFormContext<IAddWhatsAppFormField>()
-    const [activeStep, setActiveStep] = React.useState(1);
+    const [activeStep, setActiveStep] = React.useState(0);
     const webHookUrl = useAppSelector((state) => state.configurations.whatsAppWebhookUrl);
 
     React.useEffect(() => {
@@ -93,7 +93,7 @@ export const WhatsAppGupshupConfigForm = (props: IWhatsAppGupshupConfigFormProps
         updateInstallation();
     };
 
-    const isLastStep = activeStep === steps.length;
+    const isLastStep = activeStep === steps.length - 1;
 
     return (
 
@@ -101,10 +101,10 @@ export const WhatsAppGupshupConfigForm = (props: IWhatsAppGupshupConfigFormProps
             <FlexBox gap="20px">
                 <ConfigSteps activeStep={activeStep} />
                 <Divider orientation="vertical" variant="middle" flexItem />
-                {activeStep === 1 ? <AccountDetailsForm /> : <AccountWebhookDetails />}
+                {activeStep === 0 ? <AccountDetailsForm /> : <AccountWebhookDetails />}
             </FlexBox>
             <DialogActions sx={{ justifyContent: 'space-between', paddingTop: '30px' }}>
-                {activeStep > 1 ?
+                {activeStep > 0 ?
                     <Button variant="outlined" onClick={handleBack}>
                         Back
                     </Button> : <div></div>
