@@ -1,7 +1,7 @@
 import { Switch } from "@mui/material"
 import { useNotifications } from "lib";
 import { FlexBox } from "lib/ui-ux"
-import { useSetEscalationStatus } from "modules/settings/apis/escalations";
+import { useSetEscalationStatus } from "modules/settings/apis/ticket-automation/escalations";
 import { useState } from "react";
 
 export const SLAStatus = (props: { status: boolean, id: number }) => {

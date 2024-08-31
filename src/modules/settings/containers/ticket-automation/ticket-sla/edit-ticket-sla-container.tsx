@@ -1,7 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
-import { IEscalationsNew, useEditEscalationNew, useFetchEscalationById, useFetchSLAmetaData } from "modules/settings/apis/escalations";
-import { AddEscalationLayout, IEscalationFormFields, ISLATargetsFormFields } from "modules/settings/component/ticket-configurations/ticket-escalation/ticket-escalation-new/add-escalation-layout";
+import { IEscalationsNew, useEditEscalationNew, useFetchEscalationById, useFetchSLAmetaData } from "modules/settings/apis/ticket-automation/escalations";
+import { AddEscalationLayout, IEscalationFormFields, ISLATargetsFormFields } from "modules/settings/component/ticket-automation/ticket-escalation/ticket-escalation-new/add-escalation-layout";
 import { useNotifications } from "lib";
 
 export const EditTicketSLAContainer = (props: { allEscalations?: IEscalationsNew[] }) => {

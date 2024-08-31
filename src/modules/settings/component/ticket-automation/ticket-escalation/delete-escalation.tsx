@@ -2,7 +2,7 @@ import React from "react";
 import { Delete } from "@mui/icons-material";
 import { useNotifications } from "lib";
 import { CustomIconButton, NegativeActionDialog } from "lib/ui-ux";
-import { useDeleteEscalation } from "modules/settings/apis/escalations";
+import { useDeleteEscalation } from "modules/settings/apis/ticket-automation/escalations";
 
 export const DeleteEscalation = (props: { id: number }) => {
     const { mutateAsync } = useDeleteEscalation();

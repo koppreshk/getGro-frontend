@@ -1,7 +1,7 @@
 import { CircularProgress, Typography } from "@mui/material"
 import { RadioGroupField, SelectField } from "lib/form-fields"
 import { FlexBox } from "lib/ui-ux"
-import { useFetchAllQueues } from "modules/settings/apis/escalations";
+import { useFetchAllQueues } from "modules/settings/apis/ticket-automation/escalations";
 import styled from "styled-components";
 
 const StyledRadioGroupFields = styled(RadioGroupField)`

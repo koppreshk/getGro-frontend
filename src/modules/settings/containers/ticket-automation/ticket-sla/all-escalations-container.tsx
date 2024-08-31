@@ -1,6 +1,6 @@
-import { useFetchAllEscalationsNew } from "modules/settings/apis/escalations";
-import { TicketEscalationLayout } from "../../component/ticket-configurations/ticket-escalation"
+import { useFetchAllEscalationsNew } from "modules/settings/apis/ticket-automation/escalations";
 import { ErrorMessage } from "lib/ui-ux";
+import { TicketEscalationLayout } from "modules/settings/component/ticket-automation/ticket-escalation";
 
 export const AllEscalationsContainer = () => {
     const { data, isLoading, error } = useFetchAllEscalationsNew();

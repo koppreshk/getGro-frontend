@@ -1,7 +1,7 @@
 import { useNotifications } from "lib";
 import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
-import { IEscalationsNew, useCreateEscalationNew, useFetchSLAmetaData } from "modules/settings/apis/escalations"
-import { AddEscalationLayout, IEscalationFormFields } from "modules/settings/component/ticket-configurations/ticket-escalation/ticket-escalation-new/add-escalation-layout";
+import { IEscalationsNew, useCreateEscalationNew, useFetchSLAmetaData } from "modules/settings/apis/ticket-automation/escalations"
+import { AddEscalationLayout, IEscalationFormFields } from "modules/settings/component/ticket-automation/ticket-escalation/ticket-escalation-new/add-escalation-layout";
 
 export const CreateTicketSLAContainer = (props: { allEscalations?: IEscalationsNew[] }) => {
     const { data, isLoading, error } = useFetchSLAmetaData();

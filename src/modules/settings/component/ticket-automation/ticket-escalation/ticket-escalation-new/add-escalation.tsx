@@ -2,7 +2,7 @@ import { Grid, Typography } from "@mui/material"
 import styled from "styled-components";
 import { AutocompleteField, SelectField } from "lib/form-fields";
 import { FlexBox } from "lib/ui-ux"
-import { IEscalationType, IQueue, IUser } from "modules/settings/apis/escalations/fetch-sla-metadata";
+import { IEscalationType, IQueue, IUser } from "modules/settings/apis/ticket-automation/escalations/fetch-sla-metadata";
 
 const Wrapper = styled(FlexBox)`
     border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
