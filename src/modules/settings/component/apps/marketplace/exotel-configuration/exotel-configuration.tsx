@@ -4,9 +4,10 @@ import { Typography } from "@mui/material";
 import { AddAppConfigurationDialog, AppConfigurationLayout } from "..";
 import ExotelIcon from '../../../../../../assets/svg/exotel-icon.svg?react';
 import { useCallback, useState } from "react";
-import { AddExotelConfigurationContainer, UpdateExotelConfigContainer } from "modules/settings/containers/marketplace/exotel";
+import { AddExotelConfigurationContainer, ManageExotelNumberContainer, UpdateExotelConfigContainer } from "modules/settings/containers/marketplace/exotel";
 import { IExotelConfigDetails } from "modules/settings/apis/marketplace/exotel";
 import { DeleteExotelConfigurations } from "./delete-exotel-configurations";
+import { AddExophoneNumberDialog } from "./manage-exotel-numbers";
 
 function OverviewContents() {
     return (
@@ -56,6 +57,12 @@ export const ExotelConfiguration = (props: { data: IExotelConfigDetails, updateI
         setOpenPopup((prevValue) => !prevValue)
     }, []);
 
+    const [openAddExoPopup, setAddExoOpenPopup] = useState(false);
+
+    const toggleAddExoPopup = useCallback(() => {
+        setAddExoOpenPopup((prevValue) => !prevValue)
+    }, []);
+
     const appConfigDialogContent = () => {
         return isInstalled ? <UpdateExotelConfigContainer togglePopup={togglePopup} /> : <AddExotelConfigurationContainer togglePopup={togglePopup} updateInstallation={props.updateInstallation} />
     };
@@ -77,9 +84,9 @@ export const ExotelConfiguration = (props: { data: IExotelConfigDetails, updateI
                 showManageBtn
                 secondaryBtnActions={{
                     secondaryBtnLabel: 'Add Exotel Number',
-                    onSecondaryBtnClk: () => {}
+                    onSecondaryBtnClk: () => toggleAddExoPopup()
                 }}
-                onManageRenderContent={() => <></>}
+                onManageRenderContent={() => <ManageExotelNumberContainer />}
                 appIcon={() => <ExotelIcon width="60px" height="60px" />}
                 unInstallApp={() => <DeleteExotelConfigurations />}
             />
@@ -89,6 +96,9 @@ export const ExotelConfiguration = (props: { data: IExotelConfigDetails, updateI
                 togglePopup={togglePopup}
                 title="Exotel Configuration"
                 maxWidth="md" />
+            <AddExophoneNumberDialog
+                openAddExoPopup={openAddExoPopup}
+                toggleAddExoPopup={toggleAddExoPopup} />
         </>
     )
 }
