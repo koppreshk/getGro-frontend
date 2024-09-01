@@ -74,7 +74,7 @@ const StyledContainer = styled(FlexBox)`
 //     "data_access_expiration_time": 1719415572
 // }
 
-export const FacebookConfigurations = () => {
+export default function FacebookConfigurations() {
     const [facebookResponse, setFacebookResponse] = useState<null | FacebookResponse>(null);
     const { showNotification } = useNotifications();
 

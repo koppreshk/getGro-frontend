@@ -9,7 +9,7 @@ export interface IRolesAndPermissions {
     roleType: string;
 }
 
-export const RolesAndPermissionsContainer = () => {
+export default function RolesAndPermissionsContainer() {
 
     const { data, isLoading } = useFetchAllRoles();
 

@@ -25,7 +25,7 @@ const AddNewAgent = (props: {
     )
 }
 
-export const AgentsLayout = () => {
+export default function AgentsLayout() {
     const [openAddUserDrawer, setOpenAddUserDrawer] = React.useState(false);
     const navigate = useNavigate();
 

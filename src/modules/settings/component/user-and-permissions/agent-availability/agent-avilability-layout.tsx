@@ -22,7 +22,7 @@ import { AgentAvailabilityStatusesContainer } from "modules/settings/containers/
 //     )
 // }
 
-export const AgentAvailabilityLayout = () => {
+export default function AgentAvailabilityLayout() {
     // const [openAddStatusDrawer, setOpenAddStatusDrawer] = React.useState(false);
     const navigate = useNavigate();
 
@@ -33,7 +33,7 @@ export const AgentAvailabilityLayout = () => {
     return (
         <FlexBox width="100%" height="100%" flexDirection="column" padding="20px" gap={'20px'}>
             <BreadCrumbs />
-            <MoreInformation information="Agent availability statuses reflect the current readiness and capability of an agent to handle specific tasks or responsibilities."/>
+            <MoreInformation information="Agent availability statuses reflect the current readiness and capability of an agent to handle specific tasks or responsibilities." />
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
                     <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />

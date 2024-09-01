@@ -2,7 +2,7 @@ import { useFetchAllStatuses } from "modules/settings/apis/ticket-status";
 import { TicketStatusLayout } from "../../component/ticket-configurations/ticket-status/ticket-status-layout";
 import { ErrorMessage } from "lib/ui-ux";
 
-export const TicketStatusContainer = () => {
+export default function TicketStatusContainer() {
     const { data, isLoading, error } = useFetchAllStatuses();
 
     if (data || isLoading) {
@@ -11,6 +11,6 @@ export const TicketStatusContainer = () => {
         )
     }
     return (
-        <ErrorMessage statusCode={error?.message}/>
+        <ErrorMessage statusCode={error?.message} />
     )
 }

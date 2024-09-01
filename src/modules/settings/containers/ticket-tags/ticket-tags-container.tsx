@@ -2,7 +2,7 @@ import { ErrorMessage } from "lib/ui-ux";
 import { useFetchAllTags } from "modules/settings/apis/tags";
 import { TagsLayout } from "modules/settings/component/ticket-configurations";
 
-export const TicketTagsContainer = () => {
+export default function TicketTagsContainer() {
     const { data, isLoading, error } = useFetchAllTags();
 
     if (data || isLoading) {

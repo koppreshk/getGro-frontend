@@ -2,7 +2,7 @@ import { TicketQueue } from "modules/settings/component/user-and-permissions/tic
 import { useFetchAllTicketQueues } from "../../apis/queues";
 import { ErrorMessage } from "lib/ui-ux";
 
-export const TicketQueuesContainer = () => {
+export default function TicketQueuesContainer() {
     const { data, isLoading, error } = useFetchAllTicketQueues();
 
     if (data || isLoading) {
@@ -11,5 +11,5 @@ export const TicketQueuesContainer = () => {
         )
     }
 
-    return <ErrorMessage statusCode={error?.message}/>
+    return <ErrorMessage statusCode={error?.message} />
 }
