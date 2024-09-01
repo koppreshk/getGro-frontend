@@ -6,7 +6,7 @@ import { AddEmailConfigContainer, EditEmailConfigContainer } from "modules/setti
 import { useCallback } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 
-export const EmailConfigLayout = () => {
+export default function EmailConfigLayout() {
     return (
         <FlexBox width="100%" height="100%" flexDirection="column" padding="20px" gap={'10px'}>
             <BreadCrumbs />

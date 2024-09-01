@@ -21,7 +21,7 @@ const MarketPlaceLayout = () => {
     )
 }
 
-export const MarketplaceRoutes = () => {
+export default function MarketplaceRoutes() {
     return (
         <>
             <Routes>

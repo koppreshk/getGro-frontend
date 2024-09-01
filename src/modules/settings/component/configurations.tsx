@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { useSearchParams } from 'react-router-dom';
+import { Outlet, useSearchParams } from 'react-router-dom';
 import { Search } from "@mui/icons-material"
 import { Typography, TextField, InputAdornment } from "@mui/material"
 import { FlexBox } from "lib/ui-ux"
 import { TicketsConfiguration } from "./ticket-configurations"
+import { Suspense } from "react";
 
 
 const StyledHeader = styled(FlexBox)`
@@ -29,6 +30,9 @@ export const Configurations = () => {
     }
     return (
         <>
+            <Suspense fallback={<div>Loading Content...</div>}>
+                <Outlet />
+            </Suspense>
             <StyledHeader width="100%" justifyContent="space-between" padding="20px" alignItems="center" >
                 <Typography variant="h4">
                     Configurations
