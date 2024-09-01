@@ -1,0 +1,14 @@
+{
+    "modules": {
+        "dashboard": {
+            "hi": "你好",
+            "welcomeBack": "欢迎回来！",
+            "moduleHeading": "仪表板",
+            "sectionHeadings": {
+                "supportMonitoring": "支持监控",
+                "agentPerformance": "代理绩效",
+                "slaDashboard": "SLA 仪表板"
+            }
+        }
+    }
+}

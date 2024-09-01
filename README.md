@@ -26,6 +26,9 @@ VITE_REST_URL=https://test.getgro.io/V1/
 VITE_SUB_DOMAIN=https://intent.getgro.io/
 ```
 
+### Locales
+**Generated Locale file from:** - https://translate.i18next.com/
+
 ### Branching Guidelines
 
 
