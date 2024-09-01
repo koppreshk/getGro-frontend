@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css, useTheme } from "styled-components"
-import { Mic, MicOff, Phone, PhonePaused, RadioButtonChecked } from "@mui/icons-material";
+import { Mic, MicOff, Phone, PhonePaused } from "@mui/icons-material";
 import { Avatar, Button, Tooltip, Typography } from "@mui/material";
 import { useExotelServices } from "lib";
 import { FlexBox } from "lib/ui-ux";
@@ -121,7 +121,7 @@ const CardComponent = () => {
             </IncomingCallHeader>
 
             {isCallAnswered ?
-                <IncomingCallFooter flexDirection="row" justifyContent="space-between">
+                <IncomingCallFooter flexDirection="row" justifyContent="center" gap={'20px'}>
 
                     <Tooltip title={isMuted ? "Un-mute" : "Mute"} arrow placement="bottom">
                         <IconWrapper alignItems="center" justifyContent="center" $buttonType="mic" onClick={onMute}>
@@ -130,11 +130,11 @@ const CardComponent = () => {
                     </Tooltip>
 
                     <FlexBox flexDirection="row" gap="9px">
-                        <Tooltip title="Call recording in progress" arrow placement="bottom">
+                        {/* <Tooltip title="Call recording in progress" arrow placement="bottom">
                             <IconWrapper alignItems="center" justifyContent="center" $buttonType="recording">
                                 <RadioButtonChecked />
                             </IconWrapper>
-                        </Tooltip>
+                        </Tooltip> */}
 
                         {/* <Tooltip title="Keypad" arrow placement="bottom">
                             <IconWrapper alignItems="center" justifyContent="center" $buttonType="normal">
