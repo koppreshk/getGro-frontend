@@ -5,6 +5,7 @@ import { Typography, TextField, InputAdornment } from "@mui/material"
 import { FlexBox } from "lib/ui-ux"
 import { TicketsConfiguration } from "./ticket-configurations"
 import { Suspense } from "react";
+import { Trans } from "react-i18next";
 
 
 const StyledHeader = styled(FlexBox)`
@@ -35,7 +36,7 @@ export const Configurations = () => {
             </Suspense>
             <StyledHeader width="100%" justifyContent="space-between" padding="20px" alignItems="center" >
                 <Typography variant="h4">
-                    Configurations
+                    <Trans i18nKey={"modules.configurations.moduleHeading"}/>
                 </Typography>
 
                 <TextField label="Search" name="search" size="small" onChange={onChange} placeholder="Search By Name" InputProps={{

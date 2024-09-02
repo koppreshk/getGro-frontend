@@ -9,6 +9,7 @@ import styled from "styled-components";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Typography } from "@mui/material";
 import { FlexBox, GridLayout } from "lib/ui-ux";
+import { useTranslation } from 'react-i18next';
 
 interface ICategoryOptions {
     route: string;
@@ -24,165 +25,168 @@ interface IConfigCategory {
     categoryOptions: ICategoryOptions[];
 }
 
-const configurations = [
-    {
-        categoryName: "Tickets",
-        categoryIcon: () => <TaskOutlined color="primary" />,
-        categoryOptions: [
-            {
-                route: "ticket-status",
-                label: "Ticket Status",
-                uniqueKey: "ticket-status",
-                catOptionIcon: () => <AssignmentTurnedInOutlined />,
-                description: "Define your ticket statuses to streamline and optimize the routing of support tickets"
-            },
-            {
-                route: "tags",
-                label: "Tags",
-                uniqueKey: "tags",
-                catOptionIcon: () => <SellOutlined />,
-                description: "Tag your tickets to enhance organization and improve reporting."
-            },
-            {
-                route: "templates",
-                label: "Templates",
-                uniqueKey: "templates",
-                catOptionIcon: () => <AddCommentOutlined />,
-                description: "Maintain and organize a library of predefined templates for responding to tickets."
-            }
-        ]
-    },
-    {
-        categoryName: 'Channels',
-        categoryIcon: () => <Tag color="primary" />,
-        categoryOptions: [
-            {
-                label: 'Facebook',
-                route: 'facebook',
-                uniqueKey: 'facebook',
-                catOptionIcon: () => <Facebook />,
-                description: 'Set up your Facebook integration.'
-            },
-            {
-                label: 'Email',
-                route: 'email',
-                uniqueKey: 'email',
-                catOptionIcon: () => <Email />,
-                description: 'Configure support email inboxes to automate ticket creation and management.'
-            }
-        ]
-    },
-    {
-        categoryName: "Ticket Automation",
-        categoryIcon: () => <ManageHistory color="primary" />,
-        categoryOptions: [
-            {
-                route: "ticket-escalation",
-                label: "Ticket Escalation",
-                uniqueKey: "ticket-escalation",
-                catOptionIcon: () => <EventNoteOutlined />,
-                description: "Simplify ticket handling: Use custom rules to automatically categorize and route tickets."
-            },
-            {
-                route: "auto-assignments",
-                label: "Auto Assignments",
-                uniqueKey: "auto-assignments",
-                catOptionIcon: () => <ManageHistory />,
-                description: "Establish automated rules to assign tickets to agents efficiently"
-            },
-            {
-                route: "create-ticket-triggers",
-                label: "Create Ticket Triggers",
-                uniqueKey: "create-ticket-triggers",
-                catOptionIcon: () => <ConfirmationNumber />,
-                description: "Configure automation rules to trigger actions automatically when a ticket is created"
-            },
-            {
-                route: "update-ticket-triggers",
-                label: "Update Ticket Triggers",
-                uniqueKey: "update-ticket-triggers",
-                catOptionIcon: () => <ConfirmationNumber />,
-                description: "Configure automation rules to trigger actions whenever a ticket is updated."
-            },
-            // {
-            //     route: "time-triggers",
-            //     label: "Time Triggers",
-            //     uniqueKey: "time-triggers",
-            //     catOptionIcon: () => <MoreTime />,
-            //     description: "Setup automation rules to perform repeated actions over time"
-            // },
-        ]
-    },
-    {
-        categoryName: "Users and Permissions",
-        categoryIcon: () => <AccountCircle color="primary" />,
-        categoryOptions: [
-            {
-                route: "agents",
-                label: "Agents",
-                uniqueKey: "Agents",
-                catOptionIcon: () => <SupportAgentRounded />,
-                description: "Modify, add, or deactivate an agent as needed."
-            },
-            {
-                route: "queues",
-                label: "Queues (Groups)",
-                uniqueKey: "queues",
-                catOptionIcon: () => <Groups2Outlined />,
-                description: "Arrange agents according to their areas of expertise to handle specific types of tickets more effectively."
-            },
-            {
-                route: "roles-and-permissions",
-                label: "Roles and Permissions",
-                uniqueKey: "roles-and-permissions",
-                catOptionIcon: () => <LockPerson />,
-                description: "Establish custom roles for agents with tailored permissions to meet your needs."
-            },
-            {
-                route: "agent-availability",
-                label: "Agent Availability Status",
-                uniqueKey: "agent-availability",
-                catOptionIcon: () => <WorkHistory />,
-                description: "Manage an agent's availability by adding, editing, or removing their status."
-            },
-        ]
-    },
-    {
-        categoryName: "General",
-        categoryIcon: () => <SettingsRounded color="primary" />,
-        categoryOptions: [
+const useConfigurations = () => {
+    const { t } = useTranslation();
+    return [
+        {
+            categoryName: t("modules.configurations.configurationOptions.tickets.primaryLabel"),
+            categoryIcon: () => <TaskOutlined color="primary" />,
+            categoryOptions: [
+                {
+                    route: "ticket-status",
+                    label: t("modules.configurations.configurationOptions.tickets.ticketStatus.label"),
+                    uniqueKey: "ticket-status",
+                    catOptionIcon: () => <AssignmentTurnedInOutlined />,
+                    description: t("modules.configurations.configurationOptions.tickets.ticketStatus.shortDescription")
+                },
+                {
+                    route: "tags",
+                    label: t("modules.configurations.configurationOptions.tickets.tags.label"),
+                    uniqueKey: "tags",
+                    catOptionIcon: () => <SellOutlined />,
+                    description: t("modules.configurations.configurationOptions.tickets.tags.shortDescription")
+                },
+                {
+                    route: "templates",
+                    label: t("modules.configurations.configurationOptions.tickets.templates.label"),
+                    uniqueKey: "templates",
+                    catOptionIcon: () => <AddCommentOutlined />,
+                    description: t("modules.configurations.configurationOptions.tickets.templates.shortDescription")
+                }
+            ]
+        },
+        {
+            categoryName: t("modules.configurations.configurationOptions.channels.primaryLabel"),
+            categoryIcon: () => <Tag color="primary" />,
+            categoryOptions: [
+                {
+                    label: t("modules.configurations.configurationOptions.channels.facebook.label"),
+                    route: 'facebook',
+                    uniqueKey: 'facebook',
+                    catOptionIcon: () => <Facebook />,
+                    description: t("modules.configurations.configurationOptions.channels.facebook.shortDescription")
+                },
+                {
+                    label: t("modules.configurations.configurationOptions.channels.email.label"),
+                    route: 'email',
+                    uniqueKey: 'email',
+                    catOptionIcon: () => <Email />,
+                    description: t("modules.configurations.configurationOptions.channels.email.shortDescription")
+                }
+            ]
+        },
+        {
+            categoryName: t("modules.configurations.configurationOptions.ticketAutomation.primaryLabel"),
+            categoryIcon: () => <ManageHistory color="primary" />,
+            categoryOptions: [
+                {
+                    route: "ticket-escalation",
+                    label: t("modules.configurations.configurationOptions.ticketAutomation.ticketEscalation.label"),
+                    uniqueKey: "ticket-escalation",
+                    catOptionIcon: () => <EventNoteOutlined />,
+                    description: t("modules.configurations.configurationOptions.ticketAutomation.ticketEscalation.shortDescription")
+                },
+                {
+                    route: "auto-assignments",
+                    label: t("modules.configurations.configurationOptions.ticketAutomation.autoAssignments.label"),
+                    uniqueKey: "auto-assignments",
+                    catOptionIcon: () => <ManageHistory />,
+                    description: t("modules.configurations.configurationOptions.ticketAutomation.autoAssignments.shortDescription")
+                },
+                {
+                    route: "create-ticket-triggers",
+                    label: t("modules.configurations.configurationOptions.ticketAutomation.createTicketTriggers.label"),
+                    uniqueKey: "create-ticket-triggers",
+                    catOptionIcon: () => <ConfirmationNumber />,
+                    description: t("modules.configurations.configurationOptions.ticketAutomation.createTicketTriggers.shortDescription")
+                },
+                {
+                    route: "update-ticket-triggers",
+                    label: t("modules.configurations.configurationOptions.ticketAutomation.updateTicketTriggers.label"),
+                    uniqueKey: "update-ticket-triggers",
+                    catOptionIcon: () => <ConfirmationNumber />,
+                    description: t("modules.configurations.configurationOptions.ticketAutomation.updateTicketTriggers.shortDescription")
+                },
+                // {
+                //     route: "time-triggers",
+                //     label: "Time Triggers",
+                //     uniqueKey: "time-triggers",
+                //     catOptionIcon: () => <MoreTime />,
+                //     description: "Setup automation rules to perform repeated actions over time"
+                // },
+            ]
+        },
+        {
+            categoryName: t("modules.configurations.configurationOptions.usersAndPermissions.primaryLabel"),
+            categoryIcon: () => <AccountCircle color="primary" />,
+            categoryOptions: [
+                {
+                    route: "agents",
+                    label: t("modules.configurations.configurationOptions.usersAndPermissions.agents.label"),
+                    uniqueKey: "Agents",
+                    catOptionIcon: () => <SupportAgentRounded />,
+                    description: t("modules.configurations.configurationOptions.usersAndPermissions.agents.shortDescription")
+                },
+                {
+                    route: "queues",
+                    label: t("modules.configurations.configurationOptions.usersAndPermissions.queues.label"),
+                    uniqueKey: "queues",
+                    catOptionIcon: () => <Groups2Outlined />,
+                    description: t("modules.configurations.configurationOptions.usersAndPermissions.queues.shortDescription")
+                },
+                {
+                    route: "roles-and-permissions",
+                    label: t("modules.configurations.configurationOptions.usersAndPermissions.rolesAndPermissions.label"),
+                    uniqueKey: "roles-and-permissions",
+                    catOptionIcon: () => <LockPerson />,
+                    description: t("modules.configurations.configurationOptions.usersAndPermissions.rolesAndPermissions.shortDescription")
+                },
+                {
+                    route: "agent-availability",
+                    label: t("modules.configurations.configurationOptions.usersAndPermissions.agentAvailabilityStatus.label"),
+                    uniqueKey: "agent-availability",
+                    catOptionIcon: () => <WorkHistory />,
+                    description: t("modules.configurations.configurationOptions.usersAndPermissions.agentAvailabilityStatus.shortDescription")
+                },
+            ]
+        },
+        {
+            categoryName: t("modules.configurations.configurationOptions.general.primaryLabel"),
+            categoryIcon: () => <SettingsRounded color="primary" />,
+            categoryOptions: [
 
-            {
-                route: "satisfaction-survey",
-                label: "Satisfaction Survey",
-                uniqueKey: "satisfaction-survey",
-                description: "Implement a customer satisfaction survey for each ticket to gather feedback and measure service quality.",
-                catOptionIcon: () => <ThumbsUpDown />
-            }
-        ]
-    },
-    {
-        categoryName: "Apps",
-        categoryIcon: () => <GridViewRounded color="primary" />,
-        categoryOptions: [
-            // {
-            //     route: "my-apps",
-            //     label: "My Apps",
-            //     uniqueKey: "my-apps",
-            //     description: "View and manage the installed marketplace and custom apps",
-            //     catOptionIcon: () => <GridViewRounded />
-            // },
-            {
-                route: "marketplace",
-                label: "Marketplace",
-                uniqueKey: "marketplace",
-                catOptionIcon: () => <StoreRounded />,
-                description: "Handle and integrate external applications seamlessly."
-            }
-        ]
-    },
+                {
+                    route: "satisfaction-survey",
+                    label: t("modules.configurations.configurationOptions.general.satisfactionSurvey.label"),
+                    uniqueKey: "satisfaction-survey",
+                    description: t("modules.configurations.configurationOptions.general.satisfactionSurvey.shortDescription"),
+                    catOptionIcon: () => <ThumbsUpDown />
+                }
+            ]
+        },
+        {
+            categoryName: t("modules.configurations.configurationOptions.apps.primaryLabel"),
+            categoryIcon: () => <GridViewRounded color="primary" />,
+            categoryOptions: [
+                // {
+                //     route: "my-apps",
+                //     label: "My Apps",
+                //     uniqueKey: "my-apps",
+                //     description: "View and manage the installed marketplace and custom apps",
+                //     catOptionIcon: () => <GridViewRounded />
+                // },
+                {
+                    route: "marketplace",
+                    label: t("modules.configurations.configurationOptions.apps.marketplace.label"),
+                    uniqueKey: "marketplace",
+                    catOptionIcon: () => <StoreRounded />,
+                    description: t("modules.configurations.configurationOptions.apps.marketplace.shortDescription")
+                }
+            ]
+        },
 
-] as IConfigCategory[]
+    ] as IConfigCategory[]
+}
 
 const ConfigLinkWrapper = styled.div`
     &:hover {
@@ -226,6 +230,7 @@ const TicketConfigOptions = (props: ICategoryOptions) => {
 export const TicketsConfiguration = () => {
     const [searchParmas] = useSearchParams();
     const searchText = searchParmas.get('searchText');
+    const configurations = useConfigurations();
 
     const filteredConfig = useMemo(() => searchText ? configurations.reduce((acc, curr) => {
         const filteredCats = curr.categoryOptions.filter((catOption) => catOption.label.toLowerCase().includes(searchText.toLowerCase()))
@@ -233,7 +238,7 @@ export const TicketsConfiguration = () => {
             acc.push({ ...curr, categoryOptions: filteredCats })
         }
         return acc;
-    }, [] as IConfigCategory[]) : configurations, [searchText]);
+    }, [] as IConfigCategory[]) : configurations, [configurations, searchText]);
 
     return (
         <>

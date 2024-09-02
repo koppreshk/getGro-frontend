@@ -1,14 +1,97 @@
 {
-    "modules": {
-        "dashboard": {
-            "hi": "你好",
-            "welcomeBack": "欢迎回来！",
-            "moduleHeading": "仪表板",
-            "sectionHeadings": {
-                "supportMonitoring": "支持监控",
-                "agentPerformance": "代理绩效",
-                "slaDashboard": "SLA 仪表板"
-            }
+  "modules": {
+    "dashboard": {
+      "hi": "你好",
+      "welcomeBack": "欢迎回来！",
+      "moduleHeading": "仪表板",
+      "sectionHeadings": {
+        "supportMonitoring": "支持监控",
+        "agentPerformance": "代理绩效",
+        "slaDashboard": "SLA 仪表板"
+      }
+    },
+    "configurations": {
+      "moduleHeading": "配置",
+      "configurationOptions": {
+        "tickets": {
+          "primaryLabel": "门票",
+          "ticketStatus": {
+            "label": "票证状态",
+            "shortDescription": "定义您的票证状态以简化和优化支持票证的路由"
+          },
+          "tags": {
+            "label": "标签",
+            "shortDescription": "标记您的票证以增强组织并改进报告。"
+          },
+          "templates": {
+            "label": "模板",
+            "shortDescription": "维护和组织用于响应工单的预定义模板库。"
+          }
+        },
+        "channels": {
+          "primaryLabel": "渠道",
+          "facebook": {
+            "label": "Facebook",
+            "shortDescription": "设置您的 Facebook 集成。"
+          },
+          "email": {
+            "label": "电子邮件",
+            "shortDescription": "配置支持电子邮件收件箱以自动创建和管理票证。"
+          }
+        },
+        "ticketAutomation": {
+          "primaryLabel": "票务自动化",
+          "ticketEscalation": {
+            "label": "工单升级",
+            "shortDescription": "简化工单处理：使用自定义规则自动分类和传送工单。"
+          },
+          "autoAssignments": {
+            "label": "自动分配",
+            "shortDescription": "建立自动化规则以有效地将工单分配给代理"
+          },
+          "createTicketTriggers": {
+            "label": "创建工单触发器",
+            "shortDescription": "配置自动化规则以在创建工单时自动触发操作"
+          },
+          "updateTicketTriggers": {
+            "label": "更新工单触发器",
+            "shortDescription": "配置自动化规则以在票证更新时触发操作。"
+          }
+        },
+        "usersAndPermissions": {
+          "primaryLabel": "用户和权限",
+          "agents": {
+            "label": "代理商",
+            "shortDescription": "根据需要修改、添加或停用代理。"
+          },
+          "queues": {
+            "label": "队列（组）",
+            "shortDescription": "根据专业领域安排代理人，更有效地处理特定类型的票务。"
+          },
+          "rolesAndPermissions": {
+            "label": "角色和权限",
+            "shortDescription": "为具有定制权限的客服人员建立自定义角色，以满足您的需求。"
+          },
+          "agentAvailabilityStatus": {
+            "label": "代理可用性状态",
+            "shortDescription": "通过添加、编辑或删除代理的状态来管理代理的可用性。"
+          }
+        },
+        "general": {
+          "primaryLabel": "一般的",
+          "satisfactionSurvey": {
+            "label": "满意度调查",
+            "shortDescription": "对每张票进行客户满意度调查，以收集反馈并衡量服务质量。"
+          }
+        },
+        "apps": {
+          "primaryLabel": "应用程序",
+          "marketplace": {
+            "label": "市场",
+            "shortDescription": "无缝处理和集成外部应用程序。"
+          }
         }
+      }
     }
+  }
 }

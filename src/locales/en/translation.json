@@ -9,6 +9,89 @@
                 "agentPerformance": "Agent Performance",
                 "slaDashboard": "SLA Dashboard"
             }
+        },
+        "configurations": {
+            "moduleHeading": "Configurations",
+            "configurationOptions": {
+                "tickets": {
+                    "primaryLabel": "Tickets",
+                    "ticketStatus": {
+                        "label": "Ticket Status",
+                        "shortDescription": "Define your ticket statuses to streamline and optimize the routing of support tickets"
+                    },
+                    "tags": {
+                        "label": "Tags",
+                        "shortDescription": "Tag your tickets to enhance organization and improve reporting."
+                    },
+                    "templates": {
+                        "label": "Templates",
+                        "shortDescription": "Maintain and organize a library of predefined templates for responding to tickets."
+                    }
+                },
+                "channels": {
+                    "primaryLabel": "Channels",
+                    "facebook": {
+                        "label": "Facebook",
+                        "shortDescription": "Set up your Facebook integration."
+                    },
+                    "email": {
+                        "label": "Email",
+                        "shortDescription": "Configure support email inboxes to automate ticket creation and management."
+                    }
+                },
+                "ticketAutomation": {
+                    "primaryLabel": "Ticket Automation",
+                    "ticketEscalation": {
+                        "label": "Ticket Escalation",
+                        "shortDescription": "Simplify ticket handling: Use custom rules to automatically categorize and route tickets."
+                    },
+                    "autoAssignments": {
+                        "label": "Auto Assignments",
+                        "shortDescription": "Establish automated rules to assign tickets to agents efficiently"
+                    },
+                    "createTicketTriggers": {
+                        "label": "Create Ticket Triggers",
+                        "shortDescription": "Configure automation rules to trigger actions automatically when a ticket is created"
+                    },
+                    "updateTicketTriggers": {
+                        "label": "Update Ticket Triggers",
+                        "shortDescription": "Configure automation rules to trigger actions whenever a ticket is updated."
+                    }
+                },
+                "usersAndPermissions": {
+                    "primaryLabel": "Users and Permissions",
+                    "agents": {
+                        "label": "Agents",
+                        "shortDescription": "Modify, add, or deactivate an agent as needed."
+                    },
+                    "queues": {
+                        "label": "Queues (Groups)",
+                        "shortDescription": "Arrange agents according to their areas of expertise to handle specific types of tickets more effectively."
+                    },
+                    "rolesAndPermissions": {
+                        "label": "Roles and Permissions",
+                        "shortDescription": "Establish custom roles for agents with tailored permissions to meet your needs."
+                    },
+                    "agentAvailabilityStatus": {
+                        "label": "Agent Availability Status",
+                        "shortDescription": "Manage an agent's availability by adding, editing, or removing their status."
+                    }
+                },
+                "general": {
+                    "primaryLabel": "General",
+                    "satisfactionSurvey": {
+                        "label": "Satisfaction Survey",
+                        "shortDescription": "Implement a customer satisfaction survey for each ticket to gather feedback and measure service quality."
+                    }
+                },
+                "apps": {
+                    "primaryLabel": "Apps",
+                    "marketplace": {
+                        "label": "Marketplace",
+                        "shortDescription": "Handle and integrate external applications seamlessly."
+                    }
+                }
+            }
         }
     }
 }
