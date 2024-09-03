@@ -50,16 +50,16 @@ function AddExotelConfigForm() {
     return (
         <Grid container spacing={3}>
             <Grid item md={12}>
-                <TextboxField name="exotelSubdomain" label="Exotel Domain" size="small" type="text" fullWidth rules={{ required: 'This field is required.' }} />
+                <TextboxField name="exotelSubdomain" label="Exotel Sub Domain" size="small" type="text" fullWidth rules={{ required: 'Exotel Sub Domain field is required.' }} />
             </Grid>
             <Grid item md={12}>
-                <TextboxField name="exotelAccountSid" label="Exotel Account SID" size="small" fullWidth rules={{ required: 'This field is required.' }} />
+                <TextboxField name="exotelAccountSid" label="Exotel Account SID" size="small" fullWidth rules={{ required: 'Exotel Account SID field is required.' }} />
             </Grid>
             <Grid item md={12}>
-                <TextboxField name="exotelAPIkey" type="password" label="Exotel API Key" size="small" fullWidth rules={{ required: 'This field is required.' }} />
+                <TextboxField name="exotelAPIkey" type="password" label="Exotel API Key" size="small" fullWidth rules={{ required: 'Exotel API Key field is required.' }} />
             </Grid>
             <Grid item md={12}>
-                <TextboxField name="exotelAPItoken" type="password" label="Exotel API Token" size="small" fullWidth rules={{ required: 'This field is required.' }} />
+                <TextboxField name="exotelAPItoken" type="password" label="Exotel API Token" size="small" fullWidth rules={{ required: 'Exotel API Token field is required.' }} />
             </Grid>
         </Grid>
     )
@@ -71,7 +71,7 @@ const AccountWebhookDetails = (props: { isMutationLoading: boolean | undefined }
             {props.isMutationLoading ? <CenteredCircularProgress /> :
                 <FlexBox flexDirection="column" gap="20px" width="75%">
                     <Typography variant="h5">Webhook</Typography>
-                    <TextboxField name="webhookURL" size="small" type="text" label="Webhook URL" fullWidth />
+                    <TextboxField name="webhookURL" size="small" type="text" rows={4} multiline disabled label="Webhook URL" fullWidth />
                 </FlexBox>
             }
         </>
