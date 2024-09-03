@@ -7,7 +7,7 @@ export const GetEmployeesByQueueContainer = (props: { queueId: string }) => {
     const { data, isLoading } = useFetchUsersInQueue(props.queueId);
 
     if (isLoading) {
-        return <CenteredCircularProgress height="auto" />
+        return <CenteredCircularProgress height="auto" style={{ marginTop: '35px' }} />
     }
 
     if (data) {

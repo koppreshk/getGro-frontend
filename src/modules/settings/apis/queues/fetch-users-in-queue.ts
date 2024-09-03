@@ -16,6 +16,6 @@ export const useFetchUsersInQueue = (queueId: string) => {
 
     return useQuery<IQueueUsers[]>({
         queryFn: fetchTicketMetadata,
-        queryKey: ConfigurationsQueryKey.FETCH_USERS_IN_QUEUE,
+        queryKey: [ConfigurationsQueryKey.FETCH_USERS_IN_QUEUE, queueId],
     });
 }

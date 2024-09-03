@@ -9,7 +9,7 @@ interface ITagInputFieldProps extends ITagInputProps {
 }
 
 export const TagInputField = (props: ITagInputFieldProps) => {
-    const { name, rules } = props;
+    const { name, rules, ...restProps } = props;
     const { formState: { errors }, control } = useFormContext();
 
     return (
@@ -18,7 +18,7 @@ export const TagInputField = (props: ITagInputFieldProps) => {
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 render={({ field: { onChange, value, ref, ...rest } }) => (
                     <TagInput
-                        {...props}
+                        {...restProps}
                         {...rest}
                         tagInputs={value}
                         onTagInputChange={onChange}
