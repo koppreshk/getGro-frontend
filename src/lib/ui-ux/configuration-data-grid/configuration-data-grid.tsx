@@ -43,11 +43,12 @@ export interface IConfigDataGridProps<T> extends Pick<TableOptions<T>, 'data' | 
     totalPages?: number
     enableSerchField?: boolean;
     hideTableControls?: boolean;
+    className?: string;
     onRowClick?: (row: Row<T>) => void;
 }
 
 export const ConfigDataGrid = <T extends object>(props: IConfigDataGridProps<T>) => {
-    const { columns, data, isLoading, totalPages, enableSerchField, initialState, hideTableControls = false, onRowClick } = props;
+    const { columns, data, isLoading, totalPages, enableSerchField, initialState, hideTableControls = false, className, onRowClick } = props;
     const memoizedData = useMemo(() => isLoading ? Array(10).fill({}) : data, [data, isLoading]);
     const memoizedColumns = useMemo(() =>
         isLoading
@@ -80,7 +81,7 @@ export const ConfigDataGrid = <T extends object>(props: IConfigDataGridProps<T>)
     })
 
     return (
-        <DataGridWrapper className="datagridwrapper" height="100%" flexDirection="column">
+        <DataGridWrapper className={className} height="100%" flexDirection="column">
             <>
                 {memoizedData.length
                     ?

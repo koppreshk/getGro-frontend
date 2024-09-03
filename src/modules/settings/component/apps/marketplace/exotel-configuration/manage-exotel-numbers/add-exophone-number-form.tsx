@@ -84,7 +84,11 @@ const AccountWebhookDetails = (props: { isMutationLoading: boolean | undefined }
                         name="webHookUrl"
                         size="small"
                         type="text"
-                        fullWidth readOnly
+                        fullWidth
+                        readOnly
+                        multiline
+                        rows={4}
+                        disabled
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end" >
