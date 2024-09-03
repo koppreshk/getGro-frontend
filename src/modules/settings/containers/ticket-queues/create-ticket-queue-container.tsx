@@ -16,7 +16,6 @@ export const CreateTicketQueueContainer = (props: ICreateTicketQueueContainerPro
     const submitCreateTicketQueue = React.useCallback((formData: IQueueFormFields) => {
         createTicketQueue({
             queueName: formData.queueName,
-            queueKey: formData.queueKey,
             assigned_employees: formData.assignedEmployees.map((item) => ({
                 firstName: item.value.split(' ')[0],
                 lastName: item.value.split(' ')[1],

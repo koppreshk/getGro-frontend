@@ -42,10 +42,7 @@ export const EditQueueContainer = (props: IEditQueueContainerProps) => {
             onFormSubmitHandler={onEditQueue}
             employees={employees}
             defaultValues={{
-                backUpEmployee: [],
-                backupEmployeeType: '',
                 assignedEmployees: queueMetadata.assignedEmployees.map((item) => ({ key: item.id.toString(), value: `${item.firstName} ${item.lastName ?? ''}` })),
-                queueKey: queueMetadata.uniqueKey,
                 queueName: queueMetadata.name
             }} />
     )

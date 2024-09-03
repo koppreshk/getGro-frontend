@@ -1,25 +1,25 @@
-import { CenteredCircularProgress } from "lib/ui-ux";
-import { AddTicketForm } from "../components/ticket-details/ticket-list-view/add-ticket-form";
-import { useFetchAllChannels } from "modules/settings/apis/tags";
+import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
+import { AddTicketForm } from "../components/ticket-details/ticket-list-view/add-ticket/add-ticket-form";
 import { useFetchAllTicketQueues } from "modules/settings/apis";
 import { useFetchPriorities } from "../apis";
+import { useFetchAllTags } from "modules/settings/apis/tags";
 
 export const AddTicketContainer = (props: { toggleAddTicketDrawer: () => void }) => {
-    const { data, isLoading } = useFetchAllChannels();
     const { data: queueData, isLoading: queueDataLoading, error } = useFetchAllTicketQueues();
     const { data: priorities, isLoading: prioritiesLoading } = useFetchPriorities();
+    const { data: allTags, isLoading: tagsLoading } = useFetchAllTags();
 
-    if (isLoading || queueDataLoading || prioritiesLoading) {
+    if (tagsLoading || queueDataLoading || prioritiesLoading) {
         return (
             <CenteredCircularProgress />
         )
     }
 
-    if (data && queueData && priorities) {
+    if (queueData && priorities && allTags) {
         return (
-            <AddTicketForm queueData={queueData?.queues} channelData={data} priorities={priorities} toggleAddTicketDrawer={props.toggleAddTicketDrawer} />
+            <AddTicketForm queueData={queueData?.queues} priorities={priorities} allTags={allTags} toggleAddTicketDrawer={props.toggleAddTicketDrawer} />
         )
     }
 
-    return <span>Error {error as any}</span>
+    return <ErrorMessage statusCode={error?.message} />
 }

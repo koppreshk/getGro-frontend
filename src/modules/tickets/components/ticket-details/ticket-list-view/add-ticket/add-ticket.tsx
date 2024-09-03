@@ -8,13 +8,13 @@ interface IAddTicketProps {
 }
 
 export interface IAddTIcketFormFields {
-    title: string;
-    priority: string;
-    channel: string,
+    requesterEmail: string;
+    subject: string;
+    priority: string,
+    template: string;
     queueId: string;
-    remarks: string;
     employeeId: string;
-    tag: { key: string, value: string }[],
+    tags: string[],
 }
 
 export const AddTicket = (props: IAddTicketProps) => {
@@ -22,17 +22,20 @@ export const AddTicket = (props: IAddTicketProps) => {
     const formMethods = useForm<IAddTIcketFormFields>({
         defaultValues: {
             priority: '1',
-            title: '',
-            channel: '1',
+            requesterEmail: '',
+            subject: '',
+            template: '',
+            employeeId: '',
             queueId: '',
-            tag: []
+            tags: []
         }
     });
 
     return (
         <DrawerExtended
             anchor="right"
-            header={"Add Ticket"}
+            header={"Add Email Ticket"}
+            width="800px"
             open={openAddTicketDrawer}
             onRenderContent={() => (
                 <FormProvider {...formMethods}>

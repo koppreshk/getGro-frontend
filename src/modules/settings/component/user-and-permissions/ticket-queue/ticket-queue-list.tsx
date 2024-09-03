@@ -20,24 +20,19 @@ const useColumns = () => {
     const columns = [
         columnHelper.accessor("name", {
             id: 'name',
-            header: () => <span>Queue Name</span>,
-            cell: info => info.getValue(),
-        }),
-        columnHelper.accessor("uniqueKey", {
-            id: 'uniqueKey',
-            header: () => <span>Queue Key</span>,
+            header: () => 'Queue Name',
             cell: info => info.getValue(),
         }),
         columnHelper.accessor("assignedEmployees", {
             id: 'assignedEmployees',
-            header: () => <span>Assigned Employees</span>,
+            header: () => 'Assigned Employees',
             cell: ({ row: { original } }) => {
                 return <AssignedEmployees assignedEmployees={original.assignedEmployees} />
             },
         }),
         columnHelper.display({
             id: 'actions',
-            header: () => <span>Actions</span>,
+            header: () => 'Actions',
             cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">

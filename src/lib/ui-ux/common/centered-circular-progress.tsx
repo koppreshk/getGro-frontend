@@ -1,10 +1,10 @@
 import { CircularProgress } from "@mui/material"
-import { FlexBox } from "../flexbox/flexbox"
+import { FlexBox, IFlexBoxProps } from "../flexbox/flexbox"
 
-export const CenteredCircularProgress = (props: { height?: string, width?: string }) => {
-    const { height = '100%', width = '100%' } = props;
+export const CenteredCircularProgress = (props: IFlexBoxProps) => {
+    const { height = '100%', width = '100%', ...rest } = props;
     return (
-        <FlexBox alignItems="center" justifyContent="center" height={height} width={width}>
+        <FlexBox {...rest} alignItems="center" justifyContent="center" height={height} width={width} >
             <CircularProgress />
         </FlexBox>
     )
