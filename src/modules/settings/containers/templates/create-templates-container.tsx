@@ -17,9 +17,9 @@ export const CreateTemplatesContainer = (props: { toggleAddStatusDrawer: () => v
         createTemplates({
             name: fromValues.name
         }).then(() => {
-            showNotification({ message: 'Canned response created', type: 'success' });
+            showNotification({ message: 'Templates created', type: 'success' });
             props.toggleAddStatusDrawer();
-        }).catch(() => showNotification({ message: 'Failed to create canned response', type: 'error' }))
+        }).catch(() => showNotification({ message: 'Failed to create Templates', type: 'error' }))
     }, [createTemplates, props, showNotification]);
 
     return (

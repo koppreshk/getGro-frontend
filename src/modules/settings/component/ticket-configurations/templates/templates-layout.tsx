@@ -19,7 +19,7 @@ const AddNewTemplates = (props: IAddNewTemplatesProps) => {
     return (
         <DrawerExtended
             width="800px"
-            header="Add Canned Response"
+            header="Add Templates"
             anchor="right"
             open={openAddStatusDrawer}
             onRenderContent={() => (
@@ -45,13 +45,13 @@ export const TemplatesLayout = (props: ITemplatesLayoutProps) => {
     return (
         <FlexBox width="100%" height="100%" padding="20px" gap={'10px'} flexDirection="column">
             <BreadCrumbs />
-            <MoreInformation information="Canned responses are a set of prewritten response templates for frequently asked questions in the support tickets" />
+            <MoreInformation information="These are a set of prewritten response templates for frequently asked questions in the support tickets" />
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
                     <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
-                    <Typography variant="h5">Canned Response</Typography>
+                    <Typography variant="h5">Templates</Typography>
                 </FlexBox>
-                <Button variant="contained" onClick={toggleAddStatusDrawer} startIcon={<AddCircleOutline />}>Add Canned Response</Button>
+                <Button variant="contained" onClick={toggleAddStatusDrawer} startIcon={<AddCircleOutline />}>Add Templates</Button>
                 <AddNewTemplates openAddStatusDrawer={openAddStatusDrawer} toggleAddStatusDrawer={toggleAddStatusDrawer} statusData={props.data} />
             </FlexBox>
             <TemplatesList isLoading={props.isLoading} statusData={props.data} />

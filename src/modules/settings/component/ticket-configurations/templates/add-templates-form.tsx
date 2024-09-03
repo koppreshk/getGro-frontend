@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import { useCallback, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form"
 import { FlexBox, LoadingButton } from "lib/ui-ux";
@@ -5,7 +6,6 @@ import { Button, Grid, Typography } from "@mui/material";
 import { RadioGroupField, RichTextEditorField, TextboxFieldWithLabel } from "lib/form-fields";
 import { IGenericResponse } from "modules/settings/apis/templates/types";
 import { ITemplatesFormFields } from "modules/settings/containers/templates";
-import styled from "styled-components";
 
 interface ITemplatesFormProps {
     mode: 'create' | 'edit';
@@ -79,7 +79,7 @@ export const TemplatesForm = (props: ITemplatesFormProps) => {
                 </Grid>
                 <FlexBox gap='10px' width="100%" justifyContent="flex-end">
                     {isInEditMode ? <Button variant="text" size="large" type="button" onClick={() => methods.reset()}>{'Reset'}</Button> : null}
-                    <LoadingButton isLoading={mutationLoading} variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>{isInEditMode ? 'Edit Response' : 'Add Response'}</LoadingButton>
+                    <LoadingButton isLoading={mutationLoading} variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>{isInEditMode ? 'Edit Template' : 'Add Template'}</LoadingButton>
                 </FlexBox>
             </FlexBox>
         </FormProvider>

@@ -20,8 +20,8 @@ export const DeleteTemplatesContainer = (props: { id: number }) => {
         mutateAsync({
             id: props.id
         })
-            .then(() => showNotification({ message: 'Canned response was deleted successfully', type: 'success' }))
-            .catch(() => showNotification({ message: 'Failed to delete the Canned response', type: 'error' }))
+            .then(() => showNotification({ message: 'Templates was deleted successfully', type: 'success' }))
+            .catch(() => showNotification({ message: 'Failed to delete the Template', type: 'error' }))
             .finally(() => toggleDeleteDialogBox())
     }, [mutateAsync, props.id, showNotification])
     return (
