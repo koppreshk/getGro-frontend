@@ -5,6 +5,7 @@ import { Button, IconButton } from "@mui/material";
 import { SelectField } from "lib/form-fields";
 import { CenteredCircularProgress, ErrorMessage, FlexBox } from "lib/ui-ux"
 import { TriggerActions, useFetchTriggerActions } from "modules/settings/apis/ticket-automation";
+import { useTheme } from "styled-components";
 
 export const CreateTriggerSetAction = () => {
     const { data, isLoading, error } = useFetchTriggerActions();
@@ -15,6 +16,8 @@ export const CreateTriggerSetAction = () => {
     const onAddCondition = useCallback(() => {
         append({ ticketFields: '', condition: '', conditionValue: '' })
     }, [append]);
+
+    const { pallete, semantics } = useTheme();
 
     if (isLoading) {
         return <CenteredCircularProgress />
@@ -28,7 +31,7 @@ export const CreateTriggerSetAction = () => {
                     gap={'10px'}
                     padding={'20px'}
                     width="100%"
-                    style={{ border: '1px solid #c4c4c4', borderRadius: '4px' }}>
+                    style={{ border: `1px solid ${pallete.formFieldBorderColor}`, borderRadius: semantics.borderRadius.sm }}>
                     <FlexBox flexDirection="column" gap={'10px'} width="100%">
                         {fields.map((field, index) => (
                             <Condition key={field.id} index={index} fieldArrayName="actions" remove={remove} data={data!} />
@@ -40,7 +43,7 @@ export const CreateTriggerSetAction = () => {
         )
     }
 
-    return <ErrorMessage statusCode={error?.message}/>
+    return <ErrorMessage statusCode={error?.message} />
 }
 
 interface ConditionProps {
@@ -58,6 +61,7 @@ const Condition = (props: ConditionProps) => {
     const operatorMenuOptions = data.find((item) => item.fieldTriggerActionId.toString() === watch(`${fieldArrayName}.${index}.ticketFields`))?.dropdownValues.map((item) => ({ key: item.id.toString(), value: item.name })) || [];
     const assigneeObject = data.find((item) => item.fieldTriggerActionId.toString() === watch(`${fieldArrayName}.${index}.ticketFields`)); //Checking if assignee is selected
     const isAssigneeSelected = assigneeObject?.name.toLocaleLowerCase() === 'Set Assignee'.toLocaleLowerCase();
+    const { pallete, semantics } = useTheme();
 
     const getAssigneeMenuOptionsIfExists = () => {
         if (isAssigneeSelected) {
@@ -68,7 +72,7 @@ const Condition = (props: ConditionProps) => {
 
     return (
         <>
-            <FlexBox width="100%" alignItems="center" padding={'16px'} gap={'8px'} style={{ border: '1px solid #c4c4c4', borderRadius: '4px' }}>
+            <FlexBox width="100%" alignItems="center" padding={'16px'} gap={'8px'} style={{ border: `1px solid ${pallete.formFieldBorderColor}`, borderRadius: semantics.borderRadius.sm }}>
                 <FlexBox
                     gap={'32px'}
                     width="calc(100% - 36px)">

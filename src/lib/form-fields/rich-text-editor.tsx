@@ -19,7 +19,7 @@ const EditorContainer = styled(FlexBox)`
     .ql-toolbar, .ql-container {
         border-left: 0;
         border-right: 0;
-        border-bottom: 1px solid #c4c4c4;
+        border-bottom: 1px solid ${({ theme }) => theme.pallete.formFieldBorderColor};
         border-top: none;
     }
     .ql-container {

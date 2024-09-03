@@ -20,6 +20,8 @@ declare module 'styled-components' {
       black: string,
       blue: string,
       standardBorderColor: string,
+      formFieldBorderColor: string;
+      onHoverFormFieldBorderColor: string;
       green: string,
       powderBlue: string,
       grayVariant1: string,

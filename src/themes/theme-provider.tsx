@@ -7,6 +7,8 @@ const defaultTheme: DefaultTheme = {
         black: '#000',
         blue: '#1976d2',
         standardBorderColor: '#E9EBED',
+        formFieldBorderColor: '#c4c4c4', 
+        onHoverFormFieldBorderColor: '#212121',
         green: '#198754',
         powderBlue: '#f0f7ff',
         grayVariant1: '#CACED5',

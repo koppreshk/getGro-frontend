@@ -5,6 +5,7 @@ import { IconButton, Button } from "@mui/material";
 import { SelectField, TextboxField } from "lib/form-fields";
 import { FlexBox } from "lib/ui-ux";
 import { FetchFieldsAndConditions } from "modules/settings/apis/ticket-automation";
+import { useTheme } from "styled-components";
 
 interface TicketConditionsProps {
     heading: React.ReactNode;
@@ -22,13 +23,15 @@ export const TicketConditions = (props: TicketConditionsProps) => {
         append({ multiSelectConditionValue: [], ticketFields: '', condition: '', conditionValue: '' })
     }, [append]);
 
+    const { pallete, semantics } = useTheme();
+
     return (
         <FlexBox
             flexDirection='column'
             gap={'10px'}
             padding={'20px'}
             width="100%"
-            style={{ border: '1px solid #c4c4c4', borderRadius: '4px' }}>
+            style={{ border: `1px solid ${pallete.formFieldBorderColor}`, borderRadius: semantics.borderRadius.sm }}>
             {heading}
             <FlexBox flexDirection="column" gap={'10px'} width="100%">
                 {fields.map((field, index) => (
@@ -56,6 +59,7 @@ const Condition = (props: ConditionProps) => {
     const sourceArray = data.find((item) => item.fieldName.toLocaleLowerCase() === 'source');
     const isInOperatorSelected = sourceArray?.operators.find((it) => it.operatorName.toLocaleLowerCase() === 'in')?.operatorId.toString() === watch(`${fieldArrayName}.${index}.operator`);
     const isNotInOperatorSelected = sourceArray?.operators.find((it) => it.operatorName.toLocaleLowerCase() === 'not in')?.operatorId.toString() === watch(`${fieldArrayName}.${index}.operator`);
+    const { pallete, semantics } = useTheme();
 
     const renderFieldsByPrevSelection = () => {
         if (isInOperatorSelected || isNotInOperatorSelected) {
@@ -78,7 +82,7 @@ const Condition = (props: ConditionProps) => {
 
     return (
         <>
-            <FlexBox width="100%" alignItems="center" padding={'16px'} gap={'8px'} style={{ border: '1px solid #c4c4c4', borderRadius: '4px' }}>
+            <FlexBox width="100%" alignItems="center" padding={'16px'} gap={'8px'} style={{ border: `1px solid ${pallete.formFieldBorderColor}`, borderRadius: semantics.borderRadius.sm }}>
                 <FlexBox
                     gap={'32px'}
                     width="calc(100% - 36px)">

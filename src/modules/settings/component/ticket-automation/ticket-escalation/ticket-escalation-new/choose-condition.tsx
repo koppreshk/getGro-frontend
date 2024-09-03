@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
 import { useFormContext } from "react-hook-form";
 import { FlexBox } from "lib/ui-ux";
 import { Box, CircularProgress, Typography } from "@mui/material"
@@ -30,7 +30,7 @@ interface IChooseConditionProps {
 export const ChooseCondition = (props: IChooseConditionProps) => {
     const { ticketField, allEscalations, mode, slaName } = props;
     const ticketFieldDropdownData = ticketField.map((data) => ({ key: data.id.toString(), value: data.name }))
-
+    const { pallete, semantics } = useTheme();
     const validateEscalationName = (value: string) => {
         const modifiedData = mode === 'edit' ? allEscalations?.filter((item) => item.name !== slaName) : allEscalations;
         const doesNameExist = modifiedData?.some((item) => item.name === value);
@@ -56,7 +56,7 @@ export const ChooseCondition = (props: IChooseConditionProps) => {
                     flexDirection='column'
                     gap={4}
                     p={2}
-                    sx={{ border: '1px solid #c4c4c4', borderRadius: '4px' }}>
+                    sx={{ border: `1px solid ${pallete.formFieldBorderColor}`, borderRadius: semantics.borderRadius.sm }}>
                     <Typography variant="body2">Apply this SLA to the tickets that meet All of these conditions</Typography>
                     <Conditions ticketFieldDropdownData={ticketFieldDropdownData} priorities={props.priorities} />
                 </Box>
@@ -66,13 +66,14 @@ export const ChooseCondition = (props: IChooseConditionProps) => {
 }
 
 const Conditions = (props: { ticketFieldDropdownData: IKeyValue[], priorities: IPriority[] }) => {
+    const { pallete, semantics } = useTheme();
 
     return (
         <Box
             display="flex"
             gap={4}
             p={2}
-            sx={{ border: '1px solid #c4c4c4', borderRadius: '4px' }}>
+            sx={{ border: `1px solid ${pallete.formFieldBorderColor}`, borderRadius: semantics.borderRadius.sm }}>
             <SelectField name="chooseCondition.ticketFields" menuOptions={props.ticketFieldDropdownData} sx={{ width: '33%' }} label="Ticket Fields" />
             <SelectField name="chooseCondition.condition" menuOptions={[{ key: 'is', value: 'Is' }]} sx={{ width: '33%' }} />
             <ConditionValueContainer ticketFieldDropdownData={props.ticketFieldDropdownData} priorities={props.priorities} />

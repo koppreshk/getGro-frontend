@@ -16,13 +16,13 @@ interface ITemplatesFormProps {
 }
 
 export const StyledRichTextEditor = styled(RichTextEditorField)`
-    border: 1px solid #c4c4c4;
+    border: 1px solid ${({ theme }) => theme.pallete.formFieldBorderColor};
     border-radius: 4px;
     &:hover {
         .ql-toolbar {
-            border-color: #212121;
+            border-color: ${({ theme }) => theme.pallete.onHoverFormFieldBorderColor};
         }
-        border-color: #212121;
+        border-color: ${({ theme }) => theme.pallete.onHoverFormFieldBorderColor};
     };
     &:focus-within {
         .ql-toolbar {

@@ -20,10 +20,10 @@ interface IAddTicketFormProps {
 const StyledTags = styled(TagInputField)`
     padding: 16.5px 14px;
     border-radius: ${({ theme }) => theme.semantics.borderRadius.xs};
-    border: 1px solid #c4c4c4;
+    border: 1px solid ${({ theme }) => theme.pallete.formFieldBorderColor};
     width: 100%;
     &:hover {
-        border-color: #212121;
+        border-color: ${({ theme }) => theme.pallete.onHoverFormFieldBorderColor};
     };
 `;
 
