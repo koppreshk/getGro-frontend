@@ -19,7 +19,7 @@ const useColumns = () => {
             cell: info => info.getValue(),
         }),
         columnHelper.accessor("phone_number", {
-            id: 'name',
+            id: 'phone_number',
             header: () => 'Phone Number',
             cell: info => info.getValue(),
         }),

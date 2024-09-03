@@ -2,9 +2,9 @@ export enum ExotelConfigurationEndPoint {
     FETCH_EXOTEL_CONFIG = 'configuration/fetch_exotel_configuration',
     INSTALL_EXOTEL_CONFIG = 'configuration/install_exotel',
     DELETE_EXOTEL_CONFIG = 'configuration/delete_exotel',
-    ADD_EXOPHONE = 'configuration/add_exophone',
     FETCH_EXPHONE_NUMBERS = 'configuration/fetch_exophones',
-    FETCH_EXOTEL_ADDED_NUMBERS = 'configuration/exotel_numbers'
+    FETCH_EXOTEL_ADDED_NUMBERS = 'configuration/exotel_numbers',
+    ADD_EXOPHONE = 'configuration/add_exophone'
 }
 
 export enum ExotelConfigurationQueryKey {
