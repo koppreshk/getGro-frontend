@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { SelectField } from "lib/form-fields";
 import { CenteredCircularProgress } from "lib/ui-ux";
 import { useFetchUsersInQueue } from "modules/settings/apis";
@@ -13,7 +13,8 @@ export const GetEmployeesByQueueContainer = (props: { queueId: string }) => {
     if (data) {
         return (
             <Grid item xs={12}>
-                <SelectField name="employeeId" label="Select Employee" sx={{ width: '100%' }}
+                <Typography variant="h6" sx={{ mb: '5px' }}>Select Employee</Typography>
+                <SelectField name="employeeId" sx={{ width: '100%' }}
                     menuOptions={data.map((item) => (
                         { key: item.id.toString(), value: `${item.firstName} ${item.lastName ? item.lastName : ''}` }
                     ))

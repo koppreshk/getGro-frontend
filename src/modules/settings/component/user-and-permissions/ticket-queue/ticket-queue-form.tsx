@@ -14,26 +14,10 @@ interface IEmployeeList {
     key: string;
     value: string;
 }
-
 export interface IQueueFormFields {
     queueName: string;
-    queueKey: string;
     assignedEmployees: IEmployeeList[];
-    backUpEmployee: IEmployeeList[];
-    backupEmployeeType: string;
 }
-
-const selectBackupEmployeeList = [
-    {
-        value: 'John', key: '453453'
-    },
-    {
-        value: 'Leo', key: '53454'
-    },
-    {
-        value: 'Charles', key: '634603'
-    }
-] as IEmployeeList[]
 
 interface ITicketQueueFormProps {
     employees: Employee[];
@@ -48,10 +32,8 @@ export const TicketQueueForm = memo((props: ITicketQueueFormProps) => {
 
     const methods = useForm<IQueueFormFields>({
         defaultValues: defaultValues ?? {
-            queueKey: '',
             queueName: '',
             assignedEmployees: [],
-            backUpEmployee: [],
         }
     });
 
@@ -66,18 +48,10 @@ export const TicketQueueForm = memo((props: ITicketQueueFormProps) => {
                     <Grid item xs={6}>
                         <TextboxField name="queueName" label="Queue Name" fullWidth rules={{ required: 'Queue name is required' }} />
                     </Grid>
-                    <Grid item xs={6}>
-                        <TextboxField name="queueKey" disabled={isInEditMode} label="Queue Key" fullWidth rules={{ required: 'Queue key is required' }} />
-                    </Grid>
                     <Grid item xs={12}>
                         <AutocompleteField label="Select Employee" name="assignedEmployees"
                             options={employees.map((item) => ({ key: item.id.toString(), value: `${item.firstName} ${item.lastName ?? ''}` }))}
                             placeholder="Select Employee" />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <AutocompleteField label="Select Backup Employee" name="backUpEmployee"
-                            options={selectBackupEmployeeList}
-                            placeholder="Select Backup Employee" />
                     </Grid>
                 </Grid>
                 <StlyedFlexBox gap='10px' width="100%" justifyContent="flex-end">

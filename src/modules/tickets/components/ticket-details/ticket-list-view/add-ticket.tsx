@@ -32,7 +32,8 @@ export const AddTicket = (props: IAddTicketProps) => {
     return (
         <DrawerExtended
             anchor="right"
-            header={"Add Ticket"}
+            header={"Add Email Ticket"}
+            width="800px"
             open={openAddTicketDrawer}
             onRenderContent={() => (
                 <FormProvider {...formMethods}>

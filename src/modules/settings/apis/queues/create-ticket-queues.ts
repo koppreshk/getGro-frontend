@@ -11,7 +11,6 @@ interface IAssignedEmployees {
 
 export interface ICreateTicketQueueArgs {
     queueName: string;
-    queueKey: string;
     assigned_employees: IAssignedEmployees[]
 }
 
@@ -22,8 +21,7 @@ export const useCreateTicketQueues = () => {
     const createTicketQueue = React.useCallback((args: ICreateTicketQueueArgs) =>
         postData(`${ConfigurationsEndPoint.CREATE_TICKET_QUEUE}`, {
             assigned_employees: args.assigned_employees,
-            name: args.queueName,
-            unique_key: args.queueKey
+            name: args.queueName
         }).then((res) => res.json()), [postData]);
 
     return useMutation({

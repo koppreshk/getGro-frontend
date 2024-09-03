@@ -15,7 +15,7 @@ interface ITemplatesFormProps {
     onFormSubmitHandler: (data: ITemplatesFormFields) => void;
 }
 
-const StyledRichTextEditor = styled(RichTextEditorField)`
+export const StyledRichTextEditor = styled(RichTextEditorField)`
     border: 1px solid #c4c4c4;
     border-radius: 4px;
     &:hover {
