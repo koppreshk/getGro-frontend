@@ -6,6 +6,7 @@ import { FlexBox } from "lib/ui-ux"
 const StyledFlexbox = styled(FlexBox)`
     border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
     border: ${({ theme }) => theme.semantics.standardBorder};
+    min-height: 400px;
 `;
 
 const MoreInfoSection = styled(FlexBox)`

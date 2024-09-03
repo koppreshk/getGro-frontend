@@ -1,10 +1,12 @@
 import React from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
-import { Box, Button, CircularProgress, DialogActions, Divider, Grid, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, DialogActions, Divider, Grid, InputAdornment, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
 import { TextboxField } from "lib/form-fields";
-import { BackButton, CenteredCircularProgress, FlexBox } from "lib/ui-ux";
+import { BackButton, CenteredCircularProgress, CustomIconButton, FlexBox } from "lib/ui-ux";
 import { IAddExotelFormFields } from "modules/settings/containers/marketplace/exotel";
 import { useAppSelector } from "lib/hooks";
+import { ContentCopy } from "@mui/icons-material";
+import { useNotifications } from "lib";
 
 export interface IAddExotelConfigurationFormProps {
     togglePopup: () => void;
@@ -66,12 +68,36 @@ function AddExotelConfigForm() {
 }
 
 const AccountWebhookDetails = (props: { isMutationLoading: boolean | undefined }) => {
+    const { showNotification } = useNotifications();
+    const { watch } = useFormContext();
+
+    const onCopy = () => {
+        navigator.clipboard.writeText(watch('webHookUrl'))
+            .then(() => showNotification({ message: 'Copied to clipboard', type: 'success' }))
+            .catch(() => showNotification({ message: 'Failed to copy', type: 'error' }));
+    }
+
     return (
         <>
             {props.isMutationLoading ? <CenteredCircularProgress /> :
                 <FlexBox flexDirection="column" gap="20px" width="75%">
                     <Typography variant="h5">Webhook</Typography>
-                    <TextboxField name="webhookURL" size="small" type="text" rows={4} multiline disabled label="Webhook URL" fullWidth />
+                    <TextboxField
+                        name="webhookURL"
+                        size="small"
+                        type="text"
+                        rows={4}
+                        multiline
+                        disabled
+                        readOnly
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end" >
+                                    <CustomIconButton onClick={onCopy} iconComponent={<ContentCopy />} tooltipProps={{ title: "Copy pop-up url", arrow: true }} />
+                                </InputAdornment>
+                            )
+                        }}
+                        label="Webhook URL" fullWidth />
                 </FlexBox>
             }
         </>
