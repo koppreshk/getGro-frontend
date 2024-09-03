@@ -9,6 +9,7 @@ export interface IExotelConfigDetails {
     exotel_api_token: string
     exotel_account_sid: string
     webhook_url?: string
+    account_type: string
 }
 
 export const useSetupExotelConfigurations = () => {

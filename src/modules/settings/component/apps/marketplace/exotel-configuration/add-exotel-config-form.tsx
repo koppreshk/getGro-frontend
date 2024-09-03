@@ -1,7 +1,7 @@
 import React from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { Box, Button, CircularProgress, DialogActions, Divider, Grid, InputAdornment, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
-import { TextboxField } from "lib/form-fields";
+import { RadioGroupField, TextboxField } from "lib/form-fields";
 import { BackButton, CenteredCircularProgress, CustomIconButton, FlexBox } from "lib/ui-ux";
 import { IAddExotelFormFields } from "modules/settings/containers/marketplace/exotel";
 import { useAppSelector } from "lib/hooks";
@@ -62,6 +62,10 @@ function AddExotelConfigForm() {
             </Grid>
             <Grid item md={12}>
                 <TextboxField name="exotelAPItoken" type="password" label="Exotel API Token" size="small" fullWidth rules={{ required: 'Exotel API Token field is required.' }} />
+            </Grid>
+            <Grid item md={12}>
+                <Typography variant="h6">Account Type</Typography>
+                <RadioGroupField name="accountType" radioOptions={[{ key: 'browser_calling', label: 'Browser Calling' }, { key: 'normal_calling', label: 'Normal Calling(Phone)' }]} />
             </Grid>
         </Grid>
     )
@@ -167,7 +171,8 @@ export const AddExotelConfigurationFormBase = (props: IAddExotelConfigurationFor
             exotelAPIkey: '',
             exotelAPItoken: '',
             exotelSubdomain: '',
-            webhookURL: ''
+            webhookURL: '',
+            accountType: 'browser_calling'
         }
     });
 

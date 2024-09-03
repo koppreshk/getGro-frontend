@@ -8,7 +8,8 @@ export interface IAddExotelFormFields {
     exotelAPIkey: string
     exotelAPItoken: string
     exotelAccountSid: string
-    webhookURL?: string
+    webhookURL?: string,
+    accountType: string
 }
 
 export const AddExotelConfigurationContainer = (props: { togglePopup: () => void; updateInstallation: () => void}) => {
@@ -20,7 +21,8 @@ export const AddExotelConfigurationContainer = (props: { togglePopup: () => void
             exotel_account_sid: formFields.exotelAccountSid,
             exotel_api_key: formFields.exotelAPIkey,
             exotel_api_token: formFields.exotelAPItoken,
-            exotel_subdomain: formFields.exotelSubdomain
+            exotel_subdomain: formFields.exotelSubdomain,
+            account_type: formFields.accountType
         })
             .then((res) => res.json())
             .then(res => {
