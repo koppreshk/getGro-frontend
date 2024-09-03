@@ -8,7 +8,7 @@ import { IAddTIcketFormFields } from "./add-ticket";
 import { IPriorities, useCreateManualTicket } from "modules/tickets/apis";
 import { useNotifications } from "lib";
 import { StyledRichTextEditor } from "modules/settings/component/ticket-configurations/templates/add-templates-form";
-import { StyledTags } from "../ticket-details-section/ticket-overview";
+import { StyledTags } from "../../ticket-details-section/ticket-overview";
 import { useState, useCallback } from "react";
 import { ITag } from "modules/settings/apis/tags";
 
