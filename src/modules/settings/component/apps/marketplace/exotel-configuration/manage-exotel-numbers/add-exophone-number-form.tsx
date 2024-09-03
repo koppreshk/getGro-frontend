@@ -1,9 +1,14 @@
 import React from "react";
-import { Box, Stepper, Step, StepLabel, StepContent, Typography, Grid, Button, CircularProgress, DialogActions, Divider } from "@mui/material";
+import { Box, Stepper, Step, StepLabel, StepContent, Typography, Grid, Button, CircularProgress, DialogActions, Divider, InputAdornment } from "@mui/material";
 import { AutocompleteField, SelectField, TextboxField } from "lib/form-fields";
-import { BackButton, CenteredCircularProgress, FlexBox } from "lib/ui-ux";
+import { BackButton, CenteredCircularProgress, CustomIconButton, FlexBox } from "lib/ui-ux";
 import { IAddExophoneNumberFormFields } from "modules/settings/containers/marketplace/exotel";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm, FormProvider, useFormContext } from "react-hook-form";
+import { IUsers } from "modules/settings/apis/users-and-permissions";
+import { Exophone } from "modules/settings/apis/marketplace/exotel";
+import { useAppSelector } from "lib/hooks";
+import { ContentCopy } from "@mui/icons-material";
+import { useNotifications } from "lib";
 
 const steps = [
     {
@@ -37,7 +42,10 @@ const ConfigSteps = (props: { activeStep: number }) => {
     );
 }
 
-function AddExophoneNumberForm(props: Pick<IAddExophoneNumberFormProps, 'exophoneNumMenuOption' | 'usersMenuOption'>) {
+function AddExophoneNumberForm(props: {
+    exophoneNumMenuOption: IKeyValue[];
+    usersMenuOption: IKeyValue[];
+}) {
     const { exophoneNumMenuOption, usersMenuOption } = props;
 
     return (
@@ -57,13 +65,35 @@ function AddExophoneNumberForm(props: Pick<IAddExophoneNumberFormProps, 'exophon
 
 
 const AccountWebhookDetails = (props: { isMutationLoading: boolean | undefined }) => {
+    const { showNotification } = useNotifications();
+    const { watch } = useFormContext();
+
+    const onCopy = () => {
+        navigator.clipboard.writeText(watch('webHookUrl'))
+            .then(() => showNotification({ message: 'Copied to clipboard', type: 'success' }))
+            .catch(() => showNotification({ message: 'Failed to copy', type: 'error' }));
+    }
+
     return (
         <>
             {props.isMutationLoading ? <CenteredCircularProgress /> :
                 <FlexBox flexDirection="column" gap="20px" width="75%">
                     <Typography variant="h5">Webhook</Typography>
-                    <TextboxField name="webhookURL" size="small" type="text" label="Webhook URL" fullWidth />
-                </FlexBox>
+                    <TextboxField
+                        label="Webhook URL"
+                        name="webHookUrl"
+                        size="small"
+                        type="text"
+                        fullWidth readOnly
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end" >
+                                    <CustomIconButton onClick={onCopy} iconComponent={<ContentCopy />} tooltipProps={{ title: "Copy pop-up url", arrow: true }} />
+                                </InputAdornment>
+                            )
+                        }}
+                    />
+                </FlexBox >
             }
         </>
     )
@@ -78,20 +108,38 @@ export interface IAddExophoneNumberFormProps {
     togglePopup: () => void;
     onSubmit: (formFields: IAddExophoneNumberFormFields) => void;
     isMutationLoading?: boolean;
-    exophoneNumMenuOption: IKeyValue[];
-    usersMenuOption: IKeyValue[];
+    allUsersData: IUsers[];
+    exophoneNumData: Exophone[];
 }
 
 export const AddExophoneNumberFormBase = (props: IAddExophoneNumberFormProps) => {
-    const { onSubmit, togglePopup, isMutationLoading } = props;
+    const { togglePopup, isMutationLoading, allUsersData, exophoneNumData, onSubmit } = props;
     const [activeStep, setActiveStep] = React.useState(0);
+    const webhookUrl = useAppSelector((state) => state.configurations.exotelWebhookNumberUrl);
+
+    const exophoneNumMenuOption = exophoneNumData ? exophoneNumData.map((item) => ({ key: item.phone_number, value: item.phone_number })) : [];
+    const usersMenuOption = allUsersData ? allUsersData.map((item) => ({ key: item.id.toString(), value: item.name })) : [];
 
     const form = useForm<IAddExophoneNumberFormFields>({
         mode: 'onChange'
     });
 
+    React.useEffect(() => {
+        if (webhookUrl) {
+            form.setValue('webHookUrl', webhookUrl);
+        }
+    }, [form, webhookUrl]);
+
     const onSubmitForm = async (formValues: IAddExophoneNumberFormFields) => {
-        onSubmit(formValues);
+        console.log('formValues', formValues);
+        const phone = exophoneNumData.find(item => item.phone_number === form.watch('phoneNumber'));
+        onSubmit({
+            appName: formValues.appName,
+            friendlyName: phone?.friendly_name || '',
+            phoneNumber: formValues.phoneNumber,
+            sid: phone?.sid || '',
+            users: formValues.users
+        })
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
@@ -110,7 +158,7 @@ export const AddExophoneNumberFormBase = (props: IAddExophoneNumberFormProps) =>
             <FlexBox gap="20px">
                 <ConfigSteps activeStep={activeStep} />
                 <Divider orientation="vertical" variant="middle" flexItem />
-                {activeStep === 0 ? <AddExophoneNumberForm exophoneNumMenuOption={props.exophoneNumMenuOption} usersMenuOption={props.usersMenuOption} /> : <AccountWebhookDetails isMutationLoading={isMutationLoading} />}
+                {activeStep === 0 ? <AddExophoneNumberForm exophoneNumMenuOption={exophoneNumMenuOption} usersMenuOption={usersMenuOption} /> : <AccountWebhookDetails isMutationLoading={isMutationLoading} />}
             </FlexBox>
             <DialogActions sx={{ justifyContent: 'space-between', paddingTop: '30px' }}>
                 {activeStep > 0 ?

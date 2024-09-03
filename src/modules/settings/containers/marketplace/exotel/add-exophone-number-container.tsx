@@ -2,6 +2,8 @@ import { CenteredCircularProgress } from "lib/ui-ux";
 import { useAddExophoneNumber, useFetchExophoneNumbers } from "modules/settings/apis/marketplace/exotel";
 import { useFetchAllUsers } from "modules/settings/apis/users-and-permissions";
 import { AddExophoneNumberFormBase } from "modules/settings/component/apps/marketplace/exotel-configuration/manage-exotel-numbers";
+import { setExotelNumberWebhookUrl } from "modules/settings/storage";
+import { useDispatch } from "react-redux";
 
 interface IEmployeeList {
     key: string;
@@ -14,12 +16,14 @@ export interface IAddExophoneNumberFormFields {
     phoneNumber: string;
     sid: string;
     users: IEmployeeList[];
+    webHookUrl?: string;
 }
 
 export const AddExophoneNumberContainer = (props: { togglePopup: () => void }) => {
     const { mutateAsync, isLoading: isMutationLoading } = useAddExophoneNumber();
     const { data: exophoneNumData, isLoading: isExophoneNumDataLoading } = useFetchExophoneNumbers();
     const { data: allUsersData, isLoading: isAllUsersDataLoading } = useFetchAllUsers("all");
+    const dispatch = useDispatch();
 
     const onSubmit = (formFields: IAddExophoneNumberFormFields) => {
         mutateAsync({
@@ -32,6 +36,7 @@ export const AddExophoneNumberContainer = (props: { togglePopup: () => void }) =
             .then((res) => res.json())
             .then(res => {
                 console.log(res);
+                dispatch(setExotelNumberWebhookUrl(res.create_pop_url));
             })
     };
 
@@ -43,16 +48,14 @@ export const AddExophoneNumberContainer = (props: { togglePopup: () => void }) =
     console.log('allUsersData', allUsersData);
 
     if (exophoneNumData && allUsersData) {
-        const exophoneNumMenuOption = exophoneNumData ? exophoneNumData.exophones.map((item) => ({ key: item.phone_number, value: item.phone_number })) : [];
-        const usersMenuOption = allUsersData ? allUsersData.map((item) => ({ key: item.id.toString(), value: item.name })) : [];
 
         return (
             <AddExophoneNumberFormBase
                 onSubmit={onSubmit}
                 isMutationLoading={isMutationLoading}
                 togglePopup={props.togglePopup}
-                exophoneNumMenuOption={exophoneNumMenuOption}
-                usersMenuOption={usersMenuOption}
+                allUsersData={allUsersData}
+                exophoneNumData={exophoneNumData.exophones}
             />
         )
     }
