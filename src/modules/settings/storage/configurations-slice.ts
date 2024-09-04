@@ -23,15 +23,12 @@ export const configurationSlice = createSlice({
         setWhatsAppWebhookUrl: (state, actions: PayloadAction<string>) => {
             state.whatsAppWebhookUrl = actions.payload
         },
-        setExotelWebhookUrl: (state, actions: PayloadAction<string>) => {
-            state.exotelWebhookUrl = actions.payload
-        },
         setExotelNumberWebhookUrl: (state, actions: PayloadAction<string>) => {
             state.exotelWebhookNumberUrl = actions.payload
         }
     }
 })
 
-export const { setTotalPage, setWhatsAppWebhookUrl, setExotelWebhookUrl, setExotelNumberWebhookUrl } = configurationSlice.actions
+export const { setTotalPage, setWhatsAppWebhookUrl, setExotelNumberWebhookUrl } = configurationSlice.actions
 
 export default configurationSlice.reducer

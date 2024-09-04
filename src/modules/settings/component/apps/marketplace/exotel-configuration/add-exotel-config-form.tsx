@@ -1,17 +1,17 @@
 import React from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
-import { Box, Button, CircularProgress, DialogActions, Divider, Grid, InputAdornment, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
+import { Box, Button, DialogActions, Divider, Grid, InputAdornment, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
 import { RadioGroupField, TextboxField } from "lib/form-fields";
-import { BackButton, CenteredCircularProgress, CustomIconButton, FlexBox } from "lib/ui-ux";
+import { BackButton, CustomIconButton, FlexBox, LoadingButton } from "lib/ui-ux";
 import { IAddExotelFormFields } from "modules/settings/containers/marketplace/exotel";
-import { useAppSelector } from "lib/hooks";
 import { ContentCopy } from "@mui/icons-material";
 import { useNotifications } from "lib";
+import { IExotelConfigDetails } from "modules/settings/apis/marketplace/exotel";
 
 export interface IAddExotelConfigurationFormProps {
+    isMutationLoading: boolean;
     togglePopup: () => void;
-    onSubmit: (formFields: IAddExotelFormFields) => void;
-    isMutationLoading?: boolean;
+    onSubmit: (data: IExotelConfigDetails) => Promise<{ webhook_url: string }>;
     updateInstallation: () => void;
 }
 
@@ -71,58 +71,56 @@ function AddExotelConfigForm() {
     )
 }
 
-const AccountWebhookDetails = (props: { isMutationLoading: boolean | undefined }) => {
+const AccountWebhookDetails = () => {
     const { showNotification } = useNotifications();
-    const { watch } = useFormContext();
+    const { watch } = useFormContext<IAddExotelFormFields>();
 
     const onCopy = () => {
-        navigator.clipboard.writeText(watch('webHookUrl'))
+        navigator.clipboard.writeText(watch('webhookURL')!)
             .then(() => showNotification({ message: 'Copied to clipboard', type: 'success' }))
             .catch(() => showNotification({ message: 'Failed to copy', type: 'error' }));
     }
 
     return (
         <>
-            {props.isMutationLoading ? <CenteredCircularProgress /> :
-                <FlexBox flexDirection="column" gap="20px" width="75%">
-                    <Typography variant="h5">Webhook</Typography>
-                    <TextboxField
-                        name="webhookURL"
-                        size="small"
-                        type="text"
-                        rows={4}
-                        multiline
-                        disabled
-                        readOnly
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="end" >
-                                    <CustomIconButton onClick={onCopy} iconComponent={<ContentCopy />} tooltipProps={{ title: "Copy pop-up url", arrow: true }} />
-                                </InputAdornment>
-                            )
-                        }}
-                        label="Webhook URL" fullWidth />
-                </FlexBox>
-            }
+            <FlexBox flexDirection="column" gap="20px" width="75%">
+                <Typography variant="h5">Webhook</Typography>
+                <TextboxField
+                    name="webhookURL"
+                    size="small"
+                    type="text"
+                    rows={4}
+                    multiline
+                    disabled
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end" >
+                                <CustomIconButton onClick={onCopy} iconComponent={<ContentCopy />} tooltipProps={{ title: "Copy pop-up url", arrow: true }} />
+                            </InputAdornment>
+                        )
+                    }}
+                    label="Webhook URL" fullWidth />
+            </FlexBox>
         </>
     )
 }
 
-export const AddExotelConfigurationForm = (props: IAddExotelConfigurationFormProps) => {
+export const AddExotelConfigurationForm = React.memo((props: IAddExotelConfigurationFormProps) => {
     const { togglePopup, onSubmit, isMutationLoading, updateInstallation } = props;
     const form = useFormContext<IAddExotelFormFields>()
     const [activeStep, setActiveStep] = React.useState(0);
-    const webHookUrl = useAppSelector((state) => state.configurations.exotelWebhookUrl);
 
-    React.useEffect(() => {
-        if (webHookUrl) {
-            form.setValue('webhookURL', webHookUrl);
-        }
-    }, [form, webHookUrl]);
-
-    const onSubmitForm = async (formValues: IAddExotelFormFields) => {
-        onSubmit(formValues);
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    const onSubmitForm = async (formFields: IAddExotelFormFields) => {
+        onSubmit({
+            exotel_account_sid: formFields.exotelAccountSid,
+            exotel_api_key: formFields.exotelAPIkey,
+            exotel_api_token: formFields.exotelAPItoken,
+            exotel_subdomain: formFields.exotelSubdomain,
+            account_type: formFields.accountType
+        }).then((res) => {
+            form.setValue('webhookURL', res.webhook_url)
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        })
     };
 
     const handleBack = () => {
@@ -141,7 +139,7 @@ export const AddExotelConfigurationForm = (props: IAddExotelConfigurationFormPro
             <FlexBox gap="20px">
                 <ConfigSteps activeStep={activeStep} />
                 <Divider orientation="vertical" variant="middle" flexItem />
-                {activeStep === 0 ? <AddExotelConfigForm /> : <AccountWebhookDetails isMutationLoading={isMutationLoading} />}
+                {activeStep === 0 ? <AddExotelConfigForm /> : <AccountWebhookDetails />}
             </FlexBox>
             <DialogActions sx={{ justifyContent: 'space-between', paddingTop: '30px' }}>
                 {activeStep > 0 ?
@@ -149,21 +147,18 @@ export const AddExotelConfigurationForm = (props: IAddExotelConfigurationFormPro
                         Back
                     </BackButton> : <div></div>
                 }
-                {webHookUrl ? null :
-                    <FlexBox gap="10px">
-                        <Button variant="outlined" onClick={togglePopup}>
-                            Cancel
-                        </Button>
-                        <Button variant="contained" onClick={isLastStep ? onSaveHandler : form.handleSubmit(onSubmitForm)}>
-                            {isMutationLoading ? (
-                                <CircularProgress size={20} />
-                            ) : isLastStep ? 'Save' : 'Next'}
-                        </Button>
-                    </FlexBox>}
+                <FlexBox gap="10px">
+                    <Button variant="outlined" onClick={togglePopup}>
+                        Cancel
+                    </Button>
+                    <LoadingButton isLoading={isMutationLoading} variant="contained" onClick={isLastStep ? onSaveHandler : form.handleSubmit(onSubmitForm)}>
+                        {isLastStep ? 'Save' : 'Next'}
+                    </LoadingButton>
+                </FlexBox>
             </DialogActions>
         </form>
     )
-}
+})
 
 export const AddExotelConfigurationFormBase = (props: IAddExotelConfigurationFormProps) => {
     const form = useForm<IAddExotelFormFields>({
