@@ -3,6 +3,7 @@ import { useNotifications } from "lib";
 import { NegativeActionDialog } from "lib/ui-ux";
 import { Button } from "@mui/material";
 import { useDeleteExotelConfiguration } from "modules/settings/apis/marketplace/exotel";
+import { DeleteForever } from '@mui/icons-material';
 
 export const DeleteExotelConfigurations = () => {
     const { mutateAsync } = useDeleteExotelConfiguration();
@@ -23,7 +24,7 @@ export const DeleteExotelConfigurations = () => {
 
     return (
         <>
-            <Button variant="outlined" size="medium" onClick={toggleDeleteDialogBox}>Uninstall</Button>
+            <Button variant="outlined" size="medium" onClick={toggleDeleteDialogBox} startIcon={<DeleteForever />}>Uninstall</Button>
             <NegativeActionDialog
                 open={open}
                 content='Do you want to uninstall this Exotel Configuration?'

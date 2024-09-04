@@ -3,6 +3,7 @@ import { useNotifications } from "lib";
 import { NegativeActionDialog } from "lib/ui-ux";
 import { useDeleteWhatsAppConfiguration } from "modules/settings/apis/marketplace/whatsApp/gupshup";
 import { Button } from "@mui/material";
+import { DeleteForever } from "@mui/icons-material";
 
 export const DeleteWhatsAppConfigurations = () => {
     const { mutateAsync } = useDeleteWhatsAppConfiguration();
@@ -23,7 +24,7 @@ export const DeleteWhatsAppConfigurations = () => {
 
     return (
         <>
-            <Button variant="outlined" size="medium" onClick={toggleDeleteDialogBox}>Uninstall</Button>
+            <Button variant="outlined" size="medium" onClick={toggleDeleteDialogBox} startIcon={<DeleteForever />}>Uninstall</Button>
             <NegativeActionDialog
                 open={open}
                 content='Do you want to uninstall this WhatsApp Configuration?'
