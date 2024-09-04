@@ -1,6 +1,6 @@
 import { useServiceClient } from "lib"
 import React from "react";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { ExotelConfigurationEndPoint, ExotelConfigurationQueryKey } from "./api-enums";
 
 export interface IDeleteExophoneNumber {
@@ -9,6 +9,7 @@ export interface IDeleteExophoneNumber {
 
 export const useDeleteExophoneNumber = () => {
     const { postData } = useServiceClient();
+    const queryClient = useQueryClient();
 
     const deleteExophoneNumber = React.useCallback((args: IDeleteExophoneNumber) =>
         postData(ExotelConfigurationEndPoint.DELETE_EXOPHONE, args), [postData])
@@ -16,7 +17,10 @@ export const useDeleteExophoneNumber = () => {
     return (
         useMutation({
             mutationFn: deleteExophoneNumber,
-            mutationKey: ExotelConfigurationQueryKey.DELETE_EXOPHONE
+            mutationKey: ExotelConfigurationQueryKey.DELETE_EXOPHONE,
+            onSuccess: () => {
+                queryClient.invalidateQueries(ExotelConfigurationQueryKey.FETCH_EXOTEL_ADDED_NUMBERS);
+            }
         })
     )
 }

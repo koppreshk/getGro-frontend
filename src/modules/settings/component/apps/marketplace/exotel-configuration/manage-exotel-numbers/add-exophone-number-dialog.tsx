@@ -6,7 +6,7 @@ export const AddExophoneNumberDialog = (props: { openAddExoPopup: boolean, toggl
     const {openAddExoPopup, toggleAddExoPopup} = props;
 
     return (
-        <Dialog open={openAddExoPopup} onClose={toggleAddExoPopup} fullWidth maxWidth="sm">
+        <Dialog open={openAddExoPopup} fullWidth maxWidth="sm">
             <DialogTitle sx={{ fontSize: '16px' }}>
                 Add Exotel Number
             </DialogTitle>

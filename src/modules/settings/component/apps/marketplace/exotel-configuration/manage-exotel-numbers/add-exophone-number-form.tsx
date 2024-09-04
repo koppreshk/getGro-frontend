@@ -106,7 +106,7 @@ interface IKeyValue {
 
 export interface IAddExophoneNumberFormProps {
     togglePopup: () => void;
-    onSubmit: (payload: IAddExophoneNumber) => Promise<{ webhook_url: string }>;
+    onSubmit: (payload: IAddExophoneNumber) => Promise<{ create_pop_url: string }>;
     isMutationLoading?: boolean;
     allUsersData: IUsers[];
     exophoneNumData: Exophone[];
@@ -120,7 +120,15 @@ export const AddExophoneNumberFormBase = (props: IAddExophoneNumberFormProps) =>
     const usersMenuOption = allUsersData ? allUsersData.map((item) => ({ key: item.id.toString(), value: item.name })) : [];
 
     const form = useForm<IAddExophoneNumberFormFields>({
-        mode: 'onChange'
+        mode: 'onChange',
+        defaultValues: {
+            appName: '',
+            friendlyName: '',
+            phoneNumber: '',
+            sid: '',
+            users: [],
+            webHookUrl: ''
+        }
     });
 
     const onSubmitForm = async (formFields: IAddExophoneNumberFormFields) => {
@@ -132,7 +140,7 @@ export const AddExophoneNumberFormBase = (props: IAddExophoneNumberFormProps) =>
             sid: phone?.sid || '',
             users: formFields.users.map((x) => Number(x.key))
         }).then((res) => {
-            form.setValue('webHookUrl', res.webhook_url);
+            form.setValue('webHookUrl', res.create_pop_url);
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
         })
     };

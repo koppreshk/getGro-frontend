@@ -61,7 +61,6 @@ const useColumns = () => {
 }
 
 const StyledConfigDataGrid = styled(ConfigDataGrid)`
-    width: 100%;
     padding: 0;
 `;
 
@@ -70,6 +69,8 @@ export const ManageExotelNumbersLayout = (props: IManageExotelNumbersLayoutProps
     const columns = useColumns();
 
     return (
-        <StyledConfigDataGrid columns={columns} data={data!} hideTableControls isLoading={isLoading} />
+        <div style={{ width: '100%' }}>
+            <StyledConfigDataGrid columns={columns} data={data!} hideTableControls isLoading={isLoading} />
+        </div>
     )
 }
