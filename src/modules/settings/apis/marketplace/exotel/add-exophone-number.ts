@@ -15,7 +15,7 @@ export const useAddExophoneNumber = () => {
     const { postData } = useServiceClient();
 
     const addExophoneNumber = React.useCallback((args: IAddExophoneNumber) =>
-        postData(ExotelConfigurationEndPoint.ADD_EXOPHONE, args), [postData])
+        postData(ExotelConfigurationEndPoint.ADD_EXOPHONE, args).then((res) => res.json()), [postData])
 
     return (
         useMutation({
