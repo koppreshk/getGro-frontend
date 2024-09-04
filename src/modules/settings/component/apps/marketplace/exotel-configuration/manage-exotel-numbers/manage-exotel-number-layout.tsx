@@ -1,7 +1,9 @@
 import { createColumnHelper } from "@tanstack/react-table"
+import { FlexBox } from "lib/ui-ux";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
 import { IExotelAddedNumbers } from "modules/settings/apis/marketplace/exotel";
 import { styled } from "styled-components";
+import { DeleteExophone } from "./delete-exophone";
 
 export interface IManageExotelNumbersLayoutProps {
     data: IExotelAddedNumbers[] | undefined;
@@ -28,6 +30,18 @@ const useColumns = () => {
             header: () => 'Exotel Group Name',
             cell: info => info.getValue(),
         }),
+        columnHelper.display({
+            id: 'actions',
+            header: () => 'Actions',
+            cell: ({ row: { original } }) => {
+                return (
+                    <FlexBox flexDirection="row" gap="5px">
+                        <DeleteExophone id={original.id} />
+                    </FlexBox>
+                )
+            },
+            enableSorting: false,
+        })
         // columnHelper.accessor("is_active", {
         //     id: 'is_active',
         //     header: () => 'Name',

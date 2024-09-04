@@ -149,16 +149,17 @@ export const AddExotelConfigurationForm = (props: IAddExotelConfigurationFormPro
                         Back
                     </BackButton> : <div></div>
                 }
-                <FlexBox gap="10px">
-                    <Button variant="outlined" onClick={togglePopup}>
-                        Cancel
-                    </Button>
-                    <Button variant="contained" onClick={isLastStep ? onSaveHandler : form.handleSubmit(onSubmitForm)}>
-                        {isMutationLoading ? (
-                            <CircularProgress size={20} />
-                        ) : isLastStep ? 'Save' : 'Next'}
-                    </Button>
-                </FlexBox>
+                {webHookUrl ? null :
+                    <FlexBox gap="10px">
+                        <Button variant="outlined" onClick={togglePopup}>
+                            Cancel
+                        </Button>
+                        <Button variant="contained" onClick={isLastStep ? onSaveHandler : form.handleSubmit(onSubmitForm)}>
+                            {isMutationLoading ? (
+                                <CircularProgress size={20} />
+                            ) : isLastStep ? 'Save' : 'Next'}
+                        </Button>
+                    </FlexBox>}
             </DialogActions>
         </form>
     )

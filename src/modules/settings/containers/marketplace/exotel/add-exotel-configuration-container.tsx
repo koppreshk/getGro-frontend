@@ -12,7 +12,7 @@ export interface IAddExotelFormFields {
     accountType: string
 }
 
-export const AddExotelConfigurationContainer = (props: { togglePopup: () => void; updateInstallation: () => void}) => {
+export const AddExotelConfigurationContainer = (props: { togglePopup: () => void; updateInstallation: () => void }) => {
     const { mutateAsync, isLoading: isMutationLoading } = useSetupExotelConfigurations();
     const dispatch = useDispatch();
 
@@ -26,7 +26,6 @@ export const AddExotelConfigurationContainer = (props: { togglePopup: () => void
         })
             .then((res) => res.json())
             .then(res => {
-                console.log(res);
                 dispatch(setExotelWebhookUrl(res.webhook_url));
             })
     }
@@ -35,7 +34,7 @@ export const AddExotelConfigurationContainer = (props: { togglePopup: () => void
         <AddExotelConfigurationFormBase
             togglePopup={props.togglePopup}
             onSubmit={onSubmit}
-            isMutationLoading={isMutationLoading} 
-            updateInstallation={props.updateInstallation}/>
+            isMutationLoading={isMutationLoading}
+            updateInstallation={props.updateInstallation} />
     )
 }
