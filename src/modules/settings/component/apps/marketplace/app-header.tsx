@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { BackButton, FlexBox } from 'lib/ui-ux'
 import { Button, Typography } from '@mui/material'
 import { IAppConfigurationLayout } from './app-configuration-layout';
+import { GetApp, Edit } from '@mui/icons-material';
 
 const StyledFlexbox = styled(FlexBox)`
     border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
@@ -40,12 +41,12 @@ export const AppHeader = (props: IAppHeaderProps) => {
                         :
                         <>
                             {unInstallApp ? unInstallApp() : <></>}
-                            <Button variant="contained" size="medium" onClick={togglePopup}>Edit</Button>
+                            <Button variant="contained" size="medium" onClick={togglePopup} startIcon={<Edit />}>Edit</Button>
                         </>
                     }
                 </FlexBox>
                 :
-                <Button variant="contained" size="medium" onClick={togglePopup}>Install</Button>
+                <Button variant="contained" size="medium" onClick={togglePopup} endIcon={<GetApp />}>Install</Button>
             }
         </StyledFlexbox>
     )
