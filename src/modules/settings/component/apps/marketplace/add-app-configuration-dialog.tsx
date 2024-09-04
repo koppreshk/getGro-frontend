@@ -13,7 +13,7 @@ export const AddAppConfigurationDialog = (props: IAddAppConfigurationDialogProps
     const { openPopup, togglePopup, dialogContent, title, maxWidth } = props;
 
     return (
-        <Dialog open={openPopup} onClose={togglePopup} fullWidth maxWidth={maxWidth}>
+        <Dialog open={openPopup} fullWidth maxWidth={maxWidth}>
             <DialogTitle sx={{ fontSize: '16px' }}>
                 {title}
             </DialogTitle>

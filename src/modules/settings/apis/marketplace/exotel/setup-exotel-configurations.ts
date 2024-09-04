@@ -16,7 +16,7 @@ export const useSetupExotelConfigurations = () => {
     const { postData } = useServiceClient();
 
     const setupExotel = React.useCallback((args: IExotelConfigDetails) =>
-        postData(ExotelConfigurationEndPoint.INSTALL_EXOTEL_CONFIG, args), [postData]);
+        postData(ExotelConfigurationEndPoint.INSTALL_EXOTEL_CONFIG, args).then((res) => res.json()), [postData]);
 
     return useMutation({
         mutationFn: setupExotel,

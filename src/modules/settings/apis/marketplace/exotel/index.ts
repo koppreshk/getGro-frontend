@@ -5,3 +5,4 @@ export * from './add-exophone-number';
 export * from './fetch-exphone-numbers';
 export * from './fetch-exotel-added-numbers';
 export * from './delete-exophone-number';
+export * from './edit-exotel-configuration';
