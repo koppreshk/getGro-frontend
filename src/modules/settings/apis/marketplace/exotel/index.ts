@@ -6,3 +6,4 @@ export * from './fetch-exphone-numbers';
 export * from './fetch-exotel-added-numbers';
 export * from './delete-exophone-number';
 export * from './edit-exotel-configuration';
+export * from './fetch-sdk-token';

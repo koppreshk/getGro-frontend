@@ -25,6 +25,10 @@ interface IExotelServices {
 const ExotelServiceContext = React.createContext(defaultContextValues);
 
 export const ExotelServiceProvider = (props: { children?: React.ReactNode; }) => {
+    // const { user } = useAuth();
+    // const { data } = useFetchSDKToken();
+    // const userId = user?.email || '';
+
     const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6ImZmYjk2YmYwLTI1YmEtNDY1NC04ZTU4LTBiMjVmMTQ0YmU5YSIsImV4cCI6MTczMjAyOTY4OH0.WTVUb0qGhtHqsboUv_kwJYa6LMna13UlrUUO2N70E2w";
     const userId = "koppresh@getgro.io";
 
