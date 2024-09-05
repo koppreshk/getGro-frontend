@@ -18,7 +18,7 @@ export const TicketNotesContainer = () => {
         const notes = data.map((item) => toCamelCasedKeysFromUnderScores(item)) as INotes[];
         return (
             <>
-                <TicketNotes notes={notes} />
+                <TicketNotes notes={notes} ticketId={ticketId!} />
             </>
         )
     }

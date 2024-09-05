@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery } from "react-query";
 import { useServiceClient } from "lib";
-import { TicketNotesEndPoint } from "./api-enums";
+import { TicketNotesEndPoint, TicketNotesQueryKey } from "./api-enums";
 import { ToCamelCasedKeysFromUnderscores } from "lib/utils";
 
 export interface Notes {
@@ -18,7 +18,7 @@ export const useFetchAllNotes = (ticketId: string) => {
 
     const fetchAllNotesData = React.useCallback(() => getData(`${TicketNotesEndPoint.FETCH_ALL_NOTES}?ticket_id=${ticketId}`).then((res) => res.json()).catch((err) => err), [ticketId, getData]);
     return useQuery<Notes[]>({
-        queryKey: [TicketNotesEndPoint.FETCH_ALL_NOTES, ticketId],
+        queryKey: [TicketNotesQueryKey.FETCH_ALL_NOTES, ticketId],
         queryFn: fetchAllNotesData
     });
 }
