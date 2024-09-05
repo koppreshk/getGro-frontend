@@ -1,11 +1,12 @@
-import { FlexBox } from "lib/ui-ux";
+import { CustomIconButton, FlexBox } from "lib/ui-ux";
 import { useState } from "react";
 import styled, { useTheme } from "styled-components";
 import ReactQuill from "react-quill";
-import { Card, CardContent, IconButton, Typography } from "@mui/material";
-import { Save } from "@mui/icons-material";
+import { Card, CardActions, CardContent, IconButton, Typography } from "@mui/material";
+import { Edit, Save } from "@mui/icons-material";
 import { CommonHeader } from "../common-header";
 import { INotes } from "modules/tickets/apis";
+import { DeleteNoteContainer } from "modules/tickets/containers/ticket-notes";
 
 const InnreHTML = styled.div`
     height: calc(100% - 265px);
@@ -78,6 +79,12 @@ const Note = (props: INotes) => {
                     {note}
                 </Typography>
             </CardContent>
+            <CardActions>
+                <FlexBox justifyContent="flex-end" width="100%" gap={'5px'}>
+                    <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: "Edit Note", arrow: true }} />
+                    <DeleteNoteContainer id={props.id} />
+                </FlexBox>
+            </CardActions>
         </Card>
     )
 }
