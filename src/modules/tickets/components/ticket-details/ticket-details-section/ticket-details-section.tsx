@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { FlexBox } from "lib/ui-ux";
 import { OrderDetailsContainer, TicketOverviewContainer, PastTicketsContainer } from "modules/tickets/containers";
 import { MenuOptions, TicketSideMenu } from "./ticket-side-menu";
-import { TicketNotes } from "./ticket-notes";
 import { useAppSelector } from "lib/hooks";
+import { TicketNotesContainer } from "modules/tickets/containers/ticket-notes";
 // import { TicketDispose } from "./dispose-ticket";
 
 const StyledFlexBox = styled(FlexBox)`  
@@ -26,7 +26,7 @@ export const TicketDetailsSection = () => {
             case MenuOptions.OrderDetails:
                 return <OrderDetailsContainer />;
             case MenuOptions.Notes:
-                return <TicketNotes />
+                return <TicketNotesContainer />
             case MenuOptions.PastTickets:
                 return <PastTicketsContainer />
             default: return <span>default</span>

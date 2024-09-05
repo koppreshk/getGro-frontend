@@ -34,3 +34,5 @@ export * from './merge-tickets/search-ticket';
 export * from './merge-tickets/merge-tickets';
 export * from './linked-tickets';
 export * from './tickets-history';
+
+export * from './ticket-notes';
