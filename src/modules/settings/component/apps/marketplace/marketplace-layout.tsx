@@ -1,7 +1,7 @@
 /// <reference types="vite-plugin-svgr/client" />
 
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { Card, CardContent, Typography } from "@mui/material";
+import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
 import { BreadCrumbs, FlexBox } from "lib/ui-ux"
 import ShopifyIcon from '../../../../../assets/svg/shopify-icon.svg?react';
 import ExotelIcon from '../../../../../assets/svg/exotel-icon.svg?react';
@@ -78,15 +78,17 @@ const App = (props: IAppProps) => {
 
     return (
         <Card sx={{ maxWidth: 275, cursor: 'pointer' }} onClick={() => navigate(name)} elevation={2}>
-            <CardContent>
-                <FlexBox flexDirection="column" gap="10px">
-                    <FlexBox gap="20px" alignItems="center">
-                        {iconElement()}
-                        <Typography variant="h5">{label}</Typography>
+            <CardActionArea>
+                <CardContent>
+                    <FlexBox flexDirection="column" gap="10px">
+                        <FlexBox gap="20px" alignItems="center">
+                            {iconElement()}
+                            <Typography variant="h5">{label}</Typography>
+                        </FlexBox>
+                        <Typography variant="body3">{description}</Typography>
                     </FlexBox>
-                    <Typography variant="body3">{description}</Typography>
-                </FlexBox>
-            </CardContent>
+                </CardContent>
+            </CardActionArea>
         </Card>
     )
 }
