@@ -3,13 +3,19 @@ import { useServiceClient } from "lib"
 import { useQuery } from "react-query";
 import { ExotelConfigurationEndPoint, ExotelConfigurationQueryKey } from "./api-enums";
 
+export interface IUser {
+    firstName: string;
+    lastName: string;
+    id: number;
+}
+
 export interface IExotelAddedNumbers {
     id: number;
     phone_number: string;
     sid: string;
     friendly_name: string;
     exotel_group_name: string;
-    users: []
+    users: IUser[];
 }
 
 export const useFetchExotelAddedNumbers = () => {

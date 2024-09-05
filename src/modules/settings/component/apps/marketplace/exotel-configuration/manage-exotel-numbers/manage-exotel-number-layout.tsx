@@ -1,5 +1,5 @@
 import { createColumnHelper } from "@tanstack/react-table"
-import { FlexBox } from "lib/ui-ux";
+import { AvatarGroup, FlexBox } from "lib/ui-ux";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
 import { IExotelAddedNumbers } from "modules/settings/apis/marketplace/exotel";
 import { styled } from "styled-components";
@@ -29,6 +29,13 @@ const useColumns = () => {
             id: 'exotel_group_name',
             header: () => 'Exotel Group Name',
             cell: info => info.getValue(),
+        }),
+        columnHelper.accessor("users", {
+            id: 'users',
+            header: () => 'Agents in Group',
+            cell: ({ row: { original } }) => {
+                return <AvatarGroup users={original.users}/>
+            },
         }),
         columnHelper.display({
             id: 'actions',
