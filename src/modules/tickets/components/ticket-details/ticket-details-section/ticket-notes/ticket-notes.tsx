@@ -5,7 +5,7 @@ import ReactQuill from "react-quill";
 import { Card, CardActions, CardContent, IconButton, Typography } from "@mui/material";
 import { Edit, Save } from "@mui/icons-material";
 import { CommonHeader } from "../common-header";
-import { INotes } from "modules/tickets/apis";
+import { INotes, useEditNote } from "modules/tickets/apis";
 import { DeleteNoteContainer } from "modules/tickets/containers/ticket-notes";
 import { useAddNote } from "modules/tickets/apis/ticket-notes/add-note";
 
@@ -22,15 +22,29 @@ const EditorContainer = styled.div`
 export const TicketNotes = (props: { notes: INotes[], ticketId: string }) => {
     const { notes, ticketId } = props;
     const [value, setValue] = useState('');
-    const { mutateAsync: addTicket } = useAddNote();
+    const [editId, setEditId] = useState<number | undefined>()
+    const { mutateAsync: addNote } = useAddNote();
+    const { mutateAsync: editNote } = useEditNote();
 
     const onChange = (value: string) => {
         setValue(value);
     }
 
     const onSaveClick = () => {
-        addTicket({ note: value, ticket_id: ticketId })
+        if (editId !== undefined) {
+            editNote({ note: value, note_id: editId }).then(() => {
+                setValue('')
+                setEditId(undefined)
+            })
+            return;
+        }
+        addNote({ note: value, ticket_id: ticketId })
             .then(() => setValue(''))
+    }
+
+    const onEdit = (id: number, note: string) => {
+        setEditId(id);
+        setValue(note);
     }
 
     return (
@@ -39,7 +53,7 @@ export const TicketNotes = (props: { notes: INotes[], ticketId: string }) => {
             <FlexBox height="calc(100% - 265px);" flexDirection="column" gap={'10px'} width="100%" padding="20px" overflowY="auto">
                 {notes.length
                     ? notes.map((note) => (
-                        <Note {...note} key={note.id} />
+                        <Note {...note} key={note.id} onEdit={onEdit} />
                     ))
                     : (
                         <FlexBox alignItems="center" justifyContent="center" height="100%" width="inherit">
@@ -65,9 +79,10 @@ export const TicketNotes = (props: { notes: INotes[], ticketId: string }) => {
     )
 }
 
-const Note = (props: INotes) => {
-    const { createdAt, note, userName } = props;
+const Note = (props: INotes & { onEdit: (id: number, note: string) => void }) => {
+    const { createdAt, note, userName, onEdit } = props;
     const { pallete } = useTheme();
+
     return (
         <Card sx={{ width: '100%', height: 'fit-content', overflow: 'unset', background: pallete.grayVariant5 }}>
             <CardContent>
@@ -79,7 +94,7 @@ const Note = (props: INotes) => {
             </CardContent>
             <CardActions>
                 <FlexBox justifyContent="flex-end" width="100%" gap={'5px'}>
-                    <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: "Edit Note", arrow: true }} />
+                    <CustomIconButton iconComponent={<Edit />} onClick={() => onEdit(props.id, note)} tooltipProps={{ title: "Edit Note", arrow: true }} />
                     <DeleteNoteContainer id={props.id} />
                 </FlexBox>
             </CardActions>

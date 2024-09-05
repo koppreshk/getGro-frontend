@@ -16,7 +16,7 @@ export const DeleteNoteContainer = (props: { id: number }) => {
     const onDeleleHandler = React.useCallback((ev: React.MouseEvent<HTMLButtonElement>) => {
         ev.stopPropagation();
         mutateAsync({
-            id: props.id
+            note_id: props.id,
         })
             .then(() => showNotification({ message: 'Note was deleted successfully', type: 'success' }))
             .catch(() => showNotification({ message: 'Failed to delete the note', type: 'error' }))
