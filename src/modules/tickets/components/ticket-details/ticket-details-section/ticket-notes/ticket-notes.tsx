@@ -4,7 +4,8 @@ import styled from "styled-components";
 import ReactQuill from "react-quill";
 import { IconButton } from "@mui/material";
 import { Save } from "@mui/icons-material";
-import { CommonHeader } from "./common-header";
+import { CommonHeader } from "../common-header";
+import { INotes } from "modules/tickets/apis";
 
 const InnreHTML = styled.div`
     height: calc(100% - 265px);
@@ -22,7 +23,8 @@ const EditorContainer = styled.div`
     }
 `;
 
-export const TicketNotes = () => {
+export const TicketNotes = (props: { notes: INotes[] }) => {
+    console.log(props);
     const [value, setValue] = useState('');
     const [savedState, onSaveState] = useState('');
 
