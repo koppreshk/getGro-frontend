@@ -1,22 +1,31 @@
 import { Tooltip, Avatar } from "@mui/material";
-import { FlexBox } from "lib/ui-ux";
 import { chooseRandomColors } from "lib/utils";
-import { Queue, Employee } from "modules/settings/apis/queues";
+import { FlexBox } from "..";
 
-export const AssignedEmployees = (props: Pick<Queue, 'assignedEmployees'>) => {
-    const { assignedEmployees } = props;
-    console.log('assignedEmployees', assignedEmployees);
+interface IUsers {
+    firstName: string;
+    lastName: string | null;
+    id: number;
+}
+
+interface IAvatarGroup {
+    users: IUsers[];
+}
+
+export const AvatarGroup = (props: IAvatarGroup) => {
+    const { users } = props;
+
     return (
         <FlexBox gap="4px">
-            {assignedEmployees.slice(0, 4).map((item, idx) => <EmployeeAvatar key={item.id} item={item} idx={idx} />)}
-            {assignedEmployees.length > 4
+            {users.slice(0, 4).map((item, idx) => <UserAvatar key={item.id} item={item} idx={idx} />)}
+            {users.length > 4
                 ?
-                <Tooltip arrow placement="bottom" title={assignedEmployees.slice(4).map(rest => rest.firstName).join(', ')}>
+                <Tooltip arrow placement="bottom" title={users.slice(4).map(rest => rest.firstName ?? '').join(', ')}>
                     <Avatar
                         sx={{
                             width: 32, height: 32, fontSize: '13px',
                             fontWeight: 500, marginLeft: '-10px', border: '2px solid white'
-                        }}>{('+' + assignedEmployees.slice(4).length)}
+                        }}>{('+' + users.slice(4).length)}
                     </Avatar>
                 </Tooltip>
                 : null}
@@ -24,7 +33,7 @@ export const AssignedEmployees = (props: Pick<Queue, 'assignedEmployees'>) => {
     )
 }
 
-const EmployeeAvatar = (props: { item: Employee, idx: number }) => {
+const UserAvatar = (props: { item: IUsers, idx: number }) => {
     const { firstName, lastName } = props.item;
     const { backgroundColor, textColor } = chooseRandomColors(firstName + lastName)
     return (
