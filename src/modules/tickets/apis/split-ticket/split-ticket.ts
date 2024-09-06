@@ -10,7 +10,7 @@ interface ISplitTicketArgs {
     description: string;
     ticket_assignee_type: 'auto' | 'manual';
     copy_attachments: boolean;
-    association_type: 'link_ticket';
+    association_type: 'link_ticket' | 'no_associate';
 }
 
 export const useSplitTicket = () => {

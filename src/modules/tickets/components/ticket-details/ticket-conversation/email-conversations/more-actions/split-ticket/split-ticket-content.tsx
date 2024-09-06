@@ -18,7 +18,7 @@ export interface ISplitTicketsFormFields {
     assignee: 'auto' | 'manual';
     queueId: string;
     employeeId: string;
-    associationWithTicket: 'link_ticket';
+    associationWithTicket: 'link_ticket' | 'no_associate';
     copyAttachments: boolean;
 }
 
@@ -70,8 +70,7 @@ export const SplitTicketsContent = (props: ISplitTicketsContentProps) => {
                         sx={{ width: '100%' }}
                         radioOptions={[
                             { key: 'no_association', label: 'No Association' },
-                            { key: 'child_ticket', label: 'Child Ticket' },
-                            { key: 'link_ticket', label: 'Related Ticket' }
+                            { key: 'link_ticket', label: 'Link Ticket' }
                         ]} />
                 </Grid>
                 <HorizontalSeparator />

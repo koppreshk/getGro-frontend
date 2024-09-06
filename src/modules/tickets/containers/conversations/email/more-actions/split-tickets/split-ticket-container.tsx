@@ -10,7 +10,8 @@ interface SplitTicketsContainerProps extends Omit<SplitTicketProps, 'showSplitTi
 export const SplitTicketsContainer = (props: SplitTicketsContainerProps) => {
     const ticketId = useAppSelector((state) => state.tickets.ticketDetails?.ticketId)
     const { onCloseDrawer, emailProps } = props;
-    const { mutateAsync } = useSplitTicket();
+    const { mutateAsync, isLoading } = useSplitTicket();
+
     const { showNotification } = useNotifications();
 
     const onSubmit = (formData: ISplitTicketsFormFields) => {
@@ -35,5 +36,5 @@ export const SplitTicketsContainer = (props: SplitTicketsContainerProps) => {
         }).catch(() => showNotification({ message: 'Failed to split tickets', type: 'error' }))
     }
 
-    return <SplitTicketsContent mutationLoading={false} onCloseDrawer={onCloseDrawer} emailProps={emailProps} onSubmit={onSubmit} />
+    return <SplitTicketsContent mutationLoading={isLoading} onCloseDrawer={onCloseDrawer} emailProps={emailProps} onSubmit={onSubmit} />
 }
