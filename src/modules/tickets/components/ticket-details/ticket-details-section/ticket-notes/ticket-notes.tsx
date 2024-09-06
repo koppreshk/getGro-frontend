@@ -6,7 +6,7 @@ import { Card, CardActions, CardContent, IconButton, Typography } from "@mui/mat
 import { Edit, Save } from "@mui/icons-material";
 import { CommonHeader } from "../common-header";
 import { INotes, useEditNote } from "modules/tickets/apis";
-import { DeleteNoteContainer } from "modules/tickets/containers/ticket-notes";
+import { DeleteAllNotesContainer, DeleteNoteContainer } from "modules/tickets/containers/ticket-notes";
 import { useAddNote } from "modules/tickets/apis/ticket-notes/add-note";
 
 const EditorContainer = styled.div`
@@ -47,9 +47,13 @@ export const TicketNotes = (props: { notes: INotes[], ticketId: string }) => {
         setValue(note);
     }
 
+    const renderDeleteAllNotes = () => {
+        return <DeleteAllNotesContainer />
+    }
+    
     return (
         <FlexBox flexDirection="column" height="100%">
-            <CommonHeader headerName="Ticket notes" />
+            <CommonHeader headerName="Ticket notes" renderFarPositionedItems={renderDeleteAllNotes} />
             <FlexBox height="calc(100% - 265px);" flexDirection="column" gap={'10px'} width="100%" padding="20px" overflowY="auto">
                 {notes.length
                     ? notes.map((note) => (

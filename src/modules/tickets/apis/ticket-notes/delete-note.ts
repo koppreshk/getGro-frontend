@@ -22,3 +22,19 @@ export const useDeleteNote = () => {
         }
     });
 }
+
+export const useDeleteAllNotes = () => {
+    const { postData } = useServiceClient();
+    const queryClient = useQueryClient();
+
+    const deleteNote = useCallback((args: { ticket_id: string }) =>
+        postData(`${TicketNotesEndPoint.DELETE_ALL_NOTES}`, args).then((res) => res.json()), [postData]);
+
+    return useMutation({
+        mutationKey: [TicketNotesQueryKey.DELETE_ALL_NOTES],
+        mutationFn: deleteNote,
+        onSuccess: () => {
+            queryClient.invalidateQueries(TicketNotesQueryKey.FETCH_ALL_NOTES);
+        }
+    });
+}
