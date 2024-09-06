@@ -36,3 +36,5 @@ export * from './linked-tickets';
 export * from './tickets-history';
 
 export * from './ticket-notes';
+
+export * from './split-ticket/split-ticket';
