@@ -4,7 +4,7 @@ import { FlexBox } from "lib/ui-ux";
 import React, { useCallback } from "react";
 import styled from "styled-components";
 import { useAuth } from "./hooks/use-auth";
-import { TextboxField } from "lib/form-fields";
+import { PasswordField, TextboxField } from "lib/form-fields";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import LoginImage from '../../assets/png/getgro-login-illus.png';
 import GetGroLogoImg from '../../assets/png/getGroLogoWname.png';
@@ -69,7 +69,7 @@ const LoginForm = () => {
                         <TextboxField name="email" label="Email" type="text" fullWidth rules={{ required: 'Email input required' }} />
                     </Grid>
                     <Grid item md={12}>
-                        <TextboxField name="password" label="Password" type="password" fullWidth rules={{ required: 'Password is required' }} />
+                        <PasswordField name="password" label="Password" type="password" fullWidth rules={{ required: 'Password is required' }} />
                     </Grid>
                     <Grid item md={12}>
                         <Button onClick={handleSubmit(onSignIn)} variant="contained" fullWidth size="large" type="submit" disabled={isLoading} endIcon={isLoading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : <ArrowForwardRounded />}>Sign in</Button>

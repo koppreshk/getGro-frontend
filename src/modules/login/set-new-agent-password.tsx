@@ -6,7 +6,7 @@ import { Box, Button, CircularProgress, Grid, Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { useNotifications } from "lib";
 import { useUpdatePassword } from "./apis";
-import { TextboxField } from "lib/form-fields";
+import { PasswordField, TextboxField } from "lib/form-fields";
 import LoginImage from '../../assets/png/getgro-login-illus.png';
 import GetGroLogoImg from '../../assets/png/getGroLogoWname.png';
 import { ArrowForwardRounded } from "@mui/icons-material";
@@ -53,7 +53,7 @@ const SetNewAgentPasswordForm = () => {
                         <Typography variant="subtitle2" color='#667287'>Set a new password to continue</Typography>
                     </Grid>
                     <Grid item md={12}>
-                        <TextboxField name="newPassword" label="New Password" type="password" fullWidth rules={{ required: 'Password is required' }} />
+                        <PasswordField name="newPassword" label="New Password" type="password" fullWidth rules={{ required: 'Password is required' }} />
                     </Grid>
                     <Grid item md={12}>
                         <TextboxField name="confirmNewPassword" label="Confirm New Password" type="text" fullWidth rules={{ required: 'Password is required', validate: validatePassword }} />
