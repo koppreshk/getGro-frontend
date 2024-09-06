@@ -29,7 +29,7 @@ export const ExotelServiceProvider = (props: { children?: React.ReactNode; }) =>
     // const { data } = useFetchSDKToken();
     // const userId = user?.email || '';
 
-    const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6ImZmYjk2YmYwLTI1YmEtNDY1NC04ZTU4LTBiMjVmMTQ0YmU5YSIsImV4cCI6MTczMjAyOTY4OH0.WTVUb0qGhtHqsboUv_kwJYa6LMna13UlrUUO2N70E2w";
+    const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjIwNTg2YTQzLTFhMzUtNDk3Ny04NDRhLTBhNzNkMjVkZTZmYSIsImV4cCI6MTczMzM3NTk1Mn0.GxN1tis3OCcbmSua781NA6B7f7727zZqdTNd732I2p4";
     const userId = "koppresh@getgro.io";
 
     const webPhone = useRef<ExotelWebPhoneSDK | null>(null);
