@@ -1,12 +1,10 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 interface IConfigurationState {
     totalPages: number;
-    whatsAppWebhookUrl: string;
 }
 const intitalState: IConfigurationState = {
-    totalPages: 0,
-    whatsAppWebhookUrl: "",
+    totalPages: 0
 }
 
 export const configurationSlice = createSlice({
@@ -15,13 +13,10 @@ export const configurationSlice = createSlice({
     reducers: {
         setTotalPage: (state, actions) => {
             state.totalPages = actions.payload
-        },
-        setWhatsAppWebhookUrl: (state, actions: PayloadAction<string>) => {
-            state.whatsAppWebhookUrl = actions.payload
         }
     }
 })
 
-export const { setTotalPage, setWhatsAppWebhookUrl } = configurationSlice.actions
+export const { setTotalPage } = configurationSlice.actions
 
 export default configurationSlice.reducer
