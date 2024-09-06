@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import styled from "styled-components";
 import { Typography, Avatar } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
@@ -6,6 +6,8 @@ import { chooseRandomColors, getInitialsByName } from "lib/utils";
 import { EmailPopoverMetadata } from "./email-popover-metadata";
 import { DownloadAttachments } from "./download-attachments";
 import { IEmailConversations } from "./email-conversations-layout";
+import { CallSplit } from "@mui/icons-material";
+import { MoreActions } from "../../ticket-details-section/ticket-overview/more-actions";
 
 interface IEmailCardProps {
     emailProps: IEmailConversations & { subject: string; };
@@ -48,16 +50,34 @@ const StyledFlex = styled(FlexBox)`
     }
 `;
 
+const StyledMoreActions = styled(MoreActions)`
+    &&{
+        padding: 0;
+    }
+`;
+
 function strip(html: string) {
     const doc = new DOMParser().parseFromString(html, 'text/html');
     return doc.body.textContent || "";
 }
 
+enum EmailActionsEnum {
+    splitTicket = 'splitTicket'
+}
+
+const menuItems = [
+    { key: EmailActionsEnum.splitTicket as string, label: 'Split Ticket', icon: <CallSplit /> }
+];
+
 export const EmailCard = (props: IEmailCardProps) => {
     const { emailProps: { htmlContent, from, fromEmail, createdAt, messageId, subject, toEmail, isCollapsed, attachments }, onSingleEmailCollapseHandler } = props;
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(from || fromEmail)), [from, fromEmail]);
+    const [, setSelectedMenu] = useState<string | undefined>();
 
     const onCardClick = () => onSingleEmailCollapseHandler({ messageId, isCollapsed: !isCollapsed });
+    const onMenuItemSelect = (key: string) => {
+        setSelectedMenu(key);
+    }
 
     return (
         <StyledEmailCardContainer className="email-card-container">
@@ -68,7 +88,10 @@ export const EmailCard = (props: IEmailCardProps) => {
                         <StyledFlex flexDirection="column">
                             <FlexBox justifyContent="space-between">
                                 <Typography variant="h6">{from || fromEmail} <span className="print">{`<${fromEmail}>`}</span></Typography>
-                                <SubTextValue variant="caption">{(createdAt)}</SubTextValue>
+                                <FlexBox alignItems="center" gap="10px">
+                                    <SubTextValue variant="caption">{(createdAt)}</SubTextValue>
+                                    <StyledMoreActions onMenuItemSelect={onMenuItemSelect} menuItems={menuItems} />
+                                </FlexBox>
                             </FlexBox>
                             {
                                 isCollapsed
@@ -82,7 +105,7 @@ export const EmailCard = (props: IEmailCardProps) => {
                     </FlexBox>
                 </FlexBox>
                 {!isCollapsed && <InnerHTML dangerouslySetInnerHTML={{ __html: htmlContent }} />}
-                {!isCollapsed && attachments.length > 0 && <DownloadAttachments attachments={attachments} messageId={messageId}/>}
+                {!isCollapsed && attachments.length > 0 && <DownloadAttachments attachments={attachments} messageId={messageId} />}
             </FlexBox >
         </StyledEmailCardContainer>
     )

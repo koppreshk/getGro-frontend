@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { PersonSearch } from "@mui/icons-material";
+import { DeleteOutlined, MergeOutlined, PersonSearch, ReportOutlined } from "@mui/icons-material";
 import { Chip, Tooltip, Typography } from "@mui/material";
 import { CustomIconButton, FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { Platform } from "../../ticket-conversation/ticket-conversation-header";
@@ -38,7 +38,7 @@ const MenuRenderer = (props: MenuRendererProps) => {
     }
 }
 
-export enum MoreActionsEnum {
+enum MoreActionsEnum {
     mergeTicket = 'mergeTicket',
     deleteTicket = 'deleteTicket',
     spamTicket = 'spamTicket'
@@ -47,6 +47,12 @@ export enum MoreActionsEnum {
 type DrawerDisplayTypes = {
     [key in MoreActionsEnum]: boolean;
 }
+
+const menuItems = [
+    { key: MoreActionsEnum.mergeTicket as string, label: 'Merge Ticket', icon: <MergeOutlined /> },
+    { key: MoreActionsEnum.deleteTicket as string, label: 'Delete Ticket', icon: <DeleteOutlined /> },
+    { key: MoreActionsEnum.spamTicket as string, label: 'Mark as Spam', icon: <ReportOutlined /> },
+];
 
 export const TicketOverview = (props: ITicketOverviewProps) => {
     const { ticketDetails } = props;
@@ -87,7 +93,7 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
                         ? <UnlinkCustomer ticketId={ticketId} />
                         : <CustomIconButton tooltipProps={{ title: 'Search Customer', arrow: true, placement: "left" }} iconComponent={<PersonSearch />} onClick={onSearchUserBtnClick} />
                     }
-                    <MoreActions onMenuItemSelect={onMenuItemSelect} />
+                    <MoreActions onMenuItemSelect={onMenuItemSelect} menuItems={menuItems} />
                 </FlexBox>
             </FlexBox>
             <FlexBox gap={'20px'} flexDirection="column" height="calc(100% - 62px)" overflowY="auto">
