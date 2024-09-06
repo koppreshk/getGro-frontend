@@ -12,6 +12,7 @@ export interface IWhatsAppGupshupConfigFormProps {
     isMutationLoading: boolean;
     onSubmit: (formValues: ISetupWhatsAppArgs) => Promise<{ webhook_url: string }>
     updateInstallation: () => void;
+    mode: 'edit' | 'add';
 }
 
 export interface IAddWhatsAppFormField {

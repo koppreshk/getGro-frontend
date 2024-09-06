@@ -30,7 +30,7 @@ export const UpdateWhatsAppGupshupConfigContainer = (props: IUpdateWhatsAppGupsh
             onSubmit={updateWhatsAppConfigHandler}
             togglePopup={props.togglePopup}
             updateInstallation={updateInstallation}
-            isMutationLoading={isMutationLoading} />
+            isMutationLoading={isMutationLoading} mode="edit"/>
     }
 
     return (

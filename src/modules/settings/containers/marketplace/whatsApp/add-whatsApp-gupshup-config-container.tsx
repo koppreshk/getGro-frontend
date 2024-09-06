@@ -13,6 +13,6 @@ export const AddWhatsAppGupShupConfigContainer = (props: { togglePopup: () => vo
             togglePopup={props.togglePopup}
             onSubmit={onSubmit}
             isMutationLoading={isMutationLoading}
-            updateInstallation={props.updateInstallation} />
+            updateInstallation={props.updateInstallation} mode="add"/>
     )
 }
