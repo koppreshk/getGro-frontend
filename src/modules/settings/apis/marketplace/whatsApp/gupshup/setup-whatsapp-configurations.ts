@@ -15,7 +15,7 @@ export const useSetupWhatsAppConfigurations = () => {
     const { postData } = useServiceClient();
 
     const setupWhatsAppConfig = React.useCallback((args: ISetupWhatsAppArgs) =>
-        postData(WhatsAppConfigurationEndPoint.SETUP_WHATSAPP_CONFIG, args), [postData]);
+        postData(WhatsAppConfigurationEndPoint.SETUP_WHATSAPP_CONFIG, args).then((res) => res.json()), [postData]);
 
     return useMutation({
         mutationFn: setupWhatsAppConfig,

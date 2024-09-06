@@ -1,14 +1,16 @@
 import React from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
-import { BackButton, FlexBox } from "lib/ui-ux";
+import { BackButton, CustomIconButton, FlexBox, LoadingButton } from "lib/ui-ux";
 import { PasswordField, TextboxField } from "lib/form-fields";
-import { Box, Button, CircularProgress, DialogActions, Divider, Step, StepLabel, Stepper, Typography } from "@mui/material";
-import { useAppSelector } from "lib/hooks";
+import { Box, Button, DialogActions, Divider, InputAdornment, Step, StepLabel, Stepper, Typography } from "@mui/material";
+import { ContentCopy } from "@mui/icons-material";
+import { useNotifications } from "lib";
+import { ISetupWhatsAppArgs } from "modules/settings/apis/marketplace/whatsApp/gupshup";
 
 export interface IWhatsAppGupshupConfigFormProps {
     togglePopup: () => void;
-    onSubmit: (formFields: IAddWhatsAppFormField) => void;
-    isMutationLoading?: boolean;
+    isMutationLoading: boolean;
+    onSubmit: (formValues: ISetupWhatsAppArgs) => Promise<{ webhook_url: string }>
     updateInstallation: () => void;
 }
 
@@ -59,10 +61,32 @@ const AccountDetailsForm = () => {
 }
 
 const AccountWebhookDetails = () => {
+    const { showNotification } = useNotifications();
+    const { watch } = useFormContext<IAddWhatsAppFormField>();
+
+    const onCopy = () => {
+        navigator.clipboard.writeText(watch('webhookURL')!)
+            .then(() => showNotification({ message: 'Copied to clipboard', type: 'success' }))
+            .catch(() => showNotification({ message: 'Failed to copy', type: 'error' }));
+    }
+
     return (
         <FlexBox flexDirection="column" gap="20px" width="75%">
             <Typography variant="h5">Webhook</Typography>
-            <TextboxField name="webhookURL" size="small" type="text" label="Webhook URL" fullWidth />
+            <TextboxField
+                name="webhookURL"
+                label="Webhook URL"
+                size="small" type="text"
+                fullWidth
+                disabled
+                InputProps={{
+                    endAdornment: (
+                        <InputAdornment position="end" >
+                            <CustomIconButton onClick={onCopy} iconComponent={<ContentCopy />} tooltipProps={{ title: "Copy Webhook url", arrow: true }} />
+                        </InputAdornment>
+                    )
+                }}
+            />
         </FlexBox>
     )
 }
@@ -71,17 +95,18 @@ export const WhatsAppGupshupConfigForm = (props: IWhatsAppGupshupConfigFormProps
     const { togglePopup, onSubmit, isMutationLoading, updateInstallation } = props;
     const form = useFormContext<IAddWhatsAppFormField>()
     const [activeStep, setActiveStep] = React.useState(0);
-    const webHookUrl = useAppSelector((state) => state.configurations.whatsAppWebhookUrl);
-
-    React.useEffect(() => {
-        if (webHookUrl) {
-            form.setValue('webhookURL', webHookUrl);
-        }
-    }, [form, webHookUrl]);
 
     const onSubmitForm = async (formValues: IAddWhatsAppFormField) => {
-        onSubmit(formValues);
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        onSubmit({
+            api_key: formValues.appAPIkey,
+            app_id: formValues.appId,
+            app_name: formValues.appName,
+            number: formValues.appNumber,
+        }).then((response) => {
+            console.log('whatsapp res', response);
+            form.setValue('webhookURL', response.webhook_url);
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        })
     };
 
     const handleBack = () => {
@@ -113,11 +138,9 @@ export const WhatsAppGupshupConfigForm = (props: IWhatsAppGupshupConfigFormProps
                     <Button variant="outlined" onClick={togglePopup}>
                         Cancel
                     </Button>
-                    <Button variant="contained" onClick={isLastStep ? onSaveHandler : form.handleSubmit(onSubmitForm)}>
-                        {isMutationLoading ? (
-                            <CircularProgress size={24} />
-                        ) : isLastStep ? 'Save' : 'Next'}
-                    </Button>
+                    <LoadingButton variant="contained" isLoading={isMutationLoading} onClick={isLastStep ? onSaveHandler : form.handleSubmit(onSubmitForm)}>
+                        {isLastStep ? 'Save' : 'Next'}
+                    </LoadingButton>
                 </FlexBox>
             </DialogActions>
         </form>
