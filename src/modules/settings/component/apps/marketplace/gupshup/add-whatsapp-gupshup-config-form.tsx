@@ -1,7 +1,7 @@
 import React from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { BackButton, FlexBox } from "lib/ui-ux";
-import { TextboxField } from "lib/form-fields";
+import { PasswordField, TextboxField } from "lib/form-fields";
 import { Box, Button, CircularProgress, DialogActions, Divider, Step, StepLabel, Stepper, Typography } from "@mui/material";
 import { useAppSelector } from "lib/hooks";
 
@@ -53,7 +53,7 @@ const AccountDetailsForm = () => {
             <TextboxField name="appName" size="small" type="text" label="WhatsApp GupShup Name" rules={{ required: 'Name required' }} fullWidth />
             <TextboxField name="appNumber" size="small" type="number" label="WhatsApp GupShup Number" rules={{ required: 'Number required' }} fullWidth />
             <TextboxField name="appId" size="small" type="text" label="WhatsApp Id" fullWidth autoComplete="off" />
-            <TextboxField name="appAPIkey" size="small" type="password" label="WhatsApp GupShup API key" rules={{ required: 'API key required' }} fullWidth autoComplete="off" />
+            <PasswordField name="appAPIkey" size="small" type="password" label="WhatsApp GupShup API key" rules={{ required: 'API key required' }} fullWidth autoComplete="off" />
         </FlexBox>
     )
 }

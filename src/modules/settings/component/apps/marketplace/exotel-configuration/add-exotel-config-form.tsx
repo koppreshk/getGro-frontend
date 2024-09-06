@@ -1,7 +1,7 @@
 import React from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { Box, Button, DialogActions, Divider, Grid, InputAdornment, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
-import { RadioGroupField, TextboxField } from "lib/form-fields";
+import { PasswordField, RadioGroupField, TextboxField } from "lib/form-fields";
 import { BackButton, CustomIconButton, FlexBox, LoadingButton } from "lib/ui-ux";
 import { IAddExotelFormFields } from "modules/settings/containers/marketplace/exotel";
 import { ContentCopy } from "@mui/icons-material";
@@ -58,10 +58,10 @@ function AddExotelConfigForm() {
                 <TextboxField name="exotelAccountSid" label="Exotel Account SID" size="small" fullWidth rules={{ required: 'Exotel Account SID field is required.' }} />
             </Grid>
             <Grid item md={12}>
-                <TextboxField name="exotelAPIkey" type="password" label="Exotel API Key" size="small" fullWidth rules={{ required: 'Exotel API Key field is required.' }} />
+                <PasswordField name="exotelAPIkey" type="password" label="Exotel API Key" size="small" fullWidth rules={{ required: 'Exotel API Key field is required.' }} />
             </Grid>
             <Grid item md={12}>
-                <TextboxField name="exotelAPItoken" type="password" label="Exotel API Token" size="small" fullWidth rules={{ required: 'Exotel API Token field is required.' }} />
+                <PasswordField name="exotelAPItoken" type="password" label="Exotel API Token" size="small" fullWidth rules={{ required: 'Exotel API Token field is required.' }} />
             </Grid>
             <Grid item md={12}>
                 <Typography variant="h6">Account Type</Typography>

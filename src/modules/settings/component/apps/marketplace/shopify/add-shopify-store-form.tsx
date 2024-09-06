@@ -1,7 +1,7 @@
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import styled from "styled-components";
-import { TextboxField } from "lib/form-fields";
+import { PasswordField, TextboxField } from "lib/form-fields";
 import { Box, Button, DialogActions, Divider, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 
@@ -100,7 +100,7 @@ const ShopifyDetailsForm = () => {
                 <TextboxField name="storeUrl" size="small" sx={{ width: '100%', borderRight: '0px' }} label="Store URL" autoComplete="off" rules={{ required: 'Store url required' }} />
                 <ShopifyEndURL variant="body3">.myshopify.com</ShopifyEndURL>
             </FlexBox>
-            <TextboxField name="accessToken" size="small" type="password" label="Access Token" rules={{ required: 'Access token required' }} />
+            <PasswordField name="accessToken" size="small" type="password" label="Access Token" rules={{ required: 'Access token required' }} />
         </FlexBox>
     )
 }
