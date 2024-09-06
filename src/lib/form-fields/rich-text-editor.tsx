@@ -8,6 +8,7 @@ import styled from "styled-components";
 type IRichTextEditorFieldProps = ReactQuillProps & {
     name: string;
     className?: string;
+    disableAutoFocus?: boolean;
 }
 
 const EditorContainer = styled(FlexBox)`
@@ -53,15 +54,15 @@ const formats = [
 ]
 
 export const RichTextEditorField = (props: IRichTextEditorFieldProps) => {
-    const { name, className, ...restProps } = props;
+    const { name, className, disableAutoFocus = false, ...restProps } = props;
     const { control } = useFormContext();
     const quillRef: React.LegacyRef<ReactQuill> | undefined = React.createRef();
 
     useEffect(() => {
-        if (quillRef?.current) {
+        if (!disableAutoFocus && quillRef?.current) {
             quillRef.current.focus();
         }
-    }, [quillRef]);
+    }, [disableAutoFocus, quillRef]);
 
     return (
         <Controller

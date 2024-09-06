@@ -1,9 +1,10 @@
 import { useServiceClient } from "lib"
 import React from "react";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { TicketsEndPoint, TicketsQueryKey } from "../api-enums";
+import { useGetQueryEndPoint } from "modules/tickets/containers";
 
-interface ISplitTicketData {
+interface ISplitTicketArgs {
     ticket_id: string;
     subject: string;
     description: string;
@@ -12,28 +13,20 @@ interface ISplitTicketData {
     association_type: 'link_ticket';
 }
 
-export const useSplitTicket = (props: {
-    assignedTo: string,
-    queueId: string
-}) => {
-    const { assignedTo, queueId } = props
+export const useSplitTicket = () => {
     const { postData } = useServiceClient();
+    const queryClient = useQueryClient();
+    const queryKey = useGetQueryEndPoint();
 
-    const splitTicket = React.useCallback(async (args: ISplitTicketData) => {
-        let queryParams = '';
-        
-        if (args.ticket_assignee_type === 'manual') {
-            queryParams = `?assigned_to=${assignedTo}&queue_id=${queueId}`;
-        }
-
-        const url = `${TicketsEndPoint.SPLIT_TICKET}${queryParams}`;
-        const res = await postData(url, args);
-        
-        return await res.json();
-    }, [assignedTo, postData, queueId]);
+    const splitTicket = React.useCallback(async (args: ISplitTicketArgs) => {
+        return postData(TicketsEndPoint.SPLIT_TICKET, args).then((res) => res.json());
+    }, [postData]);
 
     return useMutation({
         mutationFn: splitTicket,
-        mutationKey: TicketsQueryKey.SPLIT_TICKET
+        mutationKey: TicketsQueryKey.SPLIT_TICKET,
+        onSuccess: () => {
+            queryClient.invalidateQueries(queryKey);
+        }
     })
 }

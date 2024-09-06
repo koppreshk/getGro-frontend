@@ -8,8 +8,9 @@ import { DownloadAttachments } from "./download-attachments";
 import { IEmailConversations } from "./email-conversations-layout";
 import { CallSplit } from "@mui/icons-material";
 import { MoreActions } from "../../ticket-details-section/ticket-overview/more-actions";
+import { SplitTicket } from "./more-actions/split-ticket";
 
-interface IEmailCardProps {
+export interface IEmailCardProps {
     emailProps: IEmailConversations & { subject: string; };
     onSingleEmailCollapseHandler: (args: {
         messageId: string;
@@ -69,14 +70,43 @@ const menuItems = [
     { key: EmailActionsEnum.splitTicket as string, label: 'Split Ticket', icon: <CallSplit /> }
 ];
 
+type DrawerDisplayTypes = {
+    [key in EmailActionsEnum]: boolean;
+}
+
+interface MenuRendererProps extends Pick<IEmailCardProps, 'emailProps'> {
+    selectedMenu?: string;
+    showDrawer: DrawerDisplayTypes;
+    toggleDrawerDisplay: (key: string) => void
+}
+
+const MenuRenderer = (props: MenuRendererProps) => {
+    const { selectedMenu, showDrawer, emailProps, toggleDrawerDisplay } = props;
+
+    switch (selectedMenu) {
+        case 'splitTicket':
+            return <SplitTicket emailProps={emailProps} showSplitTicketDrawer={showDrawer.splitTicket} onCloseDrawer={() => toggleDrawerDisplay('splitTicket')} />;
+        default: return <></>
+    }
+}
+
 export const EmailCard = (props: IEmailCardProps) => {
     const { emailProps: { htmlContent, from, fromEmail, createdAt, messageId, subject, toEmail, isCollapsed, attachments }, onSingleEmailCollapseHandler } = props;
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(from || fromEmail)), [from, fromEmail]);
-    const [, setSelectedMenu] = useState<string | undefined>();
+    const [selectedMenu, setSelectedMenu] = useState<string | undefined>();
+    const [showDrawer, setDrawerDisplay] = useState<DrawerDisplayTypes>({
+        splitTicket: false,
+    });
+
+    const toggleDrawerDisplay = (key: string) => {
+        setDrawerDisplay((prev) => ({ ...prev, [key]: !prev[key as keyof DrawerDisplayTypes] }))
+    }
 
     const onCardClick = () => onSingleEmailCollapseHandler({ messageId, isCollapsed: !isCollapsed });
+
     const onMenuItemSelect = (key: string) => {
         setSelectedMenu(key);
+        toggleDrawerDisplay(key);
     }
 
     return (
@@ -106,6 +136,7 @@ export const EmailCard = (props: IEmailCardProps) => {
                 </FlexBox>
                 {!isCollapsed && <InnerHTML dangerouslySetInnerHTML={{ __html: htmlContent }} />}
                 {!isCollapsed && attachments.length > 0 && <DownloadAttachments attachments={attachments} messageId={messageId} />}
+                <MenuRenderer emailProps={props.emailProps} selectedMenu={selectedMenu} showDrawer={showDrawer} toggleDrawerDisplay={toggleDrawerDisplay} />
             </FlexBox >
         </StyledEmailCardContainer>
     )

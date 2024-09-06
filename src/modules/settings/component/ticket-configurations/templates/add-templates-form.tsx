@@ -65,7 +65,7 @@ export const TemplatesForm = (props: ITemplatesFormProps) => {
                     </Grid>
                     <Grid item xs={12}>
                         <Typography variant="h6" sx={{ mb: '5px' }}>Description</Typography>
-                        <StyledRichTextEditor name={`template`} />
+                        <StyledRichTextEditor name={`template`} disableAutoFocus />
                     </Grid>
                     <Grid item xs={12}>
                         <Typography variant="h6" sx={{ mb: '5px' }}>Access Scope</Typography>

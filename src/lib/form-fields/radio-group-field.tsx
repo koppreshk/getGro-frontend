@@ -1,4 +1,4 @@
-import { FormControl, FormControlLabel, Radio, RadioGroup, RadioGroupProps, Typography } from "@mui/material"
+import { FormControlLabel, Radio, RadioGroup, RadioGroupProps, Typography } from "@mui/material"
 import { FlexBox } from "lib/ui-ux";
 import { Controller, FieldValues, RegisterOptions, useFormContext } from "react-hook-form"
 
@@ -21,22 +21,20 @@ export const RadioGroupField = (props: IRadioGroupFieldProps) => {
         <>
             <Controller
                 render={({ field }) => (
-                    <FormControl>
-                        <RadioGroup
-                            row
-                            aria-labelledby="demo-row-radio-buttons-group-label"
-                            {...rest} {...field}>
-                            {radioOptions.map((item) => (
-                                <FlexBox key={item.key} flexDirection="column">
-                                    <FormControlLabel value={item.key} control={<Radio size="small" />} label={item.label} />
-                                    {item.renderContentBelowLabel
-                                        ? typeof item.renderContentBelowLabel === 'string' ? <Typography variant="body3" sx={{ pl: '27px' }}>{item.renderContentBelowLabel}</Typography>
-                                            : item.renderContentBelowLabel() : null}
-                                </FlexBox>
-                            )
-                            )}
-                        </RadioGroup>
-                    </FormControl>
+                    <RadioGroup
+                        row
+                        aria-labelledby="demo-row-radio-buttons-group-label"
+                        {...rest} {...field}>
+                        {radioOptions.map((item) => (
+                            <FlexBox key={item.key} flexDirection="column">
+                                <FormControlLabel value={item.key} control={<Radio size="small" />} label={item.label} />
+                                {item.renderContentBelowLabel
+                                    ? typeof item.renderContentBelowLabel === 'string' ? <Typography variant="body3" sx={{ pl: '27px' }}>{item.renderContentBelowLabel}</Typography>
+                                        : item.renderContentBelowLabel() : null}
+                            </FlexBox>
+                        )
+                        )}
+                    </RadioGroup>
                 )}
                 control={control}
                 name={name}
