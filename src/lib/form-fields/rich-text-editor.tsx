@@ -1,13 +1,16 @@
+import { ErrorMessage } from "@hookform/error-message";
 import { FlexBox } from "lib/ui-ux";
 import React from "react";
 import { useEffect } from "react";
-import { Controller, useFormContext } from "react-hook-form"
+import { Controller, FieldValues, RegisterOptions, useFormContext } from "react-hook-form"
 import ReactQuill, { ReactQuillProps } from "react-quill";
 import styled from "styled-components";
+import { StyledErrorMessage } from "./select-field";
 
 type IRichTextEditorFieldProps = ReactQuillProps & {
     name: string;
     className?: string;
+    rules?: Omit<RegisterOptions<FieldValues, string>, 'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'>;
     disableAutoFocus?: boolean;
 }
 
@@ -54,8 +57,8 @@ const formats = [
 ]
 
 export const RichTextEditorField = (props: IRichTextEditorFieldProps) => {
-    const { name, className, disableAutoFocus = false, ...restProps } = props;
-    const { control } = useFormContext();
+    const { name, rules, className, disableAutoFocus = false, ...restProps } = props;
+    const { formState: { errors }, control } = useFormContext();
     const quillRef: React.LegacyRef<ReactQuill> | undefined = React.createRef();
 
     useEffect(() => {
@@ -65,25 +68,29 @@ export const RichTextEditorField = (props: IRichTextEditorFieldProps) => {
     }, [disableAutoFocus, quillRef]);
 
     return (
-        <Controller
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            render={({ field: { onChange, value, ref, ...rest } }) => (
-                <EditorContainer className={className}>
-                    <ReactQuill
-                        {...restProps}
-                        {...rest}
-                        theme="snow"
-                        value={value}
-                        ref={quillRef}
-                        placeholder="Type in here"
-                        preserveWhitespace
-                        modules={modules}
-                        formats={formats}
-                        onChange={onChange} />
-                </EditorContainer>
-            )}
-            control={control}
-            name={name}
-        />
+        <>
+            <Controller
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                render={({ field: { onChange, value, ref, ...rest } }) => (
+                    <EditorContainer className={className}>
+                        <ReactQuill
+                            {...restProps}
+                            {...rest}
+                            theme="snow"
+                            value={value}
+                            ref={quillRef}
+                            placeholder="Type in here"
+                            preserveWhitespace
+                            modules={modules}
+                            formats={formats}
+                            onChange={onChange} />
+                    </EditorContainer>
+                )}
+                control={control}
+                rules={rules}
+                name={name}
+            />
+            <ErrorMessage errors={errors} name={name} as={StyledErrorMessage} />
+        </>
     )
 }

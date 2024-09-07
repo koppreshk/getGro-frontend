@@ -12,7 +12,9 @@ import { QueueOptions } from "../../ticket-conversation/email-conversations/more
 interface IAddTicketFormProps {
     priorities: IPriorities[];
     allTags: ITag[];
+    mutationLoading: boolean;
     toggleAddTicketDrawer: () => void;
+    onSubmit: (formData: IAddTIcketFormFields) => void
 }
 
 const StyledTags = styled(TagInputField)`
@@ -30,17 +32,17 @@ export interface IAddTIcketFormFields {
     subject: string;
     priority: string,
     template: string;
-    assignee: string;
+    assignee: "auto" | "manual";
     queueId: string;
     employeeId: string;
     tags: string[],
 }
 
 export const AddTicketForm = (props: IAddTicketFormProps) => {
-    const { priorities, allTags, toggleAddTicketDrawer } = props;
+    const { priorities, allTags, mutationLoading, onSubmit, toggleAddTicketDrawer } = props;
     const formMethods = useForm<IAddTIcketFormFields>({
         defaultValues: {
-            priority: '1',
+            priority: priorities[0].id.toString(),
             requesterEmail: '',
             subject: '',
             template: '',
@@ -50,38 +52,20 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
             tags: []
         }
     });
-    // const { mutateAsync } = useCreateManualTicket();
-    // const { showNotification } = useNotifications();
-
-    const onSubmit = (formData: IAddTIcketFormFields) => {
-        console.log(formData)
-        // mutateAsync({
-        //     channel_id: formData.channel,
-        //     employee_id: formData.employeeId,
-        //     priority_id: formData.priority,
-        //     queue_id: formData.queueId,
-        //     remarks: formData.remarks,
-        //     tag_id: formData.tag.map((item) => (item.key)),
-        //     title: formData.title
-        // })
-        //     .then(() => showNotification({ message: 'Created a new ticket successfully', type: 'success' }))
-        //     .catch(() => showNotification({ message: 'Failed to create a new ticket', type: 'error' }))
-        //     .finally(() => toggleAddTicketDrawer())
-    }
 
     return (
         <FormProvider {...formMethods}>
             <FlexBox flexDirection="column" width="100%" padding="20px" justifyContent="space-between" height="calc(100% - 78px)" gap={'20px'}>
                 <FlexBox gap="20px" flexDirection="column" overflowY="auto" maxHeight="calc(100% - 57px)" padding="0 10px 0px 0px">
-                    <TextboxFieldWithLabel name="requesterEmail" type="email" label="Requester Email" />
-                    <TextboxFieldWithLabel name="subject" label="Subject" />
+                    <TextboxFieldWithLabel name="requesterEmail" type="email" label="Requester Email" rules={{ required: 'Requester Email is required' }} />
+                    <TextboxFieldWithLabel name="subject" label="Subject" rules={{ required: 'Subject is required' }} />
                     <Grid item xs={12}>
                         <Typography variant="h6" sx={{ mb: '5px' }}>Priority</Typography>
                         <SelectField name="priority" sx={{ width: '100%' }} menuOptions={priorities.map((item) => ({ key: item.id.toString(), value: item.name }))} />
                     </Grid>
                     <Grid item xs={12}>
                         <Typography variant="h6" sx={{ mb: '5px' }}>Description</Typography>
-                        <StyledRichTextEditor name={`template`} disableAutoFocus />
+                        <StyledRichTextEditor name={`template`} disableAutoFocus rules={{ required: 'Description is required' }} />
                     </Grid>
                     <Grid item xs={12}>
                         <Typography variant="h6" sx={{ mb: '5px' }}>Assignee</Typography>
@@ -106,7 +90,7 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
                 </FlexBox>
                 <FlexBox justifyContent="flex-end" gap={'20px'} padding="0 30px 0 0">
                     <Button variant="outlined" onClick={toggleAddTicketDrawer}>Cancel</Button>
-                    <LoadingButton isLoading={false} variant="contained" onClick={formMethods.handleSubmit(onSubmit)}>Submit</LoadingButton>
+                    <LoadingButton isLoading={mutationLoading} variant="contained" onClick={formMethods.handleSubmit(onSubmit)}>Submit</LoadingButton>
                 </FlexBox>
             </FlexBox>
         </FormProvider>

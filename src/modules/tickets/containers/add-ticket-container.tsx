@@ -1,11 +1,39 @@
 import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
-import { AddTicketForm } from "../components/ticket-details/ticket-list-view/add-ticket/add-ticket-form";
-import { useFetchPriorities } from "../apis";
+import { AddTicketForm, IAddTIcketFormFields } from "../components/ticket-details/ticket-list-view/add-ticket/add-ticket-form";
+import { useCreateManualTicket, useFetchPriorities } from "../apis";
 import { useFetchAllTags } from "modules/settings/apis/tags";
+import { useNotifications } from "lib";
 
 export const AddTicketContainer = (props: { toggleAddTicketDrawer: () => void }) => {
     const { data: priorities, isLoading: prioritiesLoading, error } = useFetchPriorities();
     const { data: allTags, isLoading: tagsLoading } = useFetchAllTags();
+    const { mutateAsync, isLoading: mutationLoading } = useCreateManualTicket();
+    const { showNotification } = useNotifications();
+
+    const onSubmit = (formData: IAddTIcketFormFields) => {
+        const { assignee, employeeId, priority, queueId, requesterEmail, subject, tags, template } = formData;
+        const assigneeOptionValue = assignee === 'manual' ? { assigned_to: employeeId, queue_id: queueId } : {}
+
+        mutateAsync({
+            priority_id: priority,
+            subject: subject,
+            tags: tags,
+            description: template,
+            requester_email: requesterEmail,
+            ticket_assignee_type: assignee,
+            ...assigneeOptionValue
+        })
+            .then((res) => {
+                if (res.status) {
+                    showNotification({ message: 'Created a new ticket successfully', type: 'success' })
+                }
+                else {
+                    showNotification({ message: res.message, type: 'error' })
+                }
+            })
+            .catch(() => showNotification({ message: 'Failed to create a new ticket', type: 'error' }))
+            .finally(() => props.toggleAddTicketDrawer())
+    }
 
     if (tagsLoading || prioritiesLoading) {
         return (
@@ -15,7 +43,7 @@ export const AddTicketContainer = (props: { toggleAddTicketDrawer: () => void })
 
     if (priorities && allTags) {
         return (
-            <AddTicketForm priorities={priorities} allTags={allTags} toggleAddTicketDrawer={props.toggleAddTicketDrawer} />
+            <AddTicketForm priorities={priorities} allTags={allTags} mutationLoading={mutationLoading} toggleAddTicketDrawer={props.toggleAddTicketDrawer} onSubmit={onSubmit} />
         )
     }
 

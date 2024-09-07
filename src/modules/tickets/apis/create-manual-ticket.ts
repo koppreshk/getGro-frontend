@@ -5,13 +5,14 @@ import { TicketsEndPoint, TicketsQueryKey } from "./api-enums";
 import { useGetQueryEndPoint } from "../containers";
 
 interface ICreateManualTicketArgs {
-    title: string;
+    requester_email: string;
+    subject: string;
+    description: string;
+    ticket_assignee_type: 'auto' | 'manual'
     priority_id: string;
-    remarks: string;
-    channel_id: string;
-    tag_id: string[];
-    queue_id: string;
-    employee_id: string;
+    tags: string[];
+    queue_id?: string;
+    assigned_to?: string;
 }
 
 export const useCreateManualTicket = () => {

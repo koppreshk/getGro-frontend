@@ -17,7 +17,7 @@ export enum TicketsEndPoint {
     SEND_WHATSAPP_MESSAGES = 'send_message_to_whatsapp',
     UPLOAD_FILE = 'upload_file',
     FETCH_CALLS_BY_TICKETID = 'fetch_calls_by_ticket_id',
-    CREATE_MANUAL_TICKET = 'create_manual_ticket',
+    CREATE_MANUAL_TICKET = 'manual_ticket',
     FETCH_PRIORITY_DROPDOWN_VALUES = 'fetch_priority_dropdown_values',
 
     UPDATE_STATUS = 'update_status',
