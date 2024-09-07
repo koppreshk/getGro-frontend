@@ -1,10 +1,11 @@
 import React from "react";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { HelpOutline, Visibility, VisibilityOff } from "@mui/icons-material";
 import { IconButton, InputAdornment, TextField, TextFieldProps, Typography } from "@mui/material"
 import { Controller, FieldValues, RegisterOptions, get, useFormContext } from "react-hook-form"
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
 import { ErrorMessage } from '@hookform/error-message';
-import { FlexBox, IFlexBoxProps } from "lib/ui-ux";
+import { CustomIconButton, FlexBox, IFlexBoxProps } from "lib/ui-ux";
+import { Link } from "react-router-dom";
 
 type ITextboxFieldProps = Omit<TextFieldProps, 'error' | 'required'> & {
     name: string;
@@ -46,11 +47,28 @@ export const TextboxField = (props: ITextboxFieldProps) => {
     )
 }
 
-export const TextboxFieldWithLabel = (props: ITextboxFieldProps & IFlexBoxProps) => {
-    const { flexDirection = 'column', gap = '5px', label, ...rest } = props;
+const HelperActions = (props: { label: React.ReactNode, helperText?: string, link?: string, linkLabel?: string }) => {
+    const { pallete } = useTheme();
+    const { label, helperText, link, linkLabel } = props;
+
+    return (
+        <FlexBox alignItems="center" gap={'8px'} justifyContent="space-between">
+            <FlexBox gap={'8px'}>
+                <Typography variant="h6">{label}</Typography>
+                {helperText ? <CustomIconButton iconComponent={<HelpOutline sx={{ width: '16px', height: '16px' }} />} tooltipProps={{ title: helperText }} style={{ padding: 0 }} /> : null}
+            </FlexBox>
+            {link ? <Link to={link} target="_blank" style={{ textDecoration: 'unset', color: pallete.primaryPurple, fontWeight: 500, fontSize: '12px' }}>{linkLabel}</Link> : null}
+        </FlexBox>
+    )
+}
+
+export const TextboxFieldWithLabel = (props: ITextboxFieldProps & IFlexBoxProps & { helperText?: string, link?: string, linkLabel?: string }) => {
+    const { flexDirection = 'column', gap = '5px', label, helperText, link, linkLabel, ...rest } = props;
     return (
         <FlexBox flexDirection={flexDirection} gap={gap}>
-            <Typography variant="h6">{label}</Typography>
+            {helperText || link
+                ? <HelperActions label={label} helperText={helperText} link={link} linkLabel={linkLabel} />
+                : <Typography variant="h6">{label}</Typography>}
             <TextboxField {...rest} />
         </FlexBox>
     )
@@ -88,5 +106,18 @@ export const PasswordField = (props: ITextboxFieldProps) => {
                 )
             }}
         />
+    )
+}
+
+export const PasswordFieldWithLabel = (props: ITextboxFieldProps & IFlexBoxProps & { helperText?: string, link?: string, linkLabel?: string }) => {
+    const { flexDirection = 'column', gap = '5px', label, helperText, link, linkLabel, ...rest } = props;
+    return (
+        <FlexBox flexDirection={flexDirection} gap={gap}>
+            {helperText || link
+                ? <HelperActions label={label} helperText={helperText} link={link} linkLabel={linkLabel} />
+                :
+                <Typography variant="h6">{label}</Typography>}
+            <PasswordField {...rest} />
+        </FlexBox>
     )
 }
