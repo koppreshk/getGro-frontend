@@ -12,7 +12,7 @@ export const useFetchPriorities = () => {
     const { getData } = useServiceClient();
 
     const getOrderDetailsData = React.useCallback(() => getData(`${TicketsEndPoint.FETCH_PRIORITY_DROPDOWN_VALUES}`).then((res) => res.json()).catch((err) => err), [getData]);
-    return useQuery<IPriorities[]>({
+    return useQuery<IPriorities[], { message: string }>({
         queryKey: [TicketsQueryKey.FETCH_PRIORITY_DROPDOWN_VALUES],
         queryFn: getOrderDetailsData,
         cacheTime: 0

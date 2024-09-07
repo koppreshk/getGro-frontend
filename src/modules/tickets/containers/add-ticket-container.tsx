@@ -1,23 +1,21 @@
 import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
 import { AddTicketForm } from "../components/ticket-details/ticket-list-view/add-ticket/add-ticket-form";
-import { useFetchAllTicketQueues } from "modules/settings/apis";
 import { useFetchPriorities } from "../apis";
 import { useFetchAllTags } from "modules/settings/apis/tags";
 
 export const AddTicketContainer = (props: { toggleAddTicketDrawer: () => void }) => {
-    const { data: queueData, isLoading: queueDataLoading, error } = useFetchAllTicketQueues();
-    const { data: priorities, isLoading: prioritiesLoading } = useFetchPriorities();
+    const { data: priorities, isLoading: prioritiesLoading, error } = useFetchPriorities();
     const { data: allTags, isLoading: tagsLoading } = useFetchAllTags();
 
-    if (tagsLoading || queueDataLoading || prioritiesLoading) {
+    if (tagsLoading || prioritiesLoading) {
         return (
             <CenteredCircularProgress />
         )
     }
 
-    if (queueData && priorities && allTags) {
+    if (priorities && allTags) {
         return (
-            <AddTicketForm queueData={queueData?.queues} priorities={priorities} allTags={allTags} toggleAddTicketDrawer={props.toggleAddTicketDrawer} />
+            <AddTicketForm priorities={priorities} allTags={allTags} toggleAddTicketDrawer={props.toggleAddTicketDrawer} />
         )
     }
 

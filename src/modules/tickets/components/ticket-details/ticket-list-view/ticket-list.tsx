@@ -43,6 +43,7 @@ const StyledTypography = styled(Typography)`
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
+        color: ${(props) => props.theme.pallete.grayNeutral};
     }
 `;
 
@@ -111,11 +112,12 @@ const TicketDetails = (props: ITicketDetailsProps) => {
             <FlexBox justifyContent="center" alignItems="center">
                 <Avatar />
             </FlexBox>
-            <TicketDetailsSectionRight flexDirection="column" gap="6px">
+            <TicketDetailsSectionRight flexDirection="column" gap="4px">
                 <FlexBox justifyContent="space-between">
                     <Typography variant="h6">{customerName}</Typography>
                     <Typography variant="caption">{createdAt}</Typography>
                 </FlexBox>
+                <StyledTypography variant="body2" title={description}>{description}</StyledTypography>
                 <FlexBox flexDirection="row" gap="10px" alignItems="center">
                     <>
                         {getSourceIcon(source)}

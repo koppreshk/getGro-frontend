@@ -22,9 +22,12 @@ export interface ISplitTicketsFormFields {
     copyAttachments: boolean;
 }
 
-const StyledRadioGroupFields = styled(RadioGroupField)`
+export const StyledRadioGroupFields = styled(RadioGroupField)`
     .MuiRadio-sizeSmall {
         padding: 6px 9px;
+    }
+    .MuiFormControlLabel-label {
+        font-size: 14px;
     }
 `;
 

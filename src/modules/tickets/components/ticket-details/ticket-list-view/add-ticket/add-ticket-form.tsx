@@ -1,17 +1,15 @@
 import styled from "styled-components";
-import { useFormContext } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { Button, Grid, Typography } from "@mui/material";
 import { SelectField, TagInputField, TextboxFieldWithLabel } from "lib/form-fields";
-import { FlexBox } from "lib/ui-ux";
-import { GetEmployeesByQueueContainer } from "modules/tickets/containers";
-import { Queue } from "modules/settings/apis";
-import { IAddTIcketFormFields } from "./add-ticket";
+import { FlexBox, LoadingButton } from "lib/ui-ux";
 import { IPriorities } from "modules/tickets/apis";
 import { StyledRichTextEditor } from "modules/settings/component/ticket-configurations/templates/add-templates-form";
 import { ITag } from "modules/settings/apis/tags";
+import { StyledRadioGroupFields } from "../../ticket-conversation/email-conversations/more-actions/split-ticket";
+import { QueueOptions } from "../../ticket-conversation/email-conversations/more-actions/split-ticket/queue-options";
 
 interface IAddTicketFormProps {
-    queueData: Queue[];
     priorities: IPriorities[];
     allTags: ITag[];
     toggleAddTicketDrawer: () => void;
@@ -27,9 +25,31 @@ const StyledTags = styled(TagInputField)`
     };
 `;
 
+export interface IAddTIcketFormFields {
+    requesterEmail: string;
+    subject: string;
+    priority: string,
+    template: string;
+    assignee: string;
+    queueId: string;
+    employeeId: string;
+    tags: string[],
+}
+
 export const AddTicketForm = (props: IAddTicketFormProps) => {
-    const { queueData, priorities, allTags, toggleAddTicketDrawer } = props;
-    const { watch, handleSubmit } = useFormContext<IAddTIcketFormFields>();
+    const { priorities, allTags, toggleAddTicketDrawer } = props;
+    const formMethods = useForm<IAddTIcketFormFields>({
+        defaultValues: {
+            priority: '1',
+            requesterEmail: '',
+            subject: '',
+            template: '',
+            assignee: 'auto',
+            employeeId: '',
+            queueId: '',
+            tags: []
+        }
+    });
     // const { mutateAsync } = useCreateManualTicket();
     // const { showNotification } = useNotifications();
 
@@ -50,43 +70,45 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
     }
 
     return (
-        <FlexBox flexDirection="column" width="100%" padding="20px" justifyContent="space-between" height="calc(100% - 78px)" gap={'20px'}>
-            <FlexBox gap="20px" flexDirection="column" overflowY="auto" maxHeight="calc(100% - 57px)" padding="0 10px 0px 0px">
-                <TextboxFieldWithLabel name="requesterEmail" type="email" label="Requester Email" />
-                <TextboxFieldWithLabel name="subject" label="Subject" />
-                <Grid item xs={12}>
-                    <Typography variant="h6" sx={{ mb: '5px' }}>Priority</Typography>
-                    <SelectField name="priority" sx={{ width: '100%' }} menuOptions={priorities.map((item) => ({ key: item.id.toString(), value: item.name }))} />
-                </Grid>
-                <Grid item xs={12}>
-                    <Typography variant="h6" sx={{ mb: '5px' }}>Description</Typography>
-                    <StyledRichTextEditor name={`template`} />
-                </Grid>
-                <Grid item xs={12} container spacing={2} direction={'row'}>
-                    <Grid item xs={watch('queueId') ? 6 : 12}>
-                        <Typography variant="h6" sx={{ mb: '5px' }}>Select Queue</Typography>
-                        <SelectField
-                            name="queueId" sx={{ width: '100%' }}
-                            menuOptions={queueData?.map((item) => ({ key: item.id.toString(), value: item.name }))} />
+        <FormProvider {...formMethods}>
+            <FlexBox flexDirection="column" width="100%" padding="20px" justifyContent="space-between" height="calc(100% - 78px)" gap={'20px'}>
+                <FlexBox gap="20px" flexDirection="column" overflowY="auto" maxHeight="calc(100% - 57px)" padding="0 10px 0px 0px">
+                    <TextboxFieldWithLabel name="requesterEmail" type="email" label="Requester Email" />
+                    <TextboxFieldWithLabel name="subject" label="Subject" />
+                    <Grid item xs={12}>
+                        <Typography variant="h6" sx={{ mb: '5px' }}>Priority</Typography>
+                        <SelectField name="priority" sx={{ width: '100%' }} menuOptions={priorities.map((item) => ({ key: item.id.toString(), value: item.name }))} />
                     </Grid>
-                    <Grid item xs={6}>
-                        {watch('queueId') ? <GetEmployeesByQueueContainer queueId={watch('queueId')!.toString()} /> : null}
+                    <Grid item xs={12}>
+                        <Typography variant="h6" sx={{ mb: '5px' }}>Description</Typography>
+                        <StyledRichTextEditor name={`template`} disableAutoFocus />
                     </Grid>
-                </Grid>
-                <Grid item xs={12} >
-                    <Typography variant="h6" sx={{ mb: '5px' }}>Tags</Typography>
-                    <StyledTags
-                        gap={"15px"}
-                        name="tags"
-                        allowToAddTagsViaText={false}
-                        allowSuggestions
-                        suggestedTags={allTags.map((item) => item.name)} />
-                </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="h6" sx={{ mb: '5px' }}>Assignee</Typography>
+                        <StyledRadioGroupFields
+                            name="assignee"
+                            row={false}
+                            sx={{ width: '100%' }}
+                            radioOptions={[
+                                { key: 'auto', label: 'Auto assign' },
+                                { key: 'manual', label: 'Select agent', renderContentBelowLabel: () => formMethods.watch('assignee') === 'manual' ? <QueueOptions /> : null }
+                            ]} />
+                    </Grid>
+                    <Grid item xs={12} >
+                        <Typography variant="h6" sx={{ mb: '5px' }}>Tags</Typography>
+                        <StyledTags
+                            gap={"15px"}
+                            name="tags"
+                            allowToAddTagsViaText={false}
+                            allowSuggestions
+                            suggestedTags={allTags.map((item) => item.name)} />
+                    </Grid>
+                </FlexBox>
+                <FlexBox justifyContent="flex-end" gap={'20px'} padding="0 30px 0 0">
+                    <Button variant="outlined" onClick={toggleAddTicketDrawer}>Cancel</Button>
+                    <LoadingButton isLoading={false} variant="contained" onClick={formMethods.handleSubmit(onSubmit)}>Submit</LoadingButton>
+                </FlexBox>
             </FlexBox>
-            <FlexBox justifyContent="flex-end" gap={'20px'} padding="0 30px 0 0">
-                <Button variant="outlined" onClick={toggleAddTicketDrawer}>Cancel</Button>
-                <Button variant="contained" onClick={handleSubmit(onSubmit)}>Submit</Button>
-            </FlexBox>
-        </FlexBox>
+        </FormProvider>
     )
 }
