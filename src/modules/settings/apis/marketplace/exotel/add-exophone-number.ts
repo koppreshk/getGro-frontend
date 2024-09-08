@@ -8,7 +8,10 @@ export interface IAddExophoneNumber {
     sid: string;
     friendly_name: string;
     app_name: string;
-    users: number[];
+    /**
+     * Not required for normal call
+     */
+    users?: number[];
 }
 
 export const useAddExophoneNumber = () => {

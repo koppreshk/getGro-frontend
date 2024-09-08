@@ -20,8 +20,13 @@ const steps = [
     }
 ];
 
-const ConfigSteps = (props: { activeStep: number }) => {
-    const { activeStep } = props;
+const ConfigSteps = (props: {
+    activeStep: number, steps: {
+        label: string;
+        description: string;
+    }[]
+}) => {
+    const { activeStep, steps } = props;
 
     return (
         <Box>
@@ -44,11 +49,10 @@ const ConfigSteps = (props: { activeStep: number }) => {
 function AddExophoneNumberForm(props: {
     exophoneNumMenuOption: IKeyValue[];
     usersMenuOption: IKeyValue[];
-    accountType: string;
+    isBrowserCalling: boolean;
 }) {
-    const { exophoneNumMenuOption, usersMenuOption, accountType } = props;
+    const { exophoneNumMenuOption, usersMenuOption, isBrowserCalling } = props;
 
-    const isBrowserCalling = accountType === 'browser_calling'
 
     return (
         <Grid container spacing={3}>
@@ -119,6 +123,11 @@ export interface IAddExophoneNumberFormProps {
 
 export const AddExophoneNumberFormBase = (props: IAddExophoneNumberFormProps) => {
     const { togglePopup, isMutationLoading, allUsersData, exophoneNumData, onSubmit } = props;
+    const isBrowserCalling = props.exotelConfigDetails.account_type === 'browser_calling';
+
+    //Remove webhook step if its NOT broswer calling
+    const modifiedSteps = !isBrowserCalling ? steps.filter((item) => item.label !== 'Webhook') : steps;
+
     const [activeStep, setActiveStep] = React.useState(0);
 
     const exophoneNumMenuOption = exophoneNumData ? exophoneNumData.map((item) => ({ key: item.phone_number, value: item.phone_number })) : [];
@@ -143,7 +152,7 @@ export const AddExophoneNumberFormBase = (props: IAddExophoneNumberFormProps) =>
             friendly_name: phone?.friendly_name || '',
             phone_number: formFields.phoneNumber,
             sid: phone?.sid || '',
-            users: formFields.users.map((x) => Number(x.key))
+            users: isBrowserCalling ? formFields.users.map((x) => Number(x.key)) : undefined
         }).then((res) => {
             form.setValue('webHookUrl', res.create_pop_url);
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -163,9 +172,9 @@ export const AddExophoneNumberFormBase = (props: IAddExophoneNumberFormProps) =>
     return (
         <FormProvider {...form}>
             <FlexBox gap="20px">
-                <ConfigSteps activeStep={activeStep} />
+                <ConfigSteps activeStep={activeStep} steps={modifiedSteps} />
                 <Divider orientation="vertical" variant="middle" flexItem />
-                {activeStep === 0 ? <AddExophoneNumberForm exophoneNumMenuOption={exophoneNumMenuOption} usersMenuOption={usersMenuOption} accountType={props.exotelConfigDetails.account_type} /> : <AccountWebhookDetails />}
+                {activeStep === 0 ? <AddExophoneNumberForm exophoneNumMenuOption={exophoneNumMenuOption} usersMenuOption={usersMenuOption} isBrowserCalling={isBrowserCalling} /> : <AccountWebhookDetails />}
             </FlexBox>
             <DialogActions sx={{ justifyContent: 'space-between', paddingTop: '30px' }}>
                 {activeStep > 0 ?
@@ -177,7 +186,7 @@ export const AddExophoneNumberFormBase = (props: IAddExophoneNumberFormProps) =>
                     <Button variant="outlined" onClick={togglePopup}>
                         Cancel
                     </Button>
-                    <LoadingButton isLoading={isMutationLoading!} variant="contained" onClick={isLastStep ? onSaveHandler : form.handleSubmit(onSubmitForm)}>
+                    <LoadingButton isLoading={isMutationLoading!} variant="contained" onClick={!isBrowserCalling ? form.handleSubmit(onSubmitForm) : isLastStep ? onSaveHandler : form.handleSubmit(onSubmitForm)}>
                         {isLastStep ? 'Save' : 'Next'}
                     </LoadingButton>
                 </FlexBox>

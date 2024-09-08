@@ -6,6 +6,7 @@ import { FlexBox } from "lib/ui-ux";
 import { Call } from "@mui/icons-material";
 import CloseIcon from '@mui/icons-material/Close';
 import { useFetchExotelAddedNumbers } from "modules/settings/apis/marketplace/exotel";
+import { useOutboundCall } from "modules/tickets/apis/telephonic-apis";
 
 const StyledDialogActions = styled(DialogActions)`
     && {
@@ -28,6 +29,7 @@ export const NormalTelephonicDialer = (props: ITelephonicDialerProps) => {
     const { phoneNumber, toggleCallBtn, openCallPopUp } = props;
     const methods = useForm<TelephonicDialerFormFields>({ defaultValues: { phoneNumber: phoneNumber } });
     const { data } = useFetchExotelAddedNumbers();
+    const { mutateAsync } = useOutboundCall();
 
     const validatePhoneNum = (num: string) => {
         if (/^\+?[0-9]{10,14}$/.test(num)) {
@@ -41,7 +43,7 @@ export const NormalTelephonicDialer = (props: ITelephonicDialerProps) => {
     }
 
     const dial = (formData: TelephonicDialerFormFields) => {
-        console.log(formData);
+        mutateAsync({ exophone: formData.exotelAddedNumber, to: formData.phoneNumber })
     }
 
     return (
@@ -56,7 +58,11 @@ export const NormalTelephonicDialer = (props: ITelephonicDialerProps) => {
                 <DialogContent>
                     <FlexBox width="100%" flexDirection="column" gap="20px">
                         <FlexBox flexDirection="column" gap={'10px'} >
-                            <SelectField name="exotelAddedNumber" label={'Exotel Number'} sx={{ mt: '5px' }} menuOptions={data?.map((item) => ({ key: item.phone_number, value: item.phone_number })) || []} />
+                            <SelectField
+                                name="exotelAddedNumber"
+                                label={'Exotel Number'} sx={{ mt: '5px' }}
+                                menuOptions={data?.map((item) => ({ key: item.phone_number, value: item.phone_number })) || []}
+                                rules={{ required: 'Please select a number to dial from' }} />
                             <TextboxField
                                 name="phoneNumber"
                                 sx={{ mt: '10px' }}

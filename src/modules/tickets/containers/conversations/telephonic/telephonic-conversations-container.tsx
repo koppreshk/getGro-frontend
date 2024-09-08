@@ -1,7 +1,7 @@
 import { ChatConversationLoader } from "lib/ui-ux/loader-components";
-import { useFetchCallsByTicketId } from "../../../apis";
 import { FlexBox } from "lib/ui-ux";
-import { TelephonicConversationsLayout } from "../../../components/ticket-details/ticket-conversation/telephonic-conversations";
+import { useFetchCallsByTicketId } from "modules/tickets/apis";
+import { TelephonicConversationsLayout } from "modules/tickets/components/ticket-details/ticket-conversation/telephonic-conversations";
 
 export const TelephonicConversationContainer = () => {
     const { isLoading, data } = useFetchCallsByTicketId();
