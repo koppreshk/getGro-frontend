@@ -11,7 +11,7 @@ import { IExotelConfigDetails } from "modules/settings/apis/marketplace/exotel";
 export interface IAddExotelConfigurationFormProps {
     isMutationLoading: boolean;
     togglePopup: () => void;
-    onSubmit: (data: IExotelConfigDetails) => Promise<{ webhook_url: string }>;
+    onSubmit: (data: IExotelConfigDetails) => Promise<{ webhook_url: string, status: boolean, message?: string }>;
     updateInstallation: () => void;
 }
 
@@ -143,6 +143,7 @@ export const AddExotelConfigurationForm = React.memo((props: IAddExotelConfigura
     const { togglePopup, onSubmit, isMutationLoading, updateInstallation } = props;
     const form = useFormContext<IAddExotelFormFields>()
     const [activeStep, setActiveStep] = React.useState(0);
+    const { showNotification } = useNotifications();
 
     const onSubmitForm = async (formFields: IAddExotelFormFields) => {
         const custDetails = formFields.accountType === 'browser_calling' ? { customer_id: formFields?.customerId, customer_secret: formFields.customerSecret } : {}
@@ -154,9 +155,13 @@ export const AddExotelConfigurationForm = React.memo((props: IAddExotelConfigura
             account_type: formFields.accountType,
             ...custDetails
         }).then((res) => {
-            form.setValue('webhookURL', res.webhook_url)
-            setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        })
+            if (res.status) {
+                form.setValue('webhookURL', res.webhook_url)
+                setActiveStep((prevActiveStep) => prevActiveStep + 1);
+                return;
+            }
+            showNotification({ message: res.message || 'Failed', type: 'error' })
+        }).catch(() => showNotification({ message: 'Failed to setup exotel configurations', type: 'error' }))
     };
 
     const handleBack = () => {
