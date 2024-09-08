@@ -1,9 +1,9 @@
 /// <reference types="vite-plugin-svgr/client" />
 
+import React, { useCallback } from "react";
 import ExotelSmallIcon from '../../../assets/svg/exotel-icon-small.svg?react';
 import { Tooltip } from "@mui/material";
-import { TelephonicDialer } from "modules/tickets/components/ticket-details/ticket-conversation/telephonic-conversations";
-import React, { useCallback } from "react";
+import { BrowserTelephonicDialer, NormalTelephonicDialer } from "modules/tickets/components/ticket-details/ticket-conversation/telephonic-conversations";
 import { SecondaryIconWrapper } from './navigation-menu';
 import { useFetchExotelConfiguration } from 'modules/settings/apis/marketplace/exotel';
 
@@ -17,6 +17,7 @@ export const ExotelCallControls = () => {
     }, []);
 
     if (data && Object.keys(data).length) {
+        const { account_type } = data;
         return (
             <>
                 <Tooltip title="Exotel" arrow placement="right">
@@ -24,7 +25,7 @@ export const ExotelCallControls = () => {
                         <ExotelSmallIcon width={'20px'} height={'20px'} />
                     </SecondaryIconWrapper>
                 </Tooltip>
-                <TelephonicDialer openCallPopUp={openCallPopUp} toggleCallBtn={toggleCallBtn} />
+                {account_type === 'browser_calling' ? <BrowserTelephonicDialer openCallPopUp={openCallPopUp} toggleCallBtn={toggleCallBtn} /> : <NormalTelephonicDialer openCallPopUp={openCallPopUp} toggleCallBtn={toggleCallBtn} />}
             </>
         )
     }

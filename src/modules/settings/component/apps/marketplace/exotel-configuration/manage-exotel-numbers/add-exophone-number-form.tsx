@@ -5,7 +5,7 @@ import { BackButton, CustomIconButton, FlexBox, LoadingButton } from "lib/ui-ux"
 import { IAddExophoneNumberFormFields } from "modules/settings/containers/marketplace/exotel";
 import { useForm, FormProvider, useFormContext } from "react-hook-form";
 import { IUsers } from "modules/settings/apis/users-and-permissions";
-import { Exophone, IAddExophoneNumber } from "modules/settings/apis/marketplace/exotel";
+import { Exophone, IAddExophoneNumber, IExotelConfigDetails } from "modules/settings/apis/marketplace/exotel";
 import { ContentCopy } from "@mui/icons-material";
 import { useNotifications } from "lib";
 
@@ -44,20 +44,24 @@ const ConfigSteps = (props: { activeStep: number }) => {
 function AddExophoneNumberForm(props: {
     exophoneNumMenuOption: IKeyValue[];
     usersMenuOption: IKeyValue[];
+    accountType: string;
 }) {
-    const { exophoneNumMenuOption, usersMenuOption } = props;
+    const { exophoneNumMenuOption, usersMenuOption, accountType } = props;
+
+    const isBrowserCalling = accountType === 'browser_calling'
 
     return (
         <Grid container spacing={3}>
             <Grid item md={12}>
-                <TextboxField name="appName" label="Group Name" size="small" type="text" fullWidth rules={{ required: 'This field is required.' }} />
+                <TextboxField name="appName" size="small" label={isBrowserCalling ? "Group Name" : 'Name'} type="text" fullWidth rules={{ required: 'This field is required.' }} />
             </Grid>
             <Grid item md={12}>
-                <SelectField name="phoneNumber" label="Select Exotel Number" size="small" sx={{ width: '100%' }} menuOptions={exophoneNumMenuOption} rules={{ required: 'This field is required.' }} />
+                <SelectField name="phoneNumber" size="small" label="Select Exotel Number" sx={{ width: '100%' }} menuOptions={exophoneNumMenuOption} rules={{ required: 'This field is required.' }} />
             </Grid>
-            <Grid item md={12}>
-                <AutocompleteField label="Select  Users in Group" name="users" options={usersMenuOption} placeholder="Select Employee" size="small" />
-            </Grid>
+            {isBrowserCalling ?
+                <Grid item md={12}>
+                    <AutocompleteField label="Select Users in Group" name="users" options={usersMenuOption} placeholder="Select Employee" size="small" />
+                </Grid> : null}
         </Grid>
     )
 }
@@ -110,6 +114,7 @@ export interface IAddExophoneNumberFormProps {
     isMutationLoading?: boolean;
     allUsersData: IUsers[];
     exophoneNumData: Exophone[];
+    exotelConfigDetails: IExotelConfigDetails;
 }
 
 export const AddExophoneNumberFormBase = (props: IAddExophoneNumberFormProps) => {
@@ -160,7 +165,7 @@ export const AddExophoneNumberFormBase = (props: IAddExophoneNumberFormProps) =>
             <FlexBox gap="20px">
                 <ConfigSteps activeStep={activeStep} />
                 <Divider orientation="vertical" variant="middle" flexItem />
-                {activeStep === 0 ? <AddExophoneNumberForm exophoneNumMenuOption={exophoneNumMenuOption} usersMenuOption={usersMenuOption} /> : <AccountWebhookDetails />}
+                {activeStep === 0 ? <AddExophoneNumberForm exophoneNumMenuOption={exophoneNumMenuOption} usersMenuOption={usersMenuOption} accountType={props.exotelConfigDetails.account_type} /> : <AccountWebhookDetails />}
             </FlexBox>
             <DialogActions sx={{ justifyContent: 'space-between', paddingTop: '30px' }}>
                 {activeStep > 0 ?

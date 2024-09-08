@@ -78,7 +78,7 @@ function AddExotelConfigForm() {
             </Grid>
             <Grid item md={12}>
                 <Typography variant="h6">Account Type</Typography>
-                <RadioGroupField name="accountType" radioOptions={[{ key: 'browser_calling', label: 'Browser Calling' }, { key: 'normal_calling', label: 'Normal Calling(Phone)' }]} />
+                <RadioGroupField name="accountType" radioOptions={[{ key: 'browser_calling', label: 'Browser Calling' }, { key: 'normal_calling', label: 'Normal Calling (Via Phone)' }]} />
             </Grid>
         </Grid>
     )
