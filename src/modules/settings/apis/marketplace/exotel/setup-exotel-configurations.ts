@@ -9,7 +9,15 @@ export interface IExotelConfigDetails {
     exotel_api_token: string
     exotel_account_sid: string
     webhook_url?: string
-    account_type: 'browser_calling' | 'normal_calling'
+    account_type: 'browser_calling' | 'normal_calling';
+    /**
+     * Needed if account_type is browser_calling
+     */
+    customer_id?: string;
+    /**
+     * Needed if account_type is browser_calling
+     */
+    customer_secret?: string;
 }
 
 export const useSetupExotelConfigurations = () => {

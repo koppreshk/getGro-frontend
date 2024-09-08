@@ -7,7 +7,9 @@ export interface IAddExotelFormFields {
     exotelAPItoken: string
     exotelAccountSid: string
     webhookURL?: string,
-    accountType: 'browser_calling' | 'normal_calling'
+    accountType: 'browser_calling' | 'normal_calling';
+    customerId?: string;
+    customerSecret?: string;
 }
 
 export const AddExotelConfigurationContainer = (props: { togglePopup: () => void; updateInstallation: () => void }) => {
