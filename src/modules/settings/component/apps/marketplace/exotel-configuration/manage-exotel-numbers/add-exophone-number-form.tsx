@@ -154,11 +154,11 @@ export const AddExophoneNumberFormBase = (props: IAddExophoneNumberFormProps) =>
             sid: phone?.sid || '',
             users: isBrowserCalling ? formFields.users.map((x) => Number(x.key)) : undefined
         }).then((res) => {
-            form.setValue('webHookUrl', res.create_pop_url);
             if (!isBrowserCalling) {
                 onSaveHandler();
                 return;
             }
+            form.setValue('webHookUrl', res.create_pop_url);
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
         })
     };
