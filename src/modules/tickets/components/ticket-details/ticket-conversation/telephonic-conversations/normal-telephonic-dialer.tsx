@@ -7,6 +7,7 @@ import { Call } from "@mui/icons-material";
 import CloseIcon from '@mui/icons-material/Close';
 import { useFetchExotelAddedNumbers } from "modules/settings/apis/marketplace/exotel";
 import { useOutboundCall } from "modules/tickets/apis/telephonic-apis";
+import { useNotifications } from "lib";
 
 const StyledDialogActions = styled(DialogActions)`
     && {
@@ -30,6 +31,7 @@ export const NormalTelephonicDialer = (props: ITelephonicDialerProps) => {
     const methods = useForm<TelephonicDialerFormFields>({ defaultValues: { phoneNumber: phoneNumber } });
     const { data } = useFetchExotelAddedNumbers();
     const { mutateAsync } = useOutboundCall();
+    const { showNotification } = useNotifications();
 
     const validatePhoneNum = (num: string) => {
         if (/^\+?[0-9]{10,14}$/.test(num)) {
@@ -44,6 +46,13 @@ export const NormalTelephonicDialer = (props: ITelephonicDialerProps) => {
 
     const dial = (formData: TelephonicDialerFormFields) => {
         mutateAsync({ exophone: formData.exotelAddedNumber, to: formData.phoneNumber })
+            .then((res) => {
+                if (res.status) {
+                    showNotification({ message: 'Call places successfully', type: 'success' });
+                    return;
+                }
+                showNotification({ message: res.message, type: 'error' });
+            }).catch(() => showNotification({ message: 'Failed to place the call', type: 'error' }))
     }
 
     return (
