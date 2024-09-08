@@ -17,7 +17,9 @@ export const EditExotelConfigForm = (props: IEditExotelConfigFormBaseProps) => {
             exotelAPIkey: currentData.exotel_api_key,
             exotelAPItoken: currentData.exotel_api_token,
             webhookURL: currentData.webhook_url,
-            accountType: currentData.account_type
+            accountType: currentData.account_type,
+            customerId: currentData.customer_id,
+            customerSecret: currentData.customer_secret
         }
     });
 
