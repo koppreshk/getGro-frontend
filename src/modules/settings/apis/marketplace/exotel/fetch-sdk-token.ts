@@ -5,7 +5,6 @@ import { ExotelConfigurationEndPoint, ExotelConfigurationQueryKey } from "./api-
 
 export interface ISDKToken {
     access_token: string;
-    browser_calling_enabled: string;
 }
 
 export const useFetchSDKToken = () => {

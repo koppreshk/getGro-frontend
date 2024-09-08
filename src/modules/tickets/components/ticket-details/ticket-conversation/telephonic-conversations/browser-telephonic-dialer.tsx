@@ -25,7 +25,7 @@ interface TelephonicDialerFormFields {
     phoneNumber: string;
 }
 
-export const TelephonicDialer = (props: ITelephonicDialerProps) => {
+export const BrowserTelephonicDialer = (props: ITelephonicDialerProps) => {
     const { openCallPopUp, phoneNumber, toggleCallBtn } = props;
     const methods = useForm<TelephonicDialerFormFields>({ defaultValues: { phoneNumber: phoneNumber } });
     const { callActive, isDeviceRegistered, dial, hangup, isIncomingCall } = useExotelServices();
@@ -52,7 +52,7 @@ export const TelephonicDialer = (props: ITelephonicDialerProps) => {
         <Dialog open={openCallPopUp} maxWidth="xs" fullWidth={true}>
             <FormProvider {...methods}>
                 <DialogTitle sx={{ fontSize: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    Make manual call
+                    Make Browser Call
                     <IconButton onClick={onClose}>
                         <CloseIcon />
                     </IconButton>
@@ -86,7 +86,8 @@ export const TelephonicDialer = (props: ITelephonicDialerProps) => {
                                                 name="phoneNumber"
                                                 sx={{ mt: '10px' }}
                                                 label="Phone Number"
-                                                fullWidth rules={{ validate: validatePhoneNum }} />}
+                                                fullWidth rules={{ validate: validatePhoneNum }} />
+                                        }
                                     </FlexBox>
                                 </DialogContent>
                                 <StyledDialogActions>

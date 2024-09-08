@@ -1,4 +1,6 @@
 import ExotelCRMWebSDK, { ExotelWebPhoneSDK, CallListenerCallback, RegisterListenerCallback, MakeCallCallback, IncomingCallDetails } from "exotel-ip-calling-crm-websdk";
+import { useAuth } from "modules/login";
+import { useFetchSDKToken } from "modules/settings/apis/marketplace/exotel";
 import React, { useContext, useEffect, useRef, useState } from "react";
 
 const defaultContextValues = {
@@ -25,12 +27,9 @@ interface IExotelServices {
 const ExotelServiceContext = React.createContext(defaultContextValues);
 
 export const ExotelServiceProvider = (props: { children?: React.ReactNode; }) => {
-    // const { user } = useAuth();
-    // const { data } = useFetchSDKToken();
-    // const userId = user?.email || '';
-
-    const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjIwNTg2YTQzLTFhMzUtNDk3Ny04NDRhLTBhNzNkMjVkZTZmYSIsImV4cCI6MTczMzM3NTk1Mn0.GxN1tis3OCcbmSua781NA6B7f7727zZqdTNd732I2p4";
-    const userId = "koppresh@getgro.io";
+    const { user } = useAuth();
+    const { data } = useFetchSDKToken();
+    const userId = user?.email || '';
 
     const webPhone = useRef<ExotelWebPhoneSDK | null>(null);
     const [isDeviceRegistered, setIsDeviceRegistered] = useState(false);
@@ -100,14 +99,16 @@ export const ExotelServiceProvider = (props: { children?: React.ReactNode; }) =>
             if (webPhone.current) {
                 return;
             }
-            const crmWebSDK = new ExotelCRMWebSDK(accessToken, userId, true);
+            const crmWebSDK = new ExotelCRMWebSDK(data!.access_token, userId, true);
             const crmWebPhone = await crmWebSDK.Initialize(
                 handleCallEvents,
                 registerationEvent
             );
             webPhone.current = crmWebPhone;
         }
-        init();
+        if (data?.access_token) {
+            init();
+        }
     });
 
     const valueObject = {

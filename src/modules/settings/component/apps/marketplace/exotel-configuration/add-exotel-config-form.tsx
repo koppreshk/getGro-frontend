@@ -49,6 +49,27 @@ const ConfigSteps = (props: { activeStep: number }) => {
 
 
 function AddExotelConfigForm() {
+    const { watch } = useFormContext();
+
+    const renderContentBelowLabel = () => {
+        return (
+            <>
+                {
+                    watch('accountType') === 'browser_calling'
+                        ?
+                        <Grid container spacing={2} sx={{ pl: '30px' }} item md={12} direction={'row'}>
+                            <Grid item md={6}>
+                                <TextboxFieldWithLabel name="customerId" label="Customer Id" size="small" fullWidth />
+                            </Grid>
+                            <Grid item md={6}>
+                                <PasswordFieldWithLabel name="customerSecret" type="password" label="Customer Secret" size="small" fullWidth />
+                            </Grid>
+                        </Grid>
+                        : null
+                }
+            </>
+        )
+    }
     return (
         <Grid container spacing={3}>
             <Grid item md={12}>
@@ -78,7 +99,7 @@ function AddExotelConfigForm() {
             </Grid>
             <Grid item md={12}>
                 <Typography variant="h6">Account Type</Typography>
-                <RadioGroupField name="accountType" radioOptions={[{ key: 'browser_calling', label: 'Browser Calling' }, { key: 'normal_calling', label: 'Normal Calling(Phone)' }]} />
+                <RadioGroupField name="accountType" radioOptions={[{ key: 'browser_calling', label: 'Browser Calling', renderContentBelowLabel: renderContentBelowLabel }, { key: 'normal_calling', label: 'Normal Calling (Via Phone)' }]} />
             </Grid>
         </Grid>
     )
@@ -124,12 +145,14 @@ export const AddExotelConfigurationForm = React.memo((props: IAddExotelConfigura
     const [activeStep, setActiveStep] = React.useState(0);
 
     const onSubmitForm = async (formFields: IAddExotelFormFields) => {
+        const custDetails = formFields.accountType === 'browser_calling' ? { customer_id: formFields?.customerId, customer_secret: formFields.customerSecret } : {}
         onSubmit({
             exotel_account_sid: formFields.exotelAccountSid,
             exotel_api_key: formFields.exotelAPIkey,
             exotel_api_token: formFields.exotelAPItoken,
             exotel_subdomain: formFields.exotelSubdomain,
-            account_type: formFields.accountType
+            account_type: formFields.accountType,
+            ...custDetails
         }).then((res) => {
             form.setValue('webhookURL', res.webhook_url)
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
