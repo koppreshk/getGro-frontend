@@ -15,6 +15,7 @@ const TemplatesContainer = lazy(() => import("../containers/templates/templates-
 const AllEscalationsContainer = lazy(() => import('../containers/ticket-automation/ticket-sla/all-escalations-container'))
 const TicketStatusContainer = lazy(() => import("../containers/ticket-status/ticket-status-container"));
 const TicketQueuesContainer = lazy(() => import("../containers/ticket-queues/ticket-queues-container"));
+const AuditLogsContainer = lazy(() => import("../containers/audit-logs/audit-logs-container"));
 
 export default function ConfigurationsPage() {
     return (
@@ -37,6 +38,7 @@ export default function ConfigurationsPage() {
 
                     <Route key="agent-availability" path="agent-availability" element={<AgentAvailabilityLayout />} />
                     <Route key="satisfaction-survey" path="satisfaction-survey" element={<SatisfactionSurveyLayout />} />
+                    <Route key="audit-logs" path="audit-logs" element={<AuditLogsContainer />} />
                     <Route key="marketplace" path="marketplace/*" element={<MarketplaceRoutes />} />
 
                     <Route key="roles-and-permissions" path="roles-and-permissions/*" element={<RolesAndPermissionsContainer />} />

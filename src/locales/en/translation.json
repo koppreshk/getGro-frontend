@@ -82,6 +82,10 @@
                     "satisfactionSurvey": {
                         "label": "Satisfaction Survey",
                         "shortDescription": "Implement a customer satisfaction survey for each ticket to gather feedback and measure service quality."
+                    },
+                    "auditLogs": {
+                        "label": "Audit Logs",
+                        "shortDescription": "View activity and access logs with regards to tickets"
                     }
                 },
                 "apps": {
