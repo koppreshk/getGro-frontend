@@ -6,7 +6,7 @@ import { getInitialsByName } from "lib/utils";
 import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { commonStyles } from "lib/ui-ux/common-styles";
 import { ITicketDetails } from "modules/tickets/apis";
-import { TelephonicDialer } from "../../ticket-conversation/telephonic-conversations";
+import { BrowserTelephonicDialer } from "../../ticket-conversation/telephonic-conversations";
 
 const StyledAvatar = styled(Avatar)`
     && {
@@ -133,7 +133,7 @@ export const ContactInfo = (props: IContactInfoProps) => {
                 {contactInfoData('Created At', createdAt)}
                 {closedAt ? contactInfoData('Closed At', closedAt) : null}
             </FlexBox>
-            {openCallPopUp ? <TelephonicDialer openCallPopUp={openCallPopUp} toggleCallBtn={toggleCallBtn} phoneNumber={phoneNumber} /> : <></>}
+            {openCallPopUp ? <BrowserTelephonicDialer openCallPopUp={openCallPopUp} toggleCallBtn={toggleCallBtn} phoneNumber={phoneNumber} /> : <></>}
         </FlexBox>
     )
 }
