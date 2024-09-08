@@ -1,6 +1,6 @@
 import { useServiceClient } from "lib"
 import React from "react";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { ExotelConfigurationEndPoint, ExotelConfigurationQueryKey } from "./api-enums";
 
 export interface IAddExophoneNumber {
@@ -16,6 +16,7 @@ export interface IAddExophoneNumber {
 
 export const useAddExophoneNumber = () => {
     const { postData } = useServiceClient();
+    const queryClient = useQueryClient();
 
     const addExophoneNumber = React.useCallback((args: IAddExophoneNumber) =>
         postData(ExotelConfigurationEndPoint.ADD_EXOPHONE, args).then((res) => res.json()), [postData])
@@ -23,7 +24,10 @@ export const useAddExophoneNumber = () => {
     return (
         useMutation({
             mutationFn: addExophoneNumber,
-            mutationKey: ExotelConfigurationQueryKey.ADD_EXOPHONE
+            mutationKey: ExotelConfigurationQueryKey.ADD_EXOPHONE,
+            onSuccess: () => {
+                queryClient.refetchQueries(ExotelConfigurationQueryKey.FETCH_EXOTEL_ADDED_NUMBERS)
+            }
         })
     )
 }
