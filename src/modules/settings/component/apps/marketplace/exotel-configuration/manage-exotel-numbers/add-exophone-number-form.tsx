@@ -155,6 +155,10 @@ export const AddExophoneNumberFormBase = (props: IAddExophoneNumberFormProps) =>
             users: isBrowserCalling ? formFields.users.map((x) => Number(x.key)) : undefined
         }).then((res) => {
             form.setValue('webHookUrl', res.create_pop_url);
+            if (!isBrowserCalling) {
+                onSaveHandler();
+                return;
+            }
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
         })
     };
@@ -167,7 +171,7 @@ export const AddExophoneNumberFormBase = (props: IAddExophoneNumberFormProps) =>
         togglePopup();
     };
 
-    const isLastStep = activeStep === steps.length - 1;
+    const isLastStep = activeStep === modifiedSteps.length - 1;
 
     return (
         <FormProvider {...form}>
