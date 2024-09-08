@@ -13,11 +13,12 @@ const StyledFlexBox = styled(FlexBox)`
 interface ITableControlProps {
     isTableActionsvisible?: boolean;
     enableSerchField?: boolean;
-    totalPages?: number
+    isContentViewModeVisible?: boolean
+    totalPages?: number;
 }
 
 export const TableControls = (props: ITableControlProps) => {
-    const { isTableActionsvisible, totalPages, enableSerchField } = props;
+    const { isTableActionsvisible, totalPages, enableSerchField, isContentViewModeVisible } = props;
     const [searchParams, setSearchParams] = useSearchParams();
     const pageNumber = Number(searchParams.get('pageNumber')) || 1;
     const noOfRecords = searchParams.get('noOfRecords') || '10';
@@ -74,7 +75,10 @@ export const TableControls = (props: ITableControlProps) => {
                 {enableSerchField ? <TextField placeholder="Input here..." size="small" label="Search" type="search" onChange={onSearchChange} /> : null}
             </FlexBox>
             <FlexBox gap="30px" alignItems="center">
-                <ContentViewMode onGridModeChange={onGridModeChange} selectedValue={cardView === 'true' ? 'card' : 'grid'} />
+                {isContentViewModeVisible ?
+                    <ContentViewMode onGridModeChange={onGridModeChange} selectedValue={cardView === 'true' ? 'card' : 'grid'} />
+                    : null
+                }
                 <VerticalSeparator />
                 <NoOfPages noOfRows={noOfRows as Rows} onFilterChangeHandler={onFilterChangeHandler} />
                 <VerticalSeparator />

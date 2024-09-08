@@ -3,7 +3,7 @@ import {
     TaskOutlined, Tag, AccountCircle, WorkHistory, LockPerson, Facebook, SellOutlined,
     GridViewRounded, StoreRounded, ThumbsUpDown, SettingsRounded, SupportAgentRounded,
     Groups2Outlined, EventNoteOutlined, AssignmentTurnedInOutlined, Email, ManageHistory,
-    ConfirmationNumber, AddCommentOutlined
+    ConfirmationNumber, AddCommentOutlined, PendingActions
 } from "@mui/icons-material";
 import styled from "styled-components";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -161,6 +161,13 @@ const useConfigurations = () => {
                     uniqueKey: "satisfaction-survey",
                     description: t("modules.configurations.configurationOptions.general.satisfactionSurvey.shortDescription"),
                     catOptionIcon: () => <ThumbsUpDown />
+                },
+                {
+                    route: "audit-logs",
+                    label: t("modules.configurations.configurationOptions.general.auditLogs.label"),
+                    uniqueKey: "audit-logs",
+                    description: t("modules.configurations.configurationOptions.general.auditLogs.shortDescription"),
+                    catOptionIcon: () => <PendingActions />
                 }
             ]
         },
