@@ -21,6 +21,28 @@
                 "myClosed": "My Closed",
                 "deletedTickets": "Deleted Tickets",
                 "spamTickets": "Spam Tickets"
+            },
+            "addTicket": {
+                "headerLabel": "Add Email Ticket",
+                "requesterEmail": "Requester Email",
+                "subject": "Subject",
+                "description": "Description",
+                "assignee": "Assignee",
+                "assigneeOptions": {
+                    "autoAssign": "Auto Assign",
+                    "selectAgent": "Select Agent"
+                },
+                "messages": {
+                    "validation": {
+                        "subject": "Subject is required",
+                        "requesterEmail": "Requester Email is required",
+                        "description": "Description is required"
+                    },
+                    "notification": {
+                        "createTicketSuccess": "Created a new ticket successfully",
+                        "createTicketError": "Failed to create a new ticket"
+                    }
+                }
             }
         },
         "configurations": {
@@ -109,6 +131,17 @@
                     }
                 }
             }
+        }
+    },
+    "common": {
+        "buttonLabels": {
+            "cancel": "Cancel",
+            "save": "Save",
+            "submit": "Submit"
+        },
+        "labels": {
+            "tags": "Tags",
+            "priority": "Priority"
         }
     }
 }

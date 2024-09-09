@@ -3,12 +3,14 @@ import { AddTicketForm, IAddTIcketFormFields } from "../components/ticket-detail
 import { useCreateManualTicket, useFetchPriorities } from "../apis";
 import { useFetchAllTags } from "modules/settings/apis/tags";
 import { useNotifications } from "lib";
+import { useTranslation } from "react-i18next";
 
 export const AddTicketContainer = (props: { toggleAddTicketDrawer: () => void }) => {
     const { data: priorities, isLoading: prioritiesLoading, error } = useFetchPriorities();
     const { data: allTags, isLoading: tagsLoading } = useFetchAllTags();
     const { mutateAsync, isLoading: mutationLoading } = useCreateManualTicket();
     const { showNotification } = useNotifications();
+    const { t } = useTranslation();
 
     const onSubmit = (formData: IAddTIcketFormFields) => {
         const { assignee, employeeId, priority, queueId, requesterEmail, subject, tags, template } = formData;
@@ -25,13 +27,13 @@ export const AddTicketContainer = (props: { toggleAddTicketDrawer: () => void })
         })
             .then((res) => {
                 if (res.status) {
-                    showNotification({ message: 'Created a new ticket successfully', type: 'success' })
+                    showNotification({ message: t("modules.tickets.addTicket.messages.notification.createTicketSuccess"), type: 'success' })
                 }
                 else {
                     showNotification({ message: res.message, type: 'error' })
                 }
             })
-            .catch(() => showNotification({ message: 'Failed to create a new ticket', type: 'error' }))
+            .catch(() => showNotification({ message: t("modules.tickets.addTicket.messages.notification.createTicketError"), type: 'error' }))
             .finally(() => props.toggleAddTicketDrawer())
     }
 
