@@ -8,6 +8,7 @@ import { StyledRichTextEditor } from "modules/settings/component/ticket-configur
 import { ITag } from "modules/settings/apis/tags";
 import { StyledRadioGroupFields } from "../../ticket-conversation/email-conversations/more-actions/split-ticket";
 import { QueueOptions } from "../../ticket-conversation/email-conversations/more-actions/split-ticket/queue-options";
+import { useTranslation } from "react-i18next";
 
 interface IAddTicketFormProps {
     priorities: IPriorities[];
@@ -40,6 +41,7 @@ export interface IAddTIcketFormFields {
 
 export const AddTicketForm = (props: IAddTicketFormProps) => {
     const { priorities, allTags, mutationLoading, onSubmit, toggleAddTicketDrawer } = props;
+    const { t } = useTranslation();
     const formMethods = useForm<IAddTIcketFormFields>({
         defaultValues: {
             priority: priorities[0].id.toString(),
@@ -57,29 +59,29 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
         <FormProvider {...formMethods}>
             <FlexBox flexDirection="column" width="100%" padding="20px" justifyContent="space-between" height="calc(100% - 78px)" gap={'20px'}>
                 <FlexBox gap="20px" flexDirection="column" overflowY="auto" maxHeight="calc(100% - 57px)" padding="0 10px 0px 0px">
-                    <TextboxFieldWithLabel name="requesterEmail" type="email" label="Requester Email" rules={{ required: 'Requester Email is required' }} />
-                    <TextboxFieldWithLabel name="subject" label="Subject" rules={{ required: 'Subject is required' }} />
+                    <TextboxFieldWithLabel name="requesterEmail" type="email" label={t("modules.tickets.addTicket.requesterEmail")} rules={{ required: t("modules.tickets.addTicket.messages.validation.requesterEmail") }} />
+                    <TextboxFieldWithLabel name="subject" label={t("modules.tickets.addTicket.subject")} rules={{ required: t("modules.tickets.addTicket.messages.validation.subject") }} />
                     <Grid item xs={12}>
-                        <Typography variant="h6" sx={{ mb: '5px' }}>Priority</Typography>
+                        <Typography variant="h6" sx={{ mb: '5px' }}>{t("common.labels.priority")}</Typography>
                         <SelectField name="priority" sx={{ width: '100%' }} menuOptions={priorities.map((item) => ({ key: item.id.toString(), value: item.name }))} />
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography variant="h6" sx={{ mb: '5px' }}>Description</Typography>
-                        <StyledRichTextEditor name={`template`} disableAutoFocus rules={{ required: 'Description is required' }} />
+                        <Typography variant="h6" sx={{ mb: '5px' }}>{t("modules.tickets.addTicket.description")}</Typography>
+                        <StyledRichTextEditor name={`template`} disableAutoFocus rules={{ required: t("modules.tickets.addTicket.messages.validation.description") }} />
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography variant="h6" sx={{ mb: '5px' }}>Assignee</Typography>
+                        <Typography variant="h6" sx={{ mb: '5px' }}>{t("modules.tickets.addTicket.assignee")}</Typography>
                         <StyledRadioGroupFields
                             name="assignee"
                             row={false}
                             sx={{ width: '100%' }}
                             radioOptions={[
-                                { key: 'auto', label: 'Auto assign' },
-                                { key: 'manual', label: 'Select agent', renderContentBelowLabel: () => formMethods.watch('assignee') === 'manual' ? <QueueOptions /> : null }
+                                { key: 'auto', label: t("modules.tickets.addTicket.assigneeOptions.autoAssign") },
+                                { key: 'manual', label: t("modules.tickets.addTicket.assigneeOptions.selectAgent"), renderContentBelowLabel: () => formMethods.watch('assignee') === 'manual' ? <QueueOptions /> : null }
                             ]} />
                     </Grid>
                     <Grid item xs={12} >
-                        <Typography variant="h6" sx={{ mb: '5px' }}>Tags</Typography>
+                        <Typography variant="h6" sx={{ mb: '5px' }}>{t("common.labels.tags")}</Typography>
                         <StyledTags
                             gap={"15px"}
                             name="tags"
@@ -89,8 +91,8 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
                     </Grid>
                 </FlexBox>
                 <FlexBox justifyContent="flex-end" gap={'20px'} padding="0 30px 0 0">
-                    <Button variant="outlined" onClick={toggleAddTicketDrawer}>Cancel</Button>
-                    <LoadingButton isLoading={mutationLoading} variant="contained" onClick={formMethods.handleSubmit(onSubmit)}>Submit</LoadingButton>
+                    <Button variant="outlined" onClick={toggleAddTicketDrawer}>{t("common.buttonLabels.cancel")}</Button>
+                    <LoadingButton isLoading={mutationLoading} variant="contained" onClick={formMethods.handleSubmit(onSubmit)}>{t("common.buttonLabels.submit")}</LoadingButton>
                 </FlexBox>
             </FlexBox>
         </FormProvider>
