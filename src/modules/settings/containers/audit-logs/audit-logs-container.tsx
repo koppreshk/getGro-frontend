@@ -8,9 +8,6 @@ export default function AuditLogsContainer() {
     const itemsPerPage = searchParams.get('noOfRecords') ?? '10';
     const pageNumber = searchParams.get('pageNumber') ?? '1';
 
-    console.log('AuditLogsContainer re-rendered', searchParams.get('noOfRecords'), searchParams.get('pageNumber'));
-
-
     const { data, error, isLoading } = useFetchAllAuditLogs(itemsPerPage, pageNumber);
 
     if (data || isLoading) {
