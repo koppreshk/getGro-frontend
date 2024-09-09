@@ -10,6 +10,19 @@
                 "slaDashboard": "SLA Dashboard"
             }
         },
+        "tickets": {
+            "ticketViews": {
+                "allTickets": "All Tickets",
+                "allPending": "All Pending",
+                "allResolved": "All Resolved",
+                "allClosed": "All Closed",
+                "myPending": "My Pending",
+                "myResolved": "My Resolved",
+                "myClosed": "My Closed",
+                "deletedTickets": "Deleted Tickets",
+                "spamTickets": "Spam Tickets"
+            }
+        },
         "configurations": {
             "moduleHeading": "Configurations",
             "configurationOptions": {

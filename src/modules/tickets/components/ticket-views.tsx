@@ -1,11 +1,12 @@
-import { Typography } from "@mui/material";
-import { TicketAccessRights, useAutherization } from "lib/hooks";
-import { FlexBox, HorizontalSeparator } from "lib/ui-ux"
 import React from "react";
 import { useMatch, useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components"
-import { TicketViewActionButtons } from "./ticket-details/ticket-list-view";
+import { Typography } from "@mui/material";
 import { DeleteOutlined, ReportOutlined } from '@mui/icons-material/';
+import { useTranslation } from "react-i18next";
+import { TicketAccessRights, useAutherization } from "lib/hooks";
+import { FlexBox, HorizontalSeparator } from "lib/ui-ux"
+import { TicketViewActionButtons } from "./ticket-details/ticket-list-view";
 
 const ViewsWrapper = styled(FlexBox)`
     width: 200px;
@@ -49,47 +50,48 @@ export const HeaderWrapper = styled(FlexBox)`
 
 const useViewOptions = () => {
     const authorize = useAutherization();
+    const { t } = useTranslation();
 
     const res = {
         primaryOptions: [
             {
-                name: 'All Tickets',
+                name: t('modules.tickets.ticketViews.allTickets'),
                 primaryKey: 'all-tickets',
                 route: 'all-tickets',
                 showOption: authorize(TicketAccessRights.AllTickets)
             },
             {
-                name: 'All Pending',
+                name: t('modules.tickets.ticketViews.allPending'),
                 primaryKey: 'all-pending',
                 route: 'all-pending',
                 showOption: authorize(TicketAccessRights.AllPending)
             },
             {
-                name: 'All Resolved',
+                name: t('modules.tickets.ticketViews.allResolved'),
                 primaryKey: 'all-resolved',
                 route: 'all-resolved',
                 showOption: authorize(TicketAccessRights.AllResolved)
             },
             {
-                name: 'All Closed',
+                name: t('modules.tickets.ticketViews.allClosed'),
                 primaryKey: 'all-closed',
                 route: 'all-closed',
                 showOption: authorize(TicketAccessRights.AllResolved)
             },
             {
-                name: 'My Pending',
+                name: t('modules.tickets.ticketViews.myPending'),
                 primaryKey: 'my-pending',
                 route: 'my-pending',
                 showOption: authorize(TicketAccessRights.MyPending)
             },
             {
-                name: 'My Resolved',
+                name: t('modules.tickets.ticketViews.myResolved'),
                 primaryKey: 'my-resolved',
                 route: 'my-resolved',
                 showOption: authorize(TicketAccessRights.MyResolved)
             },
             {
-                name: 'My Closed',
+                name: t('modules.tickets.ticketViews.myClosed'),
                 primaryKey: 'my-closed',
                 route: 'my-closed',
                 showOption: authorize(TicketAccessRights.MyClosed)
@@ -97,13 +99,13 @@ const useViewOptions = () => {
         ],
         secondaryOptions: [
             {
-                name: 'Deleted Tickets',
+                name: t('modules.tickets.ticketViews.deletedTickets'),
                 primaryKey: 'deleted-tickets',
                 route: 'deleted-tickets',
                 renderIcon: () => <DeleteOutlined />
             },
             {
-                name: 'Spam Tickets',
+                name: t('modules.tickets.ticketViews.spamTickets'),
                 primaryKey: 'spam-tickets',
                 route: 'spam-tickets',
                 renderIcon: () => <ReportOutlined />
