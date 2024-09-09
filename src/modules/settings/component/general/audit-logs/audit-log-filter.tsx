@@ -1,6 +1,7 @@
 import React from "react";
 import { FormControl, InputLabel, Select, MenuItem, SelectChangeEvent, Box } from "@mui/material"
 import { useSearchParams } from "react-router-dom";
+import { AuditLogSelectUser } from "./audit-log-select-user-dropdown";
 
 const eventTypeMenuOptions = [
     {
@@ -21,19 +22,35 @@ const eventTypeMenuOptions = [
 
 export const AuditLogFilter = () => {
     const [searchParams, setSearchParams] = useSearchParams();
-    const [eventType, setEventType] = React.useState('');
 
-    const eventTypeHandleChange = (event: SelectChangeEvent) => {
-        setEventType(event.target.value as string);
+    const [eventType, setEventType] = React.useState(searchParams.get('eventType') || '');
+    const [user, setUser] = React.useState(searchParams.get('user') || '');
 
-        if (event.target.value.length) {
-            searchParams.set('eventType', event.target.value);
+    const selectUserHandleChange = React.useCallback((event: SelectChangeEvent) => {
+        const selectedUser = event.target.value 
+        setUser(selectedUser);
+
+        if (selectedUser) {
+            searchParams.set('user', selectedUser);
             setSearchParams(searchParams);
             return;
         }
-        searchParams.delete('searchText');
+        searchParams.delete('user');
         setSearchParams(searchParams);
-    };
+    }, [searchParams, setSearchParams])
+
+    const eventTypeHandleChange = React.useCallback((event: SelectChangeEvent) => {
+        const eventTypeValue = event.target.value;
+        setEventType(eventTypeValue);
+
+        if (eventTypeValue) {
+            searchParams.set('eventType', eventTypeValue);
+            setSearchParams(searchParams);
+            return;
+        }
+        searchParams.delete('eventType');
+        setSearchParams(searchParams);
+    }, [searchParams, setSearchParams]);
 
     return (
         <Box display="flex" gap={4} width={'75%'} justifyContent={'flex-end'}>
@@ -46,6 +63,9 @@ export const AuditLogFilter = () => {
                     label="Age"
                     onChange={eventTypeHandleChange}
                 >
+                    <MenuItem value="">
+                        <em>None</em>
+                    </MenuItem>
                     {
                         eventTypeMenuOptions.map((item) => (
                             <MenuItem key={item.key} value={item.key}>
@@ -54,24 +74,7 @@ export const AuditLogFilter = () => {
                     }
                 </Select>
             </FormControl>
-            <FormControl sx={{ width: '25%' }} size="small">
-                <InputLabel id="demo-select-small-label">Users</InputLabel>
-                <Select
-                    labelId="demo-select-small-label"
-                    id="demo-select-small-label"
-                    value={eventType}
-                    label="Age"
-                    onChange={eventTypeHandleChange}
-                >
-                    {
-                        eventTypeMenuOptions.map((item) => (
-                            <MenuItem key={item.key} value={item.key}>
-                                {item.value}
-                            </MenuItem>))
-                    }
-                </Select>
-            </FormControl>
-           
+            <AuditLogSelectUser selectUserHandleChange={selectUserHandleChange} user={user}/>
         </Box>
     )
 }
