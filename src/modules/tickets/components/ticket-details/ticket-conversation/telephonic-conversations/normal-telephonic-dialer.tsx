@@ -48,7 +48,8 @@ export const NormalTelephonicDialer = (props: ITelephonicDialerProps) => {
         mutateAsync({ exophone: formData.exotelAddedNumber, to: formData.phoneNumber })
             .then((res) => {
                 if (res.status) {
-                    showNotification({ message: 'Call places successfully', type: 'success' });
+                    showNotification({ message: 'Call placed successfully', type: 'success' });
+                    onClose();
                     return;
                 }
                 showNotification({ message: res.message, type: 'error' });
