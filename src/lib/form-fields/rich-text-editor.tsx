@@ -50,11 +50,12 @@ const modules = {
 }
 
 const formats = [
-    'header',
+    'header', 'font', 'size',
     'bold', 'italic', 'underline', 'strike', 'blockquote',
     'list', 'bullet', 'indent',
-    'link'
-]
+    'link',
+    'clean' // Clean formatting button
+];
 
 export const RichTextEditorField = (props: IRichTextEditorFieldProps) => {
     const { name, rules, className, disableAutoFocus = false, ...restProps } = props;

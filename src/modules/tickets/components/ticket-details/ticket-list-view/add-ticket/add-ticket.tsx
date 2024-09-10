@@ -15,7 +15,7 @@ export const AddTicket = (props: IAddTicketProps) => {
         <DrawerExtended
             anchor="right"
             header={t('modules.tickets.addTicket.headerLabel')}
-            width="800px"
+            width="600px"
             open={openAddTicketDrawer}
             onRenderContent={() => (
                 <AddTicketContainer toggleAddTicketDrawer={toggleAddTicketDrawer} />

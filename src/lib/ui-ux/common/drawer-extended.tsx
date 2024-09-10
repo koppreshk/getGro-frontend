@@ -8,7 +8,7 @@ interface IDrawerExtendedProps extends DrawerProps {
     /**
      * Default width of this drawer component is 420px, if not given any value, 420px is considered
      */
-    width?: '420px' | '500px' | '800px';
+    width?: '420px' | '500px' | '600px' | '800px';
     onRenderContent?: () => React.ReactNode;
 }
 

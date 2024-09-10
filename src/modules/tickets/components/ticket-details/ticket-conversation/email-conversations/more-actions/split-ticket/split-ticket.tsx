@@ -12,7 +12,7 @@ export const SplitTicket = (props: SplitTicketProps) => {
 
     return (
         <DrawerExtended
-            width="500px"
+            width="600px"
             header={"Split Ticket"}
             anchor="right"
             open={showSplitTicketDrawer}

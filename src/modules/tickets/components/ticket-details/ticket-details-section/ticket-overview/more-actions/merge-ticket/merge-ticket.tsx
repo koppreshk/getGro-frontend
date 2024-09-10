@@ -11,7 +11,7 @@ export const MergeTicket = (props: MergeTicketProps) => {
 
     return (
         <DrawerExtended
-            width="500px"
+            width="600px"
             header={"Merge Ticket"}
             anchor="right"
             open={showMergeTicketDrawer}
