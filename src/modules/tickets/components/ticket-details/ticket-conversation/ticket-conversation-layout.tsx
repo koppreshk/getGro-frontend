@@ -1,6 +1,5 @@
 import React, { useCallback } from "react";
 import { CustomTabPanel, FlexBox } from "lib/ui-ux"
-import styled from "styled-components"
 import { TicketConversationHeader } from "./ticket-conversation-header";
 import { useAppSelector } from "lib/hooks";
 import {
@@ -12,15 +11,60 @@ import {
     TicketLinksContainer,
     TicketHistoryContainer
 } from "modules/tickets/containers";
-import { Tabs, Tab } from "@mui/material";
+import { Tabs, Tab, styled as MUIStyled } from "@mui/material";
+import styled from "styled-components";
 
-const StyledTab = styled(Tab)`
-    &&{
-        padding: 12px 10px;
-        min-height: unset;
-        text-transform: unset;
-    }
-`;
+// const StyledTab = styled(Tab)`
+//     &&{
+//         padding: 12px 10px;
+//         min-height: unset;
+//         text-transform: unset;
+//     }
+// `;
+
+interface StyledTabProps {
+    label: string;
+}
+
+interface StyledTabsProps {
+    children?: React.ReactNode;
+    value: number;
+    onChange: (event: React.SyntheticEvent, newValue: number) => void;
+}
+
+const StyledTabs = MUIStyled((props: StyledTabsProps) => (
+    <Tabs
+        {...props}
+        TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
+    />
+))({
+    '& .MuiTabs-indicator': {
+        display: 'flex',
+        justifyContent: 'center',
+        backgroundColor: 'transparent',
+    },
+    '& .MuiTabs-indicatorSpan': {
+        maxWidth: 40,
+        width: '100%',
+        backgroundColor: '#635ee7',
+    },
+    background: '#f1f1f1'
+});
+
+const StyledTab = MUIStyled((props: StyledTabProps) => (
+    <Tab disableRipple {...props} />
+))(({ theme }) => ({
+    textTransform: 'none',
+    fontWeight: theme.typography.fontWeightRegular,
+    fontSize: theme.typography.pxToRem(15),
+    marginRight: theme.spacing(1),
+    '&.Mui-focusVisible': {
+        backgroundColor: 'rgba(100, 95, 228, 0.32)',
+    },
+    '&.Mui-selected': {
+        fontWeight: theme.typography.fontWeightMedium,
+    },
+}));
 
 export interface ITicketConversationLayoutProps {
 }
@@ -66,11 +110,21 @@ export const TicketConversationLayout = () => {
     return (
         <LayoutWrapper width="100%" flexDirection="column">
             <TicketConversationHeader ticketDetailsById={ticketDetailsById!} />
-            <Tabs value={value} onChange={handleChange} variant="fullWidth" aria-label="ticket-tabs" sx={{ minHeight: 'unset' }}>
+            <StyledTabs
+                value={value}
+                onChange={handleChange}
+                aria-label="styled tabs example"
+                sx={{ minHeight: 'unset' }}
+            >
                 <StyledTab label="Conversations" />
                 <StyledTab label="Links" />
                 <StyledTab label="History" />
-            </Tabs>
+            </StyledTabs>
+            {/* <Tabs value={value} onChange={handleChange} variant="fullWidth" aria-label="ticket-tabs" sx={{ minHeight: 'unset' }}>
+                <StyledTab label="Conversations" />
+                <StyledTab label="Links" />
+                <StyledTab label="History" />
+            </Tabs> */}
             <div style={{ height: 'calc(100% - 114px)' }}>
                 <CustomTabPanel value={value} index={0} height="100%">
                     {renderConversations()}

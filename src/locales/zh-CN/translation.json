@@ -10,6 +10,41 @@
         "slaDashboard": "SLA 仪表板"
       }
     },
+    "tickets": {
+      "ticketViews": {
+        "allTickets": "所有门票",
+        "allPending": "全部待定",
+        "allResolved": "全部解决",
+        "allClosed": "全部关闭",
+        "myPending": "我的待处理",
+        "myResolved": "我的解决方案",
+        "myClosed": "我的已关闭",
+        "deletedTickets": "已删除的门票",
+        "spamTickets": "垃圾邮件门票"
+      },
+      "addTicket": {
+        "headerLabel": "添加电子邮件票证",
+        "requesterEmail": "请求者电子邮件",
+        "subject": "主题",
+        "description": "描述",
+        "assignee": "受让人",
+        "assigneeOptions": {
+          "autoAssign": "自动分配",
+          "selectAgent": "选择代理"
+        },
+        "messages": {
+          "validation": {
+            "subject": "主题为必填项",
+            "requesterEmail": "请求者电子邮件为必填项",
+            "description": "描述为必填项"
+          },
+          "notification": {
+            "createTicketSuccess": "已成功创建新工单",
+            "createTicketError": "无法创建新工单"
+          }
+        }
+      }
+    },
     "configurations": {
       "moduleHeading": "配置",
       "configurationOptions": {
@@ -47,7 +82,7 @@
           },
           "autoAssignments": {
             "label": "自动分配",
-            "shortDescription": "建立自动化规则以有效地将工单分配给代理"
+            "shortDescription": "建立自动化规则以高效地将工单分配给代理"
           },
           "createTicketTriggers": {
             "label": "创建工单触发器",
@@ -82,6 +117,10 @@
           "satisfactionSurvey": {
             "label": "满意度调查",
             "shortDescription": "对每张票进行客户满意度调查，以收集反馈并衡量服务质量。"
+          },
+          "auditLogs": {
+            "label": "审核日志",
+            "shortDescription": "查看与票证相关的活动和访问日志"
           }
         },
         "apps": {
@@ -92,6 +131,17 @@
           }
         }
       }
+    }
+  },
+  "common": {
+    "buttonLabels": {
+      "cancel": "取消",
+      "save": "节省",
+      "submit": "提交"
+    },
+    "labels": {
+      "tags": "标签",
+      "priority": "优先事项"
     }
   }
 }

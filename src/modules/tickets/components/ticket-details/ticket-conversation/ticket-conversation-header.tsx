@@ -34,7 +34,7 @@ export const TicketConversationHeader = (props: { ticketDetailsById: Partial<ITi
     const { ticketDetailsById } = props;
     return (
         <HeaderWrapper width="100%" flexDirection="column">
-            <Typography variant="h5">Conversations</Typography>
+            <Typography variant="h5">Interactions</Typography>
             <FlexBox gap="5px">
                 <Typography variant="body2">with {ticketDetailsById?.customerName ? ticketDetailsById.customerName + ' via' : 'User via...'}</Typography>
                 <Platform variant="body2" $platform={ticketDetailsById?.source?.toLocaleLowerCase() ?? ''}>{ticketDetailsById?.source}</Platform>
