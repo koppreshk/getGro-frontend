@@ -1,6 +1,7 @@
 import { TicketsByView } from "modules/tickets/components";
 import { useFetchAllPendingTickets } from "modules/tickets/apis";
 import React from "react";
+import { ErrorMessage } from "lib/ui-ux";
 
 export const AllPendingTicketsContainer = React.memo(() => {
     const { data, isLoading, isFetching, error } = useFetchAllPendingTickets();
@@ -17,6 +18,6 @@ export const AllPendingTicketsContainer = React.memo(() => {
     }
 
     return (
-        <span>Error: {error as never}</span>
+        <ErrorMessage statusCode={error?.message} />
     )
 })

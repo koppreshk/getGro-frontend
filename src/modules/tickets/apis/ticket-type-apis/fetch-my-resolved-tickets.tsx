@@ -14,7 +14,7 @@ export const useFetchMyResolvedTickets = () => {
 
     const getMyResolvedTickets = React.useCallback(() => getData(`${TicketsEndPoint.FETCH_MY_RESOLVED}?${_pageNumber}items_per_page=${itemsPerPage ?? '10'}`).then((res) => res.json()), [_pageNumber, getData, itemsPerPage]);
 
-    return useQuery<{data: ITicketDetails[], total_pages: number}>({
+    return useQuery<{data: ITicketDetails[], total_pages: number}, { message: string }>({
         queryFn: getMyResolvedTickets,
         queryKey: [TicketsQueryKey.FETCH_MY_RESOLVED]
     })

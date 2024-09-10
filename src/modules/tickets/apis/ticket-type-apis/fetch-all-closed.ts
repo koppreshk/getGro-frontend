@@ -13,7 +13,7 @@ export const useFetchAllClosedTickets = () => {
     const _pageNumber = pageNumber === undefined ? '' : `page=${pageNumber ?? '1'}&`;
 
     const fetchAllClosedData = React.useCallback(() => getData(`${TicketsEndPoint.FETCH_ALL_CLOSED_TICKETS}?${_pageNumber}items_per_page=${itemsPerPage ?? '10'}`).then((res) => res.json()), [_pageNumber, getData, itemsPerPage]);
-    return useQuery<{ data: ITicketDetails[], total_pages: number }>({
+    return useQuery<{ data: ITicketDetails[], total_pages: number }, { message: string }>({
         queryKey: [TicketsQueryKey.FETCH_ALL_CLOSED_TICKETS, pageNumber, itemsPerPage],
         queryFn: fetchAllClosedData,
         keepPreviousData: true

@@ -1,3 +1,4 @@
+import { ErrorMessage } from "lib/ui-ux";
 import { useFetchAllClosedTickets } from "modules/tickets/apis";
 import { TicketsByView } from "modules/tickets/components";
 import React from "react";
@@ -17,6 +18,6 @@ export const AllClosedTicketsContainer = React.memo(() => {
     }
 
     return (
-        <span>Error: {error as never}</span>
+        <ErrorMessage statusCode={error?.message} />
     )
 })

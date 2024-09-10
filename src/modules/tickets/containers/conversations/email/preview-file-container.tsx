@@ -38,12 +38,13 @@ const PreviewFile = (props: { open: boolean; onClose: () => void; content: strin
             open={open}
             onClose={onClose}
             aria-labelledby="alert-dialog-title"
-            fullScreen
+            fullWidth
+            maxWidth={'lg'}
             aria-describedby="alert-dialog-description">
             <IconButton edge="start" color="inherit" onClick={onClose} sx={{ alignSelf: 'end', paddingRight: '20px' }}>
                 <Close />
             </IconButton>
-            <object data={`data:${contentType};base64,${content}`} type={contentType} width="100%" height="100%">
+            <object data={`data:${contentType};base64,${content}`} width="100%" height="100%">
                 <p>Alternative text</p>
             </object>
         </Dialog >
