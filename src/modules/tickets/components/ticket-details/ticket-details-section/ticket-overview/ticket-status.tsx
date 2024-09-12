@@ -6,6 +6,7 @@ import { FlexBox, HorizontalSeparator } from "lib/ui-ux"
 import { useState } from "react";
 import { TypographyName } from "./contact-info";
 import { IGenericResponse } from "modules/settings/apis/ticket-status/types";
+import { Trans } from "react-i18next";
 
 const StyledButton = styled(Button)`
     &&{
@@ -70,7 +71,7 @@ export const TicketStatus = (props: ITicketStatusProps) => {
         <div>
             {renderMode === 'card' ? null : <HorizontalSeparator $margin="0px 0px 10px 0px" />}
             <FlexBox flexDirection="column" padding="0px 20px" gap={'5px'}>
-                {renderMode === 'card' ? null : <TypographyName variant="h6">Status</TypographyName>}
+                {renderMode === 'card' ? null : <TypographyName variant="h6"><Trans i18nKey={'common.labels.status'} /></TypographyName>}
                 <StyledButton
                     variant="contained"
                     onClick={handleClick}

@@ -99,7 +99,7 @@ export const useFetchAgentPerformanceData = (dateRange: DateRange) => {
     const finalParam = filterType === 'queue' && filterValue ? `queue_id=${filterValue}` : filterType === 'user' && filterValue ? `user_id=${filterValue}` : '';
     const fetchAllAgentPerformanceData = React.useCallback(() => getData(`${DashboardEndPoint.AGENT_PERFORMANCE}?from=${parsedFromDate}&to=${parsedToDate}&type=${filterType}&${finalParam}`).then((res) => res.json()), [filterType, finalParam, getData, parsedFromDate, parsedToDate])
 
-    return useQuery<IAgentPerformance>({
+    return useQuery<IAgentPerformance, { message: string }>({
         queryKey: [DashboardQueryKeys.AGENT_PERFORMANCE, filterType, filterValue, parsedFromDate, parsedToDate],
         queryFn: fetchAllAgentPerformanceData
     });

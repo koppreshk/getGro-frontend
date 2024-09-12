@@ -141,7 +141,10 @@
         },
         "labels": {
             "tags": "Tags",
-            "priority": "Priority"
+            "priority": "Priority",
+            "status": "Status",
+            "assignee": "Assignee",
+            "ticketId": "Ticket Id"
         }
     }
 }

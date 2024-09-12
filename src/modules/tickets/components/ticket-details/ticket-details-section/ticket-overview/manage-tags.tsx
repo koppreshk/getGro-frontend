@@ -3,6 +3,7 @@ import { TypographyName } from "./contact-info";
 import styled from "styled-components";
 import { ITag } from "modules/settings/apis/tags";
 import { useCallback, useEffect, useState } from "react";
+import { Trans } from "react-i18next";
 
 export const StyledTags = styled(TagInput)`
     padding: 8px;
@@ -35,7 +36,7 @@ export const ManageTags = (props: IManageTagsProps) => {
 
     return (
         <FlexBox flexDirection="column" padding="0px 20px" gap={'5px'} width="100%">
-            <TypographyName variant="h6">Tags</TypographyName>
+            <TypographyName variant="h6"><Trans i18nKey={'common.labels.tags'} /></TypographyName>
             <StyledTags
                 tagInputs={tagItems}
                 gap={"15px"}

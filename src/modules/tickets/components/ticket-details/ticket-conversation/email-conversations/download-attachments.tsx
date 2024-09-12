@@ -36,7 +36,7 @@ const fileTypes = {
 };
 
 const getFileExtension = (contentType: string): string | undefined => {
-    return fileTypes[contentType.toLocaleLowerCase() as keyof typeof fileTypes];
+    return fileTypes[contentType.split(';')[0].toLocaleLowerCase() as keyof typeof fileTypes];
 };
 
 const StyledFlexBox = styled(FlexBox)`
