@@ -22,6 +22,12 @@
         "deletedTickets": "已删除的门票",
         "spamTickets": "垃圾邮件门票"
       },
+      "ticketDetails": {
+        "interactions": {
+          "header": "互动",
+          "subHeading": "和 {{customerName}} 通过"
+        }
+      },
       "addTicket": {
         "headerLabel": "添加电子邮件票证",
         "requesterEmail": "请求者电子邮件",
@@ -82,7 +88,7 @@
           },
           "autoAssignments": {
             "label": "自动分配",
-            "shortDescription": "建立自动化规则以高效地将工单分配给代理"
+            "shortDescription": "建立自动化规则以有效地将工单分配给代理"
           },
           "createTicketTriggers": {
             "label": "创建工单触发器",
@@ -141,7 +147,10 @@
     },
     "labels": {
       "tags": "标签",
-      "priority": "优先事项"
+      "priority": "优先事项",
+      "status": "地位",
+      "assignee": "受让人",
+      "ticketId": "票证编号"
     }
   }
 }

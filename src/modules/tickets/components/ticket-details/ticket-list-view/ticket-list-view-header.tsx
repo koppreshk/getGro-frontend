@@ -6,6 +6,8 @@ import styled from "styled-components";
 import { useMatch, useNavigate } from "react-router-dom";
 import React from "react";
 import { TicketViewActionButtons } from ".";
+import { Trans } from "react-i18next";
+import { convertToCamelCase } from "lib/utils";
 
 
 export const HeaderWrapper = styled(FlexBox)`
@@ -16,10 +18,7 @@ export const HeaderWrapper = styled(FlexBox)`
 
 export const TicketListViewHeader = () => {
     const match = useMatch('/tickets/:ticketType/:ticketId')
-    const header = match?.params.ticketType?.split('-').map((item) => {
-        const newString = item.charAt(0).toUpperCase() + item.slice(1);
-        return newString;
-    }).join(' ');
+    const header = convertToCamelCase(match?.params.ticketType || '')
     const navigate = useNavigate();
 
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
@@ -39,7 +38,7 @@ export const TicketListViewHeader = () => {
             <FlexBox>
                 <CustomIconButton onClick={() => { navigate(-1) }} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
                 <FlexBox alignItems="center" gap="5px">
-                    <Typography variant="h5">{header}</Typography>
+                    <Typography variant="h5"><Trans i18nKey={`modules.tickets.ticketViews.${header}`} /></Typography>
                     <FlexBox>
                         <RefreshButton />
                         <CustomIconButton tooltipProps={{ title: 'Sort' }} iconComponent={<SortIcon />} onClick={handleClick} />

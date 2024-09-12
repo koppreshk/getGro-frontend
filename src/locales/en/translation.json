@@ -22,6 +22,31 @@
                 "deletedTickets": "Deleted Tickets",
                 "spamTickets": "Spam Tickets"
             },
+            "ticketDetails": {
+                "interactions": {
+                    "header": "Interactions",
+                    "subHeading": "with {{customerName}} via",
+                    "conversations": {
+                        "label": "Conversations",
+                        "email": {
+                            "reply": "Reply",
+                            "collapseAll": "Collapse All",
+                            "expandAll": "Expand All",
+                            "printAll": "Print All",
+                            "from": "From",
+                            "to": "To",
+                            "subject": "Subject",
+                            "date": "Date"
+                        }
+                    },
+                    "links": {
+                        "label": "Links"
+                    },
+                    "history": {
+                        "label": "History"
+                    }
+                }
+            },
             "addTicket": {
                 "headerLabel": "Add Email Ticket",
                 "requesterEmail": "Requester Email",

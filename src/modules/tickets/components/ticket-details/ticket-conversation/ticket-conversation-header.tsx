@@ -3,6 +3,7 @@ import { Typography } from "@mui/material"
 import { HeaderWrapper } from "../ticket-list-view"
 import { FlexBox } from "lib/ui-ux"
 import { ITicketDetails } from "modules/tickets/apis";
+import { Trans } from "react-i18next";
 
 export const Platform = styled(Typography) <{ $platform: string }>`
    && {
@@ -32,11 +33,16 @@ export const Platform = styled(Typography) <{ $platform: string }>`
 
 export const TicketConversationHeader = (props: { ticketDetailsById: Partial<ITicketDetails> }) => {
     const { ticketDetailsById } = props;
+    const customerName = ticketDetailsById?.customerName ? ticketDetailsById.customerName : 'User'
     return (
         <HeaderWrapper width="100%" flexDirection="column">
-            <Typography variant="h5">Interactions</Typography>
+            <Typography variant="h5"><Trans i18nKey={"modules.tickets.ticketDetails.interactions.header"} /></Typography>
             <FlexBox gap="5px">
-                <Typography variant="body2">with {ticketDetailsById?.customerName ? ticketDetailsById.customerName + ' via' : 'User via...'}</Typography>
+                <Typography variant="body2">
+                    <Trans i18nKey={"modules.tickets.ticketDetails.interactions.subHeading"} customerName={customerName} >
+                        with {{ customerName }} via
+                    </Trans>
+                </Typography>
                 <Platform variant="body2" $platform={ticketDetailsById?.source?.toLocaleLowerCase() ?? ''}>{ticketDetailsById?.source}</Platform>
             </FlexBox>
         </HeaderWrapper>

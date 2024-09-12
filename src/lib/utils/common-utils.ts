@@ -37,6 +37,16 @@ export const toCamelCasedKeysFromUnderScores = (obj: { [key: string]: any }) => 
         }, {} as any))
 };
 
+export const convertToCamelCase = (str: string, splitter = '-') => {
+    return str
+        .toLowerCase()
+        .split(splitter)
+        .map((word, index) =>
+            index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1)
+        )
+        .join('');
+};
+
 export const capitalizeFirstLetter = (string: string, splitter?: string) => {
     const words = string.split(splitter ?? " ");
 

@@ -13,6 +13,7 @@ import {
 } from "modules/tickets/containers";
 import { Tabs, Tab, styled as MUIStyled } from "@mui/material";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 
 // const StyledTab = styled(Tab)`
 //     &&{
@@ -77,7 +78,7 @@ export const TicketConversationLayout = () => {
     const ticketDetailsById = useAppSelector(state => state.tickets.ticketDetails);
     const ticketSource = ticketDetailsById && ticketDetailsById.source?.toLocaleLowerCase();
     const [value, setValue] = React.useState(0);
-
+    const { t } = useTranslation();
     const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
@@ -116,9 +117,9 @@ export const TicketConversationLayout = () => {
                 aria-label="styled tabs example"
                 sx={{ minHeight: 'unset' }}
             >
-                <StyledTab label="Conversations" />
-                <StyledTab label="Links" />
-                <StyledTab label="History" />
+                <StyledTab label={t("modules.tickets.ticketDetails.interactions.conversations.label")} />
+                <StyledTab label={t("modules.tickets.ticketDetails.interactions.links.label")} />
+                <StyledTab label={t("modules.tickets.ticketDetails.interactions.history.label")} />
             </StyledTabs>
             {/* <Tabs value={value} onChange={handleChange} variant="fullWidth" aria-label="ticket-tabs" sx={{ minHeight: 'unset' }}>
                 <StyledTab label="Conversations" />

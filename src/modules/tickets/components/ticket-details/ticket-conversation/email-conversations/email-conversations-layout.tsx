@@ -9,6 +9,7 @@ import { toCamelCasedKeysFromUnderScores } from "lib/utils";
 import './printable-content.css';
 import { EmailThreadOptions } from "./email-thread-options";
 import { FormProvider, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 // import { useSocket } from "lib/providers/socket";
 
 const LayoutWrapper = styled(FlexBox)`
@@ -41,6 +42,7 @@ export const EmailConversationLayout = (props: { conversationsData: ITicketById,
     const [emailThreads, setEmailThreads] = useState(casedConversation);
     const { showEditor: showReplyEditor, toggleEditorView: toggleReplyEditorView } = useEmailActionHelpers();
     const { showEditor, toggleEditorView } = useEmailActionHelpers();
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (casedConversation.length !== emailThreads.length) {
@@ -99,11 +101,11 @@ export const EmailConversationLayout = (props: { conversationsData: ITicketById,
                         {!isCollapsedAll ? <EmailThreadOptions onReplyClick={onReplyClick} onForwardClick={onForwardClick} /> : null}
                         {
                             isCollapsedAll ?
-                                <CustomIconButton className="no-print" tooltipProps={{ title: 'Expand all' }} iconComponent={<UnfoldMore />} sx={{ width: '24px', height: '24px' }} onClick={onExpandAll} />
+                                <CustomIconButton className="no-print" tooltipProps={{ title: t('modules.tickets.ticketDetails.interactions.conversations.email.expandAll') }} iconComponent={<UnfoldMore />} sx={{ width: '24px', height: '24px' }} onClick={onExpandAll} />
                                 :
-                                <CustomIconButton className="no-print" tooltipProps={{ title: 'Collapse all' }} iconComponent={<UnfoldLess />} sx={{ width: '24px', height: '24px' }} onClick={onCollapseAll} />
+                                <CustomIconButton className="no-print" tooltipProps={{ title: t('modules.tickets.ticketDetails.interactions.conversations.email.collapseAll') }} iconComponent={<UnfoldLess />} sx={{ width: '24px', height: '24px' }} onClick={onCollapseAll} />
                         }
-                        <CustomIconButton tooltipProps={{ title: 'Print all' }} iconComponent={<Print />} sx={{ width: '24px', height: '24px' }} onClick={onPrintHandler} />
+                        <CustomIconButton tooltipProps={{ title: t('modules.tickets.ticketDetails.interactions.conversations.email.printAll') }} iconComponent={<Print />} sx={{ width: '24px', height: '24px' }} onClick={onPrintHandler} />
                     </FlexBox>
                 </FlexBox>
                 <EmailConversations

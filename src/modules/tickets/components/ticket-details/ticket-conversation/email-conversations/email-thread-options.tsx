@@ -1,6 +1,7 @@
 import { TurnLeft, TurnRight } from "@mui/icons-material"
 import { Tooltip, IconButton } from "@mui/material"
 import { useMemo } from "react"
+import { useTranslation } from "react-i18next";
 
 interface IEmailThreadOptionsProps {
     onReplyClick: React.MouseEventHandler<HTMLButtonElement>;
@@ -9,18 +10,20 @@ interface IEmailThreadOptionsProps {
 
 export const EmailThreadOptions = (props: IEmailThreadOptionsProps) => {
     const { onReplyClick, onForwardClick } = props;
+    const { t } = useTranslation();
+
     const threadOptions = useMemo(() => ([
         {
-            title: 'Reply',
+            title: t('modules.tickets.ticketDetails.interactions.conversations.email.reply'),
             onClick: onReplyClick,
             renderIcon: () => <TurnLeft />
         },
         {
-            title: 'Forward',
+            title: t('modules.tickets.ticketDetails.interactions.conversations.email.forward'),
             onClick: onForwardClick,
             renderIcon: () => <TurnRight />
         }
-    ]), [onForwardClick, onReplyClick])
+    ]), [onForwardClick, onReplyClick, t])
 
     return (
         <>
