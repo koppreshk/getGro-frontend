@@ -38,7 +38,7 @@ export const EmailConversationLayout = (props: { conversationsData: ITicketById,
     const casedConversation = conversations.map((item) => ({ ...toCamelCasedKeysFromUnderScores(item), isCollapsed: true })) as IEmailConversations[];
     casedConversation[casedConversation.length - 1].isCollapsed = false //making the last thread open 
     // const { socket } = useSocket();
-    const formContext = useForm<IEmailFormFields>();
+    const formContext = useForm<IEmailFormFields>({ mode: 'onChange', shouldUnregister: true });
     const [emailThreads, setEmailThreads] = useState(casedConversation);
     const { showEditor: showReplyEditor, toggleEditorView: toggleReplyEditorView } = useEmailActionHelpers();
     const { showEditor, toggleEditorView } = useEmailActionHelpers();

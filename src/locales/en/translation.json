@@ -36,7 +36,9 @@
                             "from": "From",
                             "to": "To",
                             "subject": "Subject",
-                            "date": "Date"
+                            "date": "Date",
+                            "uploadFile": "Upload file(s)",
+                            "insertTemplete": "Insert Template"
                         }
                     },
                     "links": {
@@ -162,7 +164,10 @@
         "buttonLabels": {
             "cancel": "Cancel",
             "save": "Save",
-            "submit": "Submit"
+            "submit": "Submit",
+            "refresh": "Refresh",
+            "send": "Send",
+            "delete": "Delete"
         },
         "labels": {
             "tags": "Tags",

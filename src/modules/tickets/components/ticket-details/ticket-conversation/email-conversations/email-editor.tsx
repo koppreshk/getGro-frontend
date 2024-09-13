@@ -6,11 +6,12 @@ import { Delete, Send } from "@mui/icons-material";
 import { Avatar, Button, CircularProgress, IconButton } from "@mui/material";
 import { chooseRandomColors, getInitialsByName } from "lib/utils";
 import { FlexBox } from "lib/ui-ux";
-import { FileUploadField, RichTextEditorField } from "lib/form-fields";
+import { FileUploadField, RichTextEditorField, validateAtLeastOneChar } from "lib/form-fields";
 import { IEmailFormFields } from "./email-conversations";
 import { UploadedAttachmentsPreview } from "./uploaded-attachments-preview";
 import { EmailHeaderOptions } from "./email-header-options";
 import { InsertTemplate } from "./insert-template";
+import { useTranslation } from "react-i18next";
 
 interface IEmailEditorProps {
     from: string;
@@ -26,6 +27,9 @@ const StyledForwardCardContainer = styled(FlexBox)`
     border-radius: 16px;
     &:hover, &:focus-within {
         box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    }
+    .editor-error-message {
+        margin-left: 20px
     }
 `;
 
@@ -46,6 +50,7 @@ export const EmailEditor = (props: IEmailEditorProps) => {
     const { watch } = useFormContext<IEmailFormFields>();
     const attachmets = watch(`${editorType}.attachments`);
     const containerRef = useRef<HTMLDivElement>(null);
+
     React.useEffect(() => {
         if (containerRef?.current) {
             containerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -58,7 +63,7 @@ export const EmailEditor = (props: IEmailEditorProps) => {
             <StyledForwardCardContainer ref={containerRef} flexDirection="column" gap="10px" width="calc(100% - 60px)">
                 <div>
                     {showEmailHeaderOptions ? <EmailHeaderOptions editorType={editorType} /> : null}
-                    <RichTextEditorField name={`${editorType}.editor`} />
+                    <RichTextEditorField name={`${editorType}.editor`} rules={{ required: 'This field is required', validate: validateAtLeastOneChar }} />
                     <FlexBox gap="8px" padding="0px 16px" flexWrap="wrap">
                         {attachmets?.selectedFiles.map((item) => (<UploadedAttachmentsPreview item={item} attachmets={attachmets} />))}
                     </FlexBox>
@@ -71,16 +76,17 @@ export const EmailEditor = (props: IEmailEditorProps) => {
 
 const EmailFooterOptions = (props: Pick<IEmailEditorProps, 'onSendClick' | 'onCancelClick' | 'editorType' | 'isMutationLoading'>) => {
     const { editorType, isMutationLoading, onCancelClick, onSendClick } = props;
+    const { t } = useTranslation();
     return (
         <FlexBox justifyContent="space-between" padding="0px 16px 10px">
             <FlexBox gap="5px">
-                <RoundedSendButton disabled={isMutationLoading} variant="contained" endIcon={isMutationLoading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : <Send />} title="Send" onClick={onSendClick}>
-                    Send
+                <RoundedSendButton disabled={isMutationLoading} variant="contained" endIcon={isMutationLoading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : <Send />} title={t("common.buttonLabels.send")} onClick={onSendClick}>
+                    {t("common.buttonLabels.send")}
                 </RoundedSendButton>
                 <FileUploadField name={`${editorType}.attachments`} multiple readMode="readAsDataURL" />
                 <InsertTemplate editorType={editorType} />
             </FlexBox >
-            <IconButton onClick={onCancelClick} title="Delete">
+            <IconButton onClick={onCancelClick} title={t("common.buttonLabels.delete")}>
                 <Delete />
             </IconButton>
         </FlexBox >

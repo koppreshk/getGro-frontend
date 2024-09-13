@@ -4,6 +4,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import { CustomIconButton, FlexBox } from 'lib/ui-ux';
 import { useCallback, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 const templates = [
     {
@@ -81,6 +82,7 @@ export const InsertTemplate = (props: { editorType: string }) => {
     const [selectedTemplateIndex, setTemplateIndex] = useState(0);
     const { setValue } = useFormContext();
     const open = Boolean(anchorEl);
+    const { t } = useTranslation();
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -105,7 +107,7 @@ export const InsertTemplate = (props: { editorType: string }) => {
 
     return (
         <>
-            <IconButton onClick={handleClick} title="Insert Templete">
+            <IconButton onClick={handleClick} title={t('modules.tickets.ticketDetails.interactions.conversations.email.insertTemplate')}>
                 <InsertCommentOutlinedIcon />
             </IconButton>
             <Dialog
