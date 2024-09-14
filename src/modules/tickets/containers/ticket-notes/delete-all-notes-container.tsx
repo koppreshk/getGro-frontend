@@ -7,7 +7,7 @@ import { useAppSelector } from "lib/hooks";
 
 export const DeleteAllNotesContainer = () => {
     const ticketId = useAppSelector((state) => state.tickets.ticketDetails?.ticketId)
-    const { mutateAsync } = useDeleteAllNotes();
+    const { mutateAsync, isLoading } = useDeleteAllNotes();
     const { showNotification } = useNotifications();
     const [open, setOpen] = React.useState(false);
 
@@ -30,6 +30,7 @@ export const DeleteAllNotesContainer = () => {
             <CustomIconButton onClick={toggleDeleteDialogBox} iconComponent={<Delete />} tooltipProps={{ title: "Delete All Notes", arrow: true }} />
             <NegativeActionDialog
                 open={open}
+                isLoading={isLoading}
                 content='Do you want to delete all these notes permanently?'
                 title='Delete All Notes'
                 negativeActionLabel="Yes, Delete"

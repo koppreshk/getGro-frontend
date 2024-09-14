@@ -7,7 +7,7 @@ import { DeleteTagContent } from "modules/settings/component/ticket-configuratio
 
 export const DeleteTicketStatusContainer = (props: { id: number }) => {
     const { id } = props;
-    const { mutateAsync } = useDeleteTag();
+    const { mutateAsync, isLoading } = useDeleteTag();
     const { showNotification } = useNotifications();
     const [open, setOpen] = React.useState(false);
 
@@ -29,6 +29,7 @@ export const DeleteTicketStatusContainer = (props: { id: number }) => {
             <CustomIconButton iconComponent={<Delete />} tooltipProps={{ title: 'Delete' }} key={id} onClick={toggleDeleteDialogBox}/>
             <NegativeActionDialog
                 open={open}
+                isLoading={isLoading}
                 content={<DeleteTagContent />}
                 title='Delete Tag'
                 negativeActionLabel="Yes, Delete"

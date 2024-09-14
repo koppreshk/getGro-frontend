@@ -7,11 +7,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useTranslation } from 'react-i18next';
+import { LoadingButton } from '.';
 
 interface INegativeActionDialogProps {
     title: string;
     content: string | React.ReactNode;
     open: boolean;
+    isLoading: boolean;
     negativeActionLabel?: string;
     onClose: () => void;
     onNegativeActionClick?: (ev: React.MouseEvent<HTMLButtonElement>) => void;
@@ -19,7 +21,7 @@ interface INegativeActionDialogProps {
 
 export const NegativeActionDialog = (props: INegativeActionDialogProps) => {
     const { t } = useTranslation();
-    const { open, title, content, negativeActionLabel = t("common.buttonLabels.delete"), onClose, onNegativeActionClick } = props;
+    const { open, title, content, isLoading, negativeActionLabel = t("common.buttonLabels.delete"), onClose, onNegativeActionClick } = props;
 
     return (
         <React.Fragment>
@@ -36,7 +38,7 @@ export const NegativeActionDialog = (props: INegativeActionDialogProps) => {
                 </DialogContent>
                 <DialogActions sx={{ padding: '16px 24px' }}>
                     <Button onClick={onClose} variant='outlined' sx={{ mr: '8px' }}>{t("common.buttonLabels.cancel")}</Button>
-                    <Button type="submit" variant='contained' color='error' onClick={onNegativeActionClick}>{negativeActionLabel}</Button>
+                    <LoadingButton isLoading={isLoading} type="submit" variant='contained' color='error' onClick={onNegativeActionClick}>{negativeActionLabel}</LoadingButton>
                 </DialogActions>
             </Dialog>
         </React.Fragment>
