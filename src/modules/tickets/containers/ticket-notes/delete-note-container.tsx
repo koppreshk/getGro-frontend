@@ -5,7 +5,7 @@ import { CustomIconButton, NegativeActionDialog } from "lib/ui-ux";
 import { useDeleteNote } from "modules/tickets/apis";
 
 export const DeleteNoteContainer = (props: { id: number }) => {
-    const { mutateAsync } = useDeleteNote();
+    const { mutateAsync, isLoading } = useDeleteNote();
     const { showNotification } = useNotifications();
     const [open, setOpen] = React.useState(false);
 
@@ -28,6 +28,7 @@ export const DeleteNoteContainer = (props: { id: number }) => {
             <CustomIconButton onClick={toggleDeleteDialogBox} iconComponent={<Delete />} tooltipProps={{ title: "Delete Note", arrow: true }} />
             <NegativeActionDialog
                 open={open}
+                isLoading={isLoading}
                 content='Do you want to delete this note permanently?'
                 title='Delete Note'
                 negativeActionLabel="Yes, Delete"

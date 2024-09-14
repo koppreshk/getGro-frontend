@@ -5,7 +5,7 @@ import { CustomIconButton, NegativeActionDialog } from "lib/ui-ux";
 import { useDeleteExophoneNumber } from "modules/settings/apis/marketplace/exotel";
 
 export const DeleteExophone = (props: { id: number }) => {
-    const { mutateAsync } = useDeleteExophoneNumber();
+    const { mutateAsync, isLoading } = useDeleteExophoneNumber();
     const { showNotification } = useNotifications();
     const [open, setOpen] = React.useState(false);
 
@@ -28,6 +28,7 @@ export const DeleteExophone = (props: { id: number }) => {
             <CustomIconButton onClick={toggleDeleteDialogBox} iconComponent={<Delete />} tooltipProps={{ title: "Delete Exophone", arrow: true }} />
             <NegativeActionDialog
                 open={open}
+                isLoading={isLoading}
                 content='Do you want to delete this exophone number permanently?'
                 title='Delete Exophone Number'
                 negativeActionLabel="Yes, Delete"

@@ -12,6 +12,7 @@ export const SpamTicket = (props: MergeTicketProps) => {
         <>
             <NegativeActionDialog
                 open={showDialog}
+                isLoading={false}
                 content={<SpamTicketContent />}
                 title='Spam Ticket'
                 negativeActionLabel="Mark Ticket As Span"

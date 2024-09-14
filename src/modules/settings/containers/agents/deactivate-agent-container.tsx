@@ -4,7 +4,7 @@ import { DeactivateAgent, DeactivateAgentDialogFormFields } from "modules/settin
 import { useNotifications } from "lib";
 
 export const DeactivateAgentContainer = (props: { id: number | string, canDeactivate: boolean }) => {
-    const { mutateAsync } = useDeactivateUser();
+    const { mutateAsync, isLoading } = useDeactivateUser();
     const { showNotification } = useNotifications();
 
     const onDeleteHandler = React.useCallback((formData: DeactivateAgentDialogFormFields) => {
@@ -22,6 +22,6 @@ export const DeactivateAgentContainer = (props: { id: number | string, canDeacti
     }, [mutateAsync, props.canDeactivate, props.id, showNotification]);
 
     return (
-        <DeactivateAgent onDeleteHandler={onDeleteHandler} canDeactivate={props.canDeactivate} />
+        <DeactivateAgent onDeleteHandler={onDeleteHandler} canDeactivate={props.canDeactivate} mutationLoading={isLoading}/>
     )
 }

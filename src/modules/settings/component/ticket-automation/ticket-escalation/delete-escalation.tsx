@@ -5,7 +5,7 @@ import { CustomIconButton, NegativeActionDialog } from "lib/ui-ux";
 import { useDeleteEscalation } from "modules/settings/apis/ticket-automation/escalations";
 
 export const DeleteEscalation = (props: { id: number }) => {
-    const { mutateAsync } = useDeleteEscalation();
+    const { mutateAsync, isLoading } = useDeleteEscalation();
     const { showNotification } = useNotifications();
     const [open, setOpen] = React.useState(false);
 
@@ -28,6 +28,7 @@ export const DeleteEscalation = (props: { id: number }) => {
             <CustomIconButton onClick={toggleDeleteDialogBox} iconComponent={<Delete />} tooltipProps={{ title: "Delete Escalation", arrow: true }} />
             <NegativeActionDialog
                 open={open}
+                isLoading={isLoading}
                 content='Do you want to delete this escalation permanently?'
                 title='Delete Escalation'
                 negativeActionLabel="Yes, Delete"

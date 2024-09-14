@@ -6,7 +6,7 @@ import { Button } from "@mui/material";
 import { DeleteForever } from "@mui/icons-material";
 
 export const DeleteWhatsAppConfigurations = () => {
-    const { mutateAsync } = useDeleteWhatsAppConfiguration();
+    const { mutateAsync, isLoading } = useDeleteWhatsAppConfiguration();
     const { showNotification } = useNotifications();
     const [open, setOpen] = React.useState(false);
 
@@ -27,6 +27,7 @@ export const DeleteWhatsAppConfigurations = () => {
             <Button variant="outlined" size="medium" onClick={toggleDeleteDialogBox} startIcon={<DeleteForever />}>Uninstall</Button>
             <NegativeActionDialog
                 open={open}
+                isLoading={isLoading}
                 content='Do you want to uninstall this WhatsApp Configuration?'
                 title='Uninstall WhatsApp Configuration'
                 negativeActionLabel="Yes, Delete"

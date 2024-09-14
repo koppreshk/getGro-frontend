@@ -12,6 +12,7 @@ export const DeleteTicket = (props: MergeTicketProps) => {
         <>
             <NegativeActionDialog
                 open={showDialog}
+                isLoading={false}
                 content={<DeleteTicketContent />}
                 title='Delete Ticket'
                 negativeActionLabel="Yes, Delete"
