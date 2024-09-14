@@ -40,7 +40,7 @@ const PreviewFile = (props: { open: boolean; onClose: () => void; content: strin
             aria-labelledby="alert-dialog-title"
             fullWidth
             maxWidth={'lg'}
-            sx={{ width: '-webkit-fill-available' }}
+            PaperProps={{ sx: { height: '-webkit-fill-available' } }}
             aria-describedby="alert-dialog-description">
             <IconButton
                 aria-label="close"
