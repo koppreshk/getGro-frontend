@@ -57,6 +57,17 @@ const formats = [
     'clean' // Clean formatting button
 ];
 
+export const validateAtLeastOneChar = (value: string) => {
+    const plainText = value
+        .replace(/<\/?[^>]+(>|$)/g, '') // Remove all HTML tags
+        .replace(/\s+/g, '') // Remove extra whitespace
+        .trim();
+
+    if (plainText.length === 0) {
+        return 'Please enter at least one character.'
+    }
+}
+
 export const RichTextEditorField = (props: IRichTextEditorFieldProps) => {
     const { name, rules, className, disableAutoFocus = false, ...restProps } = props;
     const { formState: { errors }, control } = useFormContext();

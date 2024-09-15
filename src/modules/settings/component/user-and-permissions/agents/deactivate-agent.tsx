@@ -10,11 +10,12 @@ import { ReassignForm } from "./reassign-form";
 
 interface DeactivateAgentDialogProps {
     canDeactivate: boolean;
+    mutationLoading: boolean;
     onDeleteHandler: (formData: DeactivateAgentDialogFormFields) => void;
 }
 
 export const DeactivateAgent = (props: DeactivateAgentDialogProps) => {
-    const { onDeleteHandler } = props;
+    const { onDeleteHandler, mutationLoading } = props;
     const [open, setOpen] = React.useState(false);
 
     const toggleDeleteDialogBox = () => {
@@ -26,7 +27,7 @@ export const DeactivateAgent = (props: DeactivateAgentDialogProps) => {
             <CustomIconButton
                 iconComponent={<NotInterestedOutlined />}
                 tooltipProps={{ title: 'Deactivate' }} onClick={toggleDeleteDialogBox} />
-            <DeactivateAgentDialog open={open} onDeleteHandler={onDeleteHandler} toggleDeleteDialogBox={toggleDeleteDialogBox} canDeactivate={props.canDeactivate} />
+            <DeactivateAgentDialog open={open} mutationLoading={mutationLoading} onDeleteHandler={onDeleteHandler} toggleDeleteDialogBox={toggleDeleteDialogBox} canDeactivate={props.canDeactivate} />
         </>
     )
 }
@@ -38,7 +39,7 @@ export interface DeactivateAgentDialogFormFields {
 }
 
 const DeactivateAgentDialog = (props: DeactivateAgentDialogProps & { open: boolean, toggleDeleteDialogBox: () => void }) => {
-    const { open, canDeactivate, onDeleteHandler, toggleDeleteDialogBox } = props;
+    const { open, canDeactivate, mutationLoading, onDeleteHandler, toggleDeleteDialogBox } = props;
     const form = useForm<DeactivateAgentDialogFormFields>({
         defaultValues: {
             deactivateAgent: 'remove_assignee_and_groups'
@@ -53,6 +54,7 @@ const DeactivateAgentDialog = (props: DeactivateAgentDialogProps & { open: boole
         <FormProvider {...form}>
             <NegativeActionDialog
                 open={open}
+                isLoading={mutationLoading}
                 content={canDeactivate ? <DeactivateAgentWithNoTickets /> : <DeactivateAgentForm />}
                 title='Deactivate Agent'
                 negativeActionLabel="Deactivate"

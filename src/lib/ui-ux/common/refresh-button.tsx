@@ -2,10 +2,11 @@ import { useQueryClient } from "react-query";
 import { RefreshOutlined } from "@mui/icons-material"
 import { CustomIconButton } from "./custom-icon-button"
 import { useCallback } from "react";
+import { useTranslation } from "react-i18next";
 
 export const RefreshButton = () => {
     const queryClient = useQueryClient();
-
+    const { t } = useTranslation();
     const refreshPage = useCallback(async () => {
         await queryClient.refetchQueries({ active: true })
     }, [queryClient])
@@ -15,7 +16,7 @@ export const RefreshButton = () => {
             <CustomIconButton
                 onClick={refreshPage}
                 iconComponent={<RefreshOutlined />}
-                tooltipProps={{ title: 'Refresh' }} />
+                tooltipProps={{ title: t('common.buttonLabels.refresh') }} />
         </>
     )
 }

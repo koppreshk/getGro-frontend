@@ -6,7 +6,7 @@ import { useDeleteExotelConfiguration } from "modules/settings/apis/marketplace/
 import { DeleteForever } from '@mui/icons-material';
 
 export const DeleteExotelConfigurations = () => {
-    const { mutateAsync } = useDeleteExotelConfiguration();
+    const { mutateAsync, isLoading } = useDeleteExotelConfiguration();
     const { showNotification } = useNotifications();
     const [open, setOpen] = React.useState(false);
 
@@ -27,6 +27,7 @@ export const DeleteExotelConfigurations = () => {
             <Button variant="outlined" size="medium" onClick={toggleDeleteDialogBox} startIcon={<DeleteForever />}>Uninstall</Button>
             <NegativeActionDialog
                 open={open}
+                isLoading={isLoading}
                 content='Do you want to uninstall this Exotel Configuration?'
                 title='Uninstall Exotel Configuration'
                 negativeActionLabel="Yes, Delete"

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { FormProvider, useForm } from "react-hook-form";
 import { Button, Grid, Typography } from "@mui/material";
-import { SelectField, TagInputField, TextboxFieldWithLabel } from "lib/form-fields";
+import { SelectField, TagInputField, TextboxFieldWithLabel, validateAtLeastOneChar } from "lib/form-fields";
 import { FlexBox, LoadingButton } from "lib/ui-ux";
 import { IPriorities } from "modules/tickets/apis";
 import { StyledRichTextEditor } from "modules/settings/component/ticket-configurations/templates/add-templates-form";
@@ -67,7 +67,7 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
                     </Grid>
                     <Grid item xs={12}>
                         <Typography variant="h6" sx={{ mb: '5px' }}>{t("modules.tickets.addTicket.description")}</Typography>
-                        <StyledRichTextEditor name={`template`} disableAutoFocus rules={{ required: t("modules.tickets.addTicket.messages.validation.description") }} />
+                        <StyledRichTextEditor name={`template`} disableAutoFocus rules={{ required: t("modules.tickets.addTicket.messages.validation.description"), validate: validateAtLeastOneChar }} />
                     </Grid>
                     <Grid item xs={12}>
                         <Typography variant="h6" sx={{ mb: '5px' }}>{t("modules.tickets.addTicket.assignee")}</Typography>

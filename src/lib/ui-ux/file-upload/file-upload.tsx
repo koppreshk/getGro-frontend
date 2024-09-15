@@ -4,6 +4,7 @@ import { IFileUploadProps, IFileInfo } from './file-upload.types';
 import { getAllFilesInfo, useFileRepository } from './utils';
 import { IconButton } from '@mui/material';
 import { AttachFileOutlined } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 const DefaultFileInput = styled.input.attrs({
     type: 'file'
@@ -24,6 +25,7 @@ export const FileUpload = React.memo((props: IFileUploadProps) => {
         const { current } = inputRef;
         current?.click();
     }, []);
+    const { t } = useTranslation();
 
     const loadSelectedFiles = React.useCallback(async (fileList: File[] | null) => {
         if (!fileList || fileList.length === 0) {
@@ -44,7 +46,7 @@ export const FileUpload = React.memo((props: IFileUploadProps) => {
 
     return hidden ? null : (
         <>
-            <IconButton onClick={_onButtonClick} title="Upload files(s)">
+            <IconButton onClick={_onButtonClick} title={t('modules.tickets.ticketDetails.interactions.conversations.email.uploadFile')}>
                 <AttachFileOutlined />
             </IconButton>
             <DefaultFileInput id={id} type="file" ref={inputRef} accept={accept} multiple={multiple} onChange={_onFileSelect} />

@@ -40,6 +40,7 @@ const PreviewFile = (props: { open: boolean; onClose: () => void; content: strin
             aria-labelledby="alert-dialog-title"
             fullWidth
             maxWidth={'lg'}
+            PaperProps={{ sx: { height: '-webkit-fill-available' } }}
             aria-describedby="alert-dialog-description">
             <IconButton
                 aria-label="close"
@@ -52,7 +53,7 @@ const PreviewFile = (props: { open: boolean; onClose: () => void; content: strin
             >
                 <Close />
             </IconButton>
-            <object data={`data:${contentType.split(';')[0]};base64,${content}`}>
+            <object data={`data:${contentType.split(';')[0]};base64,${content}`} style={{ height: '100%' }}>
                 <p>Alternative text</p>
             </object>
         </Dialog >

@@ -5,7 +5,7 @@ import { CustomIconButton, NegativeActionDialog } from "lib/ui-ux";
 import { AutoMationType, useDeleteAssignment } from "modules/settings/apis/ticket-automation";
 
 export const DeleteAssignment = (props: { id: number, autoMationType: AutoMationType }) => {
-    const { mutateAsync } = useDeleteAssignment(props.autoMationType);
+    const { mutateAsync, isLoading } = useDeleteAssignment(props.autoMationType);
     const { showNotification } = useNotifications();
     const [open, setOpen] = React.useState(false);
 
@@ -28,6 +28,7 @@ export const DeleteAssignment = (props: { id: number, autoMationType: AutoMation
             <CustomIconButton onClick={toggleDeleteDialogBox} iconComponent={<Delete />} tooltipProps={{ title: "Delete Rule", arrow: true }} />
             <NegativeActionDialog
                 open={open}
+                isLoading={isLoading}
                 content='Do you want to delete this assignment config permanently?'
                 title='Delete assignment config'
                 negativeActionLabel="Yes, Delete"

@@ -5,7 +5,7 @@ import { CustomIconButton, NegativeActionDialog } from "lib/ui-ux";
 import { useDeleteEmail } from "modules/settings/apis";
 
 export const DeleteEmail = (props: { id: number }) => {
-    const { mutateAsync } = useDeleteEmail();
+    const { mutateAsync, isLoading } = useDeleteEmail();
     const { showNotification } = useNotifications();
     const [open, setOpen] = React.useState(false);
 
@@ -28,6 +28,7 @@ export const DeleteEmail = (props: { id: number }) => {
             <CustomIconButton onClick={toggleDeleteDialogBox} iconComponent={<Delete />} tooltipProps={{ title: "Delete Email", arrow: true }} />
             <NegativeActionDialog
                 open={open}
+                isLoading={isLoading}
                 content='Do you want to delete this Email config permanently?'
                 title='Delete Email config'
                 negativeActionLabel="Yes, Delete"
