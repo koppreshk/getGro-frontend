@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import { Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
-import { ModuleKeys } from "./permissions";
+import { ModuleKeys } from "./types";
+import { SwitchField } from "lib/form-fields";
 
 interface ModulesProps {
     moduleName: string;
     moduleKey: ModuleKeys,
+    hideModule?: boolean;
     isSelected: boolean;
     onModuleChange: (value: ModuleKeys) => void
 }
@@ -18,11 +20,12 @@ const StyledName = styled(FlexBox) <{ $isSelected: boolean; }>`
 `;
 
 export const Modules = (props: ModulesProps) => {
-    const { moduleKey, moduleName, isSelected, onModuleChange } = props;
+    const { moduleKey, moduleName, isSelected, hideModule, onModuleChange } = props;
 
     return (
-        <StyledName onClick={() => onModuleChange(moduleKey)} $isSelected={isSelected} alignItems="center">
+        <StyledName onClick={() => onModuleChange(moduleKey)} $isSelected={isSelected} alignItems="center" justifyContent="space-between">
             <Typography variant="h5">{moduleName}</Typography>
+            {hideModule ? null : <SwitchField name={`modules.${moduleKey}`} />}
         </StyledName>
     )
 }
