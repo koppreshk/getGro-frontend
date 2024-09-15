@@ -159,7 +159,7 @@ export const Permissions = () => {
                     </FlexBox>
                 </FlexBox>
             </FlexBox>
-            <FlexBox width="60%" justifyContent="flex-end" gap={'20px'}>
+            <FlexBox width="60%" justifyContent="flex-start" gap={'20px'}>
                 <Button variant="outlined" onClick={() => navigate(-1)}>Cancel</Button>
                 <Button variant="contained">Submit</Button>
             </FlexBox>
