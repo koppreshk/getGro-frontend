@@ -4,7 +4,7 @@ import { FormProvider, useForm } from "react-hook-form"
 import { Permissions } from './permissions';
 import { AllPermissionKeys, ModuleKeys } from "./types";
 
-interface ICreateRoleFormFields {
+export interface ICreateRoleFormFields {
     name: string;
     description: string;
     modules: {
@@ -15,8 +15,23 @@ interface ICreateRoleFormFields {
     }
 }
 
-export const CreateRole = () => {
-    const form = useForm<ICreateRoleFormFields>();
+interface CreateRoleProps {
+    defaultValues?: ICreateRoleFormFields;
+}
+
+export const CreateRole = (props: CreateRoleProps) => {
+    const { defaultValues } = props;
+    const form = useForm<ICreateRoleFormFields>({
+        defaultValues: defaultValues ?? {
+            name: '',
+            description: '',
+            modules: {
+                CONFIGURATIONS: true,
+                DASHBOARDS: true,
+                TICKETS: true
+            }
+        }
+    });
 
     return (
         <FormProvider {...form}>

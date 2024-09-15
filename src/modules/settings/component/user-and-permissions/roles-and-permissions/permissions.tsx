@@ -5,12 +5,15 @@ import { useState } from "react";
 import { Modules } from "./modules";
 import { PermissionList } from "./permission-list";
 import { ModuleKeys, AllPermissionKeys, TicketPermissionKeys, ConfigurationPermissionKeys } from "./types";
+import { useFormContext } from "react-hook-form";
+import { ICreateRoleFormFields } from "./create-role";
 
 interface IPermissionList {
     associatedModule: keyof typeof ModuleKeys;
     permissions: {
         name: string;
         permissionKey: AllPermissionKeys;
+        disabled?: boolean;
     }[];
 }
 
@@ -129,12 +132,14 @@ const permissionList = [{
 export const Permissions = () => {
     const navigate = useNavigate();
     const [selectedModule, setSelectedModule] = useState(ModuleKeys.TICKETS);
+    const { watch } = useFormContext<ICreateRoleFormFields>();
 
     const onModuleChange = (value: ModuleKeys) => {
         setSelectedModule(value);
     }
 
     const associatedPermissions = permissionList.find((item) => item.associatedModule === selectedModule)!;
+    const modifiedPermissions = watch(`modules.${associatedPermissions.associatedModule}`) ? associatedPermissions.permissions : associatedPermissions.permissions.map((item) => ({ ...item, disabled: true }))
 
     return (
         <FlexBox flexDirection="column" height="calc(100% - 134px)">
@@ -155,7 +160,7 @@ export const Permissions = () => {
                 <FlexBox flexDirection="column" padding="20px" gap={'15px'}>
                     <Typography variant="h6">Permissions</Typography>
                     <FlexBox flexDirection="column" flexWrap="wrap" height="calc(100% - 43px)" style={{ columnGap: '35px' }}>
-                        {associatedPermissions.permissions.map((item) => <PermissionList {...item} key={item.permissionKey} />)}
+                        {modifiedPermissions.map((item) => <PermissionList {...item} key={item.permissionKey} />)}
                     </FlexBox>
                 </FlexBox>
             </FlexBox>
