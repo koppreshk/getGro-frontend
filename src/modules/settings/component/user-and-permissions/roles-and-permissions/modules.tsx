@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
 import { Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { ModuleKeys } from "./types";
@@ -17,14 +17,19 @@ const StyledName = styled(FlexBox) <{ $isSelected: boolean; }>`
     padding-left: ${({ $isSelected }) => $isSelected ? '12px' : '16px'};
     height: 42px;
     cursor: pointer;
+    &:hover {
+        border-left: ${({ theme, $isSelected }) => $isSelected ? `4px solid ${theme.pallete.primaryPurple}` : `4px solid ${theme.pallete.standardBorderColor}`};
+        padding-left: 12px;
+    }
 `;
 
 export const Modules = (props: ModulesProps) => {
     const { moduleKey, moduleName, isSelected, hideModule, onModuleChange } = props;
+    const { pallete } = useTheme();
 
     return (
         <StyledName onClick={() => onModuleChange(moduleKey)} $isSelected={isSelected} alignItems="center" justifyContent="space-between">
-            <Typography variant="h5">{moduleName}</Typography>
+            <Typography variant="h6" sx={{ color: isSelected ? pallete.primaryPurple : pallete.defaultTextColor }}>{moduleName}</Typography>
             {hideModule ? null : <SwitchField name={`modules.${moduleKey}`} />}
         </StyledName>
     )
