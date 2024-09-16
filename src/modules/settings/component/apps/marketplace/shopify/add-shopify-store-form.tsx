@@ -2,27 +2,37 @@ import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import styled from "styled-components";
 import { PasswordField, TextboxField } from "lib/form-fields";
-import { Box, Button, DialogActions, Divider, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
-import { FlexBox } from "lib/ui-ux";
+import { Box, Button, DialogActions, Divider, Grid, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
+import { FlexBox, LoadingButton } from "lib/ui-ux";
+import { IShopifyConfigDetails } from "modules/settings/apis/marketplace/shopify";
+import { IShopifyFormFields } from "modules/settings/containers/marketplace/shopify";
+import { useNotifications } from "lib";
 
-interface IAddShopifyStoreFormProps {
+export interface IAddShopifyConfigurationFormProps {
+    isMutationLoading: boolean;
     togglePopup: () => void;
+    onSubmit: (data: IShopifyConfigDetails) => Promise<{ status: boolean, message?: string }>;
 }
 
-export const AddShopifyStoreForm = (props: IAddShopifyStoreFormProps) => {
-    const { togglePopup } = props;
-    const form = useForm();
+export const ShopifyStoreConfigForm = (props: IAddShopifyConfigurationFormProps) => {
+    const { togglePopup, onSubmit, isMutationLoading } = props;
+    const form = useForm<IShopifyFormFields>();
+    const [activeStep,] = React.useState(0);
+    const { showNotification } = useNotifications();
 
-    const [activeStep, setActiveStep] = React.useState(0);
-    const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    };
-
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
-
-    const isLastStep = activeStep === steps.length - 1;
+    const onSubmitForm = async (formField: IShopifyFormFields) => {
+        onSubmit({
+            store_name: formField.storeName,
+            store_url: formField.storeUrl.concat('.myshopify.com'),
+            store_access_token: formField.accessToken,
+        }).then(() => {
+            togglePopup();
+            showNotification({ message: 'Shopify configured successfully', type: 'success' });
+        }).catch(() => {
+            togglePopup();
+            showNotification({ message: 'Failed to setup Shopify configurations', type: 'error' })
+        })
+    }
 
     return (
         <>
@@ -33,12 +43,12 @@ export const AddShopifyStoreForm = (props: IAddShopifyStoreFormProps) => {
                     {activeStep === 0 ? <ShopifyDetailsForm /> : <span>Work in Progress..</span>}
                 </FlexBox>
                 <DialogActions>
-                    <Button variant="outlined" onClick={isLastStep ? handleBack : togglePopup}>
-                        {isLastStep ? 'Back' : 'Cancel'}
+                    <Button variant="outlined" onClick={togglePopup}>
+                        Cancel
                     </Button>
-                    <Button variant="contained" autoFocus onClick={isLastStep ? togglePopup : handleNext}>
-                        {isLastStep ? 'Save' : 'Next'}
-                    </Button>
+                    <LoadingButton isLoading={isMutationLoading} variant="contained" autoFocus onClick={form.handleSubmit(onSubmitForm)}>
+                        Save
+                    </LoadingButton>
                 </DialogActions>
             </FormProvider>
         </>
@@ -49,10 +59,6 @@ const steps = [
     {
         label: 'Account',
         description: `Connect shopify store with getgro`,
-    },
-    {
-        label: 'Permissions',
-        description: 'Setup visibility to limit access to certain roles',
     }
 ];
 
@@ -102,16 +108,39 @@ const StyledTextboxField = styled(TextboxField)`
 
 const ShopifyDetailsForm = () => {
     return (
-        <FlexBox flexDirection="column" gap="20px">
-            <TextboxField name="storeName" size="small" label="Store Name" sx={{ minWidth: '400px' }} rules={{ required: 'Store name required' }} />
-            <StyledTextboxField
-                name="storeUrl"
-                size="small" sx={{ pr: '0px !important' }} label="Store URL"
-                InputProps={{
-                    endAdornment: <ShopifyEndURL variant="body3">.myshopify.com</ShopifyEndURL>
-                }}
-                autoComplete="off" rules={{ required: 'Store url required' }} />
-            <PasswordField name="accessToken" size="small" type="password" label="Access Token" rules={{ required: 'Access token required' }} />
-        </FlexBox>
+        <Grid container spacing={3}>
+            <Grid item md={12}>
+
+                <TextboxField name="storeName" size="small" label="Store Name" sx={{ minWidth: '400px' }} rules={{ required: 'Store name required' }} />
+            </Grid>
+            <Grid item md={12}>
+                <StyledTextboxField
+                    name="storeUrl"
+                    size="small" sx={{ pr: '0px !important' }} label="Store URL"
+                    InputProps={{
+                        endAdornment: <ShopifyEndURL variant="body3">.myshopify.com</ShopifyEndURL>
+                    }}
+                    autoComplete="off" rules={{ required: 'Store url required' }} />
+            </Grid>
+            <Grid item md={12}>
+                <PasswordField name="accessToken" size="small" type="password" label="Access Token" rules={{ required: 'Access token required' }} />
+            </Grid>
+        </Grid>
+    )
+}
+
+export const AddShopifyConfigurationFormBase = (props: IAddShopifyConfigurationFormProps) => {
+    const form = useForm<IShopifyFormFields>({
+        defaultValues: {
+            storeName: '',
+            storeUrl: '',
+            accessToken: ''
+        }
+    });
+
+    return (
+        <FormProvider {...form}>
+            <ShopifyStoreConfigForm {...props} />
+        </FormProvider>
     )
 }

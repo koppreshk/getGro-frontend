@@ -21,7 +21,8 @@ export interface IAppConfigurationLayout {
     secondaryBtnActions?: {
         onSecondaryBtnClk: () => void;
         secondaryBtnLabel: string;
-    }
+    };
+    isAppList?: boolean;
 }
 
 export const AppConfigurationLayout = (props: IAppConfigurationLayout) => {
@@ -43,7 +44,7 @@ export const AppConfigurationLayout = (props: IAppConfigurationLayout) => {
                     onManageBtnClick={onManageBtnClick}
                     appIcon={props.appIcon}
                     togglePopup={props.togglePopup}
-                    unInstallApp={props.unInstallApp} />
+                    unInstallApp={props.unInstallApp} isAppList={props.isAppList}/>
                 <AppContent
                     manageBtnClicked={manageBtnClicked}
                     lastUpdated={props.lastUpdated}
