@@ -10,7 +10,6 @@ export const ShopifyConfigurationContainer = () => {
     }
 
     if (data) {
-        console.log('shopify data', data);
         return <ShopifyConfiguration data={data}/>
     }
 
