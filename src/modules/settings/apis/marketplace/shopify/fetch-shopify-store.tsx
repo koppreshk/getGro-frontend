@@ -1,15 +1,20 @@
-import React from "react";
-import { useQuery } from "react-query";
-import { useServiceClient } from "lib";
-import { ShopifyConfigurationEndPoint, ShopifyConfigurationQueryKey } from ".";
+// import React from "react";
+// import { useQuery } from "react-query";
+// import { useServiceClient } from "lib";
+// import { ShopifyConfigurationEndPoint, ShopifyConfigurationQueryKey } from ".";
 
-export const useFetchShopifyStoreConfig = () => {
-    const { getData } = useServiceClient();
+// interface IFetchShopifyStore {
+//     store_id: number;
+// }
 
-    const fetchShopifyConfigurations = React.useCallback(() => getData(ShopifyConfigurationEndPoint.FETCH_STORE).then((res) => res.json()), [getData]);
+// export const useFetchShopifyStoreConfig = () => {
+//     const { getData } = useServiceClient();
 
-    return useQuery({
-        queryFn: fetchShopifyConfigurations,
-        queryKey: ShopifyConfigurationQueryKey.FETCH_STORE
-    });
-}
+//     const fetchShopifyConfigurations = React.useCallback((args: IFetchShopifyStore) => 
+//         getData(ShopifyConfigurationEndPoint.FETCH_STORE, args).then((res) => res.json()), [getData]);
+
+//     return useQuery({
+//         queryFn: fetchShopifyConfigurations,
+//         queryKey: ShopifyConfigurationQueryKey.FETCH_STORE
+//     });
+// }

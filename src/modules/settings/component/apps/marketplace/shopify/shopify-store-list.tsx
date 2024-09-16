@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import { Edit } from "@mui/icons-material";
-import { createColumnHelper } from "@tanstack/react-table";
+import { Row, createColumnHelper } from "@tanstack/react-table";
 import { CustomIconButton, FlexBox } from "lib/ui-ux";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
 import { IShopifyStore } from "modules/settings/apis/marketplace/shopify";
 import { DeleteShopifyStore } from ".";
+import { useCallback, useState } from "react";
+import { AddAppConfigurationDialog } from "../add-app-configuration-dialog";
 
 export interface IShopifyStoreListProps {
     data: IShopifyStore[] | undefined
@@ -56,9 +58,30 @@ export const ShopifyStoreList = (props: IShopifyStoreListProps) => {
     const { data, isLoading } = props;
     const columns = useColumns();
 
+    const [openPopup, setOpenPopup] = useState(false);
+    const togglePopup = useCallback(() => {
+        setOpenPopup((prevValue) => !prevValue)
+    }, []);
+
+    const [storeMetadata, setStoreMetadata] = useState({});
+
+    const onRowClick = (row: Row<IShopifyStore>) => {
+        togglePopup()
+        setStoreMetadata(row.original);
+    }
+
+    console.log('storeMetadata', storeMetadata);
+
     return (
         <div style={{ width: '100%' }}>
-            <StyledConfigDataGrid columns={columns} data={data!} hideTableControls isLoading={isLoading} />
+            <StyledConfigDataGrid columns={columns} data={data!} hideTableControls isLoading={isLoading} onRowClick={onRowClick}/>
+            <AddAppConfigurationDialog
+                dialogContent={() => <></>}
+                openPopup={openPopup}
+                togglePopup={togglePopup}
+                title="Edit Shopify Store"
+                maxWidth="md"
+            />
         </div>
     )
 }
