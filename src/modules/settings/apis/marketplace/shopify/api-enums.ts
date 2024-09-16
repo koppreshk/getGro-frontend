@@ -1,8 +1,8 @@
 export enum ShopifyConfigurationEndPoint{
     CREATE_STORE = 'shopify/create_store',
-    FETCH_ALL_STORES = '/shopify/stores',
+    FETCH_ALL_STORES = 'shopify/stores',
     FETCH_STORE = 'shopify/store',
-    EDIT_STORE = '/shopify/edit_store',
+    EDIT_STORE = 'shopify/edit_store',
     DELETE_STORE = 'shopify/delete_store',
 }
 

@@ -1,5 +1,5 @@
-import { useServiceClient } from "lib";
 import React from "react";
+import { useServiceClient } from "lib";
 import { useMutation, useQueryClient } from "react-query";
 import { IShopifyConfigDetails } from "./setup-shopify-configurations";
 import { ShopifyConfigurationEndPoint, ShopifyConfigurationQueryKey } from "./api-enums";
