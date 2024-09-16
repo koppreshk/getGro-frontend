@@ -5,7 +5,7 @@ import { CustomIconButton, FlexBox } from "lib/ui-ux";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
 import { IShopifyStore } from "modules/settings/apis/marketplace/shopify";
 import { DeleteShopifyStore } from ".";
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { AddAppConfigurationDialog } from "../add-app-configuration-dialog";
 
 export interface IShopifyStoreListProps {
@@ -24,12 +24,12 @@ const useColumns = () => {
         }),
         columnHelper.accessor("created_at", {
             id: 'Created At',
-            header: () => 'Phone Number',
+            header: () => 'Last Modified At',
             cell: info => info.getValue(),
         }),
         columnHelper.accessor("admin", {
             id: 'Created By',
-            header: () => 'Exotel Group Name',
+            header: () => 'Last Modified By',
             cell: info => info.getValue(),
         }),
         columnHelper.display({
@@ -38,7 +38,7 @@ const useColumns = () => {
             cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
-                        <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: "Edit Queue", arrow: true }} />
+                        <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: "Edit Store", arrow: true }} />
                         <DeleteShopifyStore id={original.id} />
                     </FlexBox>
                 )
@@ -65,10 +65,10 @@ export const ShopifyStoreList = (props: IShopifyStoreListProps) => {
 
     const [storeMetadata, setStoreMetadata] = useState({});
 
-    const onRowClick = (row: Row<IShopifyStore>) => {
+    const onRowClick = React.useCallback((row: Row<IShopifyStore>) => {
         togglePopup()
         setStoreMetadata(row.original);
-    }
+    }, [togglePopup]);
 
     console.log('storeMetadata', storeMetadata);
 

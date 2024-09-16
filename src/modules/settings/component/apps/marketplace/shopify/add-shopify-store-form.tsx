@@ -42,7 +42,7 @@ export const ShopifyStoreConfigForm = (props: IAddShopifyConfigurationFormProps)
                     <Divider orientation="vertical" variant="middle" flexItem />
                     {activeStep === 0 ? <ShopifyDetailsForm /> : <span>Work in Progress..</span>}
                 </FlexBox>
-                <DialogActions>
+                <DialogActions sx={{ paddingTop: '30px' }}>
                     <Button variant="outlined" onClick={togglePopup}>
                         Cancel
                     </Button>
@@ -110,7 +110,6 @@ const ShopifyDetailsForm = () => {
     return (
         <Grid container spacing={3}>
             <Grid item md={12}>
-
                 <TextboxField name="storeName" size="small" label="Store Name" sx={{ minWidth: '400px' }} rules={{ required: 'Store name required' }} />
             </Grid>
             <Grid item md={12}>
