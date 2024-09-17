@@ -1,9 +1,44 @@
-// import { useFetchShopifyStoreConfig } from "modules/settings/apis/marketplace/shopify";
+import React from "react";
+import { IShopifyStore, useEditShopifyConfiguration, useFetchShopifyStoreConfig } from "modules/settings/apis/marketplace/shopify";
+import { CenteredCircularProgress } from "lib/ui-ux";
+import { EditShopifyStoreFormBase } from "modules/settings/component/apps/marketplace/shopify";
+import { useNotifications } from "lib";
+import { IShopifyFormFields } from "./add-shopify-configuration-container";
 
-// export const EditShopifyConfigurationContainer = () => {
-//     const {data} = useFetchShopifyStoreConfig();
-//     return(
-//         <>
-//         </>
-//     )
-// }
+export const EditShopifyConfigurationContainer = (props: { storeData: IShopifyStore, togglePopup: () => void }) => {
+    const { storeData: { id }, togglePopup } = props;
+    const { data, isLoading, error } = useFetchShopifyStoreConfig(id);
+    const { mutateAsync, isLoading: isMutationLoading } = useEditShopifyConfiguration();
+    const { showNotification } = useNotifications();
+
+    const editShopifyConfigHandler = React.useCallback((formData: IShopifyFormFields) => {
+        mutateAsync({
+            store_name: formData.storeName,
+            store_url: formData.storeUrl,
+            store_access_token: formData.accessToken,
+        }).then(() => {
+            showNotification({ message: 'Shopify store details edited successfully', type: 'success' });
+            togglePopup();
+        }).catch(() => showNotification({ message: 'Failed to edit Shopify store details', type: 'error' }))
+    }, [mutateAsync, showNotification, togglePopup]);
+    
+    if (isLoading) {
+        return <CenteredCircularProgress />
+    }
+
+    if(data) {
+        return(
+            <EditShopifyStoreFormBase
+                isMutationLoading={isMutationLoading}
+                togglePopup={togglePopup}
+                onSubmit={editShopifyConfigHandler}
+                storeData={data}
+            />
+        )
+    }
+
+    return (
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        <span>Error: {error as any}</span>
+    )
+}

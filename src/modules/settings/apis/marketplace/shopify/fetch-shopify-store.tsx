@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery } from "react-query";
 import { useServiceClient } from "lib";
-import { ShopifyConfigurationEndPoint, ShopifyConfigurationQueryKey } from ".";
+import { IShopifyStore, ShopifyConfigurationEndPoint, ShopifyConfigurationQueryKey } from ".";
 
 export const useFetchShopifyStoreConfig = (storeId: number) => {
     const { getData } = useServiceClient();
@@ -9,7 +9,7 @@ export const useFetchShopifyStoreConfig = (storeId: number) => {
     const fetchShopifyConfigurations = React.useCallback(() => 
         getData(`${ShopifyConfigurationEndPoint.FETCH_STORE}?store_id=${storeId}`).then((res) => res.json()), [getData, storeId]);
 
-    return useQuery({
+    return useQuery<IShopifyStore>({
         queryFn: fetchShopifyConfigurations,
         queryKey: ShopifyConfigurationQueryKey.FETCH_STORE
     });

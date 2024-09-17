@@ -1,56 +1,41 @@
 import React from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import styled from "styled-components";
 import { PasswordField, TextboxField } from "lib/form-fields";
 import { Box, Button, DialogActions, Divider, Grid, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
 import { FlexBox, LoadingButton } from "lib/ui-ux";
-import { IShopifyConfigDetails } from "modules/settings/apis/marketplace/shopify";
 import { IShopifyFormFields } from "modules/settings/containers/marketplace/shopify";
-import { useNotifications } from "lib";
 
 export interface IAddShopifyConfigurationFormProps {
     isMutationLoading: boolean;
     togglePopup: () => void;
-    onSubmit: (data: IShopifyConfigDetails) => Promise<{ status: boolean, message?: string }>;
+    onSubmit: (formData: IShopifyFormFields) => void;
 }
 
 export const ShopifyStoreConfigForm = (props: IAddShopifyConfigurationFormProps) => {
     const { togglePopup, onSubmit, isMutationLoading } = props;
-    const form = useForm<IShopifyFormFields>();
+    const form = useFormContext<IShopifyFormFields>();
     const [activeStep,] = React.useState(0);
-    const { showNotification } = useNotifications();
-
-    const onSubmitForm = async (formField: IShopifyFormFields) => {
-        onSubmit({
-            store_name: formField.storeName,
-            store_url: formField.storeUrl.concat('.myshopify.com'),
-            store_access_token: formField.accessToken,
-        }).then(() => {
-            togglePopup();
-            showNotification({ message: 'Shopify configured successfully', type: 'success' });
-        }).catch(() => {
-            togglePopup();
-            showNotification({ message: 'Failed to setup Shopify configurations', type: 'error' })
-        })
-    }
+   
+    const onSubmitForm =  React.useCallback(async (formField: IShopifyFormFields) => {
+        onSubmit(formField)
+    }, [onSubmit]) ;
 
     return (
         <>
-            <FormProvider {...form}>
-                <FlexBox gap="20px">
-                    <ShopifyConfigSteps activeStep={activeStep} />
-                    <Divider orientation="vertical" variant="middle" flexItem />
-                    {activeStep === 0 ? <ShopifyDetailsForm /> : <span>Work in Progress..</span>}
-                </FlexBox>
-                <DialogActions sx={{ paddingTop: '30px' }}>
-                    <Button variant="outlined" onClick={togglePopup}>
-                        Cancel
-                    </Button>
-                    <LoadingButton isLoading={isMutationLoading} variant="contained" autoFocus onClick={form.handleSubmit(onSubmitForm)}>
-                        Save
-                    </LoadingButton>
-                </DialogActions>
-            </FormProvider>
+            <FlexBox gap="20px">
+                <ShopifyConfigSteps activeStep={activeStep} />
+                <Divider orientation="vertical" variant="middle" flexItem />
+                {activeStep === 0 ? <ShopifyDetailsForm /> : <span>Work in Progress..</span>}
+            </FlexBox>
+            <DialogActions sx={{ paddingTop: '30px' }}>
+                <Button variant="outlined" onClick={togglePopup}>
+                    Cancel
+                </Button>
+                <LoadingButton isLoading={isMutationLoading} variant="contained" autoFocus onClick={form.handleSubmit(onSubmitForm)}>
+                    Save
+                </LoadingButton>
+            </DialogActions>
         </>
     )
 }

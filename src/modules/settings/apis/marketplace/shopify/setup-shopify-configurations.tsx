@@ -1,5 +1,5 @@
 import React from "react";
-import { useServiceClient } from "lib"
+import { useServiceClient } from "lib";
 import { useMutation, useQueryClient } from "react-query";
 import { ShopifyConfigurationEndPoint, ShopifyConfigurationQueryKey } from "./api-enums";
 

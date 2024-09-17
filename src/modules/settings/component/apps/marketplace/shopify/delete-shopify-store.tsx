@@ -10,7 +10,10 @@ export const DeleteShopifyStore = (props: { id: number }) => {
     const { showNotification } = useNotifications();
     const [open, setOpen] = React.useState(false);
 
-    const toggleDeleteDialogBox = () => {
+    const toggleDeleteDialogBox = (ev?: React.MouseEvent<HTMLButtonElement>) => {
+        if (ev) {
+            ev.stopPropagation();
+        }
         setOpen((prev) => !prev);
     };
 
