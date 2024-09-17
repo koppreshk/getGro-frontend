@@ -30,6 +30,7 @@
                         "label": "Conversations",
                         "email": {
                             "reply": "Reply",
+                            "forward": "Forward",
                             "collapseAll": "Collapse All",
                             "expandAll": "Expand All",
                             "printAll": "Print All",

@@ -2,14 +2,16 @@ import styled from "styled-components";
 import { PersonOutlineOutlined, ShoppingCartOutlined, DescriptionOutlined, ChevronRight, ChevronLeft, ConfirmationNumberOutlined } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material"
 import { FlexBox } from "lib/ui-ux";
-import { useAppDispatch, useAppSelector } from "lib/hooks";
+import { useAppDispatch, useAppSelector, useFeature } from "lib/hooks";
 import { setShowHideTicketDetails } from "modules/tickets/storage";
 import { useCallback } from "react";
+import React from "react";
 
 interface IMenuOption {
     title: string;
     id: MenuOptions;
     disabled?: boolean;
+    hidden?: boolean;
     iconComponent: () => JSX.Element;
 }
 
@@ -41,7 +43,8 @@ export enum MenuOptions {
 }
 
 const useSideMenuOptions = () => {
-    const customerInfo = useAppSelector((state) => state.tickets.ticketDetails?.customerInfo)
+    const customerInfo = useAppSelector((state) => state.tickets.ticketDetails?.customerInfo);
+    const showNotes = useFeature('MANAGE_NOTES');
     return [
         {
             title: 'Customer Profile',
@@ -57,7 +60,8 @@ const useSideMenuOptions = () => {
         {
             title: 'Notes',
             id: MenuOptions.Notes,
-            iconComponent: () => <DescriptionOutlined />
+            iconComponent: () => <DescriptionOutlined />,
+            hidden: !showNotes
         },
         {
             title: 'Past Tickets',
@@ -93,11 +97,15 @@ export const TicketSideMenu = (props: ITicketSideMenuProps) => {
         <SideMenuWrapper flexDirection="column" gap="12px" justifyContent="space-between">
             <FlexBox flexDirection="column" gap="12px">
                 {sideMenuOptions.map((option, index) => (
-                    <Tooltip key={index} title={option.title} arrow placement="left">
-                        <IconWrapper $isSelected={selectedMenuOption === option.id} $isDisabled={option.disabled} onClick={() => onOptionClick(option)}>
-                            {option.iconComponent()}
-                        </IconWrapper>
-                    </Tooltip>
+                    <React.Fragment>
+                        {option.hidden
+                            ? null :
+                            <Tooltip key={index} title={option.title} arrow placement="left">
+                                <IconWrapper $isSelected={selectedMenuOption === option.id} $isDisabled={option.disabled} onClick={() => onOptionClick(option)}>
+                                    {option.iconComponent()}
+                                </IconWrapper>
+                            </Tooltip>}
+                    </React.Fragment>
                 ))}
             </FlexBox>
             <FlexBox flexDirection="column" gap="12px">

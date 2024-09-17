@@ -1,6 +1,6 @@
 import { MoreVert } from "@mui/icons-material";
 import { IconButton, Menu, MenuItem, ListItemIcon } from "@mui/material";
-import { useState } from "react";
+import React, { useState } from "react";
 
 interface MoreActionsProps {
     onMenuItemSelect: (key: string) => void;
@@ -8,6 +8,7 @@ interface MoreActionsProps {
         key: string;
         label: string;
         icon: JSX.Element;
+        hidden?: boolean;
     }[];
     className?: string;
 }
@@ -41,12 +42,15 @@ export const MoreActions = (props: MoreActionsProps) => {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
                 {menuItems.map(item => (
-                    <MenuItem key={item.key} onClick={(ev) => onMenuSelection(ev, item.key)}>
-                        <ListItemIcon>
-                            {item.icon}
-                        </ListItemIcon>
-                        {item.label}
-                    </MenuItem>
+                    <React.Fragment key={item.key}>
+                        {item.hidden ? null :
+                            <MenuItem onClick={(ev) => onMenuSelection(ev, item.key)}>
+                                <ListItemIcon>
+                                    {item.icon}
+                                </ListItemIcon>
+                                {item.label}
+                            </MenuItem>}
+                    </React.Fragment>
                 ))
                 }
             </Menu>
