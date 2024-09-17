@@ -68,9 +68,9 @@ enum EmailActionsEnum {
 }
 
 const useMenuItems = () => {
-    const isFeautureAccessable = useFeature<undefined>();
+    const isFeatureAccessible = useFeature<undefined>();
     return [
-        { key: EmailActionsEnum.splitTicket as string, label: 'Split Ticket', icon: <CallSplit />, hidden: !isFeautureAccessable('SPLIT_TICKET') }
+        { key: EmailActionsEnum.splitTicket as string, label: 'Split Ticket', icon: <CallSplit />, hidden: !isFeatureAccessible('SPLIT_TICKET') }
     ];
 }
 

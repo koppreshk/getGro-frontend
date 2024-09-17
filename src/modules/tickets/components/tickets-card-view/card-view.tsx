@@ -50,7 +50,7 @@ export const CardView = (props: ITicketDetails) => {
     const [searchParams] = useSearchParams();
     const noOfRecords = searchParams.get('noOfRecords');
     const pageNumber = searchParams.get('pageNumber');
-    const isFeautureAccessable = useFeature<undefined>();
+    const isFeatureAccessible = useFeature<undefined>();
 
     const onRowClick = React.useCallback(() => {
         navigate(`${match?.pathname}/${ticketId}?noOfRecords=${noOfRecords}&pageNumber=${pageNumber}`, { replace: true });
@@ -95,7 +95,7 @@ export const CardView = (props: ITicketDetails) => {
 
             <FlexBox alignItems="center">
                 <Priority priority={priority} />
-                {isFeautureAccessable('EDIT_STATUS') ? <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} statusUpdateString={''} renderMode="card" /> : null}
+                {isFeatureAccessible('EDIT_STATUS') ? <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} statusUpdateString={''} renderMode="card" /> : null}
             </FlexBox>
         </StyledCard >
     )

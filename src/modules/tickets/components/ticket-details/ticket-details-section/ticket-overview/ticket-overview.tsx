@@ -49,9 +49,9 @@ type DrawerDisplayTypes = {
 }
 
 const useMenuItems = () => {
-    const isFeautureAccessable = useFeature<undefined>();
+    const isFeatureAccessible = useFeature<undefined>();
     return [
-        { key: MoreActionsEnum.mergeTicket as string, label: 'Merge Ticket', icon: <MergeOutlined />, hidden: !isFeautureAccessable('MERGE_TICKET') },
+        { key: MoreActionsEnum.mergeTicket as string, label: 'Merge Ticket', icon: <MergeOutlined />, hidden: !isFeatureAccessible('MERGE_TICKET') },
         { key: MoreActionsEnum.deleteTicket as string, label: 'Delete Ticket', icon: <DeleteOutlined /> },
         { key: MoreActionsEnum.spamTicket as string, label: 'Mark as Spam', icon: <ReportOutlined /> },
     ];
@@ -83,7 +83,7 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
     }
 
     const menuItems = useMenuItems();
-    const isFeautureAccessable = useFeature<undefined>();
+    const isFeatureAccessible = useFeature<undefined>();
 
     return (
         <FlexBox gap="20px" padding="10px" flexDirection="column" height="100%">
@@ -106,10 +106,10 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
             <FlexBox gap={'20px'} flexDirection="column" height="calc(100% - 62px)" overflowY="auto">
                 <ContactInfo customerInfo={customerInfo} createdAt={createdAt} closedAt={closedAt} ticketId={ticketId} customerName={customerName} />
                 <FlexBox flexDirection="column" gap="10px">
-                    {isFeautureAccessable('EDIT_STATUS') ? <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} statusUpdateString={statusUpdateString} /> : null}
-                    {isFeautureAccessable('EDIT_ASSIGNEE') ? <ManageAssigneeContainer ticketId={ticketId} assigneeInfo={assigneeInfo} /> : null}
-                    {isFeautureAccessable('EDIT_PRIORITY') ? <ManagePriorityContainer priority={priority} ticketId={ticketId} /> : null}
-                    {isFeautureAccessable('EDIT_TAGS') ? <ManageTagsContainer ticketId={ticketId} tags={tags} /> : null}
+                    {isFeatureAccessible('EDIT_STATUS') ? <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} statusUpdateString={statusUpdateString} /> : null}
+                    {isFeatureAccessible('EDIT_ASSIGNEE') ? <ManageAssigneeContainer ticketId={ticketId} assigneeInfo={assigneeInfo} /> : null}
+                    {isFeatureAccessible('EDIT_PRIORITY') ? <ManagePriorityContainer priority={priority} ticketId={ticketId} /> : null}
+                    {isFeatureAccessible('EDIT_TAGS') ? <ManageTagsContainer ticketId={ticketId} tags={tags} /> : null}
                     <HorizontalSeparator $margin="10px 0px 0px 0px" />
                 </FlexBox>
                 {ticketDetails?.responseDue || ticketDetails?.resolutionDue ?
