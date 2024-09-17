@@ -10,6 +10,7 @@ import { TicketStatusContainer } from "../../containers";
 import { DateTime } from "luxon";
 import { chooseRandomColors, getInitialsByName, useDateDifference } from "lib/utils";
 import { useSourceIcon } from "modules/tickets/hooks";
+import { useFeature } from "lib/hooks";
 
 const StyledCard = styled(FlexBox)`
     background: ${({ theme }) => theme.pallete.white};
@@ -49,6 +50,7 @@ export const CardView = (props: ITicketDetails) => {
     const [searchParams] = useSearchParams();
     const noOfRecords = searchParams.get('noOfRecords');
     const pageNumber = searchParams.get('pageNumber');
+    const isFeatureAccessible = useFeature<undefined>();
 
     const onRowClick = React.useCallback(() => {
         navigate(`${match?.pathname}/${ticketId}?noOfRecords=${noOfRecords}&pageNumber=${pageNumber}`, { replace: true });
@@ -93,7 +95,7 @@ export const CardView = (props: ITicketDetails) => {
 
             <FlexBox alignItems="center">
                 <Priority priority={priority} />
-                <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} statusUpdateString={''} renderMode="card" />
+                {isFeatureAccessible('EDIT_STATUS') ? <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} statusUpdateString={''} renderMode="card" /> : null}
             </FlexBox>
         </StyledCard >
     )

@@ -4,7 +4,7 @@ import { Chip, Tooltip, Typography } from "@mui/material";
 import { CustomIconButton, FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { Platform } from "../../ticket-conversation/ticket-conversation-header";
 import { ManageAssigneeContainer, ManagePriorityContainer, SearchCustomerContainer, TicketStatusContainer, ManageTagsContainer } from "modules/tickets/containers";
-import { useAppSelector } from "lib/hooks";
+import { useAppSelector, useFeature } from "lib/hooks";
 import { UnlinkCustomer } from "./unlink-customer";
 import { ITicketDetails } from "modules/tickets/apis";
 import { ContactInfo, TypographyName } from "./contact-info";
@@ -48,11 +48,15 @@ type DrawerDisplayTypes = {
     [key in MoreActionsEnum]: boolean;
 }
 
-const menuItems = [
-    { key: MoreActionsEnum.mergeTicket as string, label: 'Merge Ticket', icon: <MergeOutlined /> },
-    { key: MoreActionsEnum.deleteTicket as string, label: 'Delete Ticket', icon: <DeleteOutlined /> },
-    { key: MoreActionsEnum.spamTicket as string, label: 'Mark as Spam', icon: <ReportOutlined /> },
-];
+const useMenuItems = () => {
+    const isFeatureAccessible = useFeature<undefined>();
+    return [
+        { key: MoreActionsEnum.mergeTicket as string, label: 'Merge Ticket', icon: <MergeOutlined />, hidden: !isFeatureAccessible('MERGE_TICKET') },
+        { key: MoreActionsEnum.deleteTicket as string, label: 'Delete Ticket', icon: <DeleteOutlined /> },
+        { key: MoreActionsEnum.spamTicket as string, label: 'Mark as Spam', icon: <ReportOutlined /> },
+    ];
+
+}
 
 export const TicketOverview = (props: ITicketOverviewProps) => {
     const { ticketDetails } = props;
@@ -78,6 +82,9 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
         toggleDrawerDisplay(key)
     }
 
+    const menuItems = useMenuItems();
+    const isFeatureAccessible = useFeature<undefined>();
+
     return (
         <FlexBox gap="20px" padding="10px" flexDirection="column" height="100%">
             <FlexBox justifyContent="space-between">
@@ -99,10 +106,10 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
             <FlexBox gap={'20px'} flexDirection="column" height="calc(100% - 62px)" overflowY="auto">
                 <ContactInfo customerInfo={customerInfo} createdAt={createdAt} closedAt={closedAt} ticketId={ticketId} customerName={customerName} />
                 <FlexBox flexDirection="column" gap="10px">
-                    <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} statusUpdateString={statusUpdateString} />
-                    <ManageAssigneeContainer ticketId={ticketId} assigneeInfo={assigneeInfo} />
-                    <ManagePriorityContainer priority={priority} ticketId={ticketId} />
-                    <ManageTagsContainer ticketId={ticketId} tags={tags} />
+                    {isFeatureAccessible('EDIT_STATUS') ? <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} statusUpdateString={statusUpdateString} /> : null}
+                    {isFeatureAccessible('EDIT_ASSIGNEE') ? <ManageAssigneeContainer ticketId={ticketId} assigneeInfo={assigneeInfo} /> : null}
+                    {isFeatureAccessible('EDIT_PRIORITY') ? <ManagePriorityContainer priority={priority} ticketId={ticketId} /> : null}
+                    {isFeatureAccessible('EDIT_TAGS') ? <ManageTagsContainer ticketId={ticketId} tags={tags} /> : null}
                     <HorizontalSeparator $margin="10px 0px 0px 0px" />
                 </FlexBox>
                 {ticketDetails?.responseDue || ticketDetails?.resolutionDue ?

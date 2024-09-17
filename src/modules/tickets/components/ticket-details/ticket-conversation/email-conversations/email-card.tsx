@@ -9,6 +9,7 @@ import { IEmailConversations } from "./email-conversations-layout";
 import { CallSplit } from "@mui/icons-material";
 import { MoreActions } from "../../ticket-details-section/ticket-overview/more-actions";
 import { SplitTicket } from "./more-actions/split-ticket";
+import { useFeature } from "lib/hooks";
 
 export interface IEmailCardProps {
     emailProps: IEmailConversations & { subject: string; };
@@ -66,9 +67,12 @@ enum EmailActionsEnum {
     splitTicket = 'splitTicket'
 }
 
-const menuItems = [
-    { key: EmailActionsEnum.splitTicket as string, label: 'Split Ticket', icon: <CallSplit /> }
-];
+const useMenuItems = () => {
+    const isFeatureAccessible = useFeature<undefined>();
+    return [
+        { key: EmailActionsEnum.splitTicket as string, label: 'Split Ticket', icon: <CallSplit />, hidden: !isFeatureAccessible('SPLIT_TICKET') }
+    ];
+}
 
 type DrawerDisplayTypes = {
     [key in EmailActionsEnum]: boolean;
@@ -108,6 +112,8 @@ export const EmailCard = (props: IEmailCardProps) => {
         setSelectedMenu(key);
         toggleDrawerDisplay(key);
     }
+
+    const menuItems = useMenuItems();
 
     return (
         <StyledEmailCardContainer className="email-card-container">
