@@ -26,7 +26,7 @@ export enum ConfigurationPermissionKeys {
     MANAGE_MARKETPLACE = 'MANAGE_MARKETPLACE'
 }
 
-export type AllPermissionKeys = TicketPermissionKeys | ConfigurationPermissionKeys;
+export type AllPermissionKeys = `${TicketPermissionKeys}` | `${ConfigurationPermissionKeys}`
 
 export enum ModuleKeys {
     TICKETS = 'TICKETS',

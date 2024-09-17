@@ -2,7 +2,7 @@ import { TextboxFieldWithLabel } from "lib/form-fields";
 import { FlexBox } from "lib/ui-ux";
 import { FormProvider, useForm } from "react-hook-form"
 import { Permissions } from './permissions';
-import { AllPermissionKeys, ModuleKeys } from "./types";
+import { AllPermissionKeys, ModuleKeys } from "lib/enums";
 
 export interface ICreateRoleFormFields {
     name: string;

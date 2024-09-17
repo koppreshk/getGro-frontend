@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { CheckboxField } from "lib/form-fields";
 import { FlexBox } from "lib/ui-ux";
-import { AllPermissionKeys } from "./types";
+import { AllPermissionKeys } from "lib/enums";
 
 export const PermissionList = (props: {
     name: string;

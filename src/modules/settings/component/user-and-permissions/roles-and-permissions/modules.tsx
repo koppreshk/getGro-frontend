@@ -1,7 +1,7 @@
 import styled, { useTheme } from "styled-components";
 import { Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
-import { ModuleKeys } from "./types";
+import { ModuleKeys } from "lib/enums";
 import { SwitchField } from "lib/form-fields";
 
 interface ModulesProps {

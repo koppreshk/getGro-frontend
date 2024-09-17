@@ -2,7 +2,7 @@ import React, { Suspense, lazy } from "react"
 import styled from "styled-components"
 import { NavigationMenu } from "../components"
 import { Toolbar } from "../components/toolbar"
-import { FlexBox } from "lib/ui-ux"
+import { CenteredCircularProgress, FlexBox } from "lib/ui-ux"
 import { Routes, Route, useNavigate, useLocation, Outlet, Navigate } from "react-router-dom"
 import { ProtectedRoute } from "modules/login/protected-route"
 import { useAuth } from "modules/login"
@@ -11,6 +11,7 @@ import { IncomingCallMain } from "modules/tickets/components/ticket-details/tick
 import LoginPage from '../../login/login';
 import SetNewAgentPassword from '../../login/set-new-agent-password';
 import { CustomerSurveyPage } from "modules/survey/pages"
+import { useGetConfig } from "../apis/get-config"
 
 const DashboardPage = lazy(() => import('../../dashboard/pages/dashboard-page'));
 const TicketsPage = lazy(() => import('../../tickets/pages/tickets-page'));
@@ -44,6 +45,7 @@ export const CoreLayout = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
+    const { isLoading } = useGetConfig();
 
     React.useEffect(() => {
         if (user && location.pathname === '/login') {
@@ -51,6 +53,10 @@ export const CoreLayout = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    if (isLoading) {
+        return <CenteredCircularProgress />
+    }
 
     return (
         <Routes>
