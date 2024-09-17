@@ -71,6 +71,7 @@ export const useGetConfig = () => {
     return useQuery<IConfig, { message: string }>({
         queryFn: getConfig,
         queryKey: [CoreQueryKey.GET_CONFIG],
+        cacheTime: 0,
         onSuccess(data) {
             dispatch(setCoreData(data))
         },
