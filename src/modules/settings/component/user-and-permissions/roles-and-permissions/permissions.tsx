@@ -4,9 +4,9 @@ import { FlexBox, VerticalSeparator } from "lib/ui-ux"
 import { useState } from "react";
 import { Modules } from "./modules";
 import { PermissionList } from "./permission-list";
-import { ModuleKeys, AllPermissionKeys, TicketPermissionKeys, ConfigurationPermissionKeys } from "./types";
 import { useFormContext } from "react-hook-form";
 import { ICreateRoleFormFields } from "./create-role";
+import { AllPermissionKeys, ConfigurationPermissionKeys, ModuleKeys, TicketPermissionKeys } from "lib/enums";
 
 interface IPermissionList {
     associatedModule: keyof typeof ModuleKeys;

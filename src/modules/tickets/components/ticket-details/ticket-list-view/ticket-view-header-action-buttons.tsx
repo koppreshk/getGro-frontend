@@ -4,6 +4,7 @@ import { PostAdd } from "@mui/icons-material";
 import { CustomIconButton } from "lib/ui-ux"
 import styled from "styled-components";
 import { AddTicket } from "./add-ticket";
+import { useFeature } from "lib/hooks";
 
 const StyledIconButtons = styled(CustomIconButton)`
     && {
@@ -23,10 +24,11 @@ export const TicketViewActionButtons = () => {
     const toggleAddTicketDrawer = useCallback(() => {
         setOpenAddTicketDrawer((prevValue) => !prevValue)
     }, []);
+    const showAddTicket = useFeature('ADD_TICKET');
 
     return (
         <>
-            <StyledIconButtons iconComponent={<PostAdd fontSize="small" />} size="small" color="primary" onClick={toggleAddTicketDrawer} tooltipProps={{ title: 'Add Ticket' }} />
+            {showAddTicket ? <StyledIconButtons iconComponent={<PostAdd fontSize="small" />} size="small" color="primary" onClick={toggleAddTicketDrawer} tooltipProps={{ title: 'Add Ticket' }} /> : null}
             <AddTicket openAddTicketDrawer={openAddTicketDrawer} toggleAddTicketDrawer={toggleAddTicketDrawer} />
         </>
     )

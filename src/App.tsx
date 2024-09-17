@@ -8,6 +8,7 @@ import { ThemeProvider, defaultMUITheme } from "themes";
 import { ExotelServiceProvider, NotificationProvider, ServiceClientProvider } from "lib";
 import ticketsReducer from './modules/tickets/storage/tickets-slice';
 import configurationsReducer from './modules/settings/storage/configurations-slice';
+import coreReducer from './modules/core/storage/core-slice';
 import { AuthProvider } from "modules/login/auth-provider-context";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorFallback } from "lib/ui-ux";
@@ -16,7 +17,8 @@ import { ErrorFallback } from "lib/ui-ux";
 const store = configureStore({
   reducer: {
     tickets: ticketsReducer,
-    configurations: configurationsReducer
+    configurations: configurationsReducer,
+    core: coreReducer 
   },
 })
 

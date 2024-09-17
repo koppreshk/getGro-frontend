@@ -12,6 +12,7 @@ import { useAuth } from "modules/login";
 export default function TicketsPage() {
     const match = useMatch('/tickets/:type/:ticketId');
     const { user } = useAuth();
+
     return (
         <>
             <FlexBox height="100%">
