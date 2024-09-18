@@ -17,16 +17,15 @@ export * from './whatsapp-apis/upload-file';
 
 export * from './email-apis/reply-to-email';
 export * from './email-apis/fetch-attachment';
+export * from './email-apis/fetch-email-conversations'
 
 export * from './telephonic-apis/fetch-calls-by-ticket-id';
 
 export * from './get-order-details';
-export * from './fetch-ticket-by-id';
 
 export * from './attach-customer';
 export * from './unlink-customer';
 export * from './get-data-by-key';
-export * from './fetch-ticket-by-id';
 export * from './get-ticket-conversations';
 export * from './create-manual-ticket';
 export * from './fetch-priorities';

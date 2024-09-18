@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useServiceClient } from "lib";
-import { TicketsEndPoint, TicketsQueryKey } from "./api-enums";
+import { TicketsEndPoint, TicketsQueryKey } from "../api-enums";
 
 export interface IAttachments {
     id: string
@@ -32,13 +32,13 @@ export interface ITicketById {
     thread_id: string;
 }
 
-export const useFetchTicketById = () => {
+export const useFetchEmailConversations = () => {
     const { ticketId } = useParams();
     const { getData } = useServiceClient();
 
-    const getOrderDetailsData = React.useCallback(() => getData(`${TicketsEndPoint.FETCH_TICKET_BY_ID}?ticket_id=${ticketId}`).then((res) => res.json()).catch((err) => err), [getData, ticketId]);
+    const getOrderDetailsData = React.useCallback(() => getData(`${TicketsEndPoint.FETCH_EMAIL_CONVERSATIONS}?ticket_id=${ticketId}`).then((res) => res.json()).catch((err) => err), [getData, ticketId]);
     return useQuery<ITicketById>({
-        queryKey: [TicketsQueryKey.FETCH_TICKET_BY_ID, ticketId],
+        queryKey: [TicketsQueryKey.FETCH_EMAIL_CONVERSATIONS, ticketId],
         queryFn: getOrderDetailsData,
         cacheTime: 0
     });
