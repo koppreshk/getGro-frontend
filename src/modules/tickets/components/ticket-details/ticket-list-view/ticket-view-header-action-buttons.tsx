@@ -24,7 +24,7 @@ export const TicketViewActionButtons = () => {
     const toggleAddTicketDrawer = useCallback(() => {
         setOpenAddTicketDrawer((prevValue) => !prevValue)
     }, []);
-    const showAddTicket = useFeature('ADD_TICKET');
+    const showAddTicket = useFeature('add_ticket');
 
     return (
         <>

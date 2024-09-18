@@ -44,7 +44,7 @@ export enum MenuOptions {
 
 const useSideMenuOptions = () => {
     const customerInfo = useAppSelector((state) => state.tickets.ticketDetails?.customerInfo);
-    const showNotes = useFeature('MANAGE_NOTES');
+    const showNotes = useFeature('manage_notes');
     return [
         {
             title: 'Customer Profile',
