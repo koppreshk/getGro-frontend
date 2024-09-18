@@ -10,12 +10,15 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { Typography } from "@mui/material";
 import { FlexBox, GridLayout } from "lib/ui-ux";
 import { useTranslation } from 'react-i18next';
+import { useFeature } from 'lib/hooks';
+import React from 'react';
 
 interface ICategoryOptions {
     route: string;
     label: string;
     uniqueKey: string;
     description?: string;
+    hidden?: boolean;
     catOptionIcon?: () => JSX.Element;
 }
 
@@ -27,6 +30,8 @@ interface IConfigCategory {
 
 const useConfigurations = () => {
     const { t } = useTranslation();
+    const isFeatureAccessible = useFeature(undefined);
+
     return [
         {
             categoryName: t("modules.configurations.configurationOptions.tickets.primaryLabel"),
@@ -37,6 +42,7 @@ const useConfigurations = () => {
                     label: t("modules.configurations.configurationOptions.tickets.ticketStatus.label"),
                     uniqueKey: "ticket-status",
                     catOptionIcon: () => <AssignmentTurnedInOutlined />,
+                    hidden: !isFeatureAccessible('manage_ticket_status'),
                     description: t("modules.configurations.configurationOptions.tickets.ticketStatus.shortDescription")
                 },
                 {
@@ -44,6 +50,7 @@ const useConfigurations = () => {
                     label: t("modules.configurations.configurationOptions.tickets.tags.label"),
                     uniqueKey: "tags",
                     catOptionIcon: () => <SellOutlined />,
+                    hidden: !isFeatureAccessible('manage_tags'),
                     description: t("modules.configurations.configurationOptions.tickets.tags.shortDescription")
                 },
                 {
@@ -71,6 +78,7 @@ const useConfigurations = () => {
                     route: 'email',
                     uniqueKey: 'email',
                     catOptionIcon: () => <Email />,
+                    hidden: !isFeatureAccessible('manage_email'),
                     description: t("modules.configurations.configurationOptions.channels.email.shortDescription")
                 }
             ]
@@ -84,6 +92,7 @@ const useConfigurations = () => {
                     label: t("modules.configurations.configurationOptions.ticketAutomation.ticketEscalation.label"),
                     uniqueKey: "ticket-escalation",
                     catOptionIcon: () => <EventNoteOutlined />,
+                    hidden: !isFeatureAccessible('manage_ticket_escalation'),
                     description: t("modules.configurations.configurationOptions.ticketAutomation.ticketEscalation.shortDescription")
                 },
                 {
@@ -91,6 +100,7 @@ const useConfigurations = () => {
                     label: t("modules.configurations.configurationOptions.ticketAutomation.autoAssignments.label"),
                     uniqueKey: "auto-assignments",
                     catOptionIcon: () => <ManageHistory />,
+                    hidden: !isFeatureAccessible('manage_auto_assignments'),
                     description: t("modules.configurations.configurationOptions.ticketAutomation.autoAssignments.shortDescription")
                 },
                 {
@@ -98,6 +108,7 @@ const useConfigurations = () => {
                     label: t("modules.configurations.configurationOptions.ticketAutomation.createTicketTriggers.label"),
                     uniqueKey: "create-ticket-triggers",
                     catOptionIcon: () => <ConfirmationNumber />,
+                    hidden: !isFeatureAccessible('manage_create_ticket_triggers'),
                     description: t("modules.configurations.configurationOptions.ticketAutomation.createTicketTriggers.shortDescription")
                 },
                 {
@@ -105,6 +116,7 @@ const useConfigurations = () => {
                     label: t("modules.configurations.configurationOptions.ticketAutomation.updateTicketTriggers.label"),
                     uniqueKey: "update-ticket-triggers",
                     catOptionIcon: () => <ConfirmationNumber />,
+                    hidden: !isFeatureAccessible('manage_update_ticket_triggers'),
                     description: t("modules.configurations.configurationOptions.ticketAutomation.updateTicketTriggers.shortDescription")
                 },
                 // {
@@ -125,6 +137,7 @@ const useConfigurations = () => {
                     label: t("modules.configurations.configurationOptions.usersAndPermissions.agents.label"),
                     uniqueKey: "Agents",
                     catOptionIcon: () => <SupportAgentRounded />,
+                    hidden: !isFeatureAccessible('manage_agents'),
                     description: t("modules.configurations.configurationOptions.usersAndPermissions.agents.shortDescription")
                 },
                 {
@@ -132,6 +145,7 @@ const useConfigurations = () => {
                     label: t("modules.configurations.configurationOptions.usersAndPermissions.queues.label"),
                     uniqueKey: "queues",
                     catOptionIcon: () => <Groups2Outlined />,
+                    hidden: !isFeatureAccessible('manage_queues'),
                     description: t("modules.configurations.configurationOptions.usersAndPermissions.queues.shortDescription")
                 },
                 {
@@ -139,6 +153,7 @@ const useConfigurations = () => {
                     label: t("modules.configurations.configurationOptions.usersAndPermissions.rolesAndPermissions.label"),
                     uniqueKey: "roles-and-permissions",
                     catOptionIcon: () => <LockPerson />,
+                    hidden: !isFeatureAccessible('manage_roles_permissions'),
                     description: t("modules.configurations.configurationOptions.usersAndPermissions.rolesAndPermissions.shortDescription")
                 },
                 {
@@ -146,6 +161,7 @@ const useConfigurations = () => {
                     label: t("modules.configurations.configurationOptions.usersAndPermissions.agentAvailabilityStatus.label"),
                     uniqueKey: "agent-availability",
                     catOptionIcon: () => <WorkHistory />,
+                    hidden: !isFeatureAccessible('manage_agent_availability_statuses'),
                     description: t("modules.configurations.configurationOptions.usersAndPermissions.agentAvailabilityStatus.shortDescription")
                 },
             ]
@@ -167,6 +183,7 @@ const useConfigurations = () => {
                     label: t("modules.configurations.configurationOptions.general.auditLogs.label"),
                     uniqueKey: "audit-logs",
                     description: t("modules.configurations.configurationOptions.general.auditLogs.shortDescription"),
+                    hidden: !isFeatureAccessible('manage_audit_logs'),
                     catOptionIcon: () => <PendingActions />
                 }
             ]
@@ -187,6 +204,7 @@ const useConfigurations = () => {
                     label: t("modules.configurations.configurationOptions.apps.marketplace.label"),
                     uniqueKey: "marketplace",
                     catOptionIcon: () => <StoreRounded />,
+                    hidden: !isFeatureAccessible('manage_marketplace'),
                     description: t("modules.configurations.configurationOptions.apps.marketplace.shortDescription")
                 }
             ]
@@ -261,8 +279,14 @@ export const TicketsConfiguration = () => {
                         </FlexBox>
                         <GridLayout $padding="10px" $gridGap="14px 12px" $gridTemplateColumns={"repeat(4, 1fr)"}>
                             {data.categoryOptions.map((categoryData) =>
-                                <TicketConfigOptions key={categoryData.uniqueKey} uniqueKey={categoryData.uniqueKey}
-                                    label={categoryData.label} route={categoryData.route} description={categoryData.description} catOptionIcon={categoryData.catOptionIcon} />)}
+                            (<React.Fragment key={categoryData.uniqueKey}>
+                                {categoryData.hidden ? null : <TicketConfigOptions
+                                    uniqueKey={categoryData.uniqueKey}
+                                    label={categoryData.label} route={categoryData.route}
+                                    description={categoryData.description} catOptionIcon={categoryData.catOptionIcon} />}
+                            </React.Fragment>
+                            )
+                            )}
                         </GridLayout>
                     </FlexBox>
                 ))

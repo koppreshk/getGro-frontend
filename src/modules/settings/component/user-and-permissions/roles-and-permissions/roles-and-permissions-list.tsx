@@ -8,6 +8,7 @@ import { useMemo } from "react";
 
 interface IRolesAndPermissionsListProps {
     rolesData: IRoles[];
+    isLoading: boolean;
 }
 
 const useColumns = () => {
@@ -61,12 +62,13 @@ const RoleNames = (props: { roleName: string, roleType: string }) => {
 }
 
 export const RolesAndPermissionList = (props: IRolesAndPermissionsListProps) => {
-    const { rolesData } = props;
+    const { rolesData, isLoading } = props;
     const colums = useColumns();
     return (
         <ConfigDataGrid
             columns={colums}
             data={rolesData}
+            isLoading={isLoading}
             hideTableControls
         />
     )

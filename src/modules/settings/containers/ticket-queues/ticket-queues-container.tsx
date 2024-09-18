@@ -3,11 +3,11 @@ import { useFetchAllTicketQueues } from "../../apis/queues";
 import { ErrorMessage } from "lib/ui-ux";
 
 export default function TicketQueuesContainer() {
-    const { data, isLoading, error } = useFetchAllTicketQueues();
+    const { data, isLoading, isFetching, error } = useFetchAllTicketQueues();
 
     if (data || isLoading) {
         return (
-            <TicketQueue isLoading={isLoading} data={data || { employees: [], queues: [], total_pages: 0 }} />
+            <TicketQueue isLoading={isLoading || isFetching} data={data || { employees: [], queues: [], total_pages: 0 }} />
         )
     }
 

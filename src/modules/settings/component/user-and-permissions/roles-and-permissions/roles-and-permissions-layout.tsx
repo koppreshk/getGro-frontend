@@ -8,6 +8,7 @@ import { CreateRoleContainer } from "modules/settings/containers/roles-and-permi
 
 interface RolesAndPermissionsLayoutProps {
     rolesData: IRoles[];
+    isLoading: boolean;
 }
 
 export const RolesAndPermissionsLayout = (props: RolesAndPermissionsLayoutProps) => {
@@ -38,7 +39,7 @@ const RolesAndPermissionsLayoutContent = (props: RolesAndPermissionsLayoutProps)
                 </FlexBox>
                 <Button variant="contained" onClick={() => { navigate('create-role') }} startIcon={<AddCircleOutline />}>Create Role</Button>
             </FlexBox>
-            <RolesAndPermissionList rolesData={props.rolesData} />
+            <RolesAndPermissionList rolesData={props.rolesData} isLoading={props.isLoading} />
         </FlexBox>
     );
 }

@@ -3,10 +3,10 @@ import { UserType, useFetchAllUsers } from "modules/settings/apis/users-and-perm
 import { UserList } from "modules/settings/component/user-and-permissions/agents/user-list"
 
 export const GetAgentsContainer = (props: { type: UserType }) => {
-    const { data, isLoading, error } = useFetchAllUsers(props.type);
+    const { data, isLoading, error, isFetching } = useFetchAllUsers(props.type);
 
     if (data || isLoading) {
-        return <UserList usersData={data} isLoading={isLoading} />
+        return <UserList usersData={data} isLoading={isLoading || isFetching} />
     }
 
     return (
