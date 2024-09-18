@@ -35,7 +35,7 @@ export const useReplyToEmail = () => {
         mutationFn: replyToEmail,
         mutationKey: [TicketsQueryKey.REPLY_TO_EMAIL],
         onSuccess: () => {
-            queryClient.invalidateQueries(TicketsQueryKey.FETCH_TICKET_BY_ID);
+            queryClient.invalidateQueries(TicketsQueryKey.FETCH_EMAIL_CONVERSATIONS);
         }
     });
 }
