@@ -14,7 +14,7 @@ interface IRolesAndPermissionsListProps {
     isLoading: boolean;
 }
 
-const useColumns = () => {
+const useColumns = (rolesData: IRoles[]) => {
     const columnHelper = createColumnHelper<IRoles>();
     const navigate = useNavigate();
 
@@ -44,10 +44,10 @@ const useColumns = () => {
             cell: ({ row: { original } }) => {
                 return (
                     <>
-                        {original.can_edit_role ?
+                        {original.can_edit_role && original.role_type !== 'system' ?
                             <FlexBox flexDirection="row" gap="5px">
                                 <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: 'Edit Role' }} onClick={() => navigate(`edit-role?roleId=${original.id}`)} />
-                                <DeleteRolesContainer roleId={original.id} />
+                                <DeleteRolesContainer roleId={original.id} rolesData={rolesData} />
                             </FlexBox>
                             : null}
                     </>
@@ -84,7 +84,7 @@ const RoleNames = (props: { roleName: string, roleType: string }) => {
 
 export const RolesAndPermissionList = (props: IRolesAndPermissionsListProps) => {
     const { rolesData, isLoading } = props;
-    const colums = useColumns();
+    const colums = useColumns(rolesData);
     return (
         <ConfigDataGrid
             columns={colums}

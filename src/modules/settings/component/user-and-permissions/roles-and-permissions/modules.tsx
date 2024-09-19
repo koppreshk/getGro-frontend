@@ -30,7 +30,7 @@ export const Modules = (props: ModulesProps) => {
     return (
         <StyledName onClick={() => onModuleChange(moduleKey)} $isSelected={isSelected} alignItems="center" justifyContent="space-between">
             <Typography variant="h6" sx={{ color: isSelected ? pallete.primaryPurple : pallete.defaultTextColor }}>{moduleName}</Typography>
-            {hideModule ? null : <SwitchField name={`modules.${moduleKey}`} />}
+            {hideModule ? null : <SwitchField name={`modules.${moduleKey}`} title="Show/Hide Module"/>}
         </StyledName>
     )
 }
