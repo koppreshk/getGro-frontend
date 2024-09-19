@@ -1,10 +1,12 @@
+import { Edit } from "@mui/icons-material";
 import { Avatar, Chip } from "@mui/material";
 import { createColumnHelper } from "@tanstack/react-table";
-import { FlexBox } from "lib/ui-ux";
+import { CustomIconButton, FlexBox } from "lib/ui-ux";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
 import { chooseRandomColors, getInitialsByName } from "lib/utils";
 import { IRoles } from "modules/settings/apis/users-and-permissions";
 import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface IRolesAndPermissionsListProps {
     rolesData: IRoles[];
@@ -13,11 +15,12 @@ interface IRolesAndPermissionsListProps {
 
 const useColumns = () => {
     const columnHelper = createColumnHelper<IRoles>();
+    const navigate = useNavigate();
 
     const columns = [
         columnHelper.accessor("name", {
             id: "roleName",
-            header: () => <span>Role Name</span>,
+            header: () => 'Role Name',
             cell: ({ row: { original } }) => {
                 return <RoleNames roleName={original.name} roleType={original.role_type} />
             },
@@ -25,15 +28,27 @@ const useColumns = () => {
         }),
         columnHelper.accessor("description", {
             id: 'description',
-            header: () => <span>Description</span>,
+            header: () => 'Description',
             cell: info => info.getValue(),
             minSize: 550
         }),
         columnHelper.accessor("agents", {
             id: 'agents',
-            header: () => <span>agents</span>,
+            header: () => 'Agents',
             cell: info => info.getValue(),
         }),
+        columnHelper.display({
+            id: 'actions',
+            header: () => 'Actions',
+            cell: ({ row: { original } }) => {
+                return (
+                    <FlexBox flexDirection="row" gap="5px">
+                        {original.can_edit_role ? <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: 'Edit Role' }} onClick={() => navigate(`edit-role?roleId=${original.id}`)} /> : null}
+                    </FlexBox>
+                )
+            },
+            enableSorting: false,
+        })
     ]
 
     return columns;

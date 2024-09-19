@@ -4,7 +4,7 @@ import { Button, Typography } from "@mui/material";
 import { BreadCrumbs, CustomIconButton, FlexBox, MoreInformation } from "lib/ui-ux";
 import { RolesAndPermissionList } from ".";
 import { IRoles } from "modules/settings/apis/users-and-permissions";
-import { CreateRoleContainer } from "modules/settings/containers/roles-and-permissions";
+import { CreateRoleContainer, EditRoleContainer } from "modules/settings/containers/roles-and-permissions";
 
 interface RolesAndPermissionsLayoutProps {
     rolesData: IRoles[];
@@ -19,7 +19,7 @@ export const RolesAndPermissionsLayout = (props: RolesAndPermissionsLayoutProps)
                 <Routes>
                     <Route key='base-route' path="/" element={<RolesAndPermissionsLayoutContent {...props} />} />
                     <Route key='add-route' path="create-role" element={<CreateRoleContainer />} />
-                    <Route key='edit-route' path="edit-role" element={<></>} />
+                    <Route key='edit-route' path="edit-role" element={<EditRoleContainer rolesData={props.rolesData} />} />
                 </Routes>
             </FlexBox>
         </FlexBox>

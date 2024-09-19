@@ -17,6 +17,7 @@ export interface ICreateRoleFormFields {
 
 interface CreateRoleProps {
     defaultValues?: ICreateRoleFormFields;
+    mutationLoading: boolean;
     onSubmit: (formData: ICreateRoleFormFields) => void;
 }
 
@@ -40,7 +41,7 @@ export const CreateRole = (props: CreateRoleProps) => {
                 <FlexBox gap={'20px'} flexDirection="column" padding="20px" width="70%">
                     <TextboxFieldWithLabel name="name" label="Role Name" size="small" rules={{ required: 'Name is required' }} />
                     <TextboxFieldWithLabel name="description" label="Description" size="small" />
-                    <Permissions onSubmit={onSubmit} />
+                    <Permissions onSubmit={onSubmit} mutationLoading={props.mutationLoading}/>
                 </FlexBox>
             </FlexBox>
         </FormProvider>

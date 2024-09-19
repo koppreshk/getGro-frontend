@@ -5,7 +5,7 @@ import { CreateRole, ICreateRoleFormFields } from "modules/settings/component/us
 import { useNavigate } from "react-router-dom";
 
 export const CreateRoleContainer = () => {
-    const { mutateAsync } = useAddRemoveRole();
+    const { mutateAsync, isLoading } = useAddRemoveRole();
     const navigate = useNavigate();
     const { showNotification } = useNotifications();
 
@@ -27,6 +27,6 @@ export const CreateRoleContainer = () => {
             showNotification({ message: `${name} role created successfully` })
         }).catch(() => showNotification({ message: 'Failed to create new role', type: 'error' }))
     }
-    return <CreateRole onSubmit={onSubmit} />
+    return <CreateRole onSubmit={onSubmit} mutationLoading={isLoading} />
 
 } 

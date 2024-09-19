@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button, Typography } from "@mui/material"
-import { FlexBox, VerticalSeparator } from "lib/ui-ux"
+import { FlexBox, LoadingButton, VerticalSeparator } from "lib/ui-ux"
 import { useState } from "react";
 import { Modules } from "./modules";
 import { PermissionList } from "./permission-list";
@@ -130,6 +130,7 @@ const permissionList = [{
 }] as IPermissionList[]
 
 interface PermissionsProps {
+    mutationLoading: boolean;
     onSubmit: (formData: ICreateRoleFormFields) => void;
 }
 
@@ -171,7 +172,7 @@ export const Permissions = (props: PermissionsProps) => {
             </FlexBox>
             <FlexBox justifyContent="flex-end" gap={'20px'}>
                 <Button variant="outlined" onClick={() => navigate(-1)}>Cancel</Button>
-                <Button variant="contained" type="submit" onClick={handleSubmit(onSubmit)}>Submit</Button>
+                <LoadingButton isLoading={props.mutationLoading} variant="contained" type="submit" onClick={handleSubmit(onSubmit)}>Submit</LoadingButton>
             </FlexBox>
         </FlexBox>
     )
