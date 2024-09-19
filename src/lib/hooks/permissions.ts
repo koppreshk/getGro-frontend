@@ -90,13 +90,3 @@ export const useAutherization = () => {
 
     return authorize;
 }
-export const usePermissions = () => {
-    const authorize = useAutherization();
-
-    return {
-        isCustomersPageAccessible: authorize(AccessRightKeys.ViewCustomers),
-        isDashboardPageAccessible: authorize(AccessRightKeys.ViewDashboard),
-        isSettingsPageAccessible: authorize(AccessRightKeys.ViewSettings),
-        isTicketsPageAccessible: authorize(AccessRightKeys.ViewTickets)
-    }
-}
