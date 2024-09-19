@@ -5,6 +5,7 @@ import { CustomIconButton, FlexBox } from "lib/ui-ux";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
 import { chooseRandomColors, getInitialsByName } from "lib/utils";
 import { IRoles } from "modules/settings/apis/users-and-permissions";
+import { DeleteRolesContainer } from "modules/settings/containers/roles-and-permissions";
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -42,9 +43,14 @@ const useColumns = () => {
             header: () => 'Actions',
             cell: ({ row: { original } }) => {
                 return (
-                    <FlexBox flexDirection="row" gap="5px">
-                        {original.can_edit_role ? <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: 'Edit Role' }} onClick={() => navigate(`edit-role?roleId=${original.id}`)} /> : null}
-                    </FlexBox>
+                    <>
+                        {original.can_edit_role ?
+                            <FlexBox flexDirection="row" gap="5px">
+                                <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: 'Edit Role' }} onClick={() => navigate(`edit-role?roleId=${original.id}`)} />
+                                <DeleteRolesContainer roleId={original.id} />
+                            </FlexBox>
+                            : null}
+                    </>
                 )
             },
             enableSorting: false,
