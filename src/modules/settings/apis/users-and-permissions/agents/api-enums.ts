@@ -8,7 +8,8 @@ export enum AgentsEndPoint {
     ACTIVATE_USER = 'user/activate',
     CURRENT_STATUS = 'user/current_status',
     AVAILABILITY_STATUSES = 'user/availability_statuses',
-    UPDATE_STATUS = 'user/status'
+    UPDATE_STATUS = 'user/status',
+    FETCH_USER_CONFIG = 'user/fetch_user_config'
 }
 
 export enum AgentsQueryKey {
@@ -21,5 +22,6 @@ export enum AgentsQueryKey {
     ACTIVATE_USER = 'ACTIVATE_USER',
     CURRENT_STATUS = 'CURRENT_STATUS',
     AVAILABILITY_STATUSES = 'AVAILABILITY_STATUSES',
-    UPDATE_STATUS = 'UPDATE_STATUS'
+    UPDATE_STATUS = 'UPDATE_STATUS',
+    FETCH_USER_CONFIG = 'FETCH_USER_CONFIG'
 }

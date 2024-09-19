@@ -26,10 +26,15 @@ export enum ConfigurationPermissionKeys {
     MANAGE_MARKETPLACE = "manage_marketplace"
 }
 
-export type AllPermissionKeys = `${TicketPermissionKeys}` | `${ConfigurationPermissionKeys}`
+/**
+ * value 'all' will only come for account owner role, and has all permissions
+ */
+export type AllPermissionKeys = `${TicketPermissionKeys}` | `${ConfigurationPermissionKeys}` | 'all'
 
 export enum ModuleKeys {
-    TICKETS = 'TICKETS',
-    CONFIGURATIONS = 'CONFIGURATIONS',
-    DASHBOARDS = 'DASHBOARDS'
+    TICKETS = 'tickets',
+    CONFIGURATIONS = 'configurations',
+    DASHBOARDS = 'dashboards'
 }
+
+export type AllModules = `${ModuleKeys}`;

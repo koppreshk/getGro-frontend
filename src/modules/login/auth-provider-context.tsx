@@ -28,7 +28,7 @@ export const AuthProvider = (props: IAuthProviderProps) => {
     // call this function when you want to authenticate the user
     const login = useCallback((data: { email: string, authToken: string, rememberMe?: boolean, role: Roles, name: string }) => {
         setUser(data, 14, data.rememberMe);
-        navigate(data.role === 'Admin' ? "/dashboard" : '/tickets', { replace: true });
+        navigate(data.role === "Account Owner" ? "/dashboard" : '/tickets', { replace: true });
     }, [navigate, setUser]);
 
     // call this function to sign out logged in user
