@@ -29,7 +29,9 @@ export enum ConfigurationPermissionKeys {
 export type AllPermissionKeys = `${TicketPermissionKeys}` | `${ConfigurationPermissionKeys}`
 
 export enum ModuleKeys {
-    TICKETS = 'TICKETS',
-    CONFIGURATIONS = 'CONFIGURATIONS',
-    DASHBOARDS = 'DASHBOARDS'
+    TICKETS = 'tickets',
+    CONFIGURATIONS = 'configurations',
+    DASHBOARDS = 'dashboards'
 }
+
+export type AllModules = `${ModuleKeys}`;

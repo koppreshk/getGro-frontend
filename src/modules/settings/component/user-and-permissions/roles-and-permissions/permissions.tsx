@@ -9,7 +9,7 @@ import { ICreateRoleFormFields } from "./create-role";
 import { AllPermissionKeys, ConfigurationPermissionKeys, ModuleKeys, TicketPermissionKeys } from "lib/enums";
 
 interface IPermissionList {
-    associatedModule: keyof typeof ModuleKeys;
+    associatedModule: `${ModuleKeys}`;
     permissions: {
         name: string;
         permissionKey: AllPermissionKeys;
@@ -31,7 +31,7 @@ const modules = [{
 
 
 const permissionList = [{
-    associatedModule: 'TICKETS',
+    associatedModule: ModuleKeys.TICKETS,
     permissions: [{
         name: 'Add Ticket',
         permissionKey: TicketPermissionKeys.ADD_TICKET
@@ -70,7 +70,7 @@ const permissionList = [{
     }]
 },
 {
-    associatedModule: 'CONFIGURATIONS',
+    associatedModule: ModuleKeys.CONFIGURATIONS,
     permissions: [{
         name: 'Manage Ticket Status',
         permissionKey: ConfigurationPermissionKeys.MANAGE_TICKET_STATUS
@@ -125,14 +125,19 @@ const permissionList = [{
     }]
 },
 {
-    associatedModule: 'DASHBOARDS',
+    associatedModule: ModuleKeys.DASHBOARDS,
     permissions: []
 }] as IPermissionList[]
 
-export const Permissions = () => {
+interface PermissionsProps {
+    onSubmit: (formData: ICreateRoleFormFields) => void;
+}
+
+export const Permissions = (props: PermissionsProps) => {
+    const { onSubmit } = props;
     const navigate = useNavigate();
     const [selectedModule, setSelectedModule] = useState(ModuleKeys.TICKETS);
-    const { watch } = useFormContext<ICreateRoleFormFields>();
+    const { watch, handleSubmit } = useFormContext<ICreateRoleFormFields>();
 
     const onModuleChange = (value: ModuleKeys) => {
         setSelectedModule(value);
@@ -164,9 +169,9 @@ export const Permissions = () => {
                     </FlexBox>
                 </FlexBox>
             </FlexBox>
-            <FlexBox width="60%" justifyContent="flex-start" gap={'20px'}>
+            <FlexBox justifyContent="flex-end" gap={'20px'}>
                 <Button variant="outlined" onClick={() => navigate(-1)}>Cancel</Button>
-                <Button variant="contained">Submit</Button>
+                <Button variant="contained" type="submit" onClick={handleSubmit(onSubmit)}>Submit</Button>
             </FlexBox>
         </FlexBox>
     )
