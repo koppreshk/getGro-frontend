@@ -5,7 +5,6 @@ import { FlexBox } from "lib/ui-ux";
 import { useAppDispatch, useAppSelector, useFeature } from "lib/hooks";
 import { setShowHideTicketDetails } from "modules/tickets/storage";
 import { useCallback } from "react";
-import React from "react";
 
 interface IMenuOption {
     title: string;
@@ -96,16 +95,12 @@ export const TicketSideMenu = (props: ITicketSideMenuProps) => {
     return (
         <SideMenuWrapper flexDirection="column" gap="12px" justifyContent="space-between">
             <FlexBox flexDirection="column" gap="12px">
-                {sideMenuOptions.map((option, index) => (
-                    <React.Fragment>
-                        {option.hidden
-                            ? null :
-                            <Tooltip key={index} title={option.title} arrow placement="left">
-                                <IconWrapper $isSelected={selectedMenuOption === option.id} $isDisabled={option.disabled} onClick={() => onOptionClick(option)}>
-                                    {option.iconComponent()}
-                                </IconWrapper>
-                            </Tooltip>}
-                    </React.Fragment>
+                {sideMenuOptions.filter((item) => !item.hidden).map((option, index) => (
+                    <Tooltip key={index} title={option.title} arrow placement="left">
+                        <IconWrapper $isSelected={selectedMenuOption === option.id} $isDisabled={option.disabled} onClick={() => onOptionClick(option)}>
+                            {option.iconComponent()}
+                        </IconWrapper>
+                    </Tooltip>
                 ))}
             </FlexBox>
             <FlexBox flexDirection="column" gap="12px">
