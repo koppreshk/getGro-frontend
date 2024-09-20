@@ -6,7 +6,7 @@ import { Modules } from "./modules";
 import { PermissionList } from "./permission-list";
 import { useFormContext } from "react-hook-form";
 import { ICreateRoleFormFields } from "./create-role";
-import { AllPermissionKeys, ConfigurationPermissionKeys, ModuleKeys, TicketPermissionKeys } from "lib/enums";
+import { AllPermissionKeys, ConfigurationPermissionKeys, DashboardPermissionKeys, ModuleKeys, TicketPermissionKeys } from "lib/enums";
 
 interface IPermissionList {
     associatedModule: `${ModuleKeys}`;
@@ -126,7 +126,16 @@ const permissionList = [{
 },
 {
     associatedModule: ModuleKeys.DASHBOARDS,
-    permissions: []
+    permissions: [{
+        name: 'Support Monitoring',
+        permissionKey: DashboardPermissionKeys.SUPPORT_MONITORNG
+    }, {
+        name: 'Agent Performance',
+        permissionKey: DashboardPermissionKeys.AGENT_PERFORMANCE
+    }, {
+        name: 'SLA Dashboard',
+        permissionKey: DashboardPermissionKeys.SLA_DASHBOARD
+    }]
 }] as IPermissionList[]
 
 interface PermissionsProps {

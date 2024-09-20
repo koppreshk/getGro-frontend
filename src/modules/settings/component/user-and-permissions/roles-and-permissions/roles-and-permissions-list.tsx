@@ -44,7 +44,7 @@ const useColumns = (rolesData: IRoles[]) => {
             cell: ({ row: { original } }) => {
                 return (
                     <>
-                        {original.can_edit_role && original.role_type !== 'system' ?
+                        {original.can_edit_role ?
                             <FlexBox flexDirection="row" gap="5px">
                                 <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: 'Edit Role' }} onClick={() => navigate(`edit-role?roleId=${original.id}`)} />
                                 <DeleteRolesContainer roleId={original.id} rolesData={rolesData} />
