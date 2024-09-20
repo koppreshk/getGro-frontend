@@ -71,6 +71,7 @@ const useConfigurations = () => {
                     route: 'facebook',
                     uniqueKey: 'facebook',
                     catOptionIcon: () => <Facebook />,
+                    hidden: true,
                     description: t("modules.configurations.configurationOptions.channels.facebook.shortDescription")
                 },
                 {
@@ -176,6 +177,7 @@ const useConfigurations = () => {
                     label: t("modules.configurations.configurationOptions.general.satisfactionSurvey.label"),
                     uniqueKey: "satisfaction-survey",
                     description: t("modules.configurations.configurationOptions.general.satisfactionSurvey.shortDescription"),
+                    hidden: true,
                     catOptionIcon: () => <ThumbsUpDown />
                 },
                 {

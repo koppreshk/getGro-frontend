@@ -25,7 +25,7 @@ export const TicketsByView = (props: TicketsByViewProps) => {
     return (
         <>
             <div style={{ background: '#fff' }}>
-                <TableControls totalPages={props.totalPages} enableSerchField />
+                <TableControls totalPages={props.totalPages} enableSerchField isContentViewModeVisible />
             </div>
             <ContentContainer>
                 {cardView === 'true' ? <TicketsCardview {...props} /> : <DisplayTicketsGrid {...props} />}
