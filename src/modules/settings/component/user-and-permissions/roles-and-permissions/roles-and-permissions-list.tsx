@@ -1,4 +1,4 @@
-import { Edit } from "@mui/icons-material";
+import { Edit, RemoveRedEye } from "@mui/icons-material";
 import { Avatar, Chip } from "@mui/material";
 import { createColumnHelper } from "@tanstack/react-table";
 import { CustomIconButton, FlexBox } from "lib/ui-ux";
@@ -49,7 +49,8 @@ const useColumns = (rolesData: IRoles[]) => {
                                 <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: 'Edit Role' }} onClick={() => navigate(`edit-role?roleId=${original.id}`)} />
                                 <DeleteRolesContainer roleId={original.id} rolesData={rolesData} />
                             </FlexBox>
-                            : null}
+                            : <CustomIconButton iconComponent={<RemoveRedEye />} tooltipProps={{ title: 'View Role' }} onClick={() => navigate(`view-role?roleId=${original.id}`)} />
+                        }
                     </>
                 )
             },

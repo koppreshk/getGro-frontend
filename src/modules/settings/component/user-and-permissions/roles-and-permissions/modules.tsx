@@ -9,6 +9,7 @@ interface ModulesProps {
     moduleKey: ModuleKeys,
     hideModule?: boolean;
     isSelected: boolean;
+    isDisabled: boolean;
     onModuleChange: (value: ModuleKeys) => void
 }
 
@@ -24,13 +25,13 @@ const StyledName = styled(FlexBox) <{ $isSelected: boolean; }>`
 `;
 
 export const Modules = (props: ModulesProps) => {
-    const { moduleKey, moduleName, isSelected, hideModule, onModuleChange } = props;
+    const { moduleKey, moduleName, isSelected, hideModule, isDisabled, onModuleChange } = props;
     const { pallete } = useTheme();
 
     return (
         <StyledName onClick={() => onModuleChange(moduleKey)} $isSelected={isSelected} alignItems="center" justifyContent="space-between">
             <Typography variant="h6" sx={{ color: isSelected ? pallete.primaryPurple : pallete.defaultTextColor }}>{moduleName}</Typography>
-            {hideModule ? null : <SwitchField name={`modules.${moduleKey}`} title="Show/Hide Module"/>}
+            {hideModule ? null : <SwitchField name={`modules.${moduleKey}`} title="Show/Hide Module" disabled={isDisabled} />}
         </StyledName>
     )
 }
