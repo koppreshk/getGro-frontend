@@ -4,10 +4,11 @@ import { Button, Typography } from "@mui/material";
 import { BreadCrumbs, CustomIconButton, FlexBox, MoreInformation } from "lib/ui-ux";
 import { RolesAndPermissionList } from ".";
 import { IRoles } from "modules/settings/apis/users-and-permissions";
-import { CreateRoleContainer } from "modules/settings/containers/roles-and-permissions";
+import { CreateRoleContainer, EditRoleContainer, ViewRoleContainer } from "modules/settings/containers/roles-and-permissions";
 
 interface RolesAndPermissionsLayoutProps {
     rolesData: IRoles[];
+    isLoading: boolean;
 }
 
 export const RolesAndPermissionsLayout = (props: RolesAndPermissionsLayoutProps) => {
@@ -18,7 +19,8 @@ export const RolesAndPermissionsLayout = (props: RolesAndPermissionsLayoutProps)
                 <Routes>
                     <Route key='base-route' path="/" element={<RolesAndPermissionsLayoutContent {...props} />} />
                     <Route key='add-route' path="create-role" element={<CreateRoleContainer />} />
-                    <Route key='edit-route' path="edit-role" element={<></>} />
+                    <Route key='edit-route' path="edit-role" element={<EditRoleContainer rolesData={props.rolesData} />} />
+                    <Route key='view-route' path="view-role" element={<ViewRoleContainer rolesData={props.rolesData} />} />
                 </Routes>
             </FlexBox>
         </FlexBox>
@@ -38,7 +40,7 @@ const RolesAndPermissionsLayoutContent = (props: RolesAndPermissionsLayoutProps)
                 </FlexBox>
                 <Button variant="contained" onClick={() => { navigate('create-role') }} startIcon={<AddCircleOutline />}>Create Role</Button>
             </FlexBox>
-            <RolesAndPermissionList rolesData={props.rolesData} />
+            <RolesAndPermissionList rolesData={props.rolesData} isLoading={props.isLoading} />
         </FlexBox>
     );
 }

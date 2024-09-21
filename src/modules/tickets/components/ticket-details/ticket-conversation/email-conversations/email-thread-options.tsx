@@ -13,7 +13,7 @@ interface IEmailThreadOptionsProps {
 export const EmailThreadOptions = (props: IEmailThreadOptionsProps) => {
     const { onReplyClick, onForwardClick } = props;
     const { t } = useTranslation();
-    const showReplyTicket = useFeature('REPLY_TICKET');
+    const showReplyTicket = useFeature('reply_ticket');
 
     const threadOptions = useMemo(() => ([
         {

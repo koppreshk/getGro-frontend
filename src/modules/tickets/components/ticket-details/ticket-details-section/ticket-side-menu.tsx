@@ -1,4 +1,3 @@
-import React from "react";
 import { useCallback } from "react";
 import styled from "styled-components";
 import { PersonOutlineOutlined, DescriptionOutlined, ChevronRight, ChevronLeft, ConfirmationNumberOutlined } from "@mui/icons-material";
@@ -45,7 +44,8 @@ export enum MenuOptions {
 
 const useSideMenuOptions = () => {
     const shopifyCustomerId = useAppSelector((state) => state.tickets.ticketDetails?.shopifyCustomerId);
-    const showNotes = useFeature('MANAGE_NOTES');
+    const showNotes = useFeature('manage_notes');
+    
     return [
         {
             title: 'Customer Profile',
@@ -97,16 +97,12 @@ export const TicketSideMenu = (props: ITicketSideMenuProps) => {
     return (
         <SideMenuWrapper flexDirection="column" gap="12px" justifyContent="space-between">
             <FlexBox flexDirection="column" gap="12px">
-                {sideMenuOptions.map((option, index) => (
-                    <React.Fragment key={option.title}>
-                        {option.hidden
-                            ? null :
-                            <Tooltip key={index} title={option.title} arrow placement="left">
-                                <IconWrapper $isSelected={selectedMenuOption === option.id} $isDisabled={option.disabled} onClick={() => onOptionClick(option)}>
-                                    {option.iconComponent()}
-                                </IconWrapper>
-                            </Tooltip>}
-                    </React.Fragment>
+                {sideMenuOptions.filter((item) => !item.hidden).map((option, index) => (
+                    <Tooltip key={index} title={option.title} arrow placement="left">
+                        <IconWrapper $isSelected={selectedMenuOption === option.id} $isDisabled={option.disabled} onClick={() => onOptionClick(option)}>
+                            {option.iconComponent()}
+                        </IconWrapper>
+                    </Tooltip>
                 ))}
             </FlexBox>
             <FlexBox flexDirection="column" gap="12px">

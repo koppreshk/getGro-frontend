@@ -95,7 +95,7 @@ export const CardView = (props: ITicketDetails) => {
 
             <FlexBox alignItems="center">
                 <Priority priority={priority} />
-                {isFeatureAccessible('EDIT_STATUS') ? <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} statusUpdateString={''} renderMode="card" /> : null}
+                {isFeatureAccessible('edit_status') ? <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} statusUpdateString={''} renderMode="card" /> : null}
             </FlexBox>
         </StyledCard >
     )

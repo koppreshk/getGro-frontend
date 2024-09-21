@@ -2,10 +2,10 @@ import { useFetchAvailabilityStatuses } from "modules/settings/apis/users-and-pe
 import { AgentStatusesList } from "modules/settings/component/user-and-permissions/agent-availability/agent-statuses-list"
 
 export const AgentAvailabilityStatusesContainer = () => {
-    const { data, isLoading } = useFetchAvailabilityStatuses()
+    const { data, isLoading, isFetching } = useFetchAvailabilityStatuses()
     return (
         <>
-            <AgentStatusesList statuses={data} isLoading={isLoading} />
+            <AgentStatusesList statuses={data} isLoading={isLoading || isFetching} />
         </>
     )
 }

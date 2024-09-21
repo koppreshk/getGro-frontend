@@ -1,35 +1,46 @@
 export enum TicketPermissionKeys {
-    ADD_TICKET = 'ADD_TICKET',
-    REPLY_TICKET = 'REPLY_TICKET',
-    EDIT_PRIORITY = 'EDIT_PRIORITY',
-    EDIT_ASSIGNEE = 'EDIT_ASSIGNEE',
-    EDIT_STATUS = 'EDIT_STATUS',
-    EDIT_TAGS = 'EDIT_TAGS',
-    SPLIT_TICKET = 'SPLIT_TICKET',
-    MANAGE_NOTES = 'MANAGE_NOTES',
-    MERGE_TICKET = 'MERGE_TICKET',
+    ADD_TICKET = "add_ticket",
+    REPLY_TICKET = "reply_ticket",
+    EDIT_PRIORITY = "edit_priority",
+    EDIT_ASSIGNEE = "edit_assignee",
+    EDIT_STATUS = "edit_status",
+    EDIT_TAGS = "edit_tags",
+    SPLIT_TICKET = "split_ticket",
+    MANAGE_NOTES = "manage_notes",
+    MERGE_TICKET = "merge_ticket",
 }
 
 export enum ConfigurationPermissionKeys {
-    MANAGE_TICKET_STATUS = 'MANAGE_TICKET_STATUS',
-    MANAGE_TAGS = 'MANAGE_TAGS',
-    MANAGE_EMAIL = 'MANAGE_EMAIL',
-    MANAGE_TICKET_ESCALATION = 'MANAGE_TICKET_ESCALATION',
-    MANAGE_AUTO_ASSIGNMENTS = 'MANAGE_AUTO_ASSIGNMENTS',
-    MANAGE_CREATE_TICKET_TRIGGERS = 'MANAGE_CREATE_TICKET_TRIGGERS',
-    MANAGE_UPDATE_TICKET_TRIGGERS = 'MANAGE_UPDATE_TICKET_TRIGGERS',
-    MANAGE_AGENTS = 'MANAGE_AGENTS',
-    MANAGE_QUEUES = 'MANAGE_QUEUES',
-    MANAGE_ROLES_PERMISSIONS = 'MANAGE_ROLES_PERMISSIONS',
-    MANAGE_AGENT_AVAILABILITY_STATUSES = 'MANAGE_AGENT_AVAILABILITY_STATUSES',
-    MANAGE_AUDIT_LOGS = 'MANAGE_AUDIT_LOGS',
-    MANAGE_MARKETPLACE = 'MANAGE_MARKETPLACE'
+    MANAGE_TICKET_STATUS = "manage_ticket_status",
+    MANAGE_TAGS = "manage_tags",
+    MANAGE_EMAIL = "manage_email",
+    MANAGE_TICKET_ESCALATION = "manage_ticket_escalation",
+    MANAGE_AUTO_ASSIGNMENTS = "manage_auto_assignments",
+    MANAGE_CREATE_TICKET_TRIGGERS = "manage_create_ticket_triggers",
+    MANAGE_UPDATE_TICKET_TRIGGERS = "manage_update_ticket_triggers",
+    MANAGE_AGENTS = "manage_agents",
+    MANAGE_QUEUES = "manage_queues",
+    MANAGE_ROLES_PERMISSIONS = "manage_roles_permissions",
+    MANAGE_AGENT_AVAILABILITY_STATUSES = "manage_agent_availability_statuses",
+    MANAGE_AUDIT_LOGS = "manage_audit_logs",
+    MANAGE_MARKETPLACE = "manage_marketplace"
 }
 
-export type AllPermissionKeys = `${TicketPermissionKeys}` | `${ConfigurationPermissionKeys}`
+export enum DashboardPermissionKeys {
+    SUPPORT_MONITORNG = 'support_monitoring',
+    AGENT_PERFORMANCE = 'agent_performance',
+    SLA_DASHBOARD = 'sla_dashboard'
+}
+
+/**
+ * value 'all' will only come for account owner role, and has all permissions
+ */
+export type AllPermissionKeys = `${TicketPermissionKeys}` | `${ConfigurationPermissionKeys}` | `${DashboardPermissionKeys}` | 'all'
 
 export enum ModuleKeys {
-    TICKETS = 'TICKETS',
-    CONFIGURATIONS = 'CONFIGURATIONS',
-    DASHBOARDS = 'DASHBOARDS'
+    TICKETS = 'tickets',
+    CONFIGURATIONS = 'configurations',
+    DASHBOARDS = 'dashboards'
 }
+
+export type AllModules = `${ModuleKeys}`;

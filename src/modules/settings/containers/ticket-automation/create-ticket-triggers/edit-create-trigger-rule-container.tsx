@@ -12,7 +12,7 @@ export const EditCreateTriggerRuleContainer = (props: {
     const { autoMationType } = props;
     const { data, isLoading } = useFetchFieldsAndConditions();
     const { data: currentRuleData, isLoading: currentRuleLoading } = useFetchAssignment('create_trigger');
-    const { mutateAsync } = useEditAutoAssignment();
+    const { mutateAsync, isLoading: mutationLoading } = useEditAutoAssignment();
     const [searchParams] = useSearchParams();
     const id = searchParams.get('id') || '';
 
@@ -91,7 +91,7 @@ export const EditCreateTriggerRuleContainer = (props: {
         }
 
         return (
-            <AddCreateTriggerRule data={data} onSubmit={onSubmit} defaultValues={defaultValues} mode="edit" allTriggers={props.allTriggers} />
+            <AddCreateTriggerRule data={data} onSubmit={onSubmit} defaultValues={defaultValues} mode="edit" allTriggers={props.allTriggers} mutationLoading={mutationLoading} />
         )
     }
 

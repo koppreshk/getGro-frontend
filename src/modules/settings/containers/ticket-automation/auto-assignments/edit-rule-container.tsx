@@ -8,7 +8,7 @@ import { isArray } from "lib/utils";
 export const EditRuleContainer = (props: { allAssignments?: IAllAssignments[]; }) => {
     const { data, isLoading } = useFetchFieldsAndConditions();
     const { data: currentRuleData, isLoading: currentRuleLoading } = useFetchAssignment('auto_assignment');
-    const { mutateAsync } = useEditAutoAssignment();
+    const { mutateAsync, isLoading: mutationLoading } = useEditAutoAssignment();
     const [searchParams] = useSearchParams();
     const id = searchParams.get('id') || '';
 
@@ -87,7 +87,7 @@ export const EditRuleContainer = (props: { allAssignments?: IAllAssignments[]; }
         }
 
         return (
-            <AddRule data={data} onSubmit={onSubmit} defaultValues={defaultValues} mode="edit" allAssignments={props.allAssignments} />
+            <AddRule data={data} onSubmit={onSubmit} defaultValues={defaultValues} mode="edit" allAssignments={props.allAssignments} mutationLoading={mutationLoading} />
         )
     }
 

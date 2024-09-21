@@ -1,7 +1,6 @@
 import { useAuth } from "modules/login";
 
 export enum Roles {
-    Admin = 'Admin',
     Agent = 'Agent',
     AccountOwner = 'Account Owner'
 }
@@ -31,47 +30,47 @@ type IAccessRights = {
 const accessRights = [
     {
         name: AccessRightKeys.ViewDashboard,
-        mode: [Roles.Admin, Roles.AccountOwner]
+        mode: [Roles.AccountOwner]
     },
     {
         name: AccessRightKeys.ViewCustomers,
-        mode: [Roles.Admin, Roles.AccountOwner]
+        mode: [Roles.AccountOwner]
     },
     {
         name: AccessRightKeys.ViewSettings,
-        mode: [Roles.Admin, Roles.AccountOwner]
+        mode: [Roles.AccountOwner]
     },
     {
         name: AccessRightKeys.ViewTickets,
-        mode: [Roles.Admin, Roles.Agent, Roles.AccountOwner],
+        mode: [Roles.Agent, Roles.AccountOwner],
     },
     {
         name: TicketAccessRights.AllTickets,
-        mode: [Roles.Admin, Roles.AccountOwner],
+        mode: [Roles.AccountOwner],
     },
     {
         name: TicketAccessRights.AllPending,
-        mode: [Roles.Admin, Roles.AccountOwner],
+        mode: [Roles.AccountOwner],
     },
     {
         name: TicketAccessRights.AllResolved,
-        mode: [Roles.Admin, Roles.AccountOwner],
+        mode: [Roles.AccountOwner],
     },
     {
         name: TicketAccessRights.AllClosed,
-        mode: [Roles.Admin, Roles.AccountOwner],
+        mode: [Roles.AccountOwner],
     },
     {
         name: TicketAccessRights.MyPending,
-        mode: [Roles.Admin, Roles.Agent, Roles.AccountOwner],
+        mode: [Roles.Agent, Roles.AccountOwner],
     },
     {
         name: TicketAccessRights.MyResolved,
-        mode: [Roles.Admin, Roles.Agent, Roles.AccountOwner],
+        mode: [Roles.Agent, Roles.AccountOwner],
     },
     {
         name: TicketAccessRights.MyClosed,
-        mode: [Roles.Admin, Roles.Agent, Roles.AccountOwner],
+        mode: [Roles.Agent, Roles.AccountOwner],
     }
 ] as IAccessRights[]
 
@@ -90,14 +89,4 @@ export const useAutherization = () => {
     }
 
     return authorize;
-}
-export const usePermissions = () => {
-    const authorize = useAutherization();
-
-    return {
-        isCustomersPageAccessible: authorize(AccessRightKeys.ViewCustomers),
-        isDashboardPageAccessible: authorize(AccessRightKeys.ViewDashboard),
-        isSettingsPageAccessible: authorize(AccessRightKeys.ViewSettings),
-        isTicketsPageAccessible: authorize(AccessRightKeys.ViewTickets)
-    }
 }

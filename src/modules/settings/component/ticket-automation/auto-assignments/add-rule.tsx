@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CustomSteps, FlexBox } from 'lib/ui-ux';
+import { CustomSteps, FlexBox, LoadingButton } from 'lib/ui-ux';
 import { ChooseConditionForm } from './choose-condition-form';
 import { AssociateAgent } from './associate-agent';
 import { Button } from '@mui/material';
@@ -12,6 +12,7 @@ import { useNotifications } from 'lib';
 
 interface AddRuleProps {
     mode?: string;
+    mutationLoading: boolean;
     defaultValues?: IAddRuleFormFields;
     data: FetchFieldsAndConditions[];
     allAssignments?: IAllAssignments[];
@@ -19,7 +20,7 @@ interface AddRuleProps {
 }
 
 const AddRuleBase = (props: AddRuleProps) => {
-    const { onSubmit, allAssignments } = props;
+    const { onSubmit, allAssignments, mutationLoading } = props;
     const [activeStep, setActiveStep] = React.useState(0);
     const form = useFormContext<IAddRuleFormFields>();
     const navigate = useNavigate();
@@ -84,12 +85,13 @@ const AddRuleBase = (props: AddRuleProps) => {
                         {props.mode === 'edit' ?
                             <Button variant="outlined" size="large" type="button" onClick={() => form.reset()}>{'Reset'}</Button>
                             : null}
-                        <Button
+                        <LoadingButton
+                            isLoading={mutationLoading}
                             variant="contained"
                             endIcon={isLastStep ? <Save /> : <KeyboardArrowRight />}
                             onClick={isLastStep ? form.handleSubmit(onSave) : handleNext}>
                             {isLastStep ? 'Save' : 'Next'}
-                        </Button>
+                        </LoadingButton>
                     </FlexBox>
                 </FlexBox>
             </FlexBox>

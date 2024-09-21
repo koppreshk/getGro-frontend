@@ -1,15 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import { Button, Typography } from "@mui/material"
-import { FlexBox, VerticalSeparator } from "lib/ui-ux"
+import { BackButton, FlexBox, LoadingButton, VerticalSeparator } from "lib/ui-ux"
 import { useState } from "react";
 import { Modules } from "./modules";
 import { PermissionList } from "./permission-list";
 import { useFormContext } from "react-hook-form";
 import { ICreateRoleFormFields } from "./create-role";
-import { AllPermissionKeys, ConfigurationPermissionKeys, ModuleKeys, TicketPermissionKeys } from "lib/enums";
+import { AllPermissionKeys, ConfigurationPermissionKeys, DashboardPermissionKeys, ModuleKeys, TicketPermissionKeys } from "lib/enums";
 
 interface IPermissionList {
-    associatedModule: keyof typeof ModuleKeys;
+    associatedModule: `${ModuleKeys}`;
     permissions: {
         name: string;
         permissionKey: AllPermissionKeys;
@@ -31,7 +31,7 @@ const modules = [{
 
 
 const permissionList = [{
-    associatedModule: 'TICKETS',
+    associatedModule: ModuleKeys.TICKETS,
     permissions: [{
         name: 'Add Ticket',
         permissionKey: TicketPermissionKeys.ADD_TICKET
@@ -70,7 +70,7 @@ const permissionList = [{
     }]
 },
 {
-    associatedModule: 'CONFIGURATIONS',
+    associatedModule: ModuleKeys.CONFIGURATIONS,
     permissions: [{
         name: 'Manage Ticket Status',
         permissionKey: ConfigurationPermissionKeys.MANAGE_TICKET_STATUS
@@ -125,21 +125,37 @@ const permissionList = [{
     }]
 },
 {
-    associatedModule: 'DASHBOARDS',
-    permissions: []
+    associatedModule: ModuleKeys.DASHBOARDS,
+    permissions: [{
+        name: 'Support Monitoring',
+        permissionKey: DashboardPermissionKeys.SUPPORT_MONITORNG
+    }, {
+        name: 'Agent Performance',
+        permissionKey: DashboardPermissionKeys.AGENT_PERFORMANCE
+    }, {
+        name: 'SLA Dashboard',
+        permissionKey: DashboardPermissionKeys.SLA_DASHBOARD
+    }]
 }] as IPermissionList[]
 
-export const Permissions = () => {
+interface PermissionsProps {
+    mode?: 'view' | 'edit' | 'add';
+    mutationLoading?: boolean;
+    onSubmit?: (formData: ICreateRoleFormFields) => void;
+}
+
+export const Permissions = (props: PermissionsProps) => {
+    const { onSubmit, mode = 'add' } = props;
     const navigate = useNavigate();
     const [selectedModule, setSelectedModule] = useState(ModuleKeys.TICKETS);
-    const { watch } = useFormContext<ICreateRoleFormFields>();
+    const { watch, handleSubmit } = useFormContext<ICreateRoleFormFields>();
 
     const onModuleChange = (value: ModuleKeys) => {
         setSelectedModule(value);
     }
 
     const associatedPermissions = permissionList.find((item) => item.associatedModule === selectedModule)!;
-    const modifiedPermissions = watch(`modules.${associatedPermissions.associatedModule}`) ? associatedPermissions.permissions : associatedPermissions.permissions.map((item) => ({ ...item, disabled: true }))
+    const modifiedPermissions = watch(`modules.${associatedPermissions.associatedModule}`) ? (mode === 'view' ? associatedPermissions.permissions.map((item) => ({ ...item, disabled: true })) : associatedPermissions.permissions) : associatedPermissions.permissions.map((item) => ({ ...item, disabled: true }))
 
     return (
         <FlexBox flexDirection="column" height="calc(100% - 134px)">
@@ -152,6 +168,7 @@ export const Permissions = () => {
                             <Modules
                                 {...item}
                                 key={item.moduleKey}
+                                isDisabled={mode === 'view'}
                                 isSelected={item.moduleKey === selectedModule}
                                 onModuleChange={onModuleChange} />))}
                     </FlexBox>
@@ -164,9 +181,16 @@ export const Permissions = () => {
                     </FlexBox>
                 </FlexBox>
             </FlexBox>
-            <FlexBox width="60%" justifyContent="flex-start" gap={'20px'}>
-                <Button variant="outlined" onClick={() => navigate(-1)}>Cancel</Button>
-                <Button variant="contained">Submit</Button>
+            <FlexBox justifyContent="flex-end" gap={'20px'}>
+                {
+                    mode === 'view' ?
+                        <BackButton onClick={() => navigate(-1)}>Back</BackButton>
+                        :
+                        <>
+                            <Button variant="outlined" onClick={() => navigate(-1)}>Cancel</Button>
+                            <LoadingButton isLoading={props?.mutationLoading || false} variant="contained" type="submit" onClick={handleSubmit(onSubmit!)}>Submit</LoadingButton>
+                        </>
+                }
             </FlexBox>
         </FlexBox>
     )

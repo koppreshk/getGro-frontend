@@ -9,7 +9,7 @@ export const AddCreateTriggerRuleContainer = (props: {
 }) => {
     const { autoMationType } = props;
     const { data, isLoading } = useFetchFieldsAndConditions();
-    const { mutateAsync } = useCreateAutoAssignment();
+    const { mutateAsync, isLoading: mutationLoading } = useCreateAutoAssignment();
 
     const onSubmit = (formData: IAddCreateTriggerRuleFormFields) => {
         const { ruleName, description, allTicketConditions, anyTicketConditions, actions } = formData;
@@ -56,7 +56,7 @@ export const AddCreateTriggerRuleContainer = (props: {
 
     if (data) {
         return (
-            <AddCreateTriggerRule data={data} onSubmit={onSubmit} allTriggers={props.allTriggers} />
+            <AddCreateTriggerRule data={data} onSubmit={onSubmit} allTriggers={props.allTriggers} mutationLoading={mutationLoading}/>
         )
     }
 

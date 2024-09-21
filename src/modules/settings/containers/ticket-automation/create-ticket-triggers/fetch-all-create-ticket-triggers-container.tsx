@@ -6,7 +6,7 @@ import { UpdateTicketTriggersLayout } from "modules/settings/component/ticket-au
 export default function FetchAllCreateTicketTriggersContainer(props: {
     autoMationType: AutoMationType;
 }) {
-    const { data, isError, error, isLoading } = useFetchAllAssignments(props.autoMationType);
+    const { data, isError, error, isLoading, isFetching } = useFetchAllAssignments(props.autoMationType);
 
     if (isError) return <ErrorMessage statusCode={error?.message} />
 
@@ -14,8 +14,8 @@ export default function FetchAllCreateTicketTriggersContainer(props: {
         <>
             {
                 props.autoMationType === 'create_trigger'
-                    ? <CreateTicketTriggersLayout data={data} isLoading={isLoading} autoMationType={props.autoMationType} />
-                    : <UpdateTicketTriggersLayout data={data} isLoading={isLoading} autoMationType={props.autoMationType} />
+                    ? <CreateTicketTriggersLayout data={data} isLoading={isLoading || isFetching} autoMationType={props.autoMationType} />
+                    : <UpdateTicketTriggersLayout data={data} isLoading={isLoading || isFetching} autoMationType={props.autoMationType} />
             }
         </>
     )

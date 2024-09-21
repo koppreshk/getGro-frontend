@@ -1,8 +1,10 @@
-import { CoreQueryKey, } from "./api-enums";
+import React from "react";
 import { useQuery } from "react-query";
-import { AllPermissionKeys } from "lib/enums";
+import { AllPermissionKeys, ConfigurationPermissionKeys, DashboardPermissionKeys, ModuleKeys, TicketPermissionKeys } from "lib/enums";
 import { useDispatch } from "react-redux";
 import { setCoreData } from '../storage/core-slice';
+import { useServiceClient } from "lib";
+import { AgentsEndPoint, AgentsQueryKey } from "modules/settings/apis/users-and-permissions/agents/api-enums";
 
 export interface IConfig {
     role: string,
@@ -17,63 +19,31 @@ export interface IConfig {
     }
 }
 
-const getConfig = () => {
-    return new Promise<IConfig>((resolve) => {
-        const res = {
-            role: 'admin',
-            modules: ['CONFIGURATIONS', 'DASHBOARDS'],
-            permissions: [
-                "ADD_TICKET",
-                "REPLY_TICKET",
-                "EDIT_PRIORITY",
-                "EDIT_ASSIGNEE",
-                "EDIT_STATUS",
-                "EDIT_TAGS",
-                "SPLIT_TICKET",
-                "MANAGE_NOTES",
-                "MERGE_TICKET",
-                "MANAGE_TICKET_STATUS",
-                "MANAGE_TAGS",
-                "MANAGE_EMAIL",
-                "MANAGE_TICKET_ESCALATION",
-                "MANAGE_AUTO_ASSIGNMENTS",
-                "MANAGE_CREATE_TICKET_TRIGGERS",
-                "MANAGE_UPDATE_TICKET_TRIGGERS",
-                "MANAGE_AGENTS",
-                "MANAGE_QUEUES",
-                "MANAGE_ROLES_PERMISSIONS",
-                "MANAGE_AGENT_AVAILABILITY_STATUSES",
-                "MANAGE_AUDIT_LOGS",
-                "MANAGE_MARKETPLACE"
-            ] as AllPermissionKeys[],
-            language: 'en',
-            user_details: {
-                user_name: 'koppresh.putpak',
-                email: 'koppresh@getgro.io',
-                phone: '1234567890'
-            }
-        }
-        setTimeout(() => {
-            resolve(res);
-        }, 200);
-    })
-}
-
-export const useGetConfig = () => {
+export const useGetConfig = (isEnabled: boolean) => {
     const dispatch = useDispatch();
 
-    // const { getData } = useServiceClient();
+    const { getData } = useServiceClient();
 
-    // const getConfig = React.useCallback(() => getData(`${CoreEndPoint.GET_CONFIG}`)
-    //     .then((res) => res.json()), [getData]);
-
+    const getConfig = React.useCallback(() => getData(`${AgentsEndPoint.FETCH_USER_CONFIG}`)
+        .then((res) => res.json()), [getData]);
 
     return useQuery<IConfig, { message: string }>({
         queryFn: getConfig,
-        queryKey: [CoreQueryKey.GET_CONFIG],
+        queryKey: [AgentsQueryKey.FETCH_USER_CONFIG],
         cacheTime: 0,
         onSuccess(data) {
+            if (data.modules.includes('all') && data.permissions.includes('all')) {
+                const allTicketPermissions = Object.values(TicketPermissionKeys);
+                const allConfigPermissions = Object.values(ConfigurationPermissionKeys);
+                const allDashboardPermissions = Object.values(DashboardPermissionKeys);
+                const allPermissions = [...allTicketPermissions, ...allConfigPermissions, ...allDashboardPermissions] as AllPermissionKeys[];
+
+                dispatch(setCoreData({ ...data, permissions: allPermissions, modules: Object.values(ModuleKeys) }));
+                return;
+            }
             dispatch(setCoreData(data))
+
         },
+        enabled: isEnabled
     })
 }
