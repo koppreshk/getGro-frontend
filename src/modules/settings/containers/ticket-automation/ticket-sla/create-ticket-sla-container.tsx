@@ -9,15 +9,13 @@ export const CreateTicketSLAContainer = (props: { allEscalations?: IEscalationsN
     const { showNotification } = useNotifications();
 
     const onFormSubmit = (formData: IEscalationFormFields) => {
-        const { addEscalation, addReminders, chooseCondition, slaTargets } = formData;
+        const { addEscalation, addReminders, chooseCondition, slaTargets, conditionsArray } = formData;
 
         return mutateAsync({
             name: chooseCondition.name,
             description: chooseCondition.description,
             evaluation_type: Number(chooseCondition.slaEvalutaion),
-            ticket_fields: [
-                { id: chooseCondition.ticketFields, value: chooseCondition.conditionValue },
-            ],
+            ticket_fields: conditionsArray.map((item) => ({ id: item.ticketFields, value: item.conditionValue })),
             targets: data!.priorities.map((item) => (
                 {
                     priority_id: item.id,

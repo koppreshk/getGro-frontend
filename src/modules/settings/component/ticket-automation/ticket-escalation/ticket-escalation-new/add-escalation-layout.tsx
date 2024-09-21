@@ -43,10 +43,12 @@ export interface IEscalationFormFields {
         name: string;
         description: string;
         slaEvalutaion: string,
+    }
+    conditionsArray: {
         ticketFields: string,
         condition: string,
         conditionValue: string
-    }
+    }[];
     slaTargets: ISLATargetsFormFields,
     addReminders: {
         ftrDuration: string;
@@ -89,11 +91,13 @@ export const AddEscalationLayout = React.memo((props: IAddEscalationLayoutProps)
             chooseCondition: {
                 name: '',
                 description: '',
-                slaEvalutaion: '0',
+                slaEvalutaion: '0'
+            },
+            conditionsArray: [{
                 ticketFields: data.ticket_fields[0].id.toString(),
                 condition: 'is',
-                conditionValue: ''
-            },
+                conditionValue: '',
+            }],
             slaTargets: {
                 critical: {
                     firstResponse: {
@@ -197,7 +201,7 @@ export const AddEscalationLayout = React.memo((props: IAddEscalationLayoutProps)
     const renderBasedOnActiveStep = () => {
         switch (activeStep) {
             case 0:
-                return <ChooseCondition ticketField={data.ticket_fields} priorities={data.priorities} allEscalations={allEscalations} mode={props.mode} slaName={defaultvalues?.chooseCondition.name}/>;
+                return <ChooseCondition ticketField={data.ticket_fields} priorities={data.priorities} allEscalations={allEscalations} mode={props.mode} slaName={defaultvalues?.chooseCondition.name} />;
             case 1:
                 return <SLATargets timeOptions={data.run_types} slaTargetPriorities={data.priorities} />;
             case 2:

@@ -1,12 +1,14 @@
 import styled, { useTheme } from "styled-components";
-import { useFormContext } from "react-hook-form";
+import { UseFieldArrayRemove, useFieldArray, useFormContext } from "react-hook-form";
 import { FlexBox } from "lib/ui-ux";
-import { Box, CircularProgress, Typography } from "@mui/material"
+import { Box, Button, CircularProgress, IconButton, Typography } from "@mui/material"
 import { RadioGroupField, SelectField, TextboxField } from "lib/form-fields"
 import { IEscalationsNew, IField, IPriority, useFetchAllQueues } from "modules/settings/apis/ticket-automation/escalations";
 import { IEscalationFormFields } from "./add-escalation-layout";
 import { useFetchAllChannels } from "modules/settings/apis/tags";
 import { useFetchAllStatuses } from "modules/settings/apis/ticket-status";
+import { useCallback } from "react";
+import { DeleteOutline } from "@mui/icons-material";
 
 const StyledRadioFields = styled(RadioGroupField)`
     .MuiFormControlLabel-label {
@@ -38,6 +40,13 @@ export const ChooseCondition = (props: IChooseConditionProps) => {
             return `${value} already exists, please use a different name to continue`;
         }
     }
+    const { fields, append, remove } = useFieldArray({
+        name: 'conditionsArray'
+    });
+
+    const onAddCondition = useCallback(() => {
+        append({ ticketFields: '', condition: '', conditionValue: '' })
+    }, [append]);
 
     return (
         <>
@@ -58,14 +67,16 @@ export const ChooseCondition = (props: IChooseConditionProps) => {
                     p={2}
                     sx={{ border: `1px solid ${pallete.formFieldBorderColor}`, borderRadius: semantics.borderRadius.sm }}>
                     <Typography variant="body2">Apply this SLA to the tickets that meet All of these conditions</Typography>
-                    <Conditions ticketFieldDropdownData={ticketFieldDropdownData} priorities={props.priorities} />
+                    {fields.map((field, index) => <Conditions key={field.id} fieldArrayName="conditionsArray" index={index} remove={remove} ticketFieldDropdownData={ticketFieldDropdownData} priorities={props.priorities} />)}
+                    <Button variant="contained" size="small" sx={{ width: 'fit-content' }} onClick={onAddCondition}>Add Condition</Button>
                 </Box>
             </FlexBox>
         </>
     )
 }
 
-const Conditions = (props: { ticketFieldDropdownData: IKeyValue[], priorities: IPriority[] }) => {
+const Conditions = (props: { index: number; fieldArrayName: string; ticketFieldDropdownData: IKeyValue[], priorities: IPriority[]; remove: UseFieldArrayRemove; }) => {
+    const { index, fieldArrayName, priorities, ticketFieldDropdownData, remove } = props;
     const { pallete, semantics } = useTheme();
 
     return (
@@ -74,17 +85,20 @@ const Conditions = (props: { ticketFieldDropdownData: IKeyValue[], priorities: I
             gap={4}
             p={2}
             sx={{ border: `1px solid ${pallete.formFieldBorderColor}`, borderRadius: semantics.borderRadius.sm }}>
-            <SelectField name="chooseCondition.ticketFields" menuOptions={props.ticketFieldDropdownData} sx={{ width: '33%' }} label="Ticket Fields" />
-            <SelectField name="chooseCondition.condition" menuOptions={[{ key: 'is', value: 'Is' }]} sx={{ width: '33%' }} />
-            <ConditionValueContainer ticketFieldDropdownData={props.ticketFieldDropdownData} priorities={props.priorities} />
+            <SelectField name={`${fieldArrayName}.${index}.ticketFields`} menuOptions={ticketFieldDropdownData} sx={{ width: '33%' }} label="Ticket Fields" />
+            <SelectField name={`${fieldArrayName}.${index}.condition`} menuOptions={[{ key: 'is', value: 'Is' }]} sx={{ width: '33%' }} />
+            <ConditionValueContainer ticketFieldDropdownData={ticketFieldDropdownData} priorities={priorities} fieldArrayName={fieldArrayName} index={index} />
+            <IconButton onClick={() => remove(index)} sx={{ width: 'fit-content' }}>
+                <DeleteOutline />
+            </IconButton>
         </Box>
     )
 }
 
-const ConditionValueContainer = (props: { ticketFieldDropdownData: IKeyValue[], priorities: IPriority[] }) => {
-    const { ticketFieldDropdownData, priorities } = props;
+const ConditionValueContainer = (props: { ticketFieldDropdownData: IKeyValue[], priorities: IPriority[]; index: number; fieldArrayName: string; }) => {
+    const { ticketFieldDropdownData, priorities, fieldArrayName, index } = props;
     const { watch } = useFormContext<IEscalationFormFields>();
-    const ticketFieldValue = watch('chooseCondition.ticketFields');
+    const ticketFieldValue = watch(`conditionsArray.${index}.ticketFields`);
     const isSourceSelected = ticketFieldDropdownData.find((item) => item.key === ticketFieldValue)?.value.toLocaleLowerCase() === 'source';
     const isPrioritySelected = ticketFieldDropdownData.find((item) => item.key === ticketFieldValue)?.value.toLocaleLowerCase() === 'priority';
     const isQueueSelected = ticketFieldDropdownData.find((item) => item.key === ticketFieldValue)?.value.toLocaleLowerCase() === 'queue';
@@ -117,7 +131,7 @@ const ConditionValueContainer = (props: { ticketFieldDropdownData: IKeyValue[], 
                 :
                 <div style={{ width: '33%' }}>
                     <SelectField
-                        name="chooseCondition.conditionValue"
+                        name={`${fieldArrayName}.${index}.conditionValue`}
                         label="Field Options"
                         rules={{ required: 'Please select an option' }}
                         menuOptions={getMenuOptions()} sx={{ width: '100%' }} />
