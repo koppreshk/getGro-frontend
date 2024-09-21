@@ -9,7 +9,7 @@ export const EditTicketSLAContainer = (props: { allEscalations?: IEscalationsNew
     const { data, isLoading, error } = useFetchSLAmetaData();
     const id = Number(searchParams.get('id')!);
     const { data: slaDataById, isLoading: slaDataLoading, error: slaError } = useFetchEscalationById(id);
-    const { mutateAsync } = useEditEscalationNew();
+    const { mutateAsync, isLoading: mutationLoading } = useEditEscalationNew();
     const { showNotification } = useNotifications();
 
     const onFormSubmit = (formData: IEscalationFormFields) => {
@@ -139,7 +139,7 @@ export const EditTicketSLAContainer = (props: { allEscalations?: IEscalationsNew
         } as IEscalationFormFields;
 
         return (
-            <AddEscalationLayout data={data} mode="edit" defaultvalues={defaultValues} onFormSubmit={onFormSubmit} allEscalations={props.allEscalations} />
+            <AddEscalationLayout data={data} mode="edit" defaultvalues={defaultValues} onFormSubmit={onFormSubmit} allEscalations={props.allEscalations} mutationLoading={mutationLoading} />
         )
     }
     return <ErrorMessage statusCode={error?.message || slaError?.message} />

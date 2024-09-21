@@ -5,7 +5,7 @@ import { AddEscalationLayout, IEscalationFormFields } from "modules/settings/com
 
 export const CreateTicketSLAContainer = (props: { allEscalations?: IEscalationsNew[] }) => {
     const { data, isLoading, error } = useFetchSLAmetaData();
-    const { mutateAsync } = useCreateEscalationNew();
+    const { mutateAsync, isLoading: mutationLoading } = useCreateEscalationNew();
     const { showNotification } = useNotifications();
 
     const onFormSubmit = (formData: IEscalationFormFields) => {
@@ -65,7 +65,7 @@ export const CreateTicketSLAContainer = (props: { allEscalations?: IEscalationsN
     }
 
     if (data) {
-        return <AddEscalationLayout data={data} onFormSubmit={onFormSubmit} allEscalations={props.allEscalations} />
+        return <AddEscalationLayout data={data} onFormSubmit={onFormSubmit} allEscalations={props.allEscalations} mutationLoading={mutationLoading} />
     }
 
     return <ErrorMessage statusCode={error?.message} />
