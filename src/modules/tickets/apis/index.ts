@@ -21,10 +21,7 @@ export * from './email-apis/fetch-email-conversations'
 
 export * from './telephonic-apis/fetch-calls-by-ticket-id';
 
-export * from './get-order-details';
-
 export * from './attach-customer';
-export * from './unlink-customer';
 export * from './get-data-by-key';
 export * from './get-ticket-conversations';
 export * from './create-manual-ticket';
@@ -37,3 +34,5 @@ export * from './tickets-history';
 export * from './ticket-notes';
 
 export * from './split-ticket/split-ticket';
+
+export * from './orders/fetch-all-orders';

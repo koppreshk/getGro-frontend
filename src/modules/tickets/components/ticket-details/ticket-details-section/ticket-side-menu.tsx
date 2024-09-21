@@ -1,11 +1,12 @@
+import React from "react";
+import { useCallback } from "react";
 import styled from "styled-components";
-import { PersonOutlineOutlined, ShoppingCartOutlined, DescriptionOutlined, ChevronRight, ChevronLeft, ConfirmationNumberOutlined } from "@mui/icons-material";
+import { PersonOutlineOutlined, DescriptionOutlined, ChevronRight, ChevronLeft, ConfirmationNumberOutlined } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material"
 import { FlexBox } from "lib/ui-ux";
 import { useAppDispatch, useAppSelector, useFeature } from "lib/hooks";
 import { setShowHideTicketDetails } from "modules/tickets/storage";
-import { useCallback } from "react";
-import React from "react";
+import ShopifyIcon from '../../../../../assets/svg/shopify-icon.svg?react';
 
 interface IMenuOption {
     title: string;
@@ -43,7 +44,7 @@ export enum MenuOptions {
 }
 
 const useSideMenuOptions = () => {
-    const customerInfo = useAppSelector((state) => state.tickets.ticketDetails?.customerInfo);
+    const shopifyCustomerId = useAppSelector((state) => state.tickets.ticketDetails?.shopifyCustomerId);
     const showNotes = useFeature('MANAGE_NOTES');
     return [
         {
@@ -52,10 +53,10 @@ const useSideMenuOptions = () => {
             iconComponent: () => <PersonOutlineOutlined />
         },
         {
-            title: !customerInfo?.omsCustomerId ? 'Link a customer to get order details' : 'Order Details',
+            title: 'Order Details',
             id: MenuOptions.OrderDetails,
-            iconComponent: () => <ShoppingCartOutlined />,
-            disabled: !customerInfo?.omsCustomerId
+            iconComponent: () => <ShopifyIcon width="20px" height="20px" />,
+            hidden: !shopifyCustomerId
         },
         {
             title: 'Notes',
@@ -97,7 +98,7 @@ export const TicketSideMenu = (props: ITicketSideMenuProps) => {
         <SideMenuWrapper flexDirection="column" gap="12px" justifyContent="space-between">
             <FlexBox flexDirection="column" gap="12px">
                 {sideMenuOptions.map((option, index) => (
-                    <React.Fragment>
+                    <React.Fragment key={option.title}>
                         {option.hidden
                             ? null :
                             <Tooltip key={index} title={option.title} arrow placement="left">

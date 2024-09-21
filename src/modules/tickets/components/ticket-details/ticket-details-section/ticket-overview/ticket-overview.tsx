@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-import { DeleteOutlined, MergeOutlined, PersonSearch, ReportOutlined } from "@mui/icons-material";
+import { useState } from "react";
+import { DeleteOutlined, MergeOutlined, ReportOutlined } from "@mui/icons-material";
 import { Chip, Tooltip, Typography } from "@mui/material";
-import { CustomIconButton, FlexBox, HorizontalSeparator } from "lib/ui-ux";
+import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { Platform } from "../../ticket-conversation/ticket-conversation-header";
-import { ManageAssigneeContainer, ManagePriorityContainer, SearchCustomerContainer, TicketStatusContainer, ManageTagsContainer } from "modules/tickets/containers";
+import { ManageAssigneeContainer, ManagePriorityContainer, TicketStatusContainer, ManageTagsContainer } from "modules/tickets/containers";
 import { useAppSelector, useFeature } from "lib/hooks";
-import { UnlinkCustomer } from "./unlink-customer";
 import { ITicketDetails } from "modules/tickets/apis";
 import { ContactInfo, TypographyName } from "./contact-info";
 import { useDateDifference } from "lib/utils";
@@ -61,10 +60,6 @@ const useMenuItems = () => {
 export const TicketOverview = (props: ITicketOverviewProps) => {
     const { ticketDetails } = props;
     const { customerName, source, createdAt, ticketId, ticketStatus, priority, assigneeInfo, statusUpdateString, closedAt, tags } = ticketDetails;
-    const [showSearchUserFlyout, setShowSearchUserFlyout] = React.useState(false);
-    const onSearchUserBtnClick = React.useCallback(() => {
-        setShowSearchUserFlyout((x) => !x);
-    }, []);
     const customerInfo = useAppSelector((state) => state.tickets.ticketDetails?.customerInfo)
     const [selectedMenu, setSelectedMenu] = useState<string | undefined>();
     const [showDrawer, setDrawerDisplay] = useState<DrawerDisplayTypes>({
@@ -96,10 +91,6 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
                     </FlexBox>
                 </FlexBox>
                 <FlexBox>
-                    {customerInfo?.omsCustomerId
-                        ? <UnlinkCustomer ticketId={ticketId} />
-                        : <CustomIconButton tooltipProps={{ title: 'Search Customer', arrow: true, placement: "left" }} iconComponent={<PersonSearch />} onClick={onSearchUserBtnClick} />
-                    }
                     <MoreActions onMenuItemSelect={onMenuItemSelect} menuItems={menuItems} />
                 </FlexBox>
             </FlexBox>
@@ -118,7 +109,6 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
                         {ticketDetails?.resolutionDue ? <DateInfo label="Resolution due: " date={ticketDetails.resolutionDue} /> : null}
                     </FlexBox> : null}
             </FlexBox>
-            <SearchCustomerContainer showSearchUserFlyout={showSearchUserFlyout} onSearchUserBtnClick={onSearchUserBtnClick} />
             <MenuRenderer selectedMenu={selectedMenu} showDrawer={showDrawer} toggleDrawerDisplay={toggleDrawerDisplay} />
         </FlexBox>
     )
