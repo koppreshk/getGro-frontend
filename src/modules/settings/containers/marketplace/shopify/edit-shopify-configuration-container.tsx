@@ -16,11 +16,12 @@ export const EditShopifyConfigurationContainer = (props: { storeData: IShopifySt
             store_name: formData.storeName,
             store_url: formData.storeUrl,
             store_access_token: formData.accessToken,
+            store_id: id
         }).then(() => {
             showNotification({ message: 'Shopify store details edited successfully', type: 'success' });
             togglePopup();
         }).catch(() => showNotification({ message: 'Failed to edit Shopify store details', type: 'error' }))
-    }, [mutateAsync, showNotification, togglePopup]);
+    }, [id, mutateAsync, showNotification, togglePopup]);
     
     if (isLoading) {
         return <CenteredCircularProgress />

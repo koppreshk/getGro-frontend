@@ -90,12 +90,11 @@ interface IContactInfoProps extends Pick<ITicketDetails, 'customerInfo' | 'ticke
 
 export const ContactInfo = (props: IContactInfoProps) => {
     const { customerInfo, createdAt, ticketId, customerName, closedAt } = props;
-    const { email, fullName, omsCustomerId, phoneNumber } = useMemo(() => {
+    const { email, fullName, phoneNumber } = useMemo(() => {
         if (customerInfo?.email) {
             return {
                 email: customerInfo.email,
                 fullName: customerInfo.firstName + ' ' + customerInfo.lastName,
-                omsCustomerId: customerInfo.omsCustomerId,
                 phoneNumber: customerInfo.phoneNumber || 'NA'
             }
         }
@@ -128,7 +127,6 @@ export const ContactInfo = (props: IContactInfoProps) => {
             <FlexBox padding="0 20px" flexDirection="column" gap="15px">
                 {contactInfoData('Email', email)}
                 {contactInfoData('Phone', phoneNumber)}
-                {contactInfoData('Customer Id', omsCustomerId)}
                 {contactInfoData('Ticket Id', ticketId)}
                 {contactInfoData('Created At', createdAt)}
                 {closedAt ? contactInfoData('Closed At', closedAt) : null}

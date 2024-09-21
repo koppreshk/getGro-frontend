@@ -3,10 +3,9 @@ import styled from "styled-components"
 import { FixedSizeList as List } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { Typography } from "@mui/material"
-import { FlexBox } from "lib/ui-ux"
-import { IOrders } from "modules/tickets/apis";
-import { CommonHeader } from "../common-header";
+import { FlexBox } from "lib/ui-ux";
 import { OrderItem } from "./order-item";
+import { IOrders } from "modules/tickets/apis";
 
 interface IOrderDetailsProps {
     orderDetails: IOrders[]
@@ -20,9 +19,8 @@ export const OrderDetails = React.memo((props: IOrderDetailsProps) => {
     const { orderDetails } = props;
     return (
         <>
-            <CommonHeader headerName="Order Details" />
             {orderDetails.length ?
-                <OrderWrappers height="calc(100% - 72px)" gap="10px" flexDirection="column">
+                <OrderWrappers height="calc(100% - 134px)" gap="10px" flexDirection="column">
                     <AutoSizer>
                         {({ height, width }) => (
                             <List

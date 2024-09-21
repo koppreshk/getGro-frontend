@@ -27,4 +27,5 @@ export interface ITicketDetails {
         email: string
     }
     tags: number[];
+    shopifyCustomerId: null | string;
 }

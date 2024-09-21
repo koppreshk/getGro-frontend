@@ -65,7 +65,7 @@ interface ITicketDetailsProps extends ITicketDetails {
 
 const TicketDetails = (props: ITicketDetailsProps) => {
     const { createdAt, customerName, ticketId, source, priority, ticketStatus, assigneeInfo, pastTickets,
-        customerInfo, channelId, resolutionDue, responseDue, statusUpdateString, closedAt, description, tags } = props;
+        customerInfo, channelId, resolutionDue, responseDue, statusUpdateString, closedAt, description, tags, shopifyCustomerId } = props;
     const params = useParams();
     const navigate = useNavigate();
     const match = useMatch(`/tickets/:ticketType/:ticketId`);
@@ -97,11 +97,11 @@ const TicketDetails = (props: ITicketDetailsProps) => {
                 statusUpdateString,
                 closedAt,
                 description,
-                tags
+                tags,
+                shopifyCustomerId
             }));
         }
-    }, [customerInfo, createdAt, customerName, dispatch, params.ticketId, priority, source, ticketId, ticketStatus,
-        pastTickets, channelId, responseDue, resolutionDue, assigneeInfo, statusUpdateString, closedAt, description, tags]);
+    }, [customerInfo, createdAt, customerName, dispatch, params.ticketId, priority, source, ticketId, ticketStatus, pastTickets, channelId, responseDue, resolutionDue, assigneeInfo, statusUpdateString, closedAt, description, tags, shopifyCustomerId]);
 
     const onTicketClick = React.useCallback(() => {
         navigate(`/tickets/${match?.params.ticketType}/${ticketId}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`);
