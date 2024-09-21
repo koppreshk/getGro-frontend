@@ -1,14 +1,20 @@
+import React from "react";
+import { useFormContext } from "react-hook-form";
 import { SelectField } from "lib/form-fields";
 import { CenteredCircularProgress, FlexBox } from "lib/ui-ux";
-import { IShopifyStore } from "modules/settings/apis/marketplace/shopify";
+import { useFetchAllShopifyStores } from "modules/settings/apis/marketplace/shopify";
 
-interface IAllShopifyStoresContainerProps {
-    shopifyStoreData: IShopifyStore[] | undefined;
-    storeDataLoading: boolean
-}
 
-export const AllShopifyStoresContainer = (props: IAllShopifyStoresContainerProps) => {
-    const { shopifyStoreData, storeDataLoading } = props
+export const AllShopifyStoresContainer = () => {
+    const { data: shopifyStoreData, isLoading: storeDataLoading } = useFetchAllShopifyStores();
+
+    const form = useFormContext();
+
+    React.useEffect(() => {
+        if(shopifyStoreData && shopifyStoreData.length > 0) {
+            form.setValue('stores', shopifyStoreData[0].id.toString());
+        }
+    }, [form, shopifyStoreData])
 
     if (storeDataLoading) {
         return <CenteredCircularProgress />;
@@ -21,7 +27,8 @@ export const AllShopifyStoresContainer = (props: IAllShopifyStoresContainerProps
                     name="stores"
                     label="Stores"
                     menuOptions={shopifyStoreData.map((item) => ({ key: item.id.toString(), value: item.store_name }))}
-                    size="small" sx={{ width: '100%' }} />
+                    size="small" sx={{ width: '100%' }} 
+                    />
             </FlexBox>
         )
     }
