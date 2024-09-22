@@ -2,7 +2,7 @@ import styled, { useTheme } from "styled-components";
 import { Typography } from "@mui/material";
 import { FlexBox, GridLayout } from "lib/ui-ux";
 import { getFormatedNumberByLocale } from "lib/utils";
-import { ISupportMonitor } from "./support-monitoring";
+import { SupportMonitoringValues } from "modules/dashboard/apis";
 
 const Metric = styled(FlexBox)`
     background-color: ${({ theme }) => theme.pallete.white};
@@ -16,15 +16,15 @@ interface ITopMetricProps {
     value: number;
 }
 
-export const TopFourMetrics = (props: ISupportMonitor) => {
-    const { hold_tickets, pending_tickets, resolution_overdue, response_overdue } = props;
+export const TopFourMetrics = (props: Pick<SupportMonitoringValues, 'total_tickets' | 'pending_tickets' | 'resolution_overdue' | 'response_overdue'>) => {
+    const { total_tickets, pending_tickets, resolution_overdue, response_overdue } = props;
     const data = [{
-        name: 'Pending TIckets',
-        value: pending_tickets,
+        name: 'Total Tickets',
+        value: total_tickets,
     },
     {
-        name: 'Hold TIckets',
-        value: hold_tickets,
+        name: 'Pending TIckets',
+        value: pending_tickets,
     },
     {
         name: 'Response Overdue',

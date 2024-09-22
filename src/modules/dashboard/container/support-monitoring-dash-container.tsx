@@ -1,20 +1,23 @@
+import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
+import { useFetchSupportMonitoringValues } from "../apis";
 import { SupportMonitoring } from "../components/parts/support-monitoring/support-monitoring"
 
 export const SupportMonitoringDashContainer = () => {
-    const data = {
-        pending_tickets: 12,
-        hold_tickets: 3,
-        response_overdue: 54,
-        resolution_overdue: 23,
-        channels_info: {
-            Instagram: 8,
-            Email: 12,
-            Facebook: 6
-        }
+    const { data, isLoading, error, isRefetching } = useFetchSupportMonitoringValues();
+
+    if (isLoading || isRefetching) {
+        return <CenteredCircularProgress />
     }
+
+    if (data) {
+        return (
+            <>
+                <SupportMonitoring data={data} />
+            </>
+        )
+    }
+
     return (
-        <>
-            <SupportMonitoring data={data} />
-        </>
+        <ErrorMessage statusCode={error?.message} />
     )
 }

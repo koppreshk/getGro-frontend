@@ -7,6 +7,7 @@ import ReactApexChart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
 import { FormProvider, useForm } from "react-hook-form";
 import { SelectField } from "lib/form-fields";
+import { SupportMonitoringValues } from "modules/dashboard/apis";
 
 const StyledContainer = styled(FlexBox)`
     background-color: ${({ theme }) => theme.pallete.white};
@@ -14,27 +15,28 @@ const StyledContainer = styled(FlexBox)`
     box-shadow: 0 4px 8px -2px #1018281a,0 2px 4px -2px #18212f0f;
 `;
 
-export const TicketStats = () => {
+export const TicketStats = (props: Pick<SupportMonitoringValues, 'tickets_created' | 'replies_by_agents' | 'response_pending' | 'tickets_closed' | 'replies_by_customers' | 'resolution_pending'>) => {
+    const { tickets_created, replies_by_agents, replies_by_customers, resolution_pending, response_pending, tickets_closed } = props;
     const quickStats1 = [{
         name: 'Tickets Created',
-        value: 1,
+        value: tickets_created,
     }, {
         name: 'Replies By Agent',
-        value: 5
+        value: replies_by_agents
     }, {
         name: 'Response Pending',
-        value: 7
+        value: response_pending
     }];
 
     const quickStats2 = [{
         name: 'Tickets Closed',
-        value: 1
+        value: tickets_closed
     }, {
-        name: 'Replies By Contact',
-        value: 5
+        name: 'Replies By Customers',
+        value: replies_by_customers
     }, {
         name: 'Resolution Pending',
-        value: 7
+        value: resolution_pending
     }]
 
     const [filterValue, setFilters] = useState('Today');
