@@ -21,6 +21,7 @@ const StyledOrderNumber = styled(Typography)`
         border-radius: 6px;
         color: #008334;
         font-weight: 500;
+        cursor: pointer;
     }
 `;
 
@@ -60,7 +61,7 @@ export const TextFieldValue = styled(Typography)`
 
 export const OrderItem = (props: IOrderViewProps) => {
     const { index, orderDetails } = props;
-    const { order_number, financial_status, fulfillment_status, total_price } = orderDetails[index];
+    const { order_number, financial_status, fulfillment_status, total_price, order_status_url } = orderDetails[index];
     const [showDrawer, setDrawerDisplay] = useState(false);
 
     const toggleOrderDetailsDrawer = () => {
@@ -82,6 +83,11 @@ export const OrderItem = (props: IOrderViewProps) => {
             </DrawerHeaderWrapper>
         )
     }
+
+    const openShopifyOrder = () => {
+        window.open(order_status_url)
+    }
+
     return (
         <>
             <StyledOrder gap="10px">
@@ -92,7 +98,7 @@ export const OrderItem = (props: IOrderViewProps) => {
                     <FlexBox flexDirection="column" gap="10px" width="50%" justifyContent="space-between">
                         <FlexBox flexDirection="column">
                             <Typography variant="h6">Order Number:</Typography>
-                            <StyledOrderNumber variant="subheading2" >{'#' + order_number}</StyledOrderNumber>
+                            <StyledOrderNumber variant="subheading2" role="link" onClick={openShopifyOrder}>{'#' + order_number}</StyledOrderNumber>
                         </FlexBox>
                         <FlexBox flexDirection="column">
                             <Typography variant="h6">Order Status:</Typography>
