@@ -45,18 +45,12 @@ export enum MenuOptions {
 const useSideMenuOptions = () => {
     const shopifyCustomerId = useAppSelector((state) => state.tickets.ticketDetails?.shopifyCustomerId);
     const showNotes = useFeature('manage_notes');
-    
+
     return [
         {
             title: 'Customer Profile',
             id: MenuOptions.CustomerProfile,
             iconComponent: () => <PersonOutlineOutlined />
-        },
-        {
-            title: 'Order Details',
-            id: MenuOptions.OrderDetails,
-            iconComponent: () => <ShopifyIcon width="20px" height="20px" />,
-            hidden: !shopifyCustomerId
         },
         {
             title: 'Notes',
@@ -68,7 +62,13 @@ const useSideMenuOptions = () => {
             title: 'Past Tickets',
             id: MenuOptions.PastTickets,
             iconComponent: () => <ConfirmationNumberOutlined />
-        }
+        },
+        {
+            title: 'Order Details',
+            id: MenuOptions.OrderDetails,
+            iconComponent: () => <ShopifyIcon width="20px" height="20px" />,
+            hidden: !shopifyCustomerId
+        },
     ] as IMenuOption[];
 }
 
