@@ -4,7 +4,6 @@ import styled, { css } from "styled-components"
 import { Typography } from "@mui/material";
 import { DeleteOutlined, ReportOutlined } from '@mui/icons-material/';
 import { useTranslation } from "react-i18next";
-import { TicketAccessRights, useAutherization } from "lib/hooks";
 import { FlexBox, HorizontalSeparator } from "lib/ui-ux"
 import { TicketViewActionButtons } from "./ticket-details/ticket-list-view";
 
@@ -49,7 +48,6 @@ export const HeaderWrapper = styled(FlexBox)`
 `;
 
 const useViewOptions = () => {
-    const authorize = useAutherization();
     const { t } = useTranslation();
 
     const res = {
@@ -57,44 +55,37 @@ const useViewOptions = () => {
             {
                 name: t('modules.tickets.ticketViews.allTickets'),
                 primaryKey: 'all-tickets',
-                route: 'all-tickets',
-                showOption: authorize(TicketAccessRights.AllTickets)
+                route: 'all-tickets'
             },
             {
                 name: t('modules.tickets.ticketViews.allPending'),
                 primaryKey: 'all-pending',
-                route: 'all-pending',
-                showOption: authorize(TicketAccessRights.AllPending)
+                route: 'all-pending'
             },
             {
                 name: t('modules.tickets.ticketViews.allResolved'),
                 primaryKey: 'all-resolved',
-                route: 'all-resolved',
-                showOption: authorize(TicketAccessRights.AllResolved)
+                route: 'all-resolved'
             },
             {
                 name: t('modules.tickets.ticketViews.allClosed'),
                 primaryKey: 'all-closed',
-                route: 'all-closed',
-                showOption: authorize(TicketAccessRights.AllResolved)
+                route: 'all-closed'
             },
             {
                 name: t('modules.tickets.ticketViews.myPending'),
                 primaryKey: 'my-pending',
-                route: 'my-pending',
-                showOption: authorize(TicketAccessRights.MyPending)
+                route: 'my-pending'
             },
             {
                 name: t('modules.tickets.ticketViews.myResolved'),
                 primaryKey: 'my-resolved',
-                route: 'my-resolved',
-                showOption: authorize(TicketAccessRights.MyResolved)
+                route: 'my-resolved'
             },
             {
                 name: t('modules.tickets.ticketViews.myClosed'),
                 primaryKey: 'my-closed',
-                route: 'my-closed',
-                showOption: authorize(TicketAccessRights.MyClosed)
+                route: 'my-closed'
             }
         ],
         secondaryOptions: [
@@ -125,7 +116,7 @@ export const TicketViews = () => {
             </HeaderWrapper>
             {primaryOptions.map((item) => (
                 <React.Fragment key={item.primaryKey}>
-                    {item.showOption ? <TicketViewOptions name={item.name} route={item.route} /> : null}
+                    {<TicketViewOptions name={item.name} route={item.route} />}
                 </React.Fragment>
             ))}
             <HorizontalSeparator />

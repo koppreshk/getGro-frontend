@@ -155,7 +155,7 @@ const AgentAssigned = (props: Pick<ITicketDetails, 'assigneeInfo'>) => {
                     <FlexBox flexDirection="column">
                         <Typography variant="subheading1">Assignee</Typography>
                         <Typography variant="subheading1">
-                            Name: {assigneeInfo?.first_name} {assigneeInfo?.last_name}
+                            Name: {assigneeInfo?.first_name} {assigneeInfo?.last_name ?? ''}
                         </Typography>
                         <Typography variant="subheading1">
                             Email: {assigneeInfo?.email}
@@ -169,7 +169,7 @@ const AgentAssigned = (props: Pick<ITicketDetails, 'assigneeInfo'>) => {
         <Tooltip title={assignedAgentInfo()}>
             <FlexBox gap={'10px'} alignItems="center" width="198px">
                 <SupportAgent sx={iconStyles} />
-                <StyledTypography variant="body2">{assigneeInfo?.email ? `${assigneeInfo?.first_name} ${assigneeInfo?.last_name}` : '--'}</StyledTypography>
+                <StyledTypography variant="body2">{assigneeInfo?.email ? `${assigneeInfo?.first_name} ${assigneeInfo?.last_name ?? ''}` : '--'}</StyledTypography>
             </FlexBox>
         </Tooltip>
     )

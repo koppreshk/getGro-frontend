@@ -13,7 +13,7 @@ export const EditAgentContainer = (props: IEditUserContainerProps) => {
     const { id, toggleUserDrawer } = props;
     const { data: roles, isLoading: rolesLoading, error: rolesError } = useFetchAllRoles();
     const { data, isLoading, error } = useFetchUserById(id);
-    const { mutateAsync } = useEditUser();
+    const { mutateAsync, isLoading: mutationLoading } = useEditUser();
     const { showNotification } = useNotifications();
 
     const onEditUser = React.useCallback((formData: IUserFormFields) => {
@@ -39,6 +39,7 @@ export const EditAgentContainer = (props: IEditUserContainerProps) => {
             <AddAgentForm
                 mode="edit"
                 roles={roles}
+                mutationLoading={mutationLoading}
                 toggleUserDrawer={toggleUserDrawer}
                 onFormSubmitHandler={onEditUser}
                 defaultValues={{

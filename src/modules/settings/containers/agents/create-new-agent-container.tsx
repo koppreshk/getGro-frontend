@@ -5,7 +5,7 @@ import { AddAgentForm, IUserFormFields } from "modules/settings/component/user-a
 
 export const CreateNewAgentContainer = (props: { toggleAddUserDrawer: () => void }) => {
     const { toggleAddUserDrawer } = props;
-    const { mutateAsync } = useCreateUser();
+    const { mutateAsync, isLoading: mutationLoading } = useCreateUser();
     const { data, isLoading, error } = useFetchAllRoles();
     const { showNotification } = useNotifications();
 
@@ -32,6 +32,7 @@ export const CreateNewAgentContainer = (props: { toggleAddUserDrawer: () => void
                 <AddAgentForm
                     mode="create"
                     roles={data}
+                    mutationLoading={mutationLoading}
                     onFormSubmitHandler={onFormSubmitHandler}
                     toggleUserDrawer={toggleAddUserDrawer} />
             </>

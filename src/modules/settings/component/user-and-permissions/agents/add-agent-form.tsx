@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from "react-hook-form"
 import { Button, Grid } from "@mui/material";
 import { SelectField, TextboxField } from "lib/form-fields";
-import { FlexBox } from "lib/ui-ux";
+import { FlexBox, LoadingButton } from "lib/ui-ux";
 import { IRoles } from "modules/settings/apis/users-and-permissions";
 import { useCallback, useMemo } from "react";
 
@@ -17,13 +17,14 @@ export interface IUserFormFields {
 interface IUserFormProps {
     mode: 'create' | 'edit';
     roles: IRoles[];
+    mutationLoading: boolean
     defaultValues?: IUserFormFields;
     toggleUserDrawer: () => void;
     onFormSubmitHandler: (data: IUserFormFields) => void;
 }
 
 export const AddAgentForm = (props: IUserFormProps) => {
-    const { mode, defaultValues, roles, toggleUserDrawer, onFormSubmitHandler } = props;
+    const { mode, defaultValues, roles, mutationLoading, toggleUserDrawer, onFormSubmitHandler } = props;
     const isInEditMode = useMemo(() => mode === 'edit', [mode]);
 
     const methods = useForm<IUserFormFields>({
@@ -67,7 +68,7 @@ export const AddAgentForm = (props: IUserFormProps) => {
                 <FlexBox gap='10px' width="100%" justifyContent="flex-end">
                     {isInEditMode ? <Button variant="text" size="large" type="button" onClick={() => methods.reset()}>{'Reset'}</Button> : null}
                     <Button variant="outlined" onClick={toggleUserDrawer}>Cancel</Button>
-                    <Button variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>{isInEditMode ? 'Edit Agent' : 'Add Agent'}</Button>
+                    <LoadingButton isLoading={mutationLoading} variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>{isInEditMode ? 'Edit Agent' : 'Add Agent'}</LoadingButton>
                 </FlexBox>
             </FlexBox>
         </FormProvider>
