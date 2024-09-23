@@ -12,13 +12,14 @@ import { useAuth } from "modules/login";
 export default function TicketsPage() {
     const match = useMatch('/tickets/:type/:ticketId');
     const { user } = useAuth();
+
     return (
         <>
             <FlexBox height="100%">
                 {match?.params?.ticketId ? null : <TicketViews />}
                 <div style={{ width: match?.params?.ticketId ? '100%' : 'calc(100% - 200px)' }}>
                     <Routes>
-                        <Route key="default-view" path="*" element={<Navigate to={user?.role === "Admin" ? "/tickets/all-tickets" : "/tickets/my-pending"} />} />
+                        <Route key="default-view" path="*" element={<Navigate to={user?.role === "Agent" ? "/tickets/my-pending" : "/tickets/all-tickets"} />} />
                         <Route key="all" path="/all-tickets" element={<AllTicketsContainer />} />
                         <Route key="all-pending" path="/all-pending" element={<AllPendingTicketsContainer />} />
                         <Route key="all-resolved" path="/all-resolved" element={<AllResolvedTicketsContainer />} />

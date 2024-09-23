@@ -10,6 +10,7 @@ import { TicketStatusContainer } from "../../containers";
 import { DateTime } from "luxon";
 import { chooseRandomColors, getInitialsByName, useDateDifference } from "lib/utils";
 import { useSourceIcon } from "modules/tickets/hooks";
+import { useFeature } from "lib/hooks";
 
 const StyledCard = styled(FlexBox)`
     background: ${({ theme }) => theme.pallete.white};
@@ -49,6 +50,7 @@ export const CardView = (props: ITicketDetails) => {
     const [searchParams] = useSearchParams();
     const noOfRecords = searchParams.get('noOfRecords');
     const pageNumber = searchParams.get('pageNumber');
+    const isFeatureAccessible = useFeature<undefined>();
 
     const onRowClick = React.useCallback(() => {
         navigate(`${match?.pathname}/${ticketId}?noOfRecords=${noOfRecords}&pageNumber=${pageNumber}`, { replace: true });
@@ -93,7 +95,7 @@ export const CardView = (props: ITicketDetails) => {
 
             <FlexBox alignItems="center">
                 <Priority priority={priority} />
-                <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} statusUpdateString={''} renderMode="card" />
+                {isFeatureAccessible('edit_status') ? <TicketStatusContainer ticketStatus={ticketStatus} ticketId={ticketId} statusUpdateString={''} renderMode="card" /> : null}
             </FlexBox>
         </StyledCard >
     )
@@ -153,7 +155,7 @@ const AgentAssigned = (props: Pick<ITicketDetails, 'assigneeInfo'>) => {
                     <FlexBox flexDirection="column">
                         <Typography variant="subheading1">Assignee</Typography>
                         <Typography variant="subheading1">
-                            Name: {assigneeInfo?.first_name} {assigneeInfo?.last_name}
+                            Name: {assigneeInfo?.first_name} {assigneeInfo?.last_name ?? ''}
                         </Typography>
                         <Typography variant="subheading1">
                             Email: {assigneeInfo?.email}
@@ -167,7 +169,7 @@ const AgentAssigned = (props: Pick<ITicketDetails, 'assigneeInfo'>) => {
         <Tooltip title={assignedAgentInfo()}>
             <FlexBox gap={'10px'} alignItems="center" width="198px">
                 <SupportAgent sx={iconStyles} />
-                <StyledTypography variant="body2">{assigneeInfo?.email ? `${assigneeInfo?.first_name} ${assigneeInfo?.last_name}` : '--'}</StyledTypography>
+                <StyledTypography variant="body2">{assigneeInfo?.email ? `${assigneeInfo?.first_name} ${assigneeInfo?.last_name ?? ''}` : '--'}</StyledTypography>
             </FlexBox>
         </Tooltip>
     )

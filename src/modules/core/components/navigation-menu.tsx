@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 import { FlexBox } from "lib/ui-ux";
 import { Popover, Tooltip, Typography, Badge } from "@mui/material";
 import { EventOutlined, GroupOutlined, InsertChartOutlined, SettingsOutlined, TaskOutlined } from "@mui/icons-material";
-import { usePermissions } from "lib/hooks";
+import { useModule } from "lib/hooks";
 import { ExotelCallControls } from "./exotel-call-controls";
 
 interface IPrimaryOptionProps {
@@ -36,14 +36,14 @@ const SecondaryOptionWrapper = styled(FlexBox)`
 const usePrimaryOptions = () => {
     const [searchParams] = useSearchParams();
     const noOfRecords = searchParams.get('noOfRecords') || '10';
-    const { isCustomersPageAccessible, isDashboardPageAccessible, isSettingsPageAccessible, isTicketsPageAccessible } = usePermissions();
+    const isModuleAccessible = useModule<undefined>();
 
     return [{
         iconComponent: () => <InsertChartOutlined />,
         primaryKey: 'dashboard',
         route: 'dashboard',
         title: 'Dashboard',
-        hidden: !isDashboardPageAccessible
+        hidden: !isModuleAccessible('dashboards')
     },
     {
         iconComponent: () => (
@@ -53,19 +53,19 @@ const usePrimaryOptions = () => {
         primaryKey: 'tickets',
         route: 'tickets',
         title: 'Tickets',
-        hidden: !isTicketsPageAccessible
+        hidden: !isModuleAccessible('tickets')
     }, {
         iconComponent: () => <GroupOutlined />,
         primaryKey: 'customers',
         route: 'customers',
         title: 'Customers',
-        hidden: !isCustomersPageAccessible
+        hidden: true
     }, {
         iconComponent: () => <SettingsOutlined />,
         primaryKey: 'configurations',
         route: 'configurations',
         title: 'Configurations',
-        hidden: !isSettingsPageAccessible
+        hidden: !isModuleAccessible('configurations')
     }];
 }
 

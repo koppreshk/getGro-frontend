@@ -5,11 +5,13 @@ import { FlexBox, RefreshButton } from "lib/ui-ux";
 import { Widgets } from "@mui/icons-material";
 import { AgentPerformanceDashContainer, SupportMonitoringDashContainer, SLADashboardContainer } from "modules/dashboard/container";
 import { Trans, useTranslation } from "react-i18next";
+import { useFeature } from "lib/hooks";
 
 interface IDashboardCategories {
     id: number;
     name: string;
     component: JSX.Element;
+    hidden?: boolean;
 }
 
 const StyledBox = styled(Box)`
@@ -22,38 +24,47 @@ const StyledBox = styled(Box)`
     background-color: rgba(241, 242, 244, 0.6);
 `;
 
-const dashboardCategories: IDashboardCategories[] = [
-    // {
-    //     id: 1,
-    //     name: "Tickets Monitor",
-    //     component: <TicketMonitoringDashContainer />,
-    // },
-    {
-        id: 2,
-        name: 'supportMonitoring',
-        component: <SupportMonitoringDashContainer />
-    },
-    {
-        id: 3,
-        name: "agentPerformance",
-        component: <AgentPerformanceDashContainer />,
-    },
-    {
-        id: 4,
-        name: "slaDashboard",
-        component: <SLADashboardContainer />,
-    },
-    // {
-    //     id: 5,
-    //     name: "CSR Dashboard",
-    //     component: <AgentPerformanceDashContainer />,
-    // },
-    // {
-    //     id: 6,
-    //     name: "Ticket Conversation Report",
-    //     component: <AgentPerformanceDashContainer />,
-    // },
-];
+const useDashboardCategories = () => {
+
+    const isFeatureAccessible = useFeature<undefined>();
+    const dashboardCategories: IDashboardCategories[] = [
+        // {
+        //     id: 1,
+        //     name: "Tickets Monitor",
+        //     component: <TicketMonitoringDashContainer />,
+        // },
+        {
+            id: 2,
+            name: 'supportMonitoring',
+            component: <SupportMonitoringDashContainer />,
+            hidden: !isFeatureAccessible('support_monitoring')
+        },
+        {
+            id: 3,
+            name: "agentPerformance",
+            component: <AgentPerformanceDashContainer />,
+            hidden: !isFeatureAccessible('agent_performance')
+        },
+        {
+            id: 4,
+            name: "slaDashboard",
+            component: <SLADashboardContainer />,
+            hidden: !isFeatureAccessible('sla_dashboard')
+        },
+        // {
+        //     id: 5,
+        //     name: "CSR Dashboard",
+        //     component: <AgentPerformanceDashContainer />,
+        // },
+        // {
+        //     id: 6,
+        //     name: "Ticket Conversation Report",
+        //     component: <AgentPerformanceDashContainer />,
+        // },
+    ];
+
+    return dashboardCategories; 
+}
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -63,8 +74,9 @@ interface TabPanelProps {
 
 function CustomTabPanel(props: TabPanelProps) {
     const { value, index, ...other } = props;
+    const dashboardCategories = useDashboardCategories();
 
-    const selectedTab = dashboardCategories.find((category) => category.id === value);
+    const selectedTab = dashboardCategories.filter((item) => !item.hidden).find((category) => category.id === value);
 
     return (
         <div
@@ -118,6 +130,7 @@ export const DashboardCategoriesPanel = () => {
     const [value, setValue] = React.useState(2);
     const { pallete } = useTheme();
     const { t } = useTranslation();
+    const dashboardCategories = useDashboardCategories();
 
     const onClickHandler = (id: number) => {
         setValue(id);
@@ -132,7 +145,7 @@ export const DashboardCategoriesPanel = () => {
                             <Widgets color="primary" />
                             <Typography variant="h4" sx={{ color: pallete.grayVariant2 }} ><Trans i18nKey="modules.dashboard.moduleHeading" /></Typography>
                         </FlexBox>
-                        {dashboardCategories.map((category) => {
+                        {dashboardCategories.filter((item) => !item.hidden).map((category) => {
                             return <TabPill key={category.id} label={t(`modules.dashboard.sectionHeadings.${category.name}`)} id={category.id} onClickHandler={onClickHandler} value={value} />
                         })}
                     </FlexBox>

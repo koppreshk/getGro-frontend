@@ -15,12 +15,13 @@ interface IOrderViewProps {
 
 const StyledOrderNumber = styled(Typography)`
     && {
-        background: #d7d6eb;
+        background: #dfeee5;
         width: fit-content;
         padding: 4px 8px;
         border-radius: 6px;
-        color: #6e26fd;
+        color: #008334;
         font-weight: 500;
+        cursor: pointer;
     }
 `;
 
@@ -60,7 +61,7 @@ export const TextFieldValue = styled(Typography)`
 
 export const OrderItem = (props: IOrderViewProps) => {
     const { index, orderDetails } = props;
-    const { orderNumber, financialStatus, fulfillmentStatus, totalPrice } = orderDetails[index];
+    const { order_number, financial_status, fulfillment_status, total_price, order_status_url } = orderDetails[index];
     const [showDrawer, setDrawerDisplay] = useState(false);
 
     const toggleOrderDetailsDrawer = () => {
@@ -71,38 +72,43 @@ export const OrderItem = (props: IOrderViewProps) => {
         return (
             <DrawerHeaderWrapper flexDirection="column">
                 <FlexBox justifyContent="space-between" alignItems="center" width="100%">
-                    <Typography variant="h5">{`Order #${orderNumber}`}</Typography>
+                    <Typography variant="h5">{`Order #${order_number}`}</Typography>
                     <IconButton aria-label="Close" onClick={toggleOrderDetailsDrawer}>
                         <Close />
                     </IconButton>
                 </FlexBox >
                 <Tooltip title="Financial Status">
-                    <Chip icon={<Paid fontSize="small" />} label={financialStatus} sx={{ width: 'fit-content' }} size="small" />
+                    <Chip icon={<Paid fontSize="small" />} label={financial_status} sx={{ width: 'fit-content' }} size="small" />
                 </Tooltip>
             </DrawerHeaderWrapper>
         )
     }
+
+    const openShopifyOrder = () => {
+        window.open(order_status_url)
+    }
+
     return (
         <>
             <StyledOrder gap="10px">
                 <OrderPLaceholderIconWrapper alignItems="center" padding="0 8px">
-                    <ShoppingBagOutlined sx={{ width: '36px', height: '36px' }} />
+                    <ShoppingBagOutlined sx={{ width: '36px', height: '36px', fill: '#667287' }} />
                 </OrderPLaceholderIconWrapper>
                 <FlexBox width="calc(100% - 52px)">
                     <FlexBox flexDirection="column" gap="10px" width="50%" justifyContent="space-between">
                         <FlexBox flexDirection="column">
                             <Typography variant="h6">Order Number:</Typography>
-                            <StyledOrderNumber variant="subheading2" >{'#' + orderNumber}</StyledOrderNumber>
+                            <StyledOrderNumber variant="subheading2" role="link" onClick={openShopifyOrder}>{'#' + order_number}</StyledOrderNumber>
                         </FlexBox>
                         <FlexBox flexDirection="column">
-                            <Typography variant="h6">Financial Status:</Typography>
-                            <TextFieldValue variant="subheading2" >{financialStatus}</TextFieldValue>
+                            <Typography variant="h6">Order Status:</Typography>
+                            <TextFieldValue variant="subheading2" >{fulfillment_status ?? 'NA'}</TextFieldValue>
                         </FlexBox>
                     </FlexBox>
                     <RelativePositionedFlexBox flexDirection="column" gap="10px" width="50%" justifyContent="space-between">
                         <FlexBox flexDirection="column">
                             <Typography variant="h6">Price:</Typography>
-                            <TextFieldValue variant="subheading2" display="inline" ><CurrencyINR />{getFormatedNumberByLocale(totalPrice)}</TextFieldValue>
+                            <TextFieldValue variant="subheading2" display="inline" ><CurrencyINR />{getFormatedNumberByLocale(total_price)}</TextFieldValue>
                         </FlexBox>
                         <Tooltip title="More details" arrow placement="left">
                             <MoreDetailsBtn onClick={toggleOrderDetailsDrawer}>
@@ -110,8 +116,8 @@ export const OrderItem = (props: IOrderViewProps) => {
                             </MoreDetailsBtn>
                         </Tooltip>
                         <FlexBox flexDirection="column">
-                            <Typography variant="h6">FulFillment Status:</Typography>
-                            <TextFieldValue variant="subheading2" >{fulfillmentStatus ?? 'NA'}</TextFieldValue>
+                            <Typography variant="h6">Payment Status:</Typography>
+                            <TextFieldValue variant="subheading2" >{fulfillment_status ?? 'NA'}</TextFieldValue>
                         </FlexBox>
                     </RelativePositionedFlexBox>
                 </FlexBox>

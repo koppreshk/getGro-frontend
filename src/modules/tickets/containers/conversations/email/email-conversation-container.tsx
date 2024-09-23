@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Alert } from "@mui/material";
-import { useFetchTicketById } from "../../../apis";
+import { useFetchEmailConversations } from "../../../apis";
 import { FlexBox } from "lib/ui-ux";
 import { EmailSkeletonLoader } from "lib/ui-ux/loader-components";
 import { EmailConversationLayout } from "../../../components/ticket-details/ticket-conversation/email-conversations/email-conversations-layout";
 
-interface IEmailConversationContainerProps {}
+interface IEmailConversationContainerProps { }
 
 export const EmailConversationContainer = (_props: IEmailConversationContainerProps) => {
-    const { data: conversationsData, isLoading: conversationLoading, isRefetching, isError, refetch } = useFetchTicketById();
+    const { data: conversationsData, isLoading: conversationLoading, isRefetching, isError, refetch } = useFetchEmailConversations();
 
     if (conversationLoading || isRefetching) {
         return (

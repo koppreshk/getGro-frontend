@@ -9,20 +9,18 @@ export const EditTicketSLAContainer = (props: { allEscalations?: IEscalationsNew
     const { data, isLoading, error } = useFetchSLAmetaData();
     const id = Number(searchParams.get('id')!);
     const { data: slaDataById, isLoading: slaDataLoading, error: slaError } = useFetchEscalationById(id);
-    const { mutateAsync } = useEditEscalationNew();
+    const { mutateAsync, isLoading: mutationLoading } = useEditEscalationNew();
     const { showNotification } = useNotifications();
 
     const onFormSubmit = (formData: IEscalationFormFields) => {
-        const { addEscalation, addReminders, chooseCondition, slaTargets } = formData;
+        const { addEscalation, addReminders, chooseCondition, slaTargets, conditionsArray } = formData;
 
         return mutateAsync({
             id,
             name: chooseCondition.name,
             description: chooseCondition.description,
             evaluation_type: Number(chooseCondition.slaEvalutaion),
-            ticket_fields: [
-                { id: chooseCondition.ticketFields, value: chooseCondition.conditionValue },
-            ],
+            ticket_fields: conditionsArray.map((item) => ({ id: item.ticketFields, value: item.conditionValue })),
             targets: data!.priorities.map((item) => (
                 {
                     priority_id: item.id,
@@ -77,11 +75,9 @@ export const EditTicketSLAContainer = (props: { allEscalations?: IEscalationsNew
             chooseCondition: {
                 name,
                 description,
-                ticketFields: ticketFields[0].field_id.toString(),
-                condition: 'is',
-                conditionValue: ticketFields[0].value.toString(),
                 slaEvalutaion: evaluationType.value.toString()
             },
+            conditionsArray: ticketFields.map((item) => ({ ticketFields: item.field_id.toString(), condition: 'is', conditionValue: item.value.toString() })),
             slaTargets: targets.reduce((acc, curr) => {
                 const priority = data.priorities.find((item) => item.id === curr.priority_id)!;
                 acc[priority.name.toLocaleLowerCase()] = {
@@ -143,7 +139,7 @@ export const EditTicketSLAContainer = (props: { allEscalations?: IEscalationsNew
         } as IEscalationFormFields;
 
         return (
-            <AddEscalationLayout data={data} mode="edit" defaultvalues={defaultValues} onFormSubmit={onFormSubmit} allEscalations={props.allEscalations} />
+            <AddEscalationLayout data={data} mode="edit" defaultvalues={defaultValues} onFormSubmit={onFormSubmit} allEscalations={props.allEscalations} mutationLoading={mutationLoading} />
         )
     }
     return <ErrorMessage statusCode={error?.message || slaError?.message} />

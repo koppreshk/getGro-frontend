@@ -6,9 +6,9 @@ import { BreadCrumbs, FlexBox } from "lib/ui-ux"
 import ShopifyIcon from '../../../../../assets/svg/shopify-icon.svg?react';
 import ExotelIcon from '../../../../../assets/svg/exotel-icon.svg?react';
 import WhatsAppIcon from '../../../../../assets/svg/whatsapp.svg?react';
-import { ShopifyLayout } from "./shopify/shopify-configuration";
 import { WhatsAppConfigurationContainer } from "modules/settings/containers/marketplace/whatsApp/whatsApp-configuration-container";
 import { ExotelConfigurationContainer } from "modules/settings/containers/marketplace/exotel";
+import { ShopifyConfigurationContainer } from "modules/settings/containers/marketplace/shopify";
 
 const MarketPlaceLayout = () => {
     return (
@@ -26,7 +26,7 @@ export default function MarketplaceRoutes() {
         <>
             <Routes>
                 <Route key="marketplace-route" path="/" element={<MarketPlaceLayout />} />
-                <Route key="shopify-route" path="shopify" element={<ShopifyLayout />} />
+                <Route key="shopify-route" path="shopify" element={<ShopifyConfigurationContainer />} />
                 <Route key="exotel-route" path="exotel" element={<ExotelConfigurationContainer />} />
                 <Route key="whatsapp-route" path="whatsapp" element={<WhatsAppConfigurationContainer />} />
             </Routes>

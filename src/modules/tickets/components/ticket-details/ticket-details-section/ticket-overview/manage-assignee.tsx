@@ -44,7 +44,7 @@ export const ManageAssignee = (props: IManageAssigneeProps) => {
             <FlexBox flexDirection="column" padding="0px 20px" gap={'5px'}>
                 <TypographyName variant="h6"><Trans i18nKey={'common.labels.assignee'} /></TypographyName>
                 <StyledContainer justifyContent="space-between" onClick={handleClick}>
-                    <Typography variant="h6">{assigneeInfo?.email ? `${assigneeInfo?.first_name} ${assigneeInfo?.last_name}` : '--'}</Typography>
+                    <Typography variant="h6">{assigneeInfo?.email ? `${assigneeInfo?.first_name} ${assigneeInfo?.last_name ?? ''}` : '--'}</Typography>
                     <ExpandMore sx={{ width: 16, height: 16 }} />
                 </StyledContainer>
             </FlexBox>
@@ -103,8 +103,8 @@ const PopoverContent = (props: { queues: Queue[], handleClose: () => void, onCha
         }
     });
     const selectedQueue = form.watch('assigneeQueue');
-    const agents = queues.find((item) => item.id.toString() === selectedQueue)?.assignedEmployees.map((item) => ({ key: item.id.toString(), value: `${item.firstName} ${item.lastName}` }))
-
+    const agents = queues.find((item) => item.id.toString() === selectedQueue)?.assignedEmployees.map((item) => ({ key: item.id.toString(), value: `${item.firstName} ${item?.lastName ?? ''}` }))
+    console.log(agents);
     const onSave = (formData: IFormFields) => {
         onChangeAssignee({
             queueId: formData.assigneeQueue,

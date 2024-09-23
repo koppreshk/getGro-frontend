@@ -4,7 +4,8 @@ import { Typography } from "@mui/material";
 import { useCallback, useState } from "react";
 import { AddAppConfigurationDialog, AppConfigurationLayout } from "..";
 import ShopifyIcon from '../../../../../../assets/svg/shopify-icon.svg?react';
-import { AddShopifyConfigContainer } from "modules/settings/containers/marketplace/shopify";
+import { AddShopifyConfigContainer, ManageShopifyStoreContainer } from "modules/settings/containers/marketplace/shopify";
+import { IShopifyStore } from "modules/settings/apis/marketplace/shopify";
 
 function OverviewContents() {
     return (
@@ -37,11 +38,18 @@ function InstallationContents() {
     )
 }
 
-export const ShopifyLayout = () => {
+interface IShopifyConfigurationProps {
+    data: IShopifyStore[];
+}
+
+export const ShopifyConfiguration = (props: IShopifyConfigurationProps) => {
+    const { data } = props;
     const [openPopup, setOpenPopup] = useState(false);
     const togglePopup = useCallback(() => {
         setOpenPopup((prevValue) => !prevValue)
     }, []);
+
+    const isInstalled = data.length > 0
 
     return (
         <>
@@ -56,14 +64,18 @@ export const ShopifyLayout = () => {
                 publishedOn="May 12, 2024"
                 version="1.0.0"
                 appIcon={() => <ShopifyIcon width="60px" height="60px" />}
-                togglePopup={togglePopup} />
+                togglePopup={togglePopup}
+                isAppInstalled={isInstalled}
+                onManageRenderContent={() => <ManageShopifyStoreContainer/>}
+                isAppList
+                 />
             <AddAppConfigurationDialog
-                dialogContent={() => <AddShopifyConfigContainer togglePopup={togglePopup}/>}
+                dialogContent={() => <AddShopifyConfigContainer togglePopup={togglePopup} />}
                 openPopup={openPopup}
                 togglePopup={togglePopup}
                 title="Add Shopify Store"
                 maxWidth="md"
-                 />
+            />
         </>
     )
 }

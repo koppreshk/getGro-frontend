@@ -3,7 +3,8 @@ export enum DashboardEndPoint {
     AGENT_PERFORMANCE = 'dashboard/agent_performance',
     FETCH_DROPDOWN_VALUES = 'dashboard/fetch_dropdown_values',
     FETCH_SLA_VALUES = 'dashboard/sla',
-    SLA_COMPARISION = 'dashboard/sla_comparison'
+    SLA_COMPARISION = 'dashboard/sla_comparison',
+    SUPPORT_MONITORING = 'dashboard/support_monitoring'
 }
 
 export enum DashboardQueryKeys {
@@ -11,5 +12,6 @@ export enum DashboardQueryKeys {
     AGENT_PERFORMANCE = 'AGENT_PERFORMANCE',
     FETCH_DROPDOWN_VALUES = 'FETCH_DROPDOWN_VALUES',
     FETCH_SLA_VALUES = 'FETCH_SLA_VALUES',
-    SLA_COMPARISION = 'SLA_COMPARISION'
+    SLA_COMPARISION = 'SLA_COMPARISION',
+    SUPPORT_MONITORING = 'SUPPORT_MONITORING'
 }

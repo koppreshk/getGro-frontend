@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CustomSteps, FlexBox } from 'lib/ui-ux';
+import { CustomSteps, FlexBox, LoadingButton } from 'lib/ui-ux';
 import { Button } from '@mui/material';
 import { KeyboardArrowLeft, Save, KeyboardArrowRight } from '@mui/icons-material';
 import { FormProvider, useForm, useFormContext } from "react-hook-form"
@@ -11,6 +11,7 @@ import { ChooseConditionForm } from '../auto-assignments/choose-condition-form';
 
 interface AddRuleProps {
     mode?: string;
+    mutationLoading: boolean;
     defaultValues?: IAddCreateTriggerRuleFormFields;
     data: FetchFieldsAndConditions[];
     allTriggers?: IAllAssignments[] | undefined;
@@ -18,7 +19,7 @@ interface AddRuleProps {
 }
 
 const AddRuleBase = (props: AddRuleProps) => {
-    const { onSubmit } = props;
+    const { mutationLoading, onSubmit } = props;
     const [activeStep, setActiveStep] = React.useState(0);
     const form = useFormContext<IAddCreateTriggerRuleFormFields>();
     const navigate = useNavigate();
@@ -83,12 +84,13 @@ const AddRuleBase = (props: AddRuleProps) => {
                         {props.mode === 'edit' ?
                             <Button variant="outlined" size="large" type="button" onClick={() => form.reset()}>{'Reset'}</Button>
                             : null}
-                        <Button
+                        <LoadingButton
+                            isLoading={mutationLoading}
                             variant="contained"
                             endIcon={isLastStep ? <Save /> : <KeyboardArrowRight />}
                             onClick={isLastStep ? form.handleSubmit(onSave) : handleNext}>
                             {isLastStep ? 'Save' : 'Next'}
-                        </Button>
+                        </LoadingButton>
                     </FlexBox>
                 </FlexBox>
             </FlexBox>

@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
-export const VerticalSeparator = styled.span`
+export const VerticalSeparator = styled.div<{ height?: string, $margin?: string }>`
   width: 2px;
-  height: 30px;
+  height: ${({ height }) => height ?? '30px'};
   padding: 10px 0px;
   box-sizing: border-box;
+  margin: ${({ $margin }) => $margin ? $margin : 'unset'};
   background-color: ${({ theme }) => theme.pallete.standardBorderColor};
 `;
 

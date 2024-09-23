@@ -1,15 +1,17 @@
+import { useCallback } from "react";
 import styled from "styled-components";
-import { PersonOutlineOutlined, ShoppingCartOutlined, DescriptionOutlined, ChevronRight, ChevronLeft, ConfirmationNumberOutlined } from "@mui/icons-material";
+import { PersonOutlineOutlined, DescriptionOutlined, ChevronRight, ChevronLeft, ConfirmationNumberOutlined } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material"
 import { FlexBox } from "lib/ui-ux";
-import { useAppDispatch, useAppSelector } from "lib/hooks";
+import { useAppDispatch, useAppSelector, useFeature } from "lib/hooks";
 import { setShowHideTicketDetails } from "modules/tickets/storage";
-import { useCallback } from "react";
+import ShopifyIcon from '../../../../../assets/svg/shopify-icon.svg?react';
 
 interface IMenuOption {
     title: string;
     id: MenuOptions;
     disabled?: boolean;
+    hidden?: boolean;
     iconComponent: () => JSX.Element;
 }
 
@@ -41,7 +43,9 @@ export enum MenuOptions {
 }
 
 const useSideMenuOptions = () => {
-    const customerInfo = useAppSelector((state) => state.tickets.ticketDetails?.customerInfo)
+    const shopifyCustomerId = useAppSelector((state) => state.tickets.ticketDetails?.shopifyCustomerId);
+    const showNotes = useFeature('manage_notes');
+
     return [
         {
             title: 'Customer Profile',
@@ -49,21 +53,22 @@ const useSideMenuOptions = () => {
             iconComponent: () => <PersonOutlineOutlined />
         },
         {
-            title: !customerInfo?.omsCustomerId ? 'Link a customer to get order details' : 'Order Details',
-            id: MenuOptions.OrderDetails,
-            iconComponent: () => <ShoppingCartOutlined />,
-            disabled: !customerInfo?.omsCustomerId
-        },
-        {
             title: 'Notes',
             id: MenuOptions.Notes,
-            iconComponent: () => <DescriptionOutlined />
+            iconComponent: () => <DescriptionOutlined />,
+            hidden: !showNotes
         },
         {
             title: 'Past Tickets',
             id: MenuOptions.PastTickets,
             iconComponent: () => <ConfirmationNumberOutlined />
-        }
+        },
+        {
+            title: 'Order Details',
+            id: MenuOptions.OrderDetails,
+            iconComponent: () => <ShopifyIcon width="20px" height="20px" />,
+            hidden: !shopifyCustomerId
+        },
     ] as IMenuOption[];
 }
 
@@ -92,7 +97,7 @@ export const TicketSideMenu = (props: ITicketSideMenuProps) => {
     return (
         <SideMenuWrapper flexDirection="column" gap="12px" justifyContent="space-between">
             <FlexBox flexDirection="column" gap="12px">
-                {sideMenuOptions.map((option, index) => (
+                {sideMenuOptions.filter((item) => !item.hidden).map((option, index) => (
                     <Tooltip key={index} title={option.title} arrow placement="left">
                         <IconWrapper $isSelected={selectedMenuOption === option.id} $isDisabled={option.disabled} onClick={() => onOptionClick(option)}>
                             {option.iconComponent()}

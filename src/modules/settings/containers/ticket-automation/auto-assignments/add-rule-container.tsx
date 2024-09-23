@@ -21,7 +21,7 @@ export interface IAddRuleFormFields {
 
 export const AddRuleContainer = (props: { allAssignments?: IAllAssignments[] }) => {
     const { data, isLoading } = useFetchFieldsAndConditions();
-    const { mutateAsync } = useCreateAutoAssignment();
+    const { mutateAsync, isLoading: mutationLoading } = useCreateAutoAssignment();
 
     const form = useForm<IAddRuleFormFields>({
         defaultValues: {
@@ -87,7 +87,7 @@ export const AddRuleContainer = (props: { allAssignments?: IAllAssignments[] }) 
     if (data) {
         return (
             <FormProvider {...form}>
-                <AddRule data={data} onSubmit={onSubmit} allAssignments={props.allAssignments} />
+                <AddRule data={data} onSubmit={onSubmit} allAssignments={props.allAssignments} mutationLoading={mutationLoading} />
             </FormProvider>
         )
     }

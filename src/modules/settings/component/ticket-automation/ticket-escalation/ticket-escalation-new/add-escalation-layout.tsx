@@ -5,7 +5,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { AddReminder } from "./add-reminder";
 import { AddEscalation } from "./add-escalation";
 import { ChooseCondition } from "./choose-condition";
-import { FlexBox } from "lib/ui-ux";
+import { FlexBox, LoadingButton } from "lib/ui-ux";
 import { KeyboardArrowLeft, KeyboardArrowRight, Save } from "@mui/icons-material";
 import { SLATargets } from "./sla-targets";
 import { IEscalationsNew, IKeyValue, ISLAmetaData } from "modules/settings/apis/ticket-automation/escalations";
@@ -43,10 +43,12 @@ export interface IEscalationFormFields {
         name: string;
         description: string;
         slaEvalutaion: string,
+    }
+    conditionsArray: {
         ticketFields: string,
         condition: string,
         conditionValue: string
-    }
+    }[];
     slaTargets: ISLATargetsFormFields,
     addReminders: {
         ftrDuration: string;
@@ -77,11 +79,12 @@ interface IAddEscalationLayoutProps {
     defaultvalues?: IEscalationFormFields;
     allEscalations?: IEscalationsNew[]
     mode?: 'add' | 'edit';
+    mutationLoading: boolean
     onFormSubmit: (formData: IEscalationFormFields) => Promise<void>
 }
 
 export const AddEscalationLayout = React.memo((props: IAddEscalationLayoutProps) => {
-    const { data, defaultvalues, allEscalations, onFormSubmit } = props;
+    const { data, defaultvalues, allEscalations, mutationLoading, onFormSubmit } = props;
     const [activeStep, setActiveStep] = React.useState(0);
     const navigate = useNavigate();
     const form = useForm<IEscalationFormFields>({
@@ -89,11 +92,13 @@ export const AddEscalationLayout = React.memo((props: IAddEscalationLayoutProps)
             chooseCondition: {
                 name: '',
                 description: '',
-                slaEvalutaion: '0',
+                slaEvalutaion: '0'
+            },
+            conditionsArray: [{
                 ticketFields: data.ticket_fields[0].id.toString(),
                 condition: 'is',
-                conditionValue: ''
-            },
+                conditionValue: '',
+            }],
             slaTargets: {
                 critical: {
                     firstResponse: {
@@ -197,7 +202,7 @@ export const AddEscalationLayout = React.memo((props: IAddEscalationLayoutProps)
     const renderBasedOnActiveStep = () => {
         switch (activeStep) {
             case 0:
-                return <ChooseCondition ticketField={data.ticket_fields} priorities={data.priorities} allEscalations={allEscalations} mode={props.mode} slaName={defaultvalues?.chooseCondition.name}/>;
+                return <ChooseCondition ticketField={data.ticket_fields} priorities={data.priorities} allEscalations={allEscalations} mode={props.mode} slaName={defaultvalues?.chooseCondition.name} />;
             case 1:
                 return <SLATargets timeOptions={data.run_types} slaTargetPriorities={data.priorities} />;
             case 2:
@@ -234,12 +239,13 @@ export const AddEscalationLayout = React.memo((props: IAddEscalationLayoutProps)
                             {props.mode === 'edit' ?
                                 <Button variant="outlined" size="large" type="button" onClick={() => form.reset()}>{'Reset'}</Button>
                                 : null}
-                            <Button
+                            <LoadingButton
                                 variant="contained"
+                                isLoading={mutationLoading}
                                 endIcon={isLastStep ? <Save /> : <KeyboardArrowRight />}
                                 onClick={isLastStep ? form.handleSubmit(onSave) : handleNext}>
                                 {isLastStep ? 'Save' : 'Next'}
-                            </Button>
+                            </LoadingButton>
                         </FlexBox>
                     </FlexBox>
                 </DialogActions>

@@ -8,10 +8,10 @@ export default function AuditLogsContainer() {
     const itemsPerPage = searchParams.get('noOfRecords') ?? '10';
     const pageNumber = searchParams.get('pageNumber') ?? '1';
 
-    const { data, error, isLoading } = useFetchAllAuditLogs(itemsPerPage, pageNumber);
+    const { data, error, isLoading, isFetching } = useFetchAllAuditLogs(itemsPerPage, pageNumber);
 
     if (data || isLoading) {
-        return <AuditLogsLayout data={data || { audit_logs: [], total_pages: 0 }} isLoading={isLoading} />
+        return <AuditLogsLayout data={data || { audit_logs: [], total_pages: 0 }} isLoading={isLoading || isFetching} />
     }
 
     return <ErrorMessage statusCode={error?.message} />

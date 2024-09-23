@@ -2,14 +2,14 @@ import styled from "styled-components";
 import { FlexBox } from "lib/ui-ux"
 import { Alert } from "@mui/material"
 import { DashboardLayout } from "../components";
-import { usePermissions } from "lib/hooks";
+import { useModule } from "lib/hooks";
 
 const StyledDasboardPage = styled(FlexBox)`
     background-color: ${({ theme }) => theme.pallete.grayVariant5};
 `;
 
 export default function DashboardPage() {
-    const { isDashboardPageAccessible } = usePermissions();
+    const isDashboardPageAccessible = useModule('dashboards');
 
     return (
         <>

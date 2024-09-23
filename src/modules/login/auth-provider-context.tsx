@@ -1,11 +1,10 @@
 import { createContext, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { clearCookies, useCookieStorage } from "./hooks/use-cookie-storage";
-import { Roles } from "lib/hooks";
 
 type User = {
-    user: null | { email: string, authToken: string, rememberMe?: boolean, role: Roles, name: string }
-    login: (_data: { email: string, authToken: string, rememberMe?: boolean, role: Roles, name: string }) => void,
+    user: null | { email: string, authToken: string, rememberMe?: boolean, role: string, name: string }
+    login: (_data: { email: string, authToken: string, rememberMe?: boolean, role: string, name: string }) => void,
     logout: () => void
 };
 
@@ -26,9 +25,9 @@ export const AuthProvider = (props: IAuthProviderProps) => {
     const navigate = useNavigate();
 
     // call this function when you want to authenticate the user
-    const login = useCallback((data: { email: string, authToken: string, rememberMe?: boolean, role: Roles, name: string }) => {
+    const login = useCallback((data: { email: string, authToken: string, rememberMe?: boolean, role: string, name: string }) => {
         setUser(data, 14, data.rememberMe);
-        navigate(data.role === 'Admin' ? "/dashboard" : '/tickets', { replace: true });
+        navigate(data.role === "Account Owner" ? "/dashboard" : '/tickets', { replace: true });
     }, [navigate, setUser]);
 
     // call this function to sign out logged in user

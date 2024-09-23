@@ -3,11 +3,11 @@ import { TicketStatusLayout } from "../../component/ticket-configurations/ticket
 import { ErrorMessage } from "lib/ui-ux";
 
 export default function TicketStatusContainer() {
-    const { data, isLoading, error } = useFetchAllStatuses();
+    const { data, isLoading, error, isFetching } = useFetchAllStatuses();
 
     if (data || isLoading) {
         return (
-            <TicketStatusLayout data={data} isLoading={isLoading} />
+            <TicketStatusLayout data={data} isLoading={isLoading || isFetching} />
         )
     }
     return (

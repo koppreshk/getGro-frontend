@@ -1,6 +1,6 @@
 import { MoreVert } from "@mui/icons-material";
 import { IconButton, Menu, MenuItem, ListItemIcon } from "@mui/material";
-import { useState } from "react";
+import React, { useState } from "react";
 
 interface MoreActionsProps {
     onMenuItemSelect: (key: string) => void;
@@ -8,6 +8,7 @@ interface MoreActionsProps {
         key: string;
         label: string;
         icon: JSX.Element;
+        hidden?: boolean;
     }[];
     className?: string;
 }
@@ -32,6 +33,8 @@ export const MoreActions = (props: MoreActionsProps) => {
         handleClose();
     }
 
+    const visibleMenuItems = menuItems.filter((item) => !item.hidden);
+
     return (
         <>
             <IconButton onClick={handleOpen} className={className}>
@@ -40,7 +43,7 @@ export const MoreActions = (props: MoreActionsProps) => {
             <Menu open={Boolean(anchor)} onClose={handleClose} anchorEl={anchor as Element} slotProps={{ paper: { sx: { width: '200px' } } }}
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
-                {menuItems.map(item => (
+                {visibleMenuItems.map(item => (
                     <MenuItem key={item.key} onClick={(ev) => onMenuSelection(ev, item.key)}>
                         <ListItemIcon>
                             {item.icon}
