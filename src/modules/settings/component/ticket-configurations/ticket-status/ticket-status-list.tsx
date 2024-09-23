@@ -1,10 +1,11 @@
+import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Edit } from "@mui/icons-material";
 import { Row, createColumnHelper } from "@tanstack/react-table";
 import { CustomIconButton, DrawerExtended, FlexBox } from "lib/ui-ux";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
 import { IGenericResponse } from "modules/settings/apis/ticket-status/types";
 import { DeleteTicketStatusContainer, EditTicketStatusContainer } from "modules/settings/containers/ticket-status";
-import { useCallback, useState } from "react";
 
 interface ITicketStatusListProps {
     statusData: IGenericResponse[] | undefined;
@@ -13,21 +14,22 @@ interface ITicketStatusListProps {
 
 const useColumns = () => {
     const columnHelper = createColumnHelper<IGenericResponse>();
+    const { t } = useTranslation();
 
     const columns = [
         columnHelper.accessor("id", {
             id: 'id',
-            header: () => <span>Status ID</span>,
+            header: () => <span>{t('modules.configurations.configurationOptions.tickets.ticketStatus.grid.statusId')}</span>,
             cell: info => info.getValue(),
         }),
         columnHelper.accessor("name", {
             id: 'name',
-            header: () => <span>Status Name</span>,
+            header: () => <span>{t('modules.configurations.configurationOptions.tickets.ticketStatus.grid.statusName')}</span>,
             cell: info => info.getValue(),
         }),
         columnHelper.display({
             id: 'actions',
-            header: () => <span>Actions</span>,
+            header: () => <span>{t('modules.configurations.configurationOptions.tickets.ticketStatus.grid.actions')}</span>,
             cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
@@ -47,6 +49,8 @@ export const TicketStatusList = (props: ITicketStatusListProps) => {
     const columns = useColumns();
     const [rowData, setRowData] = useState({});
     const [showDrawer, setShowDrawer] = useState(false)
+    const { t } = useTranslation();
+
 
     const toggleDrawer = useCallback(() => {
         setShowDrawer((preValue) => !preValue);
@@ -64,7 +68,7 @@ export const TicketStatusList = (props: ITicketStatusListProps) => {
                 open={showDrawer}
                 anchor="right"
                 width="500px"
-                header="View or Edit Ticket Status"
+                header={t('modules.configurations.configurationOptions.tickets.ticketStatus.editLabel')}
                 onRenderContent={() => (
                     <EditTicketStatusContainer onSelectRowMetaData={rowData as IGenericResponse} toggleDrawer={toggleDrawer} statusData={statusData}/>
                 )}

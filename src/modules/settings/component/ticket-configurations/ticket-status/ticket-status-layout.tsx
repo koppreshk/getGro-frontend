@@ -6,6 +6,7 @@ import { AddCircleOutline, ArrowBack } from "@mui/icons-material";
 import { TicketStatusList } from "modules/settings/component/ticket-configurations/ticket-status";
 import { IGenericResponse } from "modules/settings/apis/ticket-status/types";
 import { CreateTicketStatusContainer } from "../../../containers/ticket-status/create-ticket-status-container";
+import { useTranslation } from "react-i18next";
 
 interface IAddNewTicketStatusProps {
     openAddStatusDrawer: boolean;
@@ -15,11 +16,12 @@ interface IAddNewTicketStatusProps {
 
 const AddNewTicketStatus = (props: IAddNewTicketStatusProps) => {
     const { openAddStatusDrawer, statusData, toggleAddStatusDrawer } = props;
+    const { t } = useTranslation();
 
     return (
         <DrawerExtended
             width="500px"
-            header="Add New Ticket Status"
+            header={t('modules.configurations.configurationOptions.tickets.ticketStatus.addLabel')}
             anchor="right"
             open={openAddStatusDrawer}
             onRenderContent={() => (
@@ -38,6 +40,8 @@ export const TicketStatusLayout = (props: ITicketStatusLayoutProps) => {
     const [openAddStatusDrawer, setOpenAddStatusDrawer] = React.useState(false);
     const navigate = useNavigate();
 
+    const { t } = useTranslation();
+
     const toggleAddStatusDrawer = useCallback(() => {
         setOpenAddStatusDrawer((prevValue) => !prevValue);
     }, []);
@@ -48,9 +52,9 @@ export const TicketStatusLayout = (props: ITicketStatusLayoutProps) => {
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
                     <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
-                    <Typography variant="h5">Ticket Status</Typography>
+                    <Typography variant="h5">{t('modules.configurations.configurationOptions.tickets.ticketStatus.label')}</Typography>
                 </FlexBox>
-                <Button variant="contained" onClick={toggleAddStatusDrawer} startIcon={<AddCircleOutline />}>Add Ticket Status</Button>
+                <Button variant="contained" onClick={toggleAddStatusDrawer} startIcon={<AddCircleOutline />}>{t('modules.configurations.configurationOptions.tickets.ticketStatus.addLabel')}</Button>
                 <AddNewTicketStatus openAddStatusDrawer={openAddStatusDrawer} toggleAddStatusDrawer={toggleAddStatusDrawer} statusData={props.data} />
             </FlexBox>
             <TicketStatusList isLoading={props.isLoading} statusData={props.data} />

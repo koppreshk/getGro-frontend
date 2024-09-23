@@ -83,6 +83,7 @@
                         "shortDescription": "Define your ticket statuses to streamline and optimize the routing of support tickets",
                         "longDescription": "",
                         "addLabel": "Add Ticket Status",
+                        "editLabel": "View or Edit Ticket Status",
                         "grid": {
                             "statusId": "Status ID",
                             "statusName": "Status Name",
@@ -332,7 +333,7 @@
                     },
                     "queues": {
                         "label": "Queues (Groups)",
-                        "shortDescription": "Arrange agents according to their areas of expertise to handle specific types of tickets more effectively."
+                        "shortDescription": "Organize agents by expertise for effective ticket handling"
                     },
                     "rolesAndPermissions": {
                         "label": "Roles and Permissions",
