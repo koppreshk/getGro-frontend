@@ -224,7 +224,7 @@ export const useFetchAllOrders = (storeId: number | null, customerId: string) =>
 
     return useQuery<IOrders[]>({
         queryFn: fetchALLOrders,
-        queryKey: TicketsQueryKey.FETCH_ALL_ORDERS,
+        queryKey: [TicketsQueryKey.FETCH_ALL_ORDERS, storeId, customerId],
         enabled: storeId && customerId ? true : false
     })
 }

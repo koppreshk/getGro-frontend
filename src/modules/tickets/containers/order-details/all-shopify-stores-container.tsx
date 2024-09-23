@@ -1,29 +1,11 @@
-import React from "react";
-import { useFormContext } from "react-hook-form";
 import { SelectField } from "lib/form-fields";
-import { CenteredCircularProgress, ErrorMessage, FlexBox } from "lib/ui-ux";
-import { useFetchAllShopifyStores } from "modules/settings/apis/marketplace/shopify";
+import { FlexBox } from "lib/ui-ux";
 import { Typography } from "@mui/material";
+import { IShopifyStore } from "modules/settings/apis/marketplace/shopify";
 
 
-export const AllShopifyStoresContainer = () => {
-    const { data: shopifyStoreData, isLoading: storeDataLoading, error } = useFetchAllShopifyStores();
-
-    const form = useFormContext();
-
-    React.useEffect(() => {
-        if (shopifyStoreData && shopifyStoreData.length > 0) {
-            form.setValue('stores', shopifyStoreData[0].id.toString());
-        }
-    }, [form, shopifyStoreData])
-
-    if (storeDataLoading) {
-        return <CenteredCircularProgress />;
-    }
-
-    if (error) {
-        return <ErrorMessage statusCode={error?.message} />
-    }
+export const AllShopifyStoresContainer = (props: { shopifyStoreData: IShopifyStore[] }) => {
+    const { shopifyStoreData } = props;
 
     if (!shopifyStoreData || shopifyStoreData.length === 0) {
         return (
