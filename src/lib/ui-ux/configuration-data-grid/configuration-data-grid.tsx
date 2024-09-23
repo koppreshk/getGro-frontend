@@ -87,34 +87,38 @@ export const ConfigDataGrid = <T extends object>(props: IConfigDataGridProps<T>)
                     ?
                     <>
                         {hideTableControls ? null : <TableControls totalPages={totalPages} enableSerchField={enableSerchField} />}
+
+                        <StyledTable>
+                            <thead>
+                                {table.getHeaderGroups().map(headerGroup => (
+                                    <tr className="table-header-row-styles" key={headerGroup.id}>
+                                        {headerGroup.headers.map(header => (
+                                            <StyledTableHeader key={header.id} style={{ width: header.getSize() }}>
+                                                <FlexBox justifyContent="space-between" flexDirection="row">
+                                                    <FlexBox alignItems="center" flexDirection="row" padding="10px">
+                                                        <Typography color={pallete.grayVariant2} variant="h6">
+                                                            {flexRender(
+                                                                header.column.columnDef.header,
+                                                                header.getContext()
+                                                            )}
+                                                        </Typography>
+
+                                                        <IconButton onClick={header.column.getToggleSortingHandler()}>
+                                                            {header.column.getCanSort() ?
+                                                                header.column.getIsSorted() === false ? <UnfoldMore /> : header.column.getIsSorted() === 'asc' ? <ExpandLess /> : <ExpandMore />
+                                                                : null}
+                                                        </IconButton>
+                                                    </FlexBox>
+                                                </FlexBox>
+                                            </StyledTableHeader>
+                                        ))}
+                                    </tr>
+                                ))}
+                            </thead>
+                        </StyledTable>
+
                         <ScrollableDiv>
                             <StyledTable>
-                                <thead>
-                                    {table.getHeaderGroups().map(headerGroup => (
-                                        <tr className="table-header-row-styles" key={headerGroup.id}>
-                                            {headerGroup.headers.map(header => (
-                                                <StyledTableHeader key={header.id} style={{ width: header.getSize() }}>
-                                                    <FlexBox justifyContent="space-between" flexDirection="row">
-                                                        <FlexBox alignItems="center" flexDirection="row" padding="10px">
-                                                            <Typography color={pallete.grayVariant2} variant="h6">
-                                                                {flexRender(
-                                                                    header.column.columnDef.header,
-                                                                    header.getContext()
-                                                                )}
-                                                            </Typography>
-
-                                                            <IconButton onClick={header.column.getToggleSortingHandler()}>
-                                                                {header.column.getCanSort() ?
-                                                                    header.column.getIsSorted() === false ? <UnfoldMore /> : header.column.getIsSorted() === 'asc' ? <ExpandLess /> : <ExpandMore />
-                                                                    : null}
-                                                            </IconButton>
-                                                        </FlexBox>
-                                                    </FlexBox>
-                                                </StyledTableHeader>
-                                            ))}
-                                        </tr>
-                                    ))}
-                                </thead>
                                 <tbody>
                                     {table.getRowModel().rows.map(row => (
                                         <tr key={row.id} className="table-row-styles" onClick={isLoading ? undefined : onRowClick && (() => onRowClick(row))}>
