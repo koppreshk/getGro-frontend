@@ -3,8 +3,9 @@ import styled from "styled-components";
 import { Avatar, Box, Tab, Tabs, Typography } from "@mui/material";
 import { chooseRandomColors, getInitialsByName } from "lib/utils";
 import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
-import { ChangePassword, GeneralInfo, GenerateAPIKeys } from ".";
+import { RolesPermissionsTab } from ".";
 import { Status } from "modules/core/components/parts/agent-status";
+import { useAppSelector } from "lib/hooks";
 
 const StyledLayoutPage = styled(FlexBox)`
     background-color: ${({ theme }) => theme.pallete.grayVariant5};
@@ -29,14 +30,14 @@ export const UserProfileLayout = () => {
 }
 
 const ProfileHeader = () => {
-
+    const config = useAppSelector((state) => state.core.config)
     return (
         <StyledFlexbox style={{ flex: '1' }} height="400px" >
             <FlexBox gap="12px" flexDirection="column" width="100%">
-                <CustomerAvatar customerName="Jon Snow" />
+                <CustomerAvatar customerName={config?.user_details.display_name || ''} />
                 <FlexBox flexDirection='column' padding='0 0 0 20px' gap="6px">
-                    <Typography variant='h5'>Jon Snow</Typography>
-                    <Typography variant='caption'>jonsnow@getgro.io</Typography>
+                    <Typography variant='h5'>{config?.user_details.display_name}</Typography>
+                    <Typography variant='caption'>{config?.user_details.email}</Typography>
 
                     <FlexBox style={{ textTransform: 'unset', gap: '6px' }} flexDirection="row" alignItems="center">
                         <Status $status="Online" />
@@ -69,54 +70,13 @@ const ProfileDetails = () => {
             <FlexBox flexDirection="column" width="100%">
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                        <Tab label="General" {...tabAriaProps(0)} />
-                        <Tab label="Signature" {...tabAriaProps(1)} />
-                        <Tab label="Change Password" {...tabAriaProps(2)} />
-                        <Tab label="API Keys" {...tabAriaProps(3)} />
+                        <Tab label="Roles and Permissions" {...tabAriaProps(0)} />
                     </Tabs>
                 </Box>
-                <CustomTabPanel value={value} index={0}>
-                    <GeneralInfo />
-                </CustomTabPanel>
-                <CustomTabPanel value={value} index={1}>
-                    dasdas
-                </CustomTabPanel>
-                <CustomTabPanel value={value} index={2}>
-                    <ChangePassword />
-                </CustomTabPanel>
-                <CustomTabPanel value={value} index={3}>
-                    <GenerateAPIKeys />
-                </CustomTabPanel>
+                {value === 0 ? <RolesPermissionsTab /> : null}
             </FlexBox>
         </StyledFlexbox>
     )
-}
-
-interface TabPanelProps {
-    children?: React.ReactNode;
-    index: number;
-    value: number;
-}
-
-
-function CustomTabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`simple-tabpanel-${index}`}
-            aria-labelledby={`simple-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box sx={{ p: 3 }}>
-                    {children}
-                </Box>
-            )}
-        </div>
-    );
 }
 
 
@@ -133,8 +93,9 @@ const CustomerAvatar = (props: { customerName: string }) => {
                 width: '120px',
                 height: '120px',
                 fontSize: '4rem',
+                textDecoration: 'uppercase'
             }}>
-                {getInitialsByName(customerName)}
+                {getInitialsByName(customerName).toLocaleUpperCase()}
             </Avatar>
             <HorizontalSeparator />
         </FlexBox>

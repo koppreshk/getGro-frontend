@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Modules } from "./modules";
 import { PermissionList } from "./permission-list";
 import { useFormContext } from "react-hook-form";
-import { ICreateRoleFormFields } from "./create-role";
+import { ICreateRoleFormFields, RoleModes } from "./create-role";
 import { AllPermissionKeys, ConfigurationPermissionKeys, DashboardPermissionKeys, ModuleKeys, TicketPermissionKeys } from "lib/enums";
 
 interface IPermissionList {
@@ -139,7 +139,7 @@ const permissionList = [{
 }] as IPermissionList[]
 
 interface PermissionsProps {
-    mode?: 'view' | 'edit' | 'add';
+    mode?: RoleModes;
     mutationLoading?: boolean;
     onSubmit?: (formData: ICreateRoleFormFields) => void;
 }
@@ -149,13 +149,14 @@ export const Permissions = (props: PermissionsProps) => {
     const navigate = useNavigate();
     const [selectedModule, setSelectedModule] = useState(ModuleKeys.TICKETS);
     const { watch, handleSubmit } = useFormContext<ICreateRoleFormFields>();
+    const isDisabled = mode === 'view' || mode === 'userProfile';
 
     const onModuleChange = (value: ModuleKeys) => {
         setSelectedModule(value);
     }
 
     const associatedPermissions = permissionList.find((item) => item.associatedModule === selectedModule)!;
-    const modifiedPermissions = watch(`modules.${associatedPermissions.associatedModule}`) ? (mode === 'view' ? associatedPermissions.permissions.map((item) => ({ ...item, disabled: true })) : associatedPermissions.permissions) : associatedPermissions.permissions.map((item) => ({ ...item, disabled: true }))
+    const modifiedPermissions = watch(`modules.${associatedPermissions.associatedModule}`) ? (isDisabled ? associatedPermissions.permissions.map((item) => ({ ...item, disabled: true })) : associatedPermissions.permissions) : associatedPermissions.permissions.map((item) => ({ ...item, disabled: true }))
 
     return (
         <FlexBox flexDirection="column" height="calc(100% - 134px)">
@@ -168,7 +169,7 @@ export const Permissions = (props: PermissionsProps) => {
                             <Modules
                                 {...item}
                                 key={item.moduleKey}
-                                isDisabled={mode === 'view'}
+                                isDisabled={isDisabled}
                                 isSelected={item.moduleKey === selectedModule}
                                 onModuleChange={onModuleChange} />))}
                     </FlexBox>
@@ -187,8 +188,13 @@ export const Permissions = (props: PermissionsProps) => {
                         <BackButton onClick={() => navigate(-1)}>Back</BackButton>
                         :
                         <>
-                            <Button variant="outlined" onClick={() => navigate(-1)}>Cancel</Button>
-                            <LoadingButton isLoading={props?.mutationLoading || false} variant="contained" type="submit" onClick={handleSubmit(onSubmit!)}>Submit</LoadingButton>
+                            {mode !== 'userProfile' ?
+                                (
+                                    <>
+                                        <Button variant="outlined" onClick={() => navigate(-1)}>Cancel</Button>
+                                        <LoadingButton isLoading={props?.mutationLoading || false} variant="contained" type="submit" onClick={handleSubmit(onSubmit!)}>Submit</LoadingButton>
+                                    </>)
+                                : null}
                         </>
                 }
             </FlexBox>

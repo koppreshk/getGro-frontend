@@ -1,4 +1,4 @@
 export * from './user-profile-layout';
 export * from './change-password';
-export * from './general-info';
+export * from './roles-permissions-tab';
 export * from './api-keys';

@@ -12,7 +12,8 @@ export interface IConfig {
     permissions: AllPermissionKeys[],
     language: string,
     user_details: {
-        user_name: string,
+        first_name: string;
+        display_name: string,
         email: string,
         phone: string
 
