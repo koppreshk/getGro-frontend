@@ -14,13 +14,15 @@ export const AuditLogList = (props: IAuditLogListProps) => {
     const colums = useColumns();
 
     return (
-        <ConfigDataGrid
-            columns={colums}
-            isLoading={isLoading}
-            data={data}
-            totalPages={totalPages} 
-            enableSerchField
+        <div style={{ height: '100%', overflow: 'auto' }}>
+            <ConfigDataGrid
+                columns={colums}
+                isLoading={isLoading}
+                data={data}
+                totalPages={totalPages}
+                enableSerchField
             />
+        </div>
     )
 }
 
