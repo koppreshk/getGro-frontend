@@ -1,6 +1,6 @@
 import { useServiceClient } from "lib";
 import React from "react";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { AutoAssignmentEndPoint, AutoAssignmentQueryKey } from "./api-enums";
 
 export type AutoMationType = 'auto_assignment' | 'create_trigger' | 'update_trigger';
@@ -40,11 +40,15 @@ export interface AssociateAgent {
 
 export const useCreateAutoAssignment = () => {
     const { postData } = useServiceClient();
+    const queryClient = useQueryClient();
 
     const createAutoAssignment = React.useCallback((args: ICreateAutoAssignmentArgs) => postData(AutoAssignmentEndPoint.CREATE_ASSIGNMENT, args).then((res) => res.json()), [postData]);
 
     return useMutation({
         mutationKey: AutoAssignmentQueryKey.CREATE_ASSIGNMENT,
-        mutationFn: createAutoAssignment
+        mutationFn: createAutoAssignment,
+        onSuccess: () => {
+            queryClient.invalidateQueries(AutoAssignmentQueryKey.FETCH_ALL_ASSIGNMENTS);
+        }
     });
 }

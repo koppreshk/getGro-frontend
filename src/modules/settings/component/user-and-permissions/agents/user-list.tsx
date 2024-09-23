@@ -41,12 +41,13 @@ const useColumns = () => {
             id: 'actions',
             header: () => 'Actions',
             cell: ({ row: { original } }) => {
+                const isLoggedInUser = original.name === user?.name; //Checking if the logged in user and current user are same
                 const showDeactivateDialog = original.fetch_verification_status !== 'Deactivated' && original.role !== 'Account Owner' && user?.name !== original.name;
                 return (
                     <FlexBox flexDirection="row" gap="5px">
                         {showDeactivateDialog && <DeactivateAgentContainer id={original.id} canDeactivate={original.can_deactivate} />}
                         {original.fetch_verification_status === 'Deactivated' && <ActivateAgentContainer id={original.id} />}
-                        {<EditAgent id={original.id} />}
+                        {!isLoggedInUser && <EditAgent id={original.id} />}
                     </FlexBox>
                 )
             },
