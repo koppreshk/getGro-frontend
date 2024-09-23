@@ -4,7 +4,7 @@ import { Typography } from "@mui/material";
 import { IShopifyStore } from "modules/settings/apis/marketplace/shopify";
 
 
-export const AllShopifyStoresContainer = (props: { shopifyStoreData: IShopifyStore[] }) => {
+export const SelectShopifyStore = (props: { shopifyStoreData: IShopifyStore[] }) => {
     const { shopifyStoreData } = props;
 
     if (!shopifyStoreData || shopifyStoreData.length === 0) {

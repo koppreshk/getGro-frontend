@@ -1,8 +1,9 @@
-import { AllShopifyStoresContainer, OrderDetailsContainer } from "modules/tickets/containers";
+import { OrderDetailsContainer } from "modules/tickets/containers";
 import { useForm, FormProvider } from "react-hook-form";
 import { CommonHeader } from "../common-header";
 import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
 import { IShopifyStore, useFetchAllShopifyStores } from "modules/settings/apis/marketplace/shopify";
+import { SelectShopifyStore } from "./select-shopify-store";
 
 interface OrderDetailsLayoutProps {
     customerId: string | null | undefined;
@@ -37,7 +38,7 @@ const OrderDetailsLayoutBase = (props: OrderDetailsLayoutProps & { shopifyStoreD
 
     return (
         <FormProvider {...form}>
-            <AllShopifyStoresContainer shopifyStoreData={shopifyStoreData} />
+            <SelectShopifyStore shopifyStoreData={shopifyStoreData} />
             <OrderDetailsContainer customerId={props.customerId} />
         </FormProvider>
     )
