@@ -77,12 +77,6 @@ const ShopifyConfigSteps = (props: { activeStep: number }) => {
     )
 }
 
-const ShopifyEndURL = styled(Typography)`
-    padding: 8px;
-    background: ${({ theme }) => theme.pallete.grayVariant5};
-    border-radius: 0px 4px 4px 0px;
-`;
-
 const StyledTextboxField = styled(TextboxField)`
     &&{
         .MuiOutlinedInput-root {
@@ -100,10 +94,7 @@ const ShopifyDetailsForm = () => {
             <Grid item md={12}>
                 <StyledTextboxField
                     name="storeUrl"
-                    size="small" sx={{ pr: '0px !important' }} label="Store URL"
-                    InputProps={{
-                        endAdornment: <ShopifyEndURL variant="body3">.myshopify.com</ShopifyEndURL>
-                    }}
+                    size="small" label="Store URL"
                     autoComplete="off" rules={{ required: 'Store url required' }} />
             </Grid>
             <Grid item md={12}>
