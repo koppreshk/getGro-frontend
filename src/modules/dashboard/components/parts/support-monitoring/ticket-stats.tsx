@@ -124,7 +124,7 @@ const TicketsCreated = () => {
             <FlexBox flexDirection="column" width="60%" padding="0px 0px 0px 40px">
                 <FlexBox justifyContent="space-between">
                     <Typography variant="h6">Tickets Created</Typography>
-                    <SelectField menuOptions={[{ key: 'status', value: 'Status' }]} name="groupBy" label="Group By" size="small" sx={{ width: '200px' }} />
+                    <SelectField menuOptions={[{ key: 'status', value: 'Status' }, { key: 'priority', value: 'Priority' }, { key: 'source', value: 'Source' }]} name="groupBy" label="Group By" size="small" sx={{ width: '200px' }} />
                 </FlexBox>
                 <ReactApexChart options={data.options} series={data.series} type="bar" height={285} width={'100%'} />
             </FlexBox>
