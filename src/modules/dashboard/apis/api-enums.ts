@@ -1,5 +1,5 @@
 export enum DashboardEndPoint {
-    FETCH_DASHBOARD_DATA = 'dashboard/fetch_dashboard_data',
+    FETCH_DASHBOARD_DATA = 'dashboard/fetch_dashboard_data', //this is not used anymore, need to confirm and remove
     AGENT_PERFORMANCE = 'dashboard/agent_performance',
     FETCH_DROPDOWN_VALUES = 'dashboard/fetch_dropdown_values',
     FETCH_SLA_VALUES = 'dashboard/sla',

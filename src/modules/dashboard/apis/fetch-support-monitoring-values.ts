@@ -17,6 +17,9 @@ export interface SupportMonitoringValues {
     unassigned_tickets: number;
     pending: number;
     completed: number;
+    email: number;
+    ivr: number;
+    whatsapp: number;
 }
 
 export const useFetchSupportMonitoringValues = () => {

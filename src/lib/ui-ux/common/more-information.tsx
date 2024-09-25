@@ -11,6 +11,7 @@ const StyledContainer = styled(FlexBox)`
 
 interface MoreInformationProps {
     information: string;
+    width?: string;
     type?: 'inherit'
     | 'action'
     | 'disabled'
@@ -23,11 +24,11 @@ interface MoreInformationProps {
 }
 
 export const MoreInformation = (props: MoreInformationProps) => {
-    const { information, type = 'action' } = props;
+    const { information, type = 'action', width } = props;
 
     return (
         <>
-            <StyledContainer gap={'10px'} padding="20px">
+            <StyledContainer gap={'10px'} padding="20px" width={width}>
                 <InfoOutlinedIcon sx={{ width: '24px', height: '24px' }} color={type} />
                 <Typography variant="body2">{information}</Typography>
             </StyledContainer>
