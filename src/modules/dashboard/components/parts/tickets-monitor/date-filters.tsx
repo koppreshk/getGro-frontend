@@ -4,7 +4,10 @@ import styled from "styled-components";
 
 interface IDateFiltersProps {
     filterValue: string;
-    dateFilterTypes?: string[];
+    dateFilterTypes?: {
+        label: string;
+        key: string;
+    }[];
     onFilterChangeHandler: (value: string) => void;
 }
 
@@ -26,13 +29,13 @@ const Text = styled(Typography) <{ $isSelected?: boolean }>`
 
 
 export const DateFilters = (props: IDateFiltersProps) => {
-    const { filterValue, dateFilterTypes = ['week', 'month'], onFilterChangeHandler } = props;
+    const { filterValue, dateFilterTypes = [{ label: 'week', key: 'week' }, { label: 'month', key: 'month' }], onFilterChangeHandler } = props;
 
     return (
         <>
             <StyledFilterContainer gap="4px">
                 {dateFilterTypes.map((item) => (
-                    <Text variant="subheading1" key={item} $isSelected={filterValue === item} onClick={() => onFilterChangeHandler(item)}>{item.slice(0, 1).toUpperCase() + item.slice(1)}</Text>
+                    <Text variant="subheading1" key={item.key} $isSelected={filterValue === item.key} onClick={() => onFilterChangeHandler(item.key)}>{item.label}</Text>
                 )
                 )}
             </StyledFilterContainer>

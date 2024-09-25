@@ -9,8 +9,7 @@ interface ISupportMonitoringProps {
 }
 
 export const SupportMonitoring = (props: ISupportMonitoringProps) => {
-    const { total_tickets, pending_tickets, resolution_overdue, response_overdue, replies_by_agents, replies_by_customers,
-        resolution_pending, tickets_closed, tickets_created, email, ivr, whatsapp } = props.data;
+    const { total_tickets, pending_tickets, resolution_overdue, response_overdue, email, ivr, whatsapp } = props.data;
 
     return (
         <>
@@ -22,9 +21,7 @@ export const SupportMonitoring = (props: ISupportMonitoringProps) => {
                     pending_tickets={pending_tickets} />
                 <FlexBox gap={'20px'} width="100%">
                     <TicketsBySource channelsInfo={{ Email: email, Whatsapp: whatsapp, IVR: ivr }} />
-                    <TicketStats replies_by_agents={replies_by_agents} replies_by_customers={replies_by_customers}
-                        resolution_pending={resolution_pending} response_pending={resolution_pending}
-                        tickets_closed={tickets_closed} tickets_created={tickets_created} />
+                    <TicketStats />
                 </FlexBox>
             </FlexBox>
         </>

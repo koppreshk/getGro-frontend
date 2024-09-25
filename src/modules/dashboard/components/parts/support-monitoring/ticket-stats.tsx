@@ -7,7 +7,7 @@ import ReactApexChart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
 import { FormProvider, useForm } from "react-hook-form";
 import { SelectField } from "lib/form-fields";
-import { SupportMonitoringValues } from "modules/dashboard/apis";
+import { useFetchSupportMonitoringStatistics, useFetchSupportMonitoringTicketsCreated } from "modules/dashboard/apis";
 
 const StyledContainer = styled(FlexBox)`
     background-color: ${({ theme }) => theme.pallete.white};
@@ -15,44 +15,45 @@ const StyledContainer = styled(FlexBox)`
     box-shadow: 0 4px 8px -2px #1018281a,0 2px 4px -2px #18212f0f;
 `;
 
-export const TicketStats = (props: Pick<SupportMonitoringValues, 'tickets_created' | 'replies_by_agents' | 'response_pending' | 'tickets_closed' | 'replies_by_customers' | 'resolution_pending'>) => {
-    const { tickets_created, replies_by_agents, replies_by_customers, resolution_pending, response_pending, tickets_closed } = props;
+export const TicketStats = () => {
+    const [filterValue, setFilters] = useState('today');
+    const { data } = useFetchSupportMonitoringStatistics(filterValue);
+
     const quickStats1 = [{
         name: 'Tickets Created',
-        value: tickets_created,
+        value: data?.tickets_created || 0,
     }, {
         name: 'Replies By Agent',
-        value: replies_by_agents
+        value: data?.replies_by_agents || 0
     }, {
         name: 'Response Pending',
-        value: response_pending
+        value: data?.response_pending || 0
     }];
 
     const quickStats2 = [{
         name: 'Tickets Closed',
-        value: tickets_closed
+        value: data?.tickets_closed || 0
     }, {
         name: 'Replies By Customers',
-        value: replies_by_customers
+        value: data?.replies_by_customers || 0
     }, {
         name: 'Resolution Pending',
-        value: resolution_pending
+        value: data?.resolution_pending || 0
     }]
-
-    const [filterValue, setFilters] = useState('Today');
 
     const onFilterChangeHandler = useCallback((value: string) => {
         setFilters(value);
     }, []);
 
     const { pallete } = useTheme();
+    const dateFilters = [{ label: 'Today', key: 'today' }, { label: 'Yesterday', key: 'yesterday' }, { label: 'Last 7 Days', key: 'last_7_days' }, { label: 'Last 30 Days', key: 'last_30_days' }, { label: 'Last 90 Days', key: 'last_90_days' }]
 
     return (
         <>
             <StyledContainer padding="20px" flexDirection="column" gap="20px" width="calc(70% - 20px)">
                 <FlexBox justifyContent="space-between" alignItems="center">
                     <Typography variant="h5">Ticket Statistics</Typography>
-                    <DateFilters onFilterChangeHandler={onFilterChangeHandler} filterValue={filterValue} dateFilterTypes={['Today', 'Yesterday', 'Last 7 Days', 'Last 30 Days', 'Last 90 Days']} />
+                    <DateFilters onFilterChangeHandler={onFilterChangeHandler} filterValue={filterValue} dateFilterTypes={dateFilters} />
                 </FlexBox>
                 <FlexBox width="100%">
                     <FlexBox gap="20px" width="40%" style={{ borderRight: `1px solid ${pallete.grayVariant1}` }}>
@@ -63,7 +64,7 @@ export const TicketStats = (props: Pick<SupportMonitoringValues, 'tickets_create
                             {quickStats2.map((item) => <QuickStats key={item.name} item={item} />)}
                         </FlexBox>
                     </FlexBox>
-                    <TicketsCreated />
+                    <TicketsCreated filterValue={filterValue} />
                 </FlexBox>
             </StyledContainer>
         </>
@@ -87,16 +88,17 @@ const QuickStats = (props: {
     )
 }
 
-const TicketsCreated = () => {
+const TicketsCreated = (props: { filterValue: string }) => {
     const form = useForm({
         defaultValues: {
             groupBy: 'status'
         }
     });
+    const { data: apidata } = useFetchSupportMonitoringTicketsCreated(form.watch('groupBy'), props.filterValue)
 
     const data = {
         series: [{
-            data: [2, 10, 7]
+            data: Object.values(apidata || [])
         }],
         options: {
             chart: {
@@ -114,7 +116,7 @@ const TicketsCreated = () => {
                 enabled: false
             },
             xaxis: {
-                categories: ['Unassgined', 'Pending', 'Completed']
+                categories: Object.keys(apidata || {})
             }
         } as ApexOptions
     };
