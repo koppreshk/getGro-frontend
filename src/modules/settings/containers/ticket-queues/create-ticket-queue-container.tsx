@@ -9,7 +9,7 @@ interface ICreateTicketQueueContainerProps {
 }
 
 export const CreateTicketQueueContainer = (props: ICreateTicketQueueContainerProps) => {
-    const { mutateAsync: createTicketQueue } = useCreateTicketQueues();
+    const { mutateAsync: createTicketQueue, isLoading: mutationLoading } = useCreateTicketQueues();
     const { data, isLoading } = useFetchTicketMetadata();
     const { showNotification } = useNotifications();
 
@@ -21,9 +21,13 @@ export const CreateTicketQueueContainer = (props: ICreateTicketQueueContainerPro
                 lastName: item.value.split(' ')[1],
                 id: Number(item.key)
             }))
-        }).then(() => {
-            showNotification({ message: 'New Ticket Queue created', type: 'success' });
-            props.toggleAddQueueDrawer();
+        }).then((res) => {
+            if (res.status) {
+                showNotification({ message: 'New Ticket Queue created', type: 'success' });
+                props.toggleAddQueueDrawer();
+                return;
+            }
+            showNotification({ message: res.message, type: 'error' })
         }).catch(() => showNotification({ message: 'Failed to create the queue', type: 'error' }))
     }, [createTicketQueue, props, showNotification]);
 
@@ -31,10 +35,12 @@ export const CreateTicketQueueContainer = (props: ICreateTicketQueueContainerPro
         return <CenteredCircularProgress />
     }
 
-    if (data) { 
+    if (data) {
         return (
             <TicketQueueForm
                 mode="create"
+                mutationLoading={mutationLoading}
+                toggleAddQueueDrawer={props.toggleAddQueueDrawer}
                 onFormSubmitHandler={submitCreateTicketQueue}
                 employees={data.employees} />
         )
