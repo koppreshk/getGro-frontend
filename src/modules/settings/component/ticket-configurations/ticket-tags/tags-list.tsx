@@ -2,9 +2,9 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { FlexBox } from "lib/ui-ux";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
 import { ITag } from "modules/settings/apis/tags";
-import { DeleteTicketStatusContainer } from "modules/settings/containers/ticket-status";
 import { EditTag } from "./edit-tag";
 import { Chip } from "@mui/material";
+import { DeleteTagsContainer } from "modules/settings/containers";
 
 export interface ITagsListProps {
     data: ITag[] | undefined;
@@ -37,7 +37,7 @@ const useColumns = (data: ITag[] | undefined) => {
                             original.can_delete ?
                                 <FlexBox flexDirection="row" gap="5px">
                                     <EditTag id={original.id} name={original.name} data={data!} />
-                                    <DeleteTicketStatusContainer id={original.id} />
+                                    <DeleteTagsContainer id={original.id} />
                                 </FlexBox> : null
                         }
                     </>
