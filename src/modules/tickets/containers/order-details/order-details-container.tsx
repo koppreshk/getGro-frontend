@@ -1,5 +1,5 @@
 
-import { CenteredCircularProgress } from "lib/ui-ux";
+import { CenteredCircularProgress, FlexBox } from "lib/ui-ux";
 import { useFetchAllOrders } from "../../apis";
 import { useFormContext } from "react-hook-form";
 import { Typography } from "@mui/material";
@@ -16,12 +16,15 @@ export const OrderDetailsContainer = (props: { customerId: string | null | undef
     }
 
     if (orderData) {
-
         return (
             <OrderDetails orderDetails={orderData} />
         )
     }
 
-    return <Typography variant="body3" sx={{padding: '0 16px'}}>Select store to view orders</Typography>
+    return (
+        <FlexBox justifyContent="center" alignItems="center" height="80%">
+            <Typography variant="body3" sx={{ padding: '0 16px' }}>Failed to load orders for the selected store</Typography>
+        </FlexBox>
+    )
 }
 

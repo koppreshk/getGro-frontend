@@ -5,7 +5,7 @@ import { CustomIconButton, NegativeActionDialog } from "lib/ui-ux"
 import { useDeleteTag } from "modules/settings/apis/tags";
 import { DeleteTagContent } from "modules/settings/component/ticket-configurations";
 
-export const DeleteTicketStatusContainer = (props: { id: number }) => {
+export const DeleteTagsContainer = (props: { id: number }) => {
     const { id } = props;
     const { mutateAsync, isLoading } = useDeleteTag();
     const { showNotification } = useNotifications();

@@ -28,7 +28,7 @@ const ExotelServiceContext = React.createContext(defaultContextValues);
 
 export const ExotelServiceProvider = (props: { children?: React.ReactNode; }) => {
     const { user } = useAuth();
-    const { data } = useFetchSDKToken();
+    const { data } = useFetchSDKToken(user ? true : false);
     const userId = user?.email || '';
 
     const webPhone = useRef<ExotelWebPhoneSDK | null>(null);

@@ -8,15 +8,9 @@ export interface SupportMonitoringValues {
     pending_tickets: number;
     response_overdue: number;
     resolution_overdue: number;
-    tickets_created: number;
-    tickets_closed: number;
-    replies_by_agents: number;
-    replies_by_customers: number;
-    response_pending: number;
-    resolution_pending: number;
-    unassigned_tickets: number;
-    pending: number;
-    completed: number;
+    email: number;
+    ivr: number;
+    whatsapp: number;
 }
 
 export const useFetchSupportMonitoringValues = () => {

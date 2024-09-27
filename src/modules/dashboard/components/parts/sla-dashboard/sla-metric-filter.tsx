@@ -12,10 +12,12 @@ const FilterContainer = styled(FlexBox)`
 
 export const SlaMetricFilter = (props: { filterValue: string, onFilterChangeHandler: (value: string) => void }) => {
     const { filterValue, onFilterChangeHandler } = props;
+    const dateFilters = ['All', 'First Response', 'Next Response', 'Resolution'].map((item) => ({ key: item, label: item }));
+
     return (
         <FilterContainer alignItems="center" gap="20px">
             <Typography variant="h5">SLA Metrics</Typography>
-            <DateFilters onFilterChangeHandler={onFilterChangeHandler} filterValue={filterValue} dateFilterTypes={['All', 'First Response', 'Next Response', 'Resolution']} />
+            <DateFilters onFilterChangeHandler={onFilterChangeHandler} filterValue={filterValue} dateFilterTypes={dateFilters} />
         </FilterContainer>
     )
 }
