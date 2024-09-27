@@ -1,16 +1,14 @@
+import { useState, memo } from "react";
+import styled from "styled-components";
 import { Close, Info, Paid, ShoppingBagOutlined } from "@mui/icons-material";
 import { Chip, IconButton, Tooltip, Typography } from "@mui/material";
 import { DrawerExtended, DrawerHeaderWrapper, FlexBox } from "lib/ui-ux";
 import { IOrders } from "modules/tickets/apis";
-import { useState } from "react";
-import styled from "styled-components";
 import { CurrencyINR, OrderDetailsDrawerContent } from "./order-details-drawer-content";
 import { getFormatedNumberByLocale } from "lib/utils";
 
 interface IOrderViewProps {
-    orderDetails: IOrders[];
-    index: number;
-    style: React.CSSProperties;
+    order: IOrders
 }
 
 const StyledOrderNumber = styled(Typography)`
@@ -59,10 +57,12 @@ export const TextFieldValue = styled(Typography)`
     }
 `;
 
-export const OrderItem = (props: IOrderViewProps) => {
-    const { index, orderDetails } = props;
-    const { order_number, financial_status, fulfillment_status, total_price, order_status_url } = orderDetails[index];
+export const OrderItem = memo((props: IOrderViewProps) => {
+    const { order } = props;
+    const { order_number, financial_status, fulfillment_status, total_price, order_status_url } = order;
     const [showDrawer, setDrawerDisplay] = useState(false);
+
+    console.log('rendering');
 
     const toggleOrderDetailsDrawer = () => {
         setDrawerDisplay((preValue) => !preValue);
@@ -128,9 +128,9 @@ export const OrderItem = (props: IOrderViewProps) => {
                 open={showDrawer}
                 header={renderHeader}
                 onRenderContent={() => (
-                    <OrderDetailsDrawerContent orderDetails={orderDetails[index]} />
+                    <OrderDetailsDrawerContent orderDetails={order} />
                 )}
                 onClose={toggleOrderDetailsDrawer} />
         </>
     )
-}
+})

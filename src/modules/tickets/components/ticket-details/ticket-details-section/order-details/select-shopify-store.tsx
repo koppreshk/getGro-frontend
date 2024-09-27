@@ -16,10 +16,10 @@ export const SelectShopifyStore = (props: { shopifyStoreData: IShopifyStore[] })
     }
 
     return (
-        <FlexBox padding="20px 10px 10px" width="100%">
+        <FlexBox padding="10px" width="100%" flexDirection="column" gap="5px">
+            <Typography variant="h6">Stores</Typography>
             <SelectField
                 name="stores"
-                label="Stores"
                 menuOptions={shopifyStoreData.map((item) => ({ key: item.id.toString(), value: item.store_name }))}
                 size="small" sx={{ width: '100%' }}
             />
