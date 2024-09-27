@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { createColumnHelper } from "@tanstack/react-table";
 import { FlexBox } from "lib/ui-ux";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
@@ -11,22 +12,23 @@ interface ITicketStatusListProps {
 
 const useColumns = (statusData: IGenericResponse[]) => {
     const columnHelper = createColumnHelper<IGenericResponse>();
+    const { t } = useTranslation();
 
     const columns = [
         columnHelper.accessor("id", {
             id: 'id',
-            header: () => 'Status ID',
+            header: () => t('modules.configurations.configurationOptions.tickets.ticketStatus.grid.statusId'),
             cell: info => info.getValue(),
         }),
         columnHelper.accessor("name", {
             id: 'name',
-            header: () => 'Status Name',
+            header: () =>t('modules.configurations.configurationOptions.tickets.ticketStatus.grid.statusName'),
             cell: info => info.getValue(),
             minSize: 300
         }),
         columnHelper.display({
             id: 'actions',
-            header: () => 'Actions',
+            header: () => t('modules.configurations.configurationOptions.tickets.ticketStatus.grid.actions'),
             cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
