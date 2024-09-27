@@ -3,7 +3,7 @@ import { ExpandMore } from "@mui/icons-material"
 import { Menu, MenuItem } from "@mui/material"
 import { Button } from "@mui/material";
 import { FlexBox, HorizontalSeparator } from "lib/ui-ux"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TypographyName } from "./contact-info";
 import { IGenericResponse } from "modules/settings/apis/ticket-status/types";
 import { Trans } from "react-i18next";
@@ -49,6 +49,12 @@ export const TicketStatus = (props: ITicketStatusProps) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [selectedIndex, setSelectedIndex] = useState(menuOptions.findIndex((item) => item.name.toLocaleLowerCase() === ticketStatus.toLocaleLowerCase()) || 0);
     const { showNotification } = useNotifications();
+
+    useEffect(() => {
+        if (ticketStatus) {
+            setSelectedIndex(menuOptions.findIndex((item) => item.name.toLocaleLowerCase() === ticketStatus.toLocaleLowerCase()))
+        }
+    }, [menuOptions, ticketStatus]);
 
     const open = Boolean(anchorEl);
 

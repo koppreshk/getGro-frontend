@@ -62,8 +62,6 @@ export const OrderItem = memo((props: IOrderViewProps) => {
     const { order_number, financial_status, fulfillment_status, total_price, order_status_url } = order;
     const [showDrawer, setDrawerDisplay] = useState(false);
 
-    console.log('rendering');
-
     const toggleOrderDetailsDrawer = () => {
         setDrawerDisplay((preValue) => !preValue);
     }

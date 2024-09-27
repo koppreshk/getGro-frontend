@@ -103,7 +103,6 @@ export const WhatsAppGupshupConfigForm = (props: IWhatsAppGupshupConfigFormProps
             app_name: formValues.appName,
             number: formValues.appNumber,
         }).then((response) => {
-            console.log('whatsapp res', response);
             form.setValue('webhookURL', response.webhook_url);
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
         })

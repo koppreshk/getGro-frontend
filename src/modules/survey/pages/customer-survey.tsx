@@ -85,7 +85,6 @@ export const CustomerSurveyPage = () => {
     });
 
     const onSubmit = useCallback((formvalues: ICustomerSurveyFields) => {
-        console.log(formvalues);
         mutateAsync({ rating: Number(formvalues.rating), ticket_id: formvalues.ticketId })
             .then((res: IResult) => {
                 setViewMessageContainer(true);

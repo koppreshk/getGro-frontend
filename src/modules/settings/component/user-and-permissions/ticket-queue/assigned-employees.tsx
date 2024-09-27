@@ -5,7 +5,6 @@ import { Queue, Employee } from "modules/settings/apis/queues";
 
 export const AssignedEmployees = (props: Pick<Queue, 'assignedEmployees'>) => {
     const { assignedEmployees } = props;
-    console.log('assignedEmployees', assignedEmployees);
     return (
         <FlexBox gap="4px">
             {assignedEmployees.slice(0, 4).map((item, idx) => <EmployeeAvatar key={item.id} item={item} idx={idx} />)}

@@ -28,7 +28,6 @@ interface IAuditLogSelectUserComponentProps extends IAuditLogSelectUserProps {
 
 const AuditLogSelectUserComponent = React.memo((props: IAuditLogSelectUserComponentProps) => {
     const { data, selectUserHandleChange, user } = props;
-    console.log('AuditLogSelectUserComponentsss');
 
     return (
         <FormControl sx={{ width: '25%' }} size="small">
