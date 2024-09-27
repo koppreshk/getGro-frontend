@@ -1,8 +1,9 @@
+import { useState, useCallback } from "react"
 import { Edit } from "@mui/icons-material"
 import { CustomIconButton, DrawerExtended } from "lib/ui-ux"
 import { IGenericResponse } from "modules/settings/apis/templates/types"
 import { EditTicketStatusContainer } from "modules/settings/containers/ticket-status"
-import { useState, useCallback } from "react"
+import { useTranslation } from "react-i18next"
 
 interface EditStatusProps {
     statusData: IGenericResponse[];
@@ -12,6 +13,7 @@ interface EditStatusProps {
 export const EditStatus = (props: EditStatusProps) => {
     const { statusData, selectedData } = props;
     const [showDrawer, setShowDrawer] = useState(false)
+    const { t } = useTranslation();
 
     const toggleDrawer = useCallback(() => {
         setShowDrawer((preValue) => !preValue);
@@ -24,7 +26,7 @@ export const EditStatus = (props: EditStatusProps) => {
                 open={showDrawer}
                 anchor="right"
                 width="500px"
-                header="View or Edit Ticket Status"
+                header={t('modules.configurations.configurationOptions.tickets.ticketStatus.editLabel')}
                 onRenderContent={() => (
                     <EditTicketStatusContainer onSelectRowMetaData={selectedData} toggleDrawer={toggleDrawer} statusData={statusData} />
                 )}
