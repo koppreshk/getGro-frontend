@@ -7,6 +7,7 @@ import { useState } from "react";
 import { TypographyName } from "./contact-info";
 import { IGenericResponse } from "modules/settings/apis/ticket-status/types";
 import { Trans } from "react-i18next";
+import { useNotifications } from "lib";
 
 const StyledButton = styled(Button)`
     &&{
@@ -47,6 +48,7 @@ export const TicketStatus = (props: ITicketStatusProps) => {
     const { menuOptions, ticketStatus, statusUpdateString, renderMode, onStatusChange } = props;
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [selectedIndex, setSelectedIndex] = useState(menuOptions.findIndex((item) => item.name.toLocaleLowerCase() === ticketStatus.toLocaleLowerCase()) || 0);
+    const { showNotification } = useNotifications();
 
     const open = Boolean(anchorEl);
 
@@ -57,9 +59,13 @@ export const TicketStatus = (props: ITicketStatusProps) => {
 
     const handleMenuItemClick = (event: React.MouseEvent<HTMLElement>, index: number) => {
         event.stopPropagation();
-        setSelectedIndex(index);
-        setAnchorEl(null);
         onStatusChange(menuOptions[index].id)
+            .then(() => {
+                setSelectedIndex(index);
+                setAnchorEl(null);
+            }).catch((res) => {
+                showNotification({ message: res?.message + ': ' + 'Failed to change status, please try after some time', type: 'error' })
+            })
     };
 
     const handleClose = (event: React.MouseEvent<HTMLElement>) => {
