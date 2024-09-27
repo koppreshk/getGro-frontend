@@ -12,7 +12,7 @@ interface IEditQueueContainerProps {
 export const EditQueueContainer = (props: IEditQueueContainerProps) => {
     const { toggleAddQueueDrawer, queueMetadata } = props;
     const { data, isLoading } = useFetchTicketMetadata();
-    const { mutateAsync: editQueue } = useEditQueue();
+    const { mutateAsync: editQueue, isLoading: mutationLoading } = useEditQueue();
     const { showNotification } = useNotifications();
 
     const onEditQueue = React.useCallback((formData: IQueueFormFields) => {
@@ -24,9 +24,13 @@ export const EditQueueContainer = (props: IEditQueueContainerProps) => {
             })),
             id: queueMetadata.id,
             name: formData.queueName,
-        }).then(() => {
-            showNotification({ message: 'Queue edited successfully', type: 'success' });
-            toggleAddQueueDrawer();
+        }).then((res) => {
+            if (res.status) {
+                showNotification({ message: 'Queue edited successfully', type: 'success' });
+                toggleAddQueueDrawer();
+                return;
+            }
+            showNotification({ message: res.message, type: 'error' })
         }).catch(() => showNotification({ message: 'Failed to edit the queue', type: 'error' }))
     }, [editQueue, queueMetadata.id, showNotification, toggleAddQueueDrawer]);
 
@@ -41,6 +45,8 @@ export const EditQueueContainer = (props: IEditQueueContainerProps) => {
             mode="edit"
             onFormSubmitHandler={onEditQueue}
             employees={employees}
+            mutationLoading={mutationLoading}
+            toggleAddQueueDrawer={toggleAddQueueDrawer}
             defaultValues={{
                 assignedEmployees: queueMetadata.assignedEmployees.map((item) => ({ key: item.id.toString(), value: `${item.firstName} ${item.lastName ?? ''}` })),
                 queueName: queueMetadata.name

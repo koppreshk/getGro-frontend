@@ -13,7 +13,8 @@ const useColumns = () => {
             header: () => 'Description',
             meta: {
                 disableColReorder: true
-            }
+            },
+            minSize: 230
         }),
         columnHelper.accessor("createdAt", {
             id: 'createdAt',
@@ -24,19 +25,10 @@ const useColumns = () => {
                 disableColReorder: true
             }
         }),
-        columnHelper.accessor("oldValue", {
-            id: 'oldValue',
+        columnHelper.accessor("userName", {
+            id: 'userName',
             cell: info => info.getValue() ?? '-',
-            header: () => 'Old Value',
-            enableResizing: false,
-            meta: {
-                disableColReorder: true
-            }
-        }),
-        columnHelper.accessor("newValue", {
-            id: 'newValue',
-            cell: info => info.getValue() ?? '-',
-            header: () => 'New Value',
+            header: () => 'User Name',
             enableResizing: false,
             meta: {
                 disableColReorder: true

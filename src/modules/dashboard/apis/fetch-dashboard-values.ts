@@ -10,7 +10,9 @@ export interface IDashboardData {
     completed_tickets: number
     first_contact_resolutions: number
     reopened_tickets: number
-    channels_info: ChannelsInfo
+    channels_info: {
+        [key: string]: number;
+    }
     total_completed_by_users: TotalCompletedByUsers
 }
 
