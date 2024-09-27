@@ -21,10 +21,10 @@ export const OrderDetailsLayout = (props: OrderDetailsLayoutProps) => {
     }
 
     return (
-        <>
+        <div style={{ height: 'calc(100% - 10px)' }} >
             <CommonHeader headerName="Order Details" />
             <OrderDetailsLayoutBase {...props} shopifyStoreData={shopifyStoreData!} />
-        </>
+        </div>
     )
 }
 
