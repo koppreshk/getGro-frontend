@@ -17,7 +17,7 @@ export const AddShopifyConfigContainer = (props: { togglePopup: () => void; }) =
     const onSubmit = React.useCallback((formData: IShopifyFormFields) => {
         mutateAsync({
             store_name: formData.storeName,
-            store_url: formData.storeUrl.concat('.myshopify.com'),
+            store_url: formData.storeUrl,
             store_access_token: formData.accessToken,
         }).then(() => {
             togglePopup();

@@ -64,11 +64,15 @@ const HelperActions = (props: { label: React.ReactNode, helperText?: string, lin
 
 export const TextboxFieldWithLabel = (props: ITextboxFieldProps & IFlexBoxProps & { helperText?: string, link?: string, linkLabel?: string }) => {
     const { flexDirection = 'column', gap = '5px', label, helperText, link, linkLabel, ...rest } = props;
+
+    const { formState: { errors } } = useFormContext();
+    const hasError = get(errors, props.name) !== undefined;
+
     return (
         <FlexBox flexDirection={flexDirection} gap={gap}>
             {helperText || link
                 ? <HelperActions label={label} helperText={helperText} link={link} linkLabel={linkLabel} />
-                : <Typography variant="h6">{label}</Typography>}
+                : <Typography variant="h6" sx={{ color: hasError ? '#d32f2f' : '#3b4455' }}>{label}</Typography>}
             <TextboxField {...rest} />
         </FlexBox>
     )

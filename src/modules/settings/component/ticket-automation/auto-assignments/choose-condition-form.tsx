@@ -1,5 +1,5 @@
 import { Chip, Typography } from "@mui/material"
-import { TextboxField } from "lib/form-fields"
+import { TextboxField, TextboxFieldWithLabel } from "lib/form-fields"
 import { FlexBox, VerticalSeparator } from "lib/ui-ux"
 import { TicketConditions } from "./ticket-conditions"
 import { FetchFieldsAndConditions, IAllAssignments } from "modules/settings/apis/ticket-automation";
@@ -18,16 +18,13 @@ export const ChooseConditionForm = (props: ChooseConditionFormProps) => {
         const modifiedData = mode === 'edit' ? allAssignments?.filter((item) => item.name !== ruleName) : allAssignments;
         const doesNameExist = modifiedData?.some((item) => item.name === value);
         if (doesNameExist) {
-            return `${value} already exists, please use a different name to continue`;
+            return `'${value}' already exists, please use a different name to continue`;
         }
     }
 
     return (
         <FlexBox flexDirection="column" gap={'20px'}>
-            <FlexBox flexDirection="column" gap={'5px'}>
-                <Typography variant="h6">Rule Name</Typography>
-                <TextboxField name="ruleName" size="small" rules={{ required: 'Rule name is required', validate: validateRuleName }} placeholder="Enter text here..." />
-            </FlexBox>
+            <TextboxFieldWithLabel label="Rule Name" name="ruleName" size="small" rules={{ required: 'Rule name is required', validate: validateRuleName }} placeholder="Enter text here..." />
             <FlexBox flexDirection="column" gap={'5px'}>
                 <Typography variant="h6">Description</Typography>
                 <TextboxField
