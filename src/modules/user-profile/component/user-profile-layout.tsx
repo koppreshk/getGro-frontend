@@ -6,6 +6,7 @@ import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { RolesPermissionsTab } from ".";
 import { Status } from "modules/core/components/parts/agent-status";
 import { useAppSelector } from "lib/hooks";
+import { useFetchCurrentStatus } from "modules/settings/apis/users-and-permissions";
 
 const StyledLayoutPage = styled(FlexBox)`
     background-color: ${({ theme }) => theme.pallete.grayVariant5};
@@ -30,7 +31,9 @@ export const UserProfileLayout = () => {
 }
 
 const ProfileHeader = () => {
-    const config = useAppSelector((state) => state.core.config)
+    const config = useAppSelector((state) => state.core.config);
+    const { data: currentStatus } = useFetchCurrentStatus();
+    
     return (
         <StyledFlexbox style={{ flex: '1' }} height="400px" >
             <FlexBox gap="12px" flexDirection="column" width="100%">
@@ -40,9 +43,9 @@ const ProfileHeader = () => {
                     <Typography variant='caption'>{config?.user_details.email}</Typography>
 
                     <FlexBox style={{ textTransform: 'unset', gap: '6px' }} flexDirection="row" alignItems="center">
-                        <Status $status="Online" />
+                        <Status $status={currentStatus?.name} />
                         <Typography variant="h6">
-                            Online
+                            {currentStatus?.name}
                         </Typography>
                     </FlexBox>
                 </FlexBox>
