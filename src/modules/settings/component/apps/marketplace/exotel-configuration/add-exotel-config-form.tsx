@@ -1,8 +1,8 @@
 import React from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
-import { Box, Button, DialogActions, Divider, Grid, InputAdornment, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
+import { Box, DialogActions, Divider, Grid, InputAdornment, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
 import { PasswordFieldWithLabel, RadioGroupField, TextboxField, TextboxFieldWithLabel } from "lib/form-fields";
-import { BackButton, CustomIconButton, FlexBox, LoadingButton } from "lib/ui-ux";
+import { BackButton, CancelButton, CustomIconButton, FlexBox, LoadingButton } from "lib/ui-ux";
 import { IAddExotelFormFields } from "modules/settings/containers/marketplace/exotel";
 import { ContentCopy } from "@mui/icons-material";
 import { useNotifications } from "lib";
@@ -189,9 +189,7 @@ export const AddExotelConfigurationForm = React.memo((props: IAddExotelConfigura
                     </BackButton> : <div></div>
                 }
                 <FlexBox gap="10px">
-                    <Button variant="outlined" onClick={togglePopup}>
-                        Cancel
-                    </Button>
+                    <CancelButton onClick={togglePopup} />
                     <LoadingButton isLoading={isMutationLoading} variant="contained" onClick={isLastStep ? onSaveHandler : form.handleSubmit(onSubmitForm)}>
                         {isLastStep ? 'Save' : 'Next'}
                     </LoadingButton>

@@ -1,11 +1,11 @@
 import React, { useCallback } from "react";
-import { FlexBox, IFileInfo, TextArea, parseFileInfo } from "lib/ui-ux";
+import { CancelButton, FlexBox, IFileInfo, TextArea, parseFileInfo } from "lib/ui-ux";
 import { Send } from "@mui/icons-material";
 import { KeyCodes } from "lib/enums";
 import { RoundedSendButton } from "../email-conversations/email-editor";
 import { FormProvider, useForm } from "react-hook-form";
 import styled from "styled-components";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import { useUploadFile } from "modules/tickets/apis";
 import { useNotifications } from "lib";
 import { NativeFileUpload } from "../../../../../../lib/ui-ux/file-upload/native-file-upload-field";
@@ -146,7 +146,7 @@ const UploadedFilePreview = (props: { toggleFileDisplay: () => void, filePreview
                 <TextArea onChange={onTextChange} value={textareaValue} onKeyDown={onKeyDown} placeholder="Shift + Enter to add a new line" />
             </DialogContent>
             <DialogActions>
-                <Button onClick={toggleFileDisplay} variant="text">Cancel</Button>
+                <CancelButton onClick={toggleFileDisplay} variant="text" />
                 <RoundedSendButton onClick={uploadFileToServer} endIcon={<Send />} variant="contained">
                     Send
                 </RoundedSendButton>

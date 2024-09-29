@@ -6,7 +6,7 @@ import { useNotifications } from "lib";
 import { useForm, FormProvider } from "react-hook-form";
 
 export const AddEmailConfigContainer = () => {
-    const { mutateAsync } = useSetupEmail();
+    const { mutateAsync, isLoading: mutationLoading } = useSetupEmail();
     const { mutateAsync: connectToNylasOAuth } = useNylasOAuth();
     const [searchParams, setSearchParams] = useSearchParams();
     const code = searchParams.get('code');
@@ -43,7 +43,7 @@ export const AddEmailConfigContainer = () => {
 
     return (
         <FormProvider {...form}>
-            <AddEmail onSubmit={onSubmit} />
+            <AddEmail onSubmit={onSubmit} mutationLoading={mutationLoading} />
         </FormProvider>
     )
 }

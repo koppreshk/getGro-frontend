@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from "react-hook-form"
 import { Button, Grid } from "@mui/material";
 import { SelectField, TextboxField } from "lib/form-fields";
-import { FlexBox, LoadingButton } from "lib/ui-ux";
+import { CancelButton, FlexBox, LoadingButton } from "lib/ui-ux";
 import { IRoles } from "modules/settings/apis/users-and-permissions";
 import { useCallback, useMemo } from "react";
 
@@ -67,7 +67,7 @@ export const AddAgentForm = (props: IUserFormProps) => {
                 </Grid>
                 <FlexBox gap='10px' width="100%" justifyContent="flex-end">
                     {isInEditMode ? <Button variant="text" size="large" type="button" onClick={() => methods.reset()}>{'Reset'}</Button> : null}
-                    <Button variant="outlined" onClick={toggleUserDrawer}>Cancel</Button>
+                    <CancelButton onClick={toggleUserDrawer} />
                     <LoadingButton isLoading={mutationLoading} variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>{isInEditMode ? 'Edit Agent' : 'Add Agent'}</LoadingButton>
                 </FlexBox>
             </FlexBox>

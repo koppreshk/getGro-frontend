@@ -1,6 +1,6 @@
-import { Typography, Button } from "@mui/material";
+import { Typography } from "@mui/material";
 import { SwitchField, TextboxField } from "lib/form-fields";
-import { FlexBox, GridLayout, HorizontalSeparator } from "lib/ui-ux";
+import { CancelButton, FlexBox, GridLayout, HorizontalSeparator, LoadingButton } from "lib/ui-ux";
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
@@ -11,12 +11,13 @@ export interface IAddEmailConfigFormFields {
 }
 
 interface IAddEmailProps {
-    formType?: 'ADD' | 'EDIT'
+    formType?: 'ADD' | 'EDIT';
+    mutationLoading: boolean;
     onSubmit: (formData: IAddEmailConfigFormFields) => void;
 }
 
 export const AddEmail = (props: IAddEmailProps) => {
-    const { formType = 'ADD', onSubmit } = props;
+    const { formType = 'ADD', mutationLoading, onSubmit } = props;
     const { handleSubmit } = useFormContext<IAddEmailConfigFormFields>();
     const navigate = useNavigate();
 
@@ -43,8 +44,8 @@ export const AddEmail = (props: IAddEmailProps) => {
             </GridLayout>
             <HorizontalSeparator />
             <FlexBox gap={'50px'}>
-                <Button variant="outlined" sx={{ width: '100px' }} onClick={() => navigate(-1)}>Cancel</Button>
-                <Button variant="contained" sx={{ width: '150px' }} onClick={handleSubmit(onSubmit)}>{formType === 'ADD' ? 'Add' : 'EDIT'}</Button>
+                <CancelButton sx={{ width: '100px' }} onClick={() => navigate(-1)} />
+                <LoadingButton variant="contained" sx={{ width: '150px' }} onClick={handleSubmit(onSubmit)} isLoading={mutationLoading}>{formType === 'ADD' ? 'Add' : 'EDIT'}</LoadingButton>
             </FlexBox>
         </FlexBox>
     )

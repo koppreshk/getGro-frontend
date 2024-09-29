@@ -1,8 +1,8 @@
 import React from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
-import { BackButton, CustomIconButton, FlexBox, LoadingButton } from "lib/ui-ux";
+import { BackButton, CancelButton, CustomIconButton, FlexBox, LoadingButton } from "lib/ui-ux";
 import { PasswordField, TextboxField } from "lib/form-fields";
-import { Box, Button, DialogActions, Divider, InputAdornment, Step, StepLabel, Stepper, Typography } from "@mui/material";
+import { Box, DialogActions, Divider, InputAdornment, Step, StepLabel, Stepper, Typography } from "@mui/material";
 import { ContentCopy } from "@mui/icons-material";
 import { useNotifications } from "lib";
 import { ISetupWhatsAppArgs } from "modules/settings/apis/marketplace/whatsApp/gupshup";
@@ -134,9 +134,7 @@ export const WhatsAppGupshupConfigForm = (props: IWhatsAppGupshupConfigFormProps
                     </BackButton> : <div></div>
                 }
                 <FlexBox gap="10px">
-                    <Button variant="outlined" onClick={togglePopup}>
-                        Cancel
-                    </Button>
+                    <CancelButton onClick={togglePopup} />
                     <LoadingButton variant="contained" isLoading={isMutationLoading} onClick={isLastStep ? onSaveHandler : form.handleSubmit(onSubmitForm)}>
                         {isLastStep ? 'Save' : 'Next'}
                     </LoadingButton>

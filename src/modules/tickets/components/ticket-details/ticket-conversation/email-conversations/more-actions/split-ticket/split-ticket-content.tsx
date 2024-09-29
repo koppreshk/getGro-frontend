@@ -1,6 +1,6 @@
-import { Button, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { CheckboxField, RadioGroupField, TextboxFieldWithLabel } from "lib/form-fields";
-import { FlexBox, HorizontalSeparator, LoadingButton } from "lib/ui-ux";
+import { CancelButton, FlexBox, HorizontalSeparator, LoadingButton } from "lib/ui-ux";
 import { useForm, FormProvider } from "react-hook-form";
 import { SplitTicketProps } from "./split-ticket";
 import { StyledRichTextEditor } from "modules/settings/component/ticket-configurations/templates/add-templates-form";
@@ -83,7 +83,7 @@ export const SplitTicketsContent = (props: ISplitTicketsContentProps) => {
                 </FlexBox>
             </FlexBox>
             <FlexBox padding="20px" gap='10px' width="100%" justifyContent="flex-end">
-                <Button variant="outlined" onClick={onCloseDrawer}>Cancel</Button>
+                <CancelButton onClick={onCloseDrawer} />
                 <LoadingButton isLoading={mutationLoading} variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>Split Tickets</LoadingButton>
             </FlexBox>
         </FormProvider>

@@ -3,7 +3,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import styled from "styled-components";
 import { Grid, Button } from "@mui/material";
 import { TextboxField, AutocompleteField } from "lib/form-fields";
-import { FlexBox, LoadingButton } from "lib/ui-ux";
+import { CancelButton, FlexBox, LoadingButton } from "lib/ui-ux";
 import { Employee } from "modules/settings/apis/queues";
 
 const StlyedFlexBox = styled(FlexBox)`
@@ -58,7 +58,7 @@ export const TicketQueueForm = memo((props: ITicketQueueFormProps) => {
                 </Grid>
                 <StlyedFlexBox gap='10px' width="100%" justifyContent="flex-end">
                     {isInEditMode ? <Button variant="text" size="large" type="button" onClick={() => methods.reset()}>{'Reset'}</Button> : null}
-                    <Button variant="outlined" onClick={toggleAddQueueDrawer}>Cancel</Button>
+                    <CancelButton onClick={toggleAddQueueDrawer} />
                     <LoadingButton isLoading={mutationLoading} variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>{isInEditMode ? 'Edit Queue' : 'Add Queue'}</LoadingButton>
                 </StlyedFlexBox>
             </FlexBox>

@@ -32,7 +32,7 @@ export const AccountMenu = () => {
             </IconButton>
             <Menu open={Boolean(anchor)} onClose={handleClose} anchorEl={anchor as Element} slotProps={{ paper: { sx: { width: '200px' } } }}>
                 <MenuItem onClick={handleClose}>
-                    <Link to='/userProfile' style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}>
+                    <Link to='/userProfile' style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center', width: '100%' }}>
                         <ListItemIcon>
                             <AccountCircle />
                         </ListItemIcon>
@@ -41,7 +41,7 @@ export const AccountMenu = () => {
                 </MenuItem>
                 {config.config?.modules.includes('configurations')
                     ? <MenuItem >
-                        <Link to='/configurations' style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}>
+                        <Link to='/configurations' style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center', width: '100%' }}>
                             <ListItemIcon>
                                 <Settings />
                             </ListItemIcon>

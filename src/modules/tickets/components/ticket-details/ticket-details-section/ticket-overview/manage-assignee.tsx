@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import styled from 'styled-components';
-import { Close, Done, ExpandMore } from "@mui/icons-material";
+import { ExpandMore } from "@mui/icons-material";
 import { Button, Popover, Typography } from "@mui/material"
 import { SelectField } from "lib/form-fields";
-import { FlexBox, HorizontalSeparator } from "lib/ui-ux"
+import { CancelButton, FlexBox, HorizontalSeparator } from "lib/ui-ux"
 import { ITicketQueues, Queue } from "modules/settings/apis";
 import { IChangeAsigneeArgs, ITicketDetails } from "modules/tickets/apis";
 import { TypographyName } from "./contact-info";
@@ -119,14 +119,8 @@ const PopoverContent = (props: { queues: Queue[], handleClose: () => void, onCha
                 <SelectField name="assigneeAgent" label="Agent" menuOptions={agents || []} />
                 <HorizontalSeparator />
                 <FlexBox justifyContent="flex-end" gap={'10px'}>
+                    <CancelButton onClick={handleClose} />
                     <Button
-                        startIcon={<Close />}
-                        variant="outlined"
-                        onClick={handleClose}>
-                        Cancel
-                    </Button>
-                    <Button
-                        startIcon={<Done />}
                         variant="contained"
                         onClick={form.handleSubmit(onSave)}>
                         Save

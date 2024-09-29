@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { Button, Typography } from "@mui/material"
-import { BackButton, FlexBox, LoadingButton, VerticalSeparator } from "lib/ui-ux"
+import { Typography } from "@mui/material"
+import { BackButton, CancelButton, FlexBox, LoadingButton, VerticalSeparator } from "lib/ui-ux"
 import { useState } from "react";
 import { Modules } from "./modules";
 import { PermissionList } from "./permission-list";
@@ -191,7 +191,7 @@ export const Permissions = (props: PermissionsProps) => {
                             {mode !== 'userProfile' ?
                                 (
                                     <>
-                                        <Button variant="outlined" onClick={() => navigate(-1)}>Cancel</Button>
+                                        <CancelButton onClick={() => navigate(-1)} />
                                         <LoadingButton isLoading={props?.mutationLoading || false} variant="contained" type="submit" onClick={handleSubmit(onSubmit!)}>Submit</LoadingButton>
                                     </>)
                                 : null}

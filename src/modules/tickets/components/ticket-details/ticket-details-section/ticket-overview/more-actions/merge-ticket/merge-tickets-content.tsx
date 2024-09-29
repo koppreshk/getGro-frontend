@@ -1,6 +1,6 @@
-import { Button, Typography } from "@mui/material"
+import { Typography } from "@mui/material"
 import { CheckboxField, RadioGroupField } from "lib/form-fields";
-import { FlexBox, LoadingButton } from "lib/ui-ux"
+import { CancelButton, FlexBox, LoadingButton } from "lib/ui-ux"
 import { FormProvider, useForm } from "react-hook-form"
 import styled from "styled-components"
 import { PrimaryTicketDetails } from "./primary-ticket-details";
@@ -83,7 +83,7 @@ export const MergeTicketsContent = (props: IMergeTicketsContentProps) => {
                 <StyledFooter padding="20px" width="100%" gap="12px" flexDirection="column">
                     <AdditionalOptions />
                     <FlexBox gap='10px' width="100%" justifyContent="flex-end">
-                        <Button variant="outlined" onClick={onCloseDrawer}>Cancel</Button>
+                        <CancelButton onClick={onCloseDrawer} />
                         <LoadingButton isLoading={mutationLoading} variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>Merge Tickets</LoadingButton>
                     </FlexBox>
                 </StyledFooter>

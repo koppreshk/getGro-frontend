@@ -1,7 +1,7 @@
 import React from "react";
-import { Box, Stepper, Step, StepLabel, StepContent, Typography, Grid, Button, DialogActions, Divider, InputAdornment } from "@mui/material";
+import { Box, Stepper, Step, StepLabel, StepContent, Typography, Grid, DialogActions, Divider, InputAdornment } from "@mui/material";
 import { AutocompleteField, SelectField, TextboxField } from "lib/form-fields";
-import { BackButton, CustomIconButton, FlexBox, LoadingButton } from "lib/ui-ux";
+import { BackButton, CancelButton, CustomIconButton, FlexBox, LoadingButton } from "lib/ui-ux";
 import { IAddExophoneNumberFormFields } from "modules/settings/containers/marketplace/exotel";
 import { useForm, FormProvider, useFormContext } from "react-hook-form";
 import { IUsers } from "modules/settings/apis/users-and-permissions";
@@ -187,9 +187,7 @@ export const AddExophoneNumberFormBase = (props: IAddExophoneNumberFormProps) =>
                     </BackButton> : <div></div>
                 }
                 <FlexBox gap="10px">
-                    <Button variant="outlined" onClick={togglePopup}>
-                        Cancel
-                    </Button>
+                    <CancelButton onClick={togglePopup} />
                     <LoadingButton isLoading={isMutationLoading!} variant="contained" onClick={!isBrowserCalling ? form.handleSubmit(onSubmitForm) : isLastStep ? onSaveHandler : form.handleSubmit(onSubmitForm)}>
                         {isLastStep ? 'Save' : 'Next'}
                     </LoadingButton>

@@ -5,7 +5,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { AddReminder } from "./add-reminder";
 import { AddEscalation } from "./add-escalation";
 import { ChooseCondition } from "./choose-condition";
-import { FlexBox, LoadingButton } from "lib/ui-ux";
+import { CancelButton, FlexBox, LoadingButton } from "lib/ui-ux";
 import { KeyboardArrowLeft, KeyboardArrowRight, Save } from "@mui/icons-material";
 import { SLATargets } from "./sla-targets";
 import { IEscalationsNew, IKeyValue, ISLAmetaData } from "modules/settings/apis/ticket-automation/escalations";
@@ -233,9 +233,7 @@ export const AddEscalationLayout = React.memo((props: IAddEscalationLayoutProps)
                         : null}
                     <FlexBox justifyContent="flex-end" width='calc(100% - 94px)'>
                         <FlexBox gap='20px'>
-                            <Button variant="contained" color="error" onClick={onClose}>
-                                {'Cancel'}
-                            </Button>
+                            <CancelButton onClick={onClose} />
                             {props.mode === 'edit' ?
                                 <Button variant="outlined" size="large" type="button" onClick={() => form.reset()}>{'Reset'}</Button>
                                 : null}

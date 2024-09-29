@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CustomSteps, FlexBox, LoadingButton } from 'lib/ui-ux';
+import { CancelButton, CustomSteps, FlexBox, LoadingButton } from 'lib/ui-ux';
 import { ChooseConditionForm } from './choose-condition-form';
 import { AssociateAgent } from './associate-agent';
 import { Button } from '@mui/material';
@@ -79,9 +79,7 @@ const AddRuleBase = (props: AddRuleProps) => {
                     : null}
                 <FlexBox justifyContent="flex-end" width={isLastStep || isInBetween ? 'calc(100% - 95px)' : '100%'}>
                     <FlexBox gap='20px'>
-                        <Button variant="contained" color="error" onClick={onClose}>
-                            {'Cancel'}
-                        </Button>
+                        <CancelButton onClick={onClose} />
                         {props.mode === 'edit' ?
                             <Button variant="outlined" size="large" type="button" onClick={() => form.reset()}>{'Reset'}</Button>
                             : null}

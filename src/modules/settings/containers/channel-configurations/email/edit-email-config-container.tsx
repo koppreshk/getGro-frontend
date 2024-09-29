@@ -7,7 +7,7 @@ import { useNavigate, useSearchParams } from "react-router-dom"
 
 export const EditEmailConfigContainer = () => {
     const [searchParams] = useSearchParams();
-    const { mutateAsync } = useEditEmailConfig();
+    const { mutateAsync, isLoading: mutationLoading } = useEditEmailConfig();
     const { showNotification } = useNotifications();
     const { data, isLoading, error } = useFetchAllEmails();
     const navigate = useNavigate();
@@ -34,7 +34,7 @@ export const EditEmailConfigContainer = () => {
         }
 
         return (
-            <EditEmailForm defaultValues={defaultValues} onSubmit={onSubmit} />
+            <EditEmailForm defaultValues={defaultValues} onSubmit={onSubmit} mutationLoading={mutationLoading} />
         )
     }
 
@@ -43,6 +43,7 @@ export const EditEmailConfigContainer = () => {
 
 interface IEditEmailFormProps {
     defaultValues: IAddEmailConfigFormFields;
+    mutationLoading: boolean;
     onSubmit: (formData: IAddEmailConfigFormFields) => void
 }
 
@@ -53,7 +54,7 @@ const EditEmailForm = (props: IEditEmailFormProps) => {
 
     return (
         <FormProvider {...form}>
-            <AddEmail onSubmit={props.onSubmit} formType="EDIT" />
+            <AddEmail onSubmit={props.onSubmit} formType="EDIT" mutationLoading={props.mutationLoading} />
         </FormProvider>
     )
 }

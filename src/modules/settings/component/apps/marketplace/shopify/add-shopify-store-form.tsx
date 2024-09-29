@@ -2,8 +2,8 @@ import React from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import styled from "styled-components";
 import { PasswordField, TextboxField } from "lib/form-fields";
-import { Box, Button, DialogActions, Divider, Grid, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
-import { FlexBox, LoadingButton } from "lib/ui-ux";
+import { Box, DialogActions, Divider, Grid, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
+import { CancelButton, FlexBox, LoadingButton } from "lib/ui-ux";
 import { IShopifyFormFields } from "modules/settings/containers/marketplace/shopify";
 
 export interface IAddShopifyConfigurationFormProps {
@@ -16,10 +16,10 @@ export const ShopifyStoreConfigForm = (props: IAddShopifyConfigurationFormProps)
     const { togglePopup, onSubmit, isMutationLoading } = props;
     const form = useFormContext<IShopifyFormFields>();
     const [activeStep,] = React.useState(0);
-   
-    const onSubmitForm =  React.useCallback(async (formField: IShopifyFormFields) => {
+
+    const onSubmitForm = React.useCallback(async (formField: IShopifyFormFields) => {
         onSubmit(formField)
-    }, [onSubmit]) ;
+    }, [onSubmit]);
 
     return (
         <>
@@ -29,9 +29,7 @@ export const ShopifyStoreConfigForm = (props: IAddShopifyConfigurationFormProps)
                 {activeStep === 0 ? <ShopifyDetailsForm /> : <span>Work in Progress..</span>}
             </FlexBox>
             <DialogActions sx={{ paddingTop: '30px' }}>
-                <Button variant="outlined" onClick={togglePopup}>
-                    Cancel
-                </Button>
+                <CancelButton onClick={togglePopup} />
                 <LoadingButton isLoading={isMutationLoading} variant="contained" autoFocus onClick={form.handleSubmit(onSubmitForm)}>
                     Save
                 </LoadingButton>
