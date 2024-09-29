@@ -40,10 +40,10 @@ export const CreateRole = (props: CreateRoleProps) => {
 
     return (
         <FormProvider {...form}>
-            <FlexBox justifyContent="center" width="100%">
-                <FlexBox gap={'20px'} flexDirection="column" padding="20px" width="70%">
-                    <TextboxFieldWithLabel name="name" disabled={mode === 'userProfile'} label="Role Name" size="small" rules={{ required: 'Name is required' }} />
-                    {mode !== 'userProfile' ? <TextboxFieldWithLabel name="description" label="Description" size="small" /> : null}
+            <FlexBox width="100%">
+                <FlexBox gap={'20px'} flexDirection="column" padding="20px" width="100%">
+                    <TextboxFieldWithLabel name="name" disabled={mode === 'userProfile'} sx={{ width: '70%' }} label="Role Name" size="small" rules={{ required: 'Name is required' }} />
+                    {mode !== 'userProfile' ? <TextboxFieldWithLabel name="description" label="Description" sx={{ width: '70%' }} size="small" /> : null}
                     <Permissions onSubmit={onSubmit} mutationLoading={props.mutationLoading} mode={mode} />
                 </FlexBox>
             </FlexBox>

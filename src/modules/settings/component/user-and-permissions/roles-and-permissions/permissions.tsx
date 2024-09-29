@@ -175,14 +175,14 @@ export const Permissions = (props: PermissionsProps) => {
                     </FlexBox>
                 </FlexBox>
                 <VerticalSeparator height="calc(100% - 40px)" $margin="20px 10px" />
-                <FlexBox flexDirection="column" padding="20px" gap={'15px'}>
+                <FlexBox flexDirection="column" padding="20px" gap={'15px'} overflowX="auto" overflowY="auto" width="calc(100% - 320px)">
                     <Typography variant="h6">Permissions</Typography>
                     <FlexBox flexDirection="column" flexWrap="wrap" height="calc(100% - 43px)" style={{ columnGap: '35px' }}>
                         {modifiedPermissions.map((item) => <PermissionList {...item} key={item.permissionKey} />)}
                     </FlexBox>
                 </FlexBox>
             </FlexBox>
-            <FlexBox justifyContent="flex-end" gap={'20px'}>
+            <FlexBox justifyContent="flex-end" gap={'20px'} width='70%'>
                 {
                     mode === 'view' ?
                         <BackButton onClick={() => navigate(-1)}>Back</BackButton>
