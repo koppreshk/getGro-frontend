@@ -9,12 +9,12 @@ export const VerticalSeparator = styled.div<{ height?: string, $margin?: string 
   background-color: ${({ theme }) => theme.pallete.standardBorderColor};
 `;
 
-export const HorizontalSeparator = styled.div<{ $margin?: string }>`
+export const HorizontalSeparator = styled.div<{ $margin?: string; $backgroundColor?: string }>`
   width: 100%;
   height: 1px;
   box-sizing: border-box;
   margin: ${({ $margin }) => $margin ? $margin : 'unset'};
-  background-color: ${({ theme }) => theme.pallete.standardBorderColor};
+  background-color: ${({ theme, $backgroundColor }) => $backgroundColor ?? theme.pallete.standardBorderColor};
 `;
 
 export const CircularSeparator = styled.div`

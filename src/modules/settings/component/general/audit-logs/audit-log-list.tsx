@@ -48,6 +48,7 @@ function useColumns() {
             id: 'summary',
             header: () => 'Summary',
             cell: info => info.getValue(),
+            minSize: 300
         })
     ]
 

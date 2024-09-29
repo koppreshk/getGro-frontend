@@ -2,16 +2,18 @@ import { useCallback } from "react";
 import styled from "styled-components";
 import { PersonOutlineOutlined, DescriptionOutlined, ChevronRight, ChevronLeft, ConfirmationNumberOutlined } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material"
-import { FlexBox } from "lib/ui-ux";
+import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { useAppDispatch, useAppSelector, useFeature } from "lib/hooks";
 import { setShowHideTicketDetails } from "modules/tickets/storage";
 import ShopifyIcon from '../../../../../assets/svg/shopify-icon.svg?react';
+import React from "react";
 
 interface IMenuOption {
     title: string;
     id: MenuOptions;
     disabled?: boolean;
     hidden?: boolean;
+    renderSeparator?: boolean;
     iconComponent: () => JSX.Element;
 }
 
@@ -67,7 +69,8 @@ const useSideMenuOptions = () => {
             title: 'Order Details',
             id: MenuOptions.OrderDetails,
             iconComponent: () => <ShopifyIcon width="20px" height="20px" />,
-            hidden: !shopifyCustomerId
+            hidden: !shopifyCustomerId,
+            renderSeparator: true
         },
     ] as IMenuOption[];
 }
@@ -94,15 +97,30 @@ export const TicketSideMenu = (props: ITicketSideMenuProps) => {
         }
     }, [onExpandCollapse, onSetMenuOption, showHideTicketDetails])
 
+    const renderOption = (option: IMenuOption) => {
+        return (
+            <Tooltip title={option.title} arrow placement="left">
+                <IconWrapper $isSelected={selectedMenuOption === option.id} $isDisabled={option.disabled} onClick={() => onOptionClick(option)}>
+                    {option.iconComponent()}
+                </IconWrapper>
+            </Tooltip>
+        )
+    }
+
     return (
         <SideMenuWrapper flexDirection="column" gap="12px" justifyContent="space-between">
             <FlexBox flexDirection="column" gap="12px">
                 {sideMenuOptions.filter((item) => !item.hidden).map((option, index) => (
-                    <Tooltip key={index} title={option.title} arrow placement="left">
-                        <IconWrapper $isSelected={selectedMenuOption === option.id} $isDisabled={option.disabled} onClick={() => onOptionClick(option)}>
-                            {option.iconComponent()}
-                        </IconWrapper>
-                    </Tooltip>
+                    <React.Fragment key={index}>
+                        {
+                            option?.renderSeparator
+                                ? <FlexBox flexDirection="column" gap={'12px'}>
+                                    <HorizontalSeparator $backgroundColor="#e8eaed"/>
+                                    {renderOption(option)}
+                                </FlexBox>
+                                : renderOption(option)
+                        }
+                    </React.Fragment>
                 ))}
             </FlexBox>
             <FlexBox flexDirection="column" gap="12px">
@@ -112,6 +130,6 @@ export const TicketSideMenu = (props: ITicketSideMenuProps) => {
                     </IconButton>
                 </Tooltip>
             </FlexBox>
-        </SideMenuWrapper>
+        </SideMenuWrapper >
     )
 }
