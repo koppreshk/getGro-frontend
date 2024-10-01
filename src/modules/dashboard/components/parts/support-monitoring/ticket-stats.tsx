@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material"
-import { FlexBox } from "lib/ui-ux";
+import { CenteredCircularProgress, FlexBox } from "lib/ui-ux";
 import styled, { useTheme } from "styled-components";
 import { DateFilters } from "../tickets-monitor/date-filters";
 import { useState, useCallback } from "react";
@@ -17,7 +17,7 @@ const StyledContainer = styled(FlexBox)`
 
 export const TicketStats = () => {
     const [filterValue, setFilters] = useState('today');
-    const { data } = useFetchSupportMonitoringStatistics(filterValue);
+    const { data, isLoading } = useFetchSupportMonitoringStatistics(filterValue);
 
     const quickStats1 = [{
         name: 'Tickets Created',
@@ -55,14 +55,19 @@ export const TicketStats = () => {
                     <Typography variant="h5">Ticket Statistics</Typography>
                     <DateFilters onFilterChangeHandler={onFilterChangeHandler} filterValue={filterValue} dateFilterTypes={dateFilters} />
                 </FlexBox>
-                <FlexBox width="100%">
-                    <FlexBox gap="20px" width="40%" style={{ borderRight: `1px solid ${pallete.grayVariant1}` }}>
-                        <FlexBox flexDirection="column" gap="60px" width="50%">
-                            {quickStats1.map((item) => <QuickStats key={item.name} item={item} />)}
-                        </FlexBox>
-                        <FlexBox flexDirection="column" gap="60px" width="50%">
-                            {quickStats2.map((item) => <QuickStats key={item.name} item={item} />)}
-                        </FlexBox>
+                <FlexBox width="100%" style={{ minHeight: '340px' }}>
+                    <FlexBox gap="20px" width="45%" style={{ borderRight: `1px solid ${pallete.grayVariant1}` }}>
+                        {isLoading
+                            ? <CenteredCircularProgress />
+                            :
+                            <>
+                                <FlexBox flexDirection="column" gap="60px" width="50%">
+                                    {quickStats1.map((item) => <QuickStats key={item.name} item={item} />)}
+                                </FlexBox>
+                                <FlexBox flexDirection="column" gap="60px" width="50%">
+                                    {quickStats2.map((item) => <QuickStats key={item.name} item={item} />)}
+                                </FlexBox>
+                            </>}
                     </FlexBox>
                     <TicketsCreated filterValue={filterValue} />
                 </FlexBox>
@@ -94,7 +99,7 @@ const TicketsCreated = (props: { filterValue: string }) => {
             groupBy: 'status'
         }
     });
-    const { data: apidata } = useFetchSupportMonitoringTicketsCreated(form.watch('groupBy'), props.filterValue)
+    const { data: apidata, isLoading } = useFetchSupportMonitoringTicketsCreated(form.watch('groupBy'), props.filterValue)
 
     const data = {
         series: [{
@@ -123,12 +128,12 @@ const TicketsCreated = (props: { filterValue: string }) => {
 
     return (
         <FormProvider {...form}>
-            <FlexBox flexDirection="column" width="60%" padding="0px 0px 0px 40px">
+            <FlexBox flexDirection="column" width="55%" padding="0px 0px 0px 40px">
                 <FlexBox justifyContent="space-between">
                     <Typography variant="h6">Tickets Created</Typography>
                     <SelectField menuOptions={[{ key: 'status', value: 'Status' }, { key: 'priority', value: 'Priority' }, { key: 'source', value: 'Source' }]} name="groupBy" label="Group By" size="small" sx={{ width: '200px' }} />
                 </FlexBox>
-                <ReactApexChart options={data.options} series={data.series} type="bar" height={285} width={'100%'} />
+                {isLoading ? <CenteredCircularProgress /> : <ReactApexChart options={data.options} series={data.series} type="bar" height={285} width={'100%'} />}
             </FlexBox>
         </FormProvider>
     )
