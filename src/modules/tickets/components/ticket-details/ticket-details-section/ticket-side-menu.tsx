@@ -115,7 +115,7 @@ export const TicketSideMenu = (props: ITicketSideMenuProps) => {
                         {
                             option?.renderSeparator
                                 ? <FlexBox flexDirection="column" gap={'12px'}>
-                                    <HorizontalSeparator $backgroundColor="#e8eaed"/>
+                                    <HorizontalSeparator $backgroundColor="#bdbdbd"/>
                                     {renderOption(option)}
                                 </FlexBox>
                                 : renderOption(option)

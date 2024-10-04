@@ -114,7 +114,7 @@ const TicketDetails = (props: ITicketDetailsProps) => {
             </FlexBox>
             <TicketDetailsSectionRight flexDirection="column" gap="4px">
                 <FlexBox justifyContent="space-between">
-                    <Typography variant="h6">{customerName}</Typography>
+                    <Typography variant="h6" sx={{ textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: 'calc(100% - 125px)', textWrap: 'nowrap' }}>{customerName}</Typography>
                     <Typography variant="caption">{createdAt}</Typography>
                 </FlexBox>
                 <StyledTypography variant="body2" title={description}>{description}</StyledTypography>
