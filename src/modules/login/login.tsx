@@ -1,7 +1,7 @@
 import { ArrowForwardRounded } from "@mui/icons-material";
 import { Box, Button, CircularProgress, FormControlLabel, Grid, Link, Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 import { useAuth } from "./hooks/use-auth";
 import { PasswordField, TextboxField } from "lib/form-fields";
@@ -11,6 +11,7 @@ import GetGroLogoImg from '../../assets/png/getGroLogoWname.png';
 import { CheckboxField } from "lib/form-fields/checkbox-field";
 import { useNotifications } from "lib";
 import { LoginResult, useLoginUser } from "./apis";
+import ReCAPTCHA from 'react-google-recaptcha';
 
 interface ILoginFields {
     email: string;
@@ -42,8 +43,18 @@ const LoginForm = () => {
     const { handleSubmit } = useFormContext<ILoginFields>();
     const { showNotification } = useNotifications();
     const { isLoading, mutateAsync } = useLoginUser();
+    const [, setIsVerified] = useState(false);
+
+    const onRecaptchaChange = (value: string | null) => {
+        console.log("Captcha value:", value);
+        setIsVerified(!!value); // set to true if reCAPTCHA token is received
+    };
 
     const onSignIn = useCallback((data: ILoginFields) => {
+        // if (!isVerified) {
+        //     alert("Please complete the reCAPTCHA.");
+        //     return;
+        // }
         mutateAsync({ email: data.email, password: data.password })
             .then((res: LoginResult) => {
                 login({ authToken: res.authToken, email: data.email, rememberMe: data.rememberMe, role: res.role, name: res.name });
@@ -73,6 +84,12 @@ const LoginForm = () => {
                     <Grid item md={12}>
                         <Button onClick={handleSubmit(onSignIn)} variant="contained" fullWidth size="large" type="submit" disabled={isLoading} endIcon={isLoading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : <ArrowForwardRounded />}>Sign in</Button>
                     </Grid>
+                </Grid>
+                <Grid>
+                    <ReCAPTCHA
+                        sitekey="6LeI4FcqAAAAAMz0zR7bddwcBvG9bPsMad0j4l6v" // replace with your site key
+                        onChange={onRecaptchaChange}
+                    />
                 </Grid>
                 <Grid item md={12} marginTop='20px'>
                     <FlexBox justifyContent="space-between" alignItems="center">
