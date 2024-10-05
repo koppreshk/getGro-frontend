@@ -7,6 +7,7 @@ export interface Employee {
     firstName: string;
     lastName: string | null;
     id: number;
+    email?: string;
 }
 
 export interface Queue {
