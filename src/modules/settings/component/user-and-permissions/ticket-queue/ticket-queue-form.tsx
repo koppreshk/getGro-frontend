@@ -1,10 +1,11 @@
 import React, { memo, useMemo } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import styled from "styled-components";
-import { Grid, Button } from "@mui/material";
-import { TextboxField, AutocompleteField } from "lib/form-fields";
+import { Grid, Button, Checkbox, Typography } from "@mui/material";
+import { TextboxField, AutocompleteField, AutoCompleteRenderOptionProps } from "lib/form-fields";
 import { CancelButton, FlexBox, LoadingButton } from "lib/ui-ux";
 import { Employee } from "modules/settings/apis/queues";
+import { CheckBoxOutlineBlank, CheckBox } from "@mui/icons-material";
 
 const StlyedFlexBox = styled(FlexBox)`
     margin-top: 20px;
@@ -43,6 +44,23 @@ export const TicketQueueForm = memo((props: ITicketQueueFormProps) => {
         onFormSubmitHandler(formvalues);
     }, [onFormSubmitHandler])
 
+    const renderOption: AutoCompleteRenderOptionProps = (optionprops, option, state) => {
+        return (
+            <li {...optionprops}>
+                <Checkbox
+                    icon={<CheckBoxOutlineBlank fontSize="small" />}
+                    checkedIcon={<CheckBox fontSize="small" />}
+                    style={{ marginRight: 8 }}
+                    checked={state.selected}
+                />
+                <FlexBox flexDirection="column">
+                    <Typography variant="h6">{option.value.split(';')[0]}</Typography>
+                    <Typography variant="body3">{option.value.split(';')[1]}</Typography>
+                </FlexBox>
+            </li>
+        )
+    }
+
     return (
         <FormProvider {...methods}>
             <FlexBox padding="20px" width="100%" height="calc(100% - 77px)" flexDirection="column" justifyContent="space-between">
@@ -51,8 +69,12 @@ export const TicketQueueForm = memo((props: ITicketQueueFormProps) => {
                         <TextboxField name="queueName" label="Queue Name" fullWidth rules={{ required: 'Queue name is required' }} />
                     </Grid>
                     <Grid item xs={12}>
-                        <AutocompleteField label="Select Employee" name="assignedEmployees"
-                            options={employees.map((item) => ({ key: item.id.toString(), value: `${item.firstName} ${item.lastName ?? ''}` }))}
+                        <AutocompleteField
+                            label="Select Employee"
+                            name="assignedEmployees"
+                            getOptionLabel={(option) => option.value.split(';')[0]}
+                            renderOption={renderOption}
+                            options={employees.map((item) => ({ key: item.id.toString(), value: [`${item.firstName} ${item.lastName ?? ''}`, item.email ?? 'absc@gmail.com'].join(';') }))}
                             placeholder="Select Employee" />
                     </Grid>
                 </Grid>
