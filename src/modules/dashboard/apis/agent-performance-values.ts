@@ -5,6 +5,7 @@ import { useServiceClient } from "lib";
 import { DashboardEndPoint, DashboardQueryKeys } from "./api-enums";
 import { useFormContext } from "react-hook-form";
 import { IAgentPerformanceFormFields } from "../components/parts/agent-performnace/agent-performance";
+import { DateTime } from "luxon";
 
 export interface IAgentPerformance {
     queues: Queue[]
@@ -91,8 +92,8 @@ export interface SecondResponse {
 
 export const useFetchAgentPerformanceData = (dateRange: DateRange) => {
     const { getData } = useServiceClient();
-    const parsedFromDate = dateRange.startDate!.toISOString();
-    const parsedToDate = dateRange.endDate!.toISOString();
+    const parsedFromDate = DateTime.fromISO(dateRange.startDate!.toISOString()).toFormat('yyyy-MM-dd');
+    const parsedToDate = DateTime.fromISO(dateRange.endDate!.toISOString()).toFormat('yyyy-MM-dd');
     const { watch } = useFormContext<IAgentPerformanceFormFields>();
     const { filterType, filterValue } = watch();
 
