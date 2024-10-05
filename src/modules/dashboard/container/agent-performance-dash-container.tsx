@@ -1,10 +1,10 @@
-import { CenteredCircularProgress } from "lib/ui-ux";
+import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
 import { useFetchDropdownValues } from "../apis";
 import { AgentPerformance, IAgentPerformanceFormFields } from "../components/parts/agent-performnace/agent-performance"
 import { useForm, FormProvider } from "react-hook-form";
 
 export const AgentPerformanceDashContainer = () => {
-    const { data, isLoading } = useFetchDropdownValues();
+    const { data, isLoading, error } = useFetchDropdownValues();
 
     const form = useForm<IAgentPerformanceFormFields>({
         values: {
@@ -17,9 +17,13 @@ export const AgentPerformanceDashContainer = () => {
         return <CenteredCircularProgress />
     }
 
-    return (
-        <FormProvider {...form}>
-            <AgentPerformance data={data!} />
-        </FormProvider>
-    )
+    if (data) {
+        return (
+            <FormProvider {...form}>
+                <AgentPerformance data={data!} />
+            </FormProvider>
+        )
+    }
+
+    return <ErrorMessage statusCode={error?.message} />
 }

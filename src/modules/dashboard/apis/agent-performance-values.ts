@@ -110,7 +110,7 @@ export const useFetchDropdownValues = () => {
     const { getData } = useServiceClient();
     const fetchAllAgentPerformanceData = React.useCallback(() => getData(`${DashboardEndPoint.FETCH_DROPDOWN_VALUES}`).then((res) => res.json()), [getData])
 
-    return useQuery<IAgentPerformance>({
+    return useQuery<IAgentPerformance, { message: string }>({
         queryKey: [DashboardQueryKeys.FETCH_DROPDOWN_VALUES],
         queryFn: fetchAllAgentPerformanceData
     });
