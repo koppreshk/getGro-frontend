@@ -117,9 +117,9 @@ export const TicketConversationLayout = () => {
                 aria-label="styled tabs example"
                 sx={{ minHeight: 'unset' }}
             >
-                <StyledTab label={t("modules.tickets.ticketDetails.interactions.conversations.label")} />
-                <StyledTab label={t("modules.tickets.ticketDetails.interactions.links.label")} />
-                <StyledTab label={t("modules.tickets.ticketDetails.interactions.history.label")} />
+                <StyledTab label={t("conversations_label")} />
+                <StyledTab label={t("links_label")} />
+                <StyledTab label={t("history_label")} />
             </StyledTabs>
             {/* <Tabs value={value} onChange={handleChange} variant="fullWidth" aria-label="ticket-tabs" sx={{ minHeight: 'unset' }}>
                 <StyledTab label="Conversations" />

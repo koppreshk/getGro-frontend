@@ -25,10 +25,10 @@ export const EmailPopoverMetadata = (props: IEmailPopoverMetadataProps) => {
     };
 
     const popoverData = [
-        { name: t('modules.tickets.ticketDetails.interactions.conversations.email.from'), value: fromEmail },
-        { name: t('modules.tickets.ticketDetails.interactions.conversations.email.to'), value: toEmail },
-        { name: t('modules.tickets.ticketDetails.interactions.conversations.email.subject'), value: subject },
-        { name: t('modules.tickets.ticketDetails.interactions.conversations.email.date'), value: createdAt }];
+        { name: t('from'), value: fromEmail },
+        { name: t('to'), value: toEmail },
+        { name: t('subject'), value: subject },
+        { name: t('date'), value: createdAt }];
 
     return (
         <div>

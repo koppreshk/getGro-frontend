@@ -53,50 +53,50 @@ const useViewOptions = () => {
     const res = {
         primaryOptions: [
             {
-                name: t('modules.tickets.ticketViews.allTickets'),
+                name: t('all_tickets'),
                 primaryKey: 'all-tickets',
                 route: 'all-tickets'
             },
             {
-                name: t('modules.tickets.ticketViews.allPending'),
+                name: t('all_pending'),
                 primaryKey: 'all-pending',
                 route: 'all-pending'
             },
             {
-                name: t('modules.tickets.ticketViews.allResolved'),
+                name: t('all_resolved'),
                 primaryKey: 'all-resolved',
                 route: 'all-resolved'
             },
             {
-                name: t('modules.tickets.ticketViews.allClosed'),
+                name: t('all_closed'),
                 primaryKey: 'all-closed',
                 route: 'all-closed'
             },
             {
-                name: t('modules.tickets.ticketViews.myPending'),
+                name: t('my_pending'),
                 primaryKey: 'my-pending',
                 route: 'my-pending'
             },
             {
-                name: t('modules.tickets.ticketViews.myResolved'),
+                name: t('my_resolved'),
                 primaryKey: 'my-resolved',
                 route: 'my-resolved'
             },
             {
-                name: t('modules.tickets.ticketViews.myClosed'),
+                name: t('my_closed'),
                 primaryKey: 'my-closed',
                 route: 'my-closed'
             }
         ],
         secondaryOptions: [
             {
-                name: t('modules.tickets.ticketViews.deletedTickets'),
+                name: t('deleted_tickets'),
                 primaryKey: 'deleted-tickets',
                 route: 'deleted-tickets',
                 renderIcon: () => <DeleteOutlined />
             },
             {
-                name: t('modules.tickets.ticketViews.spamTickets'),
+                name: t('spam_tickets'),
                 primaryKey: 'spam-tickets',
                 route: 'spam-tickets',
                 renderIcon: () => <ReportOutlined />

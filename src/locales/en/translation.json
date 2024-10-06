@@ -5,47 +5,33 @@
     "support_monitoring": "Support Monitoring",
     "agent_performance": "Agent Performance",
     "sla_dashboard": "SLA Dashboard",
+    "all_tickets": "All Tickets",
+    "all_pending": "All Pending",
+    "all_resolved": "All Resolved",
+    "all_closed": "All Closed",
+    "my_pending": "My Pending",
+    "my_resolved": "My Resolved",
+    "my_closed": "My Closed",
+    "deleted_tickets": "Deleted Tickets",
+    "spam_tickets": "Spam Tickets",
+    "interactions_header": "Interactions",
+    "interactions_sub_heading": "with {{customerName}} via",
+    "conversations_label": "Conversations",
+    "reply": "Reply",
+    "forward": "Forward",
+    "collapse_all": "Collapse All",
+    "expand_all": "Expand All",
+    "print_all": "Print All",
+    "from": "From",
+    "to": "To",
+    "subject": "Subject",
+    "date": "Date",
+    "upload_file": "Upload file(s)",
+    "insertTemplete": "Insert Template",
+    "links_label": "Links",
+    "history_label": "History",
     "modules": {
         "tickets": {
-            "ticketViews": {
-                "allTickets": "All Tickets",
-                "allPending": "All Pending",
-                "allResolved": "All Resolved",
-                "allClosed": "All Closed",
-                "myPending": "My Pending",
-                "myResolved": "My Resolved",
-                "myClosed": "My Closed",
-                "deletedTickets": "Deleted Tickets",
-                "spamTickets": "Spam Tickets"
-            },
-            "ticketDetails": {
-                "interactions": {
-                    "header": "Interactions",
-                    "subHeading": "with {{customerName}} via",
-                    "conversations": {
-                        "label": "Conversations",
-                        "email": {
-                            "reply": "Reply",
-                            "forward": "Forward",
-                            "collapseAll": "Collapse All",
-                            "expandAll": "Expand All",
-                            "printAll": "Print All",
-                            "from": "From",
-                            "to": "To",
-                            "subject": "Subject",
-                            "date": "Date",
-                            "uploadFile": "Upload file(s)",
-                            "insertTemplete": "Insert Template"
-                        }
-                    },
-                    "links": {
-                        "label": "Links"
-                    },
-                    "history": {
-                        "label": "History"
-                    }
-                }
-            },
             "addTicket": {
                 "headerLabel": "Add Email Ticket",
                 "requesterEmail": "Requester Email",

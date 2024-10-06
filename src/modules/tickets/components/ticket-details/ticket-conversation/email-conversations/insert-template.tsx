@@ -107,7 +107,7 @@ export const InsertTemplate = (props: { editorType: string }) => {
 
     return (
         <>
-            <IconButton onClick={handleClick} title={t('modules.tickets.ticketDetails.interactions.conversations.email.insertTemplate')}>
+            <IconButton onClick={handleClick} title={t('insert_template')}>
                 <InsertCommentOutlinedIcon />
             </IconButton>
             <Dialog
@@ -129,7 +129,7 @@ export const InsertTemplate = (props: { editorType: string }) => {
                         <CustomIconButton tooltipProps={{ title: 'Next template' }} iconComponent={<ChevronRightOutlined />} onClick={onNextClick} disabled={selectedTemplateIndex + 1 === templates.length} />
                     </FlexBox>
                     <Button variant='contained' endIcon={<PostAddOutlined />} onClick={setEditorValue}>
-                        Add Template
+                        {t('insert_template')}
                     </Button>
                 </DialogActions>
             </Dialog>

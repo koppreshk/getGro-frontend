@@ -17,13 +17,13 @@ export const EmailThreadOptions = (props: IEmailThreadOptionsProps) => {
 
     const threadOptions = useMemo(() => ([
         {
-            title: t('modules.tickets.ticketDetails.interactions.conversations.email.reply'),
+            title: t('reply'),
             onClick: onReplyClick,
             renderIcon: () => <TurnLeft />,
             hidden: !showReplyTicket
         },
         {
-            title: t('modules.tickets.ticketDetails.interactions.conversations.email.forward'),
+            title: t('forward'),
             onClick: onForwardClick,
             renderIcon: () => <TurnRight />
         }
