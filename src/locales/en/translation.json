@@ -30,30 +30,20 @@
     "insertTemplete": "Insert Template",
     "links_label": "Links",
     "history_label": "History",
+    "add_email_ticket": "Add Email Ticket",
+    "requester_email": "Requester Email",
+    "description": "Description",
+    "assignee": "Assignee",
+    "auto_assign": "Auto Assign",
+    "select_agent": "Select Agent",
+    "subject_validation": "Subject is required",
+    "requester_email_validation": "Requester Email is required",
+    "description_validation": "Description is required",
+    "create_ticket_success": "Created a new ticket successfully",
+    "create_ticket_error": "Failed to create a new ticket",
     "modules": {
         "tickets": {
-            "addTicket": {
-                "headerLabel": "Add Email Ticket",
-                "requesterEmail": "Requester Email",
-                "subject": "Subject",
-                "description": "Description",
-                "assignee": "Assignee",
-                "assigneeOptions": {
-                    "autoAssign": "Auto Assign",
-                    "selectAgent": "Select Agent"
-                },
-                "messages": {
-                    "validation": {
-                        "subject": "Subject is required",
-                        "requesterEmail": "Requester Email is required",
-                        "description": "Description is required"
-                    },
-                    "notification": {
-                        "createTicketSuccess": "Created a new ticket successfully",
-                        "createTicketError": "Failed to create a new ticket"
-                    }
-                }
-            }
+            "addTicket": {}
         },
         "configurations": {
             "moduleHeading": "Configurations",
