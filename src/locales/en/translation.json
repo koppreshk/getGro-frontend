@@ -1,15 +1,11 @@
 {
+    "hi": "Hi",
+    "welcome_back": "Welcome back!",
+    "module_heading": "Dashboards",
+    "support_monitoring": "Support Monitoring",
+    "agent_performance": "Agent Performance",
+    "sla_dashboard": "SLA Dashboard",
     "modules": {
-        "dashboard": {
-            "hi": "Hi",
-            "welcomeBack": "Welcome back!",
-            "moduleHeading": "Dashboards",
-            "sectionHeadings": {
-                "supportMonitoring": "Support Monitoring",
-                "agentPerformance": "Agent Performance",
-                "slaDashboard": "SLA Dashboard"
-            }
-        },
         "tickets": {
             "ticketViews": {
                 "allTickets": "All Tickets",
