@@ -21,7 +21,7 @@ const AddNewTicketStatus = (props: IAddNewTicketStatusProps) => {
     return (
         <DrawerExtended
             width="500px"
-            header={t('modules.configurations.configurationOptions.tickets.ticketStatus.addLabel')}
+            header={t('add_ticket_label')}
             anchor="right"
             open={openAddStatusDrawer}
             onRenderContent={() => (
@@ -52,9 +52,9 @@ export const TicketStatusLayout = (props: ITicketStatusLayoutProps) => {
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
                     <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
-                    <Typography variant="h5">{t('modules.configurations.configurationOptions.tickets.ticketStatus.label')}</Typography>
+                    <Typography variant="h5">{t('add_ticket_label')}</Typography>
                 </FlexBox>
-                <Button variant="contained" onClick={toggleAddStatusDrawer} startIcon={<AddCircleOutline />}>{t('modules.configurations.configurationOptions.tickets.ticketStatus.addLabel')}</Button>
+                <Button variant="contained" onClick={toggleAddStatusDrawer} startIcon={<AddCircleOutline />}>{t('add_ticket_label')}</Button>
                 <AddNewTicketStatus openAddStatusDrawer={openAddStatusDrawer} toggleAddStatusDrawer={toggleAddStatusDrawer} statusData={props.data} />
             </FlexBox>
             <TicketStatusList isLoading={props.isLoading} statusData={props.data} />

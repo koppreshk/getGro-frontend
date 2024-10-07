@@ -26,7 +26,7 @@ export const EditStatus = (props: EditStatusProps) => {
                 open={showDrawer}
                 anchor="right"
                 width="500px"
-                header={t('modules.configurations.configurationOptions.tickets.ticketStatus.editLabel')}
+                header={t('edit_ticket_label')}
                 onRenderContent={() => (
                     <EditTicketStatusContainer onSelectRowMetaData={selectedData} toggleDrawer={toggleDrawer} statusData={statusData} />
                 )}

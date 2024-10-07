@@ -34,16 +34,16 @@ const useConfigurations = () => {
 
     return [
         {
-            categoryName: t("modules.configurations.configurationOptions.tickets.primaryLabel"),
+            categoryName: t("tickets"),
             categoryIcon: () => <TaskOutlined color="primary" />,
             categoryOptions: [
                 {
                     route: "ticket-status",
-                    label: t("modules.configurations.configurationOptions.tickets.ticketStatus.label"),
+                    label: t("ticket_status"),
                     uniqueKey: "ticket-status",
                     catOptionIcon: () => <AssignmentTurnedInOutlined />,
                     hidden: !isFeatureAccessible('manage_ticket_status'),
-                    description: t("modules.configurations.configurationOptions.tickets.ticketStatus.shortDescription")
+                    description: t("ticket_status_short_description")
                 },
                 {
                     route: "tags",

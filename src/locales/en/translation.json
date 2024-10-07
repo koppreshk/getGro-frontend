@@ -1,7 +1,7 @@
 {
     "hi": "Hi",
     "welcome_back": "Welcome back!",
-    "module_heading": "Dashboards",
+    "dashboards_module_heading": "Dashboards",
     "support_monitoring": "Support Monitoring",
     "agent_performance": "Agent Performance",
     "sla_dashboard": "SLA Dashboard",
@@ -41,44 +41,23 @@
     "description_validation": "Description is required",
     "create_ticket_success": "Created a new ticket successfully",
     "create_ticket_error": "Failed to create a new ticket",
+    "configurations_module_heading": "Configurations",
+    "tickets": "Tickets",
+    "ticket_status": "Ticket Status",
+    "ticket_status_short_description": "Define your ticket statuses to streamline and optimize the routing of support tickets",
+    "add_ticket_label": "Add Ticket Status",
+    "edit_ticket_label": "View or Edit Ticket Status",
+    "status_id": "Status ID",
+    "status_name": "Status Name",
+    "actions": "Actions",
+    "name": "Name",
     "modules": {
-        "tickets": {
-            "addTicket": {}
-        },
         "configurations": {
-            "moduleHeading": "Configurations",
             "configurationOptions": {
                 "tickets": {
-                    "primaryLabel": "Tickets",
-                    "ticketStatus": {
-                        "label": "Ticket Status",
-                        "shortDescription": "Define your ticket statuses to streamline and optimize the routing of support tickets",
-                        "longDescription": "",
-                        "addLabel": "Add Ticket Status",
-                        "editLabel": "View or Edit Ticket Status",
-                        "grid": {
-                            "statusId": "Status ID",
-                            "statusName": "Status Name",
-                            "actions": "Actions"
-                        },
-                        "formLabel": {
-                            "name": "Name"
-                        },
-                        "messages": {
-                            "validation": {
-                                "subject": "Subject is required",
-                                "requesterEmail": "Requester Email is required",
-                                "description": "Description is required"
-                            },
-                            "notification": {
-                                "createTicketSuccess": "Created a new ticket successfully",
-                                "createTicketError": "Failed to create a new ticket"
-                            }
-                        }
-                    },
                     "tags": {
                         "label": "Tags",
-                        "shortDescription": "Tag your tickets to enhance organization and improve reporting.",
+                        "short_description": "Tag your tickets to enhance organization and improve reporting.",
                         "longDescription": "Tags are labels that you can assign to tickets. They help with categorizing, filtering, and automating processes.",
                         "addLabel": "Create Tags",
                         "grid": {
@@ -92,7 +71,7 @@
                     },
                     "templates": {
                         "label": "Templates",
-                        "shortDescription": "Maintain and organize a library of predefined templates for responding to tickets.",
+                        "short_description": "Maintain and organize a library of predefined templates for responding to tickets.",
                         "longDescription": "These are a set of prewritten response templates for frequently asked questions in the support tickets",
                         "addLabel": "Add Templates",
                         "grid": {},
@@ -107,18 +86,18 @@
                     "primaryLabel": "Channels",
                     "facebook": {
                         "label": "Facebook",
-                        "shortDescription": "Set up your Facebook integration."
+                        "short_description": "Set up your Facebook integration."
                     },
                     "email": {
                         "label": "Email",
-                        "shortDescription": "Configure support email inboxes to automate ticket creation and management."
+                        "short_description": "Configure support email inboxes to automate ticket creation and management."
                     }
                 },
                 "ticketAutomation": {
                     "primaryLabel": "Ticket Automation",
                     "ticketEscalation": {
                         "label": "Ticket Escalation",
-                        "shortDescription": "Simplify ticket handling: Use custom rules to automatically categorize and route tickets.",
+                        "short_description": "Simplify ticket handling: Use custom rules to automatically categorize and route tickets.",
                         "longDescription": "Service Level Agreements (SLAs) define the response and resolution times for support tickets. You can configure each SLA to function based on calendar hours (24/7) or specific business hours. When a ticket is created or updated, the system applies the first applicable SLA from the defined order.",
                         "addLabel": "Add Escalation",
                         "grid": {
@@ -187,7 +166,7 @@
                     },
                     "autoAssignments": {
                         "label": "Auto Assignments",
-                        "shortDescription": "Establish automated rules to assign tickets to agents efficiently",
+                        "short_description": "Establish automated rules to assign tickets to agents efficiently",
                         "addLabel": "Add New Rule",
                         "grid": {
                             "ruleName": "Add New Rule",
@@ -230,7 +209,7 @@
                     },
                     "createTicketTriggers": {
                         "label": "Create Ticket Triggers",
-                        "shortDescription": "Configure automation rules to trigger actions automatically when a ticket is created",
+                        "short_description": "Configure automation rules to trigger actions automatically when a ticket is created",
                         "addConditions": "Add Condition",
                         "grid": {
                             "ruleName": "Add New Rule",
@@ -264,7 +243,7 @@
                     },
                     "updateTicketTriggers": {
                         "label": "Update Ticket Triggers",
-                        "shortDescription": "Configure automation rules to trigger actions whenever a ticket is updated.",
+                        "short_description": "Configure automation rules to trigger actions whenever a ticket is updated.",
                         "addConditions": "Add Condition",
                         "grid": {
                             "ruleName": "Add New Rule",
@@ -301,37 +280,37 @@
                     "primaryLabel": "Users and Permissions",
                     "agents": {
                         "label": "Agents",
-                        "shortDescription": "Modify, add, or deactivate an agent as needed."
+                        "short_description": "Modify, add, or deactivate an agent as needed."
                     },
                     "queues": {
                         "label": "Queues (Groups)",
-                        "shortDescription": "Organize agents by expertise for effective ticket handling"
+                        "short_description": "Organize agents by expertise for effective ticket handling"
                     },
                     "rolesAndPermissions": {
                         "label": "Roles and Permissions",
-                        "shortDescription": "Establish custom roles for agents with tailored permissions to meet your needs."
+                        "short_description": "Establish custom roles for agents with tailored permissions to meet your needs."
                     },
                     "agentAvailabilityStatus": {
                         "label": "Agent Availability Status",
-                        "shortDescription": "Manage an agent's availability by adding, editing, or removing their status."
+                        "short_description": "Manage an agent's availability by adding, editing, or removing their status."
                     }
                 },
                 "general": {
                     "primaryLabel": "General",
                     "satisfactionSurvey": {
                         "label": "Satisfaction Survey",
-                        "shortDescription": "Implement a customer satisfaction survey for each ticket to gather feedback and measure service quality."
+                        "short_description": "Implement a customer satisfaction survey for each ticket to gather feedback and measure service quality."
                     },
                     "auditLogs": {
                         "label": "Audit Logs",
-                        "shortDescription": "View activity and access logs with regards to tickets"
+                        "short_description": "View activity and access logs with regards to tickets"
                     }
                 },
                 "apps": {
                     "primaryLabel": "Apps",
                     "marketplace": {
                         "label": "Marketplace",
-                        "shortDescription": "Handle and integrate external applications seamlessly."
+                        "short_description": "Handle and integrate external applications seamlessly."
                     }
                 }
             }

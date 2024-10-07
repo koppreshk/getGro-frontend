@@ -17,18 +17,18 @@ const useColumns = (statusData: IGenericResponse[]) => {
     const columns = [
         columnHelper.accessor("id", {
             id: 'id',
-            header: () => t('modules.configurations.configurationOptions.tickets.ticketStatus.grid.statusId'),
+            header: () => t('status_id'),
             cell: info => info.getValue(),
         }),
         columnHelper.accessor("name", {
             id: 'name',
-            header: () =>t('modules.configurations.configurationOptions.tickets.ticketStatus.grid.statusName'),
+            header: () =>t('name'),
             cell: info => info.getValue(),
             minSize: 300
         }),
         columnHelper.display({
             id: 'actions',
-            header: () => t('modules.configurations.configurationOptions.tickets.ticketStatus.grid.actions'),
+            header: () => t('actions'),
             cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
