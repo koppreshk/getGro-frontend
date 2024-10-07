@@ -51,24 +51,19 @@
     "status_name": "Status Name",
     "actions": "Actions",
     "name": "Name",
+    "tags": "Tags",
+    "tags_short_description": "Tag your tickets to enhance organization and improve reporting.",
+    "tags_long_description": "Tags are labels that you can assign to tickets. They help with categorizing, filtering, and automating processes.",
+    "create_tags": "Create Tags",
+    "tickets_associated": "Tickets Associated",
+    "tags_helptext": "Add tags by pressing enter key and then save",
+    "tags_create_success": "Successfully created Tags",
+    "tags_create_error": "Failed to create tags",
+    "tags_exist_validation": "One or more tags already exists, please remove and continue",
     "modules": {
         "configurations": {
             "configurationOptions": {
                 "tickets": {
-                    "tags": {
-                        "label": "Tags",
-                        "short_description": "Tag your tickets to enhance organization and improve reporting.",
-                        "longDescription": "Tags are labels that you can assign to tickets. They help with categorizing, filtering, and automating processes.",
-                        "addLabel": "Create Tags",
-                        "grid": {
-                            "name": "Name",
-                            "ticketAssociated": "Ticket Associated",
-                            "actions": "Actions"
-                        },
-                        "formLabel": {
-                            "name": "Name"
-                        }
-                    },
                     "templates": {
                         "label": "Templates",
                         "short_description": "Maintain and organize a library of predefined templates for responding to tickets.",

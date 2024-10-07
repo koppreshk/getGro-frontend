@@ -5,6 +5,7 @@ import { TagInputField } from "lib/form-fields";
 import { FlexBox } from "lib/ui-ux";
 import { ITag, useCreateTags } from "modules/settings/apis/tags";
 import { FormProvider, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 interface ICreateTagProps {
@@ -31,20 +32,21 @@ export const CreateTag = (props: ICreateTagProps) => {
     const form = useForm<IFormFields>({
         mode: 'onChange'
     });
+    const { t } = useTranslation();
 
     const onCreateTagSubmit = (formData: IFormFields) => {
         mutateAsync({
             tags: formData.createdTags
         })
-            .then(() => showNotification({ message: 'Successfully created Tags', type: 'success' }))
-            .catch(() => showNotification({ message: 'Failed to create tags', type: 'error' }))
+            .then(() => showNotification({ message: t('tags_create_success'), type: 'success' }))
+            .catch(() => showNotification({ message: t('tags_create_error'), type: 'error' }))
             .finally(() => handleClose())
     }
 
     const validateInput = (values: string[]) => {
         const someTagExists = createdTags?.some((item) => values.includes(item.name));
         if (someTagExists) {
-            return 'One or more tags already exists, please remove and continue'
+            return t('tags_exist_validation')
         }
     }
 
@@ -58,7 +60,7 @@ export const CreateTag = (props: ICreateTagProps) => {
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
-                    <Typography variant="h5">Create Tags</Typography>
+                    <Typography variant="h5">{t('create_tags')}</Typography>
                 </DialogTitle>
                 <DialogContent >
                     <FlexBox gap={'15px'} flexDirection="column">
@@ -71,7 +73,7 @@ export const CreateTag = (props: ICreateTagProps) => {
                                 placeholder="Add your tags here..."
                                 rules={{ validate: validateInput }} />
                         </div>
-                        <Typography variant="body3"><b>Note:</b> Add tags by pressing enter key and then save</Typography>
+                        <Typography variant="body3"><b>Note:</b> {t('tags_helptext')}</Typography>
                     </FlexBox>
                 </DialogContent>
                 <DialogActions>

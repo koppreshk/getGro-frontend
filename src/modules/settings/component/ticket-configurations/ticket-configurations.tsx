@@ -47,11 +47,11 @@ const useConfigurations = () => {
                 },
                 {
                     route: "tags",
-                    label: t("modules.configurations.configurationOptions.tickets.tags.label"),
+                    label: t("tags"),
                     uniqueKey: "tags",
                     catOptionIcon: () => <SellOutlined />,
                     hidden: !isFeatureAccessible('manage_tags'),
-                    description: t("modules.configurations.configurationOptions.tickets.tags.shortDescription")
+                    description: t("tags_short_description")
                 },
                 {
                     route: "templates",
