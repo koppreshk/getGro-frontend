@@ -55,32 +55,32 @@ const useConfigurations = () => {
                 },
                 {
                     route: "templates",
-                    label: t("modules.configurations.configurationOptions.tickets.templates.label"),
+                    label: t("templates"),
                     uniqueKey: "templates",
                     catOptionIcon: () => <AddCommentOutlined />,
-                    description: t("modules.configurations.configurationOptions.tickets.templates.shortDescription")
+                    description: t("templates_short_description")
                 }
             ]
         },
         {
-            categoryName: t("modules.configurations.configurationOptions.channels.primaryLabel"),
+            categoryName: t("channels"),
             categoryIcon: () => <Tag color="primary" />,
             categoryOptions: [
                 {
-                    label: t("modules.configurations.configurationOptions.channels.facebook.label"),
+                    label: t("facebook"),
                     route: 'facebook',
                     uniqueKey: 'facebook',
                     catOptionIcon: () => <Facebook />,
                     hidden: true,
-                    description: t("modules.configurations.configurationOptions.channels.facebook.shortDescription")
+                    description: t("facebook_short_description")
                 },
                 {
-                    label: t("modules.configurations.configurationOptions.channels.email.label"),
+                    label: t("email"),
                     route: 'email',
                     uniqueKey: 'email',
                     catOptionIcon: () => <Email />,
                     hidden: !isFeatureAccessible('manage_email'),
-                    description: t("modules.configurations.configurationOptions.channels.email.shortDescription")
+                    description: t("email_short_description")
                 }
             ]
         },

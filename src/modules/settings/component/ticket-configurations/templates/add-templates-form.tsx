@@ -6,6 +6,7 @@ import { Button, Grid, Typography } from "@mui/material";
 import { RadioGroupField, RichTextEditorField, TextboxFieldWithLabel } from "lib/form-fields";
 import { IGenericResponse } from "modules/settings/apis/templates/types";
 import { ITemplatesFormFields } from "modules/settings/containers/templates";
+import { useTranslation } from "react-i18next";
 
 interface ITemplatesFormProps {
     mode: 'create' | 'edit';
@@ -35,6 +36,7 @@ export const StyledRichTextEditor = styled(RichTextEditorField)`
 export const TemplatesForm = (props: ITemplatesFormProps) => {
     const { mode, defaultValues, mutationLoading, statusData } = props;
     const isInEditMode = useMemo(() => mode === 'edit', [mode]);
+    const { t } = useTranslation();
 
     const methods = useForm<ITemplatesFormFields>({
         defaultValues: defaultValues ?? {
@@ -64,11 +66,11 @@ export const TemplatesForm = (props: ITemplatesFormProps) => {
                         <TextboxFieldWithLabel name="name" label="Title" fullWidth rules={{ required: 'Title is required', validate: validateTitle }} />
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography variant="h6" sx={{ mb: '5px' }}>Description</Typography>
+                        <Typography variant="h6" sx={{ mb: '5px' }}>{t('description')}</Typography>
                         <StyledRichTextEditor name={`template`} disableAutoFocus />
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography variant="h6" sx={{ mb: '5px' }}>Access Scope</Typography>
+                        <Typography variant="h6" sx={{ mb: '5px' }}>{t('access_scope')}</Typography>
                         <RadioGroupField
                             name="accessScope"
                             sx={{ gap: '10px' }}
