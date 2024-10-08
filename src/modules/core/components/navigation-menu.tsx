@@ -3,7 +3,7 @@ import { Link, useLocation, useSearchParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { FlexBox } from "lib/ui-ux";
 import { Popover, Tooltip, Typography, Badge } from "@mui/material";
-import { EventOutlined, GroupOutlined, InsertChartOutlined, SettingsOutlined, TaskOutlined } from "@mui/icons-material";
+import { EventOutlined, GroupOutlined, InsertChartOutlined, SettingsOutlined, TaskOutlined, Article } from "@mui/icons-material";
 import { useModule } from "lib/hooks";
 import { ExotelCallControls } from "./exotel-call-controls";
 
@@ -60,6 +60,13 @@ const usePrimaryOptions = () => {
         route: 'customers',
         title: 'Customers',
         hidden: true
+    },
+    {
+        iconComponent: () => <Article />,
+        primaryKey: 'knowledge-base',
+        route: 'knowledge-base',
+        title: 'Knowledge Base',
+        hidden: false
     }, {
         iconComponent: () => <SettingsOutlined />,
         primaryKey: 'configurations',
