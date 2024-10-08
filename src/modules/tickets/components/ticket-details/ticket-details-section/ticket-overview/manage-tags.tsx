@@ -36,7 +36,7 @@ export const ManageTags = (props: IManageTagsProps) => {
 
     return (
         <FlexBox flexDirection="column" padding="0px 20px" gap={'5px'} width="100%">
-            <TypographyName variant="h6"><Trans i18nKey={'common.labels.tags'} /></TypographyName>
+            <TypographyName variant="h6"><Trans i18nKey={'tags'} /></TypographyName>
             <StyledTags
                 tagInputs={tagItems}
                 gap={"15px"}

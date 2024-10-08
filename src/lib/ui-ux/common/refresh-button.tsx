@@ -16,7 +16,7 @@ export const RefreshButton = () => {
             <CustomIconButton
                 onClick={refreshPage}
                 iconComponent={<RefreshOutlined />}
-                tooltipProps={{ title: t('common.buttonLabels.refresh') }} />
+                tooltipProps={{ title: t('refresh') }} />
         </>
     )
 }

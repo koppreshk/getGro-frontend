@@ -35,7 +35,7 @@ export const CancelButton = (props: Omit<LoadingButtonProps, 'isLoading'>) => {
         <Button
             {...rest}
             variant={variant}>
-            <Trans i18nKey="common.buttonLabels.cancel" />
+            <Trans i18nKey="cancel" />
             {children}
         </Button>
     )

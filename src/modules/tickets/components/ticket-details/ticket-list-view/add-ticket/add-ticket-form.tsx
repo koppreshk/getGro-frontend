@@ -62,7 +62,7 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
                     <TextboxFieldWithLabel name="requesterEmail" type="email" label={t("requester_email")} rules={{ required: t("requester_email_validation") }} />
                     <TextboxFieldWithLabel name="subject" label={t("subject")} rules={{ required: t("subject_validation") }} />
                     <Grid item xs={12}>
-                        <Typography variant="h6" sx={{ mb: '5px' }}>{t("common.labels.priority")}</Typography>
+                        <Typography variant="h6" sx={{ mb: '5px' }}>{t("priority")}</Typography>
                         <SelectField name="priority" sx={{ width: '100%' }} menuOptions={priorities.map((item) => ({ key: item.id.toString(), value: item.name }))} />
                     </Grid>
                     <Grid item xs={12}>
@@ -81,7 +81,7 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
                             ]} />
                     </Grid>
                     <Grid item xs={12} >
-                        <Typography variant="h6" sx={{ mb: '5px' }}>{t("common.labels.tags")}</Typography>
+                        <Typography variant="h6" sx={{ mb: '5px' }}>{t("tags")}</Typography>
                         <StyledTags
                             gap={"15px"}
                             name="tags"
@@ -91,8 +91,8 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
                     </Grid>
                 </FlexBox>
                 <FlexBox justifyContent="flex-end" gap={'20px'} padding="0 30px 0 0">
-                    <Button variant="outlined" onClick={toggleAddTicketDrawer}>{t("common.buttonLabels.cancel")}</Button>
-                    <LoadingButton isLoading={mutationLoading} variant="contained" onClick={formMethods.handleSubmit(onSubmit)}>{t("common.buttonLabels.submit")}</LoadingButton>
+                    <Button variant="outlined" onClick={toggleAddTicketDrawer}>{t("cancel")}</Button>
+                    <LoadingButton isLoading={mutationLoading} variant="contained" onClick={formMethods.handleSubmit(onSubmit)}>{t("submit")}</LoadingButton>
                 </FlexBox>
             </FlexBox>
         </FormProvider>

@@ -21,7 +21,7 @@ interface INegativeActionDialogProps {
 
 export const NegativeActionDialog = (props: INegativeActionDialogProps) => {
     const { t } = useTranslation();
-    const { open, title, content, isLoading, negativeActionLabel = t("common.buttonLabels.delete"), onClose, onNegativeActionClick } = props;
+    const { open, title, content, isLoading, negativeActionLabel = t("delete"), onClose, onNegativeActionClick } = props;
 
     return (
         <React.Fragment>
@@ -37,7 +37,7 @@ export const NegativeActionDialog = (props: INegativeActionDialogProps) => {
                         : content}
                 </DialogContent>
                 <DialogActions sx={{ padding: '16px 24px' }}>
-                    <Button onClick={onClose} variant='outlined' sx={{ mr: '8px' }}>{t("common.buttonLabels.cancel")}</Button>
+                    <Button onClick={onClose} variant='outlined' sx={{ mr: '8px' }}>{t("cancel")}</Button>
                     <LoadingButton isLoading={isLoading} type="submit" variant='contained' color='error' onClick={onNegativeActionClick}>{negativeActionLabel}</LoadingButton>
                 </DialogActions>
             </Dialog>
