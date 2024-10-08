@@ -1,389 +1,169 @@
 {
-    "modules": {
-        "dashboard": {
-            "hi": "Hi",
-            "welcomeBack": "Welcome back!",
-            "moduleHeading": "Dashboards",
-            "sectionHeadings": {
-                "supportMonitoring": "Support Monitoring",
-                "agentPerformance": "Agent Performance",
-                "slaDashboard": "SLA Dashboard"
-            }
-        },
-        "tickets": {
-            "ticketViews": {
-                "allTickets": "All Tickets",
-                "allPending": "All Pending",
-                "allResolved": "All Resolved",
-                "allClosed": "All Closed",
-                "myPending": "My Pending",
-                "myResolved": "My Resolved",
-                "myClosed": "My Closed",
-                "deletedTickets": "Deleted Tickets",
-                "spamTickets": "Spam Tickets"
-            },
-            "ticketDetails": {
-                "interactions": {
-                    "header": "Interactions",
-                    "subHeading": "with {{customerName}} via",
-                    "conversations": {
-                        "label": "Conversations",
-                        "email": {
-                            "reply": "Reply",
-                            "forward": "Forward",
-                            "collapseAll": "Collapse All",
-                            "expandAll": "Expand All",
-                            "printAll": "Print All",
-                            "from": "From",
-                            "to": "To",
-                            "subject": "Subject",
-                            "date": "Date",
-                            "uploadFile": "Upload file(s)",
-                            "insertTemplete": "Insert Template"
-                        }
-                    },
-                    "links": {
-                        "label": "Links"
-                    },
-                    "history": {
-                        "label": "History"
-                    }
-                }
-            },
-            "addTicket": {
-                "headerLabel": "Add Email Ticket",
-                "requesterEmail": "Requester Email",
-                "subject": "Subject",
-                "description": "Description",
-                "assignee": "Assignee",
-                "assigneeOptions": {
-                    "autoAssign": "Auto Assign",
-                    "selectAgent": "Select Agent"
-                },
-                "messages": {
-                    "validation": {
-                        "subject": "Subject is required",
-                        "requesterEmail": "Requester Email is required",
-                        "description": "Description is required"
-                    },
-                    "notification": {
-                        "createTicketSuccess": "Created a new ticket successfully",
-                        "createTicketError": "Failed to create a new ticket"
-                    }
-                }
-            }
-        },
-        "configurations": {
-            "moduleHeading": "Configurations",
-            "configurationOptions": {
-                "tickets": {
-                    "primaryLabel": "Tickets",
-                    "ticketStatus": {
-                        "label": "Ticket Status",
-                        "shortDescription": "Define your ticket statuses to streamline and optimize the routing of support tickets",
-                        "longDescription": "",
-                        "addLabel": "Add Ticket Status",
-                        "editLabel": "View or Edit Ticket Status",
-                        "grid": {
-                            "statusId": "Status ID",
-                            "statusName": "Status Name",
-                            "actions": "Actions"
-                        },
-                        "formLabel": {
-                            "name": "Name"
-                        },
-                        "messages": {
-                            "validation": {
-                                "subject": "Subject is required",
-                                "requesterEmail": "Requester Email is required",
-                                "description": "Description is required"
-                            },
-                            "notification": {
-                                "createTicketSuccess": "Created a new ticket successfully",
-                                "createTicketError": "Failed to create a new ticket"
-                            }
-                        }
-                    },
-                    "tags": {
-                        "label": "Tags",
-                        "shortDescription": "Tag your tickets to enhance organization and improve reporting.",
-                        "longDescription": "Tags are labels that you can assign to tickets. They help with categorizing, filtering, and automating processes.",
-                        "addLabel": "Create Tags",
-                        "grid": {
-                            "name": "Name",
-                            "ticketAssociated": "Ticket Associated",
-                            "actions": "Actions"
-                        },
-                        "formLabel": {
-                            "name": "Name"
-                        }
-                    },
-                    "templates": {
-                        "label": "Templates",
-                        "shortDescription": "Maintain and organize a library of predefined templates for responding to tickets.",
-                        "longDescription": "These are a set of prewritten response templates for frequently asked questions in the support tickets",
-                        "addLabel": "Add Templates",
-                        "grid": {},
-                        "formLabel": {
-                            "title": "Title",
-                            "description": "Description",
-                            "accessScope": "Access Scope"
-                        }
-                    }
-                },
-                "channels": {
-                    "primaryLabel": "Channels",
-                    "facebook": {
-                        "label": "Facebook",
-                        "shortDescription": "Set up your Facebook integration."
-                    },
-                    "email": {
-                        "label": "Email",
-                        "shortDescription": "Configure support email inboxes to automate ticket creation and management."
-                    }
-                },
-                "ticketAutomation": {
-                    "primaryLabel": "Ticket Automation",
-                    "ticketEscalation": {
-                        "label": "Ticket Escalation",
-                        "shortDescription": "Simplify ticket handling: Use custom rules to automatically categorize and route tickets.",
-                        "longDescription": "Service Level Agreements (SLAs) define the response and resolution times for support tickets. You can configure each SLA to function based on calendar hours (24/7) or specific business hours. When a ticket is created or updated, the system applies the first applicable SLA from the defined order.",
-                        "addLabel": "Add Escalation",
-                        "grid": {
-                            "slaName": "SLA Name",
-                            "lastModifiedBy": "Last Modified By",
-                            "lastModified": "Last Modified",
-                            "slaActive": "SLA Active",
-                            "actions": "Actions"
-                        },
-                        "chooseCondition": {
-                            "formLabel": {
-                                "name": "Name",
-                                "description": "Description",
-                                "accessScope": "Access Scope",
-                                "slaEvalutaionOption": {
-                                    "label": "Calculate SLA Evaluation (Resolution due) when conditions are met from",
-                                    "ticketCreationTime": "Ticket creation time",
-                                    "timeWhenConditionsAreMet": "Time when conditions are met"
-                                },
-                                "slaConditionDescText": "Apply this SLA to the tickets that meet All of these conditions",
-                                "ticketFields": "Ticket Fields",
-                                "fieldOptions": "Field Options"
-                            }
-                        },
-                        "slaTarget": {
-                            "formLabel": {
-                                "timeToFirstResponse": "Time to first response",
-                                "timeToNextResponse": "Time to next response",
-                                "timeToResolution": "Time to resolution"
-                            },
-                            "low": "Low",
-                            "normal": "Normal",
-                            "high": "High",
-                            "critical": "Critical"
-                        },
-                        "addReminders": {
-                            "headerLabel": "Remind agents when the SLA due time approaches",
-                            "firstResponseHeading": "First response reminder",
-                            "nextResponseHeading": "Next response reminder",
-                            "resolutionHeading": "Resolution reminder",
-                            "firstResponseLabel": "When First response target approches in",
-                            "nextResponseLabel": "When Next response target approches in",
-                            "resolutionLabel": "When Resolution target approches in",
-                            "sendReminderToLabel": "Send reminder to",
-                            "formLabel": {
-                                "duration": "Duration",
-                                "queue": "Queue",
-                                "agent": "Agent"
-                            }
-                        },
-                        "addEscalation": {
-                            "headerLabel": "Send escalation when the SLA is violated",
-                            "firstResponseHeading": "First response escalation",
-                            "nextResponseHeading": "Next response escalation",
-                            "resolutionHeading": "Resolution escalation",
-                            "firstResponseLabel": "When First response target is not met, escalate",
-                            "nextResponseLabel": "When Next response target is not met, escalate",
-                            "resolutionLabel": "When Resolution target is not met, escalate",
-                            "sendReminderToLabel": "Send reminder to",
-                            "formLabel": {
-                                "escalate": "Escalate",
-                                "to": "To",
-                                "agent": "Agent"
-                            }
-                        }
-                    },
-                    "autoAssignments": {
-                        "label": "Auto Assignments",
-                        "shortDescription": "Establish automated rules to assign tickets to agents efficiently",
-                        "addLabel": "Add New Rule",
-                        "grid": {
-                            "ruleName": "Add New Rule",
-                            "lastModifiedBy": "Last Modified By",
-                            "lastModified": "Last Modified",
-                            "isActive": "Is Active",
-                            "actions": "Actions"
-                        },
-                        "chooseCondition": {
-                            "formLabel": {
-                                "ruleName": "Rule Name",
-                                "description": "Description",
-                                "addRuleCondition": {
-                                    "labelPrefix": "Apply this rule to the tickets that meet",
-                                    "labelSuffix": " of these conditions",
-                                    "all": "All",
-                                    "any": "Any",
-                                    "and": "AND",
-                                    "ticketFields": "Ticket Fields",
-                                    "operator": "Operator",
-                                    "conditionValue": "Condition Value"
-                                }
-                            },
-                            "addConditions": "Add Condition"
-                        },
-                        "associateAgent": {
-                            "description1": "One active and available agent in the specified queue will be selected for assignment",
-                            "description2": "If the ticket, already has a Queue/Agent set, this rule will not trigger",
-                            "formLabel": {
-                                "assignModeCondition": {
-                                    "evenDistribution": "Round Robin(Even Distribution)",
-                                    "edHelperText": "Evenly distributes tickets among agents.",
-                                    "loadBased": "Round Robin(Load Based)",
-                                    "ldHelperText": "Allocates tickets to agents based on their workload."
-                                },
-                                "queueLabel": "Choose a queue that is eligible for auto-assignment",
-                                "queue": "Queue"
-                            }
-                        }
-                    },
-                    "createTicketTriggers": {
-                        "label": "Create Ticket Triggers",
-                        "shortDescription": "Configure automation rules to trigger actions automatically when a ticket is created",
-                        "addConditions": "Add Condition",
-                        "grid": {
-                            "ruleName": "Add New Rule",
-                            "lastModifiedBy": "Last Modified By",
-                            "lastModified": "Last Modified",
-                            "isActive": "Is Active",
-                            "actions": "Actions"
-                        },
-                        "chooseCondition": {
-                            "formLabel": {
-                                "ruleName": "Rule Name",
-                                "description": "Description",
-                                "addRuleCondition": {
-                                    "labelPrefix": "Apply this rule to the tickets that meet",
-                                    "labelSuffix": " of these conditions",
-                                    "all": "All",
-                                    "any": "Any",
-                                    "and": "AND",
-                                    "ticketFields": "Ticket Fields",
-                                    "operator": "Operator",
-                                    "conditionValue": "Condition Value"
-                                }
-                            }
-                        },
-                        "setActions": {
-                            "formLabel": {
-                                "ticketFields": "Ticket Fields",
-                                "operator": "Operator"
-                            }
-                        }
-                    },
-                    "updateTicketTriggers": {
-                        "label": "Update Ticket Triggers",
-                        "shortDescription": "Configure automation rules to trigger actions whenever a ticket is updated.",
-                        "addConditions": "Add Condition",
-                        "grid": {
-                            "ruleName": "Add New Rule",
-                            "lastModifiedBy": "Last Modified By",
-                            "lastModified": "Last Modified",
-                            "isActive": "Is Active",
-                            "actions": "Actions"
-                        },
-                        "chooseCondition": {
-                            "formLabel": {
-                                "ruleName": "Rule Name",
-                                "description": "Description",
-                                "addRuleCondition": {
-                                    "labelPrefix": "Apply this rule to the tickets that meet",
-                                    "labelSuffix": " of these conditions",
-                                    "all": "All",
-                                    "any": "Any",
-                                    "and": "AND",
-                                    "ticketFields": "Ticket Fields",
-                                    "operator": "Operator",
-                                    "conditionValue": "Condition Value"
-                                }
-                            }
-                        },
-                        "setActions": {
-                            "formLabel": {
-                                "ticketFields": "Ticket Fields",
-                                "operator": "Operator"
-                            }
-                        }
-                    }
-                },
-                "usersAndPermissions": {
-                    "primaryLabel": "Users and Permissions",
-                    "agents": {
-                        "label": "Agents",
-                        "shortDescription": "Modify, add, or deactivate an agent as needed."
-                    },
-                    "queues": {
-                        "label": "Queues (Groups)",
-                        "shortDescription": "Organize agents by expertise for effective ticket handling"
-                    },
-                    "rolesAndPermissions": {
-                        "label": "Roles and Permissions",
-                        "shortDescription": "Establish custom roles for agents with tailored permissions to meet your needs."
-                    },
-                    "agentAvailabilityStatus": {
-                        "label": "Agent Availability Status",
-                        "shortDescription": "Manage an agent's availability by adding, editing, or removing their status."
-                    }
-                },
-                "general": {
-                    "primaryLabel": "General",
-                    "satisfactionSurvey": {
-                        "label": "Satisfaction Survey",
-                        "shortDescription": "Implement a customer satisfaction survey for each ticket to gather feedback and measure service quality."
-                    },
-                    "auditLogs": {
-                        "label": "Audit Logs",
-                        "shortDescription": "View activity and access logs with regards to tickets"
-                    }
-                },
-                "apps": {
-                    "primaryLabel": "Apps",
-                    "marketplace": {
-                        "label": "Marketplace",
-                        "shortDescription": "Handle and integrate external applications seamlessly."
-                    }
-                }
-            }
-        }
-    },
-    "common": {
-        "buttonLabels": {
-            "cancel": "Cancel",
-            "save": "Save",
-            "submit": "Submit",
-            "edit": "Edit",
-            "add": "Add",
-            "back": "Back",
-            "next": "Next",
-            "refresh": "Refresh",
-            "send": "Send",
-            "delete": "Delete"
-        },
-        "labels": {
-            "tags": "Tags",
-            "priority": "Priority",
-            "status": "Status",
-            "assignee": "Assignee",
-            "ticketId": "Ticket Id"
-        }
-    }
+    "hi": "Hi",
+    "welcome_back": "Welcome back!",
+    "dashboards_module_heading": "Dashboards",
+    "support_monitoring": "Support Monitoring",
+    "agent_performance": "Agent Performance",
+    "sla_dashboard": "SLA Dashboard",
+    "all_tickets": "All Tickets",
+    "all_pending": "All Pending",
+    "all_resolved": "All Resolved",
+    "all_closed": "All Closed",
+    "my_pending": "My Pending",
+    "my_resolved": "My Resolved",
+    "my_closed": "My Closed",
+    "deleted_tickets": "Deleted Tickets",
+    "spam_tickets": "Spam Tickets",
+    "interactions_header": "Interactions",
+    "interactions_sub_heading": "with {{customerName}} via",
+    "conversations_label": "Conversations",
+    "reply": "Reply",
+    "forward": "Forward",
+    "collapse_all": "Collapse All",
+    "expand_all": "Expand All",
+    "print_all": "Print All",
+    "from": "From",
+    "to": "To",
+    "subject": "Subject",
+    "date": "Date",
+    "upload_file": "Upload file(s)",
+    "insertTemplete": "Insert Template",
+    "links_label": "Links",
+    "history_label": "History",
+    "add_email_ticket": "Add Email Ticket",
+    "requester_email": "Requester Email",
+    "description": "Description",
+    "assignee": "Assignee",
+    "auto_assign": "Auto Assign",
+    "select_agent": "Select Agent",
+    "subject_validation": "Subject is required",
+    "requester_email_validation": "Requester Email is required",
+    "description_validation": "Description is required",
+    "create_ticket_success": "Created a new ticket successfully",
+    "create_ticket_error": "Failed to create a new ticket",
+    "configurations_module_heading": "Configurations",
+    "tickets": "Tickets",
+    "ticket_status": "Ticket Status",
+    "ticket_status_short_description": "Define your ticket statuses to streamline and optimize the routing of support tickets",
+    "add_ticket_label": "Add Ticket Status",
+    "edit_ticket_label": "View or Edit Ticket Status",
+    "status_id": "Status ID",
+    "status_name": "Status Name",
+    "actions": "Actions",
+    "name": "Name",
+    "tags": "Tags",
+    "tags_short_description": "Tag your tickets to enhance organization and improve reporting.",
+    "tags_long_description": "Tags are labels that you can assign to tickets. They help with categorizing, filtering, and automating processes.",
+    "create_tags": "Create Tags",
+    "tickets_associated": "Tickets Associated",
+    "tags_helptext": "Add tags by pressing enter key and then save",
+    "tags_create_success": "Successfully created Tags",
+    "tags_create_error": "Failed to create tags",
+    "tags_exist_validation": "One or more tags already exists, please remove and continue",
+    "templates": "Templates",
+    "templates_short_description": "Maintain and organize a library of predefined templates for responding to tickets.",
+    "templates_long_description": "These are a set of prewritten response templates for frequently asked questions in the support tickets",
+    "add_templates": "Add Templates",
+    "title": "Title",
+    "access_scope": "Access Scope",
+    "email": "Email",
+    "channels": "Channels",
+    "facebook": "Facebook",
+    "facebook_short_description": "Set up your Facebook integration.",
+    "email_short_description": "Configure support email inboxes to automate ticket creation and management.",
+    "ticket_automation": "Ticket Automation",
+    "ticket_escalation": "Ticket Escalation",
+    "ticket_escalation_short_description": "Simplify ticket handling: Use custom rules to automatically categorize and route tickets.",
+    "ticket_escalation_long_description": "Service Level Agreements (SLAs) define the response and resolution times for support tickets. You can configure each SLA to function based on calendar hours (24/7) or specific business hours. When a ticket is created or updated, the system applies the first applicable SLA from the defined order.",
+    "add_escalation": "Add Escalation",
+    "sla_name": "SLA Name",
+    "last_modified_by": "Last Modified By",
+    "last_modified": "Last Modified",
+    "sla_active": "SLA Active",
+    "sla_evaluation_label": "Calculate SLA Evaluation (Resolution due) when conditions are met from",
+    "ticket_creation_time": "Ticket creation time",
+    "time_when_conditions_are_met": "Time when conditions are met",
+    "sla_condition_desctext": "Apply this SLA to the tickets that meet All of these conditions",
+    "ticket_fields": "Ticket Fields",
+    "field_options": "Field Options",
+    "time_to_first_response": "Time to first response",
+    "time_to_next_response": "Time to next response",
+    "time_to_resolution": "Time to resolution",
+    "low": "Low",
+    "normal": "Normal",
+    "high": "High",
+    "critical": "Critical",
+    "auto_assignments": "Auto Assignments",
+    "auto_assignments_short_description": "Establish automated rules to assign tickets to agents efficiently",
+    "create_ticket_triggers": "Create Ticket Triggers",
+    "create_ticket_triggers_short_description": "Configure automation rules to trigger actions automatically when a ticket is created",
+    "update_ticket_triggers": "Update Ticket Triggers",
+    "update_ticket_triggers_short_description": "Configure automation rules to trigger actions whenever a ticket is updated.",
+    "add_reminders_header_label": "Remind agents when the SLA due time approaches",
+    "first_response_reminder": "First response reminder",
+    "next_response_reminder": "Next response reminder",
+    "resolution_reminder": "Resolution reminder",
+    "first_response_label": "When First response target approches in",
+    "next_response_label": "When Next response target approches in",
+    "resolution_label": "When Resolution target approches in",
+    "send_reminder_to": "Send reminder to",
+    "duration": "Duration",
+    "queue": "Queue",
+    "agent": "Agent",
+    "add_escalation_header_label": "Send escalation when the SLA is violated",
+    "first_response_escalation": "First response escalation",
+    "next_response_escalation": "Next response escalation",
+    "resolution_escalation": "Resolution escalation",
+    "first_response_escalation_note": "When First response target is not met, escalate",
+    "next_response_escalation_note": "When Next response target is not met, escalate",
+    "resolution_escalation_note": "When Resolution target is not met, escalate",
+    "escalate": "Escalate",
+    "add_new_rule": "Add New Rule",
+    "is_active": "Is Active",
+    "rule_name": "Rule Name",
+    "apply_this_rule_prefix": "Apply this rule to the tickets that meet",
+    "apply_this_rulesSuffix": " of these conditions",
+    "all": "All",
+    "any": "Any",
+    "and": "AND",
+    "operator": "Operator",
+    "condition_value": "Condition Value",
+    "add_condition": "Add Condition",
+    "associate_agent_description1": "One active and available agent in the specified queue will be selected for assignment",
+    "associate_agent_description2": "If the ticket, already has a Queue/Agent set, this rule will not trigger",
+    "round_robin_even_distribution": "Round Robin(Even Distribution)",
+    "even_distribution_among_agents": "Evenly distributes tickets among agents.",
+    "round_robin_load_based": "Round Robin(Load Based)",
+    "allocates_tickets_to_agents": "Allocates tickets to agents based on their workload.",
+    "queue_label": "Choose a queue that is eligible for auto-assignment",
+    "users_and_permissions": "Users and Permissions",
+    "agents": "Agents",
+    "agents_short_description": "Modify, add, or deactivate an agent as needed.",
+    "queues_groups": "Queues (Groups)",
+    "queues_short_description": "Organize agents by expertise for effective ticket handling",
+    "roles_and_permissions": "Roles and Permissions",
+    "roles_and_permissions_short_description": "Establish custom roles for agents with tailored permissions to meet your needs.",
+    "agent_availability_status": "Agent Availability Status",
+    "agent_availability_status_short_description": "Manage an agent's availability by adding, editing, or removing their status.",
+    "general": "General",
+    "satisfaction_survey": "Satisfaction Survey",
+    "satisfaction_survey_short_description": "Implement a customer satisfaction survey for each ticket to gather feedback and measure service quality.",
+    "audit_logs": "Audit Logs",
+    "audit_logs_short_description": "View activity and access logs with regards to tickets",
+    "apps": "Apps",
+    "marketplace": "Marketplace",
+    "marketplace_short_description": "Handle and integrate external applications seamlessly.",
+    "cancel": "Cancel",
+    "save": "Save",
+    "submit": "Submit",
+    "edit": "Edit",
+    "add": "Add",
+    "back": "Back",
+    "next": "Next",
+    "refresh": "Refresh",
+    "send": "Send",
+    "delete": "Delete",
+    "priority": "Priority",
+    "status": "Status",
+    "ticketId": "Ticket Id"
 }

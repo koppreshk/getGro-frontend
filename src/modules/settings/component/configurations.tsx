@@ -36,7 +36,7 @@ export const Configurations = () => {
             </Suspense>
             <StyledHeader width="100%" justifyContent="space-between" padding="20px" alignItems="center" >
                 <Typography variant="h4">
-                    <Trans i18nKey={"modules.configurations.moduleHeading"}/>
+                    <Trans i18nKey={"configurations_module_heading"}/>
                 </Typography>
 
                 <TextField label="Search" name="search" size="small" onChange={onChange} placeholder="Search By Name" InputProps={{

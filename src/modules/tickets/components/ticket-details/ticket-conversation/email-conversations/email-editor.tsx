@@ -80,13 +80,13 @@ const EmailFooterOptions = (props: Pick<IEmailEditorProps, 'onSendClick' | 'onCa
     return (
         <FlexBox justifyContent="space-between" padding="0px 16px 10px">
             <FlexBox gap="5px">
-                <RoundedSendButton disabled={isMutationLoading} variant="contained" endIcon={isMutationLoading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : <Send />} title={t("common.buttonLabels.send")} onClick={onSendClick}>
-                    {t("common.buttonLabels.send")}
+                <RoundedSendButton disabled={isMutationLoading} variant="contained" endIcon={isMutationLoading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : <Send />} title={t("send")} onClick={onSendClick}>
+                    {t("send")}
                 </RoundedSendButton>
                 <FileUploadField name={`${editorType}.attachments`} multiple readMode="readAsDataURL" />
                 <InsertTemplate editorType={editorType} />
             </FlexBox >
-            <IconButton onClick={onCancelClick} title={t("common.buttonLabels.delete")}>
+            <IconButton onClick={onCancelClick} title={t("delete")}>
                 <Delete />
             </IconButton>
         </FlexBox >

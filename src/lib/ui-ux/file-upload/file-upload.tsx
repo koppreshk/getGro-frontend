@@ -46,7 +46,7 @@ export const FileUpload = React.memo((props: IFileUploadProps) => {
 
     return hidden ? null : (
         <>
-            <IconButton onClick={_onButtonClick} title={t('modules.tickets.ticketDetails.interactions.conversations.email.uploadFile')}>
+            <IconButton onClick={_onButtonClick} title={t('upload_file')}>
                 <AttachFileOutlined />
             </IconButton>
             <DefaultFileInput id={id} type="file" ref={inputRef} accept={accept} multiple={multiple} onChange={_onFileSelect} />

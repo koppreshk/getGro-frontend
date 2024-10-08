@@ -27,13 +27,13 @@ export const AddTicketContainer = (props: { toggleAddTicketDrawer: () => void })
         })
             .then((res) => {
                 if (res.status) {
-                    showNotification({ message: t("modules.tickets.addTicket.messages.notification.createTicketSuccess"), type: 'success' })
+                    showNotification({ message: t("create_ticket_success"), type: 'success' })
                 }
                 else {
                     showNotification({ message: res.message, type: 'error' })
                 }
             })
-            .catch(() => showNotification({ message: t("modules.tickets.addTicket.messages.notification.createTicketError"), type: 'error' }))
+            .catch(() => showNotification({ message: t("create_ticket_error"), type: 'error' }))
             .finally(() => props.toggleAddTicketDrawer())
     }
 

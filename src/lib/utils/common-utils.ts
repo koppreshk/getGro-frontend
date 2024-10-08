@@ -47,6 +47,13 @@ export const convertToCamelCase = (str: string, splitter = '-') => {
         .join('');
 };
 
+export const convertToUnderscore = (str: string, splitter = '-') => {
+    return str
+        .toLowerCase()
+        .split(splitter)
+        .join('_');
+};
+
 export const capitalizeFirstLetter = (string: string, splitter?: string) => {
     const words = string.split(splitter ?? " ");
 

@@ -34,91 +34,91 @@ const useConfigurations = () => {
 
     return [
         {
-            categoryName: t("modules.configurations.configurationOptions.tickets.primaryLabel"),
+            categoryName: t("tickets"),
             categoryIcon: () => <TaskOutlined color="primary" />,
             categoryOptions: [
                 {
                     route: "ticket-status",
-                    label: t("modules.configurations.configurationOptions.tickets.ticketStatus.label"),
+                    label: t("ticket_status"),
                     uniqueKey: "ticket-status",
                     catOptionIcon: () => <AssignmentTurnedInOutlined />,
                     hidden: !isFeatureAccessible('manage_ticket_status'),
-                    description: t("modules.configurations.configurationOptions.tickets.ticketStatus.shortDescription")
+                    description: t("ticket_status_short_description")
                 },
                 {
                     route: "tags",
-                    label: t("modules.configurations.configurationOptions.tickets.tags.label"),
+                    label: t("tags"),
                     uniqueKey: "tags",
                     catOptionIcon: () => <SellOutlined />,
                     hidden: !isFeatureAccessible('manage_tags'),
-                    description: t("modules.configurations.configurationOptions.tickets.tags.shortDescription")
+                    description: t("tags_short_description")
                 },
                 {
                     route: "templates",
-                    label: t("modules.configurations.configurationOptions.tickets.templates.label"),
+                    label: t("templates"),
                     uniqueKey: "templates",
                     catOptionIcon: () => <AddCommentOutlined />,
-                    description: t("modules.configurations.configurationOptions.tickets.templates.shortDescription")
+                    description: t("templates_short_description")
                 }
             ]
         },
         {
-            categoryName: t("modules.configurations.configurationOptions.channels.primaryLabel"),
+            categoryName: t("channels"),
             categoryIcon: () => <Tag color="primary" />,
             categoryOptions: [
                 {
-                    label: t("modules.configurations.configurationOptions.channels.facebook.label"),
+                    label: t("facebook"),
                     route: 'facebook',
                     uniqueKey: 'facebook',
                     catOptionIcon: () => <Facebook />,
                     hidden: true,
-                    description: t("modules.configurations.configurationOptions.channels.facebook.shortDescription")
+                    description: t("facebook_short_description")
                 },
                 {
-                    label: t("modules.configurations.configurationOptions.channels.email.label"),
+                    label: t("email"),
                     route: 'email',
                     uniqueKey: 'email',
                     catOptionIcon: () => <Email />,
                     hidden: !isFeatureAccessible('manage_email'),
-                    description: t("modules.configurations.configurationOptions.channels.email.shortDescription")
+                    description: t("email_short_description")
                 }
             ]
         },
         {
-            categoryName: t("modules.configurations.configurationOptions.ticketAutomation.primaryLabel"),
+            categoryName: t("ticket_automation"),
             categoryIcon: () => <ManageHistory color="primary" />,
             categoryOptions: [
                 {
                     route: "ticket-escalation",
-                    label: t("modules.configurations.configurationOptions.ticketAutomation.ticketEscalation.label"),
+                    label: t("ticket_escalation"),
                     uniqueKey: "ticket-escalation",
                     catOptionIcon: () => <EventNoteOutlined />,
                     hidden: !isFeatureAccessible('manage_ticket_escalation'),
-                    description: t("modules.configurations.configurationOptions.ticketAutomation.ticketEscalation.shortDescription")
+                    description: t("ticket_escalation_short_description")
                 },
                 {
                     route: "auto-assignments",
-                    label: t("modules.configurations.configurationOptions.ticketAutomation.autoAssignments.label"),
+                    label: t("auto_assignments"),
                     uniqueKey: "auto-assignments",
                     catOptionIcon: () => <ManageHistory />,
                     hidden: !isFeatureAccessible('manage_auto_assignments'),
-                    description: t("modules.configurations.configurationOptions.ticketAutomation.autoAssignments.shortDescription")
+                    description: t("auto_assignments_short_description")
                 },
                 {
                     route: "create-ticket-triggers",
-                    label: t("modules.configurations.configurationOptions.ticketAutomation.createTicketTriggers.label"),
+                    label: t("create_ticket_triggers"),
                     uniqueKey: "create-ticket-triggers",
                     catOptionIcon: () => <ConfirmationNumber />,
                     hidden: !isFeatureAccessible('manage_create_ticket_triggers'),
-                    description: t("modules.configurations.configurationOptions.ticketAutomation.createTicketTriggers.shortDescription")
+                    description: t("create_ticket_triggers_short_description")
                 },
                 {
                     route: "update-ticket-triggers",
-                    label: t("modules.configurations.configurationOptions.ticketAutomation.updateTicketTriggers.label"),
+                    label: t("update_ticket_triggers"),
                     uniqueKey: "update-ticket-triggers",
                     catOptionIcon: () => <ConfirmationNumber />,
                     hidden: !isFeatureAccessible('manage_update_ticket_triggers'),
-                    description: t("modules.configurations.configurationOptions.ticketAutomation.updateTicketTriggers.shortDescription")
+                    description: t("update_ticket_triggers_short_description")
                 },
                 // {
                 //     route: "time-triggers",
@@ -130,68 +130,68 @@ const useConfigurations = () => {
             ]
         },
         {
-            categoryName: t("modules.configurations.configurationOptions.usersAndPermissions.primaryLabel"),
+            categoryName: t("users_and_permissions"),
             categoryIcon: () => <AccountCircle color="primary" />,
             categoryOptions: [
                 {
                     route: "agents",
-                    label: t("modules.configurations.configurationOptions.usersAndPermissions.agents.label"),
+                    label: t("agents"),
                     uniqueKey: "Agents",
                     catOptionIcon: () => <SupportAgentRounded />,
                     hidden: !isFeatureAccessible('manage_agents'),
-                    description: t("modules.configurations.configurationOptions.usersAndPermissions.agents.shortDescription")
+                    description: t("agents_short_description")
                 },
                 {
                     route: "queues",
-                    label: t("modules.configurations.configurationOptions.usersAndPermissions.queues.label"),
+                    label: t("queues_groups"),
                     uniqueKey: "queues",
                     catOptionIcon: () => <Groups2Outlined />,
                     hidden: !isFeatureAccessible('manage_queues'),
-                    description: t("modules.configurations.configurationOptions.usersAndPermissions.queues.shortDescription")
+                    description: t("queues_short_description")
                 },
                 {
                     route: "roles-and-permissions",
-                    label: t("modules.configurations.configurationOptions.usersAndPermissions.rolesAndPermissions.label"),
+                    label: t("roles_and_permissions"),
                     uniqueKey: "roles-and-permissions",
                     catOptionIcon: () => <LockPerson />,
                     hidden: !isFeatureAccessible('manage_roles_permissions'),
-                    description: t("modules.configurations.configurationOptions.usersAndPermissions.rolesAndPermissions.shortDescription")
+                    description: t("roles_and_permissions_short_description")
                 },
                 {
                     route: "agent-availability",
-                    label: t("modules.configurations.configurationOptions.usersAndPermissions.agentAvailabilityStatus.label"),
+                    label: t("agent_availability_status"),
                     uniqueKey: "agent-availability",
                     catOptionIcon: () => <WorkHistory />,
                     hidden: !isFeatureAccessible('manage_agent_availability_statuses'),
-                    description: t("modules.configurations.configurationOptions.usersAndPermissions.agentAvailabilityStatus.shortDescription")
+                    description: t("agent_availability_status_short_description")
                 },
             ]
         },
         {
-            categoryName: t("modules.configurations.configurationOptions.general.primaryLabel"),
+            categoryName: t("general"),
             categoryIcon: () => <SettingsRounded color="primary" />,
             categoryOptions: [
 
                 {
                     route: "satisfaction-survey",
-                    label: t("modules.configurations.configurationOptions.general.satisfactionSurvey.label"),
+                    label: t("satisfaction_survey"),
                     uniqueKey: "satisfaction-survey",
-                    description: t("modules.configurations.configurationOptions.general.satisfactionSurvey.shortDescription"),
+                    description: t("satisfaction_survey_short_description"),
                     hidden: true,
                     catOptionIcon: () => <ThumbsUpDown />
                 },
                 {
                     route: "audit-logs",
-                    label: t("modules.configurations.configurationOptions.general.auditLogs.label"),
+                    label: t("audit_logs"),
                     uniqueKey: "audit-logs",
-                    description: t("modules.configurations.configurationOptions.general.auditLogs.shortDescription"),
+                    description: t("audit_logs_short_description"),
                     hidden: !isFeatureAccessible('manage_audit_logs'),
                     catOptionIcon: () => <PendingActions />
                 }
             ]
         },
         {
-            categoryName: t("modules.configurations.configurationOptions.apps.primaryLabel"),
+            categoryName: t("apps"),
             categoryIcon: () => <GridViewRounded color="primary" />,
             categoryOptions: [
                 // {
@@ -203,11 +203,11 @@ const useConfigurations = () => {
                 // },
                 {
                     route: "marketplace",
-                    label: t("modules.configurations.configurationOptions.apps.marketplace.label"),
+                    label: t("marketplace"),
                     uniqueKey: "marketplace",
                     catOptionIcon: () => <StoreRounded />,
                     hidden: !isFeatureAccessible('manage_marketplace'),
-                    description: t("modules.configurations.configurationOptions.apps.marketplace.shortDescription")
+                    description: t("marketplace_short_description")
                 }
             ]
         },

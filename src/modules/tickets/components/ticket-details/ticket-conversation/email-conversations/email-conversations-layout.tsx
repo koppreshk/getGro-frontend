@@ -101,11 +101,11 @@ export const EmailConversationLayout = (props: { conversationsData: ITicketById,
                         {!isCollapsedAll ? <EmailThreadOptions onReplyClick={onReplyClick} onForwardClick={onForwardClick} /> : null}
                         {
                             isCollapsedAll ?
-                                <CustomIconButton className="no-print" tooltipProps={{ title: t('modules.tickets.ticketDetails.interactions.conversations.email.expandAll') }} iconComponent={<UnfoldMore />} sx={{ width: '24px', height: '24px' }} onClick={onExpandAll} />
+                                <CustomIconButton className="no-print" tooltipProps={{ title: t('expand_all') }} iconComponent={<UnfoldMore />} sx={{ width: '24px', height: '24px' }} onClick={onExpandAll} />
                                 :
-                                <CustomIconButton className="no-print" tooltipProps={{ title: t('modules.tickets.ticketDetails.interactions.conversations.email.collapseAll') }} iconComponent={<UnfoldLess />} sx={{ width: '24px', height: '24px' }} onClick={onCollapseAll} />
+                                <CustomIconButton className="no-print" tooltipProps={{ title: t('collapse_all') }} iconComponent={<UnfoldLess />} sx={{ width: '24px', height: '24px' }} onClick={onCollapseAll} />
                         }
-                        <CustomIconButton tooltipProps={{ title: t('modules.tickets.ticketDetails.interactions.conversations.email.printAll') }} iconComponent={<Print />} sx={{ width: '24px', height: '24px' }} onClick={onPrintHandler} />
+                        <CustomIconButton tooltipProps={{ title: t('print_all') }} iconComponent={<Print />} sx={{ width: '24px', height: '24px' }} onClick={onPrintHandler} />
                     </FlexBox>
                 </FlexBox>
                 <EmailConversations

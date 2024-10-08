@@ -14,7 +14,7 @@ export const AddTicket = (props: IAddTicketProps) => {
     return (
         <DrawerExtended
             anchor="right"
-            header={t('modules.tickets.addTicket.headerLabel')}
+            header={t('add_email_ticket')}
             width="600px"
             open={openAddTicketDrawer}
             onRenderContent={() => (

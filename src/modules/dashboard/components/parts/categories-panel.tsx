@@ -35,19 +35,19 @@ const useDashboardCategories = () => {
         // },
         {
             id: 2,
-            name: 'supportMonitoring',
+            name: 'support_monitoring',
             component: <SupportMonitoringDashContainer />,
             hidden: !isFeatureAccessible('support_monitoring')
         },
         {
             id: 3,
-            name: "agentPerformance",
+            name: "agent_performance",
             component: <AgentPerformanceDashContainer />,
             hidden: !isFeatureAccessible('agent_performance')
         },
         {
             id: 4,
-            name: "slaDashboard",
+            name: "sla_dashboard",
             component: <SLADashboardContainer />,
             hidden: !isFeatureAccessible('sla_dashboard')
         },
@@ -63,7 +63,7 @@ const useDashboardCategories = () => {
         // },
     ];
 
-    return dashboardCategories; 
+    return dashboardCategories;
 }
 
 interface TabPanelProps {
@@ -143,10 +143,10 @@ export const DashboardCategoriesPanel = () => {
                     <FlexBox gap='10px' flexDirection="row" alignItems="center">
                         <FlexBox alignItems="center" gap="5px" padding="0 12px 0 0">
                             <Widgets color="primary" />
-                            <Typography variant="h4" sx={{ color: pallete.grayVariant2 }} ><Trans i18nKey="modules.dashboard.moduleHeading" /></Typography>
+                            <Typography variant="h4" sx={{ color: pallete.grayVariant2 }} ><Trans i18nKey="dashboards_module_heading" /></Typography>
                         </FlexBox>
                         {dashboardCategories.filter((item) => !item.hidden).map((category) => {
-                            return <TabPill key={category.id} label={t(`modules.dashboard.sectionHeadings.${category.name}`)} id={category.id} onClickHandler={onClickHandler} value={value} />
+                            return <TabPill key={category.id} label={t(`${category.name}`)} id={category.id} onClickHandler={onClickHandler} value={value} />
                         })}
                     </FlexBox>
                     <RefreshButton />

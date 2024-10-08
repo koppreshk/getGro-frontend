@@ -36,10 +36,10 @@ export const TicketConversationHeader = (props: { ticketDetailsById: Partial<ITi
     const customerName = ticketDetailsById?.customerName ? ticketDetailsById.customerName : 'User'
     return (
         <HeaderWrapper width="100%" flexDirection="column">
-            <Typography variant="h5"><Trans i18nKey={"modules.tickets.ticketDetails.interactions.header"} /></Typography>
+            <Typography variant="h5"><Trans i18nKey={"interactions_header"} /></Typography>
             <FlexBox gap="5px">
                 <Typography variant="body2">
-                    <Trans i18nKey={"modules.tickets.ticketDetails.interactions.subHeading"} customerName={customerName} >
+                    <Trans i18nKey={"interactions_sub_heading"} customerName={customerName} >
                         with {{ customerName }} via
                     </Trans>
                 </Typography>

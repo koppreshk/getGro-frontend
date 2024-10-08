@@ -23,8 +23,8 @@ const UserDetails = () => {
     const { pallete } = useTheme();
     return (
         <StyledFlexbox flexDirection="column" gap="5px" padding="25px 25px 0px">
-            <Typography variant="h2" textTransform={"capitalize"}><Trans i18nKey="modules.dashboard.hi"/> {user?.email.split('@')[0]}</Typography>
-            <Typography variant="h6" sx={{ color: pallete.grayVariant2 }}><Trans i18nKey="modules.dashboard.welcomeBack"/></Typography>
+            <Typography variant="h2" textTransform={"capitalize"}><Trans i18nKey="hi"/> {user?.email.split('@')[0]}</Typography>
+            <Typography variant="h6" sx={{ color: pallete.grayVariant2 }}><Trans i18nKey="welcome_back"/></Typography>
         </StyledFlexbox>
     )
 }

@@ -64,7 +64,7 @@ export const ManagePriority = (props: IManagePriorityProps) => {
     return (
         <div>
             <FlexBox flexDirection="column" padding="0px 20px" gap={'5px'}>
-                <TypographyName variant="h6"><Trans i18nKey={'common.labels.priority'} /></TypographyName>
+                <TypographyName variant="h6"><Trans i18nKey={'priority'} /></TypographyName>
                 <StyledContainer justifyContent="space-between" onClick={handleClick}>
                     <FlexBox alignItems="center" gap='5px'>
                         <PriorityIcon $priority={priority} />
