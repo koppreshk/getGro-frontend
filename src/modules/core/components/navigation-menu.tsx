@@ -66,7 +66,7 @@ const usePrimaryOptions = () => {
         primaryKey: 'knowledge-base',
         route: 'knowledge-base',
         title: 'Knowledge Base',
-        hidden: false
+        hidden: !isModuleAccessible('knowledge_base')
     }, {
         iconComponent: () => <SettingsOutlined />,
         primaryKey: 'configurations',

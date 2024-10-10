@@ -7,6 +7,7 @@ import { CreateArticleContainer } from "../containers"
 import { KnowledgeBaseList } from "./knowledge-base-list"
 import { IKnowledgeBase } from "../apis"
 import { Trans } from "react-i18next"
+import { useFeature } from "lib/hooks"
 
 interface IKnowledgeBaseLayoutProps {
     knowledgeBaseData: IKnowledgeBase[];
@@ -33,13 +34,15 @@ const KnowledgeBaseContent = (props: IKnowledgeBaseLayoutProps) => {
         navigate('create-knowledge-base');
     }, [navigate]);
 
+    const isCreateArticleAccessible = useFeature('create_article');
+    
     return (
         <FlexBox flexDirection="column" gap={'20px'} width="100%" height="100%">
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <Typography variant="h5">
                     <Trans i18nKey={"knowledge_base"} />
                 </Typography>
-                <Button variant="contained" startIcon={<AddCircleOutline />} onClick={navigateToCreateKB}> <Trans i18nKey={"create"} /></Button>
+                {isCreateArticleAccessible ? <Button variant="contained" startIcon={<AddCircleOutline />} onClick={navigateToCreateKB}> <Trans i18nKey={"create"} /></Button> : null}
             </FlexBox>
             <KnowledgeBaseList data={props.knowledgeBaseData} isLoading={props.isLoading} />
         </FlexBox>

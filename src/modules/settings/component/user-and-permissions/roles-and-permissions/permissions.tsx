@@ -6,7 +6,8 @@ import { Modules } from "./modules";
 import { PermissionList } from "./permission-list";
 import { useFormContext } from "react-hook-form";
 import { ICreateRoleFormFields, RoleModes } from "./create-role";
-import { AllPermissionKeys, ConfigurationPermissionKeys, DashboardPermissionKeys, ModuleKeys, TicketPermissionKeys } from "lib/enums";
+import { AllPermissionKeys, ConfigurationPermissionKeys, DashboardPermissionKeys, KnowledgeBasePermissionKeys, ModuleKeys, TicketPermissionKeys } from "lib/enums";
+import { useTranslation } from "react-i18next";
 
 interface IPermissionList {
     associatedModule: `${ModuleKeys}`;
@@ -27,6 +28,9 @@ const modules = [{
 }, {
     moduleName: 'Dashboards',
     moduleKey: ModuleKeys.DASHBOARDS
+}, {
+    moduleName: 'Knowledge Base',
+    moduleKey: ModuleKeys.KNOWLEDGE_BASE
 }];
 
 
@@ -136,6 +140,13 @@ const permissionList = [{
         name: 'SLA Dashboard',
         permissionKey: DashboardPermissionKeys.SLA_DASHBOARD
     }]
+},
+{
+    associatedModule: ModuleKeys.KNOWLEDGE_BASE,
+    permissions: [{
+        name: 'Create Article',
+        permissionKey: KnowledgeBasePermissionKeys.CREATE_ARTICLE
+    }]
 }] as IPermissionList[]
 
 interface PermissionsProps {
@@ -150,6 +161,7 @@ export const Permissions = (props: PermissionsProps) => {
     const [selectedModule, setSelectedModule] = useState(ModuleKeys.TICKETS);
     const { watch, handleSubmit } = useFormContext<ICreateRoleFormFields>();
     const isDisabled = mode === 'view' || mode === 'userProfile';
+    const { t } = useTranslation();
 
     const onModuleChange = (value: ModuleKeys) => {
         setSelectedModule(value);
@@ -160,10 +172,10 @@ export const Permissions = (props: PermissionsProps) => {
 
     return (
         <FlexBox flexDirection="column" height="calc(100% - 134px)">
-            <Typography variant="h4">Permissions</Typography>
+            <Typography variant="h4">{t('permissions')}</Typography>
             <FlexBox height="calc(100% - 102px)">
                 <FlexBox flexDirection="column" width="300px" padding="20px" gap={'15px'}>
-                    <Typography variant="h6">Modules</Typography>
+                    <Typography variant="h6">{t('modules')}</Typography>
                     <FlexBox flexDirection="column" >
                         {modules.map((item) => (
                             <Modules
@@ -176,7 +188,7 @@ export const Permissions = (props: PermissionsProps) => {
                 </FlexBox>
                 <VerticalSeparator height="calc(100% - 40px)" $margin="20px 10px" />
                 <FlexBox flexDirection="column" padding="20px" gap={'15px'} overflowX="auto" overflowY="auto" width="calc(100% - 320px)">
-                    <Typography variant="h6">Permissions</Typography>
+                    <Typography variant="h6">{t('permissions')}</Typography>
                     <FlexBox flexDirection="column" flexWrap="wrap" height="calc(100% - 43px)" style={{ columnGap: '35px' }}>
                         {modifiedPermissions.map((item) => <PermissionList {...item} key={item.permissionKey} />)}
                     </FlexBox>
@@ -185,14 +197,14 @@ export const Permissions = (props: PermissionsProps) => {
             <FlexBox justifyContent="flex-end" gap={'20px'} width='70%'>
                 {
                     mode === 'view' ?
-                        <BackButton onClick={() => navigate(-1)}>Back</BackButton>
+                        <BackButton onClick={() => navigate(-1)}>{t('back')}</BackButton>
                         :
                         <>
                             {mode !== 'userProfile' ?
                                 (
                                     <>
                                         <CancelButton onClick={() => navigate(-1)} />
-                                        <LoadingButton isLoading={props?.mutationLoading || false} variant="contained" type="submit" onClick={handleSubmit(onSubmit!)}>Submit</LoadingButton>
+                                        <LoadingButton isLoading={props?.mutationLoading || false} variant="contained" type="submit" onClick={handleSubmit(onSubmit!)}>{t('submit')}</LoadingButton>
                                     </>)
                                 : null}
                         </>

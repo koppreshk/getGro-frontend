@@ -32,15 +32,20 @@ export enum DashboardPermissionKeys {
     SLA_DASHBOARD = 'sla_dashboard'
 }
 
+export enum KnowledgeBasePermissionKeys {
+    CREATE_ARTICLE = 'create_article'
+}
+
 /**
  * value 'all' will only come for account owner role, and has all permissions
  */
-export type AllPermissionKeys = `${TicketPermissionKeys}` | `${ConfigurationPermissionKeys}` | `${DashboardPermissionKeys}` | 'all'
+export type AllPermissionKeys = `${TicketPermissionKeys}` | `${ConfigurationPermissionKeys}` | `${DashboardPermissionKeys}` | `${KnowledgeBasePermissionKeys}` | 'all'
 
 export enum ModuleKeys {
     TICKETS = 'tickets',
     CONFIGURATIONS = 'configurations',
-    DASHBOARDS = 'dashboards'
+    DASHBOARDS = 'dashboards',
+    KNOWLEDGE_BASE = 'knowledge_base'
 }
 
 export type AllModules = `${ModuleKeys}`;
