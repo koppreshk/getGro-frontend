@@ -41,7 +41,7 @@ const KnowledgeBaseContent = (props: IKnowledgeBaseLayoutProps) => {
                 </Typography>
                 <Button variant="contained" startIcon={<AddCircleOutline />} onClick={navigateToCreateKB}> <Trans i18nKey={"create"} /></Button>
             </FlexBox>
-            <KnowledgeBaseList data={props.knowledgeBaseData} />
+            <KnowledgeBaseList data={props.knowledgeBaseData} isLoading={props.isLoading} />
         </FlexBox>
     )
 }

@@ -6,10 +6,11 @@ import { Trans } from "react-i18next";
 
 interface IKnowledgeBaseListProps {
     data: IKnowledgeBase[];
+    isLoading: boolean;
 }
 
 export const KnowledgeBaseList = (props: IKnowledgeBaseListProps) => {
-    const { data } = props;
+    const { data, isLoading } = props;
     const colums = useColumns();
 
     return (
@@ -17,6 +18,8 @@ export const KnowledgeBaseList = (props: IKnowledgeBaseListProps) => {
             <ConfigDataGrid
                 columns={colums}
                 data={data}
+                isLoading={isLoading}
+                hideTableControls
                 enableSerchField
             />
         </div>

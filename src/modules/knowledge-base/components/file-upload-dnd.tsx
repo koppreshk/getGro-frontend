@@ -1,8 +1,9 @@
-import styled from 'styled-components';
-import { Button, IconButton, Typography } from "@mui/material"
-import { FlexBox } from "lib/ui-ux";
 import { useState, DragEvent, ChangeEvent, useRef, MouseEventHandler, Dispatch, SetStateAction } from "react";
+import styled from 'styled-components';
+import { Trans, useTranslation } from 'react-i18next';
+import { Button, IconButton, Typography } from "@mui/material"
 import { DeleteOutline } from '@mui/icons-material';
+import { FlexBox } from "lib/ui-ux";
 import { generateId } from 'lib/utils';
 import { IFile } from './create-article';
 
@@ -74,6 +75,7 @@ export const FileUploadDND = (props: FileUploadDNDProps) => {
         const filteredFiles = files.filter((item) => item.id !== id);
         setFiles(filteredFiles);
     }
+    const { t } = useTranslation();
 
     return (
         <FlexBox gap={'20px'} height='calc(100% - 160px)' padding="20px" style={{ background: '#f1f1f1', borderRadius: '8px' }}>
@@ -88,8 +90,8 @@ export const FileUploadDND = (props: FileUploadDNDProps) => {
                 flexDirection='column'
                 gap={'8px'}
                 $isDragging={isDragging}>
-                <Typography variant="h6">{isDragging ? 'Release to drop the files here' : 'Drag and drop files to upload'}</Typography>
-                <Typography variant="body2">{'Or'}</Typography>
+                <Typography variant="h6">{isDragging ? t('release_to_drop') : t('drag_and_drop')}</Typography>
+                <Typography variant="body2">{t('or')}</Typography>
                 <input
                     type="file"
                     multiple
@@ -98,7 +100,7 @@ export const FileUploadDND = (props: FileUploadDNDProps) => {
                     style={{ display: 'none' }}
                     id="fileInput"
                 />
-                <Button variant="contained" onClick={handleOpenFileDialog} >Browse</Button>
+                <Button variant="contained" onClick={handleOpenFileDialog} ><Trans i18nKey="browse" /></Button>
             </FileUploadDNDContainer>
             {files.length ? <UploadedFiles files={files} onDeleteClick={onDeleteClick} /> : null}
         </FlexBox>
@@ -114,7 +116,7 @@ const UploadedFiles = (props: UploadedFileProps) => {
     const { files, onDeleteClick } = props;
     return (
         <FlexBox flexDirection='column' gap={'20px'}>
-            <Typography>Uploaded Files</Typography>
+            <Typography><Trans i18nKey="uploaded_files" /></Typography>
             {files.map((item, index) => (
                 <AttachmentPreviewContainer key={`${item.file.name}-${index}`} gap="8px" alignItems="center">
                     <FileType alignItems="center" justifyContent="center">
