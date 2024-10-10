@@ -3,11 +3,13 @@ import { Route, Routes, useNavigate } from "react-router-dom"
 import { AddCircleOutline } from "@mui/icons-material"
 import { Button, Typography } from "@mui/material"
 import { BreadCrumbs, FlexBox } from "lib/ui-ux"
-import { CreateArticleContainer, IKnowledgeBase } from "../containers"
+import { CreateArticleContainer } from "../containers"
 import { KnowledgeBaseList } from "./knowledge-base-list"
+import { IKnowledgeBase } from "../apis"
 
 interface IKnowledgeBaseLayoutProps {
-    knowledgeBaseData: IKnowledgeBase[]
+    knowledgeBaseData: IKnowledgeBase[];
+    isLoading: boolean;
 }
 
 export const KnowledgeBaseLayout = (props: IKnowledgeBaseLayoutProps) => {
@@ -16,7 +18,7 @@ export const KnowledgeBaseLayout = (props: IKnowledgeBaseLayoutProps) => {
             <BreadCrumbs />
             <FlexBox flexDirection="column" gap={'20px'} padding="0 20px 20px" height="calc(100% - 46px)">
                 <Routes>
-                    <Route key='base-route' path="/" element={<KnowledgeBaseContent knowledgeBaseData={props.knowledgeBaseData} />} />
+                    <Route key='base-route' path="/" element={<KnowledgeBaseContent {...props} />} />
                     <Route key='add-route' path="create-knowledge-base" element={<CreateArticleContainer />} />
                 </Routes>
             </FlexBox>

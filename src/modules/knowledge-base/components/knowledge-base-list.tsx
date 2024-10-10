@@ -1,13 +1,14 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
-import { IKnowledgeBase } from "../containers";
+import { IKnowledgeBase } from "../apis";
+import { Link } from "@mui/material";
 
 interface IKnowledgeBaseListProps {
-    data:  IKnowledgeBase[];
+    data: IKnowledgeBase[];
 }
 
 export const KnowledgeBaseList = (props: IKnowledgeBaseListProps) => {
-    const { data} = props;
+    const { data } = props;
     const colums = useColumns();
 
     return (
@@ -32,10 +33,12 @@ function useColumns() {
         columnHelper.accessor('title', {
             id: 'title',
             header: () => 'Title',
-            cell: info => info.getValue(),
+            cell: ({ row: { original } }) => {
+                return <Link href={original.url} underline="none" target="_blank">{original.title}</Link>
+            },
         }),
-        columnHelper.accessor('created_date', {
-            id: 'created_date',
+        columnHelper.accessor('created_at', {
+            id: 'created_at',
             header: () => 'Created Date',
             cell: info => info.getValue(),
         })
