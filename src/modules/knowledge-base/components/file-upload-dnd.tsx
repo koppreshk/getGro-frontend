@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import { Button, IconButton, Typography } from "@mui/material"
 import { FlexBox } from "lib/ui-ux";
-import { useState, DragEvent, ChangeEvent, useRef, MouseEventHandler } from "react";
+import { useState, DragEvent, ChangeEvent, useRef, MouseEventHandler, Dispatch, SetStateAction } from "react";
 import { DeleteOutline } from '@mui/icons-material';
+import { generateId } from 'lib/utils';
+import { IFile } from './create-article';
 
 const FileType = styled(FlexBox)`
     width: 40px;
@@ -13,8 +15,8 @@ const FileType = styled(FlexBox)`
 `;
 
 const AttachmentPreviewContainer = styled(FlexBox)`
-    border: 1px solid ${(props) => props.theme.pallete.grayVariant5};
-    background-color: ${(props) => props.theme.pallete.grayVariant5};
+    border: 1px solid #ccc;
+    background-color: ${(props) => props.theme.pallete.white};
     border-radius: 6px;
     width: fit-content;
 `;
@@ -25,8 +27,13 @@ const FileUploadDNDContainer = styled(FlexBox) <{ $isDragging: boolean }>`
     margin-bottom: 20px;
 `;
 
-export const FileUploadDND = () => {
-    const [files, setFiles] = useState<File[]>([]);
+interface FileUploadDNDProps {
+    files: IFile[];
+    setFiles: Dispatch<SetStateAction<IFile[]>>
+}
+
+export const FileUploadDND = (props: FileUploadDNDProps) => {
+    const { files, setFiles } = props;
     const [isDragging, setIsDragging] = useState(false);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -46,12 +53,14 @@ export const FileUploadDND = () => {
 
         // Extract files from the drop event
         const droppedFiles = Array.from(e.dataTransfer.files);
-        setFiles(droppedFiles);
+        const modifiedFiles = droppedFiles.slice().map((file) => ({ file, id: generateId() }));
+        setFiles(modifiedFiles);
     };
 
     const handleFileSelection = (e: ChangeEvent<HTMLInputElement>) => {
         const selectedFiles = e.target.files ? Array.from(e.target.files) : [];
-        setFiles(selectedFiles);
+        const modifiedFiles = selectedFiles.slice().map((file) => ({ file, id: generateId() }));
+        setFiles(modifiedFiles);
     };
 
     const handleOpenFileDialog: MouseEventHandler<HTMLButtonElement> = (ev): void => {
@@ -61,36 +70,13 @@ export const FileUploadDND = () => {
         }
     };
 
-    // const handleUpload = async () => {
-    //     if (files.length === 0) {
-    //         alert('Please select some files first.');
-    //         return;
-    //     }
-
-    //     const formData = new FormData();
-    //     files.forEach(file => {
-    //         formData.append('files[]', file);
-    //     });
-
-    //     try {
-    //         const response = await fetch('/upload', {
-    //             method: 'POST',
-    //             body: formData,
-    //         });
-
-    //         if (response.ok) {
-    //             alert('Files uploaded successfully!');
-    //         } else {
-    //             alert('File upload failed.');
-    //         }
-    //     } catch (error) {
-    //         console.error('Error uploading files:', error);
-    //         alert('Error uploading files.');
-    //     }
-    // };
+    const onDeleteClick = (id: string) => {
+        const filteredFiles = files.filter((item) => item.id !== id);
+        setFiles(filteredFiles);
+    }
 
     return (
-        <FlexBox gap={'20px'} width="100%" height='100%'>
+        <FlexBox gap={'20px'} height='calc(100% - 160px)' padding="20px" style={{ background: '#f1f1f1', borderRadius: '8px' }}>
             <FileUploadDNDContainer
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
@@ -98,11 +84,10 @@ export const FileUploadDND = () => {
                 alignItems="center"
                 justifyContent="center"
                 width="60%"
-                height="50%"
+                height="100%"
                 flexDirection='column'
                 gap={'8px'}
-                $isDragging={isDragging}
-            >
+                $isDragging={isDragging}>
                 <Typography variant="h6">{isDragging ? 'Release to drop the files here' : 'Drag and drop files to upload'}</Typography>
                 <Typography variant="body2">{'Or'}</Typography>
                 <input
@@ -115,27 +100,28 @@ export const FileUploadDND = () => {
                 />
                 <Button variant="contained" onClick={handleOpenFileDialog} >Browse</Button>
             </FileUploadDNDContainer>
-            <UploadedFiles files={files} />
+            {files.length ? <UploadedFiles files={files} onDeleteClick={onDeleteClick} /> : null}
         </FlexBox>
     )
 }
 
 interface UploadedFileProps {
-    files: File[]
+    files: IFile[];
+    onDeleteClick: (id: string) => void;
 }
 
 const UploadedFiles = (props: UploadedFileProps) => {
-    const { files } = props;
+    const { files, onDeleteClick } = props;
     return (
         <FlexBox flexDirection='column' gap={'20px'}>
             <Typography>Uploaded Files</Typography>
             {files.map((item, index) => (
-                <AttachmentPreviewContainer key={`${item.name}-${index}`} gap="8px" alignItems="center">
+                <AttachmentPreviewContainer key={`${item.file.name}-${index}`} gap="8px" alignItems="center">
                     <FileType alignItems="center" justifyContent="center">
-                        <Typography variant="caption" sx={{ color: 'inherit' }}>{item.name.split('.').pop()?.toUpperCase()}</Typography>
+                        <Typography variant="caption" sx={{ color: 'inherit' }}>{item.file.name.split('.').pop()?.toUpperCase()}</Typography>
                     </FileType>
-                    <Typography variant="body3" title={item.name} sx={{ maxWidth: '320px', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}>{item.name}</Typography>
-                    <IconButton>
+                    <Typography variant="body3" title={item.file.name} sx={{ maxWidth: '320px', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}>{item.file.name}</Typography>
+                    <IconButton onClick={() => onDeleteClick(item.id)}>
                         <DeleteOutline />
                     </IconButton>
                 </AttachmentPreviewContainer>
