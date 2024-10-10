@@ -165,8 +165,11 @@
     "next": "Next",
     "refresh": "Refresh",
     "send": "Send",
+    "create": "Create",
     "delete": "Delete",
     "priority": "Priority",
     "status": "Status",
-    "ticketId": "Ticket Id"
+    "ticketId": "Ticket Id",
+    "knowledge_base": "Knowledge Base",
+    "created_date": "Created Date"
 }

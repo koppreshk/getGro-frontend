@@ -2,6 +2,7 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
 import { IKnowledgeBase } from "../apis";
 import { Link } from "@mui/material";
+import { Trans } from "react-i18next";
 
 interface IKnowledgeBaseListProps {
     data: IKnowledgeBase[];
@@ -32,14 +33,14 @@ function useColumns() {
         }),
         columnHelper.accessor('title', {
             id: 'title',
-            header: () => 'Title',
+            header: () => <Trans i18nKey={"title"}/>,
             cell: ({ row: { original } }) => {
                 return <Link href={original.url} underline="none" target="_blank">{original.title}</Link>
             },
         }),
         columnHelper.accessor('created_at', {
             id: 'created_at',
-            header: () => 'Created Date',
+            header: () => <Trans i18nKey={"created_date"}/>,
             cell: info => info.getValue(),
         })
     ]
