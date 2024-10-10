@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "react-query";
-import { AllPermissionKeys, ConfigurationPermissionKeys, DashboardPermissionKeys, ModuleKeys, TicketPermissionKeys } from "lib/enums";
+import { AllPermissionKeys, ConfigurationPermissionKeys, DashboardPermissionKeys, KnowledgeBasePermissionKeys, ModuleKeys, TicketPermissionKeys } from "lib/enums";
 import { useDispatch } from "react-redux";
 import { setCoreData } from '../storage/core-slice';
 import { useServiceClient } from "lib";
@@ -37,7 +37,9 @@ export const useGetConfig = (isEnabled: boolean) => {
                 const allTicketPermissions = Object.values(TicketPermissionKeys);
                 const allConfigPermissions = Object.values(ConfigurationPermissionKeys);
                 const allDashboardPermissions = Object.values(DashboardPermissionKeys);
-                const allPermissions = [...allTicketPermissions, ...allConfigPermissions, ...allDashboardPermissions] as AllPermissionKeys[];
+                const allKBPermissions = Object.values(KnowledgeBasePermissionKeys);
+
+                const allPermissions = [...allTicketPermissions, ...allConfigPermissions, ...allDashboardPermissions, ...allKBPermissions] as AllPermissionKeys[];
 
                 dispatch(setCoreData({ ...data, permissions: allPermissions, modules: Object.values(ModuleKeys) }));
                 return;

@@ -177,5 +177,7 @@
     "status": "Status",
     "ticketId": "Ticket Id",
     "knowledge_base": "Knowledge Base",
-    "created_date": "Created Date"
+    "created_date": "Created Date",
+    "modules": "Modules",
+    "permissions": "Permissions"
 }

@@ -33,7 +33,8 @@ export const CreateRole = (props: CreateRoleProps) => {
             modules: {
                 configurations: true,
                 dashboards: true,
-                tickets: true
+                tickets: true,
+                knowledge_base: true
             }
         }
     });
