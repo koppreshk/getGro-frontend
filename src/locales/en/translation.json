@@ -45,6 +45,7 @@
     "title_required": "Title required",
     "requester_email_validation": "Requester Email is required",
     "description_validation": "Description is required",
+    "select_file_validation": "Please select some files before uploading",
     "create_ticket_success": "Created a new ticket successfully",
     "create_kb_article_success": "Created knowledge base article successfully",
     "create_ticket_error": "Failed to create a new ticket",

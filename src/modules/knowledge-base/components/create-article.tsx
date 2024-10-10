@@ -28,11 +28,13 @@ export const CreateArticle = (props: CreateArticleProps) => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const [files, setFiles] = useState<IFile[]>([]);
+    const [error, setError] = useState<string | null>(null); // Error state
+
     const { showNotification } = useNotifications();
 
     const onFormSubmit = (formfieldData: { title: string }) => {
         if (files.length === 0) {
-            alert('Please select some files first.');
+            setError(t('select_file_validation'));
             return;
         }
 
@@ -51,9 +53,9 @@ export const CreateArticle = (props: CreateArticleProps) => {
     }
     return (
         <FormProvider {...form}>
-            <FlexBox padding="20px" width="100%" height="100%" gap={'20px'} flexDirection="column">
+            <FlexBox padding="20px" width="100%" height="100%" gap={'20px'} flexDirection="column" overflowY="auto">
                 <TextboxFieldWithLabel sx={{ width: '60%' }} name="title" label={t("title")} rules={{ required: t('title_required') }} />
-                <FileUploadDND setFiles={setFiles} files={files} />
+                <FileUploadDND setFiles={setFiles} files={files} error={error} setError={setError} />
                 <FlexBox gap={'20px'}>
                     <CancelButton onClick={() => navigate(-1)} />
                     <LoadingButton variant="contained" isLoading={mutationLoading} onClick={form.handleSubmit(onFormSubmit)}>{t('submit')}</LoadingButton>

@@ -6,6 +6,7 @@ import { DeleteOutline } from '@mui/icons-material';
 import { FlexBox } from "lib/ui-ux";
 import { generateId } from 'lib/utils';
 import { IFile } from './create-article';
+import { StyledErrorMessage } from "lib/form-fields";
 
 const FileType = styled(FlexBox)`
     width: 40px;
@@ -30,12 +31,15 @@ const FileUploadDNDContainer = styled(FlexBox) <{ $isDragging: boolean }>`
 
 interface FileUploadDNDProps {
     files: IFile[];
+    error: string | null;
     setFiles: Dispatch<SetStateAction<IFile[]>>
+    setError: Dispatch<SetStateAction<string | null>>
 }
 
 export const FileUploadDND = (props: FileUploadDNDProps) => {
-    const { files, setFiles } = props;
+    const { files, setFiles, error, setError } = props;
     const [isDragging, setIsDragging] = useState(false);
+
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
     const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
@@ -56,12 +60,14 @@ export const FileUploadDND = (props: FileUploadDNDProps) => {
         const droppedFiles = Array.from(e.dataTransfer.files);
         const modifiedFiles = droppedFiles.slice().map((file) => ({ file, id: generateId() }));
         setFiles(modifiedFiles);
+        setError(null); // Clear any previous error
     };
 
     const handleFileSelection = (e: ChangeEvent<HTMLInputElement>) => {
         const selectedFiles = e.target.files ? Array.from(e.target.files) : [];
         const modifiedFiles = selectedFiles.slice().map((file) => ({ file, id: generateId() }));
         setFiles(modifiedFiles);
+        setError(null); // Clear any previous error
     };
 
     const handleOpenFileDialog: MouseEventHandler<HTMLButtonElement> = (ev): void => {
@@ -78,31 +84,38 @@ export const FileUploadDND = (props: FileUploadDNDProps) => {
     const { t } = useTranslation();
 
     return (
-        <FlexBox gap={'20px'} height='calc(100% - 160px)' padding="20px" style={{ background: '#f1f1f1', borderRadius: '8px' }}>
-            <FileUploadDNDContainer
-                onDragOver={handleDragOver}
-                onDragLeave={handleDragLeave}
-                onDrop={handleDrop}
-                alignItems="center"
-                justifyContent="center"
-                width="60%"
-                height="100%"
-                flexDirection='column'
-                gap={'8px'}
-                $isDragging={isDragging}>
-                <Typography variant="h6">{isDragging ? t('release_to_drop') : t('drag_and_drop')}</Typography>
-                <Typography variant="body2">{t('or')}</Typography>
-                <input
-                    type="file"
-                    multiple
-                    ref={fileInputRef}
-                    onChange={handleFileSelection}
-                    style={{ display: 'none' }}
-                    id="fileInput"
-                />
-                <Button variant="contained" onClick={handleOpenFileDialog} ><Trans i18nKey="browse" /></Button>
-            </FileUploadDNDContainer>
-            {files.length ? <UploadedFiles files={files} onDeleteClick={onDeleteClick} /> : null}
+        <FlexBox flexDirection="column" height='calc(100% - 160px)' gap={'5px'}>
+            <FlexBox gap={'20px'}  padding="20px" height="95%" style={{ background: '#f1f1f1', borderRadius: '8px' }}>
+                <FileUploadDNDContainer
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleDrop}
+                    alignItems="center"
+                    justifyContent="center"
+                    width="60%"
+                    height="100%"
+                    flexDirection='column'
+                    gap={'8px'}
+                    $isDragging={isDragging}>
+                    <Typography variant="h6">{isDragging ? t('release_to_drop') : t('drag_and_drop')}</Typography>
+                    <Typography variant="body2">{t('or')}</Typography>
+                    <input
+                        type="file"
+                        multiple
+                        ref={fileInputRef}
+                        onChange={handleFileSelection}
+                        style={{ display: 'none' }}
+                        id="fileInput"
+                    />
+                    <Button variant="contained" onClick={handleOpenFileDialog} ><Trans i18nKey="browse" /></Button>
+                </FileUploadDNDContainer>
+                {files.length ? <UploadedFiles files={files} onDeleteClick={onDeleteClick} /> : null}
+            </FlexBox>
+            {error && (
+                <StyledErrorMessage>
+                    {error}
+                </StyledErrorMessage>
+            )}
         </FlexBox>
     )
 }

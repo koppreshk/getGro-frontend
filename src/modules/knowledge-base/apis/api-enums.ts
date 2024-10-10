@@ -1,5 +1,5 @@
 export enum KnowledgeBaseEndPoint {
-    CREATE_KB_ARTCLE = 'knowledge_base/create', //this is not used anymore, need to confirm and remove
+    CREATE_KB_ARTCLE = 'knowledge_base/create',
     FETCH_ALL_KB = 'knowledge_base/all'
 }
 
