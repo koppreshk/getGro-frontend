@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Trans, useTranslation } from 'react-i18next';
 import { Button, IconButton, Typography } from "@mui/material"
 import { DeleteOutline } from '@mui/icons-material';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { FlexBox } from "lib/ui-ux";
 import { generateId } from 'lib/utils';
 import { IFile } from './create-article';
@@ -85,7 +86,7 @@ export const FileUploadDND = (props: FileUploadDNDProps) => {
 
     return (
         <FlexBox flexDirection="column" height='calc(100% - 160px)' gap={'5px'}>
-            <FlexBox gap={'20px'}  padding="20px" height="95%" style={{ background: '#f1f1f1', borderRadius: '8px' }}>
+            <FlexBox gap={'20px'} padding="20px" height="95%" style={{ background: '#f1f1f1', borderRadius: '8px' }}>
                 <FileUploadDNDContainer
                     onDragOver={handleDragOver}
                     onDragLeave={handleDragLeave}
@@ -97,6 +98,7 @@ export const FileUploadDND = (props: FileUploadDNDProps) => {
                     flexDirection='column'
                     gap={'8px'}
                     $isDragging={isDragging}>
+                    <UploadFileIcon sx={{ width: '120px', height: '120px', marginBottom: '20px' }} />
                     <Typography variant="h6">{isDragging ? t('release_to_drop') : t('drag_and_drop')}</Typography>
                     <Typography variant="body2">{t('or')}</Typography>
                     <input
