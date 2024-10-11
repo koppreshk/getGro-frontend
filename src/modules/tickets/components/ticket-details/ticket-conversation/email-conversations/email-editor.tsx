@@ -12,6 +12,7 @@ import { UploadedAttachmentsPreview } from "./uploaded-attachments-preview";
 import { EmailHeaderOptions } from "./email-header-options";
 import { InsertTemplate } from "./insert-template";
 import { useTranslation } from "react-i18next";
+import { InsertArticle } from "./insert-article";
 
 interface IEmailEditorProps {
     from: string;
@@ -85,6 +86,7 @@ const EmailFooterOptions = (props: Pick<IEmailEditorProps, 'onSendClick' | 'onCa
                 </RoundedSendButton>
                 <FileUploadField name={`${editorType}.attachments`} multiple readMode="readAsDataURL" />
                 <InsertTemplate editorType={editorType} />
+                <InsertArticle editorType={editorType} />
             </FlexBox >
             <IconButton onClick={onCancelClick} title={t("delete")}>
                 <Delete />

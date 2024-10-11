@@ -179,5 +179,8 @@
     "knowledge_base": "Knowledge Base",
     "created_date": "Created Date",
     "modules": "Modules",
-    "permissions": "Permissions"
+    "permissions": "Permissions",
+    "added_by": "Added By",
+    "insert_template": "Insert Template",
+    "insert_article": "Insert Article"
 }

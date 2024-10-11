@@ -36,14 +36,19 @@ function useColumns() {
         }),
         columnHelper.accessor('title', {
             id: 'title',
-            header: () => <Trans i18nKey={"title"}/>,
+            header: () => <Trans i18nKey={"title"} />,
             cell: ({ row: { original } }) => {
                 return <Link href={original.url} underline="none" target="_blank">{original.title}</Link>
             },
         }),
         columnHelper.accessor('created_at', {
             id: 'created_at',
-            header: () => <Trans i18nKey={"created_date"}/>,
+            header: () => <Trans i18nKey={"created_date"} />,
+            cell: info => info.getValue(),
+        }),
+        columnHelper.accessor('added_by', {
+            id: 'added_by',
+            header: () => <Trans i18nKey={"added_by"} />,
             cell: info => info.getValue(),
         })
     ]
