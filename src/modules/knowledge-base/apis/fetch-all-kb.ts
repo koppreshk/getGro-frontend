@@ -18,6 +18,6 @@ export const useFetchAllKB = () => {
 
     return useQuery<IKnowledgeBase[], { message: string }>({
         queryFn: allKb,
-        queryKey: KnowledgeBaseQueryKeys.FETCH_ALL_KB
+        queryKey: KnowledgeBaseQueryKeys.FETCH_ALL_KB,
     })
 }

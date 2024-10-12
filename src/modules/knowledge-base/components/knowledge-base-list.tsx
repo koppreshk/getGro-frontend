@@ -3,6 +3,8 @@ import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
 import { IKnowledgeBase } from "../apis";
 import { Link } from "@mui/material";
 import { Trans } from "react-i18next";
+import { FlexBox } from "lib/ui-ux";
+import { DeleteKBArticle } from "./delete-kb-article";
 
 interface IKnowledgeBaseListProps {
     data: IKnowledgeBase[];
@@ -50,6 +52,18 @@ function useColumns() {
             id: 'added_by',
             header: () => <Trans i18nKey={"added_by"} />,
             cell: info => info.getValue(),
+        }),
+        columnHelper.display({
+            id: 'actions',
+            header: () => <Trans i18nKey={"actions"} />,
+            cell: ({ row: { original } }) => {
+                return (
+                    <FlexBox flexDirection="row" gap="5px">
+                        <DeleteKBArticle id={original.id} />
+                    </FlexBox>
+                )
+            },
+            enableSorting: false,
         })
     ]
 
