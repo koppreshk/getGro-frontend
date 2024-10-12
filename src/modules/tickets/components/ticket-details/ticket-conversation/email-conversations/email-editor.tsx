@@ -69,14 +69,14 @@ export const EmailEditor = (props: IEmailEditorProps) => {
                         {attachmets?.selectedFiles.map((item) => (<UploadedAttachmentsPreview item={item} attachmets={attachmets} />))}
                     </FlexBox>
                 </div>
-                <EmailFooterOptions onCancelClick={props.onCancelClick} onSendClick={props.onSendClick} editorType={editorType} isMutationLoading={isMutationLoading} />
+                <EmailFooterOptions onCancelClick={props.onCancelClick} onSendClick={props.onSendClick} editorType={editorType} isMutationLoading={isMutationLoading} editorValue={watch(`${editorType}.editor`)} />
             </StyledForwardCardContainer>
         </FlexBox>
     )
 }
 
-const EmailFooterOptions = (props: Pick<IEmailEditorProps, 'onSendClick' | 'onCancelClick' | 'editorType' | 'isMutationLoading'>) => {
-    const { editorType, isMutationLoading, onCancelClick, onSendClick } = props;
+const EmailFooterOptions = (props: Pick<IEmailEditorProps, 'onSendClick' | 'onCancelClick' | 'editorType' | 'isMutationLoading'> & { editorValue: string }) => {
+    const { editorType, isMutationLoading, editorValue, onCancelClick, onSendClick } = props;
     const { t } = useTranslation();
     return (
         <FlexBox justifyContent="space-between" padding="0px 16px 10px">
@@ -86,7 +86,7 @@ const EmailFooterOptions = (props: Pick<IEmailEditorProps, 'onSendClick' | 'onCa
                 </RoundedSendButton>
                 <FileUploadField name={`${editorType}.attachments`} multiple readMode="readAsDataURL" />
                 <InsertTemplate editorType={editorType} />
-                <InsertArticle editorType={editorType} />
+                <InsertArticle editorType={editorType} editorValue={editorValue} />
             </FlexBox >
             <IconButton onClick={onCancelClick} title={t("delete")}>
                 <Delete />

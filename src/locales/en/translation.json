@@ -182,5 +182,6 @@
     "permissions": "Permissions",
     "added_by": "Added By",
     "insert_template": "Insert Template",
-    "insert_article": "Insert Article"
+    "insert_article": "Insert Article",
+    "no_articles_found": "No articles found"
 }

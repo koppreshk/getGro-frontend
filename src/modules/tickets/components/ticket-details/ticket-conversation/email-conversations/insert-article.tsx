@@ -5,7 +5,7 @@ import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ArticleOutlined } from '@mui/icons-material';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Link, TextField, Typography } from '@mui/material';
-import { CancelButton, FlexBox } from 'lib/ui-ux';
+import { CancelButton, CenteredCircularProgress, FlexBox } from 'lib/ui-ux';
 import { IKnowledgeBase, useSearchArticle } from 'modules/knowledge-base/apis';
 import { CheckboxField } from 'lib/form-fields';
 
@@ -21,12 +21,12 @@ interface ArticleFormFields {
     }
 }
 
-export const InsertArticle = (props: { editorType: string }) => {
+export const InsertArticle = (props: { editorType: string; editorValue: string }) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const { setValue } = useFormContext();
     const open = Boolean(anchorEl);
     const { t } = useTranslation();
-    const { mutateAsync, data } = useSearchArticle();
+    const { mutateAsync, data, isLoading } = useSearchArticle();
     const form = useForm<ArticleFormFields>({
         shouldUnregister: true,
         mode: 'onBlur',
@@ -69,9 +69,9 @@ export const InsertArticle = (props: { editorType: string }) => {
 
         // Convert the JSX content to an HTML string
         const htmlString = ReactDOMServer.renderToStaticMarkup(linksMarkup);
-        setValue(`${props.editorType}.editor`, htmlString);
+        setValue(`${props.editorType}.editor`, props.editorValue + htmlString);
         handleClose();
-    }, [data, props.editorType, setValue]);
+    }, [data, props.editorType, props.editorValue, setValue]);
 
     const onSearch: ChangeEventHandler<HTMLInputElement> = (ev) => {
         mutateAsync({ title: ev.target.value })
@@ -85,6 +85,11 @@ export const InsertArticle = (props: { editorType: string }) => {
             <Dialog
                 open={open}
                 fullWidth
+                PaperProps={{
+                    sx: {
+                        maxWidth: '850px'
+                    }
+                }}
                 onClose={handleClose}>
                 <FormProvider {...form}>
                     <DialogTitle id="alert-dialog-title">
@@ -96,10 +101,17 @@ export const InsertArticle = (props: { editorType: string }) => {
                                 onChange={onSearch}
                                 id="outlined-basic" label="Search Articles"
                                 placeholder='Search articles by title' variant="outlined" />
-                            <FlexBox gap={'10px'}>
-                                {data?.map((item) => (
-                                    <ArticleContent key={item.id} item={item} />
-                                ))}
+                            <FlexBox gap={'10px'} style={{ minHeight: '250px', maxHeight: '250px' }} flexWrap='wrap' overflowY='auto'>
+                                {isLoading
+                                    ? <CenteredCircularProgress height='unset' />
+                                    : data?.length
+                                        ? data?.map((item) => (
+                                            <ArticleContent key={item.id} item={item} />
+                                        )) : (
+                                            <FlexBox justifyContent='center' alignItems='center' width='100%'>
+                                                <Typography>{t('no_articles_found')}</Typography>
+                                            </FlexBox>)
+                                }
                             </FlexBox>
                         </FlexBox>
                     </DialogContent>
@@ -119,7 +131,7 @@ export const InsertArticle = (props: { editorType: string }) => {
 const ArticleContent = (props: { item: IKnowledgeBase }) => {
     const { item } = props;
     return (
-        <StyledCard padding='12px' gap={'8px'} alignItems='flex-start'>
+        <StyledCard padding='12px' gap={'8px'} alignItems='flex-start' height='fit-content'>
             <CheckboxField name={`articles.${item.id}`} sx={{ padding: 0 }} />
             <FlexBox flexDirection='column' gap={'8px'}>
                 <Link variant='h6' href={item.url} underline="none" target="_blank">
