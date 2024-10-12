@@ -5,6 +5,7 @@ import { EditEmail } from './edit-email';
 import { DeleteEmail } from './delete-email';
 import { IEmails } from 'modules/settings/apis';
 import { getFormattedDate } from 'lib/utils';
+import { useTranslation } from 'react-i18next';
 
 interface IAllEmailProps {
     data?: IEmails[];
@@ -13,32 +14,32 @@ interface IAllEmailProps {
 
 const useColumns = () => {
     const columnHelper = createColumnHelper<IEmails>();
-
+    const { t } = useTranslation();
     const columns = [
         columnHelper.accessor("display_name", {
             id: 'display_name',
             cell: info => info.getValue(),
-            header: () => 'Name',
+            header: () => t('name'),
         }),
         columnHelper.accessor("updated_at", {
             id: 'updated_at',
             cell: info => getFormattedDate(info.getValue()),
-            header: () => 'Updated At',
+            header: () => t('updated_at'),
         }),
         columnHelper.accessor("email", {
             id: 'email',
             cell: info => info.getValue(),
-            header: () => 'Email',
+            header: () => t('email'),
         }),
         columnHelper.accessor('can_create_ticket', {
             id: 'can_create_ticket',
-            header: () => 'is Active',
+            header: () => t('is_active'),
             cell: info => info.getValue() ? 'Enabled' : 'Disabled',
             enableSorting: false,
         }),
         columnHelper.display({
             id: 'actions',
-            header: () => <span>Actions</span>,
+            header: () => t('actions'),
             cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">

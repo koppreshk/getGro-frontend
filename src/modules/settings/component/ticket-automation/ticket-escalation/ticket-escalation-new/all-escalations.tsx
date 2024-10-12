@@ -6,6 +6,7 @@ import { IEscalationsNew } from 'modules/settings/apis/ticket-automation/escalat
 import { DeleteEscalation } from '../delete-escalation';
 import { SLAStatus } from './sla-status';
 import { EditEscalation } from './edit-escalation';
+import { useTranslation } from 'react-i18next';
 
 interface IAllEscalaltionsProps extends ITicketEscalaltionLayoutProps {
 
@@ -13,26 +14,27 @@ interface IAllEscalaltionsProps extends ITicketEscalaltionLayoutProps {
 
 const useColumns = () => {
     const columnHelper = createColumnHelper<IEscalationsNew>();
-
+    const { t } = useTranslation();
+    
     const columns = [
         columnHelper.accessor("name", {
             id: 'slaName',
             cell: info => info.getValue(),
-            header: () => 'SLA Name',
+            header: () => t('sla_name'),
         }),
         columnHelper.accessor("last_modified_by", {
             id: 'lastModifiedBy',
             cell: info => info.getValue(),
-            header: () => 'Last Modified By',
+            header: () => t('last_modified_by'),
         }),
         columnHelper.accessor("last_modified_at", {
             id: 'lastModified',
             cell: info => info.getValue(),
-            header: () => 'Last Modified',
+            header: () => t('last_modified'),
         }),
         columnHelper.display({
             id: 'isSLAActive',
-            header: () => 'SLA Active',
+            header: () => t('sla_active'),
             cell: ({ row: { original } }) => {
                 return (
                     <SLAStatus status={original.is_active} id={original.id} />
@@ -42,7 +44,7 @@ const useColumns = () => {
         }),
         columnHelper.display({
             id: 'actions',
-            header: () => 'Actions',
+            header: () => t('actions'),
             cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">

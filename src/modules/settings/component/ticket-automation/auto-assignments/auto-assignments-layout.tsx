@@ -1,6 +1,7 @@
 
 import { useCallback } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { ArrowBack, AddCircleOutline } from "@mui/icons-material"
 import { Button, Typography } from "@mui/material"
 import { BreadCrumbs, CustomIconButton, FlexBox, MoreInformation } from "lib/ui-ux";
@@ -31,6 +32,7 @@ export const AutoAssignmentsLayout = (props: IAutoAssignmentsLayoutProps) => {
 
 const AutoAssignmentsContent = (props: IAutoAssignmentsLayoutProps) => {
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const toggleAddAutoAssignmentsDrawer = useCallback(() => {
         navigate('add-rule');
@@ -42,9 +44,9 @@ const AutoAssignmentsContent = (props: IAutoAssignmentsLayoutProps) => {
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
                     <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
-                    <Typography variant="h5">Auto Assignments</Typography>
+                    <Typography variant="h5">{t('auto_assignments')}</Typography>
                 </FlexBox>
-                <Button variant="contained" onClick={toggleAddAutoAssignmentsDrawer} startIcon={<AddCircleOutline />}>Add New Rule</Button>
+                <Button variant="contained" onClick={toggleAddAutoAssignmentsDrawer} startIcon={<AddCircleOutline />}>{t('add_new_rule')}</Button>
             </FlexBox>
             <div style={{ height: 'calc(100% - 179px)' }}>
                 <AllAssignments data={props.data} isLoading={props.isLoading} />

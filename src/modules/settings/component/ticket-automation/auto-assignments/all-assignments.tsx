@@ -5,6 +5,7 @@ import { IAllAssignments } from 'modules/settings/apis/ticket-automation';
 import { EditAssignment } from './edit-assignment';
 import { DeleteAssignment } from './delete-assignment';
 import { AssignmentStatus } from './assignment-status';
+import { useTranslation } from 'react-i18next';
 
 interface IAllEmailProps {
     data?: IAllAssignments[];
@@ -13,26 +14,26 @@ interface IAllEmailProps {
 
 const useColumns = () => {
     const columnHelper = createColumnHelper<IAllAssignments>();
-
+    const { t } = useTranslation();
     const columns = [
         columnHelper.accessor("name", {
             id: 'Rule Name',
             cell: info => info.getValue(),
-            header: () => 'Rule Name',
+            header: () => t('rule_name'),
         }),
         columnHelper.accessor("last_modified", {
             id: 'last_modified',
             cell: info => info.getValue(),
-            header: () => 'Last Modified',
+            header: () => t('last_modified'),
         }),
         columnHelper.accessor("last_modified_by", {
             id: 'last_modified_by',
             cell: info => info.getValue(),
-            header: () => 'Last Modified By',
+            header: () => t('last_modified_by'),
         }),
         columnHelper.accessor('is_active', {
             id: 'is_active',
-            header: () => 'is Active',
+            header: () => t('is_active'),
             cell: ({ row: { original } }) => < AssignmentStatus id={original.id} status={original.is_active} autoMationType='auto_assignment' />,
             enableSorting: false,
         }),

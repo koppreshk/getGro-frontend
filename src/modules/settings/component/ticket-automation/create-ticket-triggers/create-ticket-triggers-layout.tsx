@@ -5,6 +5,7 @@ import { Button, Typography } from "@mui/material"
 import { BreadCrumbs, CustomIconButton, FlexBox, MoreInformation } from "lib/ui-ux"
 import { AddCreateTriggerRuleContainer, EditCreateTriggerRuleContainer } from "modules/settings/containers/ticket-automation/create-ticket-triggers";
 import { AllCreateTicketTriggers, IAllCreateTicketTriggersProps } from "./all-create-ticket-triggers"
+import { useTranslation } from "react-i18next"
 
 export interface ICreateTriggersLayoutProps extends IAllCreateTicketTriggersProps {
 
@@ -28,6 +29,7 @@ export const CreateTicketTriggersLayout = (props: ICreateTriggersLayoutProps) =>
 
 const CreateTicketTriggersContent = (props: ICreateTriggersLayoutProps) => {
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const navigateToCreateTrigger = useCallback(() => {
         navigate('add-rule');
@@ -39,9 +41,9 @@ const CreateTicketTriggersContent = (props: ICreateTriggersLayoutProps) => {
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
                     <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
-                    <Typography variant="h5">Create Ticket Triggers</Typography>
+                    <Typography variant="h5">{t('create_ticket_triggers')}</Typography>
                 </FlexBox>
-                <Button variant="contained" onClick={navigateToCreateTrigger} startIcon={<AddCircleOutline />}>Add New Rule</Button>
+                <Button variant="contained" onClick={navigateToCreateTrigger} startIcon={<AddCircleOutline />}>{t('add_new_rule')}</Button>
             </FlexBox>
             <div style={{ height: 'calc(100% - 179px)' }}>
                 <AllCreateTicketTriggers {...props} />
