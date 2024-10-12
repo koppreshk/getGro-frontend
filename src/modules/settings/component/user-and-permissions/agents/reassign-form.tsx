@@ -3,6 +3,7 @@ import { SelectField } from "lib/form-fields";
 import { FlexBox } from "lib/ui-ux";
 import { useFetchAllTicketQueues } from "modules/settings/apis";
 import { useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 const StyledSelectFields = styled(SelectField)`
@@ -14,6 +15,7 @@ const StyledSelectFields = styled(SelectField)`
 export const ReassignForm = () => {
     const { watch } = useFormContext();
     const { data, isLoading } = useFetchAllTicketQueues();
+    const { t } = useTranslation();
 
     if (isLoading) {
         return <FlexBox width="100%" justifyContent="center"><CircularProgress size={32} /></FlexBox>
@@ -26,8 +28,8 @@ export const ReassignForm = () => {
 
         return (
             <FlexBox gap={'20px'} style={{ marginLeft: '26px' }}>
-                <StyledSelectFields name="queue_id" sx={{ width: '200px' }} size="small" label="Queue" menuOptions={queues.map((item) => ({ key: item.id.toString(), value: item.name }))} rules={{ required: 'Please select a queue to change assignee' }} />
-                <StyledSelectFields name="reassign_to" sx={{ width: '200px' }} size="small" label="Assignee" menuOptions={agents || []} />
+                <StyledSelectFields name="queue_id" sx={{ width: '200px' }} size="small" label={t("queue")} menuOptions={queues.map((item) => ({ key: item.id.toString(), value: item.name }))} rules={{ required: t('queue_validation') }} />
+                <StyledSelectFields name="reassign_to" sx={{ width: '200px' }} size="small" label={t("assignee")} menuOptions={agents || []} />
             </FlexBox>
         )
     }

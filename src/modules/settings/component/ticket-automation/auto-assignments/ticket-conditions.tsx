@@ -6,6 +6,7 @@ import { SelectField, TextboxField } from "lib/form-fields";
 import { FlexBox } from "lib/ui-ux";
 import { FetchFieldsAndConditions } from "modules/settings/apis/ticket-automation";
 import { useTheme } from "styled-components";
+import { useTranslation } from "react-i18next";
 
 interface TicketConditionsProps {
     heading: React.ReactNode;
@@ -60,6 +61,7 @@ const Condition = (props: ConditionProps) => {
     const isInOperatorSelected = sourceArray?.operators.find((it) => it.operatorName.toLocaleLowerCase() === 'in')?.operatorId.toString() === watch(`${fieldArrayName}.${index}.operator`);
     const isNotInOperatorSelected = sourceArray?.operators.find((it) => it.operatorName.toLocaleLowerCase() === 'not in')?.operatorId.toString() === watch(`${fieldArrayName}.${index}.operator`);
     const { pallete, semantics } = useTheme();
+    const { t } = useTranslation();
 
     const renderFieldsByPrevSelection = () => {
         if (isInOperatorSelected || isNotInOperatorSelected) {
@@ -86,8 +88,8 @@ const Condition = (props: ConditionProps) => {
                 <FlexBox
                     gap={'32px'}
                     width="calc(100% - 36px)">
-                    <SelectField name={`${fieldArrayName}.${index}.ticketFields`} menuOptions={ticketFields} sx={{ width: '33%' }} label="Ticket Fields" />
-                    <SelectField name={`${fieldArrayName}.${index}.operator`} menuOptions={operators} sx={{ width: '33%' }} label="Operator" />
+                    <SelectField name={`${fieldArrayName}.${index}.ticketFields`} menuOptions={ticketFields} sx={{ width: '33%' }} label={t("ticket_fields")} />
+                    <SelectField name={`${fieldArrayName}.${index}.operator`} menuOptions={operators} sx={{ width: '33%' }} label={t("operator")} />
                     {(isInOperatorSelected || isNotInOperatorSelected) ? <SelectField
                         name={`${fieldArrayName}.${index}.multiSelectConditionValue`}
                         multiple

@@ -8,7 +8,7 @@ import { CancelButton, FlexBox, HorizontalSeparator } from "lib/ui-ux"
 import { ITicketQueues, Queue } from "modules/settings/apis";
 import { IChangeAsigneeArgs, ITicketDetails } from "modules/tickets/apis";
 import { TypographyName } from "./contact-info";
-import { Trans } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 export const StyledContainer = styled(FlexBox)`
     padding: 8px;
@@ -102,6 +102,8 @@ const PopoverContent = (props: { queues: Queue[], handleClose: () => void, onCha
             assigneeQueue: ''
         }
     });
+    const { t } = useTranslation();
+
     const selectedQueue = form.watch('assigneeQueue');
     const agents = queues.find((item) => item.id.toString() === selectedQueue)?.assignedEmployees.map((item) => ({ key: item.id.toString(), value: `${item.firstName} ${item?.lastName ?? ''}` }))
 
@@ -114,8 +116,8 @@ const PopoverContent = (props: { queues: Queue[], handleClose: () => void, onCha
     return (
         <FormProvider {...form}>
             <FlexBox gap={'20px'} flexDirection="column" width="300px" padding='20px'>
-                <Typography variant="h6">Change Assignee</Typography>
-                <SelectField name="assigneeQueue" label="Queue" menuOptions={queues.map((item) => ({ key: item.id.toString(), value: item.name }))} rules={{ required: 'Please select a queue to change assignee' }} />
+                <Typography variant="h6">{t('change_assignee')}</Typography>
+                <SelectField name="assigneeQueue" label="Queue" menuOptions={queues.map((item) => ({ key: item.id.toString(), value: item.name }))} rules={{ required: t('queue_validation') }} />
                 <SelectField name="assigneeAgent" label="Agent" menuOptions={agents || []} />
                 <HorizontalSeparator />
                 <FlexBox justifyContent="flex-end" gap={'10px'}>
@@ -123,7 +125,7 @@ const PopoverContent = (props: { queues: Queue[], handleClose: () => void, onCha
                     <Button
                         variant="contained"
                         onClick={form.handleSubmit(onSave)}>
-                        Save
+                        {t('save')}
                     </Button>
                 </FlexBox>
             </FlexBox>

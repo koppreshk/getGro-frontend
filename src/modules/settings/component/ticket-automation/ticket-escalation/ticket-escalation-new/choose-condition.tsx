@@ -9,6 +9,7 @@ import { useFetchAllChannels } from "modules/settings/apis/tags";
 import { useFetchAllStatuses } from "modules/settings/apis/ticket-status";
 import { useCallback } from "react";
 import { DeleteOutline } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
 
 const StyledRadioFields = styled(RadioGroupField)`
     .MuiFormControlLabel-label {
@@ -33,6 +34,8 @@ export const ChooseCondition = (props: IChooseConditionProps) => {
     const { ticketField, allEscalations, mode, slaName } = props;
     const ticketFieldDropdownData = ticketField.map((data) => ({ key: data.id.toString(), value: data.name }))
     const { pallete, semantics } = useTheme();
+    const { t } = useTranslation();
+
     const validateEscalationName = (value: string) => {
         const modifiedData = mode === 'edit' ? allEscalations?.filter((item) => item.name !== slaName) : allEscalations;
         const doesNameExist = modifiedData?.some((item) => item.name === value);
@@ -57,8 +60,8 @@ export const ChooseCondition = (props: IChooseConditionProps) => {
                     multiline
                     rows={4} />
                 <FlexBox flexDirection="column">
-                    <Typography variant="h6">Calculate SLA Evaluation (Resolution due) when conditions are met from</Typography>
-                    <StyledRadioFields name="chooseCondition.slaEvalutaion" radioOptions={[{ key: '0', label: 'Ticket creation time' }, { key: '1', label: 'Time when conditions are met' }]} />
+                    <Typography variant="h6">{t('sla_evaluation_label')}</Typography>
+                    <StyledRadioFields name="chooseCondition.slaEvalutaion" radioOptions={[{ key: '0', label: t('ticket_creation_time') }, { key: '1', label: t('time_when_conditions_are_met') }]} />
                 </FlexBox>
                 <Box
                     display="flex"
@@ -66,9 +69,9 @@ export const ChooseCondition = (props: IChooseConditionProps) => {
                     gap={4}
                     p={2}
                     sx={{ border: `1px solid ${pallete.formFieldBorderColor}`, borderRadius: semantics.borderRadius.sm }}>
-                    <Typography variant="body2">Apply this SLA to the tickets that meet All of these conditions</Typography>
+                    <Typography variant="body2">{t('sla_condition_desctext')}</Typography>
                     {fields.map((field, index) => <Conditions key={field.id} fieldArrayName="conditionsArray" index={index} remove={remove} ticketFieldDropdownData={ticketFieldDropdownData} priorities={props.priorities} />)}
-                    <Button variant="contained" size="small" sx={{ width: 'fit-content' }} onClick={onAddCondition}>Add Condition</Button>
+                    <Button variant="contained" size="small" sx={{ width: 'fit-content' }} onClick={onAddCondition}>{t('add_condition')}</Button>
                 </Box>
             </FlexBox>
         </>
@@ -78,6 +81,7 @@ export const ChooseCondition = (props: IChooseConditionProps) => {
 const Conditions = (props: { index: number; fieldArrayName: string; ticketFieldDropdownData: IKeyValue[], priorities: IPriority[]; remove: UseFieldArrayRemove; }) => {
     const { index, fieldArrayName, priorities, ticketFieldDropdownData, remove } = props;
     const { pallete, semantics } = useTheme();
+    const { t } = useTranslation();
 
     return (
         <Box
@@ -85,7 +89,7 @@ const Conditions = (props: { index: number; fieldArrayName: string; ticketFieldD
             gap={4}
             p={2}
             sx={{ border: `1px solid ${pallete.formFieldBorderColor}`, borderRadius: semantics.borderRadius.sm }}>
-            <SelectField name={`${fieldArrayName}.${index}.ticketFields`} menuOptions={ticketFieldDropdownData} sx={{ width: '33%' }} label="Ticket Fields" />
+            <SelectField name={`${fieldArrayName}.${index}.ticketFields`} menuOptions={ticketFieldDropdownData} sx={{ width: '33%' }} label={t("ticket_fields")} />
             <SelectField name={`${fieldArrayName}.${index}.condition`} menuOptions={[{ key: 'is', value: 'Is' }]} sx={{ width: '33%' }} />
             <ConditionValueContainer ticketFieldDropdownData={ticketFieldDropdownData} priorities={priorities} fieldArrayName={fieldArrayName} index={index} />
             <IconButton onClick={() => remove(index)} sx={{ width: 'fit-content' }}>

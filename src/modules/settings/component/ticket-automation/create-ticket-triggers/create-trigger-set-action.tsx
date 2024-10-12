@@ -6,6 +6,7 @@ import { SelectField } from "lib/form-fields";
 import { CenteredCircularProgress, ErrorMessage, FlexBox } from "lib/ui-ux"
 import { TriggerActions, useFetchTriggerActions } from "modules/settings/apis/ticket-automation";
 import { useTheme } from "styled-components";
+import { useTranslation } from "react-i18next";
 
 export const CreateTriggerSetAction = () => {
     const { data, isLoading, error } = useFetchTriggerActions();
@@ -62,6 +63,7 @@ const Condition = (props: ConditionProps) => {
     const assigneeObject = data.find((item) => item.fieldTriggerActionId.toString() === watch(`${fieldArrayName}.${index}.ticketFields`)); //Checking if assignee is selected
     const isAssigneeSelected = assigneeObject?.name.toLocaleLowerCase() === 'Set Assignee'.toLocaleLowerCase();
     const { pallete, semantics } = useTheme();
+    const { t } = useTranslation();
 
     const getAssigneeMenuOptionsIfExists = () => {
         if (isAssigneeSelected) {
@@ -76,8 +78,8 @@ const Condition = (props: ConditionProps) => {
                 <FlexBox
                     gap={'32px'}
                     width="calc(100% - 36px)">
-                    <SelectField name={`${fieldArrayName}.${index}.ticketFields`} menuOptions={ticketFieldMenuOptions} sx={{ width: '33%' }} label="Ticket Fields" />
-                    <SelectField name={`${fieldArrayName}.${index}.operator`} menuOptions={operatorMenuOptions} sx={{ width: '33%' }} label="Operator" />
+                    <SelectField name={`${fieldArrayName}.${index}.ticketFields`} menuOptions={ticketFieldMenuOptions} sx={{ width: '33%' }} label={t("ticket_fields")} />
+                    <SelectField name={`${fieldArrayName}.${index}.operator`} menuOptions={operatorMenuOptions} sx={{ width: '33%' }} label={t("operator")} />
                     {isAssigneeSelected ?
                         <SelectField
                             name={`${fieldArrayName}.${index}.conditionValue`}
