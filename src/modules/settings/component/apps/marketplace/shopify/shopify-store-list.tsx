@@ -8,6 +8,7 @@ import { IShopifyStore } from "modules/settings/apis/marketplace/shopify";
 import { AddAppConfigurationDialog } from "../add-app-configuration-dialog";
 import { EditShopifyConfigurationContainer } from "modules/settings/containers/marketplace/shopify";
 import { DeleteShopifyStore } from "./delete-shopify-store";
+import { useTranslation } from "react-i18next";
 
 export interface IShopifyStoreListProps {
     data: IShopifyStore[] | undefined
@@ -16,26 +17,27 @@ export interface IShopifyStoreListProps {
 
 const useColumns = () => {
     const columnHelper = createColumnHelper<IShopifyStore>();
+    const { t } = useTranslation();
 
     const column = [
         columnHelper.accessor("store_name", {
             id: 'name',
-            header: () => 'Store Name',
+            header: () => t('store_name'),
             cell: info => info.getValue(),
         }),
         columnHelper.accessor("created_at", {
             id: 'Created At',
-            header: () => 'Last Modified At',
+            header: () => t('last_modified_at'),
             cell: info => info.getValue(),
         }),
         columnHelper.accessor("admin", {
             id: 'Created By',
-            header: () => 'Last Modified By',
+            header: () => t('last_modified_by'),
             cell: info => info.getValue(),
         }),
         columnHelper.display({
             id: 'actions',
-            header: () => 'Actions',
+            header: () => t('actions'),
             cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
