@@ -183,5 +183,10 @@
     "added_by": "Added By",
     "insert_template": "Insert Template",
     "insert_article": "Insert Article",
-    "no_articles_found": "No articles found"
+    "no_articles_found": "No articles found",
+    "delete_article": "Delete Article",
+    "delete_article_success": "Article deleted successfully",
+    "delete_article_failed": "Failed to delete the Article",
+    "confirm_article_delete_message": "Are you sure you want to delete this article?",
+    "yes_delete": "Yes, Delete"
 }
