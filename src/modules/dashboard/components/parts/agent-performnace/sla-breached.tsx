@@ -5,8 +5,8 @@ import styled, { useTheme } from "styled-components";
 import { Datav1 } from "modules/dashboard/apis";
 
 
-export const SLABreached = (props: Pick<Datav1, 'first_response_breached' | 'first_response_achieved' | 'first_response_breach_str' | 'next_response_breached' | 'next_response_achieved' | 'next_response_breach_str' |'resolution_achieved' | 'resolution_breached' | 'resolution_breach_str'>) => {
-    const { first_response_breached, first_response_achieved, next_response_breached, next_response_achieved, next_response_breach_str, resolution_achieved,
+export const SLABreached = (props: Pick<Datav1, 'first_response_breached' | 'first_response_achieved' | 'first_response_breach_str' | 'next_response_breached' | 'next_response_achieved' | 'next_response_breach_str' | 'resolution_achieved' | 'resolution_breached' | 'resolution_breach_str'>) => {
+    const { first_response_breached, next_response_breached, next_response_breach_str,
         resolution_breached, resolution_breach_str, first_response_breach_str } = props;
 
     const data = [{
@@ -14,22 +14,22 @@ export const SLABreached = (props: Pick<Datav1, 'first_response_breached' | 'fir
         value1: first_response_breached,
         postFixValue1: first_response_breach_str,
         subText1: 'No of Tickets breached',
-        value2: first_response_achieved,
-        subText2: 'No of Tickets SLA achieved'
+        // value2: first_response_achieved,
+        // subText2: 'No of Tickets SLA achieved'
     }, {
         sectionHeading: 'Next Response',
         value1: next_response_breached,
         postFixValue1: next_response_breach_str,
         subText1: 'No of Tickets breached',
-        value2: next_response_achieved,
-        subText2: 'No of Tickets SLA achieved'
+        // value2: next_response_achieved,
+        // subText2: 'No of Tickets SLA achieved'
     }, {
         sectionHeading: 'Resolution',
         value1: resolution_breached,
         postFixValue1: resolution_breach_str,
         subText1: 'No of Tickets breached',
-        value2: resolution_achieved,
-        subText2: 'No of Tickets SLA achieved'
+        // value2: resolution_achieved,
+        // subText2: 'No of Tickets SLA achieved'
     }]
 
     return (
@@ -47,8 +47,8 @@ interface ISectionMetricsProps {
     value1: number;
     postFixValue1: string;
     subText1: string;
-    value2: number;
-    subText2: string;
+    value2?: number;
+    subText2?: string;
 }
 
 const SectionMetricsContainer = styled(FlexBox)`
