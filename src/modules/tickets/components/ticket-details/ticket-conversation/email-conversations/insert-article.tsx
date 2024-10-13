@@ -69,7 +69,7 @@ export const InsertArticle = (props: { editorType: string; editorValue: string }
 
         // Convert the JSX content to an HTML string
         const htmlString = ReactDOMServer.renderToStaticMarkup(linksMarkup);
-        setValue(`${props.editorType}.editor`, props.editorValue + htmlString);
+        setValue(`${props.editorType}.editor`, props.editorValue ? props.editorValue + htmlString : htmlString);
         handleClose();
     }, [data, props.editorType, props.editorValue, setValue]);
 
