@@ -1,4 +1,4 @@
-import { useFetchSLAComparisionValues } from "modules/dashboard/apis";
+import { SlaComparisondata, useFetchSLAComparisionValues } from "modules/dashboard/apis";
 import { SlaBreachedOnTimeChart } from "./sla-breached-on-time-chart"
 import { SlaMetricFilter } from "./sla-metric-filter"
 import { DateRange } from "@matharumanpreet00/react-daterange-picker";
@@ -20,7 +20,7 @@ export const SLAmetricsChart = (props: ISLAmetricsChartProps) => {
     return (
         <>
             <SlaMetricFilter filterValue={filterValue} onFilterChangeHandler={onFilterChangeHandler} />
-            <div style={{minHeight: '450px'}}><SlaMetricContainer dateRange={dateRange} filterValue={filterValue} /></div>
+            <div style={{ minHeight: '450px' }}><SlaMetricContainer dateRange={dateRange} filterValue={filterValue} /></div>
         </>
     )
 }
@@ -33,10 +33,26 @@ const SlaMetricContainer = (props: { dateRange: DateRange; filterValue: string }
         return <CenteredCircularProgress />
     }
 
-    return (
-        <>
-            <SlaBreachedOnTimeChart groupByPriorityData={data!.data} />
-            {/* <SLAachivedVsBreachedTickets /> */}
-        </>
-    )
+    if (data) {
+        const modData = Object.keys(data).length ? data : {
+            data: {
+                "Normal": {
+                    "achieved_count": 0,
+                    "breach_count": 0,
+                    "total_tickets": 0
+                }
+            } as SlaComparisondata,
+            group_by: 'priority',
+            metric_type: 'all'
+        }//Fallback data
+
+        return (
+            <>
+                <SlaBreachedOnTimeChart groupByPriorityData={modData!.data} />
+                {/* <SLAachivedVsBreachedTickets /> */}
+            </>
+        )
+    }
+
+    return null;
 }
