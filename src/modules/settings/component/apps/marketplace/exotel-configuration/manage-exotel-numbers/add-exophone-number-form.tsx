@@ -182,9 +182,8 @@ export const AddExophoneNumberFormBase = (props: IAddExophoneNumberFormProps) =>
             </FlexBox>
             <DialogActions sx={{ justifyContent: 'space-between', paddingTop: '30px' }}>
                 {activeStep > 0 ?
-                    <BackButton variant="outlined" onClick={handleBack}>
-                        Back
-                    </BackButton> : <div></div>
+                    <BackButton variant="outlined" onClick={handleBack} />
+                    : <div></div>
                 }
                 <FlexBox gap="10px">
                     <CancelButton onClick={togglePopup} />

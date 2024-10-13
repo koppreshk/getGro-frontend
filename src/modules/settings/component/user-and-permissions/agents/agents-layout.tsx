@@ -6,6 +6,7 @@ import { BreadCrumbs, CustomIconButton, DrawerExtended, FlexBox, MoreInformation
 import { CreateNewAgentContainer } from "modules/settings/containers";
 import { GetAgentsContainer } from "modules/settings/containers/agents/get-agents-container";
 import { UserType } from "modules/settings/apis/users-and-permissions";
+import { useTranslation } from "react-i18next";
 
 const AddNewAgent = (props: {
     openAddUserDrawer: boolean;
@@ -28,6 +29,7 @@ const AddNewAgent = (props: {
 export default function AgentsLayout() {
     const [openAddUserDrawer, setOpenAddUserDrawer] = React.useState(false);
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const toggleAddUserDrawer = useCallback(() => {
         setOpenAddUserDrawer((prevValue) => !prevValue);
@@ -46,7 +48,7 @@ export default function AgentsLayout() {
                 <MoreInformation information="Agents are responsible for managing tickets and addressing customer issues. You can add as many agents as your license allows." />
                 <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                     <FlexBox alignItems="center" gap="10px">
-                        <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
+                        <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: t('back') }} />
                         <Typography variant="h5">Agents</Typography>
                     </FlexBox>
                     <Button variant="contained" onClick={toggleAddUserDrawer} startIcon={<AddCircleOutline />}>Add Agent</Button>

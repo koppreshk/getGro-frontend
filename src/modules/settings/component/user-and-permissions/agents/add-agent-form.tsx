@@ -4,6 +4,7 @@ import { SelectField, TextboxField } from "lib/form-fields";
 import { CancelButton, FlexBox, LoadingButton } from "lib/ui-ux";
 import { IRoles } from "modules/settings/apis/users-and-permissions";
 import { useCallback, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 export interface IUserFormFields {
     name: string;
@@ -26,6 +27,7 @@ interface IUserFormProps {
 export const AddAgentForm = (props: IUserFormProps) => {
     const { mode, defaultValues, roles, mutationLoading, toggleUserDrawer, onFormSubmitHandler } = props;
     const isInEditMode = useMemo(() => mode === 'edit', [mode]);
+    const { t } = useTranslation();
 
     const methods = useForm<IUserFormFields>({
         defaultValues: defaultValues ?? {
@@ -44,7 +46,7 @@ export const AddAgentForm = (props: IUserFormProps) => {
             <FlexBox padding="20px" width="100%" height="calc(100% - 77px)" flexDirection="column" justifyContent="space-between">
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        <TextboxField name="name" label="Name" rules={{ required: 'First name is required' }} />
+                        <TextboxField name="name" label={t('name')} rules={{ required: 'First name is required' }} />
                     </Grid>
                     <Grid item xs={12}>
                         <TextboxField name="displayName" label="Display Name" rules={{ required: 'Display name is required' }} />

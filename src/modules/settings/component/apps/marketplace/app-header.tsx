@@ -34,11 +34,11 @@ export const AppHeader = (props: IAppHeaderProps) => {
                         {manageBtnClicked
                             ? (
                                 <>
-                                    <BackButton variant="outlined" size="medium" onClick={onManageBtnClick}>Back</BackButton>
+                                    <BackButton variant="outlined" size="medium" onClick={onManageBtnClick} />
                                     <Button variant="contained" size="medium" onClick={togglePopup} endIcon={<GetApp />}>Add New Store</Button>
                                 </>
                             )
-                            : 
+                            :
                             <Button variant="outlined" size="medium" onClick={onManageBtnClick}>Manage</Button>}
                     </FlexBox>
                     :
@@ -49,7 +49,7 @@ export const AppHeader = (props: IAppHeaderProps) => {
                         {manageBtnClicked
                             ? (
                                 <>
-                                    <BackButton variant="outlined" size="medium" onClick={onManageBtnClick}>Back</BackButton>
+                                    <BackButton variant="outlined" size="medium" onClick={onManageBtnClick} />
                                     <Button variant="contained" size="medium" onClick={secondaryBtnActions?.onSecondaryBtnClk}>{secondaryBtnActions?.secondaryBtnLabel}</Button>
                                 </>
                             )

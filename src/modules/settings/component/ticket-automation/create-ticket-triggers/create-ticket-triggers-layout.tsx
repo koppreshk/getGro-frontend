@@ -40,7 +40,7 @@ const CreateTicketTriggersContent = (props: ICreateTriggersLayoutProps) => {
             <MoreInformation information="Set up ticket triggers to automate actions based on specific criteria for newly created tickets. This allows you to define rules that execute predefined tasks automatically." />
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
-                    <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
+                    <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: t('back') }} />
                     <Typography variant="h5">{t('create_ticket_triggers')}</Typography>
                 </FlexBox>
                 <Button variant="contained" onClick={navigateToCreateTrigger} startIcon={<AddCircleOutline />}>{t('add_new_rule')}</Button>

@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { useMatch, useNavigate } from "react-router-dom";
 import React from "react";
 import { TicketViewActionButtons } from ".";
-import { Trans } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { convertToUnderscore } from "lib/utils";
 
 
@@ -20,6 +20,7 @@ export const TicketListViewHeader = () => {
     const match = useMatch('/tickets/:ticketType/:ticketId')
     const header = convertToUnderscore(match?.params.ticketType || '')
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
@@ -36,7 +37,7 @@ export const TicketListViewHeader = () => {
     return (
         <HeaderWrapper width="100%" justifyContent="space-between">
             <FlexBox>
-                <CustomIconButton onClick={() => { navigate(-1) }} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
+                <CustomIconButton onClick={() => { navigate(-1) }} iconComponent={<ArrowBack />} tooltipProps={{ title: t('back') }} />
                 <FlexBox alignItems="center" gap="5px">
                     <Typography variant="h5"><Trans i18nKey={`${header}`} /></Typography>
                     <FlexBox>

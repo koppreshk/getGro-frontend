@@ -54,7 +54,7 @@ export const TemplatesForm = (props: ITemplatesFormProps) => {
         const modifiedData = mode === 'edit' ? statusData?.filter((item) => item.name !== defaultValues?.name) : statusData;
         const doesNameExist = modifiedData?.some((item) => item.name === value);
         if (doesNameExist) {
-            return `${value} already exists, please use a different name and save`;
+            return t('value_exists_validation', { value });
         }
     }
 

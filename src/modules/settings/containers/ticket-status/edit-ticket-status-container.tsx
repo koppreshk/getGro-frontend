@@ -30,6 +30,7 @@ export const EditTicketStatusContainer = (props: IEditTicketStatusContainerProps
         <TicketStatusForm
             mode="edit"
             onFormSubmitHandler={onEditStatusTicket}
+            toggleDrawer={toggleDrawer}
             mutationLoading={isLoading}
             statusData={statusData}
             defaultValues={{

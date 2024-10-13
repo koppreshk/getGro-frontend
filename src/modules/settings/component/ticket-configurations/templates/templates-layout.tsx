@@ -50,7 +50,7 @@ export const TemplatesLayout = (props: ITemplatesLayoutProps) => {
             <MoreInformation information={t('templates_long_description')} />
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
-                    <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
+                    <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: t('back') }} />
                     <Typography variant="h5">{t('templates')}</Typography>
                 </FlexBox>
                 <Button variant="contained" onClick={toggleAddStatusDrawer} startIcon={<AddCircleOutline />}>{t('add_templates')}</Button>

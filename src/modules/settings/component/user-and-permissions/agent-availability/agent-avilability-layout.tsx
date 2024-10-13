@@ -3,6 +3,7 @@ import { ArrowBack } from "@mui/icons-material";
 import { Typography } from "@mui/material"
 import { BreadCrumbs, CustomIconButton, FlexBox, MoreInformation } from "lib/ui-ux"
 import { AgentAvailabilityStatusesContainer } from "modules/settings/containers/agent-availability";
+import { useTranslation } from "react-i18next";
 
 // const AddNewStatus = (props: {
 //     openAddStatusDrawer: boolean;
@@ -25,6 +26,7 @@ import { AgentAvailabilityStatusesContainer } from "modules/settings/containers/
 export default function AgentAvailabilityLayout() {
     // const [openAddStatusDrawer, setOpenAddStatusDrawer] = React.useState(false);
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     // const toggleAddStatusDrawer = useCallback(() => {
     //     setOpenAddStatusDrawer((prevValue) => !prevValue);
@@ -36,7 +38,7 @@ export default function AgentAvailabilityLayout() {
             <MoreInformation information="Agent availability statuses reflect the current readiness and capability of an agent to handle specific tasks or responsibilities." />
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
-                    <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
+                    <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: t('back') }} />
                     <Typography variant="h5">Agent Availability Statuses</Typography>
                 </FlexBox>
                 {/* <Button variant="contained" onClick={toggleAddStatusDrawer} startIcon={<AddCircleOutline />}>Add Status</Button> */}

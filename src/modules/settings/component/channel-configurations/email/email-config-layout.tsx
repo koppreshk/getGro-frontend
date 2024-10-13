@@ -4,6 +4,7 @@ import { BreadCrumbs, CustomIconButton, FlexBox, MoreInformation } from "lib/ui-
 import { FetchAllEmailsContainer } from "modules/settings/containers/channel-configurations";
 import { AddEmailConfigContainer, EditEmailConfigContainer } from "modules/settings/containers/channel-configurations/email";
 import { useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { Route, Routes, useNavigate } from "react-router-dom";
 
 export default function EmailConfigLayout() {
@@ -24,6 +25,7 @@ export default function EmailConfigLayout() {
 
 const EmailConfigContent = () => {
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const toggleAddEscalationDrawer = useCallback(() => {
         navigate('add-email');
@@ -33,7 +35,7 @@ const EmailConfigContent = () => {
         <>
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
-                    <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
+                    <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: t('back') }} />
                     <Typography variant="h5">Email Configurations</Typography>
                 </FlexBox>
                 <Button variant="contained" onClick={toggleAddEscalationDrawer} startIcon={<Add />}>Add Email</Button>

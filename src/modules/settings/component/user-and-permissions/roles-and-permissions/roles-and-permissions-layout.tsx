@@ -5,6 +5,7 @@ import { BreadCrumbs, CustomIconButton, FlexBox, MoreInformation } from "lib/ui-
 import { RolesAndPermissionList } from ".";
 import { IRoles } from "modules/settings/apis/users-and-permissions";
 import { CreateRoleContainer, EditRoleContainer, ViewRoleContainer } from "modules/settings/containers/roles-and-permissions";
+import { useTranslation } from "react-i18next";
 
 interface RolesAndPermissionsLayoutProps {
     rolesData: IRoles[];
@@ -29,13 +30,14 @@ export const RolesAndPermissionsLayout = (props: RolesAndPermissionsLayoutProps)
 
 const RolesAndPermissionsLayoutContent = (props: RolesAndPermissionsLayoutProps) => {
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     return (
         <FlexBox flexDirection="column" gap={'20px'} padding="20px" width="100%">
             <MoreInformation information="Roles and permissions provide detailed control over access for your support agents, specifically within the Agent Portal. Note that these permissions do not affect automation rules" />
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px" >
-                    <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
+                    <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: t('back') }} />
                     <Typography variant="h5">Roles & Permission</Typography>
                 </FlexBox>
                 <Button variant="contained" onClick={() => { navigate('create-role') }} startIcon={<AddCircleOutline />}>Create Role</Button>

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { AuditLogList } from "./audit-log-list";
 import { IAuditLogsResponse } from "modules/settings/apis/audit-logs/fetch-all-audit-logs";
 import { AuditLogFilter } from "./audit-log-filter";
+import { useTranslation } from "react-i18next";
 
 interface IAuditLogsLayoutProps {
     data: IAuditLogsResponse;
@@ -14,6 +15,7 @@ interface IAuditLogsLayoutProps {
 export const AuditLogsLayout = (props: IAuditLogsLayoutProps) => {
     const { data, isLoading } = props;
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     return (
         <FlexBox width="100%" flexDirection="column" height="100%">
@@ -22,8 +24,8 @@ export const AuditLogsLayout = (props: IAuditLogsLayoutProps) => {
                 <MoreInformation information="Activity logs provide information about specific events or operations, like what the change was and who made it" />
                 <FlexBox width="100%" padding="10px" justifyContent="space-between">
                     <FlexBox alignItems="center" gap="10px">
-                        <CustomIconButton onClick={() => navigate('/configurations')} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
-                        <Typography variant="h5">Audit Logs</Typography>
+                        <CustomIconButton onClick={() => navigate('/configurations')} iconComponent={<ArrowBack />} tooltipProps={{ title: t('back') }} />
+                        <Typography variant="h5">{t('audit_logs')}</Typography>
                     </FlexBox>
                     <AuditLogFilter />
                 </FlexBox>

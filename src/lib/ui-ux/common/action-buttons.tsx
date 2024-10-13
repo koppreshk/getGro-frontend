@@ -24,6 +24,7 @@ export const BackButton = (props: Omit<LoadingButtonProps, 'isLoading'>) => {
         <Button
             {...rest}
             startIcon={<KeyboardArrowLeft />}>
+            <Trans i18nKey="back" />
             {children}
         </Button>
     )

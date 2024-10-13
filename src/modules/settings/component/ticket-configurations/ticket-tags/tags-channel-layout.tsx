@@ -20,7 +20,7 @@ export const TagsLayout = (props: ITagsListProps) => {
             <MoreInformation information={t('tags_long_description')} />
             <FlexBox justifyContent='space-between' width='100%' alignItems="center">
                 <FlexBox alignItems='center' gap="10px">
-                    <CustomIconButton onClick={() => navigate('/configurations')} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
+                    <CustomIconButton onClick={() => navigate('/configurations')} iconComponent={<ArrowBack />} tooltipProps={{ title: t('back') }} />
                     <Typography variant="h5"><Trans i18nKey='tags' /></Typography>
                 </FlexBox>
                 <Button

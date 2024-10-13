@@ -6,6 +6,7 @@ import { OrderItem } from "./order-item";
 import { IOrders } from "modules/tickets/apis";
 import { ExpandMore } from "@mui/icons-material";
 import { commonStyles } from "lib/ui-ux/common-styles";
+import { useTranslation } from "react-i18next";
 
 interface IOrderDetailsProps {
     orderDetails: IOrders[]
@@ -94,6 +95,7 @@ interface ICustomerDetailsProps extends IOrderDetailsProps {
 export const CustomerDetails = forwardRef<HTMLDivElement, ICustomerDetailsProps>((props, ref) => {
     const { orderDetails, onAccordionChange } = props;
     const customerDetails = orderDetails[0].customer;
+    const { t } = useTranslation();
 
     return (
         <FlexBox width="100%" flexDirection="column" gap="5px" ref={ref} style={{ marginBottom: '20px' }}>
@@ -105,7 +107,7 @@ export const CustomerDetails = forwardRef<HTMLDivElement, ICustomerDetailsProps>
                 </AccordionSummary>
                 <AccordionDetails>
                     <FlexBox gap="10px" flexDirection="column">
-                        <NameValue heading="Name" value={`${customerDetails.first_name} ${customerDetails.last_name}`} />
+                        <NameValue heading={t('name')} value={`${customerDetails.first_name} ${customerDetails.last_name}`} />
                         <NameValue heading="Email" value={customerDetails.email} />
                         <NameValue heading="Phone" value={customerDetails.phone ? customerDetails.phone : 'NA'} />
                     </FlexBox>

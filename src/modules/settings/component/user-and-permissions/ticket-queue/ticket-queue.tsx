@@ -7,6 +7,7 @@ import { ITicketQueues } from "modules/settings/apis/queues"
 import { CreateTicketQueueContainer } from "modules/settings/containers"
 import { TicketQueueList } from "./ticket-queue-list"
 import { MoreInformation } from "lib/ui-ux/common/more-information";
+import { useTranslation } from "react-i18next";
 
 interface IAddNewQueueProps {
     openAddQueueDrawer: boolean;
@@ -36,6 +37,7 @@ interface ITicketQueueProps {
 export const TicketQueue = (props: ITicketQueueProps) => {
     const { data, isLoading } = props;
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const [openAddQueueDrawer, setOpenAddQueueDrawer] = React.useState(false);
 
@@ -50,7 +52,7 @@ export const TicketQueue = (props: ITicketQueueProps) => {
                 <MoreInformation information="Queues in an organization link related agents together, facilitating tasks such as automatic assignment, automation, ticket permission management, and sharing filters." />
                 <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                     <FlexBox alignItems="center" gap="10px">
-                        <CustomIconButton onClick={() => navigate('/configurations')} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
+                        <CustomIconButton onClick={() => navigate('/configurations')} iconComponent={<ArrowBack />} tooltipProps={{ title: t('back') }} />
                         <Typography variant="h5">Ticket Queue</Typography>
                     </FlexBox>
                     <Button variant="contained" startIcon={<AddCircleOutline />} onClick={toggleAddQueueDrawer}>Add Queue</Button>

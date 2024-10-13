@@ -11,6 +11,7 @@ import { setTotalPage } from "modules/settings/storage";
 import { AllEscalations } from "./ticket-escalation-new/all-escalations";
 import { CreateTicketSLAContainer, EditTicketSLAContainer } from "modules/settings/containers";
 import { MoreInformation } from "lib/ui-ux/common/more-information";
+import { useTranslation } from "react-i18next";
 
 export interface ITicketEscalaltionLayoutProps {
     isLoading: boolean;
@@ -41,6 +42,7 @@ export const TicketEscalationLayout = (props: ITicketEscalaltionLayoutProps) => 
 
 const EscalationLayoutContent = (props: ITicketEscalaltionLayoutProps) => {
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const toggleAddEscalationDrawer = useCallback(() => {
         navigate('add-escalation');
@@ -51,7 +53,7 @@ const EscalationLayoutContent = (props: ITicketEscalaltionLayoutProps) => {
             <MoreInformation information="Service Level Agreements (SLAs) define the response and resolution times for support tickets. You can configure each SLA to function based on calendar hours (24/7) or specific business hours. When a ticket is created or updated, the system applies the first applicable SLA from the defined order." />
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
-                    <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBackIcon />} tooltipProps={{ title: 'Back' }} />
+                    <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBackIcon />} tooltipProps={{ title: t('back') }} />
                     <Typography variant="h5">Ticket Escalation</Typography>
                 </FlexBox>
                 <Button variant="contained" onClick={toggleAddEscalationDrawer} startIcon={<AddCircleOutline />}>Add Escalation</Button>

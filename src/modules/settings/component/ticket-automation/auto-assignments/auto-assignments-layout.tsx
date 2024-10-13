@@ -43,7 +43,7 @@ const AutoAssignmentsContent = (props: IAutoAssignmentsLayoutProps) => {
             <MoreInformation information="Automatic assignments ensure tickets are distributed to agents in a group using a round-robin approach. When a ticket is created or updated, the system applies the first matching rule in the designated order to determine the appropriate agent for assignment." />
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
-                    <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: 'Back' }} />
+                    <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: t('back') }} />
                     <Typography variant="h5">{t('auto_assignments')}</Typography>
                 </FlexBox>
                 <Button variant="contained" onClick={toggleAddAutoAssignmentsDrawer} startIcon={<AddCircleOutline />}>{t('add_new_rule')}</Button>

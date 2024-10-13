@@ -197,7 +197,7 @@ export const Permissions = (props: PermissionsProps) => {
             <FlexBox justifyContent="flex-end" gap={'20px'} width='70%'>
                 {
                     mode === 'view' ?
-                        <BackButton onClick={() => navigate(-1)}>{t('back')}</BackButton>
+                        <BackButton onClick={() => navigate(-1)} />
                         :
                         <>
                             {mode !== 'userProfile' ?
