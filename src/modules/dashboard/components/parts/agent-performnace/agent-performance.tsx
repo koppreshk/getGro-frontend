@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { FlexBox } from "lib/ui-ux";
 import styled from "styled-components";
 import { DateRange } from "@matharumanpreet00/react-daterange-picker";
-import { useFormContext } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { DashboardDateRangePicker } from "../dashboard-date-range-picker";
 import { RadioGroupField } from "lib/form-fields/radio-group-field";
 import { SelectField } from "lib/form-fields";
@@ -34,7 +34,12 @@ export const AgentPerformance = (props: IAgentPerformanceProps) => {
     const { data } = props;
     const { queues, employees } = data;
     const [dateRange, setDateRange] = React.useState<DateRange>({ startDate: DateTime.now().minus({ month: 1 }).toJSDate(), endDate: new Date() });
-    const form = useFormContext<IAgentPerformanceFormFields>();
+    const form = useForm<IAgentPerformanceFormFields>({
+        values: {
+            filterType: 'user',
+            filterValue: employees[0].id.toString() || ''
+        }
+    });
 
     const filterType = form.watch('filterType');
 
@@ -44,21 +49,23 @@ export const AgentPerformance = (props: IAgentPerformanceProps) => {
         if (filterType === 'user' && !employees.find(item => item.id.toString() == form.watch('filterValue'))) {
             form.setValue('filterValue', employees[0].id.toString());
         }
-        if(filterType === 'queue' && !queues.find(item => item.id.toString() == form.watch('filterValue'))){
+        if (filterType === 'queue' && !queues.find(item => item.id.toString() == form.watch('filterValue'))) {
             form.setValue('filterValue', queues[0].id.toString());
         }
     }, [employees, filterType, form, queues]);
 
     return (
-        <FlexBox flexDirection="column" gap="15px" height="100%" padding="20px">
-            <FlexBox justifyContent="space-between" alignItems="center">
-                <FilterContainer alignItems="center">
-                    <RadioGroupField name="filterType" radioOptions={[{ key: 'queue', label: 'Queue' }, { key: 'user', label: 'User' }]} />
-                    <SelectField name="filterValue" label={`Selected ${filterType === 'queue' ? 'Queue' : 'User'}`} menuOptions={menuOptions} size="small" sx={{ width: '200px' }} />
-                </FilterContainer>
-                <DashboardDateRangePicker dateRange={dateRange} setDateRange={setDateRange} />
+        <FormProvider {...form}>
+            <FlexBox flexDirection="column" gap="15px" height="100%" padding="20px">
+                <FlexBox justifyContent="space-between" alignItems="center">
+                    <FilterContainer alignItems="center">
+                        <RadioGroupField name="filterType" radioOptions={[{ key: 'queue', label: 'Queue' }, { key: 'user', label: 'User' }]} />
+                        <SelectField name="filterValue" label={`Selected ${filterType === 'queue' ? 'Queue' : 'User'}`} menuOptions={menuOptions} size="small" sx={{ width: '200px' }} />
+                    </FilterContainer>
+                    <DashboardDateRangePicker dateRange={dateRange} setDateRange={setDateRange} />
+                </FlexBox>
+                <AgentPerformancecontentContainer dateRange={dateRange} />
             </FlexBox>
-            <AgentPerformancecontentContainer dateRange={dateRange} />
-        </FlexBox>
+        </FormProvider>
     )
 }

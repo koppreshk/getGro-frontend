@@ -1,8 +1,8 @@
 import React from "react";
-import { Link, useLocation, useSearchParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { FlexBox } from "lib/ui-ux";
-import { Popover, Tooltip, Typography, Badge } from "@mui/material";
+import { Popover, Tooltip, Typography } from "@mui/material";
 import { EventOutlined, GroupOutlined, InsertChartOutlined, SettingsOutlined, TaskOutlined, Article } from "@mui/icons-material";
 import { useModule } from "lib/hooks";
 import { ExotelCallControls } from "./exotel-call-controls";
@@ -34,8 +34,8 @@ const SecondaryOptionWrapper = styled(FlexBox)`
 `;
 
 const usePrimaryOptions = () => {
-    const [searchParams] = useSearchParams();
-    const noOfRecords = searchParams.get('noOfRecords') || '10';
+    // const [searchParams] = useSearchParams();
+    // const noOfRecords = searchParams.get('noOfRecords') || '10';
     const isModuleAccessible = useModule<undefined>();
 
     return [{
@@ -47,9 +47,10 @@ const usePrimaryOptions = () => {
     },
     {
         iconComponent: () => (
-            <Badge color="primary" badgeContent={noOfRecords} max={999}>
-                <TaskOutlined width='32px' height='32px' />
-            </Badge>),
+            // <Badge color="primary" badgeContent={noOfRecords} max={999}>
+            <TaskOutlined width='32px' height='32px' />
+            // </Badge>
+        ),
         primaryKey: 'tickets',
         route: 'tickets',
         title: 'Tickets',
