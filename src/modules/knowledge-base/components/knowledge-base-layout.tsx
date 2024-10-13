@@ -34,7 +34,7 @@ const KnowledgeBaseContent = (props: IKnowledgeBaseLayoutProps) => {
         navigate('create-knowledge-base');
     }, [navigate]);
 
-    const isCreateArticleAccessible = useFeature('create_article');
+    const isCreateArticleAccessible = useFeature('manage_article');
     
     return (
         <FlexBox flexDirection="column" gap={'20px'} width="100%" height="100%">
