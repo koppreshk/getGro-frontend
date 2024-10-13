@@ -144,8 +144,8 @@ const permissionList = [{
 {
     associatedModule: ModuleKeys.KNOWLEDGE_BASE,
     permissions: [{
-        name: 'Create Article',
-        permissionKey: KnowledgeBasePermissionKeys.CREATE_ARTICLE
+        name: 'Manage Article',
+        permissionKey: KnowledgeBasePermissionKeys.MANAGE_ARTICLE
     }]
 }] as IPermissionList[]
 

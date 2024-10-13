@@ -33,7 +33,7 @@ export enum DashboardPermissionKeys {
 }
 
 export enum KnowledgeBasePermissionKeys {
-    CREATE_ARTICLE = 'create_article'
+    MANAGE_ARTICLE = 'manage_article'
 }
 
 /**
