@@ -37,7 +37,9 @@ const useColumns = () => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
                         <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: "Edit Queue", arrow: true }} />
-                        <DeleteQueue id={original.id} />
+                        <div onClick={(e) => e.stopPropagation()}>
+                            <DeleteQueue id={original.id} />
+                        </div>
                     </FlexBox>
                 )
             },
