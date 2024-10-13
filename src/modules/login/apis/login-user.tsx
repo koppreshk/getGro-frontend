@@ -21,7 +21,8 @@ export const useLoginUser = () => {
                 password: data.password
             }),
             headers: {
-                'sub-domain': subDomainValue
+                'sub-domain': subDomainValue,
+                'Content-Type': 'application/json'
             }
         })
             .then((res) => {
