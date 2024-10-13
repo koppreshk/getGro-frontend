@@ -1,5 +1,6 @@
 import { NegativeActionDialog } from "lib/ui-ux";
 import { DeleteTicketContent } from "./delete-ticket-content";
+import { useTranslation } from "react-i18next";
 
 interface MergeTicketProps {
     showDialog: boolean;
@@ -8,6 +9,8 @@ interface MergeTicketProps {
 
 export const DeleteTicket = (props: MergeTicketProps) => {
     const { onCloseDrawer, showDialog } = props;
+    const { t } = useTranslation();
+
     return (
         <>
             <NegativeActionDialog
@@ -15,7 +18,7 @@ export const DeleteTicket = (props: MergeTicketProps) => {
                 isLoading={false}
                 content={<DeleteTicketContent />}
                 title='Delete Ticket'
-                negativeActionLabel="Yes, Delete"
+                negativeActionLabel={t("yes_delete")}
                 onNegativeActionClick={onCloseDrawer}
                 onClose={onCloseDrawer} />
         </>

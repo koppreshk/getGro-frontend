@@ -1,8 +1,8 @@
 
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Typography } from "@mui/material";
 import { useNotifications } from "lib";
 import { TagInputField } from "lib/form-fields";
-import { FlexBox } from "lib/ui-ux";
+import { CancelButton, FlexBox, LoadingButton } from "lib/ui-ux";
 import { ITag, useCreateTags } from "modules/settings/apis/tags";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -27,7 +27,7 @@ const StyledTags = styled(TagInputField)`
 
 export const CreateTag = (props: ICreateTagProps) => {
     const { open, createdTags, handleClose } = props;
-    const { mutateAsync } = useCreateTags()
+    const { mutateAsync, isLoading } = useCreateTags()
     const { showNotification } = useNotifications();
     const form = useForm<IFormFields>({
         mode: 'onChange'
@@ -77,10 +77,10 @@ export const CreateTag = (props: ICreateTagProps) => {
                     </FlexBox>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} variant="outlined">Close</Button>
-                    <Button autoFocus variant="contained" onClick={form.handleSubmit(onCreateTagSubmit)}>
-                        Save
-                    </Button>
+                    <CancelButton onClick={handleClose} />
+                    <LoadingButton isLoading={isLoading} autoFocus variant="contained" onClick={form.handleSubmit(onCreateTagSubmit)}>
+                        {t('save')}
+                    </LoadingButton>
                 </DialogActions>
             </Dialog>
         </FormProvider>

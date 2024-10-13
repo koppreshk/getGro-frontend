@@ -3,11 +3,13 @@ import { Delete } from "@mui/icons-material";
 import { useNotifications } from "lib";
 import { CustomIconButton, NegativeActionDialog } from "lib/ui-ux";
 import { useDeleteNote } from "modules/tickets/apis";
+import { useTranslation } from "react-i18next";
 
 export const DeleteNoteContainer = (props: { id: number }) => {
     const { mutateAsync, isLoading } = useDeleteNote();
     const { showNotification } = useNotifications();
     const [open, setOpen] = React.useState(false);
+    const { t } = useTranslation();
 
     const toggleDeleteDialogBox = () => {
         setOpen((prev) => !prev);
@@ -31,7 +33,7 @@ export const DeleteNoteContainer = (props: { id: number }) => {
                 isLoading={isLoading}
                 content='Do you want to delete this note permanently?'
                 title='Delete Note'
-                negativeActionLabel="Yes, Delete"
+                negativeActionLabel={t("yes_delete")}
                 onNegativeActionClick={onDeleleHandler}
                 onClose={toggleDeleteDialogBox} />
         </>

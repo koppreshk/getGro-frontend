@@ -4,11 +4,13 @@ import { NegativeActionDialog } from "lib/ui-ux";
 import { useDeleteWhatsAppConfiguration } from "modules/settings/apis/marketplace/whatsApp/gupshup";
 import { Button } from "@mui/material";
 import { DeleteForever } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
 
 export const DeleteWhatsAppConfigurations = () => {
     const { mutateAsync, isLoading } = useDeleteWhatsAppConfiguration();
     const { showNotification } = useNotifications();
     const [open, setOpen] = React.useState(false);
+    const { t } = useTranslation();
 
     const toggleDeleteDialogBox = () => {
         setOpen((prev) => !prev);
@@ -30,7 +32,7 @@ export const DeleteWhatsAppConfigurations = () => {
                 isLoading={isLoading}
                 content='Do you want to uninstall this WhatsApp Configuration?'
                 title='Uninstall WhatsApp Configuration'
-                negativeActionLabel="Yes, Delete"
+                negativeActionLabel={t("yes_delete")}
                 onNegativeActionClick={onDeleleHandler}
                 onClose={toggleDeleteDialogBox} />
         </>

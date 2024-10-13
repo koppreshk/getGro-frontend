@@ -4,10 +4,12 @@ import { NegativeActionDialog } from "lib/ui-ux";
 import { Button } from "@mui/material";
 import { useDeleteExotelConfiguration } from "modules/settings/apis/marketplace/exotel";
 import { DeleteForever } from '@mui/icons-material';
+import { useTranslation } from "react-i18next";
 
 export const DeleteExotelConfigurations = () => {
     const { mutateAsync, isLoading } = useDeleteExotelConfiguration();
     const { showNotification } = useNotifications();
+    const { t } = useTranslation();
     const [open, setOpen] = React.useState(false);
 
     const toggleDeleteDialogBox = () => {
@@ -30,7 +32,7 @@ export const DeleteExotelConfigurations = () => {
                 isLoading={isLoading}
                 content='Do you want to uninstall this Exotel Configuration?'
                 title='Uninstall Exotel Configuration'
-                negativeActionLabel="Yes, Delete"
+                negativeActionLabel={t("yes_delete")}
                 onNegativeActionClick={onDeleleHandler}
                 onClose={toggleDeleteDialogBox} />
         </>

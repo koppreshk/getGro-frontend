@@ -3,11 +3,13 @@ import { Delete } from "@mui/icons-material";
 import { useNotifications } from "lib";
 import { CustomIconButton, NegativeActionDialog } from "lib/ui-ux";
 import { useDeleteEscalation } from "modules/settings/apis/ticket-automation/escalations";
+import { useTranslation } from "react-i18next";
 
 export const DeleteEscalation = (props: { id: number }) => {
     const { mutateAsync, isLoading } = useDeleteEscalation();
     const { showNotification } = useNotifications();
     const [open, setOpen] = React.useState(false);
+    const { t } = useTranslation();
 
     const toggleDeleteDialogBox = () => {
         setOpen((prev) => !prev);
@@ -31,7 +33,7 @@ export const DeleteEscalation = (props: { id: number }) => {
                 isLoading={isLoading}
                 content='Do you want to delete this escalation permanently?'
                 title='Delete Escalation'
-                negativeActionLabel="Yes, Delete"
+                negativeActionLabel={t("yes_delete")}
                 onNegativeActionClick={onDeleleHandler}
                 onClose={toggleDeleteDialogBox} />
         </>

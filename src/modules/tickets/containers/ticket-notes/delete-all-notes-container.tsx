@@ -4,12 +4,14 @@ import { useNotifications } from "lib";
 import { CustomIconButton, NegativeActionDialog } from "lib/ui-ux";
 import { useDeleteAllNotes } from "modules/tickets/apis";
 import { useAppSelector } from "lib/hooks";
+import { useTranslation } from "react-i18next";
 
 export const DeleteAllNotesContainer = () => {
     const ticketId = useAppSelector((state) => state.tickets.ticketDetails?.ticketId)
     const { mutateAsync, isLoading } = useDeleteAllNotes();
     const { showNotification } = useNotifications();
     const [open, setOpen] = React.useState(false);
+    const { t } = useTranslation();
 
     const toggleDeleteDialogBox = () => {
         setOpen((prev) => !prev);
@@ -33,7 +35,7 @@ export const DeleteAllNotesContainer = () => {
                 isLoading={isLoading}
                 content='Do you want to delete all these notes permanently?'
                 title='Delete All Notes'
-                negativeActionLabel="Yes, Delete"
+                negativeActionLabel={t("yes_delete")}
                 onNegativeActionClick={onDeleleHandler}
                 onClose={toggleDeleteDialogBox} />
         </>

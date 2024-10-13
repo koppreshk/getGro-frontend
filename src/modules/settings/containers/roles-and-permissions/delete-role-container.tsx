@@ -7,11 +7,12 @@ import { FormProvider, useForm } from "react-hook-form";
 import { SelectField } from "lib/form-fields";
 import { IRoles } from "modules/settings/apis/users-and-permissions";
 import { Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 export const DeleteRolesContainer = (props: { roleId: number, rolesData: IRoles[] }) => {
     const { roleId, rolesData } = props;
     const { mutateAsync, isLoading } = useDeleteRole();
-
+    const { t } = useTranslation();
     const { showNotification } = useNotifications();
     const [open, setOpen] = React.useState(false);
     const methods = useForm();
@@ -36,7 +37,7 @@ export const DeleteRolesContainer = (props: { roleId: number, rolesData: IRoles[
 
     return (
         <FormProvider {...methods}>
-            <CustomIconButton iconComponent={<Delete />} tooltipProps={{ title: 'Delete' }} key={roleId} onClick={toggleDeleteDialogBox} />
+            <CustomIconButton iconComponent={<Delete />} tooltipProps={{ title: t('delete') }} key={roleId} onClick={toggleDeleteDialogBox} />
             <NegativeActionDialog
                 open={open}
                 isLoading={isLoading}
@@ -47,7 +48,7 @@ export const DeleteRolesContainer = (props: { roleId: number, rolesData: IRoles[
                     </FlexBox>)
                 }
                 title='Delete Role'
-                negativeActionLabel="Yes, Delete"
+                negativeActionLabel={t("yes_delete")}
                 onNegativeActionClick={onDeleleHandler}
                 onClose={toggleDeleteDialogBox} />
         </FormProvider>

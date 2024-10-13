@@ -3,9 +3,11 @@ import { Delete } from "@mui/icons-material";
 import { useNotifications } from "lib";
 import { CustomIconButton, NegativeActionDialog } from "lib/ui-ux";
 import { useDeleteShopifyStore } from "modules/settings/apis/marketplace/shopify";
+import { useTranslation } from "react-i18next";
 
 export const DeleteShopifyStore = (props: { id: number }) => {
     const { mutateAsync, isLoading } = useDeleteShopifyStore();
+    const { t } = useTranslation();
 
     const { showNotification } = useNotifications();
     const [open, setOpen] = React.useState(false);
@@ -35,7 +37,7 @@ export const DeleteShopifyStore = (props: { id: number }) => {
                 isLoading={isLoading}
                 content='Do you want to delete this Shopify store permanently?'
                 title='Delete Shopify store'
-                negativeActionLabel="Yes, Delete"
+                negativeActionLabel={t("yes_delete")}
                 onNegativeActionClick={onDeleleHandler}
                 onClose={toggleDeleteDialogBox} />
         </>

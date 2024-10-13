@@ -1,13 +1,14 @@
 
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Chip, Avatar } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Chip, Avatar } from "@mui/material";
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import { FormProvider, useForm } from "react-hook-form";
 import { TextboxField } from "lib/form-fields";
 import { ITag, useEditTag } from "modules/settings/apis/tags";
 import { useNotifications } from "lib";
 import { Edit } from "@mui/icons-material";
-import { CustomIconButton } from "lib/ui-ux";
+import { CancelButton, CustomIconButton, LoadingButton } from "lib/ui-ux";
 import { useState, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 
 interface IEditTagProps {
     open: boolean
@@ -24,22 +25,23 @@ const EditTagDialog = (props: IEditTagProps) => {
         }
     });
 
-    const { mutateAsync } = useEditTag();
+    const { mutateAsync, isLoading } = useEditTag();
     const { showNotification } = useNotifications();
+    const { t } = useTranslation();
 
     const onEditTagSubmit = (formValues: { editTagName: string }) => {
         mutateAsync({
             id: clickedTagDetails.id.toString(),
             name: formValues.editTagName
-        }).then(() => showNotification({ message: 'Successfully edited the tag' }))
-            .catch(() => showNotification({ message: 'Failed to edit the tag', type: 'error' }))
+        }).then(() => showNotification({ message: t('tags_edit_success') }))
+            .catch(() => showNotification({ message: t('tags_edit_error'), type: 'error' }))
             .finally(() => handleClose());
     }
 
     const onValidate = (value: string) => {
         const doesTagExist = clickedTagDetails.data.some((item) => item.name === value);
         if (doesTagExist) {
-            return `${value} already exists, please input a diiferent one`;
+            return t('value_exists_validation');
         }
     }
 
@@ -52,7 +54,7 @@ const EditTagDialog = (props: IEditTagProps) => {
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
-                    Edit Tag
+                    {t('edit_tag')}
                 </DialogTitle>
                 <DialogContent sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                     <Chip
@@ -64,10 +66,10 @@ const EditTagDialog = (props: IEditTagProps) => {
                     <TextboxField name="editTagName" id="outlined-basic" variant="standard" size="small" rules={{ validate: onValidate }} />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Close</Button>
-                    <Button autoFocus variant="contained" onClick={form.handleSubmit(onEditTagSubmit)}>
-                        Save
-                    </Button>
+                    <CancelButton onClick={handleClose} />
+                    <LoadingButton isLoading={isLoading} autoFocus variant="contained" onClick={form.handleSubmit(onEditTagSubmit)}>
+                        {t('save')}
+                    </LoadingButton>
                 </DialogActions>
             </Dialog>
         </FormProvider>
@@ -76,14 +78,14 @@ const EditTagDialog = (props: IEditTagProps) => {
 
 export const EditTag = (props: { id: number; name: string, data: ITag[] }) => {
     const [isDialogShown, setDialogDisplay] = useState(false);
-
+    const { t } = useTranslation();
     const toggleDrawer = useCallback(() => {
         setDialogDisplay((preValue) => !preValue);
     }, []);
 
     return (
         <>
-            <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: "Edit tag", arrow: true }} onClick={toggleDrawer} />
+            <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: t("edit_tag"), arrow: true }} onClick={toggleDrawer} />
             <EditTagDialog handleClose={toggleDrawer} open={isDialogShown} clickedTagDetails={props} />
         </>
     )

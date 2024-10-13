@@ -3,11 +3,13 @@ import { Delete } from "@mui/icons-material";
 import { useNotifications } from "lib";
 import { CustomIconButton, NegativeActionDialog } from "lib/ui-ux";
 import { AutoMationType, useDeleteAssignment } from "modules/settings/apis/ticket-automation";
+import { useTranslation } from "react-i18next";
 
 export const DeleteAssignment = (props: { id: number, autoMationType: AutoMationType }) => {
     const { mutateAsync, isLoading } = useDeleteAssignment(props.autoMationType);
     const { showNotification } = useNotifications();
     const [open, setOpen] = React.useState(false);
+    const { t } = useTranslation();
 
     const toggleDeleteDialogBox = () => {
         setOpen((prev) => !prev);
@@ -31,7 +33,7 @@ export const DeleteAssignment = (props: { id: number, autoMationType: AutoMation
                 isLoading={isLoading}
                 content='Do you want to delete this assignment config permanently?'
                 title='Delete assignment config'
-                negativeActionLabel="Yes, Delete"
+                negativeActionLabel={t("yes_delete")}
                 onNegativeActionClick={onDeleleHandler}
                 onClose={toggleDeleteDialogBox} />
         </>
