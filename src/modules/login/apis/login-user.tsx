@@ -14,8 +14,12 @@ export const useLoginUser = () => {
         const restURl = import.meta.env.VITE_REST_URL;
         const subDomainValue = import.meta.env.VITE_SUB_DOMAIN ?? new URL(location.origin).href; //Keeping env values incase of overiding from local
 
-        return fetch(`${restURl}${LoginEndPoint.LOGIN_USER}?email_address=${data.email}&password=${data.password}`, {
+        return fetch(`${restURl}${LoginEndPoint.LOGIN_USER}`, {
             method: 'POST',
+            body: JSON.stringify({
+                email_address: data.email,
+                password: data.password
+            }),
             headers: {
                 'sub-domain': subDomainValue
             }
