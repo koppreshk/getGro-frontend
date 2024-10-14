@@ -31,7 +31,7 @@ export const AddEmailConfigContainer = () => {
                     searchParams.delete('code');
                     setSearchParams(searchParams);
                     showNotification({ message: t('email_config_success'), type: 'success' });
-                    navigate(-1);
+                    navigate('/');
                 })
                 .catch(() => showNotification({ message: t('email_config_error'), type: 'error' }))
         }
