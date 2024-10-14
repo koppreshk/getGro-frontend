@@ -74,7 +74,7 @@ export const TicketQueueForm = memo((props: ITicketQueueFormProps) => {
                             name="assignedEmployees"
                             getOptionLabel={(option) => option.value.split(';')[0]}
                             renderOption={renderOption}
-                            options={employees.map((item) => ({ key: item.id.toString(), value: [`${item.firstName} ${item.lastName ?? ''}`, item.email ?? 'absc@gmail.com'].join(';') }))}
+                            options={employees.map((item) => ({ key: item.id.toString(), value: [`${item.firstName} ${item.lastName ?? ''}`, item?.email].join(';') }))}
                             placeholder="Select Employee" />
                     </Grid>
                 </Grid>
