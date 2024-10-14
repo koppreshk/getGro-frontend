@@ -55,13 +55,13 @@ export const AgentTicketStats = (props: { data: IAgentPerformance }) => {
     }];
 
     const data2 = [{
-        value: average_first_response_time,
+        value: average_first_response_time + 'min(s)',
         subHeading: "Avg First Response Time"
     }, {
-        value: average_next_response_time,
+        value: average_next_response_time + 'min(s)',
         subHeading: "Avg Next Response Time"
     }, {
-        value: average_resolution_time,
+        value: average_resolution_time + 'min(s)',
         subHeading: "Avg Resolution Time"
     }];
 
