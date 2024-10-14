@@ -55,14 +55,17 @@ export const AgentTicketStats = (props: { data: IAgentPerformance }) => {
     }];
 
     const data2 = [{
-        value: average_first_response_time + 'min(s)',
-        subHeading: "Avg First Response Time"
+        value: average_first_response_time,
+        subHeading: "Avg First Response Time",
+        subTextValue: 'min(s)',
     }, {
-        value: average_next_response_time + 'min(s)',
-        subHeading: "Avg Next Response Time"
+        value: average_next_response_time,
+        subHeading: "Avg Next Response Time",
+        subTextValue: 'min(s)',
     }, {
-        value: average_resolution_time + 'min(s)',
-        subHeading: "Avg Resolution Time"
+        value: average_resolution_time,
+        subHeading: "Avg Resolution Time",
+        subTextValue: 'min(s)',
     }];
 
     return (
@@ -91,7 +94,7 @@ export const AgentTicketStats = (props: { data: IAgentPerformance }) => {
                 <StyledGridContainer $padding="20px" $gridGap="20px">
                     <Typography variant="h5" >Average Figures</Typography>
                     <StyledLayout $gridTemplateColumns="repeat(3, 1fr)" $alignItems="center">
-                        {data2.map((item) => <SingleStat subHeading={item.subHeading} value={item.value.toString()} key={item.subHeading} />)}
+                        {data2.map((item) => <SingleStat subHeading={item.subHeading} value={item.value.toString()} key={item.subHeading} subTextValue={item.subTextValue?.toString()} />)}
                     </StyledLayout>
                 </StyledGridContainer>
                 <FirstContactResolution fcr={fcr} />
