@@ -3,6 +3,7 @@ import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux"
 import { useEditEmailConfig, useFetchAllEmails } from "modules/settings/apis"
 import { AddEmail, IAddEmailConfigFormFields } from "modules/settings/component/channel-configurations"
 import { FormProvider, useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import { useNavigate, useSearchParams } from "react-router-dom"
 
 export const EditEmailConfigContainer = () => {
@@ -12,13 +13,15 @@ export const EditEmailConfigContainer = () => {
     const { data, isLoading, error } = useFetchAllEmails();
     const navigate = useNavigate();
 
+    const { t } = useTranslation();
+
     const onSubmit = (formData: IAddEmailConfigFormFields) => {
         mutateAsync({ displayName: formData.displayName, id: Number(searchParams.get('id')!), isActive: formData.isActive })
             .then(() => {
-                showNotification({ message: 'Successfully edited email config', type: 'success' });
+                showNotification({ message: t('email__edit_config_success'), type: 'success' });
                 navigate(-1);
             })
-            .catch(() => showNotification({ message: 'Failed to update email config', type: 'error' }))
+            .catch(() => showNotification({ message: t('email_edit_config_error'), type: 'error' }))
     }
 
     if (isLoading) {

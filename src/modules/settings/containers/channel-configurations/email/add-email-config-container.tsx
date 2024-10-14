@@ -4,6 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useNotifications } from "lib";
 import { useForm, FormProvider } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 export const AddEmailConfigContainer = () => {
     const { mutateAsync, isLoading: mutationLoading } = useSetupEmail();
@@ -12,6 +13,7 @@ export const AddEmailConfigContainer = () => {
     const code = searchParams.get('code');
     const { showNotification } = useNotifications();
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const form = useForm<IAddEmailConfigFormFields>({
         defaultValues: {
@@ -28,12 +30,12 @@ export const AddEmailConfigContainer = () => {
                 .then(() => {
                     searchParams.delete('code');
                     setSearchParams(searchParams);
-                    showNotification({ message: 'Successfully integrated email configuration', type: 'success' });
+                    showNotification({ message: t('email_config_success'), type: 'success' });
                     navigate(-1);
                 })
-                .catch(() => showNotification({ message: 'Successfully integrated email configuration', type: 'error' }))
+                .catch(() => showNotification({ message: t('email_config_error'), type: 'error' }))
         }
-    }, [code, connectToNylasOAuth, form, navigate, searchParams, setSearchParams, showNotification]);
+    }, [code, connectToNylasOAuth, form, navigate, searchParams, setSearchParams, showNotification, t]);
 
     const onSubmit = (formData: IAddEmailConfigFormFields) => {
         mutateAsync({ email: formData.emailAddress }).then((res) => {

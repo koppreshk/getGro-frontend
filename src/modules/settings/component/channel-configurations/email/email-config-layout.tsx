@@ -8,10 +8,12 @@ import { useTranslation } from "react-i18next";
 import { Route, Routes, useNavigate } from "react-router-dom";
 
 export default function EmailConfigLayout() {
+    const { t } = useTranslation();
+
     return (
         <FlexBox width="100%" height="100%" flexDirection="column" padding="20px" gap={'10px'}>
             <BreadCrumbs />
-            <MoreInformation information="Set up the support email address that users will use to reach out for assistance. Emails sent to this address will automatically be turned into support tickets." />
+            <MoreInformation information={t('email_more_info')} />
             <div style={{ height: 'calc(100% - 34px)' }}>
                 <Routes>
                     <Route key='base-route' path="/" element={<EmailConfigContent />} />
@@ -36,9 +38,9 @@ const EmailConfigContent = () => {
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
                     <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: t('back') }} />
-                    <Typography variant="h5">Email Configurations</Typography>
+                    <Typography variant="h5">{t('email_configurations')}</Typography>
                 </FlexBox>
-                <Button variant="contained" onClick={toggleAddEscalationDrawer} startIcon={<Add />}>Add Email</Button>
+                <Button variant="contained" onClick={toggleAddEscalationDrawer} startIcon={<Add />}>{t('add_email')}</Button>
             </FlexBox>
             <FetchAllEmailsContainer />
         </>

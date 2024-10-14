@@ -49,10 +49,10 @@ export const AddAgentForm = (props: IUserFormProps) => {
                         <TextboxField name="name" label={t('name')} rules={{ required: 'First name is required' }} />
                     </Grid>
                     <Grid item xs={12}>
-                        <TextboxField name="displayName" label="Display Name" rules={{ required: 'Display name is required' }} />
+                        <TextboxField name="displayName" label={t('display_name')} rules={{ required: t('display_name_validation') }} />
                     </Grid>
                     <Grid item xs={12}>
-                        <TextboxField name="email" label="Email" rules={{ required: 'Email is required' }} />
+                        <TextboxField name="email" label={t('email')} rules={{ required: 'Email is required' }} />
                     </Grid>
                     <Grid item xs={12}>
                         <TextboxField name="phoneNumber" label="Phone Number" />

@@ -20,19 +20,19 @@ export const DeleteEmail = (props: { id: number }) => {
         mutateAsync({
             id: props.id
         })
-            .then(() => showNotification({ message: 'Email config deleted successfully', type: 'success' }))
-            .catch(() => showNotification({ message: 'Failed to delete the Email config', type: 'error' }))
+            .then(() => showNotification({ message: t('email_delete_config_success'), type: 'success' }))
+            .catch(() => showNotification({ message: t('email_delete_config_error'), type: 'error' }))
             .finally(() => toggleDeleteDialogBox())
-    }, [mutateAsync, props.id, showNotification])
+    }, [mutateAsync, props.id, showNotification, t])
 
     return (
         <>
-            <CustomIconButton onClick={toggleDeleteDialogBox} iconComponent={<Delete />} tooltipProps={{ title: "Delete Email", arrow: true }} />
+            <CustomIconButton onClick={toggleDeleteDialogBox} iconComponent={<Delete />} tooltipProps={{ title: t('delete_email'), arrow: true }} />
             <NegativeActionDialog
                 open={open}
                 isLoading={isLoading}
-                content='Do you want to delete this Email config permanently?'
-                title='Delete Email config'
+                content={t('delete_email_config_content')}
+                title={t('delete_email_config')}
                 negativeActionLabel={t("yes_delete")}
                 onNegativeActionClick={onDeleleHandler}
                 onClose={toggleDeleteDialogBox} />
