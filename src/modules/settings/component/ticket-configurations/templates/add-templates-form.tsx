@@ -80,7 +80,7 @@ export const TemplatesForm = (props: ITemplatesFormProps) => {
                     </Grid>
                 </Grid>
                 <FlexBox gap='10px' width="100%" justifyContent="flex-end">
-                    {isInEditMode ? <Button variant="text" size="large" type="button" onClick={() => methods.reset()}>{'Reset'}</Button> : null}
+                    {isInEditMode ? <Button variant="text" size="large" type="button" onClick={() => methods.reset()}>{t('reset')}</Button> : null}
                     <LoadingButton isLoading={mutationLoading} variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>{isInEditMode ? 'Edit Template' : 'Add Template'}</LoadingButton>
                 </FlexBox>
             </FlexBox>

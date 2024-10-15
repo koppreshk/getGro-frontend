@@ -48,7 +48,7 @@ const AddRuleBase = (props: AddRuleProps) => {
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
-    const steps = [{ label: t('choose_condition') }, { label: "Associate Agent" }];
+    const steps = [{ label: t('choose_condition') }, { label: t('associate_agent') }];
 
     const isLastStep = activeStep === steps.length - 1;
     const isInBetween = activeStep !== 0 || isLastStep;
@@ -76,21 +76,21 @@ const AddRuleBase = (props: AddRuleProps) => {
                 {isLastStep || isInBetween
                     ?
                     <Button variant="contained" startIcon={<KeyboardArrowLeft />} onClick={isLastStep || isInBetween ? handleBack : onClose}>
-                        Back
+                        {t('back')}
                     </Button>
                     : null}
                 <FlexBox justifyContent="flex-end" width={isLastStep || isInBetween ? 'calc(100% - 95px)' : '100%'}>
                     <FlexBox gap='20px'>
                         <CancelButton onClick={onClose} />
                         {props.mode === 'edit' ?
-                            <Button variant="outlined" size="large" type="button" onClick={() => form.reset()}>{'Reset'}</Button>
+                            <Button variant="outlined" size="large" type="button" onClick={() => form.reset()}>{t('reset')}</Button>
                             : null}
                         <LoadingButton
                             isLoading={mutationLoading}
                             variant="contained"
                             endIcon={isLastStep ? <Save /> : <KeyboardArrowRight />}
                             onClick={isLastStep ? form.handleSubmit(onSave) : handleNext}>
-                            {isLastStep ? 'Save' : 'Next'}
+                            {isLastStep ? t('save') : t('next')}
                         </LoadingButton>
                     </FlexBox>
                 </FlexBox>

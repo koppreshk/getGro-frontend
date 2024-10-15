@@ -39,7 +39,7 @@ const useColumns = () => {
         }),
         columnHelper.display({
             id: 'actions',
-            header: () => 'Actions',
+            header: () => t("actions"),
             cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">

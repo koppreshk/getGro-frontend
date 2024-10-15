@@ -7,6 +7,7 @@ import { IAddExotelFormFields } from "modules/settings/containers/marketplace/ex
 import { ContentCopy } from "@mui/icons-material";
 import { useNotifications } from "lib";
 import { IExotelConfigDetails } from "modules/settings/apis/marketplace/exotel";
+import { useTranslation } from "react-i18next";
 
 export interface IAddExotelConfigurationFormProps {
     isMutationLoading: boolean;
@@ -144,6 +145,7 @@ export const AddExotelConfigurationForm = React.memo((props: IAddExotelConfigura
     const form = useFormContext<IAddExotelFormFields>()
     const [activeStep, setActiveStep] = React.useState(0);
     const { showNotification } = useNotifications();
+    const { t } = useTranslation();
 
     const onSubmitForm = async (formFields: IAddExotelFormFields) => {
         const custDetails = formFields.accountType === 'browser_calling' ? { customer_id: formFields?.customerId, customer_secret: formFields.customerSecret } : {}
@@ -190,7 +192,7 @@ export const AddExotelConfigurationForm = React.memo((props: IAddExotelConfigura
                 <FlexBox gap="10px">
                     <CancelButton onClick={togglePopup} />
                     <LoadingButton isLoading={isMutationLoading} variant="contained" onClick={isLastStep ? onSaveHandler : form.handleSubmit(onSubmitForm)}>
-                        {isLastStep ? 'Save' : 'Next'}
+                        {isLastStep ? t('save') : t('next')}
                     </LoadingButton>
                 </FlexBox>
             </DialogActions>

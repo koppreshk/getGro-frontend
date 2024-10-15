@@ -4,6 +4,7 @@ import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
 import { IExotelAddedNumbers } from "modules/settings/apis/marketplace/exotel";
 import { styled } from "styled-components";
 import { DeleteExophone } from "./delete-exophone";
+import { useTranslation } from "react-i18next";
 
 export interface IManageExotelNumbersLayoutProps {
     data: IExotelAddedNumbers[] | undefined;
@@ -13,6 +14,7 @@ export interface IManageExotelNumbersLayoutProps {
 
 const useColumns = () => {
     const columnHelper = createColumnHelper<IExotelAddedNumbers>();
+    const { t } = useTranslation();
 
     const column = [
         columnHelper.accessor("friendly_name", {
@@ -39,7 +41,7 @@ const useColumns = () => {
         }),
         columnHelper.display({
             id: 'actions',
-            header: () => 'Actions',
+            header: () => t("actions"),
             cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">

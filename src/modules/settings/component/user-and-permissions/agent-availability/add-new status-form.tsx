@@ -4,6 +4,7 @@ import { MuiColorInput } from "mui-color-input";
 import { Button, Grid } from "@mui/material";
 import { SelectField, TextboxField } from "lib/form-fields";
 import { FlexBox } from "lib/ui-ux";
+import { useTranslation } from "react-i18next";
 
 export interface IUserFormFields {
     statusName: string;
@@ -19,6 +20,7 @@ interface IUserFormProps {
 export const AddNewStatusForm = (props: IUserFormProps) => {
     const { mode, defaultValues, onFormSubmitHandler } = props;
     const isInEditMode = useMemo(() => mode === 'edit', [mode]);
+    const { t } = useTranslation();
 
     const methods = useForm<IUserFormFields>({
         defaultValues: defaultValues ?? {
@@ -52,7 +54,7 @@ export const AddNewStatusForm = (props: IUserFormProps) => {
                     </Grid>
                 </Grid>
                 <FlexBox gap='10px' width="100%" justifyContent="flex-end">
-                    {isInEditMode ? <Button variant="text" size="large" type="button" onClick={() => methods.reset()}>{'Reset'}</Button> : null}
+                    {isInEditMode ? <Button variant="text" size="large" type="button" onClick={() => methods.reset()}>{t('reset')}</Button> : null}
                     <Button variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>{isInEditMode ? 'Edit Status' : 'Add Status'}</Button>
                 </FlexBox>
             </FlexBox>

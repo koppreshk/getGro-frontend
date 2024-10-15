@@ -7,6 +7,7 @@ import { AssignedEmployees } from "./assigned-employees";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
 import { EditQueueContainer } from "modules/settings/containers";
 import { Edit } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
 
 interface ITicketQueueListProps {
     queueData: Queue[];
@@ -16,7 +17,8 @@ interface ITicketQueueListProps {
 
 const useColumns = () => {
     const columnHelper = createColumnHelper<Queue>();
-
+    const { t } = useTranslation();
+    
     const columns = [
         columnHelper.accessor("name", {
             id: 'name',
@@ -32,7 +34,7 @@ const useColumns = () => {
         }),
         columnHelper.display({
             id: 'actions',
-            header: () => 'Actions',
+            header: () => t("actions"),
             cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">

@@ -6,6 +6,7 @@ import { Box, DialogActions, Divider, InputAdornment, Step, StepLabel, Stepper, 
 import { ContentCopy } from "@mui/icons-material";
 import { useNotifications } from "lib";
 import { ISetupWhatsAppArgs } from "modules/settings/apis/marketplace/whatsApp/gupshup";
+import { useTranslation } from "react-i18next";
 
 export interface IWhatsAppGupshupConfigFormProps {
     togglePopup: () => void;
@@ -95,7 +96,8 @@ export const WhatsAppGupshupConfigForm = (props: IWhatsAppGupshupConfigFormProps
     const { togglePopup, onSubmit, isMutationLoading, updateInstallation } = props;
     const form = useFormContext<IAddWhatsAppFormField>()
     const [activeStep, setActiveStep] = React.useState(0);
-
+    const { t } = useTranslation();
+    
     const onSubmitForm = async (formValues: IAddWhatsAppFormField) => {
         onSubmit({
             api_key: formValues.appAPIkey,
@@ -135,7 +137,7 @@ export const WhatsAppGupshupConfigForm = (props: IWhatsAppGupshupConfigFormProps
                 <FlexBox gap="10px">
                     <CancelButton onClick={togglePopup} />
                     <LoadingButton variant="contained" isLoading={isMutationLoading} onClick={isLastStep ? onSaveHandler : form.handleSubmit(onSubmitForm)}>
-                        {isLastStep ? 'Save' : 'Next'}
+                        {isLastStep ? t('save') : t('next')}
                     </LoadingButton>
                 </FlexBox>
             </DialogActions>

@@ -7,6 +7,7 @@ import { chooseRandomColors, getInitialsByName } from "lib/utils";
 import { IRoles } from "modules/settings/apis/users-and-permissions";
 import { DeleteRolesContainer } from "modules/settings/containers/roles-and-permissions";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 interface IRolesAndPermissionsListProps {
@@ -17,6 +18,7 @@ interface IRolesAndPermissionsListProps {
 const useColumns = (rolesData: IRoles[]) => {
     const columnHelper = createColumnHelper<IRoles>();
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const columns = [
         columnHelper.accessor("name", {
@@ -40,7 +42,7 @@ const useColumns = (rolesData: IRoles[]) => {
         }),
         columnHelper.display({
             id: 'actions',
-            header: () => 'Actions',
+            header: () => t("actions"),
             cell: ({ row: { original } }) => {
                 return (
                     <>

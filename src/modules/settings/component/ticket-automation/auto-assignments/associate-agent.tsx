@@ -34,7 +34,7 @@ export const AssociateAgent = () => {
                 <Typography variant="h6">{t('choose_a_queue')}</Typography>
                 {isQueueLoading
                     ? <CircularProgress />
-                    : <SelectField label="Queue " name="selectedQueue" sx={{ width: '20%' }} menuOptions={allQueues?.map((item) => ({ key: item.id.toString(), value: item.name })) || []} rules={{ required: t('queue_validation') }} />}
+                    : <SelectField label={t("queue")} name="selectedQueue" sx={{ width: '20%' }} menuOptions={allQueues?.map((item) => ({ key: item.id.toString(), value: item.name })) || []} rules={{ required: t('queue_validation') }} />}
             </FlexBox>
         </FlexBox >
     )

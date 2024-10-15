@@ -1,3 +1,5 @@
+import { useTheme } from "styled-components";
+import { useTranslation } from "react-i18next";
 import { useMemo, useState } from "react";
 import { Edit } from "@mui/icons-material";
 import { createColumnHelper } from "@tanstack/react-table";
@@ -10,11 +12,11 @@ import { chooseRandomColors, getInitialsByName } from "lib/utils";
 import { VerificationStatus } from "./verification-status";
 import { ActivateAgentContainer } from "modules/settings/containers/agents/activate-agent-container";
 import { useAuth } from "modules/login";
-import { useTheme } from "styled-components";
 
 const useColumns = () => {
     const columnHelper = createColumnHelper<IUsers>();
     const { user } = useAuth();
+    const { t } = useTranslation();
 
     const columns = [
         columnHelper.accessor("id", {
@@ -39,7 +41,7 @@ const useColumns = () => {
         }),
         columnHelper.display({
             id: 'actions',
-            header: () => 'Actions',
+            header: () => t("actions"),
             cell: ({ row: { original } }) => {
                 const isLoggedInUser = original.name === user?.name; //Checking if the logged in user and current user are same
                 const showDeactivateDialog = original.fetch_verification_status !== 'Deactivated' && original.role !== 'Account Owner' && user?.name !== original.name;

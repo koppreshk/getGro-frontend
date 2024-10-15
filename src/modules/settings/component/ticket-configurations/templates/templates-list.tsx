@@ -5,6 +5,7 @@ import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
 import { IGenericResponse } from "modules/settings/apis/templates/types";
 import { DeleteTemplatesContainer, EditTemplatesContainer } from "modules/settings/containers/templates";
 import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface ITemplatesListProps {
     statusData: IGenericResponse[] | undefined;
@@ -13,6 +14,7 @@ interface ITemplatesListProps {
 
 const useColumns = () => {
     const columnHelper = createColumnHelper<IGenericResponse>();
+    const { t } = useTranslation();
 
     const columns = [
         columnHelper.accessor("id", {
@@ -27,7 +29,7 @@ const useColumns = () => {
         }),
         columnHelper.display({
             id: 'actions',
-            header: () => 'Actions',
+            header: () => t("actions"),
             cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">

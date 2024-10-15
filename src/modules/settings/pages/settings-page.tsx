@@ -24,9 +24,8 @@ export default function ConfigurationsPage() {
             <Routes>
                 <Route element={<ProtectedConfigurationsRoute />}>
                     <Route key="configuration-home" path='/'  >
-                        <Route key="queues" path="/" element={<Configurations />} />
+                        <Route key="homepath" path="/" element={<Configurations />} />
                         <Route key="queues" path="queues/*" element={<TicketQueuesContainer />} />
-                        <Route key="ticket-escalation" path="ticket-escalation/*" element={<AllEscalationsContainer />} />
                         <Route key="templates" path="templates/*" element={<TemplatesContainer />} />
                         <Route key="ticket-status" path="ticket-status/*" element={<TicketStatusContainer />} />
                         <Route key="ticket-tags" path="tags" element={<TicketTagsContainer />} />
@@ -34,6 +33,7 @@ export default function ConfigurationsPage() {
                         <Route key="email-config" path="email/*" element={<EmailConfigLayout />} />
                         <Route key="add-agent" path="agents" element={<AgentsLayout />} />
 
+                        <Route key="ticket-escalation" path="ticket-escalation/*" element={<AllEscalationsContainer />} />
                         <Route key="auto-assignment" path="auto-assignments/*" element={<FetchAllAssignmentsContainer />} />
                         <Route key="create-ticket-triggers" path="create-ticket-triggers/*" element={<FetchAllCreateTicketTriggersContainer autoMationType="create_trigger" />} />
                         <Route key="update-ticket-triggers" path="update-ticket-triggers/*" element={<FetchAllCreateTicketTriggersContainer autoMationType="update_trigger" />} />

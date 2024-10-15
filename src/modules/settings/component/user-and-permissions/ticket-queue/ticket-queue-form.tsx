@@ -6,6 +6,7 @@ import { TextboxField, AutocompleteField, AutoCompleteRenderOptionProps } from "
 import { CancelButton, FlexBox, LoadingButton } from "lib/ui-ux";
 import { Employee } from "modules/settings/apis/queues";
 import { CheckBoxOutlineBlank, CheckBox } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
 
 const StlyedFlexBox = styled(FlexBox)`
     margin-top: 20px;
@@ -32,6 +33,7 @@ interface ITicketQueueFormProps {
 export const TicketQueueForm = memo((props: ITicketQueueFormProps) => {
     const { mode, defaultValues, employees, mutationLoading, toggleAddQueueDrawer, onFormSubmitHandler } = props;
     const isInEditMode = useMemo(() => mode === 'edit', [mode]);
+    const { t } = useTranslation();
 
     const methods = useForm<IQueueFormFields>({
         defaultValues: defaultValues ?? {
@@ -79,7 +81,7 @@ export const TicketQueueForm = memo((props: ITicketQueueFormProps) => {
                     </Grid>
                 </Grid>
                 <StlyedFlexBox gap='10px' width="100%" justifyContent="flex-end">
-                    {isInEditMode ? <Button variant="text" size="large" type="button" onClick={() => methods.reset()}>{'Reset'}</Button> : null}
+                    {isInEditMode ? <Button variant="text" size="large" type="button" onClick={() => methods.reset()}>{t('reset')}</Button> : null}
                     <CancelButton onClick={toggleAddQueueDrawer} />
                     <LoadingButton isLoading={mutationLoading} variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>{isInEditMode ? 'Edit Queue' : 'Add Queue'}</LoadingButton>
                 </StlyedFlexBox>

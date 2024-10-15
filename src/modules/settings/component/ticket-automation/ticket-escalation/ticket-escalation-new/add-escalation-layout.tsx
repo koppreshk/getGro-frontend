@@ -239,7 +239,7 @@ export const AddEscalationLayout = React.memo((props: IAddEscalationLayoutProps)
                         <FlexBox gap='20px'>
                             <CancelButton onClick={onClose} />
                             {props.mode === 'edit' ?
-                                <Button variant="outlined" size="large" type="button" onClick={() => form.reset()}>{t('reset')}</Button>
+                                <Button variant="outlined" size="large" type="button" onClick={() => form.reset()}>{t(t('reset'))}</Button>
                                 : null}
                             <LoadingButton
                                 variant="contained"

@@ -6,7 +6,7 @@ import { SelectField, TextboxField } from "lib/form-fields";
 import { FlexBox } from "lib/ui-ux";
 import { FetchFieldsAndConditions } from "modules/settings/apis/ticket-automation";
 import { useTheme } from "styled-components";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 interface TicketConditionsProps {
     heading: React.ReactNode;
@@ -39,7 +39,7 @@ export const TicketConditions = (props: TicketConditionsProps) => {
                     <Condition key={field.id} index={index} fieldArrayName={fieldArrayName} data={data} remove={remove} />
                 ))}
             </FlexBox>
-            <Button variant="contained" size="small" sx={{ width: 'fit-content' }} onClick={onAddCondition}>Add Condition</Button>
+            <Button variant="contained" size="small" sx={{ width: 'fit-content' }} onClick={onAddCondition}><Trans i18nKey={'add_condition'} /></Button>
         </FlexBox>
     )
 }

@@ -20,19 +20,19 @@ export const DeleteAssignment = (props: { id: number, autoMationType: AutoMation
         mutateAsync({
             id: props.id
         })
-            .then(() => showNotification({ message: 'Assignment config deleted successfully', type: 'success' }))
-            .catch(() => showNotification({ message: 'Failed to delete the Assignment config', type: 'error' }))
+            .then(() => showNotification({ message: t('assignments_delete_success'), type: 'success' }))
+            .catch(() => showNotification({ message: t('assignments_delete_error'), type: 'error' }))
             .finally(() => toggleDeleteDialogBox())
-    }, [mutateAsync, props.id, showNotification])
+    }, [mutateAsync, props.id, showNotification, t])
 
     return (
         <>
-            <CustomIconButton onClick={toggleDeleteDialogBox} iconComponent={<Delete />} tooltipProps={{ title: "Delete Rule", arrow: true }} />
+            <CustomIconButton onClick={toggleDeleteDialogBox} iconComponent={<Delete />} tooltipProps={{ title: t('delete_rule'), arrow: true }} />
             <NegativeActionDialog
                 open={open}
                 isLoading={isLoading}
-                content='Do you want to delete this assignment config permanently?'
-                title='Delete assignment config'
+                content={t('delete_assignment_content')}
+                title={t('delete_assignment_config')}
                 negativeActionLabel={t("yes_delete")}
                 onNegativeActionClick={onDeleleHandler}
                 onClose={toggleDeleteDialogBox} />

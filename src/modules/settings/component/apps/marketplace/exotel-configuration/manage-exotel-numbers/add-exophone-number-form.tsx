@@ -8,6 +8,7 @@ import { IUsers } from "modules/settings/apis/users-and-permissions";
 import { Exophone, IAddExophoneNumber, IExotelConfigDetails } from "modules/settings/apis/marketplace/exotel";
 import { ContentCopy } from "@mui/icons-material";
 import { useNotifications } from "lib";
+import { useTranslation } from "react-i18next";
 
 const steps = [
     {
@@ -124,6 +125,7 @@ export interface IAddExophoneNumberFormProps {
 export const AddExophoneNumberFormBase = (props: IAddExophoneNumberFormProps) => {
     const { togglePopup, isMutationLoading, allUsersData, exophoneNumData, onSubmit } = props;
     const isBrowserCalling = props.exotelConfigDetails.account_type === 'browser_calling';
+    const { t } = useTranslation();
 
     //Remove webhook step if its NOT broswer calling
     const modifiedSteps = !isBrowserCalling ? steps.filter((item) => item.label !== 'Webhook') : steps;
@@ -188,7 +190,7 @@ export const AddExophoneNumberFormBase = (props: IAddExophoneNumberFormProps) =>
                 <FlexBox gap="10px">
                     <CancelButton onClick={togglePopup} />
                     <LoadingButton isLoading={isMutationLoading!} variant="contained" onClick={!isBrowserCalling ? form.handleSubmit(onSubmitForm) : isLastStep ? onSaveHandler : form.handleSubmit(onSubmitForm)}>
-                        {isLastStep ? 'Save' : 'Next'}
+                        {isLastStep ? t('save') : t('next')}
                     </LoadingButton>
                 </FlexBox>
             </DialogActions>

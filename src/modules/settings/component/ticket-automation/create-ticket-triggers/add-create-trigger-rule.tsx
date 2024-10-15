@@ -82,14 +82,14 @@ const AddRuleBase = (props: AddRuleProps) => {
                     <FlexBox gap='20px'>
                         <CancelButton onClick={onClose} />
                         {props.mode === 'edit' ?
-                            <Button variant="outlined" size="large" type="button" onClick={() => form.reset()}>{'Reset'}</Button>
+                            <Button variant="outlined" size="large" type="button" onClick={() => form.reset()}>{t('reset')}</Button>
                             : null}
                         <LoadingButton
                             isLoading={mutationLoading}
                             variant="contained"
                             endIcon={isLastStep ? <Save /> : <KeyboardArrowRight />}
                             onClick={isLastStep ? form.handleSubmit(onSave) : handleNext}>
-                            {isLastStep ? 'Save' : 'Next'}
+                            {isLastStep ? t('save') : t('next')}
                         </LoadingButton>
                     </FlexBox>
                 </FlexBox>
