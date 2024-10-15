@@ -55,7 +55,7 @@ export const TicketStatusForm = (props: ITicketStatusFormProps) => {
                 </Grid>
                 <FlexBox gap='10px' width="100%" justifyContent="flex-end">
                     <CancelButton onClick={toggleDrawer} />
-                    {isInEditMode ? <Button variant="outlined" size="large" type="button" onClick={() => methods.reset()}>{t(t('reset'))}</Button> : null}
+                    {isInEditMode ? <Button variant="outlined" size="large" type="button" onClick={() => methods.reset()}>{t('reset')}</Button> : null}
                     <LoadingButton isLoading={mutationLoading} variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>{isInEditMode ? t('edit_ticket_label') : t('add_ticket_label')}</LoadingButton>
                 </FlexBox>
             </FlexBox>
