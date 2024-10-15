@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createSearchParams, useMatch, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { Avatar, Typography } from "@mui/material"
@@ -49,6 +49,20 @@ const StyledTypography = styled(Typography)`
 
 export const TicketList = (props: ITicketListProps) => {
     const { data } = props;
+    const params = useParams();
+    const navigate = useNavigate();
+    const match = useMatch(`/tickets/:ticketType/:ticketId`);
+    const [searchParams] = useSearchParams();
+    const noOfRecords = searchParams.get('noOfRecords');
+    const pageNumber = searchParams.get('pageNumber');
+    
+    const doesTicketIdExist = data.some((item) => item.ticketId === params.ticketId);
+
+    useEffect(() => {
+        if(!doesTicketIdExist){
+            navigate(`/tickets/${match?.params.ticketType}/${data[0].ticketId}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`);   
+        }
+    }, [data, doesTicketIdExist, match?.params.ticketType, navigate, noOfRecords, pageNumber])
 
     const ticketViewDetails = data.map((item) => (
         <TicketDetails key={item.ticketId} {...item}
