@@ -45,17 +45,18 @@ export const ChooseConditionForm = (props: ChooseConditionFormProps) => {
                 <TicketConditions
                     fieldArrayName="anyTicketConditions"
                     data={data}
-                    heading={<Typography variant="body2"><Trans i18nKey={'rule_text_any_condtions'}/></Typography>} />
+                    heading={<Typography variant="body2"><Trans i18nKey={'rule_text_any_condtions'} /></Typography>} />
             </FlexBox>
         </FlexBox>
     )
 }
 
 const ConditionCombiner = () => {
+    const { t } = useTranslation();
     return (
         <>
             <VerticalSeparator />
-            <Chip label="AND" />
+            <Chip label={t('and')} />
             <VerticalSeparator />
         </>
     )

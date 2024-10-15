@@ -47,7 +47,7 @@ const AddRuleBase = (props: AddRuleProps) => {
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
-    const steps = [{ label: t('choose_condition') }, { label: "Set Action" }];
+    const steps = [{ label: t('choose_condition') }, { label: t('set_action') }];
 
     const isLastStep = activeStep === steps.length - 1;
     const isInBetween = activeStep !== 0 || isLastStep;
@@ -75,7 +75,7 @@ const AddRuleBase = (props: AddRuleProps) => {
                 {isLastStep || isInBetween
                     ?
                     <Button variant="contained" startIcon={<KeyboardArrowLeft />} onClick={isLastStep || isInBetween ? handleBack : onClose}>
-                        Back
+                        {t('back')}
                     </Button>
                     : null}
                 <FlexBox justifyContent="flex-end" width={isLastStep || isInBetween ? 'calc(100% - 95px)' : '100%'}>

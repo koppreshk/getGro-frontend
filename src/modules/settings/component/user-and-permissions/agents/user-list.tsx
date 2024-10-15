@@ -49,7 +49,7 @@ const useColumns = () => {
                     <FlexBox flexDirection="row" gap="5px">
                         {showDeactivateDialog && <DeactivateAgentContainer id={original.id} canDeactivate={original.can_deactivate} />}
                         {original.fetch_verification_status === 'Deactivated' && <ActivateAgentContainer id={original.id} />}
-                        {!isLoggedInUser && <EditAgent id={original.id} />}
+                        {!isLoggedInUser && original.role !== 'Account Owner' && <EditAgent id={original.id} />}
                     </FlexBox>
                 )
             },

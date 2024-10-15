@@ -71,13 +71,13 @@ const Condition = (props: ConditionProps) => {
             return (
                 <SelectField
                     name={`${fieldArrayName}.${index}.conditionValue`}
-                    label="Condition Value"
+                    label={t('condition_value')}
                     menuOptions={conditionValue} sx={{ width: '33%' }} />
             )
         }
         else {
             return (
-                <TextboxField name={`${fieldArrayName}.${index}.conditionValue`} label="Condition Value" placeholder="Comma separated values" />
+                <TextboxField name={`${fieldArrayName}.${index}.conditionValue`} label={t('condition_value')} placeholder={t('comma_separated_values')} />
             )
         }
     }
@@ -94,7 +94,7 @@ const Condition = (props: ConditionProps) => {
                         name={`${fieldArrayName}.${index}.multiSelectConditionValue`}
                         multiple
                         menuOptions={conditionValue}
-                        sx={{ width: '33%' }} label="Condition Value" /> : null}
+                        sx={{ width: '33%' }} label={t('condition_value')} /> : null}
                     {renderFieldsByPrevSelection()}
                 </FlexBox>
                 <IconButton onClick={() => remove(index)} sx={{ width: 'fit-content' }}>

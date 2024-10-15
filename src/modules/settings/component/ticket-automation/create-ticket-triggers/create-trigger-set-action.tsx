@@ -19,6 +19,7 @@ export const CreateTriggerSetAction = () => {
     }, [append]);
 
     const { pallete, semantics } = useTheme();
+    const { t } = useTranslation();
 
     if (isLoading) {
         return <CenteredCircularProgress />
@@ -38,7 +39,7 @@ export const CreateTriggerSetAction = () => {
                             <Condition key={field.id} index={index} fieldArrayName="actions" remove={remove} data={data!} />
                         ))}
                     </FlexBox>
-                    <Button variant="contained" size="small" sx={{ width: 'fit-content' }} onClick={onAddCondition}>Add Condition</Button>
+                    <Button variant="contained" size="small" sx={{ width: 'fit-content' }} onClick={onAddCondition}>{t('add_condition')}</Button>
                 </FlexBox>
             </FlexBox >
         )
@@ -83,7 +84,7 @@ const Condition = (props: ConditionProps) => {
                     {isAssigneeSelected ?
                         <SelectField
                             name={`${fieldArrayName}.${index}.conditionValue`}
-                            label="Condition Value"
+                            label={t('condition_value')}
                             menuOptions={getAssigneeMenuOptionsIfExists() || []} sx={{ width: '33%' }} /> : null}
                 </FlexBox>
                 <IconButton onClick={() => remove(index)} sx={{ width: 'fit-content' }}>
