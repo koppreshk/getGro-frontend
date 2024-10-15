@@ -20,19 +20,19 @@ export const DeleteEscalation = (props: { id: number }) => {
         mutateAsync({
             id: props.id
         })
-            .then(() => showNotification({ message: 'Escalation deleted successfully', type: 'success' }))
-            .catch(() => showNotification({ message: 'Failed to delete the Escalation', type: 'error' }))
+            .then(() => showNotification({ message: t('delete_escalation_success'), type: 'success' }))
+            .catch(() => showNotification({ message: t('delete_escalation_error'), type: 'error' }))
             .finally(() => toggleDeleteDialogBox())
-    }, [mutateAsync, props.id, showNotification])
+    }, [mutateAsync, props.id, showNotification, t])
 
     return (
         <>
-            <CustomIconButton onClick={toggleDeleteDialogBox} iconComponent={<Delete />} tooltipProps={{ title: "Delete Escalation", arrow: true }} />
+            <CustomIconButton onClick={toggleDeleteDialogBox} iconComponent={<Delete />} tooltipProps={{ title: t('delete_escalation'), arrow: true }} />
             <NegativeActionDialog
                 open={open}
                 isLoading={isLoading}
-                content='Do you want to delete this escalation permanently?'
-                title='Delete Escalation'
+                content={t('delete_escalation_content')}
+                title={t('delete_escalation')}
                 negativeActionLabel={t("yes_delete")}
                 onNegativeActionClick={onDeleleHandler}
                 onClose={toggleDeleteDialogBox} />

@@ -3,6 +3,7 @@ import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
 import { IEscalationsNew, useEditEscalationNew, useFetchEscalationById, useFetchSLAmetaData } from "modules/settings/apis/ticket-automation/escalations";
 import { AddEscalationLayout, IEscalationFormFields, ISLATargetsFormFields } from "modules/settings/component/ticket-automation/ticket-escalation/ticket-escalation-new/add-escalation-layout";
 import { useNotifications } from "lib";
+import { useTranslation } from "react-i18next";
 
 export const EditTicketSLAContainer = (props: { allEscalations?: IEscalationsNew[] }) => {
     const [searchParams] = useSearchParams();
@@ -11,6 +12,7 @@ export const EditTicketSLAContainer = (props: { allEscalations?: IEscalationsNew
     const { data: slaDataById, isLoading: slaDataLoading, error: slaError } = useFetchEscalationById(id);
     const { mutateAsync, isLoading: mutationLoading } = useEditEscalationNew();
     const { showNotification } = useNotifications();
+    const { t } = useTranslation();
 
     const onFormSubmit = (formData: IEscalationFormFields) => {
         const { addEscalation, addReminders, chooseCondition, slaTargets, conditionsArray } = formData;
@@ -57,12 +59,12 @@ export const EditTicketSLAContainer = (props: { allEscalations?: IEscalationsNew
         })
             .then((res) => {
                 if (res.status) {
-                    showNotification({ message: 'SLA edited successfully', type: 'success' });
+                    showNotification({ message: t('sla_edit_success'), type: 'success' });
                     return
                 }
                 showNotification({ message: res.message, type: 'error' })
             })
-            .catch(() => showNotification({ message: 'Failed to edit SLA', type: 'error' }))
+            .catch(() => showNotification({ message: t('sla_edit_failure'), type: 'error' }))
     }
 
     if (isLoading || slaDataLoading) {

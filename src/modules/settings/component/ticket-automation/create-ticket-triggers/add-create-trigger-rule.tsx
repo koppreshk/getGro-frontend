@@ -8,6 +8,7 @@ import { useNotifications } from 'lib';
 import { FetchFieldsAndConditions, IAllAssignments } from 'modules/settings/apis/ticket-automation';
 import { CreateTriggerSetAction } from './create-trigger-set-action';
 import { ChooseConditionForm } from '../auto-assignments/choose-condition-form';
+import { useTranslation } from 'react-i18next';
 
 interface AddRuleProps {
     mode?: string;
@@ -24,7 +25,8 @@ const AddRuleBase = (props: AddRuleProps) => {
     const form = useFormContext<IAddCreateTriggerRuleFormFields>();
     const navigate = useNavigate();
     const { showNotification } = useNotifications();
-
+    const { t } = useTranslation();
+    
     const renderBasedOnActiveStep = () => {
         switch (activeStep) {
             case 0:
@@ -45,7 +47,7 @@ const AddRuleBase = (props: AddRuleProps) => {
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
-    const steps = [{ label: "Choose Condition" }, { label: "Set Action" }];
+    const steps = [{ label: t('choose_condition') }, { label: "Set Action" }];
 
     const isLastStep = activeStep === steps.length - 1;
     const isInBetween = activeStep !== 0 || isLastStep;

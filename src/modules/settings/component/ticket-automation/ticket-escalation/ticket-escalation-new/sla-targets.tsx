@@ -2,6 +2,7 @@ import { Typography } from "@mui/material";
 import { SelectField, TextboxField } from "lib/form-fields";
 import { FlexBox } from "lib/ui-ux"
 import { IField, IKeyValue, IPriority } from "modules/settings/apis/ticket-automation/escalations/fetch-sla-metadata";
+import { useTranslation } from "react-i18next";
 import styled from 'styled-components';
 
 const PriorityLabel = styled(FlexBox)`
@@ -24,6 +25,7 @@ export const SLATargets = (props: ISLATargetsProps) => {
     const { timeOptions, slaTargetPriorities } = props;
     const priorities = slaTargetPriorities.map((data) => ({ key: data.id.toString(), value: data.name }));
     const timeFieldOptions = timeOptions.map((data) => ({ key: data.id.toString(), value: data.name }));
+    const { t } = useTranslation();
 
     return (
         <FlexBox flexDirection="column" gap="20px">
@@ -34,15 +36,15 @@ export const SLATargets = (props: ISLATargetsProps) => {
                     </PriorityLabel>
                     <FlexBox padding="0 20px" gap={"10px"} >
                         <FlexBox padding="20px" flexDirection="column" gap="10px">
-                            <Typography variant="body3">Time to first response</Typography>
+                            <Typography variant="body3">{t('time_to_first_response')}</Typography>
                             <TimeInputs timePrefixName={`slaTargets.${item.value.toLowerCase()}.firstResponse.timePrefix`} timeFieldsName={`slaTargets.${item.value.toLowerCase()}.firstResponse.timeFields`} timeFieldOptions={timeFieldOptions} />
                         </FlexBox>
                         <FlexBox padding="20px" flexDirection="column" gap="10px">
-                            <Typography variant="body3">Time to next response</Typography>
+                            <Typography variant="body3">{t('time_to_next_response')}</Typography>
                             <TimeInputs timePrefixName={`slaTargets.${item.value.toLowerCase()}.nextResponse.timePrefix`} timeFieldsName={`slaTargets.${item.value.toLowerCase()}.nextResponse.timeFields`} timeFieldOptions={timeFieldOptions} />
                         </FlexBox>
                         <FlexBox padding="20px" flexDirection="column" gap="10px">
-                            <Typography variant="body3">Time to resolution</Typography>
+                            <Typography variant="body3">{t('time_to_resolution')}</Typography>
                             <TimeInputs timePrefixName={`slaTargets.${item.value.toLowerCase()}.resolution.timePrefix`} timeFieldsName={`slaTargets.${item.value.toLowerCase()}.resolution.timeFields`} timeFieldOptions={timeFieldOptions} />
                         </FlexBox>
                     </FlexBox>

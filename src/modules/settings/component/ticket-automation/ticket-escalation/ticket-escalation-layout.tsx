@@ -50,13 +50,13 @@ const EscalationLayoutContent = (props: ITicketEscalaltionLayoutProps) => {
 
     return (
         <FlexBox flexDirection="column" gap={'20px'} padding="20px" width="100%" height="100%">
-            <MoreInformation information="Service Level Agreements (SLAs) define the response and resolution times for support tickets. You can configure each SLA to function based on calendar hours (24/7) or specific business hours. When a ticket is created or updated, the system applies the first applicable SLA from the defined order." />
+            <MoreInformation information={t('ticket_escalation_long_description')} />
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
                     <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBackIcon />} tooltipProps={{ title: t('back') }} />
-                    <Typography variant="h5">Ticket Escalation</Typography>
+                    <Typography variant="h5">{t('ticket_escalation')}</Typography>
                 </FlexBox>
-                <Button variant="contained" onClick={toggleAddEscalationDrawer} startIcon={<AddCircleOutline />}>Add Escalation</Button>
+                <Button variant="contained" onClick={toggleAddEscalationDrawer} startIcon={<AddCircleOutline />}>{t('add_escalation')}</Button>
             </FlexBox>
             <AllEscalations {...props} />
         </FlexBox>

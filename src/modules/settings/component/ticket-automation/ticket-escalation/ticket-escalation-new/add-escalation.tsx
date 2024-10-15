@@ -62,7 +62,7 @@ export const AddEscalation = (props: IAddEscalationProps) => {
                         <HeaderLabel >
                             <Typography variant="body2"> {t('next_response_escalation_note')} </Typography>
                         </HeaderLabel>
-                        <SelectField name="addEscalation.ntrDuration" menuOptions={escalationTimes.map((data) => ({ key: data.id.toString(), value: data.name }))} sx={{ width: '100%' }} label="Escalate" />
+                        <SelectField name="addEscalation.ntrDuration" menuOptions={escalationTimes.map((data) => ({ key: data.id.toString(), value: data.name }))} sx={{ width: '100%' }} label={t("escalate")} />
                     </Grid>
                     <Grid item xs={8}>
                         <HeaderLabel>

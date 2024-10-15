@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { FetchFieldsAndConditions, IAllAssignments } from 'modules/settings/apis/ticket-automation';
 import { IAddRuleFormFields } from 'modules/settings/containers/ticket-automation';
 import { useNotifications } from 'lib';
+import { useTranslation } from 'react-i18next';
 
 interface AddRuleProps {
     mode?: string;
@@ -25,7 +26,8 @@ const AddRuleBase = (props: AddRuleProps) => {
     const form = useFormContext<IAddRuleFormFields>();
     const navigate = useNavigate();
     const { showNotification } = useNotifications();
-
+    const { t } = useTranslation();
+    
     const renderBasedOnActiveStep = () => {
         switch (activeStep) {
             case 0:
@@ -46,7 +48,7 @@ const AddRuleBase = (props: AddRuleProps) => {
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
-    const steps = [{ label: "Choose Condition" }, { label: "Associate Agent" }];
+    const steps = [{ label: t('choose_condition') }, { label: "Associate Agent" }];
 
     const isLastStep = activeStep === steps.length - 1;
     const isInBetween = activeStep !== 0 || isLastStep;

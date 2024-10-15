@@ -9,21 +9,8 @@ import { CancelButton, FlexBox, LoadingButton } from "lib/ui-ux";
 import { KeyboardArrowLeft, KeyboardArrowRight, Save } from "@mui/icons-material";
 import { SLATargets } from "./sla-targets";
 import { IEscalationsNew, IKeyValue, ISLAmetaData } from "modules/settings/apis/ticket-automation/escalations";
+import { useTranslation } from "react-i18next";
 
-const steps = [
-    {
-        label: 'Choose Condition',
-    },
-    {
-        label: 'SLA Targets',
-    },
-    {
-        label: 'Add Reminders',
-    },
-    {
-        label: 'Add Escalation',
-    }
-];
 
 interface ITimeBasedFormFields {
     timePrefix: string,
@@ -87,6 +74,8 @@ export const AddEscalationLayout = React.memo((props: IAddEscalationLayoutProps)
     const { data, defaultvalues, allEscalations, mutationLoading, onFormSubmit } = props;
     const [activeStep, setActiveStep] = React.useState(0);
     const navigate = useNavigate();
+    const { t } = useTranslation();
+
     const form = useForm<IEscalationFormFields>({
         defaultValues: defaultvalues ?? {
             chooseCondition: {
@@ -183,6 +172,21 @@ export const AddEscalationLayout = React.memo((props: IAddEscalationLayoutProps)
         mode: 'onBlur'
     });
 
+    const steps = [
+        {
+            label: t('choose_condition'),
+        },
+        {
+            label: t('sla_targets'),
+        },
+        {
+            label: t('add_reminders'),
+        },
+        {
+            label: t('add_escalation'),
+        }
+    ];
+
     const handleNext = async () => {
         const isFormValidated = await form.trigger();
         if (isFormValidated) {
@@ -218,7 +222,7 @@ export const AddEscalationLayout = React.memo((props: IAddEscalationLayoutProps)
     return (
         <Box sx={{ p: '20px 120px', height: '100%', boxSizing: 'border-box', width: '100%' }}>
             <FormProvider {...form}>
-                <AddEscalaltionSteps activeStep={activeStep} />
+                <AddEscalaltionSteps activeStep={activeStep} steps={steps} />
                 <div style={{ padding: '30px 60px', height: `calc(100% - 94px)`, boxSizing: 'border-box', overflow: 'auto' }}>
                     {
                         renderBasedOnActiveStep()
@@ -228,21 +232,21 @@ export const AddEscalationLayout = React.memo((props: IAddEscalationLayoutProps)
                     {isLastStep || isInBetween
                         ?
                         <Button variant="contained" startIcon={<KeyboardArrowLeft />} onClick={isLastStep || isInBetween ? handleBack : onClose}>
-                            Back
+                            {t('back')}
                         </Button>
                         : null}
                     <FlexBox justifyContent="flex-end" width='calc(100% - 94px)'>
                         <FlexBox gap='20px'>
                             <CancelButton onClick={onClose} />
                             {props.mode === 'edit' ?
-                                <Button variant="outlined" size="large" type="button" onClick={() => form.reset()}>{'Reset'}</Button>
+                                <Button variant="outlined" size="large" type="button" onClick={() => form.reset()}>{t('reset')}</Button>
                                 : null}
                             <LoadingButton
                                 variant="contained"
                                 isLoading={mutationLoading}
                                 endIcon={isLastStep ? <Save /> : <KeyboardArrowRight />}
                                 onClick={isLastStep ? form.handleSubmit(onSave) : handleNext}>
-                                {isLastStep ? 'Save' : 'Next'}
+                                {isLastStep ? t('save') : t('next')}
                             </LoadingButton>
                         </FlexBox>
                     </FlexBox>
@@ -252,8 +256,12 @@ export const AddEscalationLayout = React.memo((props: IAddEscalationLayoutProps)
     )
 })
 
-const AddEscalaltionSteps = (props: { activeStep: number }) => {
-    const { activeStep } = props;
+const AddEscalaltionSteps = (props: {
+    activeStep: number; steps: {
+        label: string;
+    }[]
+}) => {
+    const { activeStep, steps } = props;
     return (
         <>
             <Box>

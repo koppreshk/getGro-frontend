@@ -40,7 +40,7 @@ export const ChooseCondition = (props: IChooseConditionProps) => {
         const modifiedData = mode === 'edit' ? allEscalations?.filter((item) => item.name !== slaName) : allEscalations;
         const doesNameExist = modifiedData?.some((item) => item.name === value);
         if (doesNameExist) {
-            return `${value} already exists, please use a different name to continue`;
+            return t('value_exists_validation');
         }
     }
     const { fields, append, remove } = useFieldArray({
@@ -54,7 +54,7 @@ export const ChooseCondition = (props: IChooseConditionProps) => {
     return (
         <>
             <FlexBox width="100%" flexDirection="column" gap="20px">
-                <TextboxField name="chooseCondition.name" label={t('name')} variant="outlined" rules={{ required: 'Name is required', validate: validateEscalationName }} />
+                <TextboxField name="chooseCondition.name" label={t('name')} variant="outlined" rules={{ required: t('name_is_required'), validate: validateEscalationName }} />
                 <TextboxField name="chooseCondition.description"
                     label="Description" variant="outlined"
                     multiline
@@ -127,7 +127,7 @@ const ConditionValueContainer = (props: { ticketFieldDropdownData: IKeyValue[], 
         }
         return [];
     }
-
+    const { t } = useTranslation();
     return (
         <>
             {isLoading || isSourcesLoading || isQueueLoading
@@ -136,8 +136,8 @@ const ConditionValueContainer = (props: { ticketFieldDropdownData: IKeyValue[], 
                 <div style={{ width: '33%' }}>
                     <SelectField
                         name={`${fieldArrayName}.${index}.conditionValue`}
-                        label="Field Options"
-                        rules={{ required: 'Please select an option' }}
+                        label={t("field_options")}
+                        rules={{ required: t('please_select_an_option') }}
                         menuOptions={getMenuOptions()} sx={{ width: '100%' }} />
                 </div>
             }

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useNotifications } from "lib";
 import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
 import { IEscalationsNew, useCreateEscalationNew, useFetchSLAmetaData } from "modules/settings/apis/ticket-automation/escalations"
@@ -7,6 +8,7 @@ export const CreateTicketSLAContainer = (props: { allEscalations?: IEscalationsN
     const { data, isLoading, error } = useFetchSLAmetaData();
     const { mutateAsync, isLoading: mutationLoading } = useCreateEscalationNew();
     const { showNotification } = useNotifications();
+    const { t } = useTranslation();
 
     const onFormSubmit = (formData: IEscalationFormFields) => {
         const { addEscalation, addReminders, chooseCondition, slaTargets, conditionsArray } = formData;
@@ -52,12 +54,12 @@ export const CreateTicketSLAContainer = (props: { allEscalations?: IEscalationsN
         })
             .then((res) => {
                 if (res.status) {
-                    showNotification({ message: 'SLA created successfully', type: 'success' });
+                    showNotification({ message: t('sla_create_success'), type: 'success' });
                     return
                 }
                 showNotification({ message: res.message, type: 'error' })
             })
-            .catch(() => showNotification({ message: 'Failed to create SLA', type: 'error' }))
+            .catch(() => showNotification({ message: t('sla_create_failure'), type: 'error' }))
     }
 
     if (isLoading) {
