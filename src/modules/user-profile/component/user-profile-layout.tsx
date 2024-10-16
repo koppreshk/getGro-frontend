@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Avatar, Box, Tab, Tabs, Typography } from "@mui/material";
 import { chooseRandomColors, getInitialsByName } from "lib/utils";
 import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
-import { RolesPermissionsTab } from ".";
+import { ChangePassword, RolesPermissionsTab } from ".";
 import { Status } from "modules/core/components/parts/agent-status";
 import { useAppSelector } from "lib/hooks";
 import { useFetchCurrentStatus } from "modules/settings/apis/users-and-permissions";
@@ -33,7 +33,7 @@ export const UserProfileLayout = () => {
 const ProfileHeader = () => {
     const config = useAppSelector((state) => state.core.config);
     const { data: currentStatus } = useFetchCurrentStatus();
-    
+
     return (
         <StyledFlexbox style={{ flex: '1' }} height="400px" >
             <FlexBox gap="12px" flexDirection="column" width="100%">
@@ -68,15 +68,26 @@ const ProfileDetails = () => {
         setValue(newValue);
     };
 
+    const renderByvalue = () => {
+        switch (value) {
+            case 0:
+                return <RolesPermissionsTab />
+            case 1:
+                return <ChangePassword />
+            default: return null;
+        }
+    }
+
     return (
         <StyledFlexbox style={{ flex: '5' }}>
             <FlexBox flexDirection="column" width="100%">
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                         <Tab label="Roles and Permissions" {...tabAriaProps(0)} />
+                        <Tab label="Change Password" {...tabAriaProps(0)} />
                     </Tabs>
                 </Box>
-                {value === 0 ? <RolesPermissionsTab /> : null}
+                {renderByvalue()}
             </FlexBox>
         </StyledFlexbox>
     )

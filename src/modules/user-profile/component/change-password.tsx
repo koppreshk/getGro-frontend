@@ -7,17 +7,13 @@ export const ChangePassword = () => {
     const formMethods = useForm();
     return (
         <FormProvider {...formMethods}>
-            <FlexBox flexDirection="column" gap="10px" width="25%">
-
+            <FlexBox flexDirection="column" gap="10px" width="50%" padding="20px">
                 <Grid container spacing={4}>
                     <Grid item md={12}>
                         <PasswordField name="currentPassword" label="Current Password" size="small" type="password" fullWidth rules={{ required: 'Password is required' }} />
                     </Grid>
                     <Grid item md={12}>
-                        <TextboxField name="newPassword" label="New Password" size="small" type="text" fullWidth rules={{ required: 'Password is required' }} />
-                    </Grid>
-                    <Grid item md={12}>
-                        <TextboxField name="confirmNewPassword" label="Confirm New Password" size="small" type="text" fullWidth rules={{ required: 'Password is required' }} />
+                        <TextboxField name="newPassword" label="New Password" size="small" type="password" fullWidth rules={{ required: 'Password is required' }} />
                     </Grid>
                     <Grid item md={12}>
                         <Button variant="contained" type="submit" >
