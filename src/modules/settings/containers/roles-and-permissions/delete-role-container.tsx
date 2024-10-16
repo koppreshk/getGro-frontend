@@ -44,7 +44,7 @@ export const DeleteRolesContainer = (props: { roleId: number, rolesData: IRoles[
                 content={(
                     <FlexBox gap={'30px'} flexDirection="column">
                         <Typography variant="body2">Choose another role for members before permantely deleting this role</Typography>
-                        <SelectField sx={{ width: '100%' }} name="role" label="Role" menuOptions={rolesData.filter(it => it.id !== props.roleId).map((item) => ({ key: item.id.toString(), value: item.name })) || []} fullWidth rules={{ required: 'Please select a role to continue' }} />
+                        <SelectField sx={{ width: '100%' }} name="role" label={t('role')} menuOptions={rolesData.filter(it => it.id !== props.roleId).map((item) => ({ key: item.id.toString(), value: item.name })) || []} fullWidth rules={{ required: 'Please select a role to continue' }} />
                     </FlexBox>)
                 }
                 title='Delete Role'

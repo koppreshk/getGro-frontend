@@ -22,22 +22,22 @@ const useColumns = () => {
         columnHelper.accessor("id", {
             id: 'id',
             cell: info => info.getValue(),
-            header: () => 'Id',
+            header: () => t('id'),
         }),
         columnHelper.accessor("name", {
             id: 'name',
             cell: info => <Name name={info.getValue()} loggedInUserName={user!.name} />,
-            header: () => 'Name',
+            header: () => t('name'),
         }),
         columnHelper.accessor("role", {
             id: 'role',
             cell: info => info.getValue(),
-            header: () => 'role',
+            header: () => t('role'),
         }),
         columnHelper.accessor("fetch_verification_status", {
             id: 'fetch_verification_status',
             cell: info => <VerificationStatus status={info.getValue()} />,
-            header: () => 'Status',
+            header: () => t('status'),
         }),
         columnHelper.display({
             id: 'actions',
@@ -64,6 +64,7 @@ const Name = (props: { name: string, loggedInUserName: string }) => {
     const { name, loggedInUserName } = props;
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(name)), [name]);
     const { pallete } = useTheme();
+    const { t } = useTranslation();
 
     return (
         <>
@@ -80,7 +81,7 @@ const Name = (props: { name: string, loggedInUserName: string }) => {
                 </Avatar>
                 <FlexBox flexDirection="column">
                     <Typography variant="body2">{name}</Typography>
-                    {loggedInUserName === name ? <Typography variant="subheading2" sx={{ color: pallete.grayNeutral }}>You</Typography> : null}
+                    {loggedInUserName === name ? <Typography variant="subheading2" sx={{ color: pallete.grayNeutral }}>{t('you')}</Typography> : null}
                 </FlexBox>
             </FlexBox>
         </>
@@ -89,6 +90,7 @@ const Name = (props: { name: string, loggedInUserName: string }) => {
 
 const EditAgent = (props: { id: number }) => {
     const [showDrawer, setShowDrawer] = useState(false);
+    const { t } = useTranslation();
 
     const toggleUserDrawer = () => {
         setShowDrawer((preValue) => !preValue);
@@ -98,13 +100,13 @@ const EditAgent = (props: { id: number }) => {
         <>
             <CustomIconButton
                 iconComponent={<Edit />}
-                tooltipProps={{ title: 'Edit' }}
+                tooltipProps={{ title: t('edit') }}
                 onClick={toggleUserDrawer} />
             <DrawerExtended
                 open={showDrawer}
                 anchor="right"
                 width="500px"
-                header="View or Edit Agent"
+                header={t('view_or_edit_agent')}
                 onRenderContent={() => (
                     <EditAgentContainer toggleUserDrawer={toggleUserDrawer} id={props.id} />
                 )}

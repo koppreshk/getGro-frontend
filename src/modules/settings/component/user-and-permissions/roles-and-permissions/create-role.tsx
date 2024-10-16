@@ -3,6 +3,7 @@ import { FlexBox } from "lib/ui-ux";
 import { FormProvider, useForm } from "react-hook-form"
 import { Permissions } from './permissions';
 import { AllPermissionKeys, ModuleKeys } from "lib/enums";
+import { useTranslation } from "react-i18next";
 
 export interface ICreateRoleFormFields {
     name: string;
@@ -38,12 +39,13 @@ export const CreateRole = (props: CreateRoleProps) => {
             }
         }
     });
+    const { t } = useTranslation();
 
     return (
         <FormProvider {...form}>
             <FlexBox width="100%">
                 <FlexBox gap={'20px'} flexDirection="column" padding="20px" width="100%">
-                    <TextboxFieldWithLabel name="name" disabled={mode === 'userProfile'} sx={{ width: '70%' }} label="Role Name" size="small" rules={{ required: 'Name is required' }} />
+                    <TextboxFieldWithLabel name="name" disabled={mode === 'userProfile'} sx={{ width: '70%' }} label="Role Name" size="small" rules={{ required: t('name_is_required') }} />
                     {mode !== 'userProfile' ? <TextboxFieldWithLabel name="description" label="Description" sx={{ width: '70%' }} size="small" /> : null}
                     <Permissions onSubmit={onSubmit} mutationLoading={props.mutationLoading} mode={mode} />
                 </FlexBox>

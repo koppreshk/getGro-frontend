@@ -19,7 +19,7 @@ const useColumns = () => {
     const column = [
         columnHelper.accessor("friendly_name", {
             id: 'name',
-            header: () => 'Name',
+            header: () => t('name'),
             cell: info => info.getValue(),
         }),
         columnHelper.accessor("phone_number", {
@@ -53,7 +53,7 @@ const useColumns = () => {
         })
         // columnHelper.accessor("is_active", {
         //     id: 'is_active',
-        //     header: () => 'Name',
+        //     header: () => t('name'),
         //     cell: ({ row: { original } }) => {
         //         return (
         //             <>

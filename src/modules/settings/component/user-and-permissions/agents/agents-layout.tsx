@@ -13,10 +13,11 @@ const AddNewAgent = (props: {
     toggleAddUserDrawer: () => void
 }) => {
     const { openAddUserDrawer, toggleAddUserDrawer } = props;
+    const { t } = useTranslation();
     return (
         <DrawerExtended
             width="500px"
-            header="Add New Agent"
+            header={t('add_new_agent')}
             anchor="right"
             open={openAddUserDrawer}
             onRenderContent={() => (
@@ -45,21 +46,21 @@ export default function AgentsLayout() {
         <FlexBox width="100%" height="100%" flexDirection="column">
             <BreadCrumbs />
             <FlexBox padding="20px" gap={'20px'} flexDirection="column" height="calc(100% - 46px)">
-                <MoreInformation information="Agents are responsible for managing tickets and addressing customer issues. You can add as many agents as your license allows." />
+                <MoreInformation information={t('agents_long_description')} />
                 <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                     <FlexBox alignItems="center" gap="10px">
                         <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: t('back') }} />
-                        <Typography variant="h5">Agents</Typography>
+                        <Typography variant="h5">{t('agents')}</Typography>
                     </FlexBox>
-                    <Button variant="contained" onClick={toggleAddUserDrawer} startIcon={<AddCircleOutline />}>Add Agent</Button>
+                    <Button variant="contained" onClick={toggleAddUserDrawer} startIcon={<AddCircleOutline />}>{t('add_agents')}</Button>
                     <AddNewAgent openAddUserDrawer={openAddUserDrawer} toggleAddUserDrawer={toggleAddUserDrawer} />
                 </FlexBox>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="Active" value="active" {...a11yProps(0)} />
-                    <Tab label="All" value="all" {...a11yProps(1)} />
-                    <Tab label="Verified" value="verified" {...a11yProps(2)} />
-                    <Tab label="Unverified" value="unverified" {...a11yProps(3)} />
-                    <Tab label="Deactivated" value="deactivated" {...a11yProps(4)} />
+                    <Tab label={t("active")} value="active" {...a11yProps(0)} />
+                    <Tab label={t('all')} value="all" {...a11yProps(1)} />
+                    <Tab label={t('verified')} value="verified" {...a11yProps(2)} />
+                    <Tab label={t('unverified')} value="unverified" {...a11yProps(3)} />
+                    <Tab label={t('deactivated')} value="deactivated" {...a11yProps(4)} />
                 </Tabs>
                 <GetAgentsContainer type={value} />
             </FlexBox>

@@ -48,7 +48,7 @@ export const TicketStatusForm = (props: ITicketStatusFormProps) => {
                     </Grid>
                     <Grid item xs={12}>
                         {isInEditMode ?
-                            <TextboxField name="ticketStatusId" label="Id" fullWidth disabled />
+                            <TextboxField name="ticketStatusId" label={t('id')} fullWidth disabled />
                             :
                             <></>}
                     </Grid>

@@ -8,6 +8,7 @@ import { Call } from "@mui/icons-material";
 import { useExotelServices } from "lib";
 import CloseIcon from '@mui/icons-material/Close';
 import { CallStatusIconWrapper, getCallStatusIcon } from "./telephonic-conversations";
+import { useTranslation } from "react-i18next";
 
 const StyledDialogActions = styled(DialogActions)`
     && {
@@ -29,6 +30,7 @@ export const BrowserTelephonicDialer = (props: ITelephonicDialerProps) => {
     const { openCallPopUp, phoneNumber, toggleCallBtn } = props;
     const methods = useForm<TelephonicDialerFormFields>({ defaultValues: { phoneNumber: phoneNumber } });
     const { callActive, isDeviceRegistered, dial, hangup, isIncomingCall } = useExotelServices();
+    const { t } = useTranslation();
 
     const validatePhoneNum = (num: string) => {
         if (/^\+?[0-9]{10,14}$/.test(num)) {
@@ -85,7 +87,7 @@ export const BrowserTelephonicDialer = (props: ITelephonicDialerProps) => {
                                             <TextboxField
                                                 name="phoneNumber"
                                                 sx={{ mt: '10px' }}
-                                                label="Phone Number"
+                                                label={t('phone_number')}
                                                 fullWidth rules={{ validate: validatePhoneNum }} />
                                         }
                                     </FlexBox>

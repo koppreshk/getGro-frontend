@@ -8,6 +8,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useFetchExotelAddedNumbers } from "modules/settings/apis/marketplace/exotel";
 import { useOutboundCall } from "modules/tickets/apis/telephonic-apis";
 import { useNotifications } from "lib";
+import { useTranslation } from "react-i18next";
 
 const StyledDialogActions = styled(DialogActions)`
     && {
@@ -56,6 +57,8 @@ export const NormalTelephonicDialer = (props: ITelephonicDialerProps) => {
             }).catch(() => showNotification({ message: 'Failed to place the call', type: 'error' }))
     }
 
+    const { t } = useTranslation();
+
     return (
         <Dialog open={openCallPopUp} maxWidth="xs" fullWidth={true}>
             <FormProvider {...methods}>
@@ -76,7 +79,7 @@ export const NormalTelephonicDialer = (props: ITelephonicDialerProps) => {
                             <TextboxField
                                 name="phoneNumber"
                                 sx={{ mt: '10px' }}
-                                label="Phone Number"
+                                label={t('phone_number')}
                                 fullWidth rules={{ validate: validatePhoneNum }} />
                         </FlexBox>
                     </FlexBox>

@@ -33,7 +33,7 @@ function useColumns() {
     const columns = [
         columnHelper.accessor("id", {
             id: 'id',
-            header: () => 'Id',
+            header: () => <Trans i18nKey={"id"} />,
             cell: info => info.getValue(),
         }),
         columnHelper.accessor('title', {

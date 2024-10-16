@@ -1,6 +1,6 @@
 import { FormProvider, useForm } from "react-hook-form"
 import { Button, Grid } from "@mui/material";
-import { SelectField, TextboxField } from "lib/form-fields";
+import { SelectField, TextboxFieldWithLabel } from "lib/form-fields";
 import { CancelButton, FlexBox, LoadingButton } from "lib/ui-ux";
 import { IRoles } from "modules/settings/apis/users-and-permissions";
 import { useCallback, useMemo } from "react";
@@ -46,23 +46,23 @@ export const AddAgentForm = (props: IUserFormProps) => {
             <FlexBox padding="20px" width="100%" height="calc(100% - 77px)" flexDirection="column" justifyContent="space-between">
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        <TextboxField name="name" label={t('name')} rules={{ required: 'First name is required' }} />
+                        <TextboxFieldWithLabel name="name" size="small" label={t('name')} rules={{ required: t('name_is_required') }} />
                     </Grid>
                     <Grid item xs={12}>
-                        <TextboxField name="displayName" label={t('display_name')} rules={{ required: t('display_name_validation') }} />
+                        <TextboxFieldWithLabel name="displayName" size="small" label={t('display_name')} rules={{ required: t('display_name_validation') }} />
                     </Grid>
                     <Grid item xs={12}>
-                        <TextboxField name="email" label={t('email')} rules={{ required: 'Email is required' }} />
+                        <TextboxFieldWithLabel name="email" label={t('email')} size="small" rules={{ required: t('email_is_required') }} />
                     </Grid>
                     <Grid item xs={12}>
-                        <TextboxField name="phoneNumber" label="Phone Number" />
+                        <TextboxFieldWithLabel name="phoneNumber" size="small" label={t('phone_number')} />
                     </Grid>
                     <Grid item xs={12}>
-                        <SelectField sx={{ width: '100%' }} name="role" label="Role" menuOptions={roles.map((item) => ({ key: item.id.toString(), value: item.name }))} fullWidth rules={{ required: 'Selection is required' }} />
+                        <SelectField sx={{ width: '100%' }} name="role" label={t('role')} menuOptions={roles.map((item) => ({ key: item.id.toString(), value: item.name }))} fullWidth rules={{ required: t('selection_is_required') }} />
                     </Grid>
                     <Grid item xs={12}>
                         {isInEditMode ?
-                            <TextboxField name="userId" label="Id" fullWidth disabled />
+                            <TextboxFieldWithLabel name="userId" size="small" label={t('id')} fullWidth disabled />
                             :
                             <></>}
                     </Grid>
@@ -70,7 +70,7 @@ export const AddAgentForm = (props: IUserFormProps) => {
                 <FlexBox gap='10px' width="100%" justifyContent="flex-end">
                     {isInEditMode ? <Button variant="text" size="large" type="button" onClick={() => methods.reset()}>{t('reset')}</Button> : null}
                     <CancelButton onClick={toggleUserDrawer} />
-                    <LoadingButton isLoading={mutationLoading} variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>{isInEditMode ? 'Edit Agent' : 'Add Agent'}</LoadingButton>
+                    <LoadingButton isLoading={mutationLoading} variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>{isInEditMode ? t('edit_agent') : t('add_agents')}</LoadingButton>
                 </FlexBox>
             </FlexBox>
         </FormProvider>

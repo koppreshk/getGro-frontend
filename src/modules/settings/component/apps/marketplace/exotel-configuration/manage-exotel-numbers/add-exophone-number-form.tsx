@@ -53,12 +53,12 @@ function AddExophoneNumberForm(props: {
     isBrowserCalling: boolean;
 }) {
     const { exophoneNumMenuOption, usersMenuOption, isBrowserCalling } = props;
-
+    const { t } = useTranslation();
 
     return (
         <Grid container spacing={3}>
             <Grid item md={12}>
-                <TextboxField name="appName" size="small" label={isBrowserCalling ? "Group Name" : 'Name'} type="text" fullWidth rules={{ required: 'This field is required.' }} />
+                <TextboxField name="appName" size="small" label={isBrowserCalling ? "Group Name" : t('name')} type="text" fullWidth rules={{ required: 'This field is required.' }} />
             </Grid>
             <Grid item md={12}>
                 <SelectField name="phoneNumber" size="small" label="Select Exotel Number" sx={{ width: '100%' }} menuOptions={exophoneNumMenuOption} rules={{ required: 'This field is required.' }} />

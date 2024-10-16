@@ -7,6 +7,7 @@ import { Typography } from "@mui/material";
 import { RadioGroupField } from "lib/form-fields";
 import styled from "styled-components";
 import { ReassignForm } from "./reassign-form";
+import { useTranslation } from "react-i18next";
 
 interface DeactivateAgentDialogProps {
     canDeactivate: boolean;
@@ -17,6 +18,7 @@ interface DeactivateAgentDialogProps {
 export const DeactivateAgent = (props: DeactivateAgentDialogProps) => {
     const { onDeleteHandler, mutationLoading } = props;
     const [open, setOpen] = React.useState(false);
+    const { t } = useTranslation();
 
     const toggleDeleteDialogBox = () => {
         setOpen((prev) => !prev);
@@ -26,7 +28,7 @@ export const DeactivateAgent = (props: DeactivateAgentDialogProps) => {
         <>
             <CustomIconButton
                 iconComponent={<NotInterestedOutlined />}
-                tooltipProps={{ title: 'Deactivate' }} onClick={toggleDeleteDialogBox} />
+                tooltipProps={{ title: t('deactivate') }} onClick={toggleDeleteDialogBox} />
             <DeactivateAgentDialog open={open} mutationLoading={mutationLoading} onDeleteHandler={onDeleteHandler} toggleDeleteDialogBox={toggleDeleteDialogBox} canDeactivate={props.canDeactivate} />
         </>
     )
@@ -45,6 +47,7 @@ const DeactivateAgentDialog = (props: DeactivateAgentDialogProps & { open: boole
             deactivateAgent: 'remove_assignee_and_groups'
         }
     });
+    const { t } = useTranslation();
 
     const onNegativeActionClick = (formData: DeactivateAgentDialogFormFields) => {
         onDeleteHandler(formData)
@@ -56,8 +59,8 @@ const DeactivateAgentDialog = (props: DeactivateAgentDialogProps & { open: boole
                 open={open}
                 isLoading={mutationLoading}
                 content={canDeactivate ? <DeactivateAgentWithNoTickets /> : <DeactivateAgentForm />}
-                title='Deactivate Agent'
-                negativeActionLabel="Deactivate"
+                title={t('deactivate_agent')}
+                negativeActionLabel={t('deactivate')}
                 onNegativeActionClick={form.handleSubmit(onNegativeActionClick)}
                 onClose={toggleDeleteDialogBox} />
         </FormProvider>
@@ -71,13 +74,15 @@ const StyledRadioFields = styled(RadioGroupField)`
 `;
 
 const DeactivateAgentWithNoTickets = () => {
+    const { t } = useTranslation();
+
     return (
         <FlexBox flexDirection="column" gap={'15px'}>
             <Typography variant="body2">
-                This will deactivate the current selected agent. This agent will no longer able to log-in until it has been reactivated.
+                {t('deactivate_agent_msg1')}
             </Typography>
             <Typography variant="body2">
-                Are you sure you want to deactivate this agent?
+                {t('deactivate_agent_confirmation')}
             </Typography>
         </FlexBox>
     )
@@ -85,26 +90,27 @@ const DeactivateAgentWithNoTickets = () => {
 
 const DeactivateAgentForm = () => {
     const { watch } = useFormContext();
+    const { t } = useTranslation();
 
     return (
         <FlexBox gap={'15px'} flexDirection="column" width="500px">
-            <Typography variant="body2">The agent has some tickets which are not closed, please select an action to perform before deactivation</Typography>
+            <Typography variant="body2">{t('deactivate_agent_header')}</Typography>
             <StyledRadioFields
                 name="deactivateAgent"
                 row={false}
                 radioOptions={[
                     {
                         key: 'remove_assignee_and_groups',
-                        label: 'Remove assignee (agent and assosicated group) from the existing unclosed tickets'
+                        label: t('remove_assignee_and_groups')
                     },
                     {
                         key: 'deactivate_and_reassign_tickets',
-                        label: 'Reassign the unclosed tickets',
+                        label: t('deactivate_and_reassign_tickets'),
                         renderContentBelowLabel: () => watch('deactivateAgent') === 'deactivate_and_reassign_tickets' ? <ReassignForm /> : null
                     },
                     {
                         key: 'remove_assignee_only',
-                        label: 'Remove agent only'
+                        label: t('remove_assignee_only')
                     }
                 ]} />
         </FlexBox>

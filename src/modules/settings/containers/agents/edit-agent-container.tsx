@@ -3,6 +3,7 @@ import { AddAgentForm, IUserFormFields } from "modules/settings/component/user-a
 import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
 import { useEditUser, useFetchAllRoles, useFetchUserById } from "modules/settings/apis/users-and-permissions";
 import { useNotifications } from "lib";
+import { useTranslation } from "react-i18next";
 
 interface IEditUserContainerProps {
     id: number;
@@ -15,6 +16,7 @@ export const EditAgentContainer = (props: IEditUserContainerProps) => {
     const { data, isLoading, error } = useFetchUserById(id);
     const { mutateAsync, isLoading: mutationLoading } = useEditUser();
     const { showNotification } = useNotifications();
+    const { t } = useTranslation();
 
     const onEditUser = React.useCallback((formData: IUserFormFields) => {
         mutateAsync({
@@ -25,10 +27,10 @@ export const EditAgentContainer = (props: IEditUserContainerProps) => {
             role_id: formData.role,
             id
         }).then(() => {
-            showNotification({ message: 'Successfully edited the user', type: 'success' })
+            showNotification({ message: t('edited_user_success'), type: 'success' })
             toggleUserDrawer();
-        }).catch(() => showNotification({ message: 'Failed to edit the user', type: 'error' }))
-    }, [id, mutateAsync, showNotification, toggleUserDrawer]);
+        }).catch(() => showNotification({ message: t('edited_user_failure'), type: 'error' }))
+    }, [id, mutateAsync, showNotification, t, toggleUserDrawer]);
 
     if (isLoading || rolesLoading) {
         return <CenteredCircularProgress />

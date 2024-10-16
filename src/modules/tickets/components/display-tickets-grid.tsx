@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "lib/hooks";
 import { setTotalPages } from "../storage";
 import { useDateDifference } from "lib/utils";
 import { useSourceIcon } from "../hooks/ticket-hooks";
+import { useTranslation } from "react-i18next";
 
 interface IDisplayTicketsGridProps {
     data: ITicketDetails[];
@@ -18,7 +19,7 @@ interface IDisplayTicketsGridProps {
 
 const useColumns = () => {
     const getSourceIcon = useSourceIcon();
-
+    const { t } = useTranslation();
     const columnHelper = createColumnHelper<ITicketDetails>()
 
     const columns = [
@@ -56,36 +57,36 @@ const useColumns = () => {
             }
         }),
         columnHelper.accessor('ticketId', {
-            header: 'Id',
+            header: t('id'),
             id: 'ticketId',
             cell: info => info.getValue(),
             minSize: 150
         }),
         columnHelper.accessor('customerName', {
-            header: 'Customer Name',
+            header: t('customer_name'),
             id: 'customerName',
             cell: info => info.getValue(),
             minSize: 200
         }),
         columnHelper.accessor('source', {
             id: 'source',
-            header: 'Source',
+            header: t('source'),
             cell: info => getSourceIcon(info.getValue().toLocaleLowerCase()),
             minSize: 120
         }),
         columnHelper.accessor('ticketStatus', {
-            header: () => 'Status',
+            header: () => t('status'),
             id: 'ticketStatus',
             cell: info => info.renderValue(),
         }),
         columnHelper.accessor('createdAt', {
-            header: () => 'Created At',
+            header: () => t('created_at'),
             id: 'createdAt',
             cell: info => info.getValue(),
             minSize: 200
         }),
         columnHelper.accessor('priority', {
-            header: 'Priority',
+            header: t('priority'),
             id: 'priority',
             minSize: 140,
             cell: info => {
@@ -93,7 +94,7 @@ const useColumns = () => {
             },
         }),
         columnHelper.accessor('resolutionDue', {
-            header: () => 'Resolution Due',
+            header: () => t('resolution_due'),
             id: 'resolutionDue',
             cell: info => (
                 <>
