@@ -1,5 +1,6 @@
 import React from "react";
 import { useQuery } from "react-query";
+import { DateTime } from "luxon";
 import { DateRange } from "@matharumanpreet00/react-daterange-picker";
 import { useServiceClient } from "lib";
 import { DashboardEndPoint, DashboardQueryKeys } from "./api-enums";
@@ -18,8 +19,8 @@ interface PriorityTypes {
 
 export const useFetchSLAComparisionValues = (dateRange: DateRange, filterValue: string) => {
     const { getData } = useServiceClient();
-    const parsedFromDate = dateRange.startDate!.toISOString();
-    const parsedToDate = dateRange.endDate!.toISOString();
+    const parsedFromDate = DateTime.fromISO(dateRange.startDate!.toISOString()).toFormat('yyyy-MM-dd');
+    const parsedToDate = DateTime.fromISO(dateRange.endDate!.toISOString()).toFormat('yyyy-MM-dd');
     const slaMetrics = filterValue.split(' ').map(item => item.toLocaleLowerCase()).join('_')
     
     const fetchAllSLAComparisionValues = React.useCallback(() => getData(`${DashboardEndPoint.SLA_COMPARISION}?from=${parsedFromDate}&to=${parsedToDate}&sla_metrics=${slaMetrics}&group_by=priority`).then((res) => res.json()), [getData, parsedFromDate, parsedToDate, slaMetrics])

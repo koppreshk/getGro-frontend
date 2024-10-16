@@ -1,8 +1,9 @@
 import { useServiceClient } from "lib";
 import React from "react";
 import { useQuery } from "react-query";
-import { DashboardEndPoint, DashboardQueryKeys } from "./api-enums";
+import { DateTime } from "luxon";
 import { DateRange } from "@matharumanpreet00/react-daterange-picker";
+import { DashboardEndPoint, DashboardQueryKeys } from "./api-enums";
 
 export interface SupportMonitoringValues {
     total_tickets: number;
@@ -16,8 +17,8 @@ export interface SupportMonitoringValues {
 
 export const useFetchSupportMonitoringValues = (dateRange: DateRange) => {
     const { getData } = useServiceClient();
-    const parsedFromDate = dateRange.startDate!.toISOString();
-    const parsedToDate = dateRange.endDate!.toISOString();
+    const parsedFromDate = DateTime.fromISO(dateRange.startDate!.toISOString()).toFormat('yyyy-MM-dd');
+    const parsedToDate = DateTime.fromISO(dateRange.endDate!.toISOString()).toFormat('yyyy-MM-dd');
 
     const fetchSupportMonitoringData = React.useCallback(() => getData(`${DashboardEndPoint.SUPPORT_MONITORING}?from=${parsedFromDate}&to=${parsedToDate}`).then((res) => res.json()), [getData, parsedFromDate, parsedToDate])
 

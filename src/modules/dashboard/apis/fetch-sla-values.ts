@@ -1,8 +1,9 @@
 import React from "react";
 import { useQuery } from "react-query";
+import { DateTime } from "luxon";
+import { DateRange } from "@matharumanpreet00/react-daterange-picker";
 import { useServiceClient } from "lib";
 import { DashboardEndPoint, DashboardQueryKeys } from "./api-enums";
-import { DateRange } from "@matharumanpreet00/react-daterange-picker";
 
 export interface ISLAValues {
     sla_applied_tickets: SlaAppliedTickets;
@@ -27,8 +28,8 @@ interface SlaAppliedTickets {
 
 export const useFetchSLAValues = (dateRange: DateRange) => {
     const { getData } = useServiceClient();
-    const parsedFromDate = dateRange.startDate!.toISOString();
-    const parsedToDate = dateRange.endDate!.toISOString();
+    const parsedFromDate = DateTime.fromISO(dateRange.startDate!.toISOString()).toFormat('yyyy-MM-dd');
+    const parsedToDate = DateTime.fromISO(dateRange.endDate!.toISOString()).toFormat('yyyy-MM-dd');
 
     const fetchAllSLAValues = React.useCallback(() => getData(`${DashboardEndPoint.FETCH_SLA_VALUES}?from=${parsedFromDate}&to=${parsedToDate}`).then((res) => res.json()), [getData, parsedFromDate, parsedToDate])
 
