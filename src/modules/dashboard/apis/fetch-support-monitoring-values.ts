@@ -2,6 +2,7 @@ import { useServiceClient } from "lib";
 import React from "react";
 import { useQuery } from "react-query";
 import { DashboardEndPoint, DashboardQueryKeys } from "./api-enums";
+import { DateRange } from "@matharumanpreet00/react-daterange-picker";
 
 export interface SupportMonitoringValues {
     total_tickets: number;
@@ -13,12 +14,15 @@ export interface SupportMonitoringValues {
     whatsapp: number;
 }
 
-export const useFetchSupportMonitoringValues = () => {
+export const useFetchSupportMonitoringValues = (dateRange: DateRange) => {
     const { getData } = useServiceClient();
-    const fetchSupportMonitoringData = React.useCallback(() => getData(`${DashboardEndPoint.SUPPORT_MONITORING}`).then((res) => res.json()), [getData])
+    const parsedFromDate = dateRange.startDate!.toISOString();
+    const parsedToDate = dateRange.endDate!.toISOString();
+
+    const fetchSupportMonitoringData = React.useCallback(() => getData(`${DashboardEndPoint.SUPPORT_MONITORING}?from=${parsedFromDate}&to=${parsedToDate}`).then((res) => res.json()), [getData, parsedFromDate, parsedToDate])
 
     return useQuery<SupportMonitoringValues, { message: string }>({
-        queryKey: [DashboardQueryKeys.SUPPORT_MONITORING],
+        queryKey: [DashboardQueryKeys.SUPPORT_MONITORING, dateRange],
         queryFn: fetchSupportMonitoringData
     });
 }

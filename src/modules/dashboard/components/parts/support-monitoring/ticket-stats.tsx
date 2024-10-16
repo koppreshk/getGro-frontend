@@ -1,13 +1,12 @@
 import { Typography } from "@mui/material"
 import { CenteredCircularProgress, FlexBox } from "lib/ui-ux";
 import styled, { useTheme } from "styled-components";
-import { DateFilters } from "../tickets-monitor/date-filters";
-import { useState, useCallback } from "react";
 import ReactApexChart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
 import { FormProvider, useForm } from "react-hook-form";
 import { SelectField } from "lib/form-fields";
 import { useFetchSupportMonitoringStatistics, useFetchSupportMonitoringTicketsCreated } from "modules/dashboard/apis";
+import { DateRange } from "@matharumanpreet00/react-daterange-picker";
 
 const StyledContainer = styled(FlexBox)`
     background-color: ${({ theme }) => theme.pallete.white};
@@ -15,9 +14,9 @@ const StyledContainer = styled(FlexBox)`
     box-shadow: 0 4px 8px -2px #1018281a,0 2px 4px -2px #18212f0f;
 `;
 
-export const TicketStats = () => {
-    const [filterValue, setFilters] = useState('today');
-    const { data, isLoading } = useFetchSupportMonitoringStatistics(filterValue);
+export const TicketStats = (props: { dateRange: DateRange }) => {
+    // const [filterValue, setFilters] = useState('today');
+    const { data, isLoading } = useFetchSupportMonitoringStatistics(props.dateRange);
 
     const quickStats1 = [{
         name: 'Tickets Created',
@@ -41,19 +40,19 @@ export const TicketStats = () => {
         value: data?.resolution_pending || 0
     }]
 
-    const onFilterChangeHandler = useCallback((value: string) => {
-        setFilters(value);
-    }, []);
+    // const onFilterChangeHandler = useCallback((value: string) => {
+    //     setFilters(value);
+    // }, []);
 
     const { pallete } = useTheme();
-    const dateFilters = [{ label: 'Today', key: 'today' }, { label: 'Yesterday', key: 'yesterday' }, { label: 'Last 7 Days', key: 'last_7_days' }, { label: 'Last 30 Days', key: 'last_30_days' }, { label: 'Last 90 Days', key: 'last_90_days' }]
+    // const dateFilters = [{ label: 'Today', key: 'today' }, { label: 'Yesterday', key: 'yesterday' }, { label: 'Last 7 Days', key: 'last_7_days' }, { label: 'Last 30 Days', key: 'last_30_days' }, { label: 'Last 90 Days', key: 'last_90_days' }]
 
     return (
         <>
             <StyledContainer padding="20px" flexDirection="column" gap="20px" width="calc(70% - 20px)">
                 <FlexBox justifyContent="space-between" alignItems="center">
                     <Typography variant="h5">Ticket Statistics</Typography>
-                    <DateFilters onFilterChangeHandler={onFilterChangeHandler} filterValue={filterValue} dateFilterTypes={dateFilters} />
+                    {/* <DateFilters onFilterChangeHandler={onFilterChangeHandler} filterValue={filterValue} dateFilterTypes={dateFilters} /> */}
                 </FlexBox>
                 <FlexBox width="100%" style={{ minHeight: '340px' }}>
                     <FlexBox gap="20px" width="45%" style={{ borderRight: `1px solid ${pallete.grayVariant1}` }}>
@@ -69,7 +68,7 @@ export const TicketStats = () => {
                                 </FlexBox>
                             </>}
                     </FlexBox>
-                    <TicketsCreated filterValue={filterValue} />
+                    <TicketsCreated dateRange={props.dateRange} />
                 </FlexBox>
             </StyledContainer>
         </>
@@ -93,13 +92,13 @@ const QuickStats = (props: {
     )
 }
 
-const TicketsCreated = (props: { filterValue: string }) => {
+const TicketsCreated = (props: { dateRange: DateRange }) => {
     const form = useForm({
         defaultValues: {
             groupBy: 'status'
         }
     });
-    const { data: apidata, isLoading } = useFetchSupportMonitoringTicketsCreated(form.watch('groupBy'), props.filterValue)
+    const { data: apidata, isLoading } = useFetchSupportMonitoringTicketsCreated(form.watch('groupBy'), props.dateRange)
 
     const data = {
         series: [{

@@ -2,6 +2,7 @@ import { useServiceClient } from "lib";
 import React from "react";
 import { useQuery } from "react-query";
 import { DashboardEndPoint, DashboardQueryKeys } from "./api-enums";
+import { DateRange } from "@matharumanpreet00/react-daterange-picker";
 
 export interface SupportMonitoringStatistics {
     tickets_created: number;
@@ -12,12 +13,15 @@ export interface SupportMonitoringStatistics {
     resolution_pending: number;
 }
 
-export const useFetchSupportMonitoringStatistics = (date: string) => {
+export const useFetchSupportMonitoringStatistics = (dateRange: DateRange) => {
     const { getData } = useServiceClient();
-    const fetchSupportMonitoringData = React.useCallback(() => getData(`${DashboardEndPoint.FETCH_SM_TICKET_STATISTICS}?date=${date}`).then((res) => res.json()), [date, getData])
+    const parsedFromDate = dateRange.startDate!.toISOString();
+    const parsedToDate = dateRange.endDate!.toISOString();
+
+    const fetchSupportMonitoringData = React.useCallback(() => getData(`${DashboardEndPoint.FETCH_SM_TICKET_STATISTICS}?from=${parsedFromDate}&to=${parsedToDate}`).then((res) => res.json()), [getData, parsedFromDate, parsedToDate])
 
     return useQuery<SupportMonitoringStatistics, { message: string }>({
-        queryKey: [DashboardQueryKeys.FETCH_SM_TICKET_STATISTICS, date],
+        queryKey: [DashboardQueryKeys.FETCH_SM_TICKET_STATISTICS, dateRange],
         queryFn: fetchSupportMonitoringData
     });
 }
