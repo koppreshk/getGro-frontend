@@ -3,6 +3,7 @@ import { useNotifications } from "lib";
 import { Queue, useEditQueue, useFetchTicketMetadata } from "../../apis/queues"
 import { IQueueFormFields, TicketQueueForm } from "../../component/user-and-permissions/ticket-queue"
 import { CenteredCircularProgress } from "lib/ui-ux";
+import { useTranslation } from "react-i18next";
 
 interface IEditQueueContainerProps {
     queueMetadata: Queue;
@@ -14,6 +15,7 @@ export const EditQueueContainer = (props: IEditQueueContainerProps) => {
     const { data, isLoading } = useFetchTicketMetadata();
     const { mutateAsync: editQueue, isLoading: mutationLoading } = useEditQueue();
     const { showNotification } = useNotifications();
+    const { t } = useTranslation();
 
     const onEditQueue = React.useCallback((formData: IQueueFormFields) => {
         editQueue({
@@ -26,13 +28,13 @@ export const EditQueueContainer = (props: IEditQueueContainerProps) => {
             name: formData.queueName,
         }).then((res) => {
             if (res.status) {
-                showNotification({ message: 'Queue edited successfully', type: 'success' });
+                showNotification({ message: t('edit_queue_created'), type: 'success' });
                 toggleAddQueueDrawer();
                 return;
             }
             showNotification({ message: res.message, type: 'error' })
-        }).catch(() => showNotification({ message: 'Failed to edit the queue', type: 'error' }))
-    }, [editQueue, queueMetadata.id, showNotification, toggleAddQueueDrawer]);
+        }).catch(() => showNotification({ message: t('edit_queue_failed'), type: 'error' }))
+    }, [editQueue, queueMetadata.id, showNotification, t, toggleAddQueueDrawer]);
 
     if (isLoading) {
         return <CenteredCircularProgress />

@@ -68,22 +68,22 @@ export const TicketQueueForm = memo((props: ITicketQueueFormProps) => {
             <FlexBox padding="20px" width="100%" height="calc(100% - 77px)" flexDirection="column" justifyContent="space-between">
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
-                        <TextboxField name="queueName" label="Queue Name" fullWidth rules={{ required: 'Queue name is required' }} />
+                        <TextboxField name="queueName" label={t('queue_name')} fullWidth rules={{ required: t('queue_name_required') }} />
                     </Grid>
                     <Grid item xs={12}>
                         <AutocompleteField
-                            label="Select Employee"
+                            label={t('select_employee')}
                             name="assignedEmployees"
                             getOptionLabel={(option) => option.value.split(';')[0]}
                             renderOption={renderOption}
                             options={employees.map((item) => ({ key: item.id.toString(), value: [`${item.firstName} ${item.lastName ?? ''}`, item?.email].join(';') }))}
-                            placeholder="Select Employee" />
+                            placeholder={t('select_employee')} />
                     </Grid>
                 </Grid>
                 <StlyedFlexBox gap='10px' width="100%" justifyContent="flex-end">
                     {isInEditMode ? <Button variant="text" size="large" type="button" onClick={() => methods.reset()}>{t('reset')}</Button> : null}
                     <CancelButton onClick={toggleAddQueueDrawer} />
-                    <LoadingButton isLoading={mutationLoading} variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>{isInEditMode ? 'Edit Queue' : 'Add Queue'}</LoadingButton>
+                    <LoadingButton isLoading={mutationLoading} variant="contained" size="large" type="submit" onClick={methods.handleSubmit(onSubmit)}>{isInEditMode ? t('edit_queue') : t('add_queue')}</LoadingButton>
                 </StlyedFlexBox>
             </FlexBox>
         </FormProvider>

@@ -16,10 +16,11 @@ interface IAddNewQueueProps {
 
 const AddNewQueue = (props: IAddNewQueueProps) => {
     const { openAddQueueDrawer, toggleAddQueueDrawer } = props;
+    const { t } = useTranslation();
     return (
         <DrawerExtended
             width="500px"
-            header="Add New Queue"
+            header={t('add_new_queue')}
             anchor="right"
             open={openAddQueueDrawer}
             onRenderContent={() => (
@@ -49,13 +50,13 @@ export const TicketQueue = (props: ITicketQueueProps) => {
         <FlexBox width="100%" flexDirection="column" height="100%">
             <BreadCrumbs />
             <FlexBox flexDirection="column" gap={'20px'} padding="20px" height="calc(100% - 46px)">
-                <MoreInformation information="Queues in an organization link related agents together, facilitating tasks such as automatic assignment, automation, ticket permission management, and sharing filters." />
+                <MoreInformation information={t('queues_long_description')} />
                 <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                     <FlexBox alignItems="center" gap="10px">
                         <CustomIconButton onClick={() => navigate('/configurations')} iconComponent={<ArrowBack />} tooltipProps={{ title: t('back') }} />
-                        <Typography variant="h5">Ticket Queue</Typography>
+                        <Typography variant="h5">{t('queues')}</Typography>
                     </FlexBox>
-                    <Button variant="contained" startIcon={<AddCircleOutline />} onClick={toggleAddQueueDrawer}>Add Queue</Button>
+                    <Button variant="contained" startIcon={<AddCircleOutline />} onClick={toggleAddQueueDrawer}>{t('add_queue')}</Button>
                     <AddNewQueue openAddQueueDrawer={openAddQueueDrawer} toggleAddQueueDrawer={toggleAddQueueDrawer} />
                 </FlexBox>
                 <TicketQueueList queueData={data.queues} isLoading={isLoading} totalPages={data.total_pages} />

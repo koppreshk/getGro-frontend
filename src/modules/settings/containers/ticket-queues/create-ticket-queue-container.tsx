@@ -3,6 +3,7 @@ import { useNotifications } from "lib";
 import { useCreateTicketQueues, useFetchTicketMetadata } from "../../apis/queues"
 import { IQueueFormFields, TicketQueueForm } from "../../component/user-and-permissions/ticket-queue"
 import { CenteredCircularProgress } from "lib/ui-ux";
+import { useTranslation } from "react-i18next";
 
 interface ICreateTicketQueueContainerProps {
     toggleAddQueueDrawer: () => void;
@@ -12,7 +13,7 @@ export const CreateTicketQueueContainer = (props: ICreateTicketQueueContainerPro
     const { mutateAsync: createTicketQueue, isLoading: mutationLoading } = useCreateTicketQueues();
     const { data, isLoading } = useFetchTicketMetadata();
     const { showNotification } = useNotifications();
-
+    const { t } = useTranslation();
     const submitCreateTicketQueue = React.useCallback((formData: IQueueFormFields) => {
         createTicketQueue({
             queueName: formData.queueName,
@@ -23,13 +24,13 @@ export const CreateTicketQueueContainer = (props: ICreateTicketQueueContainerPro
             }))
         }).then((res) => {
             if (res.status) {
-                showNotification({ message: 'New Ticket Queue created', type: 'success' });
+                showNotification({ message: t('new_queue_created'), type: 'success' });
                 props.toggleAddQueueDrawer();
                 return;
             }
             showNotification({ message: res.message, type: 'error' })
-        }).catch(() => showNotification({ message: 'Failed to create the queue', type: 'error' }))
-    }, [createTicketQueue, props, showNotification]);
+        }).catch(() => showNotification({ message: t('new_queue_failed'), type: 'error' }))
+    }, [createTicketQueue, props, showNotification, t]);
 
     if (isLoading) {
         return <CenteredCircularProgress />

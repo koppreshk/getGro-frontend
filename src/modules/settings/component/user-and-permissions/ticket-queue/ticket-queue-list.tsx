@@ -22,12 +22,12 @@ const useColumns = () => {
     const columns = [
         columnHelper.accessor("name", {
             id: 'name',
-            header: () => 'Queue Name',
+            header: () => t('queue_name'),
             cell: info => info.getValue(),
         }),
         columnHelper.accessor("assignedEmployees", {
             id: 'assignedEmployees',
-            header: () => 'Assigned Employees',
+            header: () => t('assigned_employees'),
             cell: ({ row: { original } }) => {
                 return <AssignedEmployees assignedEmployees={original.assignedEmployees} />
             },
@@ -38,7 +38,7 @@ const useColumns = () => {
             cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
-                        <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: "Edit Queue", arrow: true }} />
+                        <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: t("edit_queue"), arrow: true }} />
                         <div onClick={(e) => e.stopPropagation()}>
                             <DeleteQueue id={original.id} />
                         </div>
@@ -57,6 +57,7 @@ export const TicketQueueList = (props: ITicketQueueListProps) => {
     const colums = useColumns();
     const [showDrawer, setDrawerDisplay] = useState(false);
     const [queueMetadata, setQueueMetadata] = useState({});
+    const { t } = useTranslation();
 
     const toggleQueueDrawer = () => {
         setDrawerDisplay((preValue) => !preValue);
@@ -88,7 +89,7 @@ export const TicketQueueList = (props: ITicketQueueListProps) => {
                 anchor="right"
                 width="500px"
                 open={showDrawer}
-                header="View or Edit Queue"
+                header={t('view_or_edit_queue')}
                 onRenderContent={() => (
                     <EditQueueContainer
                         toggleAddQueueDrawer={toggleQueueDrawer}
