@@ -12,14 +12,14 @@ export const StyledContainer = styled(FlexBox)`
 `;
 
 export const CustomerSatifaction = (props: { csat: CSAT }) => {
-    const { response_rate, sent_count, rated_count, total_rating } = props.csat;
+    const { response_rate, sent_count, rated_count } = props.csat;
     const { semantics } = useTheme();
     return (
         <StyledContainer gap="20px" flexDirection="column">
             <Typography variant="h5" >Customer Satisfaction (CSAT)</Typography>
             <GridLayout $gridTemplateColumns={'1fr 1fr'} $gridGap={'30px'}>
                 <FlexBox style={{ borderRight: semantics.standardBorder }} justifyContent="space-between" padding="30px" alignItems="center">
-                    <CustomCircularProgress value={total_rating} />
+                    <CustomCircularProgress value={response_rate} />
                     <FlexBox flexDirection="column" gap="20px">
                         <Typography variant="body1">Survey Response</Typography>
                         <FlexBox flexDirection="column">
@@ -36,11 +36,11 @@ export const CustomerSatifaction = (props: { csat: CSAT }) => {
 }
 
 const CustomerResponse = (props: { csat: CSAT }) => {
-    const { negative_rating, neutral_rating, positive_rating, } = props.csat;
+    const { negative_rating, neutral_rating, positive_rating, total_rating } = props.csat;
     const responses = [
-        { type: 'Positive', totalSent: 0, responded: positive_rating },
-        { type: 'Neutral', totalSent: 0, responded: neutral_rating },
-        { type: 'Negative', totalSent: 0, responded: negative_rating }]
+        { type: 'Positive', totalSent: total_rating, responded: positive_rating },
+        { type: 'Neutral', totalSent: total_rating, responded: neutral_rating },
+        { type: 'Negative', totalSent: total_rating, responded: negative_rating }]
 
     return (
         <>
