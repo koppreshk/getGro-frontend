@@ -3,15 +3,20 @@ import { ApexOptions } from "apexcharts";
 import ReactApexChart from "react-apexcharts";
 import { StyledContainer } from "./customer-satifaction";
 
-export const TotalLoginHours = () => {
+export const TotalLoginHours = (props: {
+    userStats: {
+        [key: string]: string
+    }
+}) => {
+    const { userStats } = props;
     const data = {
-        series: [6, 1.5, 0.5, 0.3],
+        series: Object.values(userStats).map((item) => Number(item.split(' ')[0])),
         options: {
             chart: {
                 fontFamily: 'Poppins',
                 type: 'donut',
             },
-            labels: ['Active', 'Busy', 'Away', 'Do not disturb', 'Offline'],
+            labels: Object.keys(userStats),
             plotOptions: {
                 pie: {
                     customScale: 0.8,
@@ -23,7 +28,7 @@ export const TotalLoginHours = () => {
                                 formatter(w) {
                                     const total = w.globals.series.reduce((acc: number, curr: number) => acc += curr);
                                     const [preDecimalValue, postDecimalValue] = total.toString().split('.');
-                                    const min = (postDecimalValue/10) * 60;
+                                    const min = (postDecimalValue / 10) * 60;
                                     return `${preDecimalValue} hr ${min} min`
                                 },
                             }

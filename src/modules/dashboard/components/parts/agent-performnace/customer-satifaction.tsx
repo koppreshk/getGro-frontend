@@ -3,6 +3,7 @@ import { FlexBox, GridLayout } from "lib/ui-ux"
 import { CustomCircularProgress } from "./first-contact-resolution"
 import styled, { useTheme } from "styled-components";
 import { SentimentSatisfiedOutlined, SentimentDissatisfiedOutlined, SentimentNeutralOutlined } from '@mui/icons-material';
+import { CSAT } from "modules/dashboard/apis";
 
 export const StyledContainer = styled(FlexBox)`
     background: ${({ theme }) => theme.pallete.white};
@@ -10,31 +11,37 @@ export const StyledContainer = styled(FlexBox)`
     border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
 `;
 
-export const CustomerSatifaction = () => {
+export const CustomerSatifaction = (props: { csat: CSAT }) => {
+    const { response_rate, sent_count, rated_count, total_rating } = props.csat;
     const { semantics } = useTheme();
     return (
         <StyledContainer gap="20px" flexDirection="column">
             <Typography variant="h5" >Customer Satisfaction (CSAT)</Typography>
             <GridLayout $gridTemplateColumns={'1fr 1fr'} $gridGap={'30px'}>
                 <FlexBox style={{ borderRight: semantics.standardBorder }} justifyContent="space-between" padding="30px" alignItems="center">
-                    <CustomCircularProgress value={33.3} />
+                    <CustomCircularProgress value={total_rating} />
                     <FlexBox flexDirection="column" gap="20px">
                         <Typography variant="body1">Survey Response</Typography>
                         <FlexBox flexDirection="column">
-                            <SurveyResponse subHeading="Sent" value="10" />
-                            <SurveyResponse subHeading="Responded" value="3" />
-                            <SurveyResponse subHeading="Response Rate" value="33.3%" />
+                            <SurveyResponse subHeading="Sent" value={sent_count} />
+                            <SurveyResponse subHeading="Responded" value={rated_count} />
+                            <SurveyResponse subHeading="Response Rate" value={response_rate} />
                         </FlexBox>
                     </FlexBox>
                 </FlexBox>
-                <CustomerResponse />
+                <CustomerResponse {...props} />
             </GridLayout>
         </StyledContainer>
     )
 }
 
-const CustomerResponse = () => {
-    const responses = [{ type: 'Positive', totalSent: 0, responded: 0 }, { type: 'Neutral', totalSent: 0, responded: 0 }, { type: 'Negative', totalSent: 0, responded: 0 }]
+const CustomerResponse = (props: { csat: CSAT }) => {
+    const { negative_rating, neutral_rating, positive_rating, } = props.csat;
+    const responses = [
+        { type: 'Positive', totalSent: 0, responded: positive_rating },
+        { type: 'Neutral', totalSent: 0, responded: neutral_rating },
+        { type: 'Negative', totalSent: 0, responded: negative_rating }]
+
     return (
         <>
             <FlexBox padding="20px" gap={'20px'}>
@@ -63,7 +70,7 @@ const Response = (props: {
     )
 }
 
-const SurveyResponse = (props: { value: string, subHeading: string }) => {
+const SurveyResponse = (props: { value: number, subHeading: string }) => {
     const { value, subHeading } = props;
     return (
         <FlexBox gap="10px">

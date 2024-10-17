@@ -6,12 +6,15 @@ import { getInitialsByName } from "lib/utils";
 import { useTheme } from "styled-components";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "lib/hooks";
+import { useLogoutUser } from "modules/login/apis";
 
 export const AccountMenu = () => {
     const [anchor, setAnchor] = useState<unknown>(null);
     const { logout, user } = useAuth();
     const { pallete } = useTheme();
     const config = useAppSelector((state) => state.core);
+    const { mutateAsync } = useLogoutUser();
+
     const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchor(event.currentTarget);
     };
@@ -21,8 +24,10 @@ export const AccountMenu = () => {
     }
 
     const onLogout = () => {
-        logout();
-        handleClose()
+        mutateAsync().then(() => {
+            logout();
+            handleClose()
+        })
     }
 
     return (

@@ -10,11 +10,19 @@ import { DateTime } from "luxon";
 export interface IAgentPerformance {
     queues: Queue[]
     employees: Employee[]
-    data: Data;
     data_v1: Datav1;
     type: string
 }
 
+export interface CSAT {
+    "sent_count": number,
+    "rated_count": number,
+    "response_rate": number,
+    "positive_rating": number,
+    "negative_rating": number,
+    "neutral_rating": number,
+    "total_rating": number
+}
 export interface Datav1 {
     first_response_achieved: number;
     next_response_achieved: number;
@@ -40,6 +48,10 @@ export interface Datav1 {
     average_assigned_per_day: number;
     average_resolved_per_day: number;
     fcr: Fcr2;
+    csat: CSAT;
+    user_stats: {
+        [key: string]: string;
+    }
 }
 interface Fcr2 {
     percentage?: null | number;
@@ -55,24 +67,6 @@ export interface Employee {
     firstName: string
     lastName?: string
     id: number
-}
-
-export interface Data {
-    total_tickets: number
-    tickets_created: number
-    ticket_assigned: number
-    total_assigned_average: number
-    total_resolved: number
-    total_closed: number
-    tickets_reopened: number
-    avg_first_response_time: number
-    avg_response_time: number
-    avg_resolution_time: number
-    fcr: {
-        percentage: number;
-        count_str: string;
-    };
-    sla_breached: SlaBreached
 }
 
 export interface SlaBreached {
