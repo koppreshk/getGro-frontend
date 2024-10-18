@@ -9,6 +9,7 @@ import { SelectField } from "lib/form-fields";
 import { IAgentPerformance } from "modules/dashboard/apis";
 import { AgentPerformancecontentContainer } from "modules/dashboard/container";
 import { DateTime } from "luxon";
+import { useAuth } from "modules/login";
 
 interface IAgentPerformanceProps {
     data: IAgentPerformance;
@@ -33,11 +34,12 @@ export interface IAgentPerformanceFormFields {
 export const AgentPerformance = (props: IAgentPerformanceProps) => {
     const { data } = props;
     const { queues, employees } = data;
+    const { user } = useAuth();
     const [dateRange, setDateRange] = React.useState<DateRange>({ startDate: DateTime.now().minus({ month: 1 }).toJSDate(), endDate: new Date() });
     const form = useForm<IAgentPerformanceFormFields>({
         values: {
             filterType: 'user',
-            filterValue: employees[0].id.toString() || ''
+            filterValue: employees.find((item) => item.firstName === user?.name)?.id.toString() || employees[0].id.toString() || ''
         }
     });
 
