@@ -47,7 +47,7 @@ export const TotalLoginHours = (props: {
                     }
                 }
             },
-            colors: ['#17e254', '#ffef0e', '#c9c2c2']
+            // colors: ['#17e254', '#ffef0e', '#c9c2c2']
         } as ApexOptions
     };
 
