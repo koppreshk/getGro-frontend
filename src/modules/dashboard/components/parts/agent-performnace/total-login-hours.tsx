@@ -2,6 +2,7 @@ import { Typography } from "@mui/material";
 import { ApexOptions } from "apexcharts";
 import ReactApexChart from "react-apexcharts";
 import { StyledContainer } from "./customer-satifaction";
+import { FlexBox, MoreInformation } from "lib/ui-ux";
 
 export const TotalLoginHours = (props: {
     userStats: {
@@ -9,6 +10,8 @@ export const TotalLoginHours = (props: {
     }
 }) => {
     const { userStats } = props;
+    const dataDoesNotExists = Object.keys(userStats).length === 0;
+
     const data = {
         series: Object.values(userStats).map((item) => Number(item.split(' ')[0])),
         options: {
@@ -27,9 +30,9 @@ export const TotalLoginHours = (props: {
                                 show: true,
                                 formatter(w) {
                                     const total = w.globals.series.reduce((acc: number, curr: number) => acc += curr);
-                                    const [preDecimalValue, postDecimalValue] = total.toString().split('.');
-                                    const min = (postDecimalValue / 10) * 60;
-                                    return `${preDecimalValue} hr ${min} min`
+                                    const hours = Math.floor(total);  // Get the whole number of hours
+                                    const minutes = Math.round((total - hours) * 60);
+                                    return `${hours} hr ${minutes} min`
                                 },
                             }
                         }
@@ -43,15 +46,20 @@ export const TotalLoginHours = (props: {
                         return val < 1 ? `${val * 60} min` : `${val} hr`
                     }
                 }
-            }
-            // colors: ['#17e254', '#ec3427', '#ffef0e', '#d80e00', '#c9c2c2']
+            },
+            colors: ['#17e254', '#ffef0e', '#c9c2c2']
         } as ApexOptions
     };
 
     return (
         <StyledContainer gap="20px" flexDirection="column">
             <Typography variant="h5">Total Login Hours</Typography>
-            <ReactApexChart options={data.options} series={data.series} type="donut" />
+            <FlexBox alignItems='center' justifyContent='center' height='100%'>
+                {dataDoesNotExists
+                    ? <MoreInformation information='No results found' />
+                    : <ReactApexChart options={data.options} series={data.series} type="donut" />
+                }
+            </FlexBox>
         </StyledContainer>
     )
 }
