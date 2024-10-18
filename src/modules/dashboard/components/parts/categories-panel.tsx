@@ -143,7 +143,7 @@ export const DashboardCategoriesPanel = () => {
                     <FlexBox gap='10px' flexDirection="row" alignItems="center">
                         <FlexBox alignItems="center" gap="5px" padding="0 12px 0 0">
                             <Widgets color="primary" />
-                            <Typography variant="h4" sx={{ color: pallete.grayVariant2 }} ><Trans i18nKey="dashboards_module_heading" /></Typography>
+                            <Typography variant="h4" sx={{ color: pallete.grayVariant2 }} ><Trans i18nKey="dashboards" /></Typography>
                         </FlexBox>
                         {dashboardCategories.filter((item) => !item.hidden).map((category) => {
                             return <TabPill key={category.id} label={t(`${category.name}`)} id={category.id} onClickHandler={onClickHandler} value={value} />

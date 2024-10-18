@@ -56,7 +56,7 @@ export const ChooseCondition = (props: IChooseConditionProps) => {
             <FlexBox width="100%" flexDirection="column" gap="20px">
                 <TextboxField name="chooseCondition.name" label={t('name')} variant="outlined" rules={{ required: t('name_is_required'), validate: validateEscalationName }} />
                 <TextboxField name="chooseCondition.description"
-                    label="Description" variant="outlined"
+                    label={t('description')} variant="outlined"
                     multiline
                     rows={4} />
                 <FlexBox flexDirection="column">

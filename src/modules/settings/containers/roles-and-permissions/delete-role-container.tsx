@@ -1,13 +1,13 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
+import { FormProvider, useForm } from "react-hook-form";
 import { Delete } from "@mui/icons-material"
+import { Typography } from "@mui/material";
 import { useNotifications } from "lib";
 import { CustomIconButton, FlexBox, NegativeActionDialog } from "lib/ui-ux"
 import { useDeleteRole } from "modules/settings/apis/users-and-permissions/roles-and-permissions";
-import { FormProvider, useForm } from "react-hook-form";
 import { SelectField } from "lib/form-fields";
 import { IRoles } from "modules/settings/apis/users-and-permissions";
-import { Typography } from "@mui/material";
-import { useTranslation } from "react-i18next";
 
 export const DeleteRolesContainer = (props: { roleId: number, rolesData: IRoles[] }) => {
     const { roleId, rolesData } = props;
@@ -28,12 +28,12 @@ export const DeleteRolesContainer = (props: { roleId: number, rolesData: IRoles[
                     role_id: props.roleId,
                     new_role_id: methods.watch('role')
                 })
-                    .then(() => showNotification({ message: 'Role was deleted successfully', type: 'success' }))
-                    .catch(() => showNotification({ message: 'Failed to delete the role', type: 'error' }))
+                    .then(() => showNotification({ message: t('role_delete_success'), type: 'success' }))
+                    .catch(() => showNotification({ message: t('role_delete_failure'), type: 'error' }))
                     .finally(() => toggleDeleteDialogBox())
             }
         })
-    }, [methods, mutateAsync, props.roleId, showNotification])
+    }, [methods, mutateAsync, props.roleId, showNotification, t])
 
     return (
         <FormProvider {...methods}>
@@ -43,11 +43,11 @@ export const DeleteRolesContainer = (props: { roleId: number, rolesData: IRoles[
                 isLoading={isLoading}
                 content={(
                     <FlexBox gap={'30px'} flexDirection="column">
-                        <Typography variant="body2">Choose another role for members before permantely deleting this role</Typography>
-                        <SelectField sx={{ width: '100%' }} name="role" label={t('role')} menuOptions={rolesData.filter(it => it.id !== props.roleId).map((item) => ({ key: item.id.toString(), value: item.name })) || []} fullWidth rules={{ required: 'Please select a role to continue' }} />
+                        <Typography variant="body2">{t('delete_role_content')}</Typography>
+                        <SelectField sx={{ width: '100%' }} name="role" label={t('role')} menuOptions={rolesData.filter(it => it.id !== props.roleId).map((item) => ({ key: item.id.toString(), value: item.name })) || []} fullWidth rules={{ required: t('delete_role_validation') }} />
                     </FlexBox>)
                 }
-                title='Delete Role'
+                title={t('delete_role')}
                 negativeActionLabel={t("yes_delete")}
                 onNegativeActionClick={onDeleleHandler}
                 onClose={toggleDeleteDialogBox} />

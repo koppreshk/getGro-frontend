@@ -3,6 +3,7 @@ import { Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { ModuleKeys } from "lib/enums";
 import { SwitchField } from "lib/form-fields";
+import { useTranslation } from "react-i18next";
 
 interface ModulesProps {
     moduleName: string;
@@ -27,11 +28,11 @@ const StyledName = styled(FlexBox) <{ $isSelected: boolean; }>`
 export const Modules = (props: ModulesProps) => {
     const { moduleKey, moduleName, isSelected, hideModule, isDisabled, onModuleChange } = props;
     const { pallete } = useTheme();
-
+    const { t } = useTranslation();
     return (
         <StyledName onClick={() => onModuleChange(moduleKey)} $isSelected={isSelected} alignItems="center" justifyContent="space-between">
-            <Typography variant="h6" sx={{ color: isSelected ? pallete.primaryPurple : pallete.defaultTextColor }}>{moduleName}</Typography>
-            {hideModule ? null : <SwitchField name={`modules.${moduleKey}`} title="Show/Hide Module" disabled={isDisabled} />}
+            <Typography variant="h6" sx={{ color: isSelected ? pallete.primaryPurple : pallete.defaultTextColor }}>{t(moduleName.toLocaleLowerCase().split(' ').join('_'))}</Typography>
+            {hideModule ? null : <SwitchField name={`modules.${moduleKey}`} title={t('show_hide_module')} disabled={isDisabled} />}
         </StyledName>
     )
 }

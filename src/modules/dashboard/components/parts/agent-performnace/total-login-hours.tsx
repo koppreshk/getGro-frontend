@@ -19,13 +19,27 @@ export const TotalLoginHours = (props: {
                 fontFamily: 'Poppins',
                 type: 'donut',
             },
+            legend: {
+                fontSize: "14px",
+                fontWeight: 500,
+            },
             labels: Object.keys(userStats),
             plotOptions: {
                 pie: {
-                    customScale: 0.8,
+                    customScale: 1.1,
                     donut: {
                         labels: {
                             show: true,
+                            name: {
+                                show: true,
+                                fontWeight: 500,
+                                fontSize: '12px'
+                            },
+                            value: {
+                                show: true,
+                                fontWeight: 500,
+                                fontSize: '12px'
+                            },
                             total: {
                                 show: true,
                                 formatter(w) {

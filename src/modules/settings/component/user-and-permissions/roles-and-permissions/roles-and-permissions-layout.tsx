@@ -34,13 +34,13 @@ const RolesAndPermissionsLayoutContent = (props: RolesAndPermissionsLayoutProps)
 
     return (
         <FlexBox flexDirection="column" gap={'20px'} padding="20px" width="100%">
-            <MoreInformation information="Roles and permissions provide detailed control over access for your support agents, specifically within the Agent Portal. Note that these permissions do not affect automation rules" />
+            <MoreInformation information={t('roles_and_permissions_long_description')} />
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px" >
                     <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: t('back') }} />
-                    <Typography variant="h5">Roles & Permission</Typography>
+                    <Typography variant="h5">{t('roles_and_permissions')}</Typography>
                 </FlexBox>
-                <Button variant="contained" onClick={() => { navigate('create-role') }} startIcon={<AddCircleOutline />}>Create Role</Button>
+                <Button variant="contained" onClick={() => { navigate('create-role') }} startIcon={<AddCircleOutline />}>{t('create_role')}</Button>
             </FlexBox>
             <RolesAndPermissionList rolesData={props.rolesData} isLoading={props.isLoading} />
         </FlexBox>

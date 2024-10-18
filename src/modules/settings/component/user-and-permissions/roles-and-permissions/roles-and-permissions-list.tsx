@@ -23,7 +23,7 @@ const useColumns = (rolesData: IRoles[]) => {
     const columns = [
         columnHelper.accessor("name", {
             id: "roleName",
-            header: () => 'Role Name',
+            header: () => t('role_name'),
             cell: ({ row: { original } }) => {
                 return <RoleNames roleName={original.name} roleType={original.role_type} />
             },
@@ -31,13 +31,13 @@ const useColumns = (rolesData: IRoles[]) => {
         }),
         columnHelper.accessor("description", {
             id: 'description',
-            header: () => 'Description',
+            header: () => t('description'),
             cell: info => info.getValue(),
             minSize: 550
         }),
         columnHelper.accessor("agents", {
             id: 'agents',
-            header: () => 'Agents',
+            header: () => t('agents'),
             cell: info => info.getValue(),
         }),
         columnHelper.display({
@@ -48,10 +48,10 @@ const useColumns = (rolesData: IRoles[]) => {
                     <>
                         {original.can_edit_role ?
                             <FlexBox flexDirection="row" gap="5px">
-                                <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: 'Edit Role' }} onClick={() => navigate(`edit-role?roleId=${original.id}`)} />
+                                <CustomIconButton iconComponent={<Edit />} tooltipProps={{ title: t('edit_role') }} onClick={() => navigate(`edit-role?roleId=${original.id}`)} />
                                 <DeleteRolesContainer roleId={original.id} rolesData={rolesData} />
                             </FlexBox>
-                            : <CustomIconButton iconComponent={<RemoveRedEye />} tooltipProps={{ title: 'View Role' }} onClick={() => navigate(`view-role?roleId=${original.id}`)} />
+                            : <CustomIconButton iconComponent={<RemoveRedEye />} tooltipProps={{ title: t('view_role') }} onClick={() => navigate(`view-role?roleId=${original.id}`)} />
                         }
                     </>
                 )

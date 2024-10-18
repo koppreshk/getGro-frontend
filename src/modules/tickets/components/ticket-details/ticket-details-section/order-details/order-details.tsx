@@ -30,8 +30,8 @@ export const TypographyValue = styled(Typography)`
     }
 `;
 
-const ListContainer = styled.div<{ dynamicHeight: number }>`
-    height: ${({ dynamicHeight }) => `calc(100% - ${dynamicHeight + 30}px)`};
+const ListContainer = styled.div<{ $dynamicHeight: number }>`
+    height: ${({ $dynamicHeight }) => `calc(100% - ${$dynamicHeight + 30}px)`};
     overflow-y: auto;
 `;
 
@@ -72,7 +72,7 @@ export const OrderDetails = React.memo((props: IOrderDetailsProps) => {
 
                     <>
                         <Typography variant="h6" sx={{ paddingBottom: '5px' }}>Recent Orders</Typography>
-                        <ListContainer dynamicHeight={dynamicHeight}>
+                        <ListContainer $dynamicHeight={dynamicHeight}>
                             {orderDetails.map((order, index) => (<OrderItem key={index} order={order} />))}
                         </ListContainer>
                     </>

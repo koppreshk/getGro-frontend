@@ -2,6 +2,7 @@ import { Typography } from "@mui/material";
 import { CheckboxField } from "lib/form-fields";
 import { FlexBox } from "lib/ui-ux";
 import { AllPermissionKeys } from "lib/enums";
+import { useTranslation } from "react-i18next";
 
 export const PermissionList = (props: {
     name: string;
@@ -9,10 +10,11 @@ export const PermissionList = (props: {
     disabled?: boolean;
 }) => {
     const { name, permissionKey, disabled } = props;
+    const { t } = useTranslation();
     return (
         <FlexBox gap={'10px'} alignItems="center">
             <CheckboxField name={`permissions.${permissionKey as string}`} disabled={disabled} />
-            <Typography variant="body2" sx={{ color: disabled ? '#3b445580' : '#3b4455' }}>{name}</Typography>
+            <Typography variant="body2" sx={{ color: disabled ? '#3b445580' : '#3b4455' }}>{t(name.toLocaleLowerCase().split(' ').join('_'))}</Typography>
         </FlexBox>
     )
 }
