@@ -3,7 +3,7 @@ import {
     TaskOutlined, Tag, AccountCircle, WorkHistory, LockPerson, Facebook, SellOutlined,
     GridViewRounded, StoreRounded, ThumbsUpDown, SettingsRounded, SupportAgentRounded,
     Groups2Outlined, EventNoteOutlined, AssignmentTurnedInOutlined, Email, ManageHistory,
-    ConfirmationNumber, AddCommentOutlined, PendingActions
+    ConfirmationNumber, AddCommentOutlined, PendingActions, Instagram
 } from "@mui/icons-material";
 import styled from "styled-components";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -73,6 +73,14 @@ const useConfigurations = () => {
                     catOptionIcon: () => <Facebook />,
                     hidden: false,
                     description: t("facebook_short_description")
+                },
+                {
+                    label: t("instagram"),
+                    route: 'instagram',
+                    uniqueKey: 'instagram',
+                    catOptionIcon: () => <Instagram />,
+                    hidden: false,
+                    description: t("instagram_short_description")
                 },
                 {
                     label: t("email"),

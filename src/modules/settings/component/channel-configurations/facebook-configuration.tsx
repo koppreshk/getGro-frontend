@@ -124,12 +124,10 @@ export default function FacebookConfigurations() {
                 console.log('User cancelled login or did not fully authorize.');
             }
         }, {
-            // config_id: '1074101920418362',
+            config_id: '1074101920418362',
             response_type: 'code',
             override_default_response_type: true,
-            redirect_uri: 'https://test.getgro.io/V1/test_api',
-            scope: 'public_profile,email,pages_show_list,pages_manage_metadata,pages_messaging,pages_read_user_content,pages_manage_engagement,business_management', // Scope from URL 1
-            return_scopes: true,
+            redirect_uri: 'https://haanum.getgro.io/configurations/facebook',
         }); // Request email permission
     };
 
