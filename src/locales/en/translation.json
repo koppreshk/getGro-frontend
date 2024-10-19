@@ -339,5 +339,9 @@
     "default_ticket_view": "Default Ticket View",
     "ticket_layout_view": "Ticket Layout View",
     "card_view": "Card View",
-    "grid_view": "Grid View"
+    "grid_view": "Grid View",
+    "change_password": "Change Password",
+    "current_password": "Current Password",
+    "new_password": "New Password",
+    "confirm_new_password": "Confirm New Password"
 }

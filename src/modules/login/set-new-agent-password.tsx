@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { Box, Button, CircularProgress, Grid, Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
@@ -23,6 +24,7 @@ const SetNewAgentPasswordForm = () => {
     const { showNotification } = useNotifications();
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
+    const { t } = useTranslation();
 
     const onSignIn = useCallback((data: ISetNewPwdFormFields) => {
         mutateAsync({ password: data.newPassword, token: searchParams.get('token')! })
@@ -53,10 +55,10 @@ const SetNewAgentPasswordForm = () => {
                         <Typography variant="subtitle2" color='#667287'>Set a new password to continue</Typography>
                     </Grid>
                     <Grid item md={12}>
-                        <PasswordField name="newPassword" label="New Password" type="password" fullWidth rules={{ required: 'Password is required' }} />
+                        <PasswordField name="newPassword" label={t('new_password')} type="password" fullWidth rules={{ required: 'Password is required' }} />
                     </Grid>
                     <Grid item md={12}>
-                        <TextboxField name="confirmNewPassword" label="Confirm New Password" type="text" fullWidth rules={{ required: 'Password is required', validate: validatePassword }} />
+                        <TextboxField name="confirmNewPassword" label={t('confirm_new_password')} type="text" fullWidth rules={{ required: 'Password is required', validate: validatePassword }} />
                     </Grid>
                     <Grid item md={12}>
                         <Button

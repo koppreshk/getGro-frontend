@@ -4,14 +4,19 @@ import { useMutation } from "react-query";
 import { toCamelCasedKeysFromUnderScores } from "lib/utils";
 
 export const useUpdatePassword = () => {
-    const onUpdatePassword = React.useCallback((data: { password: string; token: string }) => {
+    const onUpdatePassword = React.useCallback((data: { password: string; token: string, currentPassword?: string }) => {
         const restURl = import.meta.env.VITE_REST_URL;
 
-        return fetch(`${restURl}${LoginEndPoint.UPDATE_PASSWORD}?password=${data.password}`, {
+        return fetch(`${restURl}${LoginEndPoint.UPDATE_PASSWORD}`, {
             method: 'POST',
             headers: {
-                'Authorization': data.token
-            }
+                'Authorization': data.token,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                password: data.password,
+                currentPassword: data?.currentPassword
+            }),
         })
             .then((res) => {
                 if (res.status === 401) {
