@@ -123,7 +123,9 @@ export default function FacebookConfigurations() {
             } else {
                 console.log('User cancelled login or did not fully authorize.');
             }
-        }, { config_id: '1278485190260419', response_type: 'code' }); // Request email permission
+        }, {
+            config_id: '1278485190260419', response_type: 'code', override_default_response_type: true
+        }); // Request email permission
     };
 
     const onCopy = () => {
