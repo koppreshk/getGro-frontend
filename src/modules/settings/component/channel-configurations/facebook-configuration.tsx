@@ -91,7 +91,7 @@ export default function FacebookConfigurations() {
         // Initialize the Facebook SDK
         window.fbAsyncInit = function () {
             window.FB.init({
-                appId: import.meta.env.VITE_FACEBOOK_APP_ID, // Replace with your Facebook App ID
+                appId: '1450143768984718', // Replace with your Facebook App ID
                 cookie: true,
                 xfbml: true,
                 version: 'v10.0', // Use the latest version
