@@ -105,7 +105,7 @@ export default function FacebookConfigurations() {
                             <Typography variant='h3'>Engage your customers, directly on facebook</Typography>
                             <Typography mb='20px' variant='body3'>Associate a facebook page with customer support and respond to customer comments and wall posts directly from getgro</Typography>
                             <FacebookLogin
-                                appId={import.meta.env.VITE_FACEBOOK_APP_ID}
+                                appId={'1450143768984718'}
                                 fields="name,email,picture"
                                 render={renderProps => (
                                     <StyledButton startIcon={<Facebook />} sx={{ width: '300px' }} variant='contained' onClick={renderProps.onClick}>

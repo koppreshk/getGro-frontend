@@ -71,7 +71,7 @@ const useConfigurations = () => {
                     route: 'facebook',
                     uniqueKey: 'facebook',
                     catOptionIcon: () => <Facebook />,
-                    hidden: true,
+                    hidden: false,
                     description: t("facebook_short_description")
                 },
                 {
