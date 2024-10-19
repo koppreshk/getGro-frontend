@@ -1,6 +1,6 @@
 import { FormProvider, useForm } from "react-hook-form"
 import { Button, Grid } from "@mui/material";
-import { SelectField, TextboxFieldWithLabel } from "lib/form-fields";
+import { SelectFieldWithLabel, TextboxFieldWithLabel } from "lib/form-fields";
 import { CancelButton, FlexBox, LoadingButton } from "lib/ui-ux";
 import { IRoles } from "modules/settings/apis/users-and-permissions";
 import { useCallback, useMemo } from "react";
@@ -33,7 +33,7 @@ export const AddAgentForm = (props: IUserFormProps) => {
         defaultValues: defaultValues ?? {
             name: '',
             displayName: '',
-            role: 'agent'
+            role: roles[0].id.toString()
         }
     });
 
@@ -46,7 +46,7 @@ export const AddAgentForm = (props: IUserFormProps) => {
             <FlexBox padding="20px" width="100%" height="calc(100% - 77px)" flexDirection="column" justifyContent="space-between">
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        <TextboxFieldWithLabel name="name" size="small" label={t('name')} rules={{ required: t('name_is_required') }} />
+                        <TextboxFieldWithLabel name="name" size="small" label={t('full_name')} rules={{ required: t('name_is_required') }} />
                     </Grid>
                     <Grid item xs={12}>
                         <TextboxFieldWithLabel name="displayName" size="small" label={t('display_name')} rules={{ required: t('display_name_validation') }} />
@@ -58,13 +58,7 @@ export const AddAgentForm = (props: IUserFormProps) => {
                         <TextboxFieldWithLabel name="phoneNumber" size="small" label={t('phone_number')} />
                     </Grid>
                     <Grid item xs={12}>
-                        <SelectField sx={{ width: '100%' }} name="role" label={t('role')} menuOptions={roles.map((item) => ({ key: item.id.toString(), value: item.name }))} fullWidth rules={{ required: t('selection_is_required') }} />
-                    </Grid>
-                    <Grid item xs={12}>
-                        {isInEditMode ?
-                            <TextboxFieldWithLabel name="userId" size="small" label={t('id')} fullWidth disabled />
-                            :
-                            <></>}
+                        <SelectFieldWithLabel sx={{ width: '100%' }} size="small" name="role" label={t('role')} menuOptions={roles.map((item) => ({ key: item.id.toString(), value: item.name }))} fullWidth rules={{ required: t('selection_is_required') }} />
                     </Grid>
                 </Grid>
                 <FlexBox gap='10px' width="100%" justifyContent="flex-end">

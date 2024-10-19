@@ -2,6 +2,7 @@ import { TableChartOutlined, KeyboardArrowDown, FormatListBulletedOutlined, Done
 import { Menu, MenuItem, Typography } from '@mui/material';
 import { FlexBox } from 'lib/ui-ux';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 const StyledFlexBox = styled(FlexBox)`
@@ -20,6 +21,7 @@ export const ContentViewMode = (props: ContentViewModeProps) => {
     const { onGridModeChange, selectedValue } = props;
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+    const { t } = useTranslation();
 
     const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
         setAnchorEl(event.currentTarget);
@@ -49,12 +51,12 @@ export const ContentViewMode = (props: ContentViewModeProps) => {
             >
                 <MenuItem onClick={() => onMenuSelect('card')} selected={selectedValue === 'card'}>
                     <FormatListBulletedOutlined />
-                    <Typography sx={{ ml: '10px' }} variant='h6'>Card View</Typography>
+                    <Typography sx={{ ml: '10px' }} variant='h6'>{t('card_view')}</Typography>
                     {selectedValue === 'card' ? <DoneOutlined sx={{ ml: '10px' }} color="primary" width={'16px'} height={'16px'} /> : null}
                 </MenuItem>
                 <MenuItem onClick={() => onMenuSelect('grid')} selected={selectedValue === 'grid'}>
                     <TableChartOutlined />
-                    <Typography sx={{ ml: '10px' }} variant='h6'>Grid View</Typography>
+                    <Typography sx={{ ml: '10px' }} variant='h6'>{t('grid_view')}</Typography>
                     {selectedValue === 'grid' ? <DoneOutlined sx={{ ml: '10px' }} color="primary" width={'16px'} height={'16px'} /> : null}
                 </MenuItem>
             </Menu>

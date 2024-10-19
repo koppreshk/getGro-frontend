@@ -7,6 +7,8 @@ import { ChangePassword, RolesPermissionsTab } from ".";
 import { Status } from "modules/core/components/parts/agent-status";
 import { useAppSelector } from "lib/hooks";
 import { useFetchCurrentStatus } from "modules/settings/apis/users-and-permissions";
+import { General } from "./general";
+import { useTranslation } from "react-i18next";
 
 const StyledLayoutPage = styled(FlexBox)`
     background-color: ${({ theme }) => theme.pallete.grayVariant5};
@@ -63,7 +65,7 @@ function tabAriaProps(index: number) {
 
 const ProfileDetails = () => {
     const [value, setValue] = React.useState(0);
-
+    const { t } = useTranslation();
     const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
@@ -71,8 +73,10 @@ const ProfileDetails = () => {
     const renderByvalue = () => {
         switch (value) {
             case 0:
-                return <RolesPermissionsTab />
+                return <General />;
             case 1:
+                return <RolesPermissionsTab />
+            case 2:
                 return <ChangePassword />
             default: return null;
         }
@@ -82,9 +86,10 @@ const ProfileDetails = () => {
         <StyledFlexbox style={{ flex: '5' }}>
             <FlexBox flexDirection="column" width="100%">
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                        <Tab label="Roles and Permissions" {...tabAriaProps(0)} />
-                        <Tab label="Change Password" {...tabAriaProps(0)} />
+                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" sx={{ textTransform: 'unset' }}>
+                        <Tab label={t('general')} {...tabAriaProps(0)} sx={{ textTransform: 'unset' }} />
+                        <Tab label="Roles and Permissions" {...tabAriaProps(0)} sx={{ textTransform: 'unset' }} />
+                        <Tab label="Change Password" {...tabAriaProps(0)} sx={{ textTransform: 'unset' }} />
                     </Tabs>
                 </Box>
                 {renderByvalue()}
