@@ -43,26 +43,31 @@ const LoginForm = () => {
     const { handleSubmit } = useFormContext<ILoginFields>();
     const { showNotification } = useNotifications();
     const { isLoading, mutateAsync } = useLoginUser();
-    const [, setIsVerified] = useState(false);
+    const [isVerified, setIsVerified] = useState(false);
+    const [tokenValue, setTokenValue] = useState<string | null>(null);
 
     const onRecaptchaChange = (value: string | null) => {
-        console.log("Captcha value:", value);
+        setTokenValue(value);
         setIsVerified(!!value); // set to true if reCAPTCHA token is received
     };
 
     const onSignIn = useCallback((data: ILoginFields) => {
-        // if (!isVerified) {
-        //     alert("Please complete the reCAPTCHA.");
-        //     return;
-        // }
-        mutateAsync({ email: data.email, password: data.password })
+        if (!isVerified) {
+            alert("Please complete the reCAPTCHA.");
+            return;
+        }
+        mutateAsync({ email: data.email, password: data.password, recaptcha: tokenValue })
             .then((res: LoginResult) => {
-                login({ authToken: res.authToken, email: data.email, rememberMe: data.rememberMe, role: res.role, name: res.name });
+                login({
+                    authToken: res.authToken, email: data.email,
+                    rememberMe: data.rememberMe, role: res.role,
+                    name: res.name
+                });
             }).catch((err) => {
                 console.error(err);
                 showNotification({ message: 'Failed to login, please check email or password', type: 'error' })
             })
-    }, [login, mutateAsync, showNotification]);
+    }, [isVerified, login, mutateAsync, showNotification, tokenValue]);
 
     return (
         <Box sx={{ width: '100%', padding: '50px', boxSizing: 'border-box' }}>

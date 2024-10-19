@@ -10,7 +10,7 @@ export type LoginResult = {
 }
 
 export const useLoginUser = () => {
-    const onLoginUser = React.useCallback((data: { email: string, password: string }) => {
+    const onLoginUser = React.useCallback((data: { email: string, password: string, recaptcha: string | null }) => {
         const restURl = import.meta.env.VITE_REST_URL;
         const subDomainValue = import.meta.env.VITE_SUB_DOMAIN ?? new URL(location.origin).href; //Keeping env values incase of overiding from local
 
@@ -18,7 +18,8 @@ export const useLoginUser = () => {
             method: 'POST',
             body: JSON.stringify({
                 email_address: data.email,
-                password: data.password
+                password: data.password,
+                recaptcha: data.recaptcha
             }),
             headers: {
                 'sub-domain': subDomainValue,
