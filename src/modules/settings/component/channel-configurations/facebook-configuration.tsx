@@ -123,7 +123,7 @@ export default function FacebookConfigurations() {
             } else {
                 console.log('User cancelled login or did not fully authorize.');
             }
-        }, { scope: 'email' }); // Request email permission
+        }, { config_id: '1278485190260419' }); // Request email permission
     };
 
     const onCopy = () => {
