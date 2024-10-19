@@ -89,22 +89,14 @@ interface IContactInfoProps extends Pick<ITicketDetails, 'customerInfo' | 'ticke
 }
 
 export const ContactInfo = (props: IContactInfoProps) => {
-    const { customerInfo, createdAt, ticketId, customerName, closedAt } = props;
-    const { email, fullName, phoneNumber } = useMemo(() => {
-        if (customerInfo?.email) {
-            return {
-                email: customerInfo.email,
-                fullName: customerInfo.firstName + ' ' + customerInfo.lastName,
-                phoneNumber: customerInfo.phoneNumber || 'NA'
-            }
-        }
+    const { customerInfo, createdAt, ticketId, closedAt } = props;
+    const { email, name, phoneNumber } = useMemo(() => {
         return {
-            email: 'NA',
-            fullName: customerName,
-            omsCustomerId: 'NA',
-            phoneNumber: 'NA'
+            email: customerInfo?.email,
+            name: customerInfo?.name,
+            phoneNumber: customerInfo?.phone_number
         }
-    }, [customerInfo, customerName]);
+    }, [customerInfo]);
 
     const [openCallPopUp, setOpenCallPopUp] = React.useState(false);
 
@@ -115,9 +107,9 @@ export const ContactInfo = (props: IContactInfoProps) => {
     return (
         <FlexBox gap="20px" flexDirection="column">
             <FlexBox gap="20px" padding="0 20px" alignItems="center" flexDirection="row">
-                {fullName === undefined ? <StyledAvatar /> : <StyledAvatar>{getInitialsByName(fullName)}</StyledAvatar>}
+                {name ? <StyledAvatar>{getInitialsByName(name)}</StyledAvatar> : <StyledAvatar />}
                 <FlexBox flexDirection="column" gap="10px" width="calc(100% - 100px)">
-                    <Typography variant="h4">{fullName}</Typography>
+                    <Typography variant="h4">{name}</Typography>
                     <ContactInfoActions email={email}
                         phoneNumber={phoneNumber} toggleCallBtn={toggleCallBtn}
                     />
@@ -129,14 +121,14 @@ export const ContactInfo = (props: IContactInfoProps) => {
                 {contactInfoData('Phone', phoneNumber)}
                 {contactInfoData('Ticket Id', ticketId)}
                 {contactInfoData('Created At', createdAt)}
-                {closedAt ? contactInfoData('Closed At', closedAt) : null}
+                {contactInfoData('Closed At', closedAt)}
             </FlexBox>
             {openCallPopUp ? <BrowserTelephonicDialer openCallPopUp={openCallPopUp} toggleCallBtn={toggleCallBtn} phoneNumber={phoneNumber} /> : <></>}
         </FlexBox>
     )
 }
 
-const contactInfoData = (name: string, value: string | number | (() => JSX.Element)) => {
+const contactInfoData = (name: string, value?: string | number | (() => JSX.Element)) => {
     const renderIcons = (name: string) => {
         switch (name) {
             case 'Email':
@@ -159,12 +151,18 @@ const contactInfoData = (name: string, value: string | number | (() => JSX.Eleme
     }
 
     return (
-        <FlexBox width="100%" flexDirection="row" gap="5px">
-            <FlexBox width="40%" flexDirection="row" gap="5px" alignItems="center">
-                {renderIcons(name)}
-                <TypographyName variant="subheading1">{name}</TypographyName>
-            </FlexBox>
-            {typeof value === 'function' ? value() : <TypographyValue variant="h6" width='60%'>{value}</TypographyValue>}
-        </FlexBox>
+        <>
+            {value
+                ?
+                <FlexBox width="100%" flexDirection="row" gap="5px">
+                    <FlexBox width="40%" flexDirection="row" gap="5px" alignItems="center">
+                        {renderIcons(name)}
+                        <TypographyName variant="subheading1">{name}</TypographyName>
+                    </FlexBox>
+                    {typeof value === 'function' ? value() : <TypographyValue variant="h6" width='60%'>{value}</TypographyValue>}
+                </FlexBox>
+                : null
+            }
+        </>
     )
 }

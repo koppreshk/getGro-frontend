@@ -94,7 +94,7 @@ export default function FacebookConfigurations() {
                 appId: '1450143768984718', // Replace with your Facebook App ID
                 cookie: true,
                 xfbml: true,
-                version: 'v10.0', // Use the latest version
+                version: 'v21.0', // Use the latest version
             });
             window.FB.AppEvents.logPageView();
         };

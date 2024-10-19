@@ -11,13 +11,11 @@ export interface ITicketDetails {
     pastTickets: ITicketDetails[];
     customerInfo?: {
         email: string;
-        firstName: string;
-        lastName: string;
-        omsCustomerId: string;
-        phoneNumber: string;
+        name: string;
+        phone_number: string;
     }
     statusUpdateString: string;
-    closedAt: null | string;
+    closedAt?: string;
     responseDue: null | string;
     resolutionDue: string;
     assigneeInfo?: {
