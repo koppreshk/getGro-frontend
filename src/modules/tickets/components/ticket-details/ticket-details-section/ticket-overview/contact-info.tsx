@@ -71,7 +71,7 @@ const ContactInfoActions = (props: IContactInfoActionsProps) => {
 
     return (
         <FlexBox gap="10px">
-            {contactInfoIcons.map((option, index) =>
+            {contactInfoIcons.filter((item) => item.hidden).map((option, index) =>
                 <Tooltip key={index} title={option.title} arrow placement="bottom">
                     <IconWrapper onClick={() => option?.onClick!()}>
                         {option.renderIcon()}
