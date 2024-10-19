@@ -52,7 +52,7 @@ const LoginForm = () => {
     };
 
     const onSignIn = useCallback((data: ILoginFields) => {
-        if (!isVerified) {
+        if (import.meta.env.MODE === 'production' && !isVerified) {
             alert("Please complete the reCAPTCHA.");
             return;
         }
