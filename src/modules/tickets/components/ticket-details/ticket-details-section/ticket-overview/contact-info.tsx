@@ -29,14 +29,12 @@ export const TypographyValue = styled(Typography)`
     }
 `;
 
-const IconWrapper = styled(FlexBox) <{ $isDisabled?: boolean }>`
+const IconWrapper = styled(FlexBox)`
     border-radius: 6px;
     padding: 8px;
     box-sizing: border-box;
     color: ${({ theme }) => theme.pallete.primaryPurple};
     background-color: ${({ theme }) => theme.pallete.purpleLight};
-    opacity: ${({ $isDisabled }) => $isDisabled ? '0.5' : '1'};
-    cursor: ${({ $isDisabled }) => $isDisabled ? 'not-allowed' : 'pointer'};
     &:hover {
         background-color: #e7e7ff;
     }  
@@ -54,20 +52,20 @@ const ContactInfoActions = (props: IContactInfoActionsProps) => {
 
     const contactInfoIcons = [
         {
-            title: phoneNumber === undefined ? 'Link a customer to make call' : 'Call',
+            title: 'Call',
             renderIcon: () => <Call />,
-            disabled: phoneNumber === undefined,
+            hidden: !!phoneNumber,
             onClick: toggleCallBtn,
         },
         {
-            title: phoneNumber === undefined ? 'Link a customer to send message' : 'Message',
+            title: 'Message',
             renderIcon: () => <Message />,
-            disabled: phoneNumber === undefined,
+            hidden: !!phoneNumber,
         },
         {
-            title: email === undefined ? 'Link a customer to send e-mail' : 'Email',
+            title: 'Email',
             renderIcon: () => <EmailOutlined />,
-            disabled: email === undefined,
+            hidden: !!email,
         }
     ];
 
@@ -75,7 +73,7 @@ const ContactInfoActions = (props: IContactInfoActionsProps) => {
         <FlexBox gap="10px">
             {contactInfoIcons.map((option, index) =>
                 <Tooltip key={index} title={option.title} arrow placement="bottom">
-                    <IconWrapper $isDisabled={option.disabled} onClick={() => !option.disabled && option?.onClick!()}>
+                    <IconWrapper onClick={() => option?.onClick!()}>
                         {option.renderIcon()}
                     </IconWrapper>
                 </Tooltip>
@@ -107,11 +105,13 @@ export const ContactInfo = (props: IContactInfoProps) => {
     return (
         <FlexBox gap="20px" flexDirection="column">
             <FlexBox gap="20px" padding="0 20px" alignItems="center" flexDirection="row">
-                {name ? <StyledAvatar>{getInitialsByName(name)}</StyledAvatar> : <StyledAvatar />}
+                {name ? <StyledAvatar>{getInitialsByName(name)}</StyledAvatar> : phoneNumber ? <StyledAvatar>{getInitialsByName(phoneNumber)}</StyledAvatar> : <StyledAvatar />}
                 <FlexBox flexDirection="column" gap="10px" width="calc(100% - 100px)">
-                    <Typography variant="h4">{name}</Typography>
-                    <ContactInfoActions email={email}
-                        phoneNumber={phoneNumber} toggleCallBtn={toggleCallBtn}
+                    <Typography variant="h4">{name || phoneNumber}</Typography>
+                    <ContactInfoActions
+                        email={email}
+                        phoneNumber={phoneNumber}
+                        toggleCallBtn={toggleCallBtn}
                     />
                 </FlexBox>
             </FlexBox>

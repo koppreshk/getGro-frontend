@@ -91,7 +91,7 @@ export default function FacebookConfigurations() {
         // Initialize the Facebook SDK
         window.fbAsyncInit = function () {
             window.FB.init({
-                appId: '1450143768984718', // Replace with your Facebook App ID
+                appId: '386521997887994', // Replace with your Facebook App ID
                 cookie: true,
                 xfbml: true,
                 version: 'v21.0', // Use the latest version
@@ -124,7 +124,6 @@ export default function FacebookConfigurations() {
                 console.log('User cancelled login or did not fully authorize.');
             }
         }, {
-            config_id: '1278485190260419',
             response_type: 'code',
             override_default_response_type: true,
             redirect_uri: 'https://haanum.getgro.io/configurations/facebook'
