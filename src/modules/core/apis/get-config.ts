@@ -15,7 +15,7 @@ export interface IConfig {
         first_name: string;
         display_name: string,
         email: string,
-        phone: string
+        phone_number: string
 
     }
 }

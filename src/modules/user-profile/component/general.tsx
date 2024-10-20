@@ -13,7 +13,7 @@ import { useNotifications } from "lib";
 interface IGeneralTabFormFeilds {
     fullName: string;
     displayName: string;
-    phone_number: string;
+    phoneNumber: string;
     ticketLayoutView: string;
     defaultTicketView: string;
     ticketPageCount: string;
@@ -33,6 +33,7 @@ export const General = () => {
         defaultValues: {
             fullName: config?.user_details.first_name,
             displayName: config?.user_details.display_name,
+            phoneNumber: config?.user_details.phone_number,
             defaultTicketView: 'all-tickets',
             ticketLayoutView: 'card-view',
             ticketPageCount: '10'
@@ -48,7 +49,7 @@ export const General = () => {
             default_ticket_view: formdata.defaultTicketView,
             display_name: formdata.displayName,
             full_name: formdata.fullName,
-            phone_number: formdata.phone_number,
+            phone_number: formdata.phoneNumber,
             ticket_layout_view: formdata.ticketLayoutView,
             ticket_page_count: formdata.ticketPageCount
         }).then((res) => {
@@ -68,7 +69,7 @@ export const General = () => {
                         <FlexBox gap={'10px'} width="100%" flexDirection="column">
                             <EditUserDetails label={t('full_name')} formFieldName="fullName" value={config?.user_details.first_name} />
                             <EditUserDetails label={t('display_name')} formFieldName="displayName" value={config?.user_details.display_name} />
-                            <EditUserDetails label={t('phone_number')} formFieldName="phoneNumber" value={config?.user_details.phone} />
+                            <EditUserDetails label={t('phone_number')} formFieldName="phoneNumber" value={config?.user_details.phone_number} />
                         </FlexBox>
                     </FlexBox>
                     <HorizontalSeparator />
