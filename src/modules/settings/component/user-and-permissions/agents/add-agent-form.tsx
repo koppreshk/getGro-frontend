@@ -55,7 +55,7 @@ export const AddAgentForm = (props: IUserFormProps) => {
                         <TextboxFieldWithLabel name="email" label={t('email')} size="small" rules={{ required: t('email_is_required') }} />
                     </Grid>
                     <Grid item xs={12}>
-                        <TextboxFieldWithLabel name="phoneNumber" size="small" label={t('phone_number')} />
+                        <TextboxFieldWithLabel name="phoneNumber" size="small" label={t('phone_number')} rules={{ required: t('phone_number_is_required') }}/>
                     </Grid>
                     <Grid item xs={12}>
                         <SelectFieldWithLabel sx={{ width: '100%' }} size="small" name="role" label={t('role')} menuOptions={roles.map((item) => ({ key: item.id.toString(), value: item.name }))} fullWidth rules={{ required: t('selection_is_required') }} />

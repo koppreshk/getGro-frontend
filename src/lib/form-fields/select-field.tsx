@@ -61,14 +61,14 @@ export const SelectField = (props: SelectFieldProps) => {
 }
 
 export const SelectFieldWithLabel = (props: SelectFieldProps & IFlexBoxProps) => {
-    const { flexDirection = 'column', gap = '5px', label, ...rest } = props;
+    const { flexDirection = 'column', gap = '5px', label, className, ...rest } = props;
 
     const { formState: { errors } } = useFormContext();
     const hasError = get(errors, props.name) !== undefined;
 
     return (
-        <FlexBox flexDirection={flexDirection} gap={gap}>
-            <Typography variant="h6" sx={{ color: hasError ? '#d32f2f' : '#3b4455' }}>{label}</Typography>
+        <FlexBox className={className} flexDirection={flexDirection} gap={gap} alignItems={flexDirection === 'row' ? 'center' : 'unset'}>
+            <Typography variant="h6" className="select-field-header-label" sx={{ color: hasError ? '#d32f2f' : '#3b4455' }}>{label}</Typography>
             <SelectField {...rest} />
         </FlexBox>
     )

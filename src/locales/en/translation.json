@@ -50,6 +50,7 @@
     "rule_name_validation": "Rule name is required",
     "name_is_required": "Name is required",
     "email_is_required": "Email is required",
+    "phone_number_is_required": "Phone number is required",
     "selection_is_required": "Selection is required",
     "please_select_an_option": "Please select an option",
     "email_address_required": "Email address is required",
@@ -347,5 +348,7 @@
     "new_password": "New Password",
     "confirm_new_password": "Confirm New Password",
     "ticket_settings": "Ticket Settings",
-    "basic_info": "Basic Info"
+    "basic_info": "Basic Info",
+    "profile_update_success": "Profile was updated successfully",
+    "profile_update_error": "Failed to update profile"
 }
