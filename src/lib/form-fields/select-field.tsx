@@ -65,7 +65,7 @@ export const SelectFieldWithLabel = (props: SelectFieldProps & IFlexBoxProps) =>
 
     const { formState: { errors } } = useFormContext();
     const hasError = get(errors, props.name) !== undefined;
-    console.log(hasError)
+
     return (
         <FlexBox flexDirection={flexDirection} gap={gap}>
             <Typography variant="h6" sx={{ color: hasError ? '#d32f2f' : '#3b4455' }}>{label}</Typography>

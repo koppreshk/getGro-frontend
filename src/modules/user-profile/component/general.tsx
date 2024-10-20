@@ -5,7 +5,7 @@ import { Cancel, Edit, CheckCircle } from "@mui/icons-material";
 import { Button, IconButton, Typography } from "@mui/material"
 import { SelectFieldWithLabel, TextboxField } from "lib/form-fields"
 import { useAppSelector } from "lib/hooks";
-import { FlexBox } from "lib/ui-ux";
+import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
 
 interface IGeneralTabFormFeilds {
     fullName: string;
@@ -32,20 +32,22 @@ export const General = () => {
     return (
         <FormProvider {...formMethods}>
             <FlexBox flexDirection="column" justifyContent="space-between" padding="20px" height="calc(100% - 49px)">
-                <FlexBox flexDirection="column" gap="40px" width="60%">
+                <FlexBox flexDirection="column" gap="20px" width="50%">
                     <FlexBox flexDirection="column" gap="10px" width="100%">
-                        <Typography variant="h5">Basic Info</Typography>
+                        <Typography variant="h5" color="GrayText">{t('basic_info')}</Typography>
                         <FlexBox gap={'10px'} width="100%" flexDirection="column">
                             <EditUserDetails label={t('full_name')} formFieldName="fullName" value={config?.user_details.first_name} />
                             <EditUserDetails label={t('display_name')} formFieldName="displayName" value={config?.user_details.display_name} />
                         </FlexBox>
                     </FlexBox>
-                    <FlexBox flexDirection="column" gap="10px" >
-                        <Typography variant="h5">Ticket Settings</Typography>
+                    <HorizontalSeparator />
+                    <FlexBox flexDirection="column" gap="15px" >
+                        <Typography variant="h5" color="GrayText">{t('ticket_settings')}</Typography>
                         <FlexBox flexDirection="column" gap="10px" >
-                            <SelectFieldWithLabel name="ticketLayoutView" sx={{ width: '300px' }} label={t('ticket_layout_view')} size="small" menuOptions={[{ key: 'card-view', value: t('card_view') }, { key: 'grid-view', value: t('grid_view') }]} />
+                            <SelectFieldWithLabel name="ticketLayoutView" label={t('ticket_layout_view')} size="small"
+                                menuOptions={[{ key: 'card-view', value: t('card_view') }, { key: 'grid-view', value: t('grid_view') }]} />
                             <SelectFieldWithLabel
-                                name="defaultTicketView" sx={{ width: '300px' }}
+                                name="defaultTicketView"
                                 label={t('default_ticket_view')} size="small"
                                 menuOptions={[
                                     {
@@ -78,7 +80,7 @@ export const General = () => {
                                     }
                                 ]} />
                             <SelectFieldWithLabel
-                                name="ticketPageCount" sx={{ width: '300px' }}
+                                name="ticketPageCount"
                                 label={t('ticket_page_count')} size="small"
                                 menuOptions={[
                                     { key: '10', value: '10' },
@@ -117,7 +119,7 @@ const EditUserDetails = (props: EditUserDetailsProps) => {
 
     return (
         <FlexBox gap={'10px'} alignItems="center">
-            <Typography variant="body2" sx={{ minWidth: '200px' }}>{label}</Typography>
+            <Typography variant="h6" sx={{ minWidth: '200px' }}>{label}</Typography>
             {!isInEditMode
                 ?
                 (
@@ -132,7 +134,7 @@ const EditUserDetails = (props: EditUserDetailsProps) => {
                 (
 
                     <FlexBox alignItems="center" gap={'4px'}>
-                        <TextboxField name={formFieldName} width="40%" label={`Modify ${label}`} size="small" type="text" />
+                        <TextboxField name={formFieldName} width={"calc(100% - 80px)"} label={`Modify ${label}`} size="small" type="text" />
                         <IconButton onClick={toggleEditMode}>
                             <Cancel color="error" />
                         </IconButton>

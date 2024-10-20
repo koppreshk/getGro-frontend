@@ -345,5 +345,7 @@
     "change_password": "Change Password",
     "current_password": "Current Password",
     "new_password": "New Password",
-    "confirm_new_password": "Confirm New Password"
+    "confirm_new_password": "Confirm New Password",
+    "ticket_settings": "Ticket Settings",
+    "basic_info": "Basic Info"
 }
