@@ -5,11 +5,13 @@ import React from 'react';
 class ServiceClient {
     private restURL: string | undefined;
     private headers = new Headers();
+    private logout: () => void;
 
-    constructor(args: { auth?: string }) {
+    constructor(args: { auth?: string, logout: () => void }) {
         this.restURL = import.meta.env.VITE_REST_URL;
         this.headers.append('Content-Type', 'application/json');
         this.headers.set('Authorization', args!.auth!);
+        this.logout = args.logout
     }
 
     private fetchData = (endPoint: string, init?: Pick<RequestInit, 'body' | 'method'>, _headers?: HeadersInit) => {
@@ -18,7 +20,10 @@ class ServiceClient {
             body: init?.body,
             method: init?.method
         }).then((res) => {
-            if (res.status === 200) {
+            if (res.status === 401) {
+                this.logout();
+            }
+            else if (res.status === 200) {
                 return res;
             }
             throw new Error(`StatusCode: ${res.status}`);
@@ -43,9 +48,9 @@ const arg: Pick<ServiceClient, 'getData' | 'postData'> = {
 const ServiceClientContext = React.createContext(arg);
 
 export const ServiceClientProvider = React.memo((props: { children: React.ReactNode }) => {
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
     return (
-        <ServiceClientContext.Provider value={new ServiceClient({ auth: user?.authToken })}>
+        <ServiceClientContext.Provider value={new ServiceClient({ auth: user?.authToken, logout: logout })}>
             {props.children}
         </ServiceClientContext.Provider>
     );
