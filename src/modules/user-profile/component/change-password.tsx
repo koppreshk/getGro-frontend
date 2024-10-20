@@ -15,7 +15,13 @@ interface IFormFields {
 }
 
 export const ChangePassword = () => {
-    const formMethods = useForm<IFormFields>();
+    const formMethods = useForm<IFormFields>({
+        defaultValues: {
+            confirmNewPassword: '',
+            currentPassword: '',
+            newPassword: ''
+        }
+    });
     const { user, logout } = useAuth();
     const { mutateAsync, isLoading } = useUpdatePassword();
     const { showNotification } = useNotifications();
@@ -26,9 +32,18 @@ export const ChangePassword = () => {
             token: user!.authToken!,
             password: formData.confirmNewPassword,
             currentPassword: formData.currentPassword
-        }).then(() => {
-            showNotification({ message: 'Successfully updated password, please login to continue', type: 'success' });
-            logout();
+        }).then((res) => {
+            if (res.status) {
+                showNotification({ message: 'Successfully updated password, please login to continue', type: 'success' });
+                logout();
+                return;
+            }
+            showNotification({ message: res.message, type: 'error' });
+            formMethods.reset({
+                confirmNewPassword: '',
+                currentPassword: '',
+                newPassword: ''
+            });
         }).catch((err) => {
             console.error(err);
             showNotification({ message: 'Failed to update password, please try later', type: 'error' })
@@ -49,7 +64,7 @@ export const ChangePassword = () => {
                         <PasswordFieldWithLabel name="currentPassword" label={t('current_password')} size="small" type="password" fullWidth rules={{ required: 'Password is required' }} />
                     </Grid>
                     <Grid item md={12}>
-                        <PasswordFieldWithLabel name="newPassword" label={t('new_password')}size="small" type="password" fullWidth rules={{ required: 'Password is required' }} />
+                        <PasswordFieldWithLabel name="newPassword" label={t('new_password')} size="small" type="password" fullWidth rules={{ required: 'Password is required' }} />
                     </Grid>
                     <Grid item md={12}>
                         <TextboxFieldWithLabel name="confirmNewPassword" label={t('confirm_new_password')} size="small" type="text" fullWidth rules={{ required: 'Password is required', validate: validatePassword }} />
