@@ -15,7 +15,7 @@ export const useUpdatePassword = () => {
             },
             body: JSON.stringify({
                 password: data.password,
-                currentPassword: data?.currentPassword
+                current_password: data?.currentPassword
             }),
         })
             .then((res) => {
