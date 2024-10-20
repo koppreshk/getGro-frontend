@@ -43,6 +43,7 @@ const ProfileHeader = () => {
                 <FlexBox flexDirection='column' padding='0 0 0 20px' gap="6px">
                     <Typography variant='h5'>{config?.user_details.display_name}</Typography>
                     <Typography variant='caption'>{config?.user_details.email}</Typography>
+                    {config?.user_details.phone_number ? <Typography variant='caption'>{config?.user_details.phone_number}</Typography> : null}
 
                     <FlexBox style={{ textTransform: 'unset', gap: '6px' }} flexDirection="row" alignItems="center">
                         <Status $status={currentStatus?.name} />
