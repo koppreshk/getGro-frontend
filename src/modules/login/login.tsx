@@ -19,6 +19,18 @@ interface ILoginFields {
     password: string;
 }
 
+const StyledForm = styled.form`
+    .recaptcha-container {
+        /* Custom styles for the container */
+        display: flex;
+    }
+
+    .recaptcha-container div {
+        transform: scale(1.045);    /* Adjust size */
+        transform-origin: 0 0;    /* Ensure scaling works from top-left */
+    }
+`;
+
 export const LoginSectionLeft = styled(FlexBox)`
     background-color: ${({ theme }) => theme.pallete.purpleLight};
 `;
@@ -71,7 +83,7 @@ const LoginForm = () => {
 
     return (
         <Box sx={{ width: '100%', padding: '50px', boxSizing: 'border-box' }}>
-            <form>
+            <StyledForm>
                 <Grid container spacing={4}>
                     <Grid item md={12}>
                         <FlexBox gap="10px">
@@ -87,14 +99,16 @@ const LoginForm = () => {
                         <PasswordField name="password" label="Password" type="password" fullWidth rules={{ required: 'Password is required' }} />
                     </Grid>
                     <Grid item md={12}>
+                        <div className="recaptcha-container">
+                            <ReCAPTCHA
+                                sitekey="6LeI4FcqAAAAAMz0zR7bddwcBvG9bPsMad0j4l6v" // replace with your site key
+                                onChange={onRecaptchaChange}
+                            />
+                        </div>
+                    </Grid>
+                    <Grid item md={12}>
                         <Button onClick={handleSubmit(onSignIn)} variant="contained" fullWidth size="large" type="submit" disabled={isLoading} endIcon={isLoading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : <ArrowForwardRounded />}>Sign in</Button>
                     </Grid>
-                </Grid>
-                <Grid>
-                    <ReCAPTCHA
-                        sitekey="6LeI4FcqAAAAAMz0zR7bddwcBvG9bPsMad0j4l6v" // replace with your site key
-                        onChange={onRecaptchaChange}
-                    />
                 </Grid>
                 <Grid item md={12} marginTop='20px'>
                     <FlexBox justifyContent="space-between" alignItems="center">
@@ -108,7 +122,7 @@ const LoginForm = () => {
                     </FlexBox>
 
                 </Grid>
-            </form>
+            </StyledForm>
         </Box>
     )
 }
