@@ -350,5 +350,15 @@
     "ticket_settings": "Ticket Settings",
     "basic_info": "Basic Info",
     "profile_update_success": "Profile was updated successfully",
-    "profile_update_error": "Failed to update profile"
+    "profile_update_error": "Failed to update profile",
+    "agent_availability_statuses": "Agent Availability Statuses",
+    "agent_availability_statuses_long_description": "Agent availability statuses reflect the current readiness and capability of an agent to handle specific tasks or responsibilities.",
+    "color": "Color",
+    "audit_logs_long_description": "Activity logs provide information about specific events or operations, like what the change was and who made it",
+    "user_name": "User Name",
+    "created_at": "Created At",
+    "event_type": "Event Type",
+    "summary": "Summary",
+    "last_modified_at": "Last Modified At",
+    "store_name": "Store Name"
 }

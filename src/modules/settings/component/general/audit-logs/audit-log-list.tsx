@@ -1,6 +1,7 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
 import { AuditLog } from "modules/settings/apis/audit-logs/fetch-all-audit-logs";
+import { useTranslation } from "react-i18next";
 
 
 interface IAuditLogListProps {
@@ -28,25 +29,26 @@ export const AuditLogList = (props: IAuditLogListProps) => {
 
 function useColumns() {
     const columnHelper = createColumnHelper<AuditLog>();
+    const { t } = useTranslation();
     const columns = [
         columnHelper.accessor("user", {
             id: 'user',
-            header: () => 'User Name',
+            header: () => t('user_name'),
             cell: info => info.getValue(),
         }),
         columnHelper.accessor('created_at', {
             id: 'created_at',
-            header: () => 'Created Date',
+            header: () => t('created_at'),
             cell: info => info.getValue(),
         }),
         columnHelper.accessor('event_type', {
             id: 'event_type',
-            header: () => 'Event Type',
+            header: () => t('event_type'),
             cell: info => info.getValue(),
         }),
         columnHelper.accessor('summary', {
             id: 'summary',
-            header: () => 'Summary',
+            header: () => t('summary'),
             cell: info => info.getValue(),
             minSize: 300
         })

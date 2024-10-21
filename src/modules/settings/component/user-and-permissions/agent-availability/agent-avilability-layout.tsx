@@ -35,11 +35,11 @@ export default function AgentAvailabilityLayout() {
     return (
         <FlexBox width="100%" height="100%" flexDirection="column" padding="20px" gap={'20px'}>
             <BreadCrumbs />
-            <MoreInformation information="Agent availability statuses reflect the current readiness and capability of an agent to handle specific tasks or responsibilities." />
+            <MoreInformation information={t('agent_availability_statuses_long_description')} />
             <FlexBox width="100%" justifyContent="space-between" padding="10px" alignItems="center">
                 <FlexBox alignItems="center" gap="10px">
                     <CustomIconButton onClick={() => { navigate('/configurations') }} iconComponent={<ArrowBack />} tooltipProps={{ title: t('back') }} />
-                    <Typography variant="h5">Agent Availability Statuses</Typography>
+                    <Typography variant="h5">{t('agent_availability_statuses')}</Typography>
                 </FlexBox>
                 {/* <Button variant="contained" onClick={toggleAddStatusDrawer} startIcon={<AddCircleOutline />}>Add Status</Button> */}
                 {/* <AddNewStatus openAddStatusDrawer={openAddStatusDrawer} toggleAddStatusDrawer={toggleAddStatusDrawer} /> */}

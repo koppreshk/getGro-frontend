@@ -9,3 +9,4 @@ export * from './file-upload';
 export * from './common';
 export * from './breadcrumbs/breadcrumbs';
 export * from './avatar-group/avatar-group';
+export * from './tabs';

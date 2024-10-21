@@ -1,25 +1,26 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
 import { AvailabilityStatuses } from "modules/settings/apis/users-and-permissions";
+import { useTranslation } from "react-i18next";
 
 const useColumns = () => {
     const columnHelper = createColumnHelper<AvailabilityStatuses>();
-
+    const { t } = useTranslation();
     const columns = [
         columnHelper.display({
             id: 'color',
             cell: ({ row: { original } }) => <div style={{ background: original.name === 'Away' ? '#ffef0e' : (original.name === 'Online' ? '#17e254' : '#c9c2c2'), width: '20px', height: '20px', borderRadius: '8px' }} />,
-            header: () => 'Color',
+            header: () => t('color'),
         }),
         columnHelper.accessor("name", {
             id: 'name',
             cell: info => info.getValue(),
-            header: () => 'Status Name',
+            header: () => t('status_name'),
         }),
         columnHelper.accessor("description", {
             id: 'description',
             cell: info => info.getValue(),
-            header: () => 'Description',
+            header: () => t('description'),
             minSize: 400
         }),
         // columnHelper.display({
@@ -65,7 +66,7 @@ export const AgentStatusesList = (props: IStatusesListProps) => {
                 data={statuses!}
                 isLoading={isLoading}
                 hideTableControls
-                // onRowClick={onRowClick}
+            // onRowClick={onRowClick}
             />
             {/* <DrawerExtended
                 open={showDrawer}

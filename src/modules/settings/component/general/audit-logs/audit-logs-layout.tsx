@@ -21,7 +21,7 @@ export const AuditLogsLayout = (props: IAuditLogsLayoutProps) => {
         <FlexBox width="100%" flexDirection="column" height="100%">
             <BreadCrumbs />
             <FlexBox flexDirection="column" gap={'20px'} padding="20px" height="calc(100% - 46px)">
-                <MoreInformation information="Activity logs provide information about specific events or operations, like what the change was and who made it" />
+                <MoreInformation information={t('audit_logs_long_description')} />
                 <FlexBox width="100%" padding="10px" justifyContent="space-between">
                     <FlexBox alignItems="center" gap="10px">
                         <CustomIconButton onClick={() => navigate('/configurations')} iconComponent={<ArrowBack />} tooltipProps={{ title: t('back') }} />
