@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Avatar, Box, Typography } from "@mui/material";
 import { chooseRandomColors, getInitialsByName } from "lib/utils";
 import { FlexBox, HorizontalSeparator, StyledTab, StyledTabs } from "lib/ui-ux";
-import { ChangePassword, RolesPermissionsTab } from ".";
+import { ChangePassword, RolesPermissionsTab, Signature } from ".";
 import { Status } from "modules/core/components/parts/agent-status";
 import { useAppSelector } from "lib/hooks";
 import { useFetchCurrentStatus } from "modules/settings/apis/users-and-permissions";
@@ -79,6 +79,8 @@ const ProfileDetails = () => {
                 return <RolesPermissionsTab />
             case 2:
                 return <ChangePassword />
+            case 3:
+                return <Signature />
             default: return null;
         }
     }
@@ -91,6 +93,7 @@ const ProfileDetails = () => {
                         <StyledTab label={t('general')} {...tabAriaProps(0)} sx={{ textTransform: 'unset' }} />
                         <StyledTab label="Roles and Permissions" {...tabAriaProps(0)} sx={{ textTransform: 'unset' }} />
                         <StyledTab label="Change Password" {...tabAriaProps(0)} sx={{ textTransform: 'unset' }} />
+                        <StyledTab label="Signature" {...tabAriaProps(0)} sx={{ textTransform: 'unset' }} />
                     </StyledTabs>
                 </Box>
                 {renderByvalue()}
