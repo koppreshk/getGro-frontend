@@ -29,7 +29,7 @@ export interface IMergeTicketsFormFields {
 interface IMergeTicketsContentProps {
     mutationLoading: boolean;
     onCloseDrawer: () => void;
-    submitMergeTicketHandler: (formData: IMergeTicketsFormFields & { primaryTicketId: string }) => Promise<{ status: boolean, message: string }>;
+    submitMergeTicketHandler: (formData: IMergeTicketsFormFields & { primaryTicketId: number }) => Promise<{ status: boolean, message: string }>;
 }
 
 export const MergeTicketsContent = (props: IMergeTicketsContentProps) => {

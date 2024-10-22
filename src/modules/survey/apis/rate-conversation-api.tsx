@@ -4,7 +4,7 @@ import { useMutation } from "react-query";
 import { SurveyEndPoint, SurveyQueryKey } from "./api-enums";
 
 interface IRateConversation {
-    ticket_id: string;
+    ticket_id: number;
     rating: number;
 }
 

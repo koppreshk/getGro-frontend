@@ -11,7 +11,7 @@ import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied
 import { useRateConversation } from "../apis";
 
 interface ICustomerSurveyFields {
-    ticketId: string;
+    ticketId: number;
     rating: string;
     comment: string;
 }
@@ -80,7 +80,7 @@ export const CustomerSurveyPage = () => {
         defaultValues: {
             comment: '',
             rating: rating,
-            ticketId: ticketId
+            ticketId: Number(ticketId)
         }
     });
 

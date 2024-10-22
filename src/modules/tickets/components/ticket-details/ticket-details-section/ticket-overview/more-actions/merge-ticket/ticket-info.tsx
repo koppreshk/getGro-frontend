@@ -38,7 +38,7 @@ export const TicketInfo = (props: TicketInfoProps) => {
                 <StyledTypography variant="body2">{description}</StyledTypography>
                 <FlexBox justifyContent="space-between" width="100%">
                     <FlexBox renderSeparator={() => <VerticalSeparator />} gap={'10px'} alignItems="center">
-                        <StyledTypography variant="body3">{'#' + ticketId.split('-')[0]}</StyledTypography>
+                        <StyledTypography variant="body3">{'#' + ticketId}</StyledTypography>
                         <StyledTypography variant="body3">{ticketStatus}</StyledTypography>
                         <StyledTypography variant="body3">{customerName}</StyledTypography>
                     </FlexBox>

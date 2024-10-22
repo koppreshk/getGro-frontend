@@ -5,7 +5,7 @@ import { useServiceClient } from "lib";
 import { TicketsEndPoint, TicketsQueryKey } from "./api-enums";
 
 export interface LinkedTickets {
-    ticket_id: string;
+    ticket_id: number;
     description: string;
     status: string;
 }

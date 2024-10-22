@@ -9,7 +9,7 @@ export interface IChangeAsigneeArgs {
     agent?: string;
 }
 
-export const useChangeAsignee = (ticketId: string) => {
+export const useChangeAsignee = (ticketId: number) => {
     const { postData } = useServiceClient();
     const queryClient = useQueryClient();
     const queryKey = useGetQueryEndPoint();
