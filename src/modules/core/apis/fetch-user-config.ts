@@ -11,6 +11,9 @@ export interface IConfig {
     modules: string[],
     permissions: AllPermissionKeys[],
     language: string,
+    ticket_layout_view: 'card_view' | 'grid_view',
+    ticket_page_count: number,
+    default_ticket_view: string
     user_details: {
         first_name: string;
         display_name: string,
@@ -20,7 +23,7 @@ export interface IConfig {
     }
 }
 
-export const useGetConfig = (isEnabled: boolean) => {
+export const useFetchUserConfig = (isEnabled: boolean) => {
     const dispatch = useDispatch();
 
     const { getData } = useServiceClient();
@@ -33,7 +36,7 @@ export const useGetConfig = (isEnabled: boolean) => {
         queryKey: [AgentsQueryKey.FETCH_USER_CONFIG],
         cacheTime: 0,
         onSuccess(data) {
-            if (data.modules.includes('all') && data.permissions.includes('all')) {
+            if (data?.modules?.includes('all') && data?.permissions?.includes('all')) {
                 const allTicketPermissions = Object.values(TicketPermissionKeys);
                 const allConfigPermissions = Object.values(ConfigurationPermissionKeys);
                 const allDashboardPermissions = Object.values(DashboardPermissionKeys);

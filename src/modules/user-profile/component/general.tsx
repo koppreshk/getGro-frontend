@@ -34,9 +34,9 @@ export const General = () => {
             fullName: config?.user_details.first_name,
             displayName: config?.user_details.display_name,
             phoneNumber: config?.user_details.phone_number,
-            defaultTicketView: 'all-tickets',
-            ticketLayoutView: 'card-view',
-            ticketPageCount: '10'
+            defaultTicketView: config?.default_ticket_view,
+            ticketLayoutView: config?.ticket_layout_view,
+            ticketPageCount: config?.ticket_page_count.toString()
         },
     });
     const { mutateAsync, isLoading } = useEditProfile();
@@ -80,8 +80,8 @@ export const General = () => {
                                 sx={{ width: "100%" }}
                                 flexDirection="row" name="ticketLayoutView" label={t('ticket_layout_view')} size="small"
                                 menuOptions={[
-                                    { key: 'card-view', value: t('card_view') },
-                                    { key: 'grid-view', value: t('grid_view') }
+                                    { key: 'card_view', value: t('card_view') },
+                                    { key: 'grid_view', value: t('grid_view') }
                                 ]} />
                             <StyledSelectField
                                 name="defaultTicketView"
@@ -91,31 +91,31 @@ export const General = () => {
                                 menuOptions={[
                                     {
                                         value: t('all_tickets'),
-                                        key: 'all-tickets',
+                                        key: 'all_tickets',
                                     },
                                     {
                                         value: t('all_pending'),
-                                        key: 'all-pending',
+                                        key: 'all_pending',
                                     },
                                     {
                                         value: t('all_resolved'),
-                                        key: 'all-resolved',
+                                        key: 'all_resolved',
                                     },
                                     {
                                         value: t('all_closed'),
-                                        key: 'all-closed',
+                                        key: 'all_closed',
                                     },
                                     {
                                         value: t('my_pending'),
-                                        key: 'my-pending',
+                                        key: 'my_pending',
                                     },
                                     {
                                         value: t('my_resolved'),
-                                        key: 'my-resolved',
+                                        key: 'my_resolved',
                                     },
                                     {
                                         value: t('my_closed'),
-                                        key: 'my-closed',
+                                        key: 'my_closed',
                                     }
                                 ]} />
                             <StyledSelectField

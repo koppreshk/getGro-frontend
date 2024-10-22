@@ -5,6 +5,7 @@ import { IconButton, TextField, Tooltip, Typography } from "@mui/material";
 import { FlexBox, RefreshButton, VerticalSeparator } from "lib/ui-ux";
 import { ArchiveOutlined, AssignmentIndOutlined, ChevronLeft, ChevronRight, DeleteOutline, KeyboardDoubleArrowLeft, KeyboardDoubleArrowRight, MarkChatReadOutlined, MarkUnreadChatAltOutlined } from '@mui/icons-material';
 import { ContentViewMode } from "./content-view-mode";
+import { useAppSelector } from "lib/hooks";
 
 const StyledFlexBox = styled(FlexBox)`
     padding: 0px 20px 0 20px;  
@@ -19,16 +20,17 @@ interface ITableControlProps {
 
 export const TableControls = (props: ITableControlProps) => {
     const { isTableActionsvisible, totalPages, enableSerchField, isContentViewModeVisible } = props;
+    const config = useAppSelector((state) => state.core.config);
     const [searchParams, setSearchParams] = useSearchParams();
     const pageNumber = Number(searchParams.get('pageNumber')) || 1;
-    const noOfRecords = searchParams.get('noOfRecords') || '10';
-    const cardView = searchParams.get('cardView') || 'true';
+    const noOfRecords = searchParams.get('noOfRecords') ? searchParams.get('noOfRecords')! : config?.ticket_page_count.toString() ?? searchParams.get('noOfRecords') ?? '10';
+    const cardView = searchParams.get('card_view') ? searchParams.get('card_view')! : (config?.ticket_layout_view ? config?.ticket_layout_view === 'card_view' : 'true');
     const [noOfRows, setFilters] = useState(noOfRecords);
 
     React.useEffect(() => {
         searchParams.set('noOfRecords', noOfRecords);
         searchParams.set('pageNumber', pageNumber.toString());
-        searchParams.set('cardView', cardView);
+        searchParams.set('card_view', cardView.toString());
         setSearchParams(searchParams);
     }, [cardView, noOfRecords, pageNumber, searchParams, setSearchParams])
 
@@ -64,7 +66,7 @@ export const TableControls = (props: ITableControlProps) => {
     }, [searchParams, setSearchParams]);
 
     const onGridModeChange = (selectedValue: string) => {
-        searchParams.set('cardView', selectedValue === 'card' ? 'true' : 'false');
+        searchParams.set('card_view', selectedValue === 'card' ? 'true' : 'false');
         setSearchParams(searchParams);
     }
 

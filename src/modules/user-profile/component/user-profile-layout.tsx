@@ -89,7 +89,7 @@ const ProfileDetails = () => {
         <StyledFlexbox style={{ flex: '5' }}>
             <FlexBox flexDirection="column" width="100%">
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <StyledTabs whiteBackground value={value} onChange={handleChange} aria-label="basic tabs example" sx={{ textTransform: 'unset' }}>
+                    <StyledTabs whitebackground value={value} onChange={handleChange} aria-label="basic tabs example" sx={{ textTransform: 'unset' }}>
                         <StyledTab label={t('general')} {...tabAriaProps(0)} sx={{ textTransform: 'unset' }} />
                         <StyledTab label="Roles and Permissions" {...tabAriaProps(0)} sx={{ textTransform: 'unset' }} />
                         <StyledTab label="Change Password" {...tabAriaProps(0)} sx={{ textTransform: 'unset' }} />

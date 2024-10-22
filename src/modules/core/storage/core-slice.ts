@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { IConfig } from '../apis/get-config';
+import { IConfig } from '../apis/fetch-user-config';
 
 interface CoreState {
     config: undefined | IConfig

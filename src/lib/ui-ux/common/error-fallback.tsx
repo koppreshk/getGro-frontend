@@ -16,7 +16,7 @@ export const ErrorFallback = (props: FallbackProps) => {
                 <ErrorIllustration width="60%" height="60%" />
                 <Typography sx={{ color: 'red' }} variant="body3">
                     <pre>
-                        {props.error.stack}
+                        {!window.navigator.onLine ? <Typography>You are offline</Typography> : props.error.stack}
                     </pre>
                 </Typography>
             </FlexBox>

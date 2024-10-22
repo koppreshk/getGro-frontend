@@ -11,7 +11,7 @@ import { IncomingCallMain } from "modules/tickets/components/ticket-details/tick
 import LoginPage from '../../login/login';
 import SetNewAgentPassword from '../../login/set-new-agent-password';
 import { CustomerSurveyPage } from "modules/survey/pages"
-import { useGetConfig } from "../apis/get-config"
+import { useFetchUserConfig } from "../apis/fetch-user-config"
 
 const DashboardPage = lazy(() => import('../../dashboard/pages/dashboard-page'));
 const TicketsPage = lazy(() => import('../../tickets/pages/tickets-page'));
@@ -46,7 +46,7 @@ export const CoreLayout = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
-    const { isLoading } = useGetConfig(user ? true : false);
+    const { isLoading } = useFetchUserConfig(user ? true : false);
 
     React.useEffect(() => {
         if (user && location.pathname === '/login') {
