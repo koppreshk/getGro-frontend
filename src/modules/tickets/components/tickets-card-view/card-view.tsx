@@ -84,7 +84,7 @@ export const CardView = (props: ITicketDetails) => {
                     <FlexBox gap={'20px'} renderSeparator={onRenderSeparator} alignItems="center">
                         <StyledTypography
                             variant="body2"
-                            width={'80px'}>{'#' + ticketId.split('-')[0]}</StyledTypography>
+                            width={'80px'}>{'#' + ticketId}</StyledTypography>
                         <CreatedAt createdAt={createdAt} />
                         <ResolutionDue resolutionDue={resolutionDue} />
                         <AgentAssigned assigneeInfo={assigneeInfo} />

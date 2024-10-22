@@ -27,7 +27,7 @@ export const useDeleteAllNotes = () => {
     const { postData } = useServiceClient();
     const queryClient = useQueryClient();
 
-    const deleteNote = useCallback((args: { ticket_id: string }) =>
+    const deleteNote = useCallback((args: { ticket_id: number }) =>
         postData(`${TicketNotesEndPoint.DELETE_ALL_NOTES}`, args).then((res) => res.json()), [postData]);
 
     return useMutation({

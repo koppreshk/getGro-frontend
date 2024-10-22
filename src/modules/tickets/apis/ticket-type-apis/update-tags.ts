@@ -5,7 +5,7 @@ import { TicketsEndPoint, TicketsQueryKey } from "../api-enums";
 import { useGetQueryEndPoint } from "modules/tickets/containers";
 
 interface IUpdateTagsArgs {
-    ticket_id: string;
+    ticket_id: number;
     tags: number[];
 }
 

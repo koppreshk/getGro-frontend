@@ -39,7 +39,7 @@ const StyledContainer = styled(FlexBox)`
     }
 `;
 
-export const PastTicketCard = (props: { item: ITicketDetails; onPastTicketClick: (ticktId: string) => void }) => {
+export const PastTicketCard = (props: { item: ITicketDetails; onPastTicketClick: (ticktId: number) => void }) => {
     const { item, onPastTicketClick } = props;
     const { pallete } = useTheme();
     const getSourceIcon = useSourceIcon();

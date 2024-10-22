@@ -4,8 +4,8 @@ import { useServiceClient } from "lib";
 import { TicketsEndPoint, TicketsQueryKey } from "../api-enums";
 
 interface IMergeTicketsData {
-    secondary_ticket_ids: string[];
-    primary_ticket_id: string;
+    secondary_ticket_ids: number[];
+    primary_ticket_id: number;
     close_secondary_ticket: boolean;
     add_secondary_ticket_message: "first_message" | "last_message";
     send_email: boolean;

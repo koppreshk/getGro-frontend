@@ -5,7 +5,7 @@ import { TicketsEndPoint, TicketsQueryKey } from "../api-enums";
 import { useParams } from "react-router-dom";
 
 export interface IWhatsAppMessages {
-    ticket_id: string;
+    ticket_id: number;
     customer_name: string;
     agent_name: string | null;
     conversations: Conversation[];
