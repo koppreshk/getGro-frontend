@@ -12,6 +12,7 @@ import LoginPage from '../../login/login';
 import SetNewAgentPassword from '../../login/set-new-agent-password';
 import { CustomerSurveyPage } from "modules/survey/pages"
 import { useFetchUserConfig } from "../apis/fetch-user-config"
+import ResetPassword from "modules/login/reset-password"
 
 const DashboardPage = lazy(() => import('../../dashboard/pages/dashboard-page'));
 const TicketsPage = lazy(() => import('../../tickets/pages/tickets-page'));
@@ -95,6 +96,7 @@ export const CoreLayout = () => {
             </Route>
             <Route key="login" path="/login" element={<LoginPage />} />
             <Route key="set-new-agent-password" path="/account/verify" element={<SetNewAgentPassword />} />
+            <Route key="reset-password" path="/reset-password" element={<ResetPassword />} />
             <Route key="customer-feedback" path="customer-feedback/*" element={<CustomerSurveyPage />} />
             <Route key="not-found" path="*" element={<PageNotFound />} />
         </Routes>
