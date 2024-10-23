@@ -10,7 +10,7 @@ export interface IEditProfileArgs {
     full_name: string
     display_name: string
     phone_number: string;
-    signiture?: string;
+    signature?: string;
 }
 
 export const useEditProfile = () => {

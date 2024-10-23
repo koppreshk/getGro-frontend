@@ -41,13 +41,13 @@ export const Signature = () => {
 
     const handleSubmitForm = (formdata: ISignature) => {
         mutateAsync({
-            signiture: formdata.signatue
+            signature: formdata.signatue
         }).then((res) => {
             if (res.status) {
-                showNotification({ message: t('signiture_update_success'), type: 'success' });
+                showNotification({ message: t('signature_update_success'), type: 'success' });
                 return;
             }
-        }).catch(() => showNotification({ message: t('signiture_update_error'), type: 'error' }))
+        }).catch(() => showNotification({ message: t('signature_update_error'), type: 'error' }))
     }
 
     return (
