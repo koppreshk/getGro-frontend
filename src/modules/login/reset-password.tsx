@@ -35,9 +35,13 @@ const ResetPasswordForm = () => {
                 token,
                 email
             })
-                .then(() => {
-                    showNotification({ message: 'Successfully updated password, please login to continue', type: 'success' })
-                    navigate('/login');
+                .then((res) => {
+                    if (res.status) {
+                        showNotification({ message: 'Successfully updated password, please login to continue', type: 'success' })
+                        navigate('/login');
+                        return;
+                    }
+                    return showNotification({ message: res.message, type: 'error' })
                 }).catch((err) => {
                     console.error(err);
                     showNotification({ message: 'Failed to update password, please try later', type: 'error' })
