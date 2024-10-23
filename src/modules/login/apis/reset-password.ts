@@ -11,12 +11,9 @@ interface IResetPassowordArgs {
 
 export const useResetPassword = () => {
     const { postData } = useServiceClient();
-    const subDomain = import.meta.env.VITE_SUB_DOMAIN ?? new URL(location.origin).href; //Keeping env values incase of overiding from local
 
     const onResetPassword = React.useCallback((args: IResetPassowordArgs) =>
-        postData(LoginEndPoint.RESET_PASSWORD, args, {
-            'sub-domain': subDomain
-        }).then((res) => res.json()), [postData, subDomain]);
+        postData(LoginEndPoint.RESET_PASSWORD, args).then((res) => res.json()), [postData]);
 
     return useMutation({
         mutationFn: onResetPassword,

@@ -11,6 +11,7 @@ class ServiceClient {
         this.restURL = import.meta.env.VITE_REST_URL;
         this.headers.append('Content-Type', 'application/json');
         this.headers.set('Authorization', args!.auth!);
+        this.headers.set('sub-domain', import.meta.env.VITE_SUB_DOMAIN ?? new URL(location.origin).href)
         this.logout = args.logout
     }
 
