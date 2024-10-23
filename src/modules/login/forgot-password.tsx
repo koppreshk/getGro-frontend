@@ -70,7 +70,10 @@ export const ForgotPassword = () => {
                                     name="email"
                                     sx={{ mt: '20px' }}
                                     label={t('email')}
-                                    fullWidth />
+                                    fullWidth
+                                    rules={{
+                                        required: t('email_is_required')
+                                    }} />
                                 <LoadingButton
                                     isLoading={isLoading}
                                     onClick={formMethods.handleSubmit(onSubmit)}
