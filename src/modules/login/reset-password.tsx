@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
-import { Box, Button, Grid, Typography } from "@mui/material";
-import { FlexBox } from "lib/ui-ux";
-// import { useNotifications } from "lib";
-// import { useUpdatePassword } from "./apis";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { Box, Grid, Typography } from "@mui/material";
+import { FlexBox, LoadingButton } from "lib/ui-ux";
+import { useNotifications } from "lib";
+import { useResetPassword } from "./apis";
 import { PasswordField, TextboxField } from "lib/form-fields";
 import LoginImage from '../../assets/png/getgro-login-illus.png';
 import GetGroLogoImg from '../../assets/png/getGroLogoWname.png';
@@ -16,24 +17,33 @@ interface ISetNewPwdFormFields {
     confirmNewPassword: string;
 }
 
-const SetNewAgentPasswordForm = () => {
-    const { watch } = useFormContext<ISetNewPwdFormFields>();
-    // const { mutateAsync, isLoading } = useUpdatePassword();
-    // const { showNotification } = useNotifications();
-    // const navigate = useNavigate();
-    // const [searchParams] = useSearchParams();
+const ResetPasswordForm = () => {
+    const { watch, handleSubmit } = useFormContext<ISetNewPwdFormFields>();
+    const { mutateAsync, isLoading } = useResetPassword();
+    const { showNotification } = useNotifications();
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
     const { t } = useTranslation();
+    const token = searchParams.get('token');
+    const email = searchParams.get('email');
 
-    // const onSignIn = useCallback((data: ISetNewPwdFormFields) => {
-    //     mutateAsync({ password: data.newPassword, token: searchParams.get('token')! })
-    //         .then(() => {
-    //             showNotification({ message: 'Successfully updated password, please login to continue', type: 'success' })
-    //             navigate('/login');
-    //         }).catch((err) => {
-    //             console.error(err);
-    //             showNotification({ message: 'Failed to update password, please try later', type: 'error' })
-    //         })
-    // }, [mutateAsync, navigate, searchParams, showNotification]);
+    const onSignIn = useCallback((data: ISetNewPwdFormFields) => {
+
+        if (token && email) {
+            mutateAsync({
+                password: data.newPassword,
+                token,
+                email
+            })
+                .then(() => {
+                    showNotification({ message: 'Successfully updated password, please login to continue', type: 'success' })
+                    navigate('/login');
+                }).catch((err) => {
+                    console.error(err);
+                    showNotification({ message: 'Failed to update password, please try later', type: 'error' })
+                })
+        }
+    }, [email, mutateAsync, navigate, showNotification, token]);
 
     const validatePassword = (val: string) => {
         if (val !== watch('newPassword')) {
@@ -59,13 +69,15 @@ const SetNewAgentPasswordForm = () => {
                         <TextboxField name="confirmNewPassword" label={t('confirm_new_password')} type="text" fullWidth rules={{ required: 'Password is required', validate: validatePassword }} />
                     </Grid>
                     <Grid item md={12}>
-                        <Button
-                            onClick={undefined} variant="contained" fullWidth size="large" type="submit"
-                            disabled={true}
+                        <LoadingButton
+                            isLoading={isLoading}
+                            disabled={token === null || email === null}
+                            onClick={handleSubmit(onSignIn)}
+                            variant="contained" fullWidth size="large" type="submit"
                             endIcon={<ArrowForwardRounded />}
                         >
                             Submit
-                        </Button>
+                        </LoadingButton>
                     </Grid>
                 </Grid>
             </form>
@@ -91,7 +103,7 @@ const ResetPassword = React.memo(() => {
                     <img src={GetGroLogoImg} width='50%' />
                 </GetGroLogoWrapper>
                 <FormProvider {...formValues}>
-                    <SetNewAgentPasswordForm />
+                    <ResetPasswordForm />
                 </FormProvider>
             </LoginSectionRight>
         </FlexBox>

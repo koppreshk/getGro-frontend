@@ -7,11 +7,11 @@ interface LoadingButtonProps extends ButtonProps {
 }
 
 export const LoadingButton = (props: LoadingButtonProps) => {
-    const { children, isLoading, endIcon, ...rest } = props
+    const { children, isLoading, disabled, endIcon, ...rest } = props
     return (
         <Button
             {...rest}
-            disabled={isLoading}
+            disabled={isLoading || disabled}
             endIcon={isLoading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : endIcon}>
             {children}
         </Button>
