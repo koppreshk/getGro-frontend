@@ -9,7 +9,7 @@ interface IForgotPassowordArgs {
 
 export const useForgotPassword = () => {
     const { postData } = useServiceClient();
-    const subDomain = import.meta.env.VITE_SUB_DOMAIN;
+    const subDomain = import.meta.env.VITE_SUB_DOMAIN ?? new URL(location.origin).href; //Keeping env values incase of overiding from local
 
     const onForgotPassword = React.useCallback((args: IForgotPassowordArgs) =>
         postData(LoginEndPoint.FORGOT_PASSWORD, {
