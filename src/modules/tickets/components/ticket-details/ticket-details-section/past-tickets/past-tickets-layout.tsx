@@ -36,9 +36,9 @@ const PastTickets = (props: IPastTicketsLayoutProps) => {
     const [isAcscending, setSortOrder] = React.useState(false);
     const sortedPastTickets = useMemo(() => isAcscending ? pastTickets.slice().sort((a, b) => (new Date(a.createdAt).valueOf() - new Date(b.createdAt).valueOf())) : pastTickets, [isAcscending, pastTickets]);
 
-    const onPastTicketClick = (ticketId: string) => {
+    const onPastTicketClick = (ticketId: number) => {
         const pathNameParts = pathname.split('/');
-        pathNameParts[3] = ticketId;
+        pathNameParts[3] = ticketId.toString();
         window.open(`${pathNameParts.join('/')}${search}`);
     }
 

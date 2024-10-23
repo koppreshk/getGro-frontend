@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { createSearchParams, useMatch, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { Avatar, Typography } from "@mui/material"
@@ -55,12 +55,12 @@ export const TicketList = (props: ITicketListProps) => {
     const [searchParams] = useSearchParams();
     const noOfRecords = searchParams.get('noOfRecords');
     const pageNumber = searchParams.get('pageNumber');
-    
-    const doesTicketIdExist = data.some((item) => item.ticketId === params.ticketId);
+
+    const doesTicketIdExist = useMemo(() => data.some((item) => item.ticketId.toString() === params.ticketId), [data, params.ticketId]);
 
     useEffect(() => {
-        if(!doesTicketIdExist){
-            navigate(`/tickets/${match?.params.ticketType}/${data[0].ticketId}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`);   
+        if (!doesTicketIdExist) {
+            navigate(`/tickets/${match?.params.ticketType}/${data[0].ticketId}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`);
         }
     }, [data, doesTicketIdExist, match?.params.ticketType, navigate, noOfRecords, pageNumber])
 
@@ -83,7 +83,7 @@ const TicketDetails = (props: ITicketDetailsProps) => {
     const params = useParams();
     const navigate = useNavigate();
     const match = useMatch(`/tickets/:ticketType/:ticketId`);
-    const isTicketActive = React.useMemo(() => params.ticketId === ticketId, [params.ticketId, ticketId]);
+    const isTicketActive = React.useMemo(() => params.ticketId === ticketId.toString(), [params.ticketId, ticketId]);
     const ref = React.useRef<HTMLDivElement>(null);
     const [searchParams] = useSearchParams();
     const noOfRecords = searchParams.get('noOfRecords');
@@ -92,7 +92,7 @@ const TicketDetails = (props: ITicketDetailsProps) => {
     const getSourceIcon = useSourceIcon();
 
     React.useEffect(() => {
-        if (params.ticketId === ticketId && ref.current) {
+        if (params.ticketId === ticketId.toString() && ref.current) {
             ref.current.scrollIntoView({ behavior: "smooth" });
 
             dispatch(setTicketDetails({

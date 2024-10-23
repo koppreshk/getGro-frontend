@@ -7,7 +7,7 @@ export const MergeTicketsContainer = (props: { onCloseDrawer: () => void }) => {
     const { onCloseDrawer } = props;
     const { mutateAsync, isLoading } = useMergeTickets();
 
-    const submitMergeTicketHandler = React.useCallback((formData: IMergeTicketsFormFields & { primaryTicketId: string }) => {
+    const submitMergeTicketHandler = React.useCallback((formData: IMergeTicketsFormFields & { primaryTicketId: number }) => {
         const { addSecondaryLinkInPrimary, addSecondaryTicketMessage, closeSecondaryTicket, sendMail, searchTickets, primaryTicketId } = formData;
         return mutateAsync({
             secondary_ticket_ids: searchTickets?.map((item) => item.ticketId) || [],

@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { TicketNotesEndPoint, TicketNotesQueryKey } from "./api-enums";
 
 interface IAddNoteArgs {
-    ticket_id: string;
+    ticket_id: number;
     note: string;
 }
 

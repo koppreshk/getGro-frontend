@@ -351,6 +351,8 @@
     "basic_info": "Basic Info",
     "profile_update_success": "Profile was updated successfully",
     "profile_update_error": "Failed to update profile",
+    "signature_update_success": "Signature was updated successfully",
+    "signature_update_error": "Failed to update signature",
     "agent_availability_statuses": "Agent Availability Statuses",
     "agent_availability_statuses_long_description": "Agent availability statuses reflect the current readiness and capability of an agent to handle specific tasks or responsibilities.",
     "color": "Color",
@@ -364,5 +366,6 @@
     "signature_description": "This signature will be automatically added to your reply when you respond to a ticket in the message editor.",
     "forgot_password": "Forgot password?",
     "forgot_password_description": "Provide your registered email address, and we will send you instructions to reset your password.",
-    "password_reset_email_message": "Password Reset Email Sent"
+    "password_reset_email_message": "Password Reset Email Sent",
+    "signature_optional": "Signature(Optional)"
 }

@@ -1,0 +1,101 @@
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { FormProvider, useForm, useFormContext } from "react-hook-form";
+import { Box, Button, Grid, Typography } from "@mui/material";
+import { FlexBox } from "lib/ui-ux";
+// import { useNotifications } from "lib";
+// import { useUpdatePassword } from "./apis";
+import { PasswordField, TextboxField } from "lib/form-fields";
+import LoginImage from '../../assets/png/getgro-login-illus.png';
+import GetGroLogoImg from '../../assets/png/getGroLogoWname.png';
+import { ArrowForwardRounded } from "@mui/icons-material";
+import { LoginSectionLeft, IllustrationImg, LoginSectionRight, GetGroLogoWrapper } from "./login";
+
+interface ISetNewPwdFormFields {
+    newPassword: string;
+    confirmNewPassword: string;
+}
+
+const SetNewAgentPasswordForm = () => {
+    const { watch } = useFormContext<ISetNewPwdFormFields>();
+    // const { mutateAsync, isLoading } = useUpdatePassword();
+    // const { showNotification } = useNotifications();
+    // const navigate = useNavigate();
+    // const [searchParams] = useSearchParams();
+    const { t } = useTranslation();
+
+    // const onSignIn = useCallback((data: ISetNewPwdFormFields) => {
+    //     mutateAsync({ password: data.newPassword, token: searchParams.get('token')! })
+    //         .then(() => {
+    //             showNotification({ message: 'Successfully updated password, please login to continue', type: 'success' })
+    //             navigate('/login');
+    //         }).catch((err) => {
+    //             console.error(err);
+    //             showNotification({ message: 'Failed to update password, please try later', type: 'error' })
+    //         })
+    // }, [mutateAsync, navigate, searchParams, showNotification]);
+
+    const validatePassword = (val: string) => {
+        if (val !== watch('newPassword')) {
+            return 'Passwords do not match'
+        }
+    }
+
+    return (
+        <Box sx={{ width: '100%', padding: '50px', boxSizing: 'border-box' }}>
+            <form>
+                <Grid container spacing={4}>
+                    <Grid item md={12}>
+                        <FlexBox gap="10px">
+                            <Typography variant="h3" fontWeight='500'>Welcome back</Typography>
+                            <Typography variant="h3" fontWeight='500' color='#6969ff'>user!</Typography>
+                        </FlexBox>
+                        <Typography variant="subtitle2" color='#667287'>Set a new password to continue</Typography>
+                    </Grid>
+                    <Grid item md={12}>
+                        <PasswordField name="newPassword" label={t('new_password')} type="password" fullWidth rules={{ required: 'Password is required' }} />
+                    </Grid>
+                    <Grid item md={12}>
+                        <TextboxField name="confirmNewPassword" label={t('confirm_new_password')} type="text" fullWidth rules={{ required: 'Password is required', validate: validatePassword }} />
+                    </Grid>
+                    <Grid item md={12}>
+                        <Button
+                            onClick={undefined} variant="contained" fullWidth size="large" type="submit"
+                            disabled={true}
+                            endIcon={<ArrowForwardRounded />}
+                        >
+                            Submit
+                        </Button>
+                    </Grid>
+                </Grid>
+            </form>
+        </Box>
+    )
+}
+
+const ResetPassword = React.memo(() => {
+    const formValues = useForm<ISetNewPwdFormFields>({
+        defaultValues: {
+            newPassword: '',
+            confirmNewPassword: '',
+        },
+        mode: 'onBlur'
+    });
+    return (
+        <FlexBox height="100%" width="100%">
+            <LoginSectionLeft width="70%" alignItems="center">
+                <IllustrationImg src={LoginImage} alt="" />
+            </LoginSectionLeft>
+            <LoginSectionRight width="30%" flexDirection="column" alignItems="center">
+                <GetGroLogoWrapper width="100%" justifyContent="center">
+                    <img src={GetGroLogoImg} width='50%' />
+                </GetGroLogoWrapper>
+                <FormProvider {...formValues}>
+                    <SetNewAgentPasswordForm />
+                </FormProvider>
+            </LoginSectionRight>
+        </FlexBox>
+    )
+})
+
+export default ResetPassword

@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react";
 import { useMatch, useNavigate, useSearchParams } from "react-router-dom";
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Avatar, Tooltip, Typography, SxProps, Chip } from "@mui/material";
 import { AccessTime, CalendarToday, SupportAgent } from "@mui/icons-material";
 import { CircularSeparator, FlexBox, VerticalSeparator } from "lib/ui-ux";
@@ -12,13 +12,23 @@ import { chooseRandomColors, getInitialsByName, useDateDifference } from "lib/ut
 import { useSourceIcon } from "modules/tickets/hooks";
 import { useFeature } from "lib/hooks";
 
-const StyledCard = styled(FlexBox)`
+const StyledCard = styled(FlexBox) <{ $ticketStatus: string }>`
     background: ${({ theme }) => theme.pallete.white};
     border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
     border: 1px solid #F1F2F4;
     cursor: pointer;
     padding: 15px 20px 15px;
     margin: 0 20px;
+    //experimenting this design
+    ${({ $ticketStatus }) => {
+        if ($ticketStatus === 'Closed') {
+            return css`
+                border-left: 3px solid #3ab43a;
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            `;
+        }
+    }}
 
     &:hover {
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;    }
@@ -57,7 +67,7 @@ export const CardView = (props: ITicketDetails) => {
     }, [match?.pathname, navigate, noOfRecords, pageNumber, ticketId]);
 
     return (
-        <StyledCard onClick={onRowClick} alignItems="center" justifyContent="space-between">
+        <StyledCard $ticketStatus={ticketStatus} onClick={onRowClick} alignItems="center" justifyContent="space-between">
 
             <FlexBox alignItems="center" gap="18px">
                 <CustomerName customerName={customerName} />
@@ -84,7 +94,7 @@ export const CardView = (props: ITicketDetails) => {
                     <FlexBox gap={'20px'} renderSeparator={onRenderSeparator} alignItems="center">
                         <StyledTypography
                             variant="body2"
-                            width={'80px'}>{'#' + ticketId.split('-')[0]}</StyledTypography>
+                            width={'80px'}>{'#' + ticketId}</StyledTypography>
                         <CreatedAt createdAt={createdAt} />
                         <ResolutionDue resolutionDue={resolutionDue} />
                         <AgentAssigned assigneeInfo={assigneeInfo} />

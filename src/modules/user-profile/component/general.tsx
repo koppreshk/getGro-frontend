@@ -9,6 +9,7 @@ import { FlexBox, HorizontalSeparator, LoadingButton } from "lib/ui-ux";
 import { useEditProfile } from "modules/settings/apis/users-and-permissions";
 import styled from "styled-components";
 import { useNotifications } from "lib";
+import { usePrimaryViewOptions } from "modules/tickets/components";
 
 interface IGeneralTabFormFeilds {
     fullName: string;
@@ -58,7 +59,9 @@ export const General = () => {
                 return;
             }
         }).catch(() => showNotification({ message: t('profile_update_error'), type: 'error' }))
-    }
+    };
+
+    const primaryViewOptions = usePrimaryViewOptions();
 
     return (
         <FormProvider {...formMethods}>
@@ -88,36 +91,7 @@ export const General = () => {
                                 sx={{ width: "100%" }}
                                 flexDirection="row"
                                 label={t('default_ticket_view')} size="small"
-                                menuOptions={[
-                                    {
-                                        value: t('all_tickets'),
-                                        key: 'all_tickets',
-                                    },
-                                    {
-                                        value: t('all_pending'),
-                                        key: 'all_pending',
-                                    },
-                                    {
-                                        value: t('all_resolved'),
-                                        key: 'all_resolved',
-                                    },
-                                    {
-                                        value: t('all_closed'),
-                                        key: 'all_closed',
-                                    },
-                                    {
-                                        value: t('my_pending'),
-                                        key: 'my_pending',
-                                    },
-                                    {
-                                        value: t('my_resolved'),
-                                        key: 'my_resolved',
-                                    },
-                                    {
-                                        value: t('my_closed'),
-                                        key: 'my_closed',
-                                    }
-                                ]} />
+                                menuOptions={primaryViewOptions.map((item) => ({ key: item.route, value: item.name }))} />
                             <StyledSelectField
                                 name="ticketPageCount"
                                 sx={{ width: "100%" }}

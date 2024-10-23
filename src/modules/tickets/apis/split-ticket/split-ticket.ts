@@ -5,7 +5,7 @@ import { TicketsEndPoint, TicketsQueryKey } from "../api-enums";
 import { useGetQueryEndPoint } from "modules/tickets/containers";
 
 interface ISplitTicketArgs {
-    ticket_id: string;
+    ticket_id: number;
     subject: string;
     description: string;
     ticket_assignee_type: 'auto' | 'manual';

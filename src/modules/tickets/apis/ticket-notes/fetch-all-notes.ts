@@ -13,7 +13,7 @@ export interface Notes {
 
 export type INotes = ToCamelCasedKeysFromUnderscores<Notes>;
 
-export const useFetchAllNotes = (ticketId: string) => {
+export const useFetchAllNotes = (ticketId: number) => {
     const { getData } = useServiceClient();
 
     const fetchAllNotesData = React.useCallback(() => getData(`${TicketNotesEndPoint.FETCH_ALL_NOTES}?ticket_id=${ticketId}`).then((res) => res.json()).catch((err) => err), [ticketId, getData]);

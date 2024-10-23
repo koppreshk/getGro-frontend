@@ -20,7 +20,7 @@ const EditorContainer = styled.div`
     }
 `;
 
-export const TicketNotes = (props: { notes: INotes[], ticketId: string }) => {
+export const TicketNotes = (props: { notes: INotes[], ticketId: number }) => {
     const { notes, ticketId } = props;
     const [value, setValue] = useState('');
     const [editId, setEditId] = useState<number | undefined>()

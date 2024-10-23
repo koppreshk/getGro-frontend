@@ -121,26 +121,26 @@ export const ResDue = (props: { date: string }) => {
     )
 }
 
-const PriorityIcon = styled.span<{ $priority: string }>`
+const PriorityIcon = styled.div<{ $priority: string }>`
     ${({ $priority }) => {
         switch ($priority.toLocaleLowerCase()) {
             case 'low':
                 return css`
-                    background-color: #E9F5CE;
-                    color: #487307;
-                    border: 1px solid #B9D674;
+                    background-color: #eefff0;
+                    color: #68966d;
+                    border: 1px solid #eefff0;
                 `;
             case 'normal':
                 return css`
-                    background-color: #D9F5FD;
-                    color: #0D60B7;
-                    border: 1px solid #8DD4F3;
+                    background-color: #fcf3e7;
+                    color: #5a2d0b;
+                    border: 1px solid #fcf3e7;
                 `;
             case 'high':
                 return css`
-                    background-color: #FFF4E5;
-                    color: #EF6C00;
-                    border: 1px solid #F2CF7D;
+                    background-color: #ffeded;
+                    color: #c3514f;
+                    border: 1px solid #ffeded;
                 `;
             case 'critical':
                 return css`
@@ -150,19 +150,51 @@ const PriorityIcon = styled.span<{ $priority: string }>`
                 `;
         }
     }};
-    padding: 0 9px;
+    padding: 5px 9px;
     border-radius: 16px;
-    text-transform: uppercase;
+    text-transform: unset;
     height: unset; 
-    font-size: 12px;
+    font-size: 14px;
     width: fit-content;
     font-weight: 600;
+    display: flex;
+    align-items: center;
+`;
+
+const PriorityDot = styled.div<{ $priority: string }>`
+    ${({ $priority }) => {
+        switch ($priority.toLocaleLowerCase()) {
+            case 'low':
+                return css`
+                background-color: #29b773;
+            `;
+            case 'normal':
+                return css`
+                background-color: #f0a637;
+            `;
+            case 'high':
+                return css`
+                background-color: #eb6363;
+            `;
+            case 'critical':
+                return css`
+                background-color: #FFECEE;
+            `;
+        }
+    }};
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+    margin-right: 8px;
 `;
 
 export const Priority = (args: { priority: string, className?: string }) => {
     const { priority, className } = args;
     return (
-        <PriorityIcon $priority={priority} className={className}>{priority}</PriorityIcon>
+        <PriorityIcon $priority={priority} className={className}>
+            <PriorityDot $priority={priority} />
+            {priority}
+        </PriorityIcon>
     )
 }
 

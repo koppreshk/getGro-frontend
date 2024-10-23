@@ -17,9 +17,9 @@ export const TicketLinks = (props: { data: LinkedTickets[] }) => {
     const { data } = props;
     const location = useLocation()
 
-    const getURL = (ticketId: string) => {
+    const getURL = (ticketId: number) => {
         const pathNameParts = location.pathname.split('/');
-        pathNameParts[3] = ticketId;
+        pathNameParts[3] = ticketId.toString();
         return `${pathNameParts.join('/')}${location.search}`;
     }
 
@@ -36,7 +36,7 @@ export const TicketLinks = (props: { data: LinkedTickets[] }) => {
                     ? data.map((item) => (
                         <FlexBox key={item.ticket_id} padding="20px" gap={'10px'}>
                             <Link to={getURL(item.ticket_id)} target="_blank">
-                                <Typography variant="body2" sx={{ width: '80px' }} color={'#6969ff'}>{'#' + item.ticket_id.split('-')[0]}</Typography>
+                                <Typography variant="body2" sx={{ width: '80px' }} color={'#6969ff'}>{'#' + item.ticket_id}</Typography>
                             </Link>
                             <Typography variant="body2" sx={{ width: 'calc(100% - 90px)' }}>{item.description}</Typography>
                             <Typography variant="body2">{item.status}</Typography>

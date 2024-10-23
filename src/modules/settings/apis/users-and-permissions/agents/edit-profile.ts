@@ -9,14 +9,15 @@ export interface IEditProfileArgs {
     ticket_page_count: string
     full_name: string
     display_name: string
-    phone_number: string
+    phone_number: string;
+    signature?: string;
 }
 
 export const useEditProfile = () => {
     const { postData } = useServiceClient();
     const queryClient = useQueryClient();
 
-    const editProfile = React.useCallback((args: IEditProfileArgs) => postData(AgentsEndPoint.EDIT_PROFILE, args).then((res) => res.json()), [postData]);
+    const editProfile = React.useCallback((args: Partial<IEditProfileArgs>) => postData(AgentsEndPoint.EDIT_PROFILE, args).then((res) => res.json()), [postData]);
 
     return useMutation({
         mutationKey: AgentsQueryKey.EDIT_PROFILE,

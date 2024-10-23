@@ -8,7 +8,7 @@ export interface IChangePriorityArgs {
     priorityId: string | number;
 }
 
-export const useChangePriority = (ticketId: string) => {
+export const useChangePriority = (ticketId: number) => {
     const { postData } = useServiceClient();
     const queryClient = useQueryClient();
     const queryKey = useGetQueryEndPoint();
