@@ -10,6 +10,7 @@ import './printable-content.css';
 import { EmailThreadOptions } from "./email-thread-options";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { useAppSelector } from "lib/hooks";
 // import { useSocket } from "lib/providers/socket";
 
 const LayoutWrapper = styled(FlexBox)`
@@ -37,8 +38,18 @@ export const EmailConversationLayout = (props: { conversationsData: ITicketById,
     const { subject, conversations, thread_id: threadId } = conversationsData;
     const casedConversation = conversations.map((item) => ({ ...toCamelCasedKeysFromUnderScores(item), isCollapsed: true })) as IEmailConversations[];
     casedConversation[casedConversation.length - 1].isCollapsed = false //making the last thread open 
+    const signature = useAppSelector((state) => state.core.config?.signature);
+
     // const { socket } = useSocket();
-    const formContext = useForm<IEmailFormFields>({ mode: 'onChange', shouldUnregister: true });
+    const formContext = useForm<IEmailFormFields>({
+        mode: 'onChange',
+        defaultValues: {
+            reply: {
+                editor: signature ? "<br><br><br><br><br>" + signature : ""
+            }
+        },
+        shouldUnregister: true
+    });
     const [emailThreads, setEmailThreads] = useState(casedConversation);
     const { showEditor: showReplyEditor, toggleEditorView: toggleReplyEditorView } = useEmailActionHelpers();
     const { showEditor, toggleEditorView } = useEmailActionHelpers();
