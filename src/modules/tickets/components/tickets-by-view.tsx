@@ -22,10 +22,25 @@ export const TicketsByView = (props: TicketsByViewProps) => {
     const [searchParams] = useSearchParams();
     const cardView = searchParams.get('card_view') || 'true';
 
+    const onDownloadBtnClick = () => {
+        if (props.data) {
+            const headers = Object.keys(props.data[0]).join(',') + '\n';
+            const rows = props.data.map(obj => Object.values(obj).join(',')).join('\n');
+            const csvContent = headers + rows;
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'data.csv');
+            link.click();
+        }
+    }
+
     return (
         <>
             <div style={{ background: '#fff' }}>
-                <TableControls totalPages={props.totalPages} enableSerchField isContentViewModeVisible />
+                <TableControls totalPages={props.totalPages} enableSerchField isContentViewModeVisible onDownloadBtnClick={onDownloadBtnClick} />
             </div>
             <ContentContainer>
                 {cardView === 'true' ? <TicketsCardview {...props} /> : <DisplayTicketsGrid {...props} />}

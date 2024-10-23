@@ -2,8 +2,8 @@ import React, { useCallback, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { IconButton, TextField, Tooltip, Typography } from "@mui/material";
-import { FlexBox, RefreshButton, VerticalSeparator } from "lib/ui-ux";
-import { ArchiveOutlined, AssignmentIndOutlined, ChevronLeft, ChevronRight, DeleteOutline, KeyboardDoubleArrowLeft, KeyboardDoubleArrowRight, MarkChatReadOutlined, MarkUnreadChatAltOutlined } from '@mui/icons-material';
+import { CustomIconButton, FlexBox, RefreshButton, VerticalSeparator } from "lib/ui-ux";
+import { ArchiveOutlined, AssignmentIndOutlined, ChevronLeft, ChevronRight, DeleteOutline, DownloadForOfflineOutlined, KeyboardDoubleArrowLeft, KeyboardDoubleArrowRight, MarkChatReadOutlined, MarkUnreadChatAltOutlined } from '@mui/icons-material';
 import { ContentViewMode } from "./content-view-mode";
 import { useAppSelector } from "lib/hooks";
 
@@ -16,10 +16,11 @@ interface ITableControlProps {
     enableSerchField?: boolean;
     isContentViewModeVisible?: boolean
     totalPages?: number;
+    onDownloadBtnClick?: () => void;
 }
 
 export const TableControls = (props: ITableControlProps) => {
-    const { isTableActionsvisible, totalPages, enableSerchField, isContentViewModeVisible } = props;
+    const { isTableActionsvisible, totalPages, enableSerchField, onDownloadBtnClick, isContentViewModeVisible } = props;
     const config = useAppSelector((state) => state.core.config);
     const [searchParams, setSearchParams] = useSearchParams();
     const pageNumber = Number(searchParams.get('pageNumber')) || 1;
@@ -105,6 +106,15 @@ export const TableControls = (props: ITableControlProps) => {
                     </IconButton>
                 </FlexBox>
                 <VerticalSeparator />
+                {onDownloadBtnClick
+                    ?
+                    <>
+                        <CustomIconButton
+                            iconComponent={<DownloadForOfflineOutlined fontSize="small" />}
+                            tooltipProps={{ title: 'Download as csv' }} onClick={onDownloadBtnClick} />
+                        <VerticalSeparator />
+                    </>
+                    : null}
                 <RefreshButton />
             </FlexBox>
         </StyledFlexBox>
