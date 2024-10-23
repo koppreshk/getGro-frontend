@@ -15,8 +15,17 @@ class ServiceClient {
     }
 
     private fetchData = (endPoint: string, init?: Pick<RequestInit, 'body' | 'method'>, _headers?: HeadersInit) => {
+        const combinedHeaders = new Headers(this.headers);
+
+        // Merge the headers
+        if (_headers) {
+            Object.entries(_headers).forEach(([key, value]) => {
+                combinedHeaders.set(key, value as string);
+            });
+        }
+
         return fetch(`${this.restURL}${endPoint}`, {
-            headers: this.headers,
+            headers: combinedHeaders,
             body: init?.body,
             method: init?.method
         }).then((res) => {

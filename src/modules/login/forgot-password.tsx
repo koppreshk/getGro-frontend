@@ -17,7 +17,11 @@ export const ForgotPassword = () => {
     const { t } = useTranslation();
     const { mutateAsync, isLoading } = useForgotPassword();
 
-    const formMethods = useForm<IForgotPswdFields>();
+    const formMethods = useForm<IForgotPswdFields>({
+        defaultValues: {
+            email: ''
+        }
+    });
 
     const open = Boolean(anchorEl);
 
@@ -38,7 +42,7 @@ export const ForgotPassword = () => {
                     setIsSubmit((pre) => !pre);
                     return;
                 }
-            }).catch((error) => console.log(error))
+            }).catch((error) => console.error(error))
     };
 
     return (
