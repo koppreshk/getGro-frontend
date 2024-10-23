@@ -1,5 +1,5 @@
 import { ArrowForwardRounded } from "@mui/icons-material";
-import { Box, Button, CircularProgress, FormControlLabel, Grid, Link, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, FormControlLabel, Grid, Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import React, { useCallback, useState } from "react";
 import styled from "styled-components";
@@ -12,6 +12,7 @@ import { CheckboxField } from "lib/form-fields/checkbox-field";
 import { useNotifications } from "lib";
 import { LoginResult, useLoginUser } from "./apis";
 import ReCAPTCHA from 'react-google-recaptcha';
+import { ForgotPassword } from "./forgot-password";
 
 interface ILoginFields {
     email: string;
@@ -118,7 +119,7 @@ const LoginForm = () => {
                             label="Remember me"
                             labelPlacement="end"
                         />
-                        <Link href="#" variant="subtitle2" underline="none" sx={{ fontSize: '16px' }}>Forgot password?</Link>
+                        <ForgotPassword />
                     </FlexBox>
 
                 </Grid>

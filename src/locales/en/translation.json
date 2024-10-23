@@ -364,5 +364,8 @@
     "last_modified_at": "Last Modified At",
     "store_name": "Store Name",
     "signature_description": "This signature will be automatically added to your reply when you respond to a ticket in the message editor.",
+    "forgot_password": "Forgot password?",
+    "forgot_password_description": "Provide your registered email address, and we will send you instructions to reset your password.",
+    "password_reset_email_message": "Password Reset Email Sent",
     "signature_optional": "Signature(Optional)"
 }
