@@ -1,6 +1,7 @@
 import { Button, Grid, Typography } from "@mui/material";
 import { useNotifications } from "lib";
 import { RichTextEditorField } from "lib/form-fields";
+import { useAppSelector } from "lib/hooks";
 import { FlexBox, LoadingButton, MoreInformation } from "lib/ui-ux";
 import { useEditProfile } from "modules/settings/apis/users-and-permissions";
 import { FormProvider, useForm } from "react-hook-form";
@@ -25,13 +26,15 @@ export const StyledRichTextEditor = styled(RichTextEditorField)`
 `;
 
 interface ISignature {
-    signatue: string;
+    signature: string;
 }
 
 export const Signature = () => {
+    const signature = useAppSelector((state) => state.core.config?.signature);
+
     const formMethods = useForm<ISignature>({
         defaultValues: {
-            signatue: ''
+            signature 
         },
     });
     const { mutateAsync, isLoading } = useEditProfile();
@@ -41,7 +44,7 @@ export const Signature = () => {
 
     const handleSubmitForm = (formdata: ISignature) => {
         mutateAsync({
-            signature: formdata.signatue
+            signature: formdata.signature
         }).then((res) => {
             if (res.status) {
                 showNotification({ message: t('signature_update_success'), type: 'success' });
@@ -60,7 +63,7 @@ export const Signature = () => {
 
                     <Grid item xs={12}>
                         <Typography variant="h6" sx={{ mb: '5px' }}>{t('signature_optional')}</Typography>
-                        <StyledRichTextEditor name='signatue' disableAutoFocus />
+                        <StyledRichTextEditor name='signature' disableAutoFocus />
                     </Grid>
 
                 </Grid>

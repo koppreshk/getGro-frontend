@@ -14,6 +14,7 @@ export interface IConfig {
     ticket_layout_view: 'card_view' | 'grid_view',
     ticket_page_count: number,
     default_ticket_view: string
+    signature: string;
     user_details: {
         first_name: string;
         display_name: string,
