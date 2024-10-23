@@ -351,6 +351,8 @@
     "basic_info": "Basic Info",
     "profile_update_success": "Profile was updated successfully",
     "profile_update_error": "Failed to update profile",
+    "signiture_update_success": "Signiture was updated successfully",
+    "signiture_update_error": "Failed to update Signiture",
     "agent_availability_statuses": "Agent Availability Statuses",
     "agent_availability_statuses_long_description": "Agent availability statuses reflect the current readiness and capability of an agent to handle specific tasks or responsibilities.",
     "color": "Color",
@@ -361,5 +363,6 @@
     "summary": "Summary",
     "last_modified_at": "Last Modified At",
     "store_name": "Store Name",
-    "signature_description": "This signature will be automatically added to your reply when you respond to a ticket in the message editor."
+    "signature_description": "This signature will be automatically added to your reply when you respond to a ticket in the message editor.",
+    "signature_optional": "Signature(Optional)"
 }
