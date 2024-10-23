@@ -47,47 +47,52 @@ export const HeaderWrapper = styled(FlexBox)`
     border-bottom: ${({ theme }) => theme.semantics.standardBorder};
 `;
 
+export const usePrimaryViewOptions = () => {
+    const { t } = useTranslation();
+    return [
+        {
+            name: t('all_tickets'),
+            primaryKey: 'all-tickets',
+            route: 'all_tickets'
+        },
+        {
+            name: t('all_pending'),
+            primaryKey: 'all-pending',
+            route: 'all_pending'
+        },
+        {
+            name: t('all_resolved'),
+            primaryKey: 'all-resolved',
+            route: 'all_resolved'
+        },
+        {
+            name: t('all_closed'),
+            primaryKey: 'all-closed',
+            route: 'all_closed'
+        },
+        {
+            name: t('my_pending'),
+            primaryKey: 'my-pending',
+            route: 'my_pending'
+        },
+        {
+            name: t('my_resolved'),
+            primaryKey: 'my-resolved',
+            route: 'my_resolved'
+        },
+        {
+            name: t('my_closed'),
+            primaryKey: 'my-closed',
+            route: 'my_closed'
+        }
+    ]
+}
+
 const useViewOptions = () => {
     const { t } = useTranslation();
-
+    const primaryOptions = usePrimaryViewOptions();
     const res = {
-        primaryOptions: [
-            {
-                name: t('all_tickets'),
-                primaryKey: 'all-tickets',
-                route: 'all-tickets'
-            },
-            {
-                name: t('all_pending'),
-                primaryKey: 'all-pending',
-                route: 'all-pending'
-            },
-            {
-                name: t('all_resolved'),
-                primaryKey: 'all-resolved',
-                route: 'all-resolved'
-            },
-            {
-                name: t('all_closed'),
-                primaryKey: 'all-closed',
-                route: 'all-closed'
-            },
-            {
-                name: t('my_pending'),
-                primaryKey: 'my-pending',
-                route: 'my-pending'
-            },
-            {
-                name: t('my_resolved'),
-                primaryKey: 'my-resolved',
-                route: 'my-resolved'
-            },
-            {
-                name: t('my_closed'),
-                primaryKey: 'my-closed',
-                route: 'my-closed'
-            }
-        ],
+        primaryOptions,
         secondaryOptions: [
             {
                 name: t('deleted_tickets'),
