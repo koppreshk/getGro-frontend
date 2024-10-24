@@ -7,7 +7,7 @@ import { useAuth } from "./hooks/use-auth";
 import { PasswordField, TextboxField } from "lib/form-fields";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import LoginImage from '../../assets/png/getgro-login-illus.png';
-import GetGroLogoImg from '../../assets/png/getGroLogoWname.png';
+import GetGroLogoImg from '../../assets/svg/main.svg';
 import { CheckboxField } from "lib/form-fields/checkbox-field";
 import { useNotifications } from "lib";
 import { LoginResult, useLoginUser } from "./apis";
