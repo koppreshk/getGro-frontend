@@ -367,5 +367,8 @@
     "forgot_password": "Forgot password?",
     "forgot_password_description": "Provide your registered email address, and we will send you instructions to reset your password.",
     "password_reset_email_message": "Password Reset Email Sent",
-    "signature_optional": "Signature(Optional)"
+    "signature_optional": "Signature(Optional)",
+    "customer_name": "Customer Name",
+    "source": "Source",
+    "resolution_due": "Resolution Due"
 }

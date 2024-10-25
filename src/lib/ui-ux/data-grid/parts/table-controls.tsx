@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
-import { IconButton, TextField, Tooltip, Typography } from "@mui/material";
+import { IconButton, TextField, Tooltip, Typography, debounce } from "@mui/material";
 import { CustomIconButton, FlexBox, RefreshButton, VerticalSeparator } from "lib/ui-ux";
 import { ArchiveOutlined, AssignmentIndOutlined, ChevronLeft, ChevronRight, DeleteOutline, DownloadForOfflineOutlined, KeyboardDoubleArrowLeft, KeyboardDoubleArrowRight, MarkChatReadOutlined, MarkUnreadChatAltOutlined } from '@mui/icons-material';
 import { ContentViewMode } from "./content-view-mode";
@@ -26,14 +26,17 @@ export const TableControls = (props: ITableControlProps) => {
     const pageNumber = Number(searchParams.get('pageNumber')) || 1;
     const noOfRecords = searchParams.get('noOfRecords') ? searchParams.get('noOfRecords')! : config?.ticket_page_count.toString() ?? searchParams.get('noOfRecords') ?? '10';
     const cardView = searchParams.get('card_view') ? searchParams.get('card_view')! : (config?.ticket_layout_view ? config?.ticket_layout_view === 'card_view' : 'true');
+    const searchTextFromParams = searchParams.get('searchText');
+
     const [noOfRows, setFilters] = useState(noOfRecords);
 
     React.useEffect(() => {
         searchParams.set('noOfRecords', noOfRecords);
         searchParams.set('pageNumber', pageNumber.toString());
         searchParams.set('card_view', cardView.toString());
+        searchTextFromParams && searchParams.set('searchText', searchTextFromParams);
         setSearchParams(searchParams);
-    }, [cardView, noOfRecords, pageNumber, searchParams, setSearchParams])
+    }, [cardView, noOfRecords, pageNumber, searchParams, searchTextFromParams, setSearchParams])
 
     const onFilterChangeHandler = useCallback((value: Rows) => {
         setFilters(value);
@@ -62,9 +65,16 @@ export const TableControls = (props: ITableControlProps) => {
     }, [pageNumber, searchParams, setSearchParams]);
 
     const onSearchChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = useCallback((ev) => {
-        searchParams.set('searchText', ev.target.value);
+        if (ev.target.value.length) {
+            searchParams.set('searchText', ev.target.value);
+            setSearchParams(searchParams);
+            return;
+        }
+        searchParams.delete('searchText');
         setSearchParams(searchParams);
     }, [searchParams, setSearchParams]);
+
+    const debouncedSearchChange = debounce(onSearchChange, 200);
 
     const onGridModeChange = (selectedValue: string) => {
         searchParams.set('card_view', selectedValue === 'card' ? 'true' : 'false');
@@ -75,7 +85,7 @@ export const TableControls = (props: ITableControlProps) => {
         <StyledFlexBox justifyContent="space-between" height="76px">
             <FlexBox alignItems="center">
                 {isTableActionsvisible ? <TableActions /> : null}
-                {enableSerchField ? <TextField placeholder="Input here..." size="small" label="Search" type="search" onChange={onSearchChange} /> : null}
+                {enableSerchField ? <TextField placeholder="Input here..." defaultValue={searchTextFromParams} size="small" label="Search" onChange={debouncedSearchChange} /> : null}
             </FlexBox>
             <FlexBox gap="30px" alignItems="center">
                 {isContentViewModeVisible ?

@@ -90,7 +90,7 @@ const useColumns = () => {
             id: 'priority',
             minSize: 140,
             cell: info => {
-                return <Priority priority={info.getValue().toLocaleLowerCase()} />
+                return <Priority priority={info.getValue()} />
             },
         }),
         columnHelper.accessor('resolutionDue', {
