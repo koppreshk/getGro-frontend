@@ -57,10 +57,10 @@ const useColumns = () => {
             }
         }),
         columnHelper.accessor('ticketId', {
-            header: t('id'),
+            header: t('ticket_id'),
             id: 'ticketId',
             cell: info => info.getValue(),
-            minSize: 150
+            minSize: 70,
         }),
         columnHelper.accessor('customerName', {
             header: t('customer_name'),
@@ -83,7 +83,7 @@ const useColumns = () => {
             header: () => t('created_at'),
             id: 'createdAt',
             cell: info => info.getValue(),
-            minSize: 200
+            minSize: 180
         }),
         columnHelper.accessor('priority', {
             header: t('priority'),

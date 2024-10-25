@@ -6,6 +6,7 @@ import { CustomIconButton, FlexBox, RefreshButton, VerticalSeparator } from "lib
 import { ArchiveOutlined, AssignmentIndOutlined, ChevronLeft, ChevronRight, DeleteOutline, DownloadForOfflineOutlined, KeyboardDoubleArrowLeft, KeyboardDoubleArrowRight, MarkChatReadOutlined, MarkUnreadChatAltOutlined } from '@mui/icons-material';
 import { ContentViewMode } from "./content-view-mode";
 import { useAppSelector } from "lib/hooks";
+import { useTranslation } from "react-i18next";
 
 const StyledFlexBox = styled(FlexBox)`
     padding: 0px 20px 0 20px;  
@@ -27,7 +28,7 @@ export const TableControls = (props: ITableControlProps) => {
     const noOfRecords = searchParams.get('noOfRecords') ? searchParams.get('noOfRecords')! : config?.ticket_page_count.toString() ?? searchParams.get('noOfRecords') ?? '10';
     const cardView = searchParams.get('card_view') ? searchParams.get('card_view')! : (config?.ticket_layout_view ? config?.ticket_layout_view === 'card_view' : 'true');
     const searchTextFromParams = searchParams.get('searchText');
-
+    const { t } = useTranslation();
     const [noOfRows, setFilters] = useState(noOfRecords);
 
     React.useEffect(() => {
@@ -85,7 +86,7 @@ export const TableControls = (props: ITableControlProps) => {
         <StyledFlexBox justifyContent="space-between" height="76px">
             <FlexBox alignItems="center">
                 {isTableActionsvisible ? <TableActions /> : null}
-                {enableSerchField ? <TextField placeholder="Input here..." defaultValue={searchTextFromParams} size="small" label="Search" onChange={debouncedSearchChange} /> : null}
+                {enableSerchField ? <TextField placeholder="Search by Ticket ID/Subject" defaultValue={searchTextFromParams} sx={{ width: '300px' }} size="small" label={t("search_tickets")} onChange={debouncedSearchChange} /> : null}
             </FlexBox>
             <FlexBox gap="30px" alignItems="center">
                 {isContentViewModeVisible ?

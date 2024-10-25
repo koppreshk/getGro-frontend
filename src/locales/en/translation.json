@@ -370,5 +370,7 @@
     "signature_optional": "Signature(Optional)",
     "customer_name": "Customer Name",
     "source": "Source",
-    "resolution_due": "Resolution Due"
+    "resolution_due": "Resolution Due",
+    "search_tickets": "Search Tickets",
+    "ticket_id": "Ticket Id"
 }
