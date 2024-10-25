@@ -9,7 +9,7 @@ import { useNotifications } from "lib";
 import { useUpdatePassword } from "./apis";
 import { PasswordField, TextboxField } from "lib/form-fields";
 import LoginImage from '../../assets/png/getgro-login-illus.png';
-import GetGroLogoImg from '../../assets/png/getGroLogoWname.png';
+import GetGroLogoImg from '../../assets/svg/main.svg';
 import { ArrowForwardRounded } from "@mui/icons-material";
 import { LoginSectionLeft, IllustrationImg, LoginSectionRight, GetGroLogoWrapper } from "./login";
 
@@ -25,17 +25,20 @@ const SetNewAgentPasswordForm = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const { t } = useTranslation();
+    const token = searchParams.get('token');
 
     const onSignIn = useCallback((data: ISetNewPwdFormFields) => {
-        mutateAsync({ password: data.newPassword, token: searchParams.get('token')! })
-            .then(() => {
-                showNotification({ message: 'Successfully updated password, please login to continue', type: 'success' })
-                navigate('/login');
-            }).catch((err) => {
-                console.error(err);
-                showNotification({ message: 'Failed to update password, please try later', type: 'error' })
-            })
-    }, [mutateAsync, navigate, searchParams, showNotification]);
+        if (token) {
+            mutateAsync({ password: data.newPassword, token })
+                .then(() => {
+                    showNotification({ message: 'Successfully updated password, please login to continue', type: 'success' })
+                    navigate('/login');
+                }).catch((err) => {
+                    console.error(err);
+                    showNotification({ message: 'Failed to update password, please try later', type: 'error' })
+                })
+        }
+    }, [mutateAsync, navigate, showNotification, token]);
 
     const validatePassword = (val: string) => {
         if (val !== watch('newPassword')) {
@@ -63,7 +66,7 @@ const SetNewAgentPasswordForm = () => {
                     <Grid item md={12}>
                         <Button
                             onClick={handleSubmit(onSignIn)} variant="contained" fullWidth size="large" type="submit"
-                            disabled={isLoading}
+                            disabled={isLoading || !token}
                             endIcon={isLoading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : <ArrowForwardRounded />}
                         >
                             Submit

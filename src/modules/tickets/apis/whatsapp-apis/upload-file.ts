@@ -5,6 +5,7 @@ import { useAuth } from "modules/login";
 
 export const useUploadFile = () => {
     const { user } = useAuth();
+    const subDomainValue = import.meta.env.VITE_SUB_DOMAIN ?? new URL(location.origin).href; //Keeping env values incase of overiding from local
 
     const uploadFile = useCallback((body: FormData) =>
         fetch(`${import.meta.env.VITE_REST_URL}${TicketsEndPoint.UPLOAD_FILE}`, {
@@ -12,8 +13,9 @@ export const useUploadFile = () => {
             method: 'post',
             headers: {
                 'Authorization': user!.authToken,
+                'sub-domain': subDomainValue
             }
-        }).then((res) => res.json()), [user]);
+        }).then((res) => res.json()), [subDomainValue, user]);
 
     return useMutation({
         mutationKey: [TicketsQueryKey.UPLOAD_FILE],

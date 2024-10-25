@@ -1,19 +1,19 @@
 import React, { Suspense, lazy } from "react"
-import styled from "styled-components"
-import { NavigationMenu } from "../components"
-import { Toolbar } from "../components/toolbar"
-import { CenteredCircularProgress, FlexBox } from "lib/ui-ux"
 import { Routes, Route, useNavigate, useLocation, Outlet, Navigate } from "react-router-dom"
+import styled from "styled-components"
+import { CenteredCircularProgress, FlexBox } from "lib/ui-ux"
 import { ProtectedRoute } from "modules/login/protected-route"
 import { useAuth } from "modules/login"
 import { commonStyles } from "lib/ui-ux/common-styles";
+import { NavigationMenu } from "../components"
+import { Toolbar } from "../components/toolbar"
+import { useFetchUserConfig } from "../apis/fetch-user-config"
 import { IncomingCallMain } from "modules/tickets/components/ticket-details/ticket-conversation/telephonic-conversations"
 import LoginPage from '../../login/login';
-import SetNewAgentPassword from '../../login/set-new-agent-password';
-import { CustomerSurveyPage } from "modules/survey/pages"
-import { useFetchUserConfig } from "../apis/fetch-user-config"
-import ResetPassword from "modules/login/reset-password"
 
+const CustomerSurveyPage = lazy(() => import('../../survey/pages/customer-survey'));
+const SetNewAgentPassword = lazy(() => import('../../login/set-new-agent-password'));
+const ResetPassword = lazy(() => import("../../login/reset-password"));
 const DashboardPage = lazy(() => import('../../dashboard/pages/dashboard-page'));
 const TicketsPage = lazy(() => import('../../tickets/pages/tickets-page'));
 const KnowledgeBasePage = lazy(() => import('../../knowledge-base/pages/knowledge-base-page'));
@@ -94,10 +94,30 @@ export const CoreLayout = () => {
                         element={<UserProfilePage />} />
                 </Route>
             </Route>
+            <Route
+                key="set-new-agent-password"
+                path="/account/verify"
+                element={(
+                    <Suspense fallback="Loading Page...">
+                        <SetNewAgentPassword />
+                    </Suspense>)} />
+            <Route
+                key="reset-password"
+                path="/reset-password"
+                element={(
+                    <Suspense fallback="Loading Page...">
+                        <ResetPassword />
+                    </Suspense>
+                )} />
+            <Route
+                key="customer-feedback"
+                path="customer-feedback/*"
+                element={(
+                    <Suspense fallback="Loading Page...">
+                        <CustomerSurveyPage />
+                    </Suspense>
+                )} />
             <Route key="login" path="/login" element={<LoginPage />} />
-            <Route key="set-new-agent-password" path="/account/verify" element={<SetNewAgentPassword />} />
-            <Route key="reset-password" path="/reset-password" element={<ResetPassword />} />
-            <Route key="customer-feedback" path="customer-feedback/*" element={<CustomerSurveyPage />} />
             <Route key="not-found" path="*" element={<PageNotFound />} />
         </Routes>
     )

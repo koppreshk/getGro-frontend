@@ -8,7 +8,7 @@ import { useNotifications } from "lib";
 import { useResetPassword } from "./apis";
 import { PasswordField, TextboxField } from "lib/form-fields";
 import LoginImage from '../../assets/png/getgro-login-illus.png';
-import GetGroLogoImg from '../../assets/png/getGroLogoWname.png';
+import GetGroLogoImg from '../../assets/svg/main.svg';
 import { ArrowForwardRounded } from "@mui/icons-material";
 import { LoginSectionLeft, IllustrationImg, LoginSectionRight, GetGroLogoWrapper } from "./login";
 

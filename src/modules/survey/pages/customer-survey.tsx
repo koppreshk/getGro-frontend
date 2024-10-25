@@ -33,7 +33,7 @@ interface IResult {
     message: string;
 }
 
-export const CustomerSurveyPage = () => {
+export default function CustomerSurveyPage() {
     const [searchParams, setSearchParams] = useSearchParams();
     const rating = searchParams.get('rating') || "0";
     const ticketId = searchParams.get('tickedId') || '';
