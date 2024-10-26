@@ -28,7 +28,7 @@ export default function MarketplaceRoutes() {
                 <Route key="marketplace-route" path="/" element={<MarketPlaceLayout />} />
                 <Route key="shopify-route" path="shopify" element={<ShopifyConfigurationContainer />} />
                 <Route key="exotel-route" path="exotel" element={<ExotelConfigurationContainer />} />
-                <Route key="whatsapp-route" path="whatsapp" element={<WhatsAppConfigurationContainer />} />
+                <Route key="gupshup-route" path="gupshup" element={<WhatsAppConfigurationContainer />} />
             </Routes>
         </>
     )
@@ -46,8 +46,8 @@ const thirdPartyApps = [
         description: 'Connect your Shopify store and display customer order information',
         iconElement: () => <ShopifyIcon width="40px" height="40px" />,
     }, {
-        name: 'whatsapp',
-        label: 'WhatsApp',
+        name: 'gupshup',
+        label: 'Gupshup',
         description: 'Enhance customer engagement with WhatsApp integration with GupShup',
         iconElement: () => <WhatsAppIcon width="40px" height="40px" />,
     }

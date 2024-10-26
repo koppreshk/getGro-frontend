@@ -1,5 +1,5 @@
 # GetGro
-Getgro is a modern customer experience platform to track, resolve and analyse customer support issues, faster.
+Getgro is a modern customer experience platform to track, resolve and analyse customer support issues, faster, better.
 ### Setup Development Environment
 
 ```sh
