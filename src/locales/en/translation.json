@@ -372,5 +372,6 @@
     "source": "Source",
     "resolution_due": "Resolution Due",
     "search_tickets": "Search Tickets",
-    "ticket_id": "Ticket Id"
+    "ticket_id": "Ticket Id",
+    "access_denied_message": "You do not have the necessary access rights to view this page"
 }

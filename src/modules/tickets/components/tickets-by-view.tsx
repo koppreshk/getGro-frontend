@@ -20,7 +20,7 @@ const ContentContainer = styled.div`
 
 export const TicketsByView = (props: TicketsByViewProps) => {
     const [searchParams] = useSearchParams();
-    const cardView = searchParams.get('card_view') || 'true';
+    const cardView = searchParams.get('cardView') || 'true';
 
     const onDownloadBtnClick = () => {
         if (props.data) {

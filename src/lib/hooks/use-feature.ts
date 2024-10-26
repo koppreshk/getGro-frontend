@@ -9,11 +9,11 @@ export const useFeature = <T extends AllPermissionKeys | undefined>(
     const { config } = useAppSelector((state) => state.core);
 
     if (featureName) {
-        return config!.permissions.includes(featureName) as UseFeatureReturnType<T>;
+        return config?.permissions.includes(featureName) as UseFeatureReturnType<T>;
     }
 
     return ((featName: AllPermissionKeys) => {
-        return config!.permissions.includes(featName);
+        return config?.permissions.includes(featName);
     }) as UseFeatureReturnType<T>;
 };
 
@@ -25,10 +25,10 @@ export const useModule = <T extends AllModules | undefined>(
     const { config } = useAppSelector((state) => state.core);
 
     if (moduleName) {
-        return config!.modules.includes(moduleName) as UseModuleReturnType<T>;
+        return config?.modules.includes(moduleName) as UseModuleReturnType<T>;
     }
 
     return ((modName: AllModules) => {
-        return config!.modules.includes(modName);
+        return config?.modules.includes(modName);
     }) as UseModuleReturnType<T>;
 };

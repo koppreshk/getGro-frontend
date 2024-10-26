@@ -26,7 +26,7 @@ export const TableControls = (props: ITableControlProps) => {
     const [searchParams, setSearchParams] = useSearchParams();
     const pageNumber = Number(searchParams.get('pageNumber')) || 1;
     const noOfRecords = searchParams.get('noOfRecords') ? searchParams.get('noOfRecords')! : config?.ticket_page_count.toString() ?? searchParams.get('noOfRecords') ?? '10';
-    const cardView = searchParams.get('card_view') ? searchParams.get('card_view')! : (config?.ticket_layout_view ? config?.ticket_layout_view === 'card_view' : 'true');
+    const cardView = searchParams.get('cardView') ? searchParams.get('cardView')! : (config?.ticket_layout_view ? config?.ticket_layout_view === 'card_view' : 'true');
     const searchTextFromParams = searchParams.get('searchText');
     const { t } = useTranslation();
     const [noOfRows, setFilters] = useState(noOfRecords);
@@ -34,7 +34,7 @@ export const TableControls = (props: ITableControlProps) => {
     React.useEffect(() => {
         searchParams.set('noOfRecords', noOfRecords);
         searchParams.set('pageNumber', pageNumber.toString());
-        searchParams.set('card_view', cardView.toString());
+        searchParams.set('cardView', cardView.toString());
         searchTextFromParams && searchParams.set('searchText', searchTextFromParams);
         setSearchParams(searchParams);
     }, [cardView, noOfRecords, pageNumber, searchParams, searchTextFromParams, setSearchParams])
@@ -78,7 +78,7 @@ export const TableControls = (props: ITableControlProps) => {
     const debouncedSearchChange = debounce(onSearchChange, 200);
 
     const onGridModeChange = (selectedValue: string) => {
-        searchParams.set('card_view', selectedValue === 'card' ? 'true' : 'false');
+        searchParams.set('cardView', selectedValue === 'card' ? 'true' : 'false');
         setSearchParams(searchParams);
     }
 
