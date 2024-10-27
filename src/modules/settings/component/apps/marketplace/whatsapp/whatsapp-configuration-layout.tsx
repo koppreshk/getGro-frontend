@@ -3,6 +3,7 @@ import AppConfig from "modules/settings/common/app-config"
 import WhatsAppIcon from '../../../../../../assets/svg/whatsapp.svg?react';
 import { FlexBox } from "lib/ui-ux";
 import { Typography } from "@mui/material";
+import { WhatsAppHeaderActionButtons } from "./whatsapp-header-action-buttons";
 
 const OverviewContents = () => {
     return (
@@ -42,16 +43,13 @@ const InstallationContents = () => {
 }
 
 export const WhatsAppConfigurationLayout = (props: { data: IWhatsAppConfigDetails, updateInstallation: () => void }) => {
-    console.log(props)
     return (
         <AppConfig>
             <AppConfig.Header
                 appDescription="Enhance customer engagement with getgro WhatsApp integration"
                 appTitle="WhatsApp"
                 appIcon={() => <WhatsAppIcon width="60px" height="60px" />}>
-                <FlexBox>
-                    test
-                </FlexBox>
+                <WhatsAppHeaderActionButtons {...props} />
             </AppConfig.Header>
             <AppConfig.Body>
                 <AppConfig.TabsPanel
