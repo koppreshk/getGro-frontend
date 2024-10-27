@@ -373,5 +373,11 @@
     "resolution_due": "Resolution Due",
     "search_tickets": "Search Tickets",
     "ticket_id": "Ticket Id",
-    "access_denied_message": "You do not have the necessary access rights to view this page"
+    "access_denied_message": "You do not have the necessary access rights to view this page",
+    "add_account": "Add Account",
+    "whatsapp_configuration": "WhatsApp Configuration",
+    "created_by": "Created By",
+    "whatsapp_phone_number_id": "Whatsapp phone number id",
+    "whatsapp_business_id": "Whatsapp business id",
+    "whatsapp_number": "Whatsapp number"
 }

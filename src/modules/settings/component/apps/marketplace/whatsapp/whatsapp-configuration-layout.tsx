@@ -4,6 +4,8 @@ import WhatsAppIcon from '../../../../../../assets/svg/whatsapp.svg?react';
 import { FlexBox } from "lib/ui-ux";
 import { Typography } from "@mui/material";
 import { WhatsAppHeaderActionButtons } from "./whatsapp-header-action-buttons";
+import { useState } from "react";
+import { ManageWhatsAppNumbersContainer } from "modules/settings/containers/marketplace/whatsapp";
 
 const OverviewContents = () => {
     return (
@@ -43,28 +45,40 @@ const InstallationContents = () => {
 }
 
 export const WhatsAppConfigurationLayout = (props: { data: IWhatsAppConfigDetails, updateInstallation: () => void }) => {
+    const [showManageContent, setManageDisplay] = useState(false);
+
+    const toggleManageDisplay = () => setManageDisplay((prev) => !prev);
+
     return (
         <AppConfig>
             <AppConfig.Header
                 appDescription="Enhance customer engagement with getgro WhatsApp integration"
                 appTitle="WhatsApp"
                 appIcon={() => <WhatsAppIcon width="60px" height="60px" />}>
-                <WhatsAppHeaderActionButtons {...props} />
+                <WhatsAppHeaderActionButtons
+                    {...props}
+                    showManageContent={showManageContent}
+                    toggleManageDisplay={toggleManageDisplay} />
             </AppConfig.Header>
             <AppConfig.Body>
-                <AppConfig.TabsPanel
-                    tabProps={[{
-                        label: 'Overview',
-                        content: <OverviewContents />
-                    }, {
-                        label: 'Installation',
-                        content: <InstallationContents />
-                    }]}
-                    email="support@getgro.com"
-                    website="https://intent.getgro.io/dashboard"
-                    lastUpdated="Oct 22, 2024"
-                    publishedOn="Oct 22, 2024"
-                    version="1.0.0" />
+                <>
+                    {showManageContent
+                        ? <ManageWhatsAppNumbersContainer />
+                        : <AppConfig.TabsPanel
+                            tabProps={[{
+                                label: 'Overview',
+                                content: <OverviewContents />
+                            }, {
+                                label: 'Installation',
+                                content: <InstallationContents />
+                            }]}
+                            email="support@getgro.com"
+                            website="https://intent.getgro.io/dashboard"
+                            lastUpdated="Oct 22, 2024"
+                            publishedOn="Oct 22, 2024"
+                            version="1.0.0" />
+                    }
+                </>
             </AppConfig.Body>
         </AppConfig>
     )
