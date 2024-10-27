@@ -6,7 +6,7 @@ import { BreadCrumbs, FlexBox } from "lib/ui-ux"
 import ShopifyIcon from '../../../../../assets/svg/shopify-icon.svg?react';
 import ExotelIcon from '../../../../../assets/svg/exotel-icon.svg?react';
 import WhatsAppIcon from '../../../../../assets/svg/whatsapp.svg?react';
-import { WhatsAppConfigurationContainer } from "modules/settings/containers/marketplace/whatsApp/whatsApp-configuration-container";
+import { GupShupConfigurationContainer } from "modules/settings/containers/marketplace/gupshup/gupshup-configuration-container";
 import { ExotelConfigurationContainer } from "modules/settings/containers/marketplace/exotel";
 import { ShopifyConfigurationContainer } from "modules/settings/containers/marketplace/shopify";
 
@@ -28,7 +28,7 @@ export default function MarketplaceRoutes() {
                 <Route key="marketplace-route" path="/" element={<MarketPlaceLayout />} />
                 <Route key="shopify-route" path="shopify" element={<ShopifyConfigurationContainer />} />
                 <Route key="exotel-route" path="exotel" element={<ExotelConfigurationContainer />} />
-                <Route key="gupshup-route" path="gupshup" element={<WhatsAppConfigurationContainer />} />
+                <Route key="gupshup-route" path="gupshup" element={<GupShupConfigurationContainer />} />
             </Routes>
         </>
     )

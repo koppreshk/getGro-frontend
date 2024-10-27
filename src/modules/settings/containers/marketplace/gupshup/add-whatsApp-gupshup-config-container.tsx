@@ -1,10 +1,10 @@
-import { ISetupWhatsAppArgs, useSetupWhatsAppConfigurations } from "modules/settings/apis/marketplace/whatsApp/gupshup";
+import { ISetupGupShupArgs, useSetupGupshupConfigurations } from "modules/settings/apis/marketplace/gupshup";
 import { AddWhatsAppGupshupConfigFormBase } from "modules/settings/component/apps/marketplace/gupshup";
 
 export const AddWhatsAppGupShupConfigContainer = (props: { togglePopup: () => void; updateInstallation: () => void }) => {
-    const { mutateAsync, isLoading: isMutationLoading } = useSetupWhatsAppConfigurations();
+    const { mutateAsync, isLoading: isMutationLoading } = useSetupGupshupConfigurations();
 
-    const onSubmit = (formValues: ISetupWhatsAppArgs) => {
+    const onSubmit = (formValues: ISetupGupShupArgs) => {
         return mutateAsync(formValues);
     };
 

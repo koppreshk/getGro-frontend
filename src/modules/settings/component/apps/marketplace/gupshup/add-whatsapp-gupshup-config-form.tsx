@@ -5,13 +5,13 @@ import { PasswordField, TextboxField } from "lib/form-fields";
 import { Box, DialogActions, Divider, InputAdornment, Step, StepLabel, Stepper, Typography } from "@mui/material";
 import { ContentCopy } from "@mui/icons-material";
 import { useNotifications } from "lib";
-import { ISetupWhatsAppArgs } from "modules/settings/apis/marketplace/whatsApp/gupshup";
+import { ISetupGupShupArgs } from "modules/settings/apis/marketplace/gupshup";
 import { useTranslation } from "react-i18next";
 
 export interface IWhatsAppGupshupConfigFormProps {
     togglePopup: () => void;
     isMutationLoading: boolean;
-    onSubmit: (formValues: ISetupWhatsAppArgs) => Promise<{ webhook_url: string }>
+    onSubmit: (formValues: ISetupGupShupArgs) => Promise<{ webhook_url: string }>
     updateInstallation: () => void;
 }
 

@@ -4,10 +4,10 @@ import { useCallback, useState } from "react";
 import { Typography } from "@mui/material";
 import { AddAppConfigurationDialog, AppConfigurationLayout } from "..";
 import WhatsAppIcon from '../../../../../../assets/svg/whatsapp.svg?react';
-import { AddWhatsAppGupShupConfigContainer, UpdateWhatsAppGupshupConfigContainer } from "modules/settings/containers/marketplace/whatsApp";
+import { AddWhatsAppGupShupConfigContainer, UpdateWhatsAppGupshupConfigContainer } from "modules/settings/containers/marketplace/gupshup";
 import { FlexBox } from "lib/ui-ux";
-import { IWhatsAppConfigDetails } from "modules/settings/apis/marketplace/whatsApp/gupshup";
-import { DeleteWhatsAppConfigurations } from "./delete-whatsapp-configurations";
+import { IWhatsAppConfigDetails } from "modules/settings/apis/marketplace/gupshup";
+import { DeleteGupShupConfigurations } from "./delete-gupshup-configurations";
 
 function OverviewContents() {
     return (
@@ -24,7 +24,6 @@ function OverviewContents() {
                 The WhatsApp with GupShup integration integration offers the following valuable features, Within the GetGro
             </Typography>
             <ul>
-                <li><b>Direct Call Functionality:</b> Users can initiate calls directly from the GetGro interface, boosting efficiency.</li>
                 <li><b>Number Assignment:</b> Allocate various WhatsApp with GupShup integration numbers to distinct categories, streamlining call prioritization.</li>
                 <li><b>Call History Monitoring:</b> Keep track of call activities in real-time by agent, ensuring transparency and accountability.</li>
                 <li><b>Ticket Generation:</b> Simplify post-call actions with auto-created tickets for outbound, inbound, or missed calls.</li>
@@ -64,7 +63,7 @@ export const WhatsAppGupshupConfiguration = (props: { data: IWhatsAppConfigDetai
                 InstallationContents={InstallationContents}
                 OverviewContents={OverviewContents}
                 appDescription="Enhance customer engagement with WhatsApp integration on Gupshup"
-                appTitle="WhatsApp"
+                appTitle="Gupshup"
                 email="support@getgro.com"
                 website="https://intent.getgro.io/dashboard"
                 lastUpdated="May 12, 2024"
@@ -73,7 +72,7 @@ export const WhatsAppGupshupConfiguration = (props: { data: IWhatsAppConfigDetai
                 appIcon={() => <WhatsAppIcon width="60px" height="60px" />}
                 togglePopup={togglePopup}
                 isAppInstalled={isInstalled}
-                unInstallApp={() => <DeleteWhatsAppConfigurations />}
+                unInstallApp={() => <DeleteGupShupConfigurations />}
             />
             <AddAppConfigurationDialog
                 dialogContent={appConfigDialogContent}

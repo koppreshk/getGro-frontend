@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useNotifications } from "lib";
 import { CenteredCircularProgress } from "lib/ui-ux";
-import { useFetchWhatsAppConfiguration } from "modules/settings/apis/marketplace/whatsApp/gupshup"
+import { useFetchGupshupConfiguration } from "modules/settings/apis/marketplace/gupshup"
 import { WhatsAppGupshupConfiguration } from "modules/settings/component/apps/marketplace/gupshup";
 
-export const WhatsAppConfigurationContainer = () => {
-    const { data, error, isLoading, refetch } = useFetchWhatsAppConfiguration();
+export const GupShupConfigurationContainer = () => {
+    const { data, error, isLoading, refetch } = useFetchGupshupConfiguration();
     const { showNotification } = useNotifications();
 
     const updateInstallation = () => {
         refetch().then(() => {
-            showNotification({ message: 'Congrats! WhatsApp configuration is added!', type: 'success' });
+            showNotification({ message: 'Congrats! GupShup configuration is added!', type: 'success' });
         });
     };
 

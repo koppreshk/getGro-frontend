@@ -1,7 +1,7 @@
 import React from "react";
 import { useServiceClient } from "lib"
 import { useQuery } from "react-query";
-import { WhatsAppConfigurationEndPoint, WhatsAppConfigurationQueryKey } from ".";
+import { GupShupConfigurationEndPoint, GupShupConfigurationQueryKey } from ".";
 
 export interface IWhatsAppConfigDetails {
     app_name: string;
@@ -11,13 +11,13 @@ export interface IWhatsAppConfigDetails {
     webhook_url: string;
 }
 
-export const useFetchWhatsAppConfiguration = () => {
+export const useFetchGupshupConfiguration = () => {
     const { getData } = useServiceClient();
 
-    const fetchWhatsappConfigurations = React.useCallback(() => getData(WhatsAppConfigurationEndPoint.FETCH_WHATSAPP_CONFIG).then((res) => res.json()), [getData]);
+    const fetchWhatsappConfigurations = React.useCallback(() => getData(GupShupConfigurationEndPoint.FETCH_WHATSAPP_CONFIG).then((res) => res.json()), [getData]);
 
     return useQuery<IWhatsAppConfigDetails>({
         queryFn: fetchWhatsappConfigurations,
-        queryKey: WhatsAppConfigurationQueryKey.FETCH_WHATSAPP_CONFIG
+        queryKey: GupShupConfigurationQueryKey.FETCH_WHATSAPP_CONFIG
     });
 }
