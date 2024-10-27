@@ -5,6 +5,7 @@ import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
 import { BreadCrumbs, FlexBox } from "lib/ui-ux"
 import ShopifyIcon from '../../../../../assets/svg/shopify-icon.svg?react';
 import ExotelIcon from '../../../../../assets/svg/exotel-icon.svg?react';
+import GupShupIcon from '../../../../../assets/svg/gupshup.svg?react';
 import WhatsAppIcon from '../../../../../assets/svg/whatsapp.svg?react';
 import { GupShupConfigurationContainer } from "modules/settings/containers/marketplace/gupshup/gupshup-configuration-container";
 import { ExotelConfigurationContainer } from "modules/settings/containers/marketplace/exotel";
@@ -29,6 +30,7 @@ export default function MarketplaceRoutes() {
                 <Route key="shopify-route" path="shopify" element={<ShopifyConfigurationContainer />} />
                 <Route key="exotel-route" path="exotel" element={<ExotelConfigurationContainer />} />
                 <Route key="gupshup-route" path="gupshup" element={<GupShupConfigurationContainer />} />
+                <Route key="whatsapp-meta-route" path="whatsapp" element={< ></>} />
             </Routes>
         </>
     )
@@ -48,7 +50,13 @@ const thirdPartyApps = [
     }, {
         name: 'gupshup',
         label: 'Gupshup',
-        description: 'Enhance customer engagement with WhatsApp integration with GupShup',
+        description: 'Enhance customer engagement with getgro WhatsApp integration via GupShup',
+        iconElement: () => <GupShupIcon width="40px" height="40px" />,
+    },
+    {
+        name: 'whatsapp',
+        label: 'WhatsApp',
+        description: 'Enhance customer engagement with getgro WhatsApp integration',
         iconElement: () => <WhatsAppIcon width="40px" height="40px" />,
     }
 ];

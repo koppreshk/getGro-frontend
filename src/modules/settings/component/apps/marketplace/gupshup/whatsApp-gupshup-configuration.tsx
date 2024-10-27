@@ -3,7 +3,7 @@
 import { useCallback, useState } from "react";
 import { Typography } from "@mui/material";
 import { AddAppConfigurationDialog, AppConfigurationLayout } from "..";
-import WhatsAppIcon from '../../../../../../assets/svg/whatsapp.svg?react';
+import GupShupIcon from '../../../../../../assets/svg/gupshup.svg?react';
 import { AddWhatsAppGupShupConfigContainer, UpdateWhatsAppGupshupConfigContainer } from "modules/settings/containers/marketplace/gupshup";
 import { FlexBox } from "lib/ui-ux";
 import { IWhatsAppConfigDetails } from "modules/settings/apis/marketplace/gupshup";
@@ -69,7 +69,7 @@ export const WhatsAppGupshupConfiguration = (props: { data: IWhatsAppConfigDetai
                 lastUpdated="May 12, 2024"
                 publishedOn="May 12, 2024"
                 version="1.0.0"
-                appIcon={() => <WhatsAppIcon width="60px" height="60px" />}
+                appIcon={() => <GupShupIcon width="60px" height="60px" />}
                 togglePopup={togglePopup}
                 isAppInstalled={isInstalled}
                 unInstallApp={() => <DeleteGupShupConfigurations />}
