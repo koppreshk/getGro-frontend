@@ -3,7 +3,7 @@ import { useServiceClient } from "lib"
 import { useQuery } from "react-query";
 import { GupShupConfigurationEndPoint, GupShupConfigurationQueryKey } from ".";
 
-export interface IWhatsAppConfigDetails {
+export interface IGupshupConfigDetails {
     app_name: string;
     api_key: string;
     number: string;
@@ -16,7 +16,7 @@ export const useFetchGupshupConfiguration = () => {
 
     const fetchWhatsappConfigurations = React.useCallback(() => getData(GupShupConfigurationEndPoint.FETCH_WHATSAPP_CONFIG).then((res) => res.json()), [getData]);
 
-    return useQuery<IWhatsAppConfigDetails>({
+    return useQuery<IGupshupConfigDetails>({
         queryFn: fetchWhatsappConfigurations,
         queryKey: GupShupConfigurationQueryKey.FETCH_WHATSAPP_CONFIG
     });

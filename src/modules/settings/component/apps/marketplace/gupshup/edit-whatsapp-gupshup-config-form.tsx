@@ -1,9 +1,9 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { IAddWhatsAppFormField, IWhatsAppGupshupConfigFormProps, WhatsAppGupshupConfigForm } from ".";
-import { IWhatsAppConfigDetails } from "modules/settings/apis/marketplace/gupshup";
+import { IGupshupConfigDetails } from "modules/settings/apis/marketplace/gupshup";
 
 interface IEditWhatsAppGupshupConfigFormBaseProps extends IWhatsAppGupshupConfigFormProps {
-    currentData: IWhatsAppConfigDetails;
+    currentData: IGupshupConfigDetails;
 }
 
 export const EditWhatsAppGupshupConfigFormBase = (props: IEditWhatsAppGupshupConfigFormBaseProps) => {

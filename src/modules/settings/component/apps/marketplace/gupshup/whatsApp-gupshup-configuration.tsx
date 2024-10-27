@@ -6,7 +6,7 @@ import { AddAppConfigurationDialog, AppConfigurationLayout } from "..";
 import GupShupIcon from '../../../../../../assets/svg/gupshup.svg?react';
 import { AddWhatsAppGupShupConfigContainer, UpdateWhatsAppGupshupConfigContainer } from "modules/settings/containers/marketplace/gupshup";
 import { FlexBox } from "lib/ui-ux";
-import { IWhatsAppConfigDetails } from "modules/settings/apis/marketplace/gupshup";
+import { IGupshupConfigDetails } from "modules/settings/apis/marketplace/gupshup";
 import { DeleteGupShupConfigurations } from "./delete-gupshup-configurations";
 
 function OverviewContents() {
@@ -46,7 +46,7 @@ function InstallationContents() {
     )
 }
 
-export const WhatsAppGupshupConfiguration = (props: { data: IWhatsAppConfigDetails, updateInstallation: () => void }) => {
+export const WhatsAppGupshupConfiguration = (props: { data: IGupshupConfigDetails, updateInstallation: () => void }) => {
     const isInstalled = Object.keys(props.data).length > 0;
     const [openPopup, setOpenPopup] = useState(false);
     const togglePopup = useCallback(() => {
