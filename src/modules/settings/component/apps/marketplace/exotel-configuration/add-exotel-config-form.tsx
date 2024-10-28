@@ -1,6 +1,6 @@
 import React from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
-import { Box, DialogActions, Divider, Grid, InputAdornment, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
+import { DialogActions, Divider, Grid, InputAdornment, Typography } from "@mui/material";
 import { PasswordFieldWithLabel, RadioGroupField, TextboxField, TextboxFieldWithLabel } from "lib/form-fields";
 import { BackButton, CancelButton, CustomIconButton, FlexBox, LoadingButton } from "lib/ui-ux";
 import { IAddExotelFormFields } from "modules/settings/containers/marketplace/exotel";
@@ -8,6 +8,7 @@ import { ContentCopy } from "@mui/icons-material";
 import { useNotifications } from "lib";
 import { IExotelConfigDetails } from "modules/settings/apis/marketplace/exotel";
 import { useTranslation } from "react-i18next";
+import { ConfigStepper } from "modules/settings/common";
 
 export interface IAddExotelConfigurationFormProps {
     isMutationLoading: boolean;
@@ -26,28 +27,6 @@ const steps = [
         description: 'Setup visibility to limit access to certain roles',
     }
 ];
-
-const ConfigSteps = (props: { activeStep: number }) => {
-    const { activeStep } = props;
-
-    return (
-        <Box>
-            <Stepper activeStep={activeStep} orientation="vertical">
-                {steps.map((step) => (
-                    <Step key={step.label}>
-                        <StepLabel                        >
-                            {step.label}
-                        </StepLabel>
-                        <StepContent>
-                            <Typography variant="body3">{step.description}</Typography>
-                        </StepContent>
-                    </Step>
-                ))}
-            </Stepper>
-        </Box>
-    );
-}
-
 
 function AddExotelConfigForm() {
     const { watch } = useFormContext();
@@ -180,7 +159,7 @@ export const AddExotelConfigurationForm = React.memo((props: IAddExotelConfigura
     return (
         <form autoComplete="off">
             <FlexBox gap="20px">
-                <ConfigSteps activeStep={activeStep} />
+                <ConfigStepper activeStep={activeStep} steps={steps} />
                 <Divider orientation="vertical" variant="middle" flexItem />
                 {activeStep === 0 ? <AddExotelConfigForm /> : <AccountWebhookDetails />}
             </FlexBox>

@@ -37,6 +37,11 @@ const useColumns = () => {
             header: () => t('whatsapp_phone_number_id'),
             cell: info => info.getValue(),
         }),
+        columnHelper.accessor("created_by", {
+            id: 'created_by',
+            header: () => t('created_by'),
+            cell: info => info.getValue(),
+        }),
         columnHelper.display({
             id: 'actions',
             header: () => t("actions"),
@@ -48,11 +53,6 @@ const useColumns = () => {
                 )
             },
             enableSorting: false,
-        }),
-        columnHelper.accessor("created_by", {
-            id: 'created_by',
-            header: () => t('created_by'),
-            cell: info => info.getValue(),
         }),
     ]
 

@@ -3,9 +3,10 @@ import { useTranslation } from "react-i18next";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { BackButton, CancelButton, CustomIconButton, FlexBox, LoadingButton } from "lib/ui-ux";
 import { PasswordFieldWithLabel, TextboxField, TextboxFieldWithLabel } from "lib/form-fields";
-import { Box, DialogActions, Divider, InputAdornment, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
+import { DialogActions, Divider, InputAdornment, Typography } from "@mui/material";
 import { ContentCopy } from "@mui/icons-material";
 import { useNotifications } from "lib";
+import { ConfigStepper } from "modules/settings/common";
 
 export interface IWhatsAppConfigFormProps {
     isMutationLoading: boolean;
@@ -32,27 +33,6 @@ const steps = [
         description: 'Configure the provided webhook URL and verify toke on the meta site to receive alerts when a message is received from WhatsApp'
     }
 ];
-
-const ConfigSteps = (props: { activeStep: number }) => {
-    const { activeStep } = props;
-
-    return (
-        <Box>
-            <Stepper activeStep={activeStep} orientation="vertical">
-                {steps.map((step) => (
-                    <Step key={step.label}>
-                        <StepLabel>
-                            {step.label}
-                        </StepLabel>
-                        <StepContent>
-                            {step.description}
-                        </StepContent>
-                    </Step>
-                ))}
-            </Stepper>
-        </Box>
-    );
-}
 
 const AppConfiguration = () => {
     return (
@@ -140,7 +120,7 @@ export const WhatsAppConfigForm = (props: IWhatsAppConfigFormProps) => {
 
         <form autoComplete="off">
             <FlexBox gap="20px">
-                <ConfigSteps activeStep={activeStep} />
+                <ConfigStepper activeStep={activeStep} steps={steps} />
                 <Divider orientation="vertical" variant="middle" flexItem />
                 {activeStep === 0 ? <AppConfiguration /> : <WebhookConfigurations />}
             </FlexBox>

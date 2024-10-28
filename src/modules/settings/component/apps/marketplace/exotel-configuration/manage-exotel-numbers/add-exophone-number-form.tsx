@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Stepper, Step, StepLabel, StepContent, Typography, Grid, DialogActions, Divider, InputAdornment } from "@mui/material";
+import { Typography, Grid, DialogActions, Divider, InputAdornment } from "@mui/material";
 import { AutocompleteField, SelectField, TextboxField } from "lib/form-fields";
 import { BackButton, CancelButton, CustomIconButton, FlexBox, LoadingButton } from "lib/ui-ux";
 import { IAddExophoneNumberFormFields } from "modules/settings/containers/marketplace/exotel";
@@ -9,6 +9,7 @@ import { Exophone, IAddExophoneNumber, IExotelConfigDetails } from "modules/sett
 import { ContentCopy } from "@mui/icons-material";
 import { useNotifications } from "lib";
 import { useTranslation } from "react-i18next";
+import { ConfigStepper } from "modules/settings/common";
 
 const steps = [
     {
@@ -20,32 +21,6 @@ const steps = [
         description: '',
     }
 ];
-
-const ConfigSteps = (props: {
-    activeStep: number, steps: {
-        label: string;
-        description: string;
-    }[]
-}) => {
-    const { activeStep, steps } = props;
-
-    return (
-        <Box>
-            <Stepper activeStep={activeStep} orientation="vertical">
-                {steps.map((step) => (
-                    <Step key={step.label}>
-                        <StepLabel>
-                            {step.label}
-                        </StepLabel>
-                        <StepContent>
-                            <Typography variant="body3">{step.description}</Typography>
-                        </StepContent>
-                    </Step>
-                ))}
-            </Stepper>
-        </Box>
-    );
-}
 
 function AddExophoneNumberForm(props: {
     exophoneNumMenuOption: IKeyValue[];
@@ -178,7 +153,7 @@ export const AddExophoneNumberFormBase = (props: IAddExophoneNumberFormProps) =>
     return (
         <FormProvider {...form}>
             <FlexBox gap="20px">
-                <ConfigSteps activeStep={activeStep} steps={modifiedSteps} />
+                <ConfigStepper activeStep={activeStep} steps={steps} />
                 <Divider orientation="vertical" variant="middle" flexItem />
                 {activeStep === 0 ? <AddExophoneNumberForm exophoneNumMenuOption={exophoneNumMenuOption} usersMenuOption={usersMenuOption} isBrowserCalling={isBrowserCalling} /> : <AccountWebhookDetails />}
             </FlexBox>

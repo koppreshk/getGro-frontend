@@ -2,11 +2,12 @@ import React from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { BackButton, CancelButton, CustomIconButton, FlexBox, LoadingButton } from "lib/ui-ux";
 import { PasswordField, TextboxField } from "lib/form-fields";
-import { Box, DialogActions, Divider, InputAdornment, Step, StepLabel, Stepper, Typography } from "@mui/material";
+import { DialogActions, Divider, InputAdornment, Typography } from "@mui/material";
 import { ContentCopy } from "@mui/icons-material";
 import { useNotifications } from "lib";
 import { ISetupGupShupArgs } from "modules/settings/apis/marketplace/gupshup";
 import { useTranslation } from "react-i18next";
+import { ConfigStepper } from "modules/settings/common";
 
 export interface IWhatsAppGupshupConfigFormProps {
     togglePopup: () => void;
@@ -31,24 +32,6 @@ const steps = [
         label: 'Webhook',
     }
 ];
-
-const ConfigSteps = (props: { activeStep: number }) => {
-    const { activeStep } = props;
-
-    return (
-        <Box>
-            <Stepper activeStep={activeStep} orientation="vertical">
-                {steps.map((step) => (
-                    <Step key={step.label}>
-                        <StepLabel>
-                            {step.label}
-                        </StepLabel>
-                    </Step>
-                ))}
-            </Stepper>
-        </Box>
-    );
-}
 
 const AccountDetailsForm = () => {
     return (
@@ -97,7 +80,7 @@ export const WhatsAppGupshupConfigForm = (props: IWhatsAppGupshupConfigFormProps
     const form = useFormContext<IAddWhatsAppFormField>()
     const [activeStep, setActiveStep] = React.useState(0);
     const { t } = useTranslation();
-    
+
     const onSubmitForm = async (formValues: IAddWhatsAppFormField) => {
         onSubmit({
             api_key: formValues.appAPIkey,
@@ -125,7 +108,7 @@ export const WhatsAppGupshupConfigForm = (props: IWhatsAppGupshupConfigFormProps
 
         <form autoComplete="off">
             <FlexBox gap="20px">
-                <ConfigSteps activeStep={activeStep} />
+                <ConfigStepper activeStep={activeStep} steps={steps} />
                 <Divider orientation="vertical" variant="middle" flexItem />
                 {activeStep === 0 ? <AccountDetailsForm /> : <AccountWebhookDetails />}
             </FlexBox>
