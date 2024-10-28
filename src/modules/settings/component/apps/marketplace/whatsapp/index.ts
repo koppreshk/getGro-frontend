@@ -3,3 +3,4 @@ export * from './delete-whatsapp-configurations';
 export * from './add-whatsapp-config-form';
 export * from './edit-whatsapp-config-form';
 export * from './manage-whatsapp-numbers-layout';
+export * from './delete-whatsapp-number';

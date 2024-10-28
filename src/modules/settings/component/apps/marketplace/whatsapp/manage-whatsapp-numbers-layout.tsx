@@ -2,9 +2,9 @@ import { createColumnHelper } from "@tanstack/react-table"
 import { FlexBox } from "lib/ui-ux";
 import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
 import { styled } from "styled-components";
-// import { DeleteExophone } from "./delete-exophone";
 import { useTranslation } from "react-i18next";
 import { IWhatsAppNumbers } from "modules/settings/apis/marketplace/whatsapp";
+import { DeleteWhatsAppNumber } from "./delete-whatsapp-number";
 
 export interface IManageWhatsAppNumbersLayoutProps {
     data: IWhatsAppNumbers[] | undefined;
@@ -40,10 +40,10 @@ const useColumns = () => {
         columnHelper.display({
             id: 'actions',
             header: () => t("actions"),
-            cell: () => {
+            cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
-                        {/* <DeleteExophone id={original.id} /> */}
+                        <DeleteWhatsAppNumber id={original.id} />
                     </FlexBox>
                 )
             },
