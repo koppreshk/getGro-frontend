@@ -26,3 +26,14 @@ export const useFetchWhatsAppNumbers = () => {
         queryKey: WhatsAppConfigurationQueryKey.FETCH_WHATSAPP_NUMBERS
     });
 }
+
+export const useFetchWhatsAppNumber = (id: number) => {
+    const { getData } = useServiceClient();
+
+    const fetchExotelConfigurations = React.useCallback(() => getData(`${WhatsAppConfigurationEndPoint.FETCH_WHATSAPP_NUMBER}?id=${id}`).then((res) => res.json()), [getData, id]);
+
+    return useQuery<IWhatsAppNumbers[]>({
+        queryFn: fetchExotelConfigurations,
+        queryKey: [WhatsAppConfigurationQueryKey.FETCH_WHATSAPP_NUMBER, id]
+    });
+}

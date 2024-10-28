@@ -5,3 +5,5 @@ export * from './edit-whatsapp-configuration';
 export * from './create-whatsapp-config';
 export * from './fetch-whatsapp-numbers';
 export * from './delete-whatsapp-number';
+export * from './create-whatsapp-number';
+export * from './edit-whatsapp-number';

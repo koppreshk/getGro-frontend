@@ -3,8 +3,12 @@ export enum WhatsAppConfigurationEndPoint {
     CREATE_WHATSAPP_CONFIG = 'meta/whatsapp/create',
     EDIT_WHATSAPP_CONFIG = 'meta/whatsapp/edit',
     DELETE_WHATSAPP_CONFIG = 'meta/whatsapp/delete',
+
     FETCH_WHATSAPP_NUMBERS = 'meta/whatsapp/numbers',
-    DELETE_WHATSAPP_NUMBER = 'meta/whatsapp/number/delete'
+    FETCH_WHATSAPP_NUMBER = 'meta/whatsapp/number',
+    DELETE_WHATSAPP_NUMBER = 'meta/whatsapp/number/delete',
+    CREATE_WHATSAPP_NUMBER = 'meta/whatsapp/number/create',
+    EDIT_WHATSAPP_NUMBER = 'meta/whatsapp/number/edit'
 }
 
 export enum WhatsAppConfigurationQueryKey {
@@ -12,6 +16,10 @@ export enum WhatsAppConfigurationQueryKey {
     CREATE_WHATSAPP_CONFIG = 'CREATE_WHATSAPP_CONFIG',
     EDIT_WHATSAPP_CONFIG = 'EDIT_WHATSAPP_CONFIG',
     DELETE_WHATSAPP_CONFIG = 'DELETE_WHATSAPP_CONFIG',
+
     FETCH_WHATSAPP_NUMBERS = 'FETCH_WHATSAPP_NUMBERS',
-    DELETE_WHATSAPP_NUMBER = 'DELETE_WHATSAPP_NUMBER'
+    FETCH_WHATSAPP_NUMBER = 'FETCH_WHATSAPP_NUMBER',
+    DELETE_WHATSAPP_NUMBER = 'DELETE_WHATSAPP_NUMBER',
+    CREATE_WHATSAPP_NUMBER = 'CREATE_WHATSAPP_NUMBER',
+    EDIT_WHATSAPP_NUMBER = 'EDIT_WHATSAPP_NUMBER'
 }
