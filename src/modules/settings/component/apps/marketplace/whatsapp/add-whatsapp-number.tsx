@@ -35,11 +35,11 @@ function AccountConfigurations() {
     )
 }
 
-interface IAddWhatsAppNumberFormFields {
+export interface IAddWhatsAppNumberFormFields {
     name: string;
     whatsappBusinessID: string;
     phoneNumberID: string;
-    sendAutoReply: string;
+    sendAutoReply: boolean;
     autoReplyMessage: string;
 }
 
@@ -56,6 +56,7 @@ const ChatConfiguration = () => {
 export interface IAddWhatsAppNumberFormProps {
     togglePopup: () => void;
     isMutationLoading?: boolean;
+    onSubmit: (formData: IAddWhatsAppNumberFormFields) => void;
 }
 
 export const AddWhatsAppNumberFormBase = (props: IAddWhatsAppNumberFormProps) => {

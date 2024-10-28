@@ -8,7 +8,7 @@ import { IWhatsAppConfigDetails } from "modules/settings/apis/marketplace/whatsa
 import { UpdateWhatsAppConfigContainer } from "modules/settings/containers/marketplace/whatsapp/update-whatsapp-config-container";
 import { AddWhatsAppConfigContainer } from "modules/settings/containers/marketplace/whatsapp/add-whatsapp-config-container";
 import { DeleteWhatsAppConfigurations } from "./delete-whatsapp-configurations";
-import { AddWhatsAppNumberFormBase } from "./add-whatsapp-number";
+import { AddWhatsAppNumberContainer } from "modules/settings/containers/marketplace/whatsapp";
 
 interface WhatsAppHeaderActionButtonsProps {
     data: IWhatsAppConfigDetails,
@@ -67,7 +67,7 @@ export const WhatsAppHeaderActionButtons = (props: WhatsAppHeaderActionButtonsPr
                 title={t('whatsapp_configuration')}
                 maxWidth="md" />
             <AddAppConfigurationDialog
-                dialogContent={() => <AddWhatsAppNumberFormBase togglePopup={toggleAddAccountDialog} />}
+                dialogContent={() => <AddWhatsAppNumberContainer toggleAddAccountDialog={toggleAddAccountDialog} />}
                 openPopup={openAddAccountDialog}
                 togglePopup={toggleAddAccountDialog}
                 title={t('add_account')}
