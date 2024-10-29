@@ -1,8 +1,8 @@
 import React from "react";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm, FormProvider, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Grid, DialogActions, Divider } from "@mui/material";
-import { TextboxFieldWithLabel } from "lib/form-fields";
+import { Grid, DialogActions, Divider, Typography } from "@mui/material";
+import { SwitchField, TextboxField, TextboxFieldWithLabel } from "lib/form-fields";
 import { BackButton, CancelButton, FlexBox, LoadingButton } from "lib/ui-ux";
 import { ConfigStepper } from "modules/settings/common";
 
@@ -44,23 +44,30 @@ export interface IAddWhatsAppNumberFormFields {
 }
 
 const ChatConfiguration = () => {
+    const { t } = useTranslation();
+    const { watch } = useFormContext();
     return (
         <>
-            <FlexBox flexDirection="column" gap="20px" width="75%">
-
-            </FlexBox >
+            <FlexBox flexDirection="row" gap="20px" width="75%">
+                <SwitchField name="sendAutoReply" />
+                <FlexBox flexDirection="column" gap={'10px'}>
+                    <Typography variant="h6">{t('auto_reply')}</Typography>
+                    <Typography variant="body3">{t('auto_reply_description')}</Typography>
+                </FlexBox>
+                {watch('sendAutoReply') ? <TextboxField name="autoReplyMessage" label="auto_reply_message" /> : null}
+            </FlexBox>
         </>
     )
 }
 
 export interface IAddWhatsAppNumberFormProps {
-    togglePopup: () => void;
     isMutationLoading?: boolean;
+    togglePopup: () => void;
     onSubmit: (formData: IAddWhatsAppNumberFormFields) => void;
 }
 
 export const AddWhatsAppNumberFormBase = (props: IAddWhatsAppNumberFormProps) => {
-    const { togglePopup, isMutationLoading = false } = props;
+    const { togglePopup, isMutationLoading = false, onSubmit } = props;
     const { t } = useTranslation();
 
     const [activeStep, setActiveStep] = React.useState(0);
@@ -70,16 +77,16 @@ export const AddWhatsAppNumberFormBase = (props: IAddWhatsAppNumberFormProps) =>
     });
 
     const onSubmitForm = async (formFields: IAddWhatsAppNumberFormFields) => {
-        console.log(formFields);
+        onSubmit(formFields);
     };
 
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const onSaveHandler = () => {
-        togglePopup();
-    };
+    const handleNext = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
 
     const isLastStep = activeStep === steps.length - 1;
 
@@ -99,7 +106,7 @@ export const AddWhatsAppNumberFormBase = (props: IAddWhatsAppNumberFormProps) =>
                 }
                 <FlexBox gap="10px">
                     <CancelButton onClick={togglePopup} />
-                    <LoadingButton isLoading={isMutationLoading} variant="contained" onClick={isLastStep ? onSaveHandler : form.handleSubmit(onSubmitForm)}>
+                    <LoadingButton isLoading={isMutationLoading} variant="contained" onClick={isLastStep ? form.handleSubmit(onSubmitForm) : handleNext}>
                         {isLastStep ? t('save') : t('next')}
                     </LoadingButton>
                 </FlexBox>

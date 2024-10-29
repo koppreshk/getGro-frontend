@@ -384,5 +384,7 @@
     "whatsapp_number_delete_failure": "Failed to delete the WhatsApp number",
     "delete_whatsapp": "Delete WhatsApp",
     "delete_dialog_content": "Do you want to delete this WhatsApp number permanently?",
-    "delete_whatsapp_number": "Delete WhatsApp Number"
+    "delete_whatsapp_number": "Delete WhatsApp Number",
+    "auto_reply_description": "Enabling this allows you to use automated replies when customers start conversations",
+    "auto_reply_message": "Auto reply message"
 }
