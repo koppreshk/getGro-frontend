@@ -6,7 +6,7 @@ export const AddWhatsAppConfigContainer = (props: { togglePopup: () => void; upd
 
     const onSubmit = (formValues: IAddWhatsAppFormField) => {
         return mutateAsync({
-            api_secret: formValues.appSecret,
+            app_secret: formValues.appSecret,
             app_id: formValues.appId,
             whatsapp_token: formValues.whatsAppToken
         });

@@ -5,8 +5,14 @@ import { useMutation } from "react-query";
 
 export interface ICreateWhatsAppArgs {
     app_id: string;
-    api_secret: string;
+    app_secret: string;
     whatsapp_token: string;
+}
+
+export interface CreateWhatsAppConfigResponse {
+    status: boolean;
+    webhook_url: string;
+    token: string;
 }
 
 export const useCreateWhatsAppConfiguration = () => {
@@ -15,7 +21,7 @@ export const useCreateWhatsAppConfiguration = () => {
     const setupWhatsAppConfig = React.useCallback((args: ICreateWhatsAppArgs) =>
         postData(WhatsAppConfigurationEndPoint.CREATE_WHATSAPP_CONFIG, args).then((res) => res.json()), [postData]);
 
-    return useMutation({
+    return useMutation<CreateWhatsAppConfigResponse, unknown, ICreateWhatsAppArgs>({
         mutationFn: setupWhatsAppConfig,
         mutationKey: WhatsAppConfigurationQueryKey.CREATE_WHATSAPP_CONFIG
     })

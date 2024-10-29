@@ -19,7 +19,7 @@ export const UpdateWhatsAppConfigContainer = (props: IUpdateWhatsAppConfigContai
 
     const updateWhatsAppConfigHandler = React.useCallback((formValues: IAddWhatsAppFormField) => {
         return mutateAsync({
-            api_secret: formValues.appSecret,
+            app_secret: formValues.appSecret,
             app_id: formValues.appId,
             whatsapp_token: formValues.whatsAppToken
         });

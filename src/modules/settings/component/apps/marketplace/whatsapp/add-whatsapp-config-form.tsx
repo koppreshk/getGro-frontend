@@ -7,11 +7,12 @@ import { DialogActions, Divider, InputAdornment, Typography } from "@mui/materia
 import { ContentCopy } from "@mui/icons-material";
 import { useNotifications } from "lib";
 import { ConfigStepper } from "modules/settings/common";
+import { CreateWhatsAppConfigResponse } from "modules/settings/apis/marketplace/whatsapp";
 
 export interface IWhatsAppConfigFormProps {
     isMutationLoading: boolean;
     togglePopup: () => void;
-    onSubmit: (formValues: IAddWhatsAppFormField) => Promise<{ webhook_url: string }>
+    onSubmit: (formValues: IAddWhatsAppFormField) => Promise<CreateWhatsAppConfigResponse>
     updateInstallation: () => void;
 }
 
@@ -55,8 +56,8 @@ const WebhookConfigurations = () => {
     }
 
     return (
-        <FlexBox flexDirection="column" gap="20px">
-            <FlexBox flexDirection="column" gap="5px" width="75%">
+        <FlexBox flexDirection="column" gap="30px" width="75%">
+            <FlexBox flexDirection="column" gap="5px" width="100%">
                 <Typography variant="h5">Webhook</Typography>
                 <TextboxField
                     name="webhookURL"
@@ -72,8 +73,8 @@ const WebhookConfigurations = () => {
                     }}
                 />
             </FlexBox>
-            <FlexBox flexDirection="column" gap="5px" width="75%">
-                <Typography variant="h5">Webhook verfiy token</Typography>
+            <FlexBox flexDirection="column" gap="5px" width="100%">
+                <Typography variant="h5">Webhook verify token</Typography>
                 <TextboxField
                     name="webhookVerifyToken"
                     size="small" type="password"
@@ -99,9 +100,12 @@ export const WhatsAppConfigForm = (props: IWhatsAppConfigFormProps) => {
     const { t } = useTranslation();
 
     const onSubmitForm = async (formValues: IAddWhatsAppFormField) => {
-        onSubmit(formValues).then((response) => {
-            form.setValue('webhookURL', response.webhook_url);
-            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        onSubmit(formValues).then((response: CreateWhatsAppConfigResponse) => {
+            if(response.status){
+                form.setValue('webhookURL', response.webhook_url);
+                form.setValue('webhookVerifyToken', response.token);
+                setActiveStep((prevActiveStep) => prevActiveStep + 1);
+            }
         })
     };
 

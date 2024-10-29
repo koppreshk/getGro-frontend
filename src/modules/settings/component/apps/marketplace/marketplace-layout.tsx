@@ -86,8 +86,8 @@ const App = (props: IAppProps) => {
     const navigate = useNavigate();
 
     return (
-        <Card sx={{ maxWidth: 275, cursor: 'pointer' }} onClick={() => navigate(name)} elevation={2}>
-            <CardActionArea>
+        <Card sx={{ maxWidth: 275, minHeight: 125, height: '100%', cursor: 'pointer' }} onClick={() => navigate(name)} elevation={2}>
+            <CardActionArea sx={{ minHeight: 125 }}>
                 <CardContent>
                     <FlexBox flexDirection="column" gap="10px">
                         <FlexBox gap="20px" alignItems="center">

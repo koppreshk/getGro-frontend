@@ -50,11 +50,13 @@ const ChatConfiguration = () => {
         <>
             <FlexBox flexDirection="row" gap="20px" width="75%">
                 <SwitchField name="sendAutoReply" />
-                <FlexBox flexDirection="column" gap={'10px'}>
-                    <Typography variant="h6">{t('auto_reply')}</Typography>
-                    <Typography variant="body3">{t('auto_reply_description')}</Typography>
+                <FlexBox flexDirection="column" gap={'20px'}>
+                    <FlexBox flexDirection="column" >
+                        <Typography variant="h6">{t('auto_reply')}</Typography>
+                        <Typography variant="body3">{t('auto_reply_description')}</Typography>
+                    </FlexBox>
+                    {watch('sendAutoReply') ? <TextboxField name="autoReplyMessage" label="auto_reply_message" /> : null}
                 </FlexBox>
-                {watch('sendAutoReply') ? <TextboxField name="autoReplyMessage" label="auto_reply_message" /> : null}
             </FlexBox>
         </>
     )

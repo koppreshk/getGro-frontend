@@ -11,7 +11,7 @@ export const AddWhatsAppNumberContainer = (props: { toggleAddAccountDialog: () =
             send_auto_reply: formData.sendAutoReply,
             whatsapp_business_id: formData.whatsappBusinessID,
             whatsapp_phone_number_id: formData.phoneNumberID
-        })
+        }).then(() => props.toggleAddAccountDialog());
     }
     return (
         <>
