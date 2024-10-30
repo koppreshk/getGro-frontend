@@ -102,7 +102,7 @@ const LoginForm = () => {
                     <Grid item md={12}>
                         <div className="recaptcha-container">
                             <ReCAPTCHA
-                                sitekey="6LeI4FcqAAAAAMz0zR7bddwcBvG9bPsMad0j4l6v" // replace with your site key
+                                sitekey={import.meta.env.VITE_GOOGLE_SITE_KEY}
                                 onChange={onRecaptchaChange}
                             />
                         </div>
