@@ -1,0 +1,36 @@
+import { ArrowBack } from "@mui/icons-material"
+import { Typography } from "@mui/material"
+import { BreadCrumbs, CustomIconButton, FlexBox, MoreInformation } from "lib/ui-ux"
+import { useNavigate } from "react-router-dom";
+import { AuditLogList } from "./audit-log-list";
+import { IAuditLogsResponse } from "modules/settings/apis/audit-logs/fetch-all-audit-logs";
+import { AuditLogFilter } from "./audit-log-filter";
+import { useTranslation } from "react-i18next";
+
+interface IAuditLogsLayoutProps {
+    data: IAuditLogsResponse;
+    isLoading: boolean;
+}
+
+export const AuditLogsLayout = (props: IAuditLogsLayoutProps) => {
+    const { data, isLoading } = props;
+    const navigate = useNavigate();
+    const { t } = useTranslation();
+
+    return (
+        <FlexBox width="100%" flexDirection="column" height="100%">
+            <BreadCrumbs />
+            <FlexBox flexDirection="column" gap={'20px'} padding="20px" height="calc(100% - 46px)">
+                <MoreInformation information={t('audit_logs_long_description')} />
+                <FlexBox width="100%" padding="10px" justifyContent="space-between">
+                    <FlexBox alignItems="center" gap="10px">
+                        <CustomIconButton onClick={() => navigate('/configurations')} iconComponent={<ArrowBack />} tooltipProps={{ title: t('back') }} />
+                        <Typography variant="h5">{t('audit_logs')}</Typography>
+                    </FlexBox>
+                    <AuditLogFilter />
+                </FlexBox>
+                <AuditLogList data={data.audit_logs} isLoading={isLoading} totalPages={data.total_pages} />
+            </FlexBox>
+        </FlexBox>
+    )
+}

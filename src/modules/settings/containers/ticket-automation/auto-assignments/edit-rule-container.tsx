@@ -1,0 +1,95 @@
+import { CenteredCircularProgress, ErrorMessage } from "lib/ui-ux";
+import { IAllAssignments, useEditAutoAssignment, useFetchAssignment, useFetchFieldsAndConditions } from "modules/settings/apis/ticket-automation";
+import { AddRule } from "modules/settings/component/ticket-automation"
+import { IAddRuleFormFields, ICondition } from "./add-rule-container";
+import { useSearchParams } from "react-router-dom";
+import { isArray } from "lib/utils";
+
+export const EditRuleContainer = (props: { allAssignments?: IAllAssignments[]; }) => {
+    const { data, isLoading } = useFetchFieldsAndConditions();
+    const { data: currentRuleData, isLoading: currentRuleLoading } = useFetchAssignment('auto_assignment');
+    const { mutateAsync, isLoading: mutationLoading } = useEditAutoAssignment();
+    const [searchParams] = useSearchParams();
+    const id = searchParams.get('id') || '';
+
+    const onSubmit = (formData: IAddRuleFormFields) => {
+        const { ruleName, description, allTicketConditions, anyTicketConditions, assignmentMode, selectedQueue } = formData;
+        const sourceArray = data!.find((item) => item.fieldName.toLocaleLowerCase() === 'source');
+
+        const getIFMultiSelectOperatorsSelected = (item: ICondition) => {
+            const isInOperatorSelected = sourceArray!.operators.find((it) => it.operatorName.toLocaleLowerCase() === 'in')!.operatorId.toString() === item.operator.toString();
+            const isNotInOperatorSelected = sourceArray?.operators.find((it) => it.operatorName.toLocaleLowerCase() === 'not in')?.operatorId.toString() === item.operator.toString();
+            return { isInOperatorSelected, isNotInOperatorSelected }
+        }
+
+        const modAllConditions = allTicketConditions.map((item) => {
+            const { isInOperatorSelected, isNotInOperatorSelected } = getIFMultiSelectOperatorsSelected(item)
+
+            return {
+                operator_id: item.operator,
+                ticket_field_id: item.ticketFields,
+                value: isInOperatorSelected || isNotInOperatorSelected ? item.multiSelectConditionValue : item.conditionValue,
+                rule_type: 'type_all'
+            }
+        })
+        const modAnyConditions = anyTicketConditions.map((item) => {
+            const { isInOperatorSelected, isNotInOperatorSelected } = getIFMultiSelectOperatorsSelected(item)
+
+            return {
+                operator_id: item.operator,
+                ticket_field_id: item.ticketFields,
+                value: isInOperatorSelected || isNotInOperatorSelected ? item.multiSelectConditionValue : item.conditionValue,
+                rule_type: 'type_any'
+            }
+        });
+
+        return mutateAsync({
+            id: id,
+            name: ruleName,
+            description,
+            rules: modAllConditions.concat(modAnyConditions),
+            associate_agent: {
+                assignment_mode: assignmentMode,
+                queue_id: selectedQueue
+            },
+            automation_type: 'auto_assignment'
+        })
+    }
+
+    if (isLoading || currentRuleLoading) {
+        return <CenteredCircularProgress />
+    }
+
+    if (data && currentRuleData) {
+        const defaultValues: IAddRuleFormFields = {
+            allTicketConditions: currentRuleData.rules.filter((item => item.rule_type === "type_all")).map((item) => {
+                const parsedCondtValue = isArray(item.value) ? { multiSelectConditionValue: item.value.map((i) => i.toString()), conditionValue: '' } : { conditionValue: item.value, multiSelectConditionValue: [] }
+                return {
+                    ticketFields: item.ticket_field_id.toString(),
+                    operator: item.operator_id.toString(),
+                    ...parsedCondtValue
+                }
+            }
+            ),
+            anyTicketConditions: currentRuleData.rules.filter((item => item.rule_type === "type_any")).map((item) => {
+                const parsedCondtValue = isArray(item.value) ? { multiSelectConditionValue: item.value.map((i) => i.toString()), conditionValue: '' } : { conditionValue: item.value, multiSelectConditionValue: [] }
+                return {
+                    ticketFields: item.ticket_field_id.toString(),
+                    operator: item.operator_id.toString(),
+                    ...parsedCondtValue
+                }
+            }
+            ),
+            assignmentMode: currentRuleData.associate_agent.assignment_mode,
+            description: currentRuleData.description,
+            ruleName: currentRuleData.name,
+            selectedQueue: currentRuleData.associate_agent.queue_id.toString()
+        }
+
+        return (
+            <AddRule data={data} onSubmit={onSubmit} defaultValues={defaultValues} mode="edit" allAssignments={props.allAssignments} mutationLoading={mutationLoading} />
+        )
+    }
+
+    return <ErrorMessage />
+}

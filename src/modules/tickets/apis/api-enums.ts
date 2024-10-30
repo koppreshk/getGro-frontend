@@ -1,0 +1,72 @@
+export enum TicketsEndPoint {
+    FETCH_ALL_TICKETS = 'all_tickets',
+    FETCH_ALL_PENDING_TICKETS = 'all_pending_tickets',
+    FETCH_ALL_RESOLVED_TICKETS = 'all_resolved_tickets',
+    FETCH_ALL_CLOSED_TICKETS = 'all_closed_tickets',
+    FETCH_MY_PENDING = 'my_pending',
+    FETCH_MY_RESOLVED = 'my_resolved',
+    FETCH_MY_CLOSED = 'my_closed',
+    GET_CUSTOMER_DETAILS = 'fetch_user_details',
+    FETCH_EMAIL_CONVERSATIONS = 'fetch_email_conversations',
+    REPLY_TO_EMAIL = 'reply_to_email',
+    FETCH_ATTACHMENT = 'fetch_attachment',
+    FETCH_ALL_WHATSAPP_MESSAGES = 'fetch_whatsapp_messages_by_ticket_id',
+    SEND_WHATSAPP_MESSAGES = 'send_message_to_whatsapp',
+    UPLOAD_FILE = 'upload_file',
+    CREATE_MANUAL_TICKET = 'manual_ticket',
+    FETCH_PRIORITY_DROPDOWN_VALUES = 'fetch_priority_dropdown_values',
+
+    FETCH_CALLS_BY_TICKETID = 'fetch_calls_by_ticket_id',
+    OUTBOUND_CALL = 'outbound_call',
+
+    UPDATE_STATUS = 'update_status',
+    CHANGE_ASSIGNEE = 'change_assignee',
+    UPDATE_PRIORITY = 'update_priority',
+    UPDATE_TAGS = 'update_tags',
+
+    MERGE_TICKETS = 'merge_tickets',
+    SEARCH_TICKETS = 'search_ticket',
+
+    LINKED_TICKETS = 'linked_tickets',
+    TICKET_HISTORY = 'history',
+
+    SPLIT_TICKET = 'split',
+
+    FETCH_ALL_ORDERS = 'fetch_all_orders'
+}
+
+export enum TicketsQueryKey {
+    FETCH_ALL_TICKETS = 'FETCH_ALL_TICKETS',
+    FETCH_ALL_PENDING_TICKETS = 'FETCH_ALL_PENDING_TICKETS',
+    FETCH_ALL_RESOLVED_TICKETS = 'FETCH_ALL_RESOLVED_TICKETS',
+    FETCH_ALL_CLOSED_TICKETS = 'FETCH_ALL_CLOSED_TICKETS',
+    FETCH_MY_PENDING = 'FETCH_MY_PENDING',
+    FETCH_MY_RESOLVED = 'FETCH_MY_RESOLVED',
+    FETCH_MY_CLOSED = 'FETCH_MY_CLOSED',
+    GET_CUSTOMER_DETAILS = 'GET_CUSTOMER_DETAILS',
+    FETCH_EMAIL_CONVERSATIONS = 'FETCH_EMAIL_CONVERSATIONS',
+    REPLY_TO_EMAIL = 'REPLY_TO_EMAIL',
+    FETCH_ATTACHMENT = 'FETCH_ATTACHMENT',
+    FETCH_ALL_WHATSAPP_MESSAGES = 'FETCH_ALL_WHATSAPP_MESSAGES',
+    SEND_WHATSAPP_MESSAGES = 'SEND_WHATSAPP_MESSAGES',
+    UPLOAD_FILE = 'UPLOAD_FILE',
+    CREATE_MANUAL_TICKET = 'CREATE_MANUAL_TICKET',
+    FETCH_PRIORITY_DROPDOWN_VALUES = 'FETCH_PRIORITY_DROPDOWN_VALUES',
+
+    FETCH_CALLS_BY_TICKETID = 'FETCH_CALLS_BY_TICKETID',
+    OUTBOUND_CALL = 'OUTBOUND_CALL',
+
+    UPDATE_STATUS = 'UPDATE_STATUS',
+    CHANGE_ASSIGNEE = 'CHANGE_ASSIGNEE',
+    UPDATE_PRIORITY = 'UPDATE_PRIORITY',
+    UPDATE_TAGS = 'UPDATE_TAGS',
+
+    MERGE_TICKETS = 'MERGE_TICKETS',
+    SEARCH_TICKETS = 'SEARCH_TICKETS',
+    LINKED_TICKETS = 'LINKED_TICKETS',
+    TICKET_HISTORY = 'TICKET_HISTORY',
+
+    SPLIT_TICKET = 'SPLIT_TICKET',
+
+    FETCH_ALL_ORDERS = 'FETCH_ALL_ORDERS'
+}
