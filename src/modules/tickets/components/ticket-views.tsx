@@ -17,9 +17,9 @@ const ViewsWrapper = styled(FlexBox)`
     border-right-width: thin;
 `;
 
-const Wrapper = styled.div<{ $isOptionSelected: boolean }>`
+const Wrapper = styled.div<{ $isOptionSelected: boolean; $disabled?: boolean }>`
     :hover {
-        background: ${(props) => props.theme.pallete.purpleLight};
+        background: ${(props) => props.$disabled ? 'unset' : props.theme.pallete.purpleLight};
     }
     ${({ $isOptionSelected }) => $isOptionSelected ? css`
         background-color: ${(props) => props.theme.pallete.purpleLight};
@@ -33,6 +33,16 @@ const Wrapper = styled.div<{ $isOptionSelected: boolean }>`
         background: ${({ theme }) => theme.pallete.white};
         color: ${(props) => props.theme.pallete.defaultTextColor};
     `}
+    ${({ $disabled }) => {
+        if($disabled){
+            return css`
+                background: ${({ theme }) => theme.pallete.grayVariant5};
+                color: ${(props) => props.theme.pallete.defaultTextColor};
+                cursor: not-allowed;
+                pointer-events: none;
+            `;
+        }
+    }};
 `;
 
 const OptionWrapper = styled(FlexBox)`
@@ -98,12 +108,14 @@ const useViewOptions = () => {
                 name: t('deleted_tickets'),
                 primaryKey: 'deleted-tickets',
                 route: 'deleted-tickets',
+                disabled: true,
                 renderIcon: () => <DeleteOutlined />
             },
             {
                 name: t('spam_tickets'),
                 primaryKey: 'spam-tickets',
                 route: 'spam-tickets',
+                disabled: true,
                 renderIcon: () => <ReportOutlined />
             },
         ]
@@ -139,11 +151,12 @@ export const TicketViews = () => {
 interface ITicketViewOptionsProps {
     name: string;
     route: string;
+    disabled?: boolean;
     renderIcon?: () => React.ReactElement;
 }
 
 const TicketViewOptions = (props: ITicketViewOptionsProps) => {
-    const { name, route, renderIcon } = props;
+    const { name, route, disabled, renderIcon } = props;
     const navigate = useNavigate();
     const match = useMatch(`/tickets/:route`);
     const selectedMenu = match?.params.route;
@@ -154,7 +167,7 @@ const TicketViewOptions = (props: ITicketViewOptionsProps) => {
     }, [navigate, route]);
 
     return (
-        <Wrapper onClick={onLinkClick} $isOptionSelected={isOptionSelected}>
+        <Wrapper onClick={onLinkClick} $isOptionSelected={isOptionSelected} $disabled={disabled}>
             <OptionWrapper gap={'10px'}>
                 {renderIcon ? renderIcon() : <></>}
                 <Typography variant="h6" color="inherit">
