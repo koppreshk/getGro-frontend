@@ -18,6 +18,7 @@ const DashboardPage = lazy(() => import('../../dashboard/pages/dashboard-page'))
 const TicketsPage = lazy(() => import('../../tickets/pages/tickets-page'));
 const KnowledgeBasePage = lazy(() => import('../../knowledge-base/pages/knowledge-base-page'));
 const CustomersPage = lazy(() => import('../../customers/pages/customers-page'));
+const ChatsPage = lazy(() => import('../../chats/pages/chat-layout-page'));
 const ConfigurationsPage = lazy(() => import('../../settings/pages/settings-page'));
 const UserProfilePage = lazy(() => import('../../user-profile/pages/user-profile-page'));
 const PageNotFound = lazy(() => import('./page-not-found'));
@@ -84,6 +85,10 @@ export const CoreLayout = () => {
                         key="customers"
                         path="customers/*"
                         element={<CustomersPage />} />
+                    <Route
+                        key="chats"
+                        path="chat/*"
+                        element={<ChatsPage />} />
                     <Route
                         key="configurations"
                         path="configurations/*"

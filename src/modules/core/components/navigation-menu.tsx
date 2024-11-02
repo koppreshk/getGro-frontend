@@ -3,9 +3,10 @@ import { Link, useLocation } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { FlexBox } from "lib/ui-ux";
 import { Popover, Tooltip, Typography } from "@mui/material";
-import { EventOutlined, GroupOutlined, InsertChartOutlined, SettingsOutlined, TaskOutlined, Article } from "@mui/icons-material";
+import { EventOutlined, GroupOutlined, InsertChartOutlined, SettingsOutlined, TaskOutlined, Article, Chat } from "@mui/icons-material";
 import { useModule } from "lib/hooks";
 import { ExotelCallControls } from "./exotel-call-controls";
+import { useTranslation } from "react-i18next";
 
 interface IPrimaryOptionProps {
     item: {
@@ -37,6 +38,7 @@ const usePrimaryOptions = () => {
     // const [searchParams] = useSearchParams();
     // const noOfRecords = searchParams.get('noOfRecords') || '10';
     const isModuleAccessible = useModule<undefined>();
+    const { t } = useTranslation();
 
     return [{
         iconComponent: () => <InsertChartOutlined />,
@@ -61,6 +63,12 @@ const usePrimaryOptions = () => {
         route: 'customers',
         title: 'Customers',
         hidden: true
+    },
+    {
+        iconComponent: () => <Chat />,
+        primaryKey: 'chat',
+        route: 'chat',
+        title: t('chat'),
     },
     {
         iconComponent: () => <Article />,
