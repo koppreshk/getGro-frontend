@@ -1,7 +1,7 @@
-import { Typography, Avatar, Badge } from "@mui/material";
+import { Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
-import { useSourceIcon } from "modules/tickets/hooks";
 import styled, { css } from "styled-components";
+import { CustomSourceAvatar } from "./custom-source-avatar";
 
 const ChatWrapper = styled(FlexBox) <{ $isChatActive: boolean }>`
     padding: 15px 10px 15px 15px;
@@ -32,30 +32,12 @@ const StyledTypography = styled(Typography)`
     }
 `;
 
-const SmallAvatar = styled(FlexBox)`
-    background: ${({ theme }) => theme.pallete.white};
-    border-radius: 100%;
-    padding: 1px;
-`;
-
-
 export const ChatItem = () => {
-    const getSourceIcon = useSourceIcon();
 
     return (
         <ChatWrapper>
             <FlexBox justifyContent="center" alignItems="center">
-                <Badge
-                    overlap="circular"
-                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                    badgeContent={
-                        <SmallAvatar>
-                            {getSourceIcon('whatsapp', { width: '16px', height: '16px' })}
-                        </SmallAvatar>
-                    }
-                >
-                    <Avatar sx={{ fontSize: '14px' }}>Sa</Avatar>
-                </Badge>
+                <CustomSourceAvatar />
             </FlexBox>
             <ChatContent flexDirection="column" gap="4px">
                 <FlexBox justifyContent="space-between">
@@ -66,4 +48,4 @@ export const ChatItem = () => {
             </ChatContent>
         </ChatWrapper>
     )
-} 
+}

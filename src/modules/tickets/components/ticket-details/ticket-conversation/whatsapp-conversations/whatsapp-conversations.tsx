@@ -20,8 +20,8 @@ const DateText = styled(Typography)`
     width: fit-content;
 `;
 
-export const WhatsAppConversations = (props: { data: IWhatsAppMessages }) => {
-    const { data } = props;
+export const WhatsAppConversations = (props: { data: IWhatsAppMessages  } & { isDisabled?: boolean }) => {
+    const { data, isDisabled } = props;
     const [chatData, setChatData] = React.useState(data.conversations);
     const { mutateAsync } = useSendWhatsAppMessages();
 
@@ -79,7 +79,7 @@ export const WhatsAppConversations = (props: { data: IWhatsAppMessages }) => {
                     }
                 </FlexBox>
             </Container>
-            <WhatsappFooter onSendAction={onSendAction} />
+            <WhatsappFooter onSendAction={onSendAction} isDisabled={isDisabled} />
         </ConversationWrapper>
     );
 }

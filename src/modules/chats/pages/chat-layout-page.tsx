@@ -1,5 +1,5 @@
 import { FlexBox, GridLayout } from "lib/ui-ux";
-import { ChatListContainer } from "../containers";
+import { ChatConversationsContainer, ChatListContainer } from "../containers";
 import styled from "styled-components";
 
 const StyledLayoutWrapper = styled(GridLayout)`
@@ -7,16 +7,18 @@ const StyledLayoutWrapper = styled(GridLayout)`
 `;
 
 const StyledLayouts = styled(FlexBox)`
+    border-left: ${({ theme }) => theme.semantics.standardBorder};
     border-right: ${({ theme }) => theme.semantics.standardBorder};
 `;
 
 export default function ChatLayoutPage() {
     return (
-        <StyledLayoutWrapper $gridTemplateColumns={'1fr 2fr 1fr'} $height={'100%'}>
+        <StyledLayoutWrapper $gridTemplateColumns={'1fr 2fr 1fr'} $height={'100%'} $gridGap={'20px'}>
             <StyledLayouts width="100%">
                 <ChatListContainer />
             </StyledLayouts>
             <StyledLayouts width="100%">
+                <ChatConversationsContainer />
             </StyledLayouts>
             <StyledLayouts width="100%">
             </StyledLayouts>
