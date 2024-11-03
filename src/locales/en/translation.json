@@ -388,5 +388,6 @@
     "auto_reply_description": "Enabling this allows you to use automated replies when customers start conversations",
     "auto_reply_message": "Auto reply message",
     "chat": "Chat",
-    "all_conversations": "All Conversations"
+    "all_conversations": "All Conversations",
+    "chat_details": "Chat Details"
 }
