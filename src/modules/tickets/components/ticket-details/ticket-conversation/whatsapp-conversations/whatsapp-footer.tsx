@@ -17,6 +17,7 @@ interface IWhatsappFooterProps {
         fileUrl?: string;
         type: string;
     }) => void;
+    isDisabled?: boolean;
 }
 
 const FooterWrapper = styled(FlexBox)`
@@ -40,7 +41,7 @@ interface IFileInfoState {
     parsedFile: IFileInfo[]
 }
 export const WhatsappFooter = (props: IWhatsappFooterProps) => {
-    const { onSendAction } = props;
+    const { onSendAction, isDisabled } = props;
     const [textareaValue, setTextAreaValue] = React.useState('');
     const [filePreviewDisplay, setFilePreviewDisplay] = React.useState(false);
     const [fileInfo, setFileInfo] = React.useState<IFileInfoState>({ original: [], parsedFile: [] });
@@ -83,7 +84,7 @@ export const WhatsappFooter = (props: IWhatsappFooterProps) => {
                     <TextArea onChange={onTextChange} value={textareaValue} onKeyDown={onKeyDown} placeholder="Shift + Enter to add a new line" />
                     <FlexBox justifyContent="space-between" padding="0px 10px 10px">
                         <NativeFileUpload onChange={onFileUpload} />
-                        <RoundedSendButton variant="contained" size="small" endIcon={<Send />} onClick={onSendClick} >
+                        <RoundedSendButton variant="contained" disabled={isDisabled} size="small" endIcon={<Send />} onClick={onSendClick} >
                             Send
                         </RoundedSendButton>
                     </FlexBox>
