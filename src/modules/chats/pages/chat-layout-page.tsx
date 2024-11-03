@@ -1,6 +1,6 @@
-import { FlexBox, GridLayout } from "lib/ui-ux";
-import { ChatConversationsContainer, ChatListContainer } from "../containers";
 import styled from "styled-components";
+import { FlexBox, GridLayout } from "lib/ui-ux";
+import { ChatConversationsContainer, ChatDetailsLayoutContainer, ChatListContainer } from "../containers";
 
 const StyledLayoutWrapper = styled(GridLayout)`
     background-color: ${({ theme }) => theme.pallete.white};
@@ -21,6 +21,7 @@ export default function ChatLayoutPage() {
                 <ChatConversationsContainer />
             </StyledLayouts>
             <StyledLayouts width="100%">
+                <ChatDetailsLayoutContainer />
             </StyledLayouts>
         </StyledLayoutWrapper>
     )

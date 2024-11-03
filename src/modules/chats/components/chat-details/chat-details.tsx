@@ -1,17 +1,14 @@
 import { FlexBox } from "lib/ui-ux"
 import { CustomSourceAvatar } from "../chat-list/custom-source-avatar"
 import { Typography } from "@mui/material"
-import { useTheme } from "styled-components"
 
-export const ChatConversationHeader = () => {
-    const { pallete } = useTheme();
-
+export const ChatDetails = () => {
     return (
-        <FlexBox gap={'10px'} padding="0 0 0 8px" height="54px" alignItems="center">
+        <FlexBox gap={'10px'}>
             <CustomSourceAvatar />
             <FlexBox flexDirection="column">
                 <Typography variant="h6">Sanjay</Typography>
-                <Typography variant="body3" sx={{ color: pallete.grayNeutral }}>{'919535016465'}</Typography>
+                <Typography variant="body3" color={'#069454'}>Verified</Typography>
             </FlexBox>
         </FlexBox>
     )
