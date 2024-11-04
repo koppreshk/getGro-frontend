@@ -389,5 +389,6 @@
     "auto_reply_message": "Auto reply message",
     "chat": "Chat",
     "all_conversations": "All Conversations",
-    "chat_details": "Chat Details"
+    "chat_details": "Chat Details",
+    "create_and_link_ticket": "Create & link ticket"
 }

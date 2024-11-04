@@ -2,6 +2,7 @@ import { FlexBox } from "lib/ui-ux"
 import { CustomSourceAvatar } from "../chat-list/custom-source-avatar"
 import { Typography } from "@mui/material"
 import { ManageAssigneeContainer, ManagePriorityContainer, ManageTagsContainer, TicketStatusContainer } from "modules/tickets/containers"
+import { CreateAndLinkTicket } from "./create-and-link-ticket"
 
 export const ChatDetails = () => {
     return (
@@ -17,6 +18,7 @@ export const ChatDetails = () => {
             <ManageAssigneeContainer ticketId={45} />
             <ManagePriorityContainer priority="Low" ticketId={45} />
             <ManageTagsContainer tags={[]} ticketId={45} />
+            <CreateAndLinkTicket />
         </FlexBox>
     )
 }
