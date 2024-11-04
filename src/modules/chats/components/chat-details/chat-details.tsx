@@ -8,7 +8,7 @@ export const ChatDetails = () => {
     return (
         <FlexBox gap={'10px'} flexDirection="column">
             <FlexBox gap={'10px'} padding="20px 20px 0">
-                <CustomSourceAvatar />
+                <CustomSourceAvatar customerName="Sanjay" source="whatsapp" />
                 <FlexBox flexDirection="column">
                     <Typography variant="h6">Sanjay</Typography>
                     <Typography variant="body3" color={'#069454'}>Verified</Typography>

@@ -1,3 +1,5 @@
+import { useMemo } from "react";
+import { useMatch, useNavigate } from "react-router-dom";
 import { Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import styled, { css } from "styled-components";
@@ -32,19 +34,37 @@ const StyledTypography = styled(Typography)`
     }
 `;
 
-export const ChatItem = () => {
+export interface ChatItemProps {
+    customerName: string;
+    createdAt: string;
+    message: string;
+    source: string;
+    conversationId: string;
+}
+
+export const ChatItem = (props: ChatItemProps) => {
+    const { customerName, createdAt, message, source, conversationId } = props;
+
+    const match = useMatch('/chat/:conversationId');
+    const navigate = useNavigate();
+
+    const isChatActive = useMemo(() => match?.params.conversationId === conversationId.toString(), [conversationId, match?.params.conversationId]);
+
+    const onChatItemClick = () => {
+        navigate(`/chat/${conversationId}`);
+    }
 
     return (
-        <ChatWrapper>
+        <ChatWrapper onClick={onChatItemClick} $isChatActive={isChatActive}>
             <FlexBox justifyContent="center" alignItems="center">
-                <CustomSourceAvatar />
+                <CustomSourceAvatar source={source} customerName={customerName} />
             </FlexBox>
             <ChatContent flexDirection="column" gap="4px">
                 <FlexBox justifyContent="space-between">
-                    <Typography variant="h6" sx={{ textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: 'calc(100% - 125px)', textWrap: 'nowrap' }}>{'Sanjay'}</Typography>
-                    <Typography variant="caption">{'21/02/2024'}</Typography>
+                    <Typography variant="h6" sx={{ textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: 'calc(100% - 125px)', textWrap: 'nowrap' }}>{customerName}</Typography>
+                    <Typography variant="caption">{createdAt}</Typography>
                 </FlexBox>
-                <StyledTypography variant="body2" title={''}>{'Hi, where is my order?'}</StyledTypography>
+                <StyledTypography variant="body2" title={message}>{message}</StyledTypography>
             </ChatContent>
         </ChatWrapper>
     )

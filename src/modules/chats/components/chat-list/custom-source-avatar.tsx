@@ -2,6 +2,7 @@ import { Badge, Avatar } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { useSourceIcon } from "modules/tickets/hooks";
 import styled from "styled-components";
+import { ChatItemProps } from "./chat-item";
 
 const SmallAvatar = styled(FlexBox)`
     background: ${({ theme }) => theme.pallete.white};
@@ -9,7 +10,8 @@ const SmallAvatar = styled(FlexBox)`
     padding: 1px;
 `;
 
-export const CustomSourceAvatar = () => {
+export const CustomSourceAvatar = (props: Pick<ChatItemProps, 'source' | 'customerName'>) => {
+    const { customerName, source } = props;
     const getSourceIcon = useSourceIcon();
 
     return (
@@ -18,11 +20,11 @@ export const CustomSourceAvatar = () => {
             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
             badgeContent={
                 <SmallAvatar>
-                    {getSourceIcon('whatsapp', { width: '16px', height: '16px' })}
+                    {getSourceIcon(source, { width: '16px', height: '16px' })}
                 </SmallAvatar>
             }
         >
-            <Avatar sx={{ fontSize: '14px' }}>Sa</Avatar>
+            <Avatar sx={{ fontSize: '14px' }}>{customerName.slice(0, 2)}</Avatar>
         </Badge>
     )
 }
