@@ -29,7 +29,7 @@ export const ChatDetailsLayout = () => {
                 <BottomNavigationAction label="History" icon={<History />} />
             </BottomNavigation>
             <HorizontalSeparator />
-            <FlexBox flexDirection="column" padding="16px">
+            <FlexBox flexDirection="column">
                 {renderByvalue()}
             </FlexBox>
         </FlexBox>
