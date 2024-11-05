@@ -3,17 +3,15 @@ import { Box, Button, CircularProgress, FormControlLabel, Grid, Typography } fro
 import { FlexBox } from "lib/ui-ux";
 import React, { useCallback, useState } from "react";
 import styled from "styled-components";
-import ReCAPTCHA from 'react-google-recaptcha';
-import { GoogleOAuthProvider, GoogleLogin, CredentialResponse } from '@react-oauth/google';
-import { useTranslation } from "react-i18next";
-import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { useAuth } from "./hooks/use-auth";
 import { PasswordField, TextboxField } from "lib/form-fields";
+import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import LoginImage from '../../assets/png/getgro-login-illus.png';
 import GetGroLogoImg from '../../assets/svg/main.svg';
 import { CheckboxField } from "lib/form-fields/checkbox-field";
 import { useNotifications } from "lib";
 import { LoginResult, useLoginUser } from "./apis";
+import ReCAPTCHA from 'react-google-recaptcha';
 import { ForgotPassword } from "./forgot-password";
 
 interface ILoginFields {
@@ -60,7 +58,6 @@ const LoginForm = () => {
     const { isLoading, mutateAsync } = useLoginUser();
     const [isVerified, setIsVerified] = useState(false);
     const [tokenValue, setTokenValue] = useState<string | null>(null);
-    const { t } = useTranslation();
 
     const onRecaptchaChange = (value: string | null) => {
         setTokenValue(value);
@@ -84,73 +81,51 @@ const LoginForm = () => {
                 showNotification({ message: 'Failed to login, please check email or password', type: 'error' })
             })
     }, [isVerified, login, mutateAsync, showNotification, tokenValue]);
-
-    const handleSuccess = (response: CredentialResponse) => {
-        console.log('Login successful!', response);
-        if (response.credential) {
-            // Use the credential token to authenticate the user or call backend API
-            console.log('Token:', response.credential);
-        }
-    };
-
-    const handleError = () => {
-        console.log('Login Failed');
-    };
+    console.log('sitkey: ',import.meta.env.VITE_GOOGLE_SITE_KEY);
 
     return (
-        <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID}>
-            <Box sx={{ width: '100%', padding: '50px', boxSizing: 'border-box' }}>
-                <StyledForm>
-                    <Grid container spacing={4}>
-                        <Grid item md={12}>
-                            <FlexBox gap="10px">
-                                <Typography variant="h3" fontWeight='500'>Welcome</Typography>
-                                <Typography variant="h3" fontWeight='500' color='#6969ff'>back!</Typography>
-                            </FlexBox>
-                            <Typography variant="subtitle2" color='#667287'>Login to continue</Typography>
-                        </Grid>
-                        <Grid item md={12}>
-                            <TextboxField name="email" label="Email" type="text" fullWidth rules={{ required: 'Email input required' }} />
-                        </Grid>
-                        <Grid item md={12}>
-                            <PasswordField name="password" label="Password" type="password" fullWidth rules={{ required: 'Password is required' }} />
-                        </Grid>
-                        <Grid item md={12}>
-                            <div className="recaptcha-container">
-                                <ReCAPTCHA
-                                    sitekey={import.meta.env.VITE_GOOGLE_SITE_KEY}
-                                    onChange={onRecaptchaChange}
-                                />
-                            </div>
-                        </Grid>
-                        <Grid item md={12}>
-                            <Button onClick={handleSubmit(onSignIn)} variant="contained" fullWidth size="large" type="submit" disabled={isLoading} endIcon={isLoading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : <ArrowForwardRounded />}>Sign in</Button>
-                        </Grid>
-                    </Grid>
-                    <Grid item md={12} marginTop='20px'>
-                        <FlexBox justifyContent="space-between" alignItems="center">
-                            <FormControlLabel
-                                value="end"
-                                control={<CheckboxField name="rememberMe" />}
-                                label="Remember me"
-                                labelPlacement="end"
-                            />
-                            <ForgotPassword />
+        <Box sx={{ width: '100%', padding: '50px', boxSizing: 'border-box' }}>
+            <StyledForm>
+                <Grid container spacing={4}>
+                    <Grid item md={12}>
+                        <FlexBox gap="10px">
+                            <Typography variant="h3" fontWeight='500'>Welcome</Typography>
+                            <Typography variant="h3" fontWeight='500' color='#6969ff'>back!</Typography>
                         </FlexBox>
-
+                        <Typography variant="subtitle2" color='#667287'>Login to continue</Typography>
                     </Grid>
-                    <Grid item md={12} marginTop='20px'>
-                        <Typography variant="body2" textAlign={'center'}>{t('or')}</Typography>
+                    <Grid item md={12}>
+                        <TextboxField name="email" label="Email" type="text" fullWidth rules={{ required: 'Email input required' }} />
                     </Grid>
-                    <Grid item md={12} marginTop='20px'>
-                        <GoogleLogin
-                            onSuccess={handleSuccess}
-                            onError={handleError}
+                    <Grid item md={12}>
+                        <PasswordField name="password" label="Password" type="password" fullWidth rules={{ required: 'Password is required' }} />
+                    </Grid>
+                    <Grid item md={12}>
+                        <div className="recaptcha-container">
+                            <ReCAPTCHA
+                                sitekey={import.meta.env.VITE_GOOGLE_SITE_KEY}
+                                onChange={onRecaptchaChange}
+                            />
+                        </div>
+                    </Grid>
+                    <Grid item md={12}>
+                        <Button onClick={handleSubmit(onSignIn)} variant="contained" fullWidth size="large" type="submit" disabled={isLoading} endIcon={isLoading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : <ArrowForwardRounded />}>Sign in</Button>
+                    </Grid>
+                </Grid>
+                <Grid item md={12} marginTop='20px'>
+                    <FlexBox justifyContent="space-between" alignItems="center">
+                        <FormControlLabel
+                            value="end"
+                            control={<CheckboxField name="rememberMe" />}
+                            label="Remember me"
+                            labelPlacement="end"
                         />
-                    </Grid>
-                </StyledForm>
-            </Box>
-        </GoogleOAuthProvider>
+                        <ForgotPassword />
+                    </FlexBox>
+
+                </Grid>
+            </StyledForm>
+        </Box>
     )
 }
 
