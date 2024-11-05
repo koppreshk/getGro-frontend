@@ -46,7 +46,7 @@ export const ChatItem = (props: ChatConversation) => {
     const isChatActive = useMemo(() => match?.params.conversationId === id.toString(), [id, match?.params.conversationId]);
 
     const onChatItemClick = () => {
-        navigate(`/chat/${id}`);
+        navigate(`${id}`);
     }
 
     return (

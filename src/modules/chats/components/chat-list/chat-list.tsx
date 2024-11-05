@@ -25,7 +25,7 @@ export const ChatList = (props: ChatListProps) => {
 
     useEffect(() => {
         if (!doesconversationIdExist) {
-            navigate(`/chat/${data.conversations[0].id}`)
+            navigate(`${data.conversations[0].id}`)
         }
     }, [data.conversations, doesconversationIdExist, navigate]);
 

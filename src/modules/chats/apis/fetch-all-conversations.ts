@@ -26,7 +26,7 @@ export const useFetchAllConversations = () => {
 
     const fetchAllDashboardData = React.useCallback(() => getData(`${ChatEndPoint.FETCH_ALL_CONVERSATIONS}`).then((res) => res.json()), [getData])
 
-    return useQuery<AllChatConversations>({
+    return useQuery<AllChatConversations, { message: string }>({
         queryKey: [ChatQueryKeys.FETCH_ALL_CONVERSATIONS],
         queryFn: fetchAllDashboardData
     });
