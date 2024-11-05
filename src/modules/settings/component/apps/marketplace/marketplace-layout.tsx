@@ -6,7 +6,7 @@ import { BreadCrumbs, FlexBox } from "lib/ui-ux"
 import ShopifyIcon from '../../../../../assets/svg/shopify-icon.svg?react';
 import ExotelIcon from '../../../../../assets/svg/exotel-icon.svg?react';
 import GupShupIcon from '../../../../../assets/svg/gupshup.svg?react';
-import WhatsAppIcon from '../../../../../assets/svg/whatsapp.svg?react';
+// import WhatsAppIcon from '../../../../../assets/svg/whatsapp.svg?react';
 import { GupShupConfigurationContainer } from "modules/settings/containers/marketplace/gupshup/gupshup-configuration-container";
 import { ExotelConfigurationContainer } from "modules/settings/containers/marketplace/exotel";
 import { ShopifyConfigurationContainer } from "modules/settings/containers/marketplace/shopify";
@@ -54,12 +54,12 @@ const thirdPartyApps = [
         description: 'Enhance customer engagement with getgro WhatsApp integration via GupShup',
         iconElement: () => <GupShupIcon width="40px" height="40px" />,
     },
-    {
-        name: 'whatsapp',
-        label: 'WhatsApp',
-        description: 'Enhance customer engagement with getgro WhatsApp integration',
-        iconElement: () => <WhatsAppIcon width="40px" height="40px" />,
-    }
+    // {
+    //     name: 'whatsapp',
+    //     label: 'WhatsApp',
+    //     description: 'Enhance customer engagement with getgro WhatsApp integration',
+    //     iconElement: () => <WhatsAppIcon width="40px" height="40px" />,
+    // }
 ];
 
 const ThirdPartyApplications = () => {
