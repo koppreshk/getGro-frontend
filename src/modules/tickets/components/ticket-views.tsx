@@ -2,7 +2,7 @@ import React from "react";
 import { useMatch, useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components"
 import { Typography } from "@mui/material";
-import { DeleteOutlined, ReportOutlined } from '@mui/icons-material/';
+// import { DeleteOutlined, ReportOutlined } from '@mui/icons-material/';
 import { useTranslation } from "react-i18next";
 import { FlexBox, HorizontalSeparator } from "lib/ui-ux"
 import { TicketViewActionButtons } from "./ticket-details/ticket-list-view";
@@ -99,33 +99,33 @@ export const usePrimaryViewOptions = () => {
 }
 
 const useViewOptions = () => {
-    const { t } = useTranslation();
+    // const { t } = useTranslation();
     const primaryOptions = usePrimaryViewOptions();
     const res = {
         primaryOptions,
-        secondaryOptions: [
-            {
-                name: t('deleted_tickets'),
-                primaryKey: 'deleted-tickets',
-                route: 'deleted-tickets',
-                disabled: true,
-                renderIcon: () => <DeleteOutlined />
-            },
-            {
-                name: t('spam_tickets'),
-                primaryKey: 'spam-tickets',
-                route: 'spam-tickets',
-                disabled: true,
-                renderIcon: () => <ReportOutlined />
-            },
-        ]
+        // secondaryOptions: [
+        //     {
+        //         name: t('deleted_tickets'),
+        //         primaryKey: 'deleted-tickets',
+        //         route: 'deleted-tickets',
+        //         disabled: true,
+        //         renderIcon: () => <DeleteOutlined />
+        //     },
+        //     {
+        //         name: t('spam_tickets'),
+        //         primaryKey: 'spam-tickets',
+        //         route: 'spam-tickets',
+        //         disabled: true,
+        //         renderIcon: () => <ReportOutlined />
+        //     },
+        // ]
     }
 
     return res;
 }
 
 export const TicketViews = () => {
-    const { primaryOptions, secondaryOptions } = useViewOptions();
+    const { primaryOptions } = useViewOptions();
     return (
         <ViewsWrapper flexDirection="column">
             <HeaderWrapper width="100%">
@@ -137,13 +137,13 @@ export const TicketViews = () => {
                 </React.Fragment>
             ))}
             <HorizontalSeparator />
-            {
+            {/* {
                 secondaryOptions.map((item) => (
                     <React.Fragment key={item.primaryKey}>
                         <TicketViewOptions {...item} />
                     </React.Fragment>
                 ))
-            }
+            } */}
         </ViewsWrapper>
     )
 };

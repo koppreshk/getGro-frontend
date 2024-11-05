@@ -1,10 +1,8 @@
 import { CustomIconButton, FlexBox, RefreshButton } from "lib/ui-ux"
-import SortIcon from '@mui/icons-material/Sort';
 import { ArrowBack } from '@mui/icons-material/';
-import { Menu, MenuItem, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import styled from "styled-components";
 import { useMatch, useNavigate } from "react-router-dom";
-import React from "react";
 import { TicketViewActionButtons } from ".";
 import { Trans, useTranslation } from "react-i18next";
 import { convertToUnderscore } from "lib/utils";
@@ -22,17 +20,17 @@ export const TicketListViewHeader = () => {
     const navigate = useNavigate();
     const { t } = useTranslation();
 
-    const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+    // const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
+    // const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    //     setAnchorEl(event.currentTarget);
+    // };
 
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    // const handleClose = () => {
+    //     setAnchorEl(null);
+    // };
 
-    const open = Boolean(anchorEl);
+    // const open = Boolean(anchorEl);
 
     return (
         <HeaderWrapper width="100%" justifyContent="space-between">
@@ -42,13 +40,13 @@ export const TicketListViewHeader = () => {
                     <Typography variant="h5"><Trans i18nKey={`${header}`} /></Typography>
                     <FlexBox>
                         <RefreshButton />
-                        <CustomIconButton tooltipProps={{ title: 'Sort' }} iconComponent={<SortIcon />} onClick={handleClick} />
+                        {/* <CustomIconButton tooltipProps={{ title: 'Sort' }} iconComponent={<SortIcon />} onClick={handleClick} /> */}
                     </FlexBox>
-                    <Menu open={open} anchorEl={anchorEl} onClose={handleClose} >
+                    {/* <Menu open={open} anchorEl={anchorEl} onClose={handleClose} >
                         <MenuItem>Status</MenuItem>
                         <MenuItem>Due Date</MenuItem>
                         <MenuItem>Source</MenuItem>
-                    </Menu>
+                    </Menu> */}
                 </FlexBox>
             </FlexBox>
             <TicketViewActionButtons />

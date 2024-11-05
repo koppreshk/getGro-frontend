@@ -51,8 +51,8 @@ const useMenuItems = () => {
     const isFeatureAccessible = useFeature<undefined>();
     return [
         { key: MoreActionsEnum.mergeTicket as string, label: 'Merge Ticket', icon: <MergeOutlined />, hidden: !isFeatureAccessible('merge_ticket') },
-        { key: MoreActionsEnum.deleteTicket as string, label: 'Delete Ticket', icon: <DeleteOutlined /> },
-        { key: MoreActionsEnum.spamTicket as string, label: 'Mark as Spam', icon: <ReportOutlined /> },
+        { key: MoreActionsEnum.deleteTicket as string, label: 'Delete Ticket', icon: <DeleteOutlined />, hidden: true },
+        { key: MoreActionsEnum.spamTicket as string, label: 'Mark as Spam', icon: <ReportOutlined />, hidden: true },
     ];
 
 }
