@@ -1,11 +1,11 @@
 import React, { useMemo } from "react";
 import styled, { css } from "styled-components";
+import { DateTime } from "luxon";
 import { Avatar, Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { Conversation } from "modules/tickets/apis";
 import { chooseRandomColors, getInitialsByName } from "lib/utils";
-import { Done, DoneAll } from '@mui/icons-material';
-import { DateTime } from "luxon";
+import { Done, DoneAll, Person } from '@mui/icons-material';
 
 const Content = styled(FlexBox) <{ $isCustomerQuery: boolean }>`
     background-color: ${({ theme, $isCustomerQuery }) => $isCustomerQuery ? theme.pallete.white : '#d9fdd3'};
@@ -78,7 +78,9 @@ export const WhatsAppChatContent = (props: IChatContentProps) => {
 
     return (
         <Wrapper gap="10px" alignItems="center" ref={containerRef} $isCustomerQuery={isCustomerQuery} flexDirection={isCustomerQuery ? 'row' : 'row-reverse'}>
-            <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>{getInitialsByName(isCustomerQuery ? customerName : (agentName || 'NA'))}</Avatar>
+            <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>
+                {isCustomerQuery ? getInitialsByName(customerName) : <Person />}
+            </Avatar>
             <Content $isCustomerQuery={isCustomerQuery} maxWidth="50%" flexDirection="column" >
                 {content.file_url ? <img src={content.file_url} loading="lazy" /> : null}
                 <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap', marginRight: '21px' }} >

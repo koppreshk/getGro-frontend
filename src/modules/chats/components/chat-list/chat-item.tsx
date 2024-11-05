@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { DateTime } from "luxon";
 import { useMatch, useNavigate } from "react-router-dom";
 import { Typography, } from "@mui/material";
 import { SouthWest, NorthEast } from '@mui/icons-material';
@@ -6,6 +7,7 @@ import { FlexBox } from "lib/ui-ux";
 import styled, { css, useTheme } from "styled-components";
 import { CustomSourceAvatar } from "./custom-source-avatar";
 import { ChatConversation } from "modules/chats/apis";
+import { isToday, isYesterday } from "lib/utils";
 
 const ChatWrapper = styled(FlexBox) <{ $isChatActive: boolean }>`
     padding: 15px 10px 15px 15px;
@@ -48,6 +50,8 @@ export const ChatItem = (props: ChatConversation) => {
     const onChatItemClick = () => {
         navigate(`${id}`);
     }
+    const isoDate = DateTime.fromFormat(created_at, 'yyyy-LL-dd hh:mm a').toISO();
+    const time = DateTime.fromISO(isoDate!).toFormat('hh:mm a');
 
     return (
         <ChatWrapper onClick={onChatItemClick} $isChatActive={isChatActive}>
@@ -58,7 +62,7 @@ export const ChatItem = (props: ChatConversation) => {
                 <FlexBox justifyContent="space-between">
                     <Typography variant="h6" sx={{ textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: 'calc(100% - 125px)', textWrap: 'nowrap' }}>{customer_name}</Typography>
                     <FlexBox flexDirection="row" gap={'10px'} alignItems="flex-end">
-                        <Typography variant="caption" title="Created At" sx={{ color: pallete.grayNeutral }}>{created_at}</Typography>
+                        <Typography variant="caption" title="Created At" sx={{ color: pallete.grayNeutral }}>{isToday(isoDate!) ? `Today, ${time}` : isYesterday(isoDate!) ? `Yesterday, ${time}` : created_at}</Typography>
                         {last_message.direction === "incoming" ? <SouthWest titleAccess="Incoming" sx={{ width: '16px', height: '16px', color: pallete.grayNeutral }} /> : <NorthEast titleAccess="Outgoing" sx={{ width: '16px', height: '16px', color: pallete.grayNeutral }} />}
                     </FlexBox>
                 </FlexBox>
