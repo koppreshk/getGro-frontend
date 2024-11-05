@@ -373,5 +373,10 @@
     "resolution_due": "Resolution Due",
     "search_tickets": "Search Tickets",
     "ticket_id": "Ticket Id",
-    "access_denied_message": "You do not have the necessary access rights to view this page"
+    "access_denied_message": "You do not have the necessary access rights to view this page",
+    "total_tickets":"Total Tickets",
+    "pending_tickets":"Pending Tickets",
+    "response_overdue": "Response Overdue",
+    "resolution_overdue": "Resolution Overdue",
+    "channel_contribution": "Channel Contribution"
 }
