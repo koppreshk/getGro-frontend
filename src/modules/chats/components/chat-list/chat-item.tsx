@@ -4,6 +4,7 @@ import { Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import styled, { css } from "styled-components";
 import { CustomSourceAvatar } from "./custom-source-avatar";
+import { ChatConversation } from "modules/chats/apis";
 
 const ChatWrapper = styled(FlexBox) <{ $isChatActive: boolean }>`
     padding: 15px 10px 15px 15px;
@@ -34,37 +35,29 @@ const StyledTypography = styled(Typography)`
     }
 `;
 
-export interface ChatItemProps {
-    customerName: string;
-    createdAt: string;
-    message: string;
-    source: string;
-    conversationId: string;
-}
-
-export const ChatItem = (props: ChatItemProps) => {
-    const { customerName, createdAt, message, source, conversationId } = props;
+export const ChatItem = (props: ChatConversation) => {
+    const { chat_source, created_at, customer_name, id, last_message } = props;
 
     const match = useMatch('/chat/:conversationId');
     const navigate = useNavigate();
 
-    const isChatActive = useMemo(() => match?.params.conversationId === conversationId.toString(), [conversationId, match?.params.conversationId]);
+    const isChatActive = useMemo(() => match?.params.conversationId === id.toString(), [id, match?.params.conversationId]);
 
     const onChatItemClick = () => {
-        navigate(`/chat/${conversationId}`);
+        navigate(`/chat/${id}`);
     }
 
     return (
         <ChatWrapper onClick={onChatItemClick} $isChatActive={isChatActive}>
             <FlexBox justifyContent="center" alignItems="center">
-                <CustomSourceAvatar source={source} customerName={customerName} />
+                <CustomSourceAvatar chat_source={chat_source} customer_name={customer_name} />
             </FlexBox>
             <ChatContent flexDirection="column" gap="4px">
                 <FlexBox justifyContent="space-between">
-                    <Typography variant="h6" sx={{ textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: 'calc(100% - 125px)', textWrap: 'nowrap' }}>{customerName}</Typography>
-                    <Typography variant="caption">{createdAt}</Typography>
+                    <Typography variant="h6" sx={{ textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: 'calc(100% - 125px)', textWrap: 'nowrap' }}>{customer_name}</Typography>
+                    <Typography variant="caption">{created_at}</Typography>
                 </FlexBox>
-                <StyledTypography variant="body2" title={message}>{message}</StyledTypography>
+                <StyledTypography variant="body2" title={last_message}>{last_message}</StyledTypography>
             </ChatContent>
         </ChatWrapper>
     )

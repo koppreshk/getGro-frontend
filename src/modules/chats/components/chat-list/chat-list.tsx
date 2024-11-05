@@ -5,43 +5,35 @@ import { Typography } from "@mui/material";
 import { Trans } from "react-i18next";
 import { useMatch, useNavigate } from "react-router-dom";
 import { useEffect, useMemo } from "react";
+import { AllChatConversations } from "modules/chats/apis";
 
 const ChatListWrapper = styled(FlexBox)`
     height: calc(100% - 65px);
     overflow: auto;
 `;
 
-const chatListData = [{
-    customerName: 'Sanjay',
-    createdAt: '21/02/2024',
-    message: 'Hi, where is my order?',
-    conversationId: '44',
-    source: 'whatsapp'
-}, {
-    customerName: 'Koppresh P',
-    createdAt: '17/09/2024',
-    message: 'Hi, Refund not received',
-    conversationId: '24',
-    source: 'whatsapp'
-}];
+interface ChatListProps {
+    data: AllChatConversations;
+}
 
-export const ChatList = () => {
+export const ChatList = (props: ChatListProps) => {
+    const { data } = props;
     const navigate = useNavigate();
     const match = useMatch('/chat/:conversationId');
 
-    const doesconversationIdExist = useMemo(() => chatListData.some((item) => item.conversationId.toString() === match?.params.conversationId), [match?.params.conversationId]);
+    const doesconversationIdExist = useMemo(() => data.conversations.some((item) => item.id.toString() === match?.params.conversationId), [data.conversations, match?.params.conversationId]);
 
     useEffect(() => {
         if (!doesconversationIdExist) {
-            navigate(`/chat/${chatListData[0].conversationId}`)
+            navigate(`/chat/${data.conversations[0].id}`)
         }
-    }, [doesconversationIdExist, navigate]);
+    }, [data.conversations, doesconversationIdExist, navigate]);
 
     return (
         <>
             <ChatListWrapper flexDirection="column" width="100%">
-                <Typography variant="h5" sx={{ p: 2 }}><Trans i18nKey="all_chatListData" /></Typography>
-                {chatListData.map((item) => <ChatItem key={item.conversationId} {...item} />)}
+                <Typography variant="h5" sx={{ p: 2 }}><Trans i18nKey="all_conversations" /></Typography>
+                {data.conversations.map((item) => <ChatItem key={item.id} {...item} />)}
             </ChatListWrapper>
         </>
     )

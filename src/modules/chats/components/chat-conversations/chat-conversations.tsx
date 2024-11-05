@@ -9,7 +9,7 @@ export const ChatConversations = () => {
         customer_name: 'Sam',
         agent_name: 'Tom',
         conversations: [{
-            created_at: '10-01-2024T12:56:45z',
+            created_at: '2024-11-04 08:51 PM',
             delivered: true,
             is_agent_sent: false,
             message: 'Hi',
