@@ -13,7 +13,11 @@ export interface ChatConversation {
     id: number
     customer_name: string
     created_at: string
-    last_message: string
+    last_message: {
+        message_type: string;
+        message: string;
+        direction: string;
+    }
     chat_source: string
 }
 

@@ -1,8 +1,9 @@
 import { useMemo } from "react";
 import { useMatch, useNavigate } from "react-router-dom";
-import { Typography } from "@mui/material";
+import { Typography, } from "@mui/material";
+import { SouthWest, NorthEast } from '@mui/icons-material';
 import { FlexBox } from "lib/ui-ux";
-import styled, { css } from "styled-components";
+import styled, { css, useTheme } from "styled-components";
 import { CustomSourceAvatar } from "./custom-source-avatar";
 import { ChatConversation } from "modules/chats/apis";
 
@@ -40,6 +41,7 @@ export const ChatItem = (props: ChatConversation) => {
 
     const match = useMatch('/chat/:conversationId');
     const navigate = useNavigate();
+    const { pallete } = useTheme();
 
     const isChatActive = useMemo(() => match?.params.conversationId === id.toString(), [id, match?.params.conversationId]);
 
@@ -55,9 +57,12 @@ export const ChatItem = (props: ChatConversation) => {
             <ChatContent flexDirection="column" gap="4px">
                 <FlexBox justifyContent="space-between">
                     <Typography variant="h6" sx={{ textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: 'calc(100% - 125px)', textWrap: 'nowrap' }}>{customer_name}</Typography>
-                    <Typography variant="caption">{created_at}</Typography>
+                    <FlexBox flexDirection="row" gap={'10px'} alignItems="flex-end">
+                        <Typography variant="caption" title="Created At" sx={{ color: pallete.grayNeutral }}>{created_at}</Typography>
+                        {last_message.direction === "incoming" ? <SouthWest titleAccess="Incoming" sx={{ width: '16px', height: '16px', color: pallete.grayNeutral }} /> : <NorthEast titleAccess="Outgoing" sx={{ width: '16px', height: '16px', color: pallete.grayNeutral }} />}
+                    </FlexBox>
                 </FlexBox>
-                <StyledTypography variant="body2" title={last_message}>{last_message}</StyledTypography>
+                <StyledTypography variant="body2" title={last_message.message}>{last_message.message}</StyledTypography>
             </ChatContent>
         </ChatWrapper>
     )
