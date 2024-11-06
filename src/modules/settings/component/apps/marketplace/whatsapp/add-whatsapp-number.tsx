@@ -55,7 +55,7 @@ const ChatConfiguration = () => {
                         <Typography variant="h6">{t('auto_reply')}</Typography>
                         <Typography variant="body3">{t('auto_reply_description')}</Typography>
                     </FlexBox>
-                    {watch('sendAutoReply') ? <TextboxField name="autoReplyMessage" label="auto_reply_message" /> : null}
+                    {watch('sendAutoReply') ? <TextboxField name="autoReplyMessage" label={t("auto_reply_message")} multiline rows={4}/> : null}
                 </FlexBox>
             </FlexBox>
         </>
@@ -64,18 +64,20 @@ const ChatConfiguration = () => {
 
 export interface IAddWhatsAppNumberFormProps {
     isMutationLoading?: boolean;
+    defaultValues?: IAddWhatsAppNumberFormFields;
     togglePopup: () => void;
     onSubmit: (formData: IAddWhatsAppNumberFormFields) => void;
 }
 
 export const AddWhatsAppNumberFormBase = (props: IAddWhatsAppNumberFormProps) => {
-    const { togglePopup, isMutationLoading = false, onSubmit } = props;
+    const { togglePopup, isMutationLoading = false, onSubmit, defaultValues } = props;
     const { t } = useTranslation();
 
     const [activeStep, setActiveStep] = React.useState(0);
 
     const form = useForm<IAddWhatsAppNumberFormFields>({
-        mode: 'onChange'
+        mode: 'onChange',
+        defaultValues: defaultValues
     });
 
     const onSubmitForm = async (formFields: IAddWhatsAppNumberFormFields) => {

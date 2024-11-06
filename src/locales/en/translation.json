@@ -390,5 +390,12 @@
     "chat": "Chat",
     "all_conversations": "All Conversations",
     "chat_details": "Chat Details",
-    "create_and_link_ticket": "Create & link ticket"
+    "create_and_link_ticket": "Create & link ticket",
+    "phone_number_id": "Phone number id",
+    "auto_reply": "Auto Reply",
+    "edit_account": "Edit Account",
+    "edit_whatsapp_account_failure": "Failed to edit whatsapp account",
+    "edit_whatsapp_account_succ": "Edited whatsapp account successfully",
+    "add_whatsapp_account_failure": "Failed to add whatsapp account",
+    "add_whatsapp_account_succ": "Added whatsapp account successfully"
 }
