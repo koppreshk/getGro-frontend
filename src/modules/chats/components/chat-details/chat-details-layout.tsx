@@ -19,7 +19,7 @@ export const ChatDetailsLayout = () => {
     }
 
     return (
-        <FlexBox flexDirection="column" width="100%" padding="8px 0 0 0">
+        <FlexBox flexDirection="column" width="100%" padding="8px 0 16px 0">
             <BottomNavigation
                 showLabels
                 value={value}
@@ -29,7 +29,7 @@ export const ChatDetailsLayout = () => {
                 <BottomNavigationAction label="History" icon={<History />} />
             </BottomNavigation>
             <HorizontalSeparator />
-            <FlexBox flexDirection="column">
+            <FlexBox flexDirection="column" height="calc(100% - 57px)">
                 {renderByvalue()}
             </FlexBox>
         </FlexBox>
