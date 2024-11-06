@@ -11,6 +11,7 @@ import { DateTime } from "luxon";
 import { chooseRandomColors, getInitialsByName, useDateDifference } from "lib/utils";
 import { useSourceIcon } from "modules/tickets/hooks";
 import { useFeature } from "lib/hooks";
+import { StyledEllipsisTypography } from "lib/ui-ux";
 
 const StyledCard = styled(FlexBox) <{ $ticketStatus: string }>`
     background: ${({ theme }) => theme.pallete.white};
@@ -67,14 +68,16 @@ export const CardView = (props: ITicketDetails) => {
     }, [match?.pathname, navigate, noOfRecords, pageNumber, ticketId]);
 
     return (
-        <StyledCard $ticketStatus={ticketStatus} onClick={onRowClick} alignItems="center" justifyContent="space-between">
+        <StyledCard $ticketStatus={ticketStatus} onClick={onRowClick} alignItems="center" justifyContent="space-between" width="calc(100% - 40px)">
 
-            <FlexBox alignItems="center" gap="18px">
+            <FlexBox alignItems="center" gap="18px" width="calc(100% - 210px)">
                 <CustomerName customerName={customerName} />
 
-                <FlexBox flexDirection="column" gap="14px">
-                    <FlexBox flexDirection="column">
-                        <Typography variant="h5">{description}</Typography>
+                <FlexBox flexDirection="column" gap="14px" width="100%">
+                    <FlexBox flexDirection="column" width="calc(100% - 70px)">
+                        <Tooltip title={description}>
+                            <StyledEllipsisTypography variant="h5">{description}</StyledEllipsisTypography>
+                        </Tooltip>
 
                         <FlexBox alignItems="baseline" gap="20px">
                             <NameAndSourceContent gap="10px" alignItems="center" renderSeparator={() => <CircularSeparator />}>
@@ -113,7 +116,7 @@ export const CardView = (props: ITicketDetails) => {
 
 const CustomerName = (props: Pick<ITicketDetails, 'customerName'>) => {
     const { customerName } = props;
-    const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(customerName)), [customerName]);
+    const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(getInitialsByName(customerName ?? 'NA')), [customerName]);
 
     return (
         <Avatar sx={{
@@ -123,7 +126,7 @@ const CustomerName = (props: Pick<ITicketDetails, 'customerName'>) => {
             height: '52px',
             fontSize: '20px',
             borderRadius: '20%'
-        }}>{getInitialsByName(customerName)}</Avatar>
+        }}>{getInitialsByName(customerName ?? 'NA')}</Avatar>
     )
 }
 
