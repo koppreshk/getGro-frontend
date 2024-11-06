@@ -10,3 +10,4 @@ export * from './common';
 export * from './breadcrumbs/breadcrumbs';
 export * from './avatar-group/avatar-group';
 export * from './tabs';
+export * from './styled-components';
