@@ -3,6 +3,7 @@ import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { Chat, History } from "@mui/icons-material";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { ChatDetails } from "./chat-details";
+import { ChatHistory } from "./chat-history";
 
 export const ChatDetailsLayout = () => {
     const [value, setValue] = React.useState(0);
@@ -14,6 +15,8 @@ export const ChatDetailsLayout = () => {
         switch (value) {
             case 0:
                 return <ChatDetails />;
+            case 1:
+                return <ChatHistory />;
             default: return null;
         }
     }
