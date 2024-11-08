@@ -5,6 +5,7 @@ import { FlexBox } from "lib/ui-ux";
 import { chooseRandomColors, getInitialsByName, getTime } from "lib/utils";
 import { Done, DoneAll, Person } from '@mui/icons-material';
 import { Message } from "modules/chats/apis";
+import { AttachmentContent } from "./attachment-content";
 
 const Content = styled(FlexBox) <{ $isIncomingMessage: boolean }>`
     background-color: ${({ theme, $isIncomingMessage }) => $isIncomingMessage ? theme.pallete.white : '#d9fdd3'};
@@ -64,7 +65,7 @@ interface IChatContentProps {
 
 export const WhatsAppChatContent = (props: IChatContentProps) => {
     const { content, customerName } = props;
-    const { created_at, direction, replied_by, media_url, message, status, message_type } = content;
+    const { created_at, direction, replied_by, media_url, message, status, mime_type, message_type } = content;
     const isIncomingMessage = direction === 'incoming';
     const containerRef = React.useRef<HTMLDivElement>(null);
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(isIncomingMessage ? customerName : replied_by || 'NA'), [replied_by, customerName, isIncomingMessage]);
@@ -79,14 +80,13 @@ export const WhatsAppChatContent = (props: IChatContentProps) => {
                 {isIncomingMessage ? getInitialsByName(customerName) : <Person />}
             </Avatar>
             <Content $isIncomingMessage={isIncomingMessage} maxWidth="50%" flexDirection="column" >
-                {message_type == 'image' && media_url
-                    ? <FlexBox height="200px">
-                        <img src={media_url} loading="lazy" style={{ width: '200px', height: '200px', objectFit: 'cover' }} />
-                    </FlexBox>
-                    : null}
-                <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap', marginRight: '21px' }} >
-                    {message}
-                </Typography>
+                {message_type != 'text'
+                    ? <AttachmentContent media_url={media_url} mime_type={mime_type} />
+                    : (
+                        <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap', marginRight: '21px' }} >
+                            {message}
+                        </Typography>
+                    )}
                 {!isIncomingMessage
                     ? <FlexBox justifyContent="flex-end" gap="5px" alignItems="center">
                         <Typography variant="subheading2" sx={{ color: '#8696a0' }}>{getTime(created_at)}</Typography>

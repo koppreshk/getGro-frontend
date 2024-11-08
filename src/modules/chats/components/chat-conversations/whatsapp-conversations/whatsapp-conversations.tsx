@@ -67,7 +67,7 @@ export const WhatsAppConversations = (props: WhatsAppConversationsProps) => {
 
     return (
         <ConversationContainerBackground style={{ width: '100%', height: 'calc(100% - 54px)',position: 'relative' }}>
-            <FlexBox height="calc(100% - 157px)" flexDirection="column" overflowY="auto" gap="10px" padding="10px">
+            <FlexBox height="calc(100% - 200px)" flexDirection="column" overflowY="auto" gap="10px" padding="10px">
                 {
                     Object.keys(groupedMessages).map((date) => {
                         return (

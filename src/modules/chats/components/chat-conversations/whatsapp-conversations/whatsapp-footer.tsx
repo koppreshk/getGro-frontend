@@ -21,18 +21,15 @@ interface IWhatsappFooterProps {
 }
 
 const FooterWrapper = styled(FlexBox)`
-    /* border-top: ${({ theme }) => theme.semantics.standardBorder} ; */
     position: absolute;
     width: 100%;
     padding: 15px;
-    bottom: 0px;
 `;
 
 const ContentArea = styled(FlexBox)`
     border-radius: 20px;
     padding: 10px;
     background: white;
-    /* box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px; */
     box-shadow: 0px 10px 50px 12px rgba(0,0,0,0.1);
 `;
 
@@ -40,6 +37,7 @@ interface IFileInfoState {
     original: File[];
     parsedFile: IFileInfo[]
 }
+
 export const WhatsappFooter = (props: IWhatsappFooterProps) => {
     const { onSendAction, isDisabled } = props;
     const [textareaValue, setTextAreaValue] = React.useState('');

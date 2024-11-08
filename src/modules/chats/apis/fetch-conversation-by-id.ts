@@ -20,7 +20,8 @@ export interface Message {
     created_at: string
     replied_by: string
     caption: null | string;
-    media_url?: string
+    media_url?: string;
+    mime_type: string;
 }
 
 export const useFetchConversationById = () => {
