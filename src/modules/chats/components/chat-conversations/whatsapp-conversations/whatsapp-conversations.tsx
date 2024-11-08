@@ -7,10 +7,6 @@ import { ChatConversationById, Message } from "modules/chats/apis";
 import { WhatsappFooter } from "./whatsapp-footer";
 import { WhatsAppChatContent } from "./whatsapp-chat-content";
 
-const ConversationWrapper = styled(FlexBox)`
-    position: relative;
-`;
-
 const DateText = styled(Typography)`
     background: #fffffff2;
     color: ${({ theme }) => theme.pallete.grayVariant2};
@@ -70,30 +66,28 @@ export const WhatsAppConversations = (props: WhatsAppConversationsProps) => {
     }, {} as Record<string, Message[]>), [chatData]);
 
     return (
-        <ConversationWrapper height="100%" width="100%" flexDirection="column">
-            <ConversationContainerBackground>
-                <FlexBox height="calc(100% - 150px)" flexDirection="column" gap="10px" overflowY="auto" padding="10px">
-                    {
-                        Object.keys(groupedMessages).map((date) => {
-                            return (
-                                <React.Fragment key={date}>
-                                    <FlexBox justifyContent="center">
-                                        <DateText variant="subheading2">{isToday(date) ? 'Today' : isYesterday(date) ? 'Yesterday' : date}</DateText>
-                                    </FlexBox>
-                                    {groupedMessages[date]?.map((item, index) => (
-                                        <WhatsAppChatContent
-                                            key={index}
-                                            content={item}
-                                            customerName={data.profile_name} />
-                                    ))}
-                                </React.Fragment>
-                            )
-                        }
+        <ConversationContainerBackground style={{ width: '100%', height: 'calc(100% - 54px)',position: 'relative' }}>
+            <FlexBox height="calc(100% - 157px)" flexDirection="column" overflowY="auto" gap="10px" padding="10px">
+                {
+                    Object.keys(groupedMessages).map((date) => {
+                        return (
+                            <React.Fragment key={date}>
+                                <FlexBox justifyContent="center">
+                                    <DateText variant="subheading2">{isToday(date) ? 'Today' : isYesterday(date) ? 'Yesterday' : date}</DateText>
+                                </FlexBox>
+                                {groupedMessages[date]?.map((item, index) => (
+                                    <WhatsAppChatContent
+                                        key={index}
+                                        content={item}
+                                        customerName={data.profile_name} />
+                                ))}
+                            </React.Fragment>
                         )
                     }
-                </FlexBox>
-            </ConversationContainerBackground>
+                    )
+                }
+            </FlexBox>
             <WhatsappFooter onSendAction={onSendAction} isDisabled={isDisabled} />
-        </ConversationWrapper>
+        </ConversationContainerBackground>
     );
 }

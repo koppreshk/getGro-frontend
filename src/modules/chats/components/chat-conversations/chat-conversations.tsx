@@ -10,9 +10,7 @@ export const ChatConversations = (props: { data: ChatConversationById }) => {
         <>
             <FlexBox flexDirection="column" width="100%">
                 <ChatConversationHeader profile_name={profile_name} profile_number={profile_number} />
-                <div style={{ height: 'calc(100% - 54px)' }}>
-                    <WhatsAppConversations data={props.data} isDisabled />
-                </div>
+                <WhatsAppConversations data={props.data} isDisabled />
             </FlexBox>
         </>
     )
