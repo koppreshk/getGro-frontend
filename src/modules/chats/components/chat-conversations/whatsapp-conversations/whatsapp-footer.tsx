@@ -7,8 +7,9 @@ import styled from "styled-components";
 import { Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import { useUploadFile } from "modules/tickets/apis";
 import { useNotifications } from "lib";
-import { NativeFileUpload } from "../../../../../../lib/ui-ux/file-upload/native-file-upload-field";
 import { getAllFilesInfo } from "lib/ui-ux/file-upload/utils";
+import { NativeFileUpload } from "lib/ui-ux/file-upload/native-file-upload-field";
+import { useTranslation } from "react-i18next";
 
 interface IWhatsappFooterProps {
     onSendAction: (newConversation: {
@@ -45,6 +46,7 @@ export const WhatsappFooter = (props: IWhatsappFooterProps) => {
     const [filePreviewDisplay, setFilePreviewDisplay] = React.useState(false);
     const [fileInfo, setFileInfo] = React.useState<IFileInfoState>({ original: [], parsedFile: [] });
     const form = useForm();
+    const { t } = useTranslation();
 
     const toggleFileDisplay = () => setFilePreviewDisplay((prevValue) => !prevValue);
 
@@ -84,7 +86,7 @@ export const WhatsappFooter = (props: IWhatsappFooterProps) => {
                     <FlexBox justifyContent="space-between" padding="0px 10px 10px">
                         <NativeFileUpload onChange={onFileUpload} />
                         <RoundedSendButton variant="contained" disabled={isDisabled} size="small" endIcon={<Send />} onClick={onSendClick} >
-                            Send
+                            {t('send')}
                         </RoundedSendButton>
                     </FlexBox>
                 </ContentArea>

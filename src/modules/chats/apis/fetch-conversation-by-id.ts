@@ -1,0 +1,38 @@
+import React from "react";
+import { useQuery } from "react-query";
+import { useServiceClient } from "lib";
+import { ChatEndPoint, ChatQueryKeys } from "./api-enums";
+import { useMatch } from "react-router";
+
+export interface ChatConversationById {
+    id: number
+    is_expired: boolean
+    profile_name: string
+    profile_number: string
+    messages: Message[];
+}
+
+export interface Message {
+    message_type: string
+    message?: string
+    direction: string
+    status: string
+    created_at: string
+    replied_by: string
+    caption: null | string;
+    media_id?: string
+}
+
+export const useFetchConversationById = () => {
+    const match = useMatch('/chat/:conversationId');
+    const id = match?.params.conversationId;
+    const { getData } = useServiceClient();
+
+    const fetchAllDashboardData = React.useCallback(() => getData(`${ChatEndPoint.FETCH_CONVERSATION_BY_ID}?conversation_id=${id}`).then((res) => res.json()), [getData, id])
+
+    return useQuery<ChatConversationById, { message: string }>({
+        queryKey: [ChatQueryKeys.FETCH_CONVERSATION_BY_ID, id],
+        queryFn: fetchAllDashboardData,
+        enabled: !!id
+    });
+}
