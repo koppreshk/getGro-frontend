@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { FlexBox, TextArea } from "lib/ui-ux";
+import { ConversationContainerBackground, FlexBox, RoundedSendButton, TextArea } from "lib/ui-ux";
 import { ChatConversationLoader } from "lib/ui-ux/loader-components";
 import { ITicketConversation } from "modules/tickets/apis";
 import { InstagramConversationChatContent } from "./instagram-conversation-chat-content";
@@ -8,8 +8,6 @@ import { FormProvider, useForm } from "react-hook-form";
 import { Send } from "@mui/icons-material";
 import { KeyCodes } from "lib/enums";
 import { FileUploadField } from "lib/form-fields";
-import { RoundedSendButton } from "../email-conversations/email-editor";
-import { Container } from "..";
 
 
 export const InstagramConversation = (props: { data: ITicketConversation, isLoading?: boolean }) => {
@@ -26,13 +24,13 @@ export const InstagramConversation = (props: { data: ITicketConversation, isLoad
 
     return (
         <FlexBox height="100%" flexDirection="column" style={{ position: 'relative' }}>
-            <Container>
+            <ConversationContainerBackground>
                 <FlexBox height="calc(100% - 150px)" flexDirection="column" gap="10px" overflowY="auto" padding="10px">
                     {isLoading ? <ChatConversationLoader />
                         :
                         chatData?.map((item, index) => <InstagramConversationChatContent key={index} content={item} agentName={data.agentName} customerName={data.customerName} />)}
                 </FlexBox>
-            </Container>
+            </ConversationContainerBackground>
             <TicketConversationFooter onSendAction={onSendAction} />
         </FlexBox>
     );

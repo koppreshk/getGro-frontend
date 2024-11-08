@@ -37,3 +37,8 @@ export function useDateDifference(date: string) {
         minsValue
     };
 }
+
+export const getTime = (date: string, format = 'yyyy-LL-dd hh:mm a') => {
+    const isoDate = DateTime.fromFormat(date, format).toISO();
+    return DateTime.fromISO(isoDate!).toFormat('hh:mm a');
+}
