@@ -8,13 +8,13 @@ const FileType = styled(FlexBox)`
     height: 32px;
     padding: 8px;
     border-radius: 6px;
-    background-color: #465365;
+    background-color:  #465365;
     color: ${(props) => props.theme.pallete.white};
 `;
 
-const AttachmentPreviewContainer = styled(FlexBox)`
+const AttachmentPreviewContainer = styled(FlexBox) <{ $isIncomingMessage: boolean }>`
     border: 1px solid ${(props) => props.theme.pallete.grayVariant5};
-    background-color: ${(props) => props.theme.pallete.grayVariant5};
+    background-color: ${({ $isIncomingMessage }) => $isIncomingMessage ? '#d8d9d880' : '#a6c3a180'}; 
     border-radius: 6px;
     width: fit-content;
 `;
@@ -40,11 +40,11 @@ const getFileExtension = (contentType: string): string | undefined => {
     return fileTypes[contentType.toLocaleLowerCase() as keyof typeof fileTypes];
 };
 
-export const AttachmentContent = (props: Pick<Message, 'media_url' | 'mime_type'>) => {
-    const { mime_type = 'image/jpeg', media_url } = props;
+export const AttachmentContent = (props: Pick<Message, 'media_url' | 'mime_type'> & { isIncomingMessage: boolean; }) => {
+    const { mime_type = 'image/jpeg', media_url, isIncomingMessage } = props;
 
     return (
-        <AttachmentPreviewContainer gap="8px" alignItems="center" >
+        <AttachmentPreviewContainer gap="8px" alignItems="center" $isIncomingMessage={isIncomingMessage}>
             <FileType alignItems="center" justifyContent="center">
                 <Typography variant="caption" sx={{ color: 'inherit' }}>
                     {getFileExtension(mime_type)?.toLocaleUpperCase()}

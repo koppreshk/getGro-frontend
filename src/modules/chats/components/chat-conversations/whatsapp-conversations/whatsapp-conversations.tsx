@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Typography } from "@mui/material";
 import { ConversationContainerBackground, FlexBox } from "lib/ui-ux";
 import { isToday, isYesterday } from "lib/utils";
-import { ChatConversationById, Message } from "modules/chats/apis";
+import { ChatConversationById, Message, useSendChatReply } from "modules/chats/apis";
 import { WhatsappFooter } from "./whatsapp-footer";
 import { WhatsAppChatContent } from "./whatsapp-chat-content";
 
@@ -16,14 +16,14 @@ const DateText = styled(Typography)`
 `;
 
 interface WhatsAppConversationsProps {
-    isDisabled?: boolean;
+    conversationId: string;
     data: ChatConversationById;
 }
 
 export const WhatsAppConversations = (props: WhatsAppConversationsProps) => {
-    const { data, isDisabled } = props;
+    const { data, conversationId } = props;
     const [chatData, setChatData] = React.useState(data.messages);
-    // const { mutateAsync } = useSendWhatsAppMessages();
+    const { mutateAsync } = useSendChatReply();
 
     React.useEffect(() => {
         setChatData(data.messages);
@@ -31,23 +31,26 @@ export const WhatsAppConversations = (props: WhatsAppConversationsProps) => {
 
     const onSendAction = React.useCallback((newConversation: { message: string; fileUrl?: string, type: string }) => {
         console.log(newConversation);
-        // setChatData((prevValue) => ([...prevValue, {
-        //     created_at: new Date().toISOString(),
-        //     delivered: false,
-        //     is_agent_sent: true,
-        //     message: newConversation.message,
-        //     message_id: '',
-        //     read: false,
-        //     file_url: newConversation.fileUrl,
-        //     message_type: newConversation.type
-        // }]))
-        // mutateAsync({
-        //     messageId: chatData[chatData.length - 1].message_id,
-        //     message: newConversation.message,
-        //     fileUrl: newConversation.fileUrl,
-        //     type: newConversation.type
-        // })
-    }, [])
+        setChatData((prevValue) => ([...prevValue, {
+            created_at: new Date().toISOString(),
+            caption: '',
+            direction: 'outgoing',
+            replied_by: 'agent',
+            message: newConversation.message,
+            status: 'pending',
+            message_type: 'text'
+        }]))
+        mutateAsync({
+            conversation_id: conversationId,
+            message_type: "text",
+            message: newConversation.message,
+            chat_type: "whatsapp",
+            media_url: undefined,
+            caption: '',
+            filename: undefined,
+            mime_type: undefined
+        })
+    }, [mutateAsync, conversationId])
 
     // Group messages by date
     const groupedMessages = useMemo(() => chatData.reduce((acc, message) => {
@@ -66,28 +69,30 @@ export const WhatsAppConversations = (props: WhatsAppConversationsProps) => {
     }, {} as Record<string, Message[]>), [chatData]);
 
     return (
-        <ConversationContainerBackground style={{ width: '100%', height: 'calc(100% - 54px)',position: 'relative' }}>
-            <FlexBox height="calc(100% - 200px)" flexDirection="column" overflowY="auto" gap="10px" padding="10px">
-                {
-                    Object.keys(groupedMessages).map((date) => {
-                        return (
-                            <React.Fragment key={date}>
-                                <FlexBox justifyContent="center">
-                                    <DateText variant="subheading2">{isToday(date) ? 'Today' : isYesterday(date) ? 'Yesterday' : date}</DateText>
-                                </FlexBox>
-                                {groupedMessages[date]?.map((item, index) => (
-                                    <WhatsAppChatContent
-                                        key={index}
-                                        content={item}
-                                        customerName={data.profile_name} />
-                                ))}
-                            </React.Fragment>
+        <ConversationContainerBackground style={{ width: '100%', height: 'calc(100% - 54px)' }}>
+            <FlexBox height="100%" flexDirection="column">
+                <FlexBox height="calc(100% - 157px)" maxHeight="calc(100% - 157px)" flexDirection="column" overflowY="auto" gap="10px" padding="10px">
+                    {
+                        Object.keys(groupedMessages).map((date) => {
+                            return (
+                                <React.Fragment key={date}>
+                                    <FlexBox justifyContent="center">
+                                        <DateText variant="subheading2">{isToday(date) ? 'Today' : isYesterday(date) ? 'Yesterday' : date}</DateText>
+                                    </FlexBox>
+                                    {groupedMessages[date]?.map((item, index) => (
+                                        <WhatsAppChatContent
+                                            key={index}
+                                            content={item}
+                                            customerName={data.profile_name} />
+                                    ))}
+                                </React.Fragment>
+                            )
+                        }
                         )
                     }
-                    )
-                }
+                </FlexBox>
+                <WhatsappFooter onSendAction={onSendAction} />
             </FlexBox>
-            <WhatsappFooter onSendAction={onSendAction} isDisabled={isDisabled} />
         </ConversationContainerBackground>
     );
 }

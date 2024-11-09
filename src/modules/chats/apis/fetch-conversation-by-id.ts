@@ -2,7 +2,6 @@ import React from "react";
 import { useQuery } from "react-query";
 import { useServiceClient } from "lib";
 import { ChatEndPoint, ChatQueryKeys } from "./api-enums";
-import { useMatch } from "react-router";
 
 export interface ChatConversationById {
     id: number
@@ -13,7 +12,7 @@ export interface ChatConversationById {
 }
 
 export interface Message {
-    message_type: string
+    message_type: 'text' | 'video' | 'audio' | 'document'
     message?: string
     direction: string
     status: string
@@ -21,12 +20,10 @@ export interface Message {
     replied_by: string
     caption: null | string;
     media_url?: string;
-    mime_type: string;
+    mime_type?: string;
 }
 
-export const useFetchConversationById = () => {
-    const match = useMatch('/chat/:conversationId');
-    const id = match?.params.conversationId;
+export const useFetchConversationById = (id?: string) => {
     const { getData } = useServiceClient();
 
     const fetchAllDashboardData = React.useCallback(() => getData(`${ChatEndPoint.FETCH_CONVERSATION_BY_ID}?conversation_id=${id}`).then((res) => res.json()), [getData, id])

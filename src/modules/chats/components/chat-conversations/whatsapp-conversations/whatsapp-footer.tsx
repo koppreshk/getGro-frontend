@@ -1,15 +1,15 @@
 import React, { useCallback } from "react";
-import { CancelButton, FlexBox, IFileInfo, RoundedSendButton, TextArea, parseFileInfo } from "lib/ui-ux";
-import { Send } from "@mui/icons-material";
-import { KeyCodes } from "lib/enums";
 import { FormProvider, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { Send } from "@mui/icons-material";
 import styled from "styled-components";
 import { Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
-import { useUploadFile } from "modules/tickets/apis";
 import { useNotifications } from "lib";
+import { useUploadFileToS3 } from "modules/chats/apis/upload-file-s3";
+import { KeyCodes } from "lib/enums";
+import { CancelButton, FlexBox, IFileInfo, RoundedSendButton, TextArea, parseFileInfo } from "lib/ui-ux";
 import { getAllFilesInfo } from "lib/ui-ux/file-upload/utils";
 import { NativeFileUpload } from "lib/ui-ux/file-upload/native-file-upload-field";
-import { useTranslation } from "react-i18next";
 
 interface IWhatsappFooterProps {
     onSendAction: (newConversation: {
@@ -17,11 +17,9 @@ interface IWhatsappFooterProps {
         fileUrl?: string;
         type: string;
     }) => void;
-    isDisabled?: boolean;
 }
 
 const FooterWrapper = styled(FlexBox)`
-    position: absolute;
     width: 100%;
     padding: 15px;
 `;
@@ -39,7 +37,7 @@ interface IFileInfoState {
 }
 
 export const WhatsappFooter = (props: IWhatsappFooterProps) => {
-    const { onSendAction, isDisabled } = props;
+    const { onSendAction } = props;
     const [textareaValue, setTextAreaValue] = React.useState('');
     const [filePreviewDisplay, setFilePreviewDisplay] = React.useState(false);
     const [fileInfo, setFileInfo] = React.useState<IFileInfoState>({ original: [], parsedFile: [] });
@@ -83,7 +81,7 @@ export const WhatsappFooter = (props: IWhatsappFooterProps) => {
                     <TextArea onChange={onTextChange} value={textareaValue} onKeyDown={onKeyDown} placeholder="Shift + Enter to add a new line" />
                     <FlexBox justifyContent="space-between" padding="0px 10px 10px">
                         <NativeFileUpload onChange={onFileUpload} />
-                        <RoundedSendButton variant="contained" disabled={isDisabled} size="small" endIcon={<Send />} onClick={onSendClick} >
+                        <RoundedSendButton variant="contained" size="small" endIcon={<Send />} onClick={onSendClick} >
                             {t('send')}
                         </RoundedSendButton>
                     </FlexBox>
@@ -104,7 +102,7 @@ export const WhatsappFooter = (props: IWhatsappFooterProps) => {
 const UploadedFilePreview = (props: { toggleFileDisplay: () => void, filePreviewDisplay: boolean; fileInfo: IFileInfoState } & IWhatsappFooterProps) => {
     const { filePreviewDisplay, fileInfo, toggleFileDisplay, onSendAction } = props;
     const [textareaValue, setTextAreaValue] = React.useState('');
-    const { mutateAsync } = useUploadFile();
+    const { mutateAsync } = useUploadFileToS3();
     const { showNotification } = useNotifications();
 
     const uploadFileToServer = useCallback(() => {
@@ -113,7 +111,7 @@ const UploadedFilePreview = (props: { toggleFileDisplay: () => void, filePreview
         formData.append('content_type', fileInfo.original[0].type);
 
         mutateAsync(formData).then((res: { file_url: string }) => {
-            onSendAction({ message: textareaValue, fileUrl: res.file_url, type: 'image' });
+            onSendAction({ message: textareaValue, fileUrl: res.file_url, type: fileInfo.original[0].type });
         })
             .catch(() => showNotification({ message: 'Failed to send the file and message', type: 'error' }))
             .finally(() => toggleFileDisplay())

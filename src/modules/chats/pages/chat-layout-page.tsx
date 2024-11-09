@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { CenteredCircularProgress, ErrorMessage, FlexBox, GridLayout } from "lib/ui-ux";
+import { CenteredCircularProgress, ErrorMessage, FlexBox } from "lib/ui-ux";
 import { ChatConversationsContainer, ChatDetailsLayoutContainer } from "../containers";
 import { useFetchAllConversations } from "../apis";
 import { ChatList } from "../components";
 
-const StyledLayoutWrapper = styled(GridLayout)`
+const StyledLayoutWrapper = styled(FlexBox)`
     background-color: ${({ theme }) => theme.pallete.white};
 `;
 
@@ -22,14 +22,14 @@ export default function ChatLayoutPage() {
 
     if (data) {
         return (
-            <StyledLayoutWrapper $gridTemplateColumns={'1fr 2fr 1fr'} $height={'100%'} $gridGap={'20px'}>
-                <StyledLayouts width="100%">
+            <StyledLayoutWrapper height={'100%'} gap={'20px'}>
+                <StyledLayouts width="25">
                     <ChatList data={data} />
                 </StyledLayouts>
-                <StyledLayouts width="100%">
+                <StyledLayouts width="50%">
                     <ChatConversationsContainer />
                 </StyledLayouts>
-                <StyledLayouts width="100%">
+                <StyledLayouts width="25%">
                     <ChatDetailsLayoutContainer />
                 </StyledLayouts>
             </StyledLayoutWrapper>

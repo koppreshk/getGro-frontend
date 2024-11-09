@@ -81,7 +81,7 @@ export const WhatsAppChatContent = (props: IChatContentProps) => {
             </Avatar>
             <Content $isIncomingMessage={isIncomingMessage} maxWidth="50%" flexDirection="column" >
                 {message_type != 'text'
-                    ? <AttachmentContent media_url={media_url} mime_type={mime_type} />
+                    ? <AttachmentContent media_url={media_url} mime_type={mime_type} isIncomingMessage={isIncomingMessage}/>
                     : (
                         <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap', marginRight: '21px' }} >
                             {message}

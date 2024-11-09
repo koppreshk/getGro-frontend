@@ -1,17 +1,21 @@
+import { useMatch } from "react-router-dom";
 import { CenteredCircularProgress } from "lib/ui-ux";
 import { useFetchConversationById } from "../apis";
 import { ChatConversations } from "../components/chat-conversations";
 
 export const ChatConversationsContainer = () => {
-    const { data, isLoading } = useFetchConversationById();
+    const match = useMatch('/chat/:conversationId');
+    const id = match?.params.conversationId;
+
+    const { data, isLoading } = useFetchConversationById(id);
 
     if (isLoading) {
         return <CenteredCircularProgress />
     }
 
-    if (data) {
+    if (data && id) {
         return (
-            <ChatConversations data={data} />
+            <ChatConversations data={data} conversationId={id} />
         )
     }
 
