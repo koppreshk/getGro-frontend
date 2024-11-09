@@ -23,10 +23,10 @@ export default function ChatLayoutPage() {
     if (data?.conversations.length) {
         return (
             <StyledLayoutWrapper height={'100%'} gap={'20px'}>
-                <StyledLayouts width="25%">
+                <StyledLayouts width="calc(25% - 20px)">
                     <ChatList data={data} />
                 </StyledLayouts>
-                <StyledLayouts width="50%">
+                <StyledLayouts width="calc(50% - 20px)">
                     <ChatConversationsContainer />
                 </StyledLayouts>
                 <StyledLayouts width="25%">

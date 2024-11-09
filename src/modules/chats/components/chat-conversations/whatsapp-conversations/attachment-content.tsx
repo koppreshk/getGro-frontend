@@ -40,25 +40,30 @@ const getFileExtension = (contentType: string): string | undefined => {
     return fileTypes[contentType.toLocaleLowerCase() as keyof typeof fileTypes];
 };
 
-export const AttachmentContent = (props: Pick<Message, 'media_url' | 'mime_type'> & { isIncomingMessage: boolean; }) => {
-    const { mime_type = 'image/jpeg', media_url, isIncomingMessage } = props;
+export const AttachmentContent = (props: Pick<Message, 'media_url' | 'mime_type' | 'caption'> & { isIncomingMessage: boolean; }) => {
+    const { mime_type = 'image/jpeg', media_url, caption, isIncomingMessage } = props;
 
     return (
-        <AttachmentPreviewContainer gap="8px" alignItems="center" $isIncomingMessage={isIncomingMessage}>
-            <FileType alignItems="center" justifyContent="center">
-                <Typography variant="caption" sx={{ color: 'inherit' }}>
-                    {getFileExtension(mime_type)?.toLocaleUpperCase()}
+        <FlexBox flexDirection="column">
+            <AttachmentPreviewContainer gap="8px" alignItems="center" $isIncomingMessage={isIncomingMessage}>
+                <FileType alignItems="center" justifyContent="center">
+                    <Typography variant="caption" sx={{ color: 'inherit' }}>
+                        {getFileExtension(mime_type)?.toLocaleUpperCase()}
+                    </Typography>
+                </FileType>
+                <Typography
+                    variant="body3"
+                    title={'File'}
+                    sx={{ maxWidth: '120px', minWidth: '80px', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}>
+                    {'File'}
                 </Typography>
-            </FileType>
-            <Typography
-                variant="body3"
-                title={'File'}
-                sx={{ maxWidth: '120px', minWidth: '80px', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}>
-                {'File'}
+                <FlexBox alignItems="center">
+                    <PreviewFileContent media_url={media_url} mime_type={mime_type} />
+                </FlexBox>
+            </AttachmentPreviewContainer>
+            <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap', marginRight: '21px' }} >
+                {caption}
             </Typography>
-            <FlexBox alignItems="center">
-                <PreviewFileContent media_url={media_url} mime_type={mime_type} />
-            </FlexBox>
-        </AttachmentPreviewContainer>
+        </FlexBox>
     )
 }

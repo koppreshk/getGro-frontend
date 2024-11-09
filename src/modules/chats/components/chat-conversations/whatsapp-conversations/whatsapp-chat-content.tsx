@@ -65,7 +65,7 @@ interface IChatContentProps {
 
 export const WhatsAppChatContent = (props: IChatContentProps) => {
     const { content, customerName } = props;
-    const { created_at, direction, replied_by, media_url, message, status, mime_type, message_type } = content;
+    const { created_at, direction, replied_by, media_url, message, status, mime_type, message_type, caption } = content;
     const isIncomingMessage = direction === 'incoming';
     const containerRef = React.useRef<HTMLDivElement>(null);
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(isIncomingMessage ? customerName : replied_by || 'NA'), [replied_by, customerName, isIncomingMessage]);
@@ -81,7 +81,7 @@ export const WhatsAppChatContent = (props: IChatContentProps) => {
             </Avatar>
             <Content $isIncomingMessage={isIncomingMessage} maxWidth="50%" flexDirection="column" >
                 {message_type != 'text'
-                    ? <AttachmentContent media_url={media_url} mime_type={mime_type} isIncomingMessage={isIncomingMessage}/>
+                    ? <AttachmentContent media_url={media_url} mime_type={mime_type} caption={caption} isIncomingMessage={isIncomingMessage}/>
                     : (
                         <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap', marginRight: '21px' }} >
                             {message}
