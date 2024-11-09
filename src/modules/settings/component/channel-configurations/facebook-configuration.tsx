@@ -94,7 +94,7 @@ export default function FacebookConfigurations() {
                 appId: '386521997887994', // Replace with your Facebook App ID
                 cookie: true,
                 xfbml: true,
-                version: 'v20.0', // Use the latest version
+                version: 'v21.0', // Use the latest version
             });
             window.FB.AppEvents.logPageView();
         };
@@ -125,8 +125,10 @@ export default function FacebookConfigurations() {
             }
         }, {
             config_id: '1074101920418362',
-            redirect_uri: 'https://haanum.getgro.io/configurations/facebook',
-        }); // Request email permission
+            response_type: 'code',
+            override_default_response_type: true,
+            redirect_uri: 'https://intent.getgro.io/configurations/facebook'
+        });
     };
 
     const onCopy = () => {
