@@ -29,26 +29,26 @@ export const WhatsAppConversations = (props: WhatsAppConversationsProps) => {
         setChatData(data.messages);
     }, [data.messages]);
 
-    const onSendAction = React.useCallback((newConversation: { message: string; fileUrl?: string, type: string }) => {
-        console.log(newConversation);
+    const onSendAction = React.useCallback((newConversation: { message: string; mediaURL?: string, type?: string, caption?: string, filename?: string }) => {
+        const { message, mediaURL, type, caption, filename } = newConversation;
         setChatData((prevValue) => ([...prevValue, {
             created_at: new Date().toISOString(),
             caption: '',
             direction: 'outgoing',
             replied_by: 'agent',
-            message: newConversation.message,
+            message: message,
             status: 'pending',
             message_type: 'text'
         }]))
-        mutateAsync({
+        return mutateAsync({
             conversation_id: conversationId,
             message_type: "text",
-            message: newConversation.message,
+            message: message,
             chat_type: "whatsapp",
-            media_url: undefined,
-            caption: '',
-            filename: undefined,
-            mime_type: undefined
+            media_url: mediaURL,
+            caption: caption,
+            filename: filename,
+            mime_type: type
         })
     }, [mutateAsync, conversationId])
 

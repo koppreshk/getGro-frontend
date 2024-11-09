@@ -7,7 +7,10 @@ interface ISendChatReplyArgs {
     conversation_id: string | number
     message_type: 'text' | 'video' | 'audio' | 'document';
     message: string
-    chat_type: string
+    chat_type: string;
+    /**
+     * Send below properties when attachment is uploaded
+     */
     media_url?: string
     caption?: string
     filename?: string

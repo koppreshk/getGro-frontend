@@ -1,24 +1,20 @@
 import { useCallback } from "react";
 import { useMutation } from "react-query";
-import { ChatQueryKeys, ChatEndPoint } from "./api-enums";
-import { useAuth } from "modules/login";
+import { ChatQueryKeys } from "./api-enums";
 
 export const useUploadFileToS3 = () => {
-    const { user } = useAuth();
-    const subDomainValue = import.meta.env.VITE_SUB_DOMAIN ?? new URL(location.origin).href; //Keeping env values incase of overiding from local
-
-    const uploadFile = useCallback((body: FormData) =>
-        fetch(`${import.meta.env.VITE_REST_URL}${ChatEndPoint.PRESIGNED_URL}`, {
-            body: body,
-            method: 'post',
+    const uploadFile = useCallback((args: { presignedUrl: string, file: File }) => {
+        return fetch(args.presignedUrl, {
+            method: 'PUT',
             headers: {
-                'Authorization': user!.authToken,
-                'sub-domain': subDomainValue
-            }
-        }).then((res) => res.json()), [subDomainValue, user]);
+                'Content-Type': args.file.type, // Make sure to set the content type of the file
+            },
+            body: args.file,
+        }).then((res) => res.json())
+    }, []);
 
     return useMutation({
-        mutationKey: [ChatQueryKeys.PRESIGNED_URL],
+        mutationKey: [ChatQueryKeys.PRESIGNED_URL_S3],
         mutationFn: uploadFile
     });
 }

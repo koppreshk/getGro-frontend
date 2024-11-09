@@ -10,13 +10,10 @@ import { KeyCodes } from "lib/enums";
 import { CancelButton, FlexBox, IFileInfo, RoundedSendButton, TextArea, parseFileInfo } from "lib/ui-ux";
 import { getAllFilesInfo } from "lib/ui-ux/file-upload/utils";
 import { NativeFileUpload } from "lib/ui-ux/file-upload/native-file-upload-field";
+import { usePresignedURL } from "modules/chats/apis/presigned-url";
 
 interface IWhatsappFooterProps {
-    onSendAction: (newConversation: {
-        message: string;
-        fileUrl?: string;
-        type: string;
-    }) => void;
+    onSendAction: (newConversation: { message: string; mediaURL?: string, type?: string, caption?: string, filename?: string }) => Promise<{ status: boolean }>;
 }
 
 const FooterWrapper = styled(FlexBox)`
@@ -102,20 +99,27 @@ export const WhatsappFooter = (props: IWhatsappFooterProps) => {
 const UploadedFilePreview = (props: { toggleFileDisplay: () => void, filePreviewDisplay: boolean; fileInfo: IFileInfoState } & IWhatsappFooterProps) => {
     const { filePreviewDisplay, fileInfo, toggleFileDisplay, onSendAction } = props;
     const [textareaValue, setTextAreaValue] = React.useState('');
-    const { mutateAsync } = useUploadFileToS3();
+    const { mutateAsync: getPresignedURL } = usePresignedURL();
+    const { mutateAsync: uploadFileToS3 } = useUploadFileToS3();
     const { showNotification } = useNotifications();
 
-    const uploadFileToServer = useCallback(() => {
-        const formData = new FormData();
-        formData.append("file", fileInfo.original[0]);
-        formData.append('content_type', fileInfo.original[0].type);
+    const uploadFileToServer = useCallback(async () => {
+        const res = await getPresignedURL({ content_type: fileInfo.original[0].type });
+        uploadFileToS3({
+            presignedUrl: res.url,
+            file: fileInfo.original[0]
+        }).then(() => {
+            return onSendAction({
+                message: '',
+                mediaURL: res.media_url,
+                type: fileInfo.original[0].type,
+                caption: textareaValue,
+                filename: fileInfo.original[0].name
+            })
+        }).catch(() => showNotification({ message: 'Failed to send the file and message', type: 'error' }))
+            .finally(() => toggleFileDisplay());
 
-        mutateAsync(formData).then((res: { file_url: string }) => {
-            onSendAction({ message: textareaValue, fileUrl: res.file_url, type: fileInfo.original[0].type });
-        })
-            .catch(() => showNotification({ message: 'Failed to send the file and message', type: 'error' }))
-            .finally(() => toggleFileDisplay())
-    }, [fileInfo.original, mutateAsync, onSendAction, showNotification, textareaValue, toggleFileDisplay])
+    }, [fileInfo.original, getPresignedURL, onSendAction, showNotification, textareaValue, toggleFileDisplay, uploadFileToS3])
 
     const onKeyDown: React.KeyboardEventHandler<HTMLTextAreaElement> = React.useCallback((ev) => {
         if (ev.key === KeyCodes.EnterKey && !ev.shiftKey) {

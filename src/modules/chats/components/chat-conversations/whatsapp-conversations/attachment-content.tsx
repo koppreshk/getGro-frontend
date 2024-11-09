@@ -33,7 +33,7 @@ const fileTypes = {
     'image/bmp': 'bmp',
     'image/gif': 'gif',
     'image/tiff': 'tiff',
-    'mime_type': 'vedio'
+    'mime_type': 'video'
 };
 
 const getFileExtension = (contentType: string): string | undefined => {
