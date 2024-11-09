@@ -1,11 +1,11 @@
 import { useCallback } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useServiceClient } from "lib"
-import { ChatEndPoint, ChatQueryKeys } from ".";
+import { ChatEndPoint, ChatQueryKeys, MessageType } from ".";
 
 interface ISendChatReplyArgs {
     conversation_id: string | number
-    message_type: 'text' | 'video' | 'audio' | 'document';
+    message_type: MessageType;
     message: string
     chat_type: string;
     /**

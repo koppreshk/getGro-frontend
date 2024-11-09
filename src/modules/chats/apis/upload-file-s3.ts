@@ -10,7 +10,7 @@ export const useUploadFileToS3 = () => {
                 'Content-Type': args.file.type, // Make sure to set the content type of the file
             },
             body: args.file,
-        }).then((res) => res.json())
+        })
     }, []);
 
     return useMutation({

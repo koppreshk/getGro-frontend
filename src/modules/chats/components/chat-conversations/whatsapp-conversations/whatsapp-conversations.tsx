@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Typography } from "@mui/material";
 import { ConversationContainerBackground, FlexBox } from "lib/ui-ux";
 import { isToday, isYesterday } from "lib/utils";
-import { ChatConversationById, Message, useSendChatReply } from "modules/chats/apis";
+import { ChatConversationById, Message, MessageType, useSendChatReply } from "modules/chats/apis";
 import { WhatsappFooter } from "./whatsapp-footer";
 import { WhatsAppChatContent } from "./whatsapp-chat-content";
 
@@ -20,6 +20,30 @@ interface WhatsAppConversationsProps {
     data: ChatConversationById;
 }
 
+function getFileType(mimeType: string): MessageType {
+    if (mimeType.startsWith("image/")) {
+        return "image";
+    } else if (mimeType.startsWith("video/")) {
+        return "video";
+    } else if (mimeType.startsWith("audio/")) {
+        return "audio";
+    } else if (
+        mimeType === "application/pdf" ||
+        mimeType === "application/msword" ||
+        mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+        mimeType === "application/vnd.ms-excel" ||
+        mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+        mimeType === "application/vnd.ms-powerpoint" ||
+        mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation" ||
+        mimeType === "text/plain" ||
+        mimeType === "application/json"
+    ) {
+        return "document";
+    } else {
+        return "document";
+    }
+}
+
 export const WhatsAppConversations = (props: WhatsAppConversationsProps) => {
     const { data, conversationId } = props;
     const [chatData, setChatData] = React.useState(data.messages);
@@ -28,6 +52,7 @@ export const WhatsAppConversations = (props: WhatsAppConversationsProps) => {
     React.useEffect(() => {
         setChatData(data.messages);
     }, [data.messages]);
+
 
     const onSendAction = React.useCallback((newConversation: { message: string; mediaURL?: string, type?: string, caption?: string, filename?: string }) => {
         const { message, mediaURL, type, caption, filename } = newConversation;
@@ -38,11 +63,13 @@ export const WhatsAppConversations = (props: WhatsAppConversationsProps) => {
             replied_by: 'agent',
             message: message,
             status: 'pending',
-            message_type: 'text'
+            message_type: mediaURL ? getFileType(type!) : "text",
+            media_url: mediaURL,
+            mime_type: type
         }]))
         return mutateAsync({
             conversation_id: conversationId,
-            message_type: "text",
+            message_type: mediaURL ? getFileType(type!) : "text",
             message: message,
             chat_type: "whatsapp",
             media_url: mediaURL,

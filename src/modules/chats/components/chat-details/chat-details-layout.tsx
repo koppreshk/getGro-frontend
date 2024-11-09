@@ -22,7 +22,7 @@ export const ChatDetailsLayout = () => {
     }
 
     return (
-        <FlexBox flexDirection="column" width="100%" padding="8px 0 16px 0">
+        <FlexBox flexDirection="column" width="100%" padding="8px 16px 16px 0">
             <BottomNavigation
                 showLabels
                 value={value}

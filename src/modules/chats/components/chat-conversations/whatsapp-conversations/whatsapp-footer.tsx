@@ -105,19 +105,24 @@ const UploadedFilePreview = (props: { toggleFileDisplay: () => void, filePreview
 
     const uploadFileToServer = useCallback(async () => {
         const res = await getPresignedURL({ content_type: fileInfo.original[0].type });
-        uploadFileToS3({
+        const s3Response = await uploadFileToS3({
             presignedUrl: res.url,
             file: fileInfo.original[0]
-        }).then(() => {
-            return onSendAction({
-                message: '',
-                mediaURL: res.media_url,
-                type: fileInfo.original[0].type,
-                caption: textareaValue,
-                filename: fileInfo.original[0].name
-            })
-        }).catch(() => showNotification({ message: 'Failed to send the file and message', type: 'error' }))
-            .finally(() => toggleFileDisplay());
+        });
+        try {
+            if (s3Response.ok) {
+                return onSendAction({
+                    message: '',
+                    mediaURL: res.media_url,
+                    type: fileInfo.original[0].type,
+                    caption: textareaValue,
+                    filename: fileInfo.original[0].name
+                }).finally(() => toggleFileDisplay())
+            }
+        } catch (error) {
+            showNotification({ message: 'Failed to send the file and message', type: 'error' });
+            toggleFileDisplay();
+        }
 
     }, [fileInfo.original, getPresignedURL, onSendAction, showNotification, textareaValue, toggleFileDisplay, uploadFileToS3])
 

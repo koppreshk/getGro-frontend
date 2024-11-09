@@ -11,8 +11,10 @@ export interface ChatConversationById {
     messages: Message[];
 }
 
+export type MessageType = 'image' | 'text' | 'video' | 'audio' | 'document';
+
 export interface Message {
-    message_type: 'text' | 'video' | 'audio' | 'document'
+    message_type: MessageType;
     message?: string
     direction: string
     status: string

@@ -20,10 +20,10 @@ export default function ChatLayoutPage() {
         return <CenteredCircularProgress />;
     }
 
-    if (data) {
+    if (data?.conversations.length) {
         return (
             <StyledLayoutWrapper height={'100%'} gap={'20px'}>
-                <StyledLayouts width="25">
+                <StyledLayouts width="25%">
                     <ChatList data={data} />
                 </StyledLayouts>
                 <StyledLayouts width="50%">
