@@ -12,3 +12,5 @@ export * from './refresh-button';
 export * from './action-buttons';
 export * from './manage-status';
 export * from './manage-priority';
+export * from './manage-assignee';
+export * from './manage-tags';
