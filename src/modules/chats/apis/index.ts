@@ -6,3 +6,5 @@ export * from './send-chat-reply';
 export * from './upload-file-s3';
 export * from './fetch-all-chat-statuses';
 export * from './update-chat-status';
+export * from './fetch-all-chat-priorities';
+export * from './fetch-all-chat-tags';

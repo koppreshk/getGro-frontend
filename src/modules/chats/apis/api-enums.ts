@@ -5,7 +5,10 @@ export enum ChatEndPoint {
     SEND_REPLY = 'chat/reply',
     PRESIGNED_URL = 'presigned_url',
     FETCH_ALL_CHAT_STATUSES = 'chat/statuses',
-    UPDATE_CHAT_STATUS = 'chat/update_status'
+    UPDATE_CHAT_STATUS = 'chat/update_status',
+    FETCH_ALL_CHAT_PRIORITIES = 'chat/priorities',
+    UPDATE_CHAT_PRIORITY = 'chat/update_priority',
+    FETCH_ALL_CHAT_TAGS = 'chat/tags'
 }
 
 export enum ChatQueryKeys {
@@ -16,6 +19,8 @@ export enum ChatQueryKeys {
     PRESIGNED_URL = 'PRESIGNED_URL',
     PRESIGNED_URL_S3 = 'PRESIGNED_URL_S3',
     FETCH_ALL_CHAT_STATUSES = 'FETCH_ALL_CHAT_STATUSES',
-    UPDATE_CHAT_STATUS = 'UPDATE_CHAT_STATUS'
-
+    FETCH_ALL_CHAT_PRIORITIES = 'FETCH_ALL_CHAT_PRIORITIES',
+    FETCH_ALL_CHAT_TAGS = 'FETCH_ALL_CHAT_TAGS',
+    UPDATE_CHAT_STATUS = 'UPDATE_CHAT_STATUS',
+    UPDATE_CHAT_PRIORITY = 'UPDATE_CHAT_PRIORITY'
 }
