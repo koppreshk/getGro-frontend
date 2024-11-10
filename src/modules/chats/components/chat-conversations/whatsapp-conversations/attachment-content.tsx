@@ -44,7 +44,7 @@ export const AttachmentContent = (props: Pick<Message, 'media_url' | 'mime_type'
     const { mime_type = 'image/jpeg', media_url, caption, isIncomingMessage } = props;
 
     return (
-        <FlexBox flexDirection="column">
+        <FlexBox flexDirection="column" gap={'5px'}>
             <AttachmentPreviewContainer gap="8px" alignItems="center" $isIncomingMessage={isIncomingMessage}>
                 <FileType alignItems="center" justifyContent="center">
                     <Typography variant="caption" sx={{ color: 'inherit' }}>

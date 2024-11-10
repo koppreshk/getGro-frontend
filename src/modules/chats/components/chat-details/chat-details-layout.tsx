@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { Chat, History } from "@mui/icons-material";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
@@ -10,6 +11,7 @@ export const ChatDetailsLayout = () => {
     const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
+    const { t } = useTranslation();
 
     const renderByvalue = () => {
         switch (value) {
@@ -28,8 +30,8 @@ export const ChatDetailsLayout = () => {
                 value={value}
                 onChange={handleChange}
             >
-                <BottomNavigationAction label="Chat Details" icon={<Chat />} />
-                <BottomNavigationAction label="History" icon={<History />} />
+                <BottomNavigationAction label={t('chat_details')} icon={<Chat />} />
+                < BottomNavigationAction label={t('history')} icon={< History />} />
             </BottomNavigation>
             <HorizontalSeparator />
             <FlexBox flexDirection="column" height="calc(100% - 57px)">

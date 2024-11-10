@@ -397,5 +397,6 @@
     "edit_whatsapp_account_failure": "Failed to edit whatsapp account",
     "edit_whatsapp_account_succ": "Edited whatsapp account successfully",
     "add_whatsapp_account_failure": "Failed to add whatsapp account",
-    "add_whatsapp_account_succ": "Added whatsapp account successfully"
+    "add_whatsapp_account_succ": "Added whatsapp account successfully",
+    "history": "History"
 }

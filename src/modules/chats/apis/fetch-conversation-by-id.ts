@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { useQuery } from "react-query";
 import { useServiceClient } from "lib";
@@ -9,6 +10,12 @@ export interface ChatConversationById {
     profile_name: string
     profile_number: string
     messages: Message[];
+    tags: any[]
+    linked_tickets: any[]
+    status_id: number
+    priority_id: number
+    assigned_to: number
+    queue_id: number
 }
 
 export type MessageType = 'image' | 'text' | 'video' | 'audio' | 'document';

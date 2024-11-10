@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import { DateTime } from "luxon";
 import { useMatch, useNavigate } from "react-router-dom";
 import { Typography, } from "@mui/material";
@@ -8,6 +8,8 @@ import styled, { css, useTheme } from "styled-components";
 import { CustomSourceAvatar } from "./custom-source-avatar";
 import { ChatConversation } from "modules/chats/apis";
 import { isToday, isYesterday } from "lib/utils";
+import { useAppDispatch } from "lib/hooks";
+import { setChatDetails } from "modules/chats/storage";
 
 const ChatWrapper = styled(FlexBox) <{ $isChatActive: boolean }>`
     padding: 15px 10px 15px 15px;
@@ -44,8 +46,18 @@ export const ChatItem = (props: ChatConversation) => {
     const match = useMatch('/chat/:conversationId');
     const navigate = useNavigate();
     const { pallete } = useTheme();
+    const dispatch = useAppDispatch();
+    const convId = match?.params.conversationId;
+    const isChatActive = useMemo(() => convId === id.toString(), [id, convId]);
+    const ref = React.useRef<HTMLDivElement>(null);
 
-    const isChatActive = useMemo(() => match?.params.conversationId === id.toString(), [id, match?.params.conversationId]);
+    React.useEffect(() => {
+        if (convId === id.toString() && ref.current) {
+            ref.current.scrollIntoView({ behavior: "smooth" });
+
+            dispatch(setChatDetails(props));
+        }
+    }, [convId, dispatch, id, props]);
 
     const onChatItemClick = () => {
         navigate(`${id}`);
@@ -54,7 +66,7 @@ export const ChatItem = (props: ChatConversation) => {
     const time = DateTime.fromISO(isoDate!).toFormat('hh:mm a');
 
     return (
-        <ChatWrapper onClick={onChatItemClick} $isChatActive={isChatActive}>
+        <ChatWrapper ref={ref} onClick={onChatItemClick} $isChatActive={isChatActive}>
             <FlexBox justifyContent="center" alignItems="center">
                 <CustomSourceAvatar chat_source={chat_source} customer_name={customer_name} />
             </FlexBox>
