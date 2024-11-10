@@ -24,6 +24,12 @@ export const ConversationContainerBackground = styled.div`
     }};
 `;
 
+export const TypographyName = styled(Typography)`
+    && {
+        color: ${({ theme }) => theme.semantics.secondaryTextColor}
+    }
+`;
+
 export const RoundedSendButton = styled(Button)`
     &&{
         border-radius: 25px;

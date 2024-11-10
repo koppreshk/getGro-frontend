@@ -4,6 +4,8 @@ export enum ChatEndPoint {
     FETCH_MEDIA_CONTENT = 'chat/fetch_media',
     SEND_REPLY = 'chat/reply',
     PRESIGNED_URL = 'presigned_url',
+    FETCH_ALL_CHAT_STATUSES = 'chat/statuses',
+    UPDATE_CHAT_STATUS = 'chat/update_status'
 }
 
 export enum ChatQueryKeys {
@@ -13,4 +15,7 @@ export enum ChatQueryKeys {
     SEND_REPLY = 'SEND_REPLY',
     PRESIGNED_URL = 'PRESIGNED_URL',
     PRESIGNED_URL_S3 = 'PRESIGNED_URL_S3',
+    FETCH_ALL_CHAT_STATUSES = 'FETCH_ALL_CHAT_STATUSES',
+    UPDATE_CHAT_STATUS = 'UPDATE_CHAT_STATUS'
+
 }

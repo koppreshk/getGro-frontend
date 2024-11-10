@@ -1,9 +1,10 @@
 import { FlexBox } from "lib/ui-ux"
 import { CustomSourceAvatar } from "../chat-list/custom-source-avatar"
 import { Typography } from "@mui/material"
-import { ManageAssigneeContainer, ManagePriorityContainer, ManageTagsContainer, TicketStatusContainer } from "modules/tickets/containers"
+import { ManageAssigneeContainer, ManagePriorityContainer, ManageTagsContainer } from "modules/tickets/containers"
 import { CreateAndLinkTicket } from "./create-and-link-ticket"
 import { useAppSelector } from "lib/hooks"
+import { ChatStatusContainer } from "modules/chats/containers"
 
 export const ChatDetails = () => {
     const chatDetails = useAppSelector((state) => state.chat.chatDetails);
@@ -19,7 +20,7 @@ export const ChatDetails = () => {
                             <Typography variant="body3">Verified</Typography>
                         </FlexBox>
                     </FlexBox>
-                    <TicketStatusContainer ticketStatus={'Open'} ticketId={45} statusUpdateString="" />
+                    <ChatStatusContainer />
                     <ManageAssigneeContainer ticketId={45} />
                     <ManagePriorityContainer priority="Low" ticketId={45} />
                     <ManageTagsContainer tags={[]} ticketId={45} />
