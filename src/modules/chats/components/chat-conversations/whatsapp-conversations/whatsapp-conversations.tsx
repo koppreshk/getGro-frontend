@@ -6,6 +6,7 @@ import { isToday, isYesterday } from "lib/utils";
 import { ChatConversationById, Message, MessageType, useSendChatReply } from "modules/chats/apis";
 import { WhatsappFooter } from "./whatsapp-footer";
 import { WhatsAppChatContent } from "./whatsapp-chat-content";
+import { useAppSelector } from "lib/hooks";
 
 const DateText = styled(Typography)`
     background: #fffffff2;
@@ -48,6 +49,7 @@ export const WhatsAppConversations = (props: WhatsAppConversationsProps) => {
     const { data, conversationId } = props;
     const [chatData, setChatData] = React.useState(data.messages);
     const { mutateAsync } = useSendChatReply();
+    const chatDetails = useAppSelector((state) => state.chat.chatDetails)
 
     React.useEffect(() => {
         setChatData(data.messages);
@@ -71,13 +73,13 @@ export const WhatsAppConversations = (props: WhatsAppConversationsProps) => {
             conversation_id: conversationId,
             message_type: mediaURL ? getFileType(type!) : "text",
             message: message,
-            chat_type: "whatsapp",
+            chat_type: chatDetails!.chat_source,
             media_url: mediaURL,
             caption: caption,
             filename: filename,
             mime_type: type
         })
-    }, [mutateAsync, conversationId])
+    }, [mutateAsync, conversationId, chatDetails])
 
     // Group messages by date
     const groupedMessages = useMemo(() => chatData.reduce((acc, message) => {
