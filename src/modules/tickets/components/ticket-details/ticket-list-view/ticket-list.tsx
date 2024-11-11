@@ -33,6 +33,10 @@ const TicketWrapper = styled(FlexBox) <{ $isTicketActive: boolean }>`
         border-width: 0;
         border-left-width: thick;
     `}
+    
+    &:hover {
+        background-color: ${(props) => props.theme.pallete.purpleLight};
+    }
 `;
 
 const TicketDetailsSectionRight = styled(FlexBox)`

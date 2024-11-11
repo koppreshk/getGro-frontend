@@ -24,6 +24,10 @@ const ChatWrapper = styled(FlexBox) <{ $isChatActive: boolean }>`
         border-width: 0;
         border-left-width: thick;
     `}
+
+    &:hover {
+        background-color: ${(props) => props.theme.pallete.purpleLight};
+    }
 `;
 
 const ChatContent = styled(FlexBox)`

@@ -76,7 +76,7 @@ export const WhatsAppChatContent = (props: IChatContentProps) => {
 
     return (
         <Wrapper gap="10px" alignItems="center" ref={containerRef} $isIncomingMessage={isIncomingMessage} flexDirection={isIncomingMessage ? 'row' : 'row-reverse'}>
-            <Avatar sx={{ color: textColor, bgcolor: backgroundColor }}>
+            <Avatar sx={{ fontSize: '14px', color: textColor, bgcolor: backgroundColor }}>
                 {isIncomingMessage ? getInitialsByName(customerName) : <Person />}
             </Avatar>
             <Content $isIncomingMessage={isIncomingMessage} maxWidth="50%" flexDirection="column" >

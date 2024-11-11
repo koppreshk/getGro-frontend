@@ -1,8 +1,10 @@
+import { useMemo } from "react";
 import { Badge, Avatar } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { useSourceIcon } from "modules/tickets/hooks";
 import styled from "styled-components";
 import { ChatConversation } from "modules/chats/apis";
+import { chooseRandomColors } from "lib/utils";
 
 const SmallAvatar = styled(FlexBox)`
     background: ${({ theme }) => theme.pallete.white};
@@ -13,6 +15,7 @@ const SmallAvatar = styled(FlexBox)`
 export const CustomSourceAvatar = (props: Pick<ChatConversation, 'chat_source' | 'customer_name'>) => {
     const { customer_name, chat_source } = props;
     const getSourceIcon = useSourceIcon();
+    const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(customer_name), [customer_name]);
 
     return (
         <Badge
@@ -24,7 +27,7 @@ export const CustomSourceAvatar = (props: Pick<ChatConversation, 'chat_source' |
                 </SmallAvatar>
             }
         >
-            <Avatar sx={{ fontSize: '14px' }}>{customer_name.slice(0, 2)}</Avatar>
+            <Avatar sx={{ fontSize: '14px', color: textColor, bgcolor: backgroundColor }}>{customer_name.slice(0, 2)}</Avatar>
         </Badge>
     )
 }
