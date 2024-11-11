@@ -12,7 +12,8 @@ export const AddWhatsAppNumberContainer = (props: { toggleAddAccountDialog: () =
             auto_reply_message: formData.autoReplyMessage,
             send_auto_reply: formData.sendAutoReply,
             whatsapp_business_id: formData.whatsappBusinessID,
-            whatsapp_phone_number_id: formData.phoneNumberID
+            whatsapp_phone_number_id: formData.phoneNumberID,
+            queue_id: formData.queueId ? formData.queueId : null
         }).then((res) => {
             if (res) {
                 showNotification({ message: 'add_whatsapp_account_success', type: 'success' });
