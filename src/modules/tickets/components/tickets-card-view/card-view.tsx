@@ -3,7 +3,7 @@ import { useMatch, useNavigate, useSearchParams } from "react-router-dom";
 import styled, { css } from 'styled-components';
 import { Avatar, Tooltip, Typography, SxProps, Chip } from "@mui/material";
 import { AccessTime, CalendarToday, SupportAgent } from "@mui/icons-material";
-import { CircularSeparator, FlexBox, VerticalSeparator } from "lib/ui-ux";
+import { CircularSeparator, FlexBox, TicketInfoContent, VerticalSeparator } from "lib/ui-ux";
 import { ITicketDetails } from "../../apis";
 import { Priority } from "../display-tickets-grid";
 import { TicketStatusContainer } from "../../containers";
@@ -33,12 +33,6 @@ const StyledCard = styled(FlexBox) <{ $ticketStatus: string }>`
 
     &:hover {
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;    }
-`;
-
-const StyledTypography = styled(Typography)`
-    &&{
-        color: ${({ theme }) => theme.pallete.grayVariant3};
-    }
 `;
 
 const onRenderSeparator = () => {
@@ -85,9 +79,9 @@ export const CardView = (props: ITicketDetails) => {
                                     <Typography variant="body2" >{customerName}</Typography>
                                 </Tooltip>
                                 <FlexBox gap={'5px'} alignItems="center">
-                                    <StyledTypography variant="subheading1" >via</StyledTypography>
+                                    <TicketInfoContent variant="subheading1" >via</TicketInfoContent>
                                     {getSourceIcon(source)}
-                                    <StyledTypography variant="body2">{source}</StyledTypography>
+                                    <TicketInfoContent variant="body2">{source}</TicketInfoContent>
                                 </FlexBox>
                             </NameAndSourceContent>
                             {responseDue ? <ResponseDueIndicator responseDue={responseDue} /> : <></>}
@@ -95,9 +89,9 @@ export const CardView = (props: ITicketDetails) => {
                     </FlexBox>
 
                     <FlexBox gap={'20px'} renderSeparator={onRenderSeparator} alignItems="center">
-                        <StyledTypography
+                        <TicketInfoContent
                             variant="body2"
-                            width={'80px'}>{'#' + ticketId}</StyledTypography>
+                            width={'80px'}>{'#' + ticketId}</TicketInfoContent>
                         <CreatedAt createdAt={createdAt} />
                         <ResolutionDue resolutionDue={resolutionDue} />
                         <AgentAssigned assigneeInfo={assigneeInfo} />
@@ -141,7 +135,7 @@ const CreatedAt = (props: Pick<ITicketDetails, 'createdAt'>) => {
         <Tooltip title={`Created ${parsedDateValue} ago`}>
             <FlexBox gap={'10px'} alignItems="center" width="198px">
                 <CalendarToday sx={iconStyles} />
-                <StyledTypography variant="body2">{`Created ${parsedDateValue} ago`}</StyledTypography>
+                <TicketInfoContent variant="body2">{`Created ${parsedDateValue} ago`}</TicketInfoContent>
             </FlexBox>
         </Tooltip>
     )
@@ -152,7 +146,7 @@ const ResolutionDue = (props: Pick<ITicketDetails, 'resolutionDue'>) => {
         <Tooltip title={`Resolution time: ${props.resolutionDue ? props.resolutionDue : '--'}`}>
             <FlexBox gap={'10px'} alignItems="center" width="198px">
                 <AccessTime sx={iconStyles} />
-                <StyledTypography variant="body2">{props.resolutionDue ? props.resolutionDue : '--'}</StyledTypography>
+                <TicketInfoContent variant="body2">{props.resolutionDue ? props.resolutionDue : '--'}</TicketInfoContent>
             </FlexBox>
         </Tooltip>
     )
@@ -182,7 +176,7 @@ const AgentAssigned = (props: Pick<ITicketDetails, 'assigneeInfo'>) => {
         <Tooltip title={assignedAgentInfo()}>
             <FlexBox gap={'10px'} alignItems="center" width="198px">
                 <SupportAgent sx={iconStyles} />
-                <StyledTypography variant="body2">{assigneeInfo?.email ? `${assigneeInfo?.first_name} ${assigneeInfo?.last_name ?? ''}` : '--'}</StyledTypography>
+                <TicketInfoContent variant="body2">{assigneeInfo?.email ? `${assigneeInfo?.first_name} ${assigneeInfo?.last_name ?? ''}` : '--'}</TicketInfoContent>
             </FlexBox>
         </Tooltip>
     )

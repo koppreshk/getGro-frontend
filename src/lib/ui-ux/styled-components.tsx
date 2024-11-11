@@ -40,3 +40,9 @@ export const RoundedSendButton = styled(Button)`
         }
     }
 `;
+
+export const TicketInfoContent = styled(Typography)`
+    &&{
+        color: ${({ theme }) => theme.pallete.grayVariant3};
+    }
+`;
