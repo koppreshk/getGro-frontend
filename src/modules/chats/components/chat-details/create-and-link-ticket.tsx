@@ -12,7 +12,7 @@ export const CreateAndLinkTicket = () => {
 
     return (
         <>
-            <Button onClick={toggleAddTicketDrawer} variant="contained" sx={{ margin: '0 20px', width: 'calc(100% - 40px)', height: '40px' }}><Trans i18nKey="create_and_link_ticket" /></Button>
+            <Button onClick={toggleAddTicketDrawer} variant="text" sx={{ height: '40px' }}><Trans i18nKey="create_and_link_ticket" /></Button>
             <CreateAndLinkTicketDrawer openAddTicketDrawer={openAddTicketDrawer} toggleAddTicketDrawer={toggleAddTicketDrawer} />
         </>
     )

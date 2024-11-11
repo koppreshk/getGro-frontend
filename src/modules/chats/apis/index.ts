@@ -10,3 +10,4 @@ export * from './fetch-all-chat-priorities';
 export * from './fetch-all-chat-tags';
 export * from './update-chat-assignee';
 export * from './update-chat-tags';
+export * from './link-ticket';

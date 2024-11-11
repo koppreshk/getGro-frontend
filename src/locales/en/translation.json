@@ -391,6 +391,7 @@
     "all_conversations": "All Conversations",
     "chat_details": "Chat Details",
     "create_and_link_ticket": "Create & link ticket",
+    "link_tickets": "Link Tickets",
     "phone_number_id": "Phone number id",
     "auto_reply": "Auto Reply",
     "edit_account": "Edit Account",
@@ -398,5 +399,9 @@
     "edit_whatsapp_account_succ": "Edited whatsapp account successfully",
     "add_whatsapp_account_failure": "Failed to add whatsapp account",
     "add_whatsapp_account_succ": "Added whatsapp account successfully",
-    "history": "History"
+    "history": "History",
+    "link_ticket_success": "Ticket linked to this conversation",
+    "link_ticket_failure": "Failed to link ticket to this conversation",
+    "links": "Links",
+    "unlink_ticket": "Unlink Ticket"
 }

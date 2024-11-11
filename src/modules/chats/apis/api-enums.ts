@@ -11,6 +11,8 @@ export enum ChatEndPoint {
     UPDATE_CHAT_PRIORITY = 'chat/update_priority',
     UPDATE_CHAT_ASSIGNEE = 'chat/update_assignee',
     UPDATE_CHAT_TAGS = 'chat/update_tags',
+    LINK_TICKET = 'chat/link_to_ticket',
+    UNLINK_TICKET = 'chat/unlink_ticket'
 }
 
 export enum ChatQueryKeys {
@@ -26,5 +28,7 @@ export enum ChatQueryKeys {
     UPDATE_CHAT_STATUS = 'UPDATE_CHAT_STATUS',
     UPDATE_CHAT_PRIORITY = 'UPDATE_CHAT_PRIORITY',
     UPDATE_CHAT_ASSIGNEE = 'UPDATE_CHAT_ASSIGNEE',
-    UPDATE_CHAT_TAGS = 'UPDATE_CHAT_TAGS'
+    UPDATE_CHAT_TAGS = 'UPDATE_CHAT_TAGS',
+    LINK_TICKET = 'LINK_TICKET',
+    UNLINK_TICKET = 'UNLINK_TICKET'
 }

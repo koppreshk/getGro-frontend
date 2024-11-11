@@ -1,10 +1,11 @@
-import { FlexBox } from "lib/ui-ux"
+import { FlexBox, VerticalSeparator } from "lib/ui-ux"
 import { CustomSourceAvatar } from "../chat-list/custom-source-avatar"
 import { Typography } from "@mui/material"
 import { CreateAndLinkTicket } from "./create-and-link-ticket"
 import { useAppSelector } from "lib/hooks"
 import { ChatStatusContainer, ManageAssigneeContainer, ManagePriorityContainer, ManageTagsContainer } from "modules/chats/containers"
 import { Links } from "./links"
+import { LinkTicket } from "./link-ticket"
 
 export const ChatDetails = () => {
     const chatDetails = useAppSelector((state) => state.chat.chatDetails);
@@ -26,7 +27,11 @@ export const ChatDetails = () => {
                     <ManageTagsContainer />
                     {chatDetails.linked_tickets.length ? <Links /> : null}
                 </FlexBox>
-                <CreateAndLinkTicket />
+                <FlexBox justifyContent="space-between" padding="0 20px">
+                    <CreateAndLinkTicket />
+                    <VerticalSeparator />
+                    <LinkTicket />
+                </FlexBox>
             </FlexBox>
         )
     }
