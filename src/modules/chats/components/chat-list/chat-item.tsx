@@ -26,7 +26,7 @@ const ChatWrapper = styled(FlexBox) <{ $isChatActive: boolean }>`
     `}
 
     &:hover {
-        background-color: ${(props) => props.theme.pallete.purpleLight};
+        background-color: ${(props) => props.$isChatActive ? props.theme.pallete.purpleLight : props.theme.pallete.grayVariant5};
     }
 `;
 
@@ -84,7 +84,7 @@ export const ChatItem = (props: ChatConversation) => {
                 </FlexBox>
                 {last_message.message_type === 'attachment' ?
                     <FlexBox>
-                        <AttachFile sx={{ width: '16px', height: '16px', color: pallete.grayNeutral }}/>
+                        <AttachFile sx={{ width: '16px', height: '16px', color: pallete.grayNeutral }} />
                         <StyledTypography variant="body2">Attachment</StyledTypography>
                     </FlexBox>
                     :

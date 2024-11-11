@@ -35,7 +35,7 @@ const TicketWrapper = styled(FlexBox) <{ $isTicketActive: boolean }>`
     `}
     
     &:hover {
-        background-color: ${(props) => props.theme.pallete.purpleLight};
+        background-color: ${(props) => props.$isTicketActive ? props.theme.pallete.purpleLight : props.theme.pallete.grayVariant5};
     }
 `;
 
