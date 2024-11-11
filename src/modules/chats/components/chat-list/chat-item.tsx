@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { DateTime } from "luxon";
 import { useMatch, useNavigate } from "react-router-dom";
 import { Typography, } from "@mui/material";
-import { SouthWest, NorthEast, AttachFile } from '@mui/icons-material';
+import { SouthWest, NorthEast } from '@mui/icons-material';
 import { FlexBox } from "lib/ui-ux";
 import styled, { css, useTheme } from "styled-components";
 import { CustomSourceAvatar } from "./custom-source-avatar";
@@ -66,14 +66,7 @@ export const ChatItem = (props: ChatConversation) => {
                         {last_message.direction === "incoming" ? <SouthWest titleAccess="Incoming" sx={{ width: '16px', height: '16px', color: pallete.grayNeutral }} /> : <NorthEast titleAccess="Outgoing" sx={{ width: '16px', height: '16px', color: pallete.grayNeutral }} />}
                     </FlexBox>
                 </FlexBox>
-                {last_message.message_type === 'attachment' ?
-                    <FlexBox>
-                        <AttachFile sx={{ width: '16px', height: '16px', color: pallete.grayNeutral }}/>
-                        <StyledTypography variant="body2">Attachment</StyledTypography>
-                    </FlexBox>
-                    :
-                    <StyledTypography variant="body2" title={last_message.message}>{last_message.message}</StyledTypography>
-                }
+                <StyledTypography variant="body2" title={last_message.message}>{last_message.message}</StyledTypography>
             </ChatContent>
         </ChatWrapper>
     )

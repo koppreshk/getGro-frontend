@@ -13,7 +13,6 @@ export interface IWhatsAppNumbers {
     updated_by: string | null;
     created_at: string
     updated_at: string
-    queue_id: number | null
 }
 
 export interface WhatsAppNumber extends IWhatsAppNumbers {

@@ -9,7 +9,6 @@ export interface CreateWhatsAppNumberArgs {
     whatsapp_business_id: string
     send_auto_reply: boolean
     auto_reply_message: string
-    queue_id: number | null
 }
 
 export const useCreateWhatsAppNumber = () => {
