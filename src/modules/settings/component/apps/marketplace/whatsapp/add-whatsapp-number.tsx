@@ -1,10 +1,11 @@
 import React from "react";
 import { useForm, FormProvider, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Grid, DialogActions, Divider, Typography } from "@mui/material";
-import { SwitchField, TextboxField, TextboxFieldWithLabel } from "lib/form-fields";
+import { Grid, DialogActions, Divider, Typography, CircularProgress } from "@mui/material";
+import { SelectFieldWithLabel, SwitchField, TextboxField, TextboxFieldWithLabel } from "lib/form-fields";
 import { BackButton, CancelButton, FlexBox, LoadingButton } from "lib/ui-ux";
 import { ConfigStepper } from "modules/settings/common";
+import { useFetchAllQueues } from "modules/settings/apis/ticket-automation";
 
 const steps = [
     {
@@ -19,18 +20,30 @@ const steps = [
 
 function AccountConfigurations() {
     const { t } = useTranslation();
+    const { data: allQueues, isLoading: isQueueLoading } = useFetchAllQueues();
 
     return (
         <Grid container spacing={3}>
             <Grid item md={12}>
-                <TextboxFieldWithLabel name="name" size="small" label={t('name')} type="text" fullWidth rules={{ required: 'This field is required.' }} />
+                <TextboxFieldWithLabel name="name" size="small" label={t('name')} type="text" fullWidth rules={{ required: 'This field is required.' }} placeholder="Enter Name" />
             </Grid>
             <Grid item md={12}>
-                <TextboxFieldWithLabel name="whatsappBusinessID" size="small" label={t('whatsapp_business_id')} rules={{ required: 'This field is required.' }} />
+                <TextboxFieldWithLabel name="whatsappBusinessID" size="small" label={t('whatsapp_business_id')} rules={{ required: 'This field is required.' }} placeholder="Enter WhatsApp business ID" />
             </Grid>
             <Grid item md={12}>
-                <TextboxFieldWithLabel name="phoneNumberID" size="small" label={t('phone_number_id')} rules={{ required: 'This field is required.' }} />
+                <TextboxFieldWithLabel name="phoneNumberID" size="small" label={t('phone_number_id')} rules={{ required: 'This field is required.' }} placeholder="Enter phone number ID" />
             </Grid>
+            <Grid item md={12}>
+                {isQueueLoading
+                    ? <CircularProgress />
+                    :
+                    <>
+                        <SelectFieldWithLabel name="queueId" size="small" label={t('queue')} fullWidth menuOptions={allQueues?.map((item) => ({ key: item.id.toString(), value: item.name })) || []} placeholder="Select Queue" />
+                        <Typography variant="caption">Chats will automatically be assigned to the selected Queue</Typography>
+                    </>
+                }
+            </Grid>
+
         </Grid>
     )
 }
@@ -40,6 +53,7 @@ export interface IAddWhatsAppNumberFormFields {
     whatsappBusinessID: string;
     phoneNumberID: string;
     sendAutoReply: boolean;
+    queueId?: number | null;
     autoReplyMessage: string;
 }
 
@@ -55,7 +69,7 @@ const ChatConfiguration = () => {
                         <Typography variant="h6">{t('auto_reply')}</Typography>
                         <Typography variant="body3">{t('auto_reply_description')}</Typography>
                     </FlexBox>
-                    {watch('sendAutoReply') ? <TextboxField name="autoReplyMessage" label={t("auto_reply_message")} multiline rows={4}/> : null}
+                    {watch('sendAutoReply') ? <TextboxField name="autoReplyMessage" label={t("auto_reply_message")} multiline rows={4} /> : null}
                 </FlexBox>
             </FlexBox>
         </>

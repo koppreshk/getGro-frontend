@@ -17,7 +17,8 @@ export const EditWhatsAppNumberContainer = (props: { toggleAddAccountDialog: () 
             whatsapp_business_id: formData.whatsappBusinessID,
             whatsapp_phone_number_id: formData.phoneNumberID,
             id: props.id,
-            is_active: true
+            is_active: true,
+            queue_id: formData.queueId ? formData.queueId : null
         }).then((res) => {
             if (res) {
                 showNotification({ message: 'edit_whatsapp_account_success', type: 'success' });
@@ -43,7 +44,8 @@ export const EditWhatsAppNumberContainer = (props: { toggleAddAccountDialog: () 
                         phoneNumberID: data.whatsapp_phone_number_id,
                         name: data.name,
                         autoReplyMessage: data.auto_reply_message,
-                        sendAutoReply: data.send_auto_reply
+                        sendAutoReply: data.send_auto_reply,
+                        queueId: data.queue_id
                     }}
                     isMutationLoading={mutationLoading} />
             </>
