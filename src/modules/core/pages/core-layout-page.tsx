@@ -48,7 +48,7 @@ export const CoreLayout = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
-    const { isLoading } = useFetchUserConfig(user ? true : false);
+    const { isLoading } = useFetchUserConfig(user);
 
     React.useEffect(() => {
         if (user && location.pathname === '/login') {
