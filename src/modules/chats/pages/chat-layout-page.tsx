@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { CenteredCircularProgress, ErrorMessage, FlexBox } from "lib/ui-ux";
+import { CenteredCircularProgress, ErrorMessage, FlexBox, NoDataIllustration } from "lib/ui-ux";
 import { ChatConversationsContainer, ChatDetailsLayoutContainer } from "../containers";
 import { useFetchAllConversations } from "../apis";
 import { ChatList } from "../components";
@@ -20,19 +20,23 @@ export default function ChatLayoutPage() {
         return <CenteredCircularProgress />;
     }
 
-    if (data?.conversations.length) {
+    if (data) {
         return (
-            <StyledLayoutWrapper height={'100%'} gap={'20px'}>
-                <StyledLayouts width="calc(25% - 20px)">
-                    <ChatList data={data} />
-                </StyledLayouts>
-                <StyledLayouts width="calc(50% - 20px)">
-                    <ChatConversationsContainer />
-                </StyledLayouts>
-                <StyledLayouts width="25%">
-                    <ChatDetailsLayoutContainer />
-                </StyledLayouts>
-            </StyledLayoutWrapper>
+            <>
+                {[data?.conversations].length ?
+                    <StyledLayoutWrapper height={'100%'} gap={'20px'}>
+                        <StyledLayouts width="calc(25% - 20px)">
+                            <ChatList data={data} />
+                        </StyledLayouts>
+                        <StyledLayouts width="calc(50% - 20px)">
+                            <ChatConversationsContainer />
+                        </StyledLayouts>
+                        <StyledLayouts width="25%">
+                            <ChatDetailsLayoutContainer />
+                        </StyledLayouts>
+                    </StyledLayoutWrapper>
+                    : <NoDataIllustration message="No conversations to display" />}
+            </>
         )
     }
 
