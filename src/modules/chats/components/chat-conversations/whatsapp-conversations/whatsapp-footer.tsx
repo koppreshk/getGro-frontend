@@ -11,6 +11,7 @@ import { CancelButton, FlexBox, IFileInfo, RoundedSendButton, TextArea, parseFil
 import { getAllFilesInfo } from "lib/ui-ux/file-upload/utils";
 import { NativeFileUpload } from "lib/ui-ux/file-upload/native-file-upload-field";
 import { usePresignedURL } from "modules/chats/apis/presigned-url";
+import { useAppSelector } from "lib/hooks";
 
 interface IWhatsappFooterProps {
     onSendAction: (newConversation: { message: string; mediaURL?: string, type?: string, caption?: string, filename?: string }) => Promise<{ status: boolean }>;
@@ -40,6 +41,7 @@ export const WhatsappFooter = (props: IWhatsappFooterProps) => {
     const [fileInfo, setFileInfo] = React.useState<IFileInfoState>({ original: [], parsedFile: [] });
     const form = useForm();
     const { t } = useTranslation();
+    const chatDetails = useAppSelector((state) => state.chat.chatDetails);
 
     const toggleFileDisplay = () => setFilePreviewDisplay((prevValue) => !prevValue);
 
@@ -77,8 +79,8 @@ export const WhatsappFooter = (props: IWhatsappFooterProps) => {
                 <ContentArea flexDirection="column" width="100%">
                     <TextArea onChange={onTextChange} value={textareaValue} onKeyDown={onKeyDown} placeholder="Shift + Enter to add a new line" />
                     <FlexBox justifyContent="space-between" padding="0px 10px 10px">
-                        <NativeFileUpload onChange={onFileUpload} />
-                        <RoundedSendButton variant="contained" size="small" endIcon={<Send />} onClick={onSendClick} >
+                        <NativeFileUpload onChange={onFileUpload} disabled={chatDetails?.is_conversation_closed} />
+                        <RoundedSendButton variant="contained" size="small" disabled={chatDetails?.is_conversation_closed} endIcon={<Send />} onClick={onSendClick} >
                             {t('send')}
                         </RoundedSendButton>
                     </FlexBox>
