@@ -10,17 +10,19 @@ export interface AllChatConversations {
 }
 
 export interface ChatConversation {
-    id: number
-    customer_name: string
-    created_at: string
-    last_message: LastMessage;
-    chat_source: string;
-    status_id: number
-    priority_id: number
-    tags: number[]
     assigned_to: number
-    queue_id: number
+    chat_source: string;
+    chat_type: string;
+    created_at: string
+    customer_name: string
+    id: number
+    is_conversation_closed: boolean;
+    last_message: LastMessage;
     linked_tickets: LinkedTicket[];
+    priority_id: number
+    queue_id: number
+    status_id: number
+    tags: number[]
 }
 
 export interface LastMessage {
