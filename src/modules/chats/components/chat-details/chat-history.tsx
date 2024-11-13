@@ -17,43 +17,34 @@ const FlexContainer = styled(FlexBox)`
     padding: 20px 10px;
 `;
 
-const exampleData = [
-    {
-        "name": "Sanjay G",
-        "last_activity_date": "1day ago",
-        "last_activity_desc": "Conversation transcript downloaded by self."
-    },
-    {
-        "name": "Kop P",
-        "last_activity_date": "1day ago",
-        "last_activity_desc": "Conversation transcript downloaded by self. downloaded by"
-    },
-    {
-        "name": "Sid M",
-        "last_activity_date": "1day ago",
-        "last_activity_desc": "Conversation transcript downloaded by self."
-    }
-]
+interface ChatHistoryProps {
+    historyData: {
+        created_at: string;
+        history: string;
+        user: string;
+    }[]
+}
 
-export const ChatHistory = () => {
+export const ChatHistory = (props: ChatHistoryProps) => {
+    const { historyData } = props;
     const { pallete } = useTheme();
 
     return (
-        <FlexContainer flexDirection="column">
-            {exampleData.map((item, index) => (
-                <FlexBox flexDirection="row" >
+        <FlexContainer flexDirection="column" width="100%">
+            {historyData.map((item, index) => (
+                <FlexBox flexDirection="row" key={item.created_at + index}>
                     <FlexBox flexDirection="column" alignItems="center">
-                        <UserAvatar userName={item.name} />
-                        {index < exampleData.length - 1 && <TimeLine />}
+                        <UserAvatar userName={item.user} />
+                        {index < historyData.length - 1 && <TimeLine />}
                     </FlexBox>
 
                     <FlexBox flexDirection="column" gap="6px" padding="0 10px 15px" width="90%">
                         <FlexBox flexDirection="column">
-                            <Typography variant="h6">{item.name}</Typography>
-                            <Typography variant="caption" sx={{ color: pallete.grayNeutral }}>made changes - {item.last_activity_date}</Typography>
+                            <Typography variant="h6">{item.user}</Typography>
+                            <Typography variant="caption" sx={{ color: pallete.grayNeutral }}>made changes - {item.created_at}</Typography>
                         </FlexBox>
                         <Typography variant="caption">
-                            {item.last_activity_desc}
+                            {item.history}
                         </Typography>
                     </FlexBox>
                 </FlexBox>

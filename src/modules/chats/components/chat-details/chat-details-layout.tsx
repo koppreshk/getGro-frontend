@@ -6,6 +6,24 @@ import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { ChatDetails } from "./chat-details";
 import { ChatHistory } from "./chat-history";
 
+const exampleData = [
+    {
+        "user": "Sanjay G",
+        "created_at": "1day ago",
+        "history": "Conversation transcript downloaded by self."
+    },
+    {
+        "user": "Kop P",
+        "created_at": "1day ago",
+        "history": "Conversation transcript downloaded by self. downloaded by"
+    },
+    {
+        "user": "Sid M",
+        "created_at": "1day ago",
+        "history": "Conversation transcript downloaded by self."
+    }
+]
+
 export const ChatDetailsLayout = () => {
     const [value, setValue] = React.useState(0);
     const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
@@ -18,7 +36,7 @@ export const ChatDetailsLayout = () => {
             case 0:
                 return <ChatDetails />;
             case 1:
-                return <ChatHistory />;
+                return <ChatHistory historyData={exampleData} />;
             default: return null;
         }
     }

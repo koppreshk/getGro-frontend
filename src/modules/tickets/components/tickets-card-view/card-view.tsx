@@ -69,7 +69,7 @@ export const CardView = (props: ITicketDetails) => {
 
                 <FlexBox flexDirection="column" gap="14px" width="100%">
                     <FlexBox flexDirection="column" width="calc(100% - 70px)">
-                        <Tooltip title={description}>
+                        <Tooltip title={'Subject: ' + description} placement="bottom-start">
                             <StyledEllipsisTypography variant="h5">{description}</StyledEllipsisTypography>
                         </Tooltip>
 
