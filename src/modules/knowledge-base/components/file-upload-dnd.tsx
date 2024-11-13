@@ -8,6 +8,7 @@ import { FlexBox } from "lib/ui-ux";
 import { generateId } from 'lib/utils';
 import { IFile } from './create-article';
 import { StyledErrorMessage } from "lib/form-fields";
+import { useNotifications } from "lib";
 
 const FileType = styled(FlexBox)`
     width: 40px;
@@ -40,6 +41,7 @@ interface FileUploadDNDProps {
 export const FileUploadDND = (props: FileUploadDNDProps) => {
     const { files, setFiles, error, setError } = props;
     const [isDragging, setIsDragging] = useState(false);
+    const { showNotification } = useNotifications();
 
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -59,16 +61,40 @@ export const FileUploadDND = (props: FileUploadDNDProps) => {
 
         // Extract files from the drop event
         const droppedFiles = Array.from(e.dataTransfer.files);
-        const modifiedFiles = droppedFiles.slice().map((file) => ({ file, id: generateId() }));
-        setFiles(modifiedFiles);
-        setError(null); // Clear any previous error
+        if (droppedFiles.length) {
+            const file = droppedFiles[0]; // Get the selected file
+
+            const maxSizeInMB = 20;
+            const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
+
+            if (file.size > maxSizeInBytes) {
+                showNotification({ message: `The file is too large. Please upload a file smaller than ${maxSizeInMB}MB.`, type: 'error' });
+            }
+            else {
+                const modifiedFiles = droppedFiles.slice().map((file) => ({ file, id: generateId() }));
+                setFiles(modifiedFiles);
+                setError(null); // Clear any previous error
+            }
+        }
     };
 
     const handleFileSelection = (e: ChangeEvent<HTMLInputElement>) => {
         const selectedFiles = e.target.files ? Array.from(e.target.files) : [];
-        const modifiedFiles = selectedFiles.slice().map((file) => ({ file, id: generateId() }));
-        setFiles(modifiedFiles);
-        setError(null); // Clear any previous error
+        if (selectedFiles.length) {
+            const file = selectedFiles[0]; // Get the selected file
+
+            const maxSizeInMB = 20;
+            const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
+
+            if (file.size > maxSizeInBytes) {
+                showNotification({ message: `The file is too large. Please upload a file smaller than ${maxSizeInMB}MB.`, type: 'error' });
+            }
+            else {
+                const modifiedFiles = selectedFiles.slice().map((file) => ({ file, id: generateId() }));
+                setFiles(modifiedFiles);
+                setError(null); // Clear any previous error
+            }
+        }
     };
 
     const handleOpenFileDialog: MouseEventHandler<HTMLButtonElement> = (ev): void => {

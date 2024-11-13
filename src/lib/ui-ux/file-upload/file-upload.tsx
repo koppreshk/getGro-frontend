@@ -5,6 +5,7 @@ import { getAllFilesInfo, useFileRepository } from './utils';
 import { IconButton } from '@mui/material';
 import { AttachFileOutlined } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
+import { useNotifications } from 'lib';
 
 const DefaultFileInput = styled.input.attrs({
     type: 'file'
@@ -26,19 +27,31 @@ export const FileUpload = React.memo((props: IFileUploadProps) => {
         current?.click();
     }, []);
     const { t } = useTranslation();
+    const { showNotification } = useNotifications();
 
     const loadSelectedFiles = React.useCallback(async (fileList: File[] | null) => {
         if (!fileList || fileList.length === 0) {
             return;
         }
-        const result = (await getAllFilesInfo(fileList, readMode)).map(parseFileInfo);
-        upsert(result);
-        const { current } = inputRef;
-        if (!current) {
-            return;
+
+        const file = fileList[0]; // Get the selected file
+
+        const maxSizeInMB = 20;
+        const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
+
+        if (file.size > maxSizeInBytes) {
+            showNotification({ message: `The file is too large. Please upload a file smaller than ${maxSizeInMB}MB.`, type: 'error' });
         }
-        current.value = '';
-    }, [readMode, upsert]);
+        else {
+            const result = (await getAllFilesInfo(fileList, readMode)).map(parseFileInfo);
+            upsert(result);
+            const { current } = inputRef;
+            if (!current) {
+                return;
+            }
+            current.value = '';
+        }
+    }, [readMode, showNotification, upsert]);
 
     const _onFileSelect = React.useCallback((ev: React.ChangeEvent<HTMLInputElement>) => {
         loadSelectedFiles(ev.target.files ? Array.from(ev.target.files) : null);

@@ -42,18 +42,30 @@ export const WhatsappFooter = (props: IWhatsappFooterProps) => {
     const form = useForm();
     const { t } = useTranslation();
     const chatDetails = useAppSelector((state) => state.chat.chatDetails);
-
+    const { showNotification } = useNotifications();
     const toggleFileDisplay = () => setFilePreviewDisplay((prevValue) => !prevValue);
 
     const onFileUpload = React.useCallback(async (args: File[]) => {
-        const result = (await getAllFilesInfo(args, 'readAsDataURL')).map(parseFileInfo);
+        if (args.length) {
+            const file = args[0]; // Get the selected file
 
-        setFileInfo({
-            original: args,
-            parsedFile: result
-        });
-        toggleFileDisplay();
-    }, [])
+            const maxSizeInMB = 20;
+            const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
+
+            if (file.size > maxSizeInBytes) {
+                showNotification({ message: `The file is too large. Please upload a file smaller than ${maxSizeInMB}MB.`, type: 'error' });
+            } else {
+                const result = (await getAllFilesInfo(args, 'readAsDataURL')).map(parseFileInfo);
+
+                setFileInfo({
+                    original: args,
+                    parsedFile: result
+                });
+                toggleFileDisplay();
+            }
+        }
+
+    }, [showNotification])
 
     const onTextChange: React.ChangeEventHandler<HTMLTextAreaElement> = React.useCallback((ev) => {
         setTextAreaValue(ev.target.value);
