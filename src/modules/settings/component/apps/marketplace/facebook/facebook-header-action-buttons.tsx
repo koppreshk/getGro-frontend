@@ -5,9 +5,9 @@ import { Button } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { AddAppConfigurationDialog } from "../add-app-configuration-dialog";
 import { FacebookConfiguration } from "./facebook-configuration";
+import { DeleteFacebookConfigurations } from "./delete-facebook-configurations";
 // import { UpdateWhatsAppConfigContainer } from "modules/settings/containers/marketplace/whatsapp/update-whatsapp-config-container";
 // import { AddWhatsAppConfigContainer } from "modules/settings/containers/marketplace/whatsapp/add-whatsapp-config-container";
-// import { DeleteWhatsAppConfigurations } from "./delete-whatsapp-configurations";
 
 interface FacebookHeaderActionButtonsProps {
     data: object,
@@ -55,11 +55,11 @@ export const FacebookHeaderActionButtons = (props: FacebookHeaderActionButtonsPr
                         (
                             <>
                                 <Button variant="outlined" size="medium" onClick={toggleManageDisplay}>{t('manage')}</Button>
-                                {/* <DeleteWhatsAppConfigurations /> */}
+                                <DeleteFacebookConfigurations />
                                 <Button variant="contained" size="medium" onClick={toggleDialog} startIcon={<Edit />}>{t('edit')}</Button>
                             </>
                         )
-                        : <FacebookConfiguration />}
+                        : <FacebookConfiguration updateInstallation={props.updateInstallation} />}
             </FlexBox>
             <AddAppConfigurationDialog
                 dialogContent={() => <></>}

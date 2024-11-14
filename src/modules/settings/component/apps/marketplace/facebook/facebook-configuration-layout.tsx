@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useTheme } from "styled-components";
 import { Facebook } from "@mui/icons-material";
 import { FacebookHeaderActionButtons } from "./facebook-header-action-buttons";
+import { IFacebookConfigDetails } from "modules/settings/apis/marketplace/facebook";
 
 const OverviewContents = () => {
     return (
@@ -35,7 +36,7 @@ const InstallationContents = () => {
     )
 }
 
-export const FacebookConfigurationLayout = (props: { data: object, updateInstallation: () => void }) => {
+export const FacebookConfigurationLayout = (props: { data: IFacebookConfigDetails, updateInstallation: () => void }) => {
     const [showManageContent, setManageDisplay] = useState(false);
 
     const toggleManageDisplay = () => setManageDisplay((prev) => !prev);

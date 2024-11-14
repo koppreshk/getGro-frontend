@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next"
 import { useSearchParams } from "react-router-dom";
 
-export const FacebookConfiguration = () => {
+export const FacebookConfiguration = (props: { updateInstallation: () => void; }) => {
     const { t } = useTranslation();
     const [searchParams, setSearchParams] = useSearchParams();
     const code = searchParams.get('code');
@@ -59,12 +59,12 @@ export const FacebookConfiguration = () => {
     useEffect(() => {
         if (code) {
             mutateAsync({ code }).then(() => {
-                console.log(code);
                 searchParams.delete('code');
                 setSearchParams(searchParams);
+                props.updateInstallation();
             })
         }
-    }, [code, mutateAsync, searchParams, setSearchParams])
+    }, [code, mutateAsync, props, searchParams, setSearchParams])
 
     return (
         <>
