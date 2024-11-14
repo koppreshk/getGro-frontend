@@ -12,7 +12,7 @@ export const useFetchFacebookConfiguration = () => {
 
     const fetchFacebookConfigurations = React.useCallback(() => getData(FacebookConfigurationEndPoint.FETCH_FACEBOOK_CONFIGURATION).then((res) => res.json()), [getData]);
 
-    return useQuery<IFacebookConfigDetails>({
+    return useQuery<IFacebookConfigDetails | null>({
         queryFn: fetchFacebookConfigurations,
         queryKey: FacebookConfigurationQueryKey.FETCH_FACEBOOK_CONFIGURATION
     });

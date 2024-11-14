@@ -17,12 +17,13 @@ export const FacebookConfigurationContainer = () => {
         return <CenteredCircularProgress />
     }
 
-    if (data) {
-        return <FacebookConfigurationLayout data={data} updateInstallation={updateInstallation} />
+    if (error) {
+        return (
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            <span>Error: {error as any}</span>
+        )
     }
+    
+    return <FacebookConfigurationLayout data={data} updateInstallation={updateInstallation} />
 
-    return (
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        <span>Error: {error as any}</span>
-    )
 }

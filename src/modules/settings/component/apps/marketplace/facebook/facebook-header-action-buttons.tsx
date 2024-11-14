@@ -6,9 +6,10 @@ import { AddAppConfigurationDialog } from "../add-app-configuration-dialog";
 import { FacebookConfiguration } from "./facebook-configuration";
 import { DeleteFacebookConfigurations } from "./delete-facebook-configurations";
 import { AddFacebookPageContainer } from "modules/settings/containers/marketplace/facebook";
+import { IFacebookConfigDetails } from "modules/settings/apis/marketplace/facebook";
 
 interface FacebookHeaderActionButtonsProps {
-    data: object,
+    data?: IFacebookConfigDetails | null,
     showManageContent: boolean;
     updateInstallation: () => void;
     toggleManageDisplay: () => void
@@ -23,7 +24,7 @@ export const FacebookHeaderActionButtons = (props: FacebookHeaderActionButtonsPr
         setAddPageDialogDisplay((prevValue) => !prevValue)
     }, []);
 
-    const isInstalled = useMemo(() => Object.keys(props.data).length > 0, [props.data]);
+    const isInstalled = useMemo(() => Object.keys(props?.data ?? {}).length > 0, [props.data]);
 
     return (
         <>

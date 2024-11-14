@@ -37,7 +37,7 @@ const InstallationContents = () => {
     )
 }
 
-export const FacebookConfigurationLayout = (props: { data: IFacebookConfigDetails, updateInstallation: () => void }) => {
+export const FacebookConfigurationLayout = (props: { data?: IFacebookConfigDetails | null, updateInstallation: () => void }) => {
     const [showManageContent, setManageDisplay] = useState(false);
 
     const toggleManageDisplay = () => setManageDisplay((prev) => !prev);
