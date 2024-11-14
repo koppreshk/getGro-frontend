@@ -6,6 +6,7 @@ import { useTheme } from "styled-components";
 import { Facebook } from "@mui/icons-material";
 import { FacebookHeaderActionButtons } from "./facebook-header-action-buttons";
 import { IFacebookConfigDetails } from "modules/settings/apis/marketplace/facebook";
+import { ManageFacebookPagesContainer } from "modules/settings/containers/marketplace/facebook/manage-facebook-pages-container";
 
 const OverviewContents = () => {
     return (
@@ -55,19 +56,23 @@ export const FacebookConfigurationLayout = (props: { data: IFacebookConfigDetail
             </AppConfig.Header>
             <AppConfig.Body>
                 <>
-                    <AppConfig.TabsPanel
-                        tabProps={[{
-                            label: 'Overview',
-                            content: <OverviewContents />
-                        }, {
-                            label: 'Installation',
-                            content: <InstallationContents />
-                        }]}
-                        email="support@getgro.com"
-                        website="https://intent.getgro.io/dashboard"
-                        lastUpdated="Oct 22, 2024"
-                        publishedOn="Oct 22, 2024"
-                        version="1.0.0" />
+                    {showManageContent
+                        ? <ManageFacebookPagesContainer />
+                        :
+                        <AppConfig.TabsPanel
+                            tabProps={[{
+                                label: 'Overview',
+                                content: <OverviewContents />
+                            }, {
+                                label: 'Installation',
+                                content: <InstallationContents />
+                            }]}
+                            email="support@getgro.com"
+                            website="https://intent.getgro.io/dashboard"
+                            lastUpdated="Oct 22, 2024"
+                            publishedOn="Oct 22, 2024"
+                            version="1.0.0" />
+                    }
                 </>
             </AppConfig.Body>
         </AppConfig>
