@@ -1,9 +1,10 @@
 import { useState, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Edit, GetApp } from "@mui/icons-material";
+import { Edit } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { AddAppConfigurationDialog } from "../add-app-configuration-dialog";
+import { FacebookConfiguration } from "./facebook-configuration";
 // import { UpdateWhatsAppConfigContainer } from "modules/settings/containers/marketplace/whatsapp/update-whatsapp-config-container";
 // import { AddWhatsAppConfigContainer } from "modules/settings/containers/marketplace/whatsapp/add-whatsapp-config-container";
 // import { DeleteWhatsAppConfigurations } from "./delete-whatsapp-configurations";
@@ -42,7 +43,7 @@ export const FacebookHeaderActionButtons = (props: FacebookHeaderActionButtonsPr
             <FlexBox gap={'10px'} height="fit-content">
                 {
                     isInstalled
-                        ? 
+                        ?
                         // showManageContent
                         //     ? (
                         //         <>
@@ -51,14 +52,14 @@ export const FacebookHeaderActionButtons = (props: FacebookHeaderActionButtonsPr
                         //         </>
                         //     )
                         //     : 
-                            (
-                                <>
-                                    <Button variant="outlined" size="medium" onClick={toggleManageDisplay}>{t('manage')}</Button>
-                                    {/* <DeleteWhatsAppConfigurations /> */}
-                                    <Button variant="contained" size="medium" onClick={toggleDialog} startIcon={<Edit />}>{t('edit')}</Button>
-                                </>
-                            )
-                        : <Button variant="contained" size="medium" onClick={toggleDialog} endIcon={<GetApp />}>{t('install')}</Button>}
+                        (
+                            <>
+                                <Button variant="outlined" size="medium" onClick={toggleManageDisplay}>{t('manage')}</Button>
+                                {/* <DeleteWhatsAppConfigurations /> */}
+                                <Button variant="contained" size="medium" onClick={toggleDialog} startIcon={<Edit />}>{t('edit')}</Button>
+                            </>
+                        )
+                        : <FacebookConfiguration />}
             </FlexBox>
             <AddAppConfigurationDialog
                 dialogContent={() => <></>}

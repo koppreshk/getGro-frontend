@@ -1,0 +1,74 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { GetApp } from "@mui/icons-material"
+import { Button } from "@mui/material"
+import { useFacebookConfiguration } from "modules/settings/apis/marketplace/facebook";
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next"
+import { useSearchParams } from "react-router-dom";
+
+export const FacebookConfiguration = () => {
+    const { t } = useTranslation();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const code = searchParams.get('code');
+    const { mutateAsync } = useFacebookConfiguration();
+
+    useEffect(() => {
+        // Initialize the Facebook SDK
+        window.fbAsyncInit = function () {
+            window.FB.init({
+                appId: '386521997887994', // Replace with your Facebook App ID
+                cookie: true,
+                xfbml: true,
+                version: 'v21.0', // Use the latest version
+            });
+            window.FB.AppEvents.logPageView();
+        };
+
+        // Load the Facebook SDK script dynamically
+        (function (d, s, id) {
+            const fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            const js: any = d.createElement(s);
+            js.id = id;
+            js.src = 'https://connect.facebook.net/en_US/sdk.js';
+            fjs?.parentNode?.insertBefore(js, fjs);
+        })(document, 'script', 'facebook-jssdk');
+    }, []);
+
+    // Facebook login handler
+    const handleFBLogin = () => {
+        window.FB.login((response: any) => {
+            if (response.authResponse) {
+                console.log('Logged in!', response);
+
+                // Fetch user details like name and email
+                window.FB.api('/me', { fields: 'name, email' }, (userInfo: any) => {
+                    console.log('User info:', userInfo);
+                });
+            } else {
+                console.log('User cancelled login or did not fully authorize.');
+            }
+        }, {
+            config_id: '1074101920418362',
+            response_type: 'code',
+            override_default_response_type: true,
+            redirect_uri: 'https://intent.getgro.io/configurations/marketplace/facebook'
+        });
+    };
+
+    useEffect(() => {
+        if (code) {
+            mutateAsync({ code }).then(() => {
+                console.log(code);
+                searchParams.delete('code');
+                setSearchParams(searchParams);
+            })
+        }
+    }, [code, mutateAsync, searchParams, setSearchParams])
+
+    return (
+        <>
+            <Button variant="contained" size="medium" onClick={handleFBLogin} endIcon={<GetApp />}>{t('install')}</Button>
+        </>
+    )
+}
