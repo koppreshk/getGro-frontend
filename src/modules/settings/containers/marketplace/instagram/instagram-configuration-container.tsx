@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FacebookConfigurationLayout } from "modules/settings/component/apps/marketplace/facebook";
+
+import { InstagramConfigurationLayout } from "modules/settings/component/apps/marketplace/instagram";
 
 export const InstagramConfigurationContainer = () => {
     // const { data, error, isLoading, refetch } = useFetchFacebookConfiguration();
@@ -16,7 +17,7 @@ export const InstagramConfigurationContainer = () => {
     // }
 
     // if (data) {
-        return <FacebookConfigurationLayout data={{}} updateInstallation={function (): void {
+        return <InstagramConfigurationLayout data={{}} updateInstallation={function (): void {
             throw new Error("Function not implemented.");
         } } />
     // }

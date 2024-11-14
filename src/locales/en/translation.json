@@ -403,5 +403,6 @@
     "link_ticket_success": "Ticket linked to this conversation",
     "link_ticket_failure": "Failed to link ticket to this conversation",
     "links": "Links",
-    "unlink_ticket": "Unlink Ticket"
+    "unlink_ticket": "Unlink Ticket",
+    "uninstall": "Uninstall"
 }

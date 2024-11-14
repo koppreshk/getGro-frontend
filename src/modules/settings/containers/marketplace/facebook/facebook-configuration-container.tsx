@@ -1,27 +1,28 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useNotifications } from "lib";
+import { CenteredCircularProgress } from "lib/ui-ux";
+import { useFetchFacebookConfiguration } from "modules/settings/apis/marketplace/facebook";
 import { FacebookConfigurationLayout } from "modules/settings/component/apps/marketplace/facebook";
 
 export const FacebookConfigurationContainer = () => {
-    // const { data, error, isLoading, refetch } = useFetchInstagramConfiguration();
-    // const { showNotification } = useNotifications();
+    const { data, error, isLoading, refetch } = useFetchFacebookConfiguration();
+    const { showNotification } = useNotifications();
 
-    // const updateInstallation = () => {
-    //     refetch().then(() => {
-    //         showNotification({ message: 'Congrats! Instagram configuration is added!', type: 'success' });
-    //     });
-    // };
+    const updateInstallation = () => {
+        refetch().then(() => {
+            showNotification({ message: 'Congrats! Facebook configuration is added!', type: 'success' });
+        });
+    };
 
-    // if (isLoading) {
-    //     return <CenteredCircularProgress />
-    // }
+    if (isLoading) {
+        return <CenteredCircularProgress />
+    }
 
-    // if (data) {
-    return <FacebookConfigurationLayout data={{}} updateInstallation={function (): void {
-        throw new Error("Function not implemented.");
-    }} />
-    // }
+    if (data) {
+        return <FacebookConfigurationLayout data={data} updateInstallation={updateInstallation} />
+    }
 
-    // return (
-    //     <span>Error: {error as any}</span>
-    // )
+    return (
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        <span>Error: {error as any}</span>
+    )
 }
