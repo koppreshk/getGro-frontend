@@ -4,13 +4,10 @@ import { Button } from "@mui/material"
 import { useFacebookConfiguration } from "modules/settings/apis/marketplace/facebook";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next"
-import { useSearchParams } from "react-router-dom";
 
 export const FacebookConfiguration = (props: { updateInstallation: () => void; mode?: string }) => {
     const { mode = 'authenticate' } = props;
     const { t } = useTranslation();
-    const [searchParams, setSearchParams] = useSearchParams();
-    const code = searchParams.get('code');
     const { mutateAsync } = useFacebookConfiguration();
 
     useEffect(() => {
@@ -41,6 +38,11 @@ export const FacebookConfiguration = (props: { updateInstallation: () => void; m
         window.FB.login((response: any) => {
             if (response.authResponse) {
                 console.log('Logged in!', response);
+                mutateAsync({
+                    code: response.code
+                }).then(() => {
+                    props.updateInstallation();
+                })
 
                 // Fetch user details like name and email
                 window.FB.api('/me', { fields: 'name, email' }, (userInfo: any) => {
@@ -56,16 +58,6 @@ export const FacebookConfiguration = (props: { updateInstallation: () => void; m
             redirect_uri: 'https://intent.getgro.io/configurations/marketplace/facebook'
         });
     };
-
-    useEffect(() => {
-        if (code) {
-            mutateAsync({ code }).then(() => {
-                searchParams.delete('code');
-                setSearchParams(searchParams);
-                props.updateInstallation();
-            })
-        }
-    }, [code, mutateAsync, props, searchParams, setSearchParams])
 
     return (
         <>
