@@ -39,7 +39,7 @@ export const FacebookConfiguration = (props: { updateInstallation: () => void; m
             if (response.authResponse) {
                 console.log('Logged in!', response);
                 mutateAsync({
-                    code: response.code
+                    code: response.authResponse
                 }).then(() => {
                     props.updateInstallation();
                 })
