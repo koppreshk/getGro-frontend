@@ -11,6 +11,9 @@ import { GupShupConfigurationContainer } from "modules/settings/containers/marke
 import { ExotelConfigurationContainer } from "modules/settings/containers/marketplace/exotel";
 import { ShopifyConfigurationContainer } from "modules/settings/containers/marketplace/shopify";
 import { WhatsappConfigurationContainer } from "modules/settings/containers/marketplace/whatsapp";
+import { InstagramConfigurationContainer } from "modules/settings/containers/marketplace/instagram";
+import { FacebookConfigurationContainer } from "modules/settings/containers/marketplace/facebook";
+
 import { Facebook, Instagram } from "@mui/icons-material";
 import { useTheme } from "styled-components";
 
@@ -34,6 +37,8 @@ export default function MarketplaceRoutes() {
                 <Route key="exotel-route" path="exotel" element={<ExotelConfigurationContainer />} />
                 <Route key="gupshup-route" path="gupshup" element={<GupShupConfigurationContainer />} />
                 <Route key="whatsapp-meta-route" path="whatsapp" element={<WhatsappConfigurationContainer />} />
+                <Route key="instagram-route" path="instagram" element={<InstagramConfigurationContainer />} />
+                <Route key="facebook-route" path="facebook" element={<FacebookConfigurationContainer />} />
             </Routes>
         </>
     )
