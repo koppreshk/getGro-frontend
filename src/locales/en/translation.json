@@ -408,5 +408,6 @@
     "authenticate": "authenticate",
     "re_authenticate": "re-authenticate",
     "add_page": "Add Page",
-    "facebook_page": "Facebook Page"
+    "facebook_page": "Facebook Page",
+    "comments_specific_keywords": "Comments with specific keywords"
 }

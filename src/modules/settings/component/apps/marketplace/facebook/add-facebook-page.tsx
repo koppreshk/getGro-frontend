@@ -2,7 +2,7 @@ import React from "react";
 import { useForm, FormProvider, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Grid, DialogActions, Divider, Typography } from "@mui/material";
-import { SelectFieldWithLabel, SwitchField, TextboxField, TextboxFieldWithLabel } from "lib/form-fields";
+import { RadioGroupField, SelectFieldWithLabel, SwitchField, TextboxField, TextboxFieldWithLabel } from "lib/form-fields";
 import { BackButton, CancelButton, FlexBox, LoadingButton } from "lib/ui-ux";
 import { ConfigStepper } from "modules/settings/common";
 import { IQueueMetadata } from "modules/settings/apis/ticket-automation/escalations/fetch-all-queues";
@@ -14,8 +14,12 @@ const steps = [
         description: 'Map facebook pages to specific groups, enabling you to manage chats.',
     },
     {
-        label: 'Chat Configuration',
-        description: 'Setup auto-reply features for whatsapp in getgro',
+        label: 'Comment Configuration',
+        description: 'Configure the comments feature for Facebook in Getgro.',
+    },
+    {
+        label: 'Messenger Configuration',
+        description: 'Set up the auto-reply features for Facebook in Getgro.',
     }
 ];
 
@@ -39,16 +43,7 @@ function PageConfigurations(props: Pick<IAddFacebookPageFormProps, 'allQueues' |
     )
 }
 
-export interface IAddFacebookPageFormFields {
-    name: string;
-    whatsappBusinessID: string;
-    phoneNumberID: string;
-    sendAutoReply: boolean;
-    queueId?: number | null;
-    autoReplyMessage: string;
-}
-
-const ChatConfiguration = () => {
+const MessengerConfiguration = () => {
     const { t } = useTranslation();
     const { watch } = useFormContext();
     return (
@@ -66,6 +61,32 @@ const ChatConfiguration = () => {
         </>
     )
 }
+
+const CommentConfiguration = () => {
+    const { t } = useTranslation();
+
+    return (
+        <>
+            <FlexBox flexDirection="row" gap="20px" width="75%">
+                <RadioGroupField
+                    name="commentsConfiguration"
+                    radioOptions={[
+                        { key: 'all_posts', label: t('all_posts') },
+                        { key: 'specific_keywords', label: t('comments_specific_keywords') }]} />
+            </FlexBox>
+        </>
+    )
+}
+
+export interface IAddFacebookPageFormFields {
+    name: string;
+    facebookPageName: string;
+    queueId?: number | null;
+    commentsConfiguration: string;
+    sendAutoReply: boolean;
+    autoReplyMessage: string;
+}
+
 
 export interface IAddFacebookPageFormProps {
     isMutationLoading?: boolean;
@@ -101,14 +122,22 @@ export const AddFacebookPageFormBase = (props: IAddFacebookPageFormProps) => {
 
     const isLastStep = activeStep === steps.length - 1;
 
+    const renderBasedOnStep = () => {
+        switch (activeStep) {
+            case 0:
+                return <PageConfigurations allQueues={props.allQueues} associatedPages={props.associatedPages} />
+            case 1:
+                return <CommentConfiguration />
+            default: return <MessengerConfiguration />
+        }
+    }
+
     return (
         <FormProvider {...form}>
             <FlexBox gap="20px">
                 <ConfigStepper activeStep={activeStep} steps={steps} />
                 <Divider orientation="vertical" variant="middle" flexItem />
-                {activeStep === 0
-                    ? <PageConfigurations allQueues={props.allQueues} associatedPages={props.associatedPages} />
-                    : <ChatConfiguration />}
+                {renderBasedOnStep()}
             </FlexBox>
             <DialogActions sx={{ justifyContent: 'space-between', paddingTop: '30px' }}>
                 {activeStep > 0 ?
