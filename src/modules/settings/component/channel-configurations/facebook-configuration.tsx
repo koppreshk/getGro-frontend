@@ -127,7 +127,7 @@ export default function FacebookConfigurations() {
             config_id: '1074101920418362',
             response_type: 'code',
             override_default_response_type: true,
-            redirect_uri: 'https://intent.getgro.io/configurations/facebook'
+            redirect_uri: 'https://intent.getgro.io/configurations/marketplace/facebook'
         });
     };
 

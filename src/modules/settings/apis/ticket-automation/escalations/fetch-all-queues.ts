@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { useServiceClient } from "lib";
 import { EscalationQueryKey, EscalationEndPoint } from "./api-enums";
 
-interface IQueueMetadata {
+export interface IQueueMetadata {
     "id": number,
     "name": string,
     "uniqueKey": string

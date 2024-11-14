@@ -404,5 +404,9 @@
     "link_ticket_failure": "Failed to link ticket to this conversation",
     "links": "Links",
     "unlink_ticket": "Unlink Ticket",
-    "uninstall": "Uninstall"
+    "uninstall": "Uninstall",
+    "authenticate": "authenticate",
+    "re_authenticate": "re-authenticate",
+    "add_page": "Add Page",
+    "facebook_page": "Facebook Page"
 }

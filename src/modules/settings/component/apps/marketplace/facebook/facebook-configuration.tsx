@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { GetApp } from "@mui/icons-material"
+import { Login } from "@mui/icons-material"
 import { Button } from "@mui/material"
 import { useFacebookConfiguration } from "modules/settings/apis/marketplace/facebook";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next"
 import { useSearchParams } from "react-router-dom";
 
-export const FacebookConfiguration = (props: { updateInstallation: () => void; }) => {
+export const FacebookConfiguration = (props: { updateInstallation: () => void; mode?: string }) => {
+    const { mode = 'authenticate' } = props;
     const { t } = useTranslation();
     const [searchParams, setSearchParams] = useSearchParams();
     const code = searchParams.get('code');
@@ -68,7 +69,7 @@ export const FacebookConfiguration = (props: { updateInstallation: () => void; }
 
     return (
         <>
-            <Button variant="contained" size="medium" onClick={handleFBLogin} endIcon={<GetApp />}>{t('install')}</Button>
+            <Button variant="contained" size="medium" onClick={handleFBLogin} endIcon={<Login />}>{mode === 'authenticate' ? t('authenticate') : t('re_authenticate')}</Button>
         </>
     )
 }
