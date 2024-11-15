@@ -1,10 +1,9 @@
 import React, { useMemo } from "react";
 import styled from "styled-components";
-import { FlexBox } from "lib/ui-ux";
+import { ConversationContainerBackground, FlexBox } from "lib/ui-ux";
 import { WhatsappFooter } from "./whatsapp-footer";
 import { WhatsAppChatContent } from "./whatsapp-chat-content";
 import { Conversation, IWhatsAppMessages, useSendWhatsAppMessages } from "modules/tickets/apis";
-import { Container } from "..";
 import { Typography } from "@mui/material";
 import { isToday, isYesterday } from "lib/utils";
 
@@ -20,8 +19,8 @@ const DateText = styled(Typography)`
     width: fit-content;
 `;
 
-export const WhatsAppConversations = (props: { data: IWhatsAppMessages }) => {
-    const { data } = props;
+export const WhatsAppConversations = (props: { data: IWhatsAppMessages  } & { isDisabled?: boolean }) => {
+    const { data, isDisabled } = props;
     const [chatData, setChatData] = React.useState(data.conversations);
     const { mutateAsync } = useSendWhatsAppMessages();
 
@@ -62,7 +61,7 @@ export const WhatsAppConversations = (props: { data: IWhatsAppMessages }) => {
 
     return (
         <ConversationWrapper height="100%" width="100%" flexDirection="column">
-            <Container>
+            <ConversationContainerBackground>
                 <FlexBox height="calc(100% - 150px)" flexDirection="column" gap="10px" overflowY="auto" padding="10px">
                     {
                         Object.keys(groupedBydateData).map((date) => {
@@ -78,8 +77,8 @@ export const WhatsAppConversations = (props: { data: IWhatsAppMessages }) => {
                         )
                     }
                 </FlexBox>
-            </Container>
-            <WhatsappFooter onSendAction={onSendAction} />
+            </ConversationContainerBackground>
+            <WhatsappFooter onSendAction={onSendAction} isDisabled={isDisabled} />
         </ConversationWrapper>
     );
 }

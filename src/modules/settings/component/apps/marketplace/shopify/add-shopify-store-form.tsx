@@ -2,9 +2,10 @@ import React from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import styled from "styled-components";
 import { PasswordField, TextboxField } from "lib/form-fields";
-import { Box, DialogActions, Divider, Grid, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material";
+import { DialogActions, Divider, Grid } from "@mui/material";
 import { CancelButton, FlexBox, LoadingButton } from "lib/ui-ux";
 import { IShopifyFormFields } from "modules/settings/containers/marketplace/shopify";
+import { ConfigStepper } from "modules/settings/common";
 
 export interface IAddShopifyConfigurationFormProps {
     isMutationLoading: boolean;
@@ -24,7 +25,7 @@ export const ShopifyStoreConfigForm = (props: IAddShopifyConfigurationFormProps)
     return (
         <>
             <FlexBox gap="20px">
-                <ShopifyConfigSteps activeStep={activeStep} />
+                <ConfigStepper activeStep={activeStep} steps={steps} />
                 <Divider orientation="vertical" variant="middle" flexItem />
                 {activeStep === 0 ? <ShopifyDetailsForm /> : <span>Work in Progress..</span>}
             </FlexBox>
@@ -44,36 +45,6 @@ const steps = [
         description: `Connect shopify store with getgro`,
     }
 ];
-
-const ShopifyConfigSteps = (props: { activeStep: number }) => {
-    const { activeStep } = props;
-    return (
-        <>
-            <Box sx={{ width: 400 }}>
-                <Stepper activeStep={activeStep} orientation="vertical">
-                    <Stepper activeStep={activeStep} orientation="vertical">
-                        {steps.map((step, index) => (
-                            <Step key={step.label}>
-                                <StepLabel
-                                    optional={
-                                        index === 2 ? (
-                                            <Typography variant="caption">Last step</Typography>
-                                        ) : null
-                                    }
-                                >
-                                    {step.label}
-                                </StepLabel>
-                                <StepContent>
-                                    <Typography variant="body3">{step.description}</Typography>
-                                </StepContent>
-                            </Step>
-                        ))}
-                    </Stepper>
-                </Stepper>
-            </Box>
-        </>
-    )
-}
 
 const StyledTextboxField = styled(TextboxField)`
     &&{

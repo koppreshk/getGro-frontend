@@ -1,12 +1,14 @@
 import React, { useEffect, useMemo } from "react";
 import { createSearchParams, useMatch, useNavigate, useParams, useSearchParams } from "react-router-dom";
-import styled, { css } from "styled-components";
+import styled, { css, useTheme } from "styled-components";
+import { DateTime } from "luxon";
 import { Avatar, Typography } from "@mui/material"
 import { FlexBox } from "lib/ui-ux"
 import { ITicketDetails } from "modules/tickets/apis";
 import { useAppDispatch } from "lib/hooks";
 import { setTicketDetails } from "modules/tickets/storage";
 import { useSourceIcon } from "modules/tickets/hooks";
+import { isToday, isYesterday } from "lib/utils";
 
 interface ITicketListProps {
     data: ITicketDetails[];
@@ -31,6 +33,10 @@ const TicketWrapper = styled(FlexBox) <{ $isTicketActive: boolean }>`
         border-width: 0;
         border-left-width: thick;
     `}
+    
+    &:hover {
+        background-color: ${(props) => props.$isTicketActive ? props.theme.pallete.purpleLight : props.theme.pallete.grayVariant5};
+    }
 `;
 
 const TicketDetailsSectionRight = styled(FlexBox)`
@@ -90,6 +96,7 @@ const TicketDetails = (props: ITicketDetailsProps) => {
     const pageNumber = searchParams.get('pageNumber');
     const dispatch = useAppDispatch();
     const getSourceIcon = useSourceIcon();
+    const { pallete } = useTheme();
 
     React.useEffect(() => {
         if (params.ticketId === ticketId.toString() && ref.current) {
@@ -121,6 +128,9 @@ const TicketDetails = (props: ITicketDetailsProps) => {
         navigate(`/tickets/${match?.params.ticketType}/${ticketId}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`);
     }, [match?.params.ticketType, navigate, noOfRecords, pageNumber, ticketId]);
 
+    const isoDate = DateTime.fromFormat(createdAt, 'yyyy-LL-dd hh:mm a').toISO();
+    const time = DateTime.fromISO(isoDate!).toFormat('hh:mm a');
+
     return (
         <TicketWrapper flexDirection="row" $isTicketActive={isTicketActive} ref={ref} onClick={onTicketClick}>
             <FlexBox justifyContent="center" alignItems="center">
@@ -129,7 +139,7 @@ const TicketDetails = (props: ITicketDetailsProps) => {
             <TicketDetailsSectionRight flexDirection="column" gap="4px">
                 <FlexBox justifyContent="space-between">
                     <Typography variant="h6" sx={{ textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: 'calc(100% - 125px)', textWrap: 'nowrap' }}>{customerName}</Typography>
-                    <Typography variant="caption">{createdAt}</Typography>
+                    <Typography variant="caption" title="Created At" sx={{ color: pallete.grayNeutral }}>{isToday(isoDate!) ? `Today, ${time}` : isYesterday(isoDate!) ? `Yesterday, ${time}` : createdAt}</Typography>
                 </FlexBox>
                 <StyledTypography variant="body2" title={description}>{description}</StyledTypography>
                 <FlexBox flexDirection="row" gap="10px" alignItems="center">

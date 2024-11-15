@@ -81,6 +81,7 @@ const LoginForm = () => {
                 showNotification({ message: 'Failed to login, please check email or password', type: 'error' })
             })
     }, [isVerified, login, mutateAsync, showNotification, tokenValue]);
+    console.log('sitkey: ',import.meta.env.VITE_GOOGLE_SITE_KEY);
 
     return (
         <Box sx={{ width: '100%', padding: '50px', boxSizing: 'border-box' }}>
@@ -102,7 +103,7 @@ const LoginForm = () => {
                     <Grid item md={12}>
                         <div className="recaptcha-container">
                             <ReCAPTCHA
-                                sitekey="6LeI4FcqAAAAAMz0zR7bddwcBvG9bPsMad0j4l6v" // replace with your site key
+                                sitekey={import.meta.env.VITE_GOOGLE_SITE_KEY}
                                 onChange={onRecaptchaChange}
                             />
                         </div>

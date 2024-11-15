@@ -4,12 +4,14 @@ import { useQuery } from "react-query";
 import { WhatsAppConfigurationEndPoint, WhatsAppConfigurationQueryKey } from ".";
 
 export interface IWhatsAppConfigDetails {
-    app_name: string;
-    api_key: string;
-    number: string;
-    app_id: string;
-    webhook_url: string;
-}
+    app_id: string
+    app_secret: string
+    whatsapp_token: string
+    created_at: string
+    updated_at: string
+    created_by: string
+    updated_by: string | null;
+  }
 
 export const useFetchWhatsAppConfiguration = () => {
     const { getData } = useServiceClient();

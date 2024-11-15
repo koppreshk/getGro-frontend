@@ -1,6 +1,6 @@
 
 export interface ITicketDetails {
-    customerName: string;
+    customerName?: string;
     ticketId: number;
     source: string;
     channelId: number;

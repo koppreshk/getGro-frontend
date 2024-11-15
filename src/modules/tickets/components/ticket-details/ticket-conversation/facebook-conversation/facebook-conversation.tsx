@@ -1,10 +1,9 @@
 import React from "react";
-import { FlexBox } from "lib/ui-ux";
+import { ConversationContainerBackground, FlexBox } from "lib/ui-ux";
 import { ChatConversationLoader } from "lib/ui-ux/loader-components";
 import { ITicketConversation } from "modules/tickets/apis";
 import { FacebookConversationChatContent } from "./facebook-conversation-chat-content";
 import { TicketConversationFooter } from "../instagram-conversations";
-import { Container } from "..";
 
 export const FacebookConversation = (props: { data: ITicketConversation, isLoading?: boolean }) => {
     const { data, isLoading } = props;
@@ -20,13 +19,13 @@ export const FacebookConversation = (props: { data: ITicketConversation, isLoadi
 
     return (
         <FlexBox height="100%" flexDirection="column" style={{ position: 'relative' }}>
-            <Container>
+            <ConversationContainerBackground>
                 <FlexBox height="calc(100% - 150px)" flexDirection="column" gap="10px" overflowY="auto" padding="10px">
                     {isLoading ? <ChatConversationLoader />
                         :
                         chatData?.map((item, index) => <FacebookConversationChatContent key={index} content={item} agentName={data.agentName} customerName={data.customerName} />)}
                 </FlexBox>
-            </Container>
+            </ConversationContainerBackground>
             <TicketConversationFooter onSendAction={onSendAction} />
         </FlexBox>
     );

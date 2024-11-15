@@ -24,7 +24,7 @@ export interface IConfig {
     }
 }
 
-export const useFetchUserConfig = (isEnabled: boolean) => {
+export const useFetchUserConfig = (user: object | null) => {
     const dispatch = useDispatch();
 
     const { getData } = useServiceClient();
@@ -34,7 +34,7 @@ export const useFetchUserConfig = (isEnabled: boolean) => {
 
     return useQuery<IConfig, { message: string }>({
         queryFn: getConfig,
-        queryKey: [AgentsQueryKey.FETCH_USER_CONFIG],
+        queryKey: [AgentsQueryKey.FETCH_USER_CONFIG, user],
         cacheTime: 0,
         onSuccess(data) {
             if (data?.modules?.includes('all') && data?.permissions?.includes('all')) {
@@ -51,6 +51,6 @@ export const useFetchUserConfig = (isEnabled: boolean) => {
             dispatch(setCoreData(data))
 
         },
-        enabled: isEnabled
+        enabled: user ? true : false
     })
 }
