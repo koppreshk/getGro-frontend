@@ -3,7 +3,8 @@ export enum FacebookConfigurationEndPoint {
     FETCH_FACEBOOK_CONFIGURATION = 'meta/facebook/account',
     DELETE_FACEBOOK_CONFIGURATION = 'meta/facebook/delete',
     FETCH_CONFIGURED_PAGES = 'meta/facebook/fetch_configured_pages',
-    FETCH_ASSOICATED_PAGES = 'meta/facebook/associated_pages'
+    FETCH_ASSOICATED_PAGES = 'meta/facebook/associated_pages',
+    ADD_FACEBOOK_PAGE = 'meta/facebook/configure_fb_page'
 }
 
 export enum FacebookConfigurationQueryKey {
@@ -11,5 +12,6 @@ export enum FacebookConfigurationQueryKey {
     FETCH_FACEBOOK_CONFIGURATION = 'FETCH_FACEBOOK_CONFIGURATION',
     DELETE_FACEBOOK_CONFIGURATION = 'DELETE_FACEBOOK_CONFIGURATION',
     FETCH_CONFIGURED_PAGES = 'FETCH_CONFIGURED_PAGES',
-    FETCH_ASSOICATED_PAGES = 'FETCH_ASSOICATED_PAGES'
+    FETCH_ASSOICATED_PAGES = 'FETCH_ASSOICATED_PAGES',
+    ADD_FACEBOOK_PAGE = 'ADD_FACEBOOK_PAGE'
 }

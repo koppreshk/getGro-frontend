@@ -32,7 +32,7 @@ function PageConfigurations(props: Pick<IAddFacebookPageFormProps, 'allQueues' |
                 <TextboxFieldWithLabel name="name" size="small" label={t('name')} type="text" fullWidth rules={{ required: 'This field is required.' }} placeholder="Enter Name" />
             </Grid>
             <Grid item md={12}>
-                <SelectFieldWithLabel name="facebookPageName" size="small" label={t('facebook_page')} rules={{ required: 'This field is required.' }} menuOptions={props.associatedPages.map((item) => ({ key: item.page_id.toString(), value: item.page_name })) || []} />
+                <SelectFieldWithLabel name="facebookPageId" size="small" label={t('facebook_page')} rules={{ required: 'This field is required.' }} menuOptions={props.associatedPages.map((item) => ({ key: item.page_id.toString(), value: item.page_name })) || []} />
             </Grid>
             <Grid item md={12}>
                 <SelectFieldWithLabel name="queueId" size="small" label={t('queue')} fullWidth menuOptions={props.allQueues.map((item) => ({ key: item.id.toString(), value: item.name })) || []} placeholder="Select Queue" />
@@ -64,15 +64,33 @@ const MessengerConfiguration = () => {
 
 const CommentConfiguration = () => {
     const { t } = useTranslation();
+    const { watch } = useFormContext();
+
+    const renderContentBelowLabel = () => {
+        return (
+            <>
+                {
+                    watch('commentsConfiguration') === 'specific_keywords'
+                        ?
+                        <FlexBox flexDirection="column" gap={'20px'} padding={'0 0 0 27px'}>
+                            <Typography variant="body3">{'If you turn this feature on, comment with specific keywords for your post will be converted into conversation'}</Typography>
+                            <TextboxFieldWithLabel name="keywords" label="Specific Ketwords" size="small" fullWidth multiline rows={3} />
+                        </FlexBox>
+                        : null
+                }
+            </>
+        )
+    }
 
     return (
         <>
             <FlexBox flexDirection="row" gap="20px" width="75%">
                 <RadioGroupField
                     name="commentsConfiguration"
+                    row={false}
                     radioOptions={[
-                        { key: 'all_posts', label: t('all_posts') },
-                        { key: 'specific_keywords', label: t('comments_specific_keywords') }]} />
+                        { key: 'all_posts', label: t('all_posts'), renderContentBelowLabel: 'If you turn this feature on, all comments received on your posts will be converted into conversations' },
+                        { key: 'specific_keywords', label: t('comments_specific_keywords'), renderContentBelowLabel: renderContentBelowLabel }]} />
             </FlexBox>
         </>
     )
@@ -80,11 +98,12 @@ const CommentConfiguration = () => {
 
 export interface IAddFacebookPageFormFields {
     name: string;
-    facebookPageName: string;
+    facebookPageId: string;
     queueId?: number | null;
     commentsConfiguration: string;
     sendAutoReply: boolean;
     autoReplyMessage: string;
+    keywords: string;
 }
 
 
@@ -116,8 +135,11 @@ export const AddFacebookPageFormBase = (props: IAddFacebookPageFormProps) => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    const handleNext = async () => {
+        const isFormValidated = await form.trigger();
+        if (isFormValidated) {
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        }
     }
 
     const isLastStep = activeStep === steps.length - 1;

@@ -1,28 +1,32 @@
+import { useNotifications } from "lib";
 import { CenteredCircularProgress } from "lib/ui-ux";
-import { useFetchAssociatedPages } from "modules/settings/apis/marketplace/facebook";
+import { useAddFacebookPage, useFetchAssociatedPages } from "modules/settings/apis/marketplace/facebook";
 import { useFetchAllQueues } from "modules/settings/apis/ticket-automation";
-import { AddFacebookPageFormBase } from "modules/settings/component/apps/marketplace/facebook"
+import { AddFacebookPageFormBase, IAddFacebookPageFormFields } from "modules/settings/component/apps/marketplace/facebook"
 
 export const AddFacebookPageContainer = (props: { toggleAddPageDialog: () => void }) => {
     const { data: allQueues, isLoading: isQueueLoading } = useFetchAllQueues();
     const { data, isLoading } = useFetchAssociatedPages();
+    const { mutateAsync, isLoading: mutationLoading } = useAddFacebookPage();
+    const { showNotification } = useNotifications();
 
-    const onSubmit = () => {
-        // mutateAsync({
-        //     name: formData.name,
-        //     auto_reply_message: formData.autoReplyMessage,
-        //     send_auto_reply: formData.sendAutoReply,
-        //     whatsapp_business_id: formData.whatsappBusinessID,
-        //     whatsapp_phone_number_id: formData.phoneNumberID,
-        //     queue_id: formData.queueId ? formData.queueId : null
-        // }).then((res) => {
-        //     if (res) {
-        //         showNotification({ message: 'add_whatsapp_Page_success', type: 'success' });
-        //         props.toggleAddPageDialog()
-        //     }
-        // }).catch(() => {
-        //     showNotification({ message: 'add_whatsapp_Page_failure', type: 'error' });
-        // });
+    const onSubmit = (formData: IAddFacebookPageFormFields) => {
+        mutateAsync({
+            page_id: formData.facebookPageId,
+            comment_configuration: formData.commentsConfiguration,
+            can_send_auto_reply: formData.sendAutoReply,
+            auto_reply_text: formData.autoReplyMessage,
+            name: formData.name,
+            specific_keywords: formData.keywords.split(','),
+            queue_id: formData.queueId?.toString() ?? ''
+        }).then((res) => {
+            if (res) {
+                showNotification({ message: 'add_fb_page_success', type: 'success' });
+                props.toggleAddPageDialog()
+            }
+        }).catch(() => {
+            showNotification({ message: 'add_fb_page_failure', type: 'error' });
+        });
     }
 
     if (isQueueLoading || isLoading) {
@@ -36,7 +40,7 @@ export const AddFacebookPageContainer = (props: { toggleAddPageDialog: () => voi
                     allQueues={allQueues}
                     associatedPages={data}
                     togglePopup={props.toggleAddPageDialog}
-                    onSubmit={onSubmit} isMutationLoading={false} />
+                    onSubmit={onSubmit} isMutationLoading={mutationLoading} />
             </>
         )
     }

@@ -5,6 +5,15 @@ import { useFacebookConfiguration } from "modules/settings/apis/marketplace/face
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next"
 
+interface FacebookResponse {
+    authResponse: {
+        userID: string | null;
+        expiresIn: string | null;
+        code: string;
+    }
+    status: string;
+}
+
 export const FacebookConfiguration = (props: { updateInstallation: () => void; mode?: string }) => {
     const { mode = 'authenticate' } = props;
     const { t } = useTranslation();
@@ -35,7 +44,7 @@ export const FacebookConfiguration = (props: { updateInstallation: () => void; m
 
     // Facebook login handler
     const handleFBLogin = () => {
-        window.FB.login((response: any) => {
+        window.FB.login((response: FacebookResponse) => {
             if (response.authResponse) {
                 console.log('Logged in!', response);
                 mutateAsync({
