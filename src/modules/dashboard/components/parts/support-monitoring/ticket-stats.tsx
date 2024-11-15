@@ -7,6 +7,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { SelectField } from "lib/form-fields";
 import { useFetchSupportMonitoringStatistics, useFetchSupportMonitoringTicketsCreated } from "modules/dashboard/apis";
 import { DateRange } from "@matharumanpreet00/react-daterange-picker";
+import { useTranslation } from "react-i18next";
 
 const StyledContainer = styled(FlexBox)`
     background-color: ${({ theme }) => theme.pallete.white};
@@ -17,9 +18,10 @@ const StyledContainer = styled(FlexBox)`
 export const TicketStats = (props: { dateRange: DateRange }) => {
     // const [filterValue, setFilters] = useState('today');
     const { data, isLoading } = useFetchSupportMonitoringStatistics(props.dateRange);
+    const { t } = useTranslation();
 
     const quickStats1 = [{
-        name: 'Tickets Created',
+        name: t('tickets_created'),
         value: data?.tickets_created || 0,
     }, {
         name: 'Replies By Agent',
