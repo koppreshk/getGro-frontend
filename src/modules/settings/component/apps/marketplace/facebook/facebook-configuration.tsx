@@ -14,6 +14,14 @@ interface FacebookResponse {
     status: string;
 }
 
+// Define Facebook SDK types for TypeScript
+declare global {
+    interface Window {
+        FB: any;
+        fbAsyncInit: () => void;
+    }
+}
+
 export const FacebookConfiguration = (props: { updateInstallation: () => void; mode?: string }) => {
     const { mode = 'authenticate' } = props;
     const { t } = useTranslation();
