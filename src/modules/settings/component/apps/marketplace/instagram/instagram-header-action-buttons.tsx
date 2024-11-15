@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Edit, GetApp } from "@mui/icons-material";
+import { Login } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { AddAppConfigurationDialog } from "../add-app-configuration-dialog";
@@ -37,6 +37,10 @@ export const InstagramHeaderActionButtons = (props: InstagramHeaderActionButtons
     //         : <AddWhatsAppConfigContainer togglePopup={toggleDialog} updateInstallation={props.updateInstallation} />
     // };
 
+    const handleOnClick = () => {
+        window.open(`https://www.instagram.com/oauth/authorize?enable_fb_login=0&force_authentication=1&client_id=558293376682732&redirect_uri=https://intent.getgro.io/configurations/instagram&response_type=code&scope=instagram_business_basic%2Cinstagram_business_manage_messages%2Cinstagram_business_manage_comments%2Cinstagram_business_content_publish`)
+    }
+
     return (
         <>
             <FlexBox gap={'10px'} height="fit-content">
@@ -55,10 +59,10 @@ export const InstagramHeaderActionButtons = (props: InstagramHeaderActionButtons
                                 <>
                                     <Button variant="outlined" size="medium" onClick={toggleManageDisplay}>{t('manage')}</Button>
                                     {/* <DeleteWhatsAppConfigurations /> */}
-                                    <Button variant="contained" size="medium" onClick={toggleDialog} startIcon={<Edit />}>{t('edit')}</Button>
+                                    <Button variant="contained" size="medium" onClick={toggleDialog} startIcon={<Login />}>{t('re_authenticate')}</Button>
                                 </>
                             )
-                        : <Button variant="contained" size="medium" onClick={toggleDialog} endIcon={<GetApp />}>{t('install')}</Button>}
+                        : <Button variant="contained" size="medium" onClick={handleOnClick} endIcon={<Login />}>{t('authenticate')}</Button>}
             </FlexBox>
             <AddAppConfigurationDialog
                 dialogContent={() => <></>}
