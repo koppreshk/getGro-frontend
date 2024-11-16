@@ -3,7 +3,7 @@ import {
     TaskOutlined, Tag, AccountCircle, WorkHistory, LockPerson, SellOutlined,
     GridViewRounded, StoreRounded, ThumbsUpDown, SettingsRounded, SupportAgentRounded,
     Groups2Outlined, EventNoteOutlined, AssignmentTurnedInOutlined, Email, ManageHistory,
-    ConfirmationNumber, AddCommentOutlined, PendingActions, Instagram
+    ConfirmationNumber, AddCommentOutlined, PendingActions
 } from "@mui/icons-material";
 import styled from "styled-components";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -66,14 +66,6 @@ const useConfigurations = () => {
             categoryName: t("channels"),
             categoryIcon: () => <Tag color="primary" />,
             categoryOptions: [
-                {
-                    label: t("instagram"),
-                    route: 'instagram',
-                    uniqueKey: 'instagram',
-                    catOptionIcon: () => <Instagram />,
-                    hidden: false,
-                    description: t("instagram_short_description")
-                },
                 {
                     label: t("email"),
                     route: 'email',
