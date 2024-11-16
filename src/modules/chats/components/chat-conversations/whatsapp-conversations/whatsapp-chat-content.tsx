@@ -6,12 +6,47 @@ import { chooseRandomColors, getInitialsByName, getTime } from "lib/utils";
 import { Done, DoneAll, Person } from '@mui/icons-material';
 import { Message } from "modules/chats/apis";
 import { AttachmentContent } from "./attachment-content";
+import { useAppSelector } from "lib/hooks";
 
-const Content = styled(FlexBox) <{ $isIncomingMessage: boolean }>`
-    background-color: ${({ theme, $isIncomingMessage }) => $isIncomingMessage ? theme.pallete.white : '#d9fdd3'};
+const Content = styled(FlexBox) <{ $isIncomingMessage: boolean, $source: string }>`
+    background-color: ${({ $isIncomingMessage, $source }) => {
+        if ($isIncomingMessage) {
+            return '#fff';
+        }
+        else {
+            switch ($source) {
+                case 'instagram':
+                    return '#6e2dff';
+                case 'facebook':
+                    return '#009dff'
+                default: return '#d9fdd3'
+            }
+        }
+    }};
     padding: 6px;
     border-radius: ${({ $isIncomingMessage }) => $isIncomingMessage ? '0px 6px 6px 6px' : '6px 0px 6px 6px'};
     box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+`;
+
+const TextMessage = styled(Typography) <{ $isIncomingMessage: boolean, $source: string }>`
+    &&{
+        white-space: pre-wrap;
+        margin-right: 21px;
+        color: ${({ $source, $isIncomingMessage }) => {
+        if ($isIncomingMessage) {
+            return '#3b4455'
+        }
+        else {
+            switch ($source) {
+                case 'instagram':
+                    return '#f7f7f7';
+                case 'facebook':
+                    return '#f7f7f7'
+                default: return '#3b4455'
+            }
+        }
+    }};
+    }
 `;
 
 const animateClient = css`
@@ -69,6 +104,7 @@ export const WhatsAppChatContent = (props: IChatContentProps) => {
     const isIncomingMessage = direction === 'incoming';
     const containerRef = React.useRef<HTMLDivElement>(null);
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(isIncomingMessage ? customerName : replied_by || 'NA'), [replied_by, customerName, isIncomingMessage]);
+    const chatDetails = useAppSelector((state) => state.chat.chatDetails);
 
     React.useEffect(() => {
         containerRef?.current && containerRef?.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -79,17 +115,17 @@ export const WhatsAppChatContent = (props: IChatContentProps) => {
             <Avatar sx={{ fontSize: '14px', color: textColor, bgcolor: backgroundColor }}>
                 {isIncomingMessage ? getInitialsByName(customerName) : <Person />}
             </Avatar>
-            <Content $isIncomingMessage={isIncomingMessage} maxWidth="50%" flexDirection="column" >
+            <Content $isIncomingMessage={isIncomingMessage} $source={chatDetails!.chat_source!} maxWidth="50%" flexDirection="column" >
                 {message_type != 'text'
-                    ? <AttachmentContent media_url={media_url} mime_type={mime_type} caption={caption} isIncomingMessage={isIncomingMessage}/>
+                    ? <AttachmentContent media_url={media_url} mime_type={mime_type} caption={caption} isIncomingMessage={isIncomingMessage} />
                     : (
-                        <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap', marginRight: '21px' }} >
+                        <TextMessage variant="body2" $source={chatDetails!.chat_source!} $isIncomingMessage={isIncomingMessage} >
                             {message}
-                        </Typography>
+                        </TextMessage>
                     )}
                 {!isIncomingMessage
                     ? <FlexBox justifyContent="flex-end" gap="5px" alignItems="center">
-                        <Typography variant="subheading2" sx={{ color: '#8696a0' }}>{getTime(created_at)}</Typography>
+                        <Typography variant="subheading2" sx={{ color: chatDetails!.chat_source === 'whatsapp' ? '#8696a0' : '#f7f7f7' }}>{getTime(created_at)}</Typography>
                         <MessageDeliveryStatuses agtMsgDeliveryStatus={status} />
                     </FlexBox> :
                     <FlexBox justifyContent="flex-end" alignItems="center">

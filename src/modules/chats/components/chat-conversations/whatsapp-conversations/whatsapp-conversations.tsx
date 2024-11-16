@@ -7,6 +7,7 @@ import { ChatConversationById, Message, MessageType, useSendChatReply } from "mo
 import { WhatsappFooter } from "./whatsapp-footer";
 import { WhatsAppChatContent } from "./whatsapp-chat-content";
 import { useAppSelector } from "lib/hooks";
+import { DateTime } from "luxon";
 
 const DateText = styled(Typography)`
     background: #fffffff2;
@@ -59,7 +60,7 @@ export const WhatsAppConversations = (props: WhatsAppConversationsProps) => {
     const onSendAction = React.useCallback((newConversation: { message: string; mediaURL?: string, type?: string, caption?: string, filename?: string }) => {
         const { message, mediaURL, type, caption, filename } = newConversation;
         setChatData((prevValue) => ([...prevValue, {
-            created_at: new Date().toISOString(),
+            created_at: DateTime.local().toFormat("yyyy-MM-dd hh:mm a"),
             caption: '',
             direction: 'outgoing',
             replied_by: 'agent',
