@@ -4,8 +4,8 @@ import { Typography } from "@mui/material";
 import { ConversationContainerBackground, FlexBox } from "lib/ui-ux";
 import { isToday, isYesterday } from "lib/utils";
 import { ChatConversationById, Message, MessageType, useSendChatReply } from "modules/chats/apis";
-import { WhatsappFooter } from "./whatsapp-footer";
-import { WhatsAppChatContent } from "./whatsapp-chat-content";
+import { ConversationFooter } from "./conversation-footer";
+import { ChatContent } from "./chat-content";
 import { useAppSelector } from "lib/hooks";
 import { DateTime } from "luxon";
 
@@ -46,7 +46,7 @@ function getFileType(mimeType: string): MessageType {
     }
 }
 
-export const WhatsAppConversations = (props: WhatsAppConversationsProps) => {
+export const ConversationsWrapper = (props: WhatsAppConversationsProps) => {
     const { data, conversationId } = props;
     const [chatData, setChatData] = React.useState(data.messages);
     const { mutateAsync } = useSendChatReply();
@@ -110,7 +110,7 @@ export const WhatsAppConversations = (props: WhatsAppConversationsProps) => {
                                         <DateText variant="subheading2">{isToday(date) ? 'Today' : isYesterday(date) ? 'Yesterday' : date}</DateText>
                                     </FlexBox>
                                     {groupedMessages[date]?.map((item, index) => (
-                                        <WhatsAppChatContent
+                                        <ChatContent
                                             key={index}
                                             content={item}
                                             customerName={data.profile_name} />
@@ -121,7 +121,7 @@ export const WhatsAppConversations = (props: WhatsAppConversationsProps) => {
                         )
                     }
                 </FlexBox>
-                <WhatsappFooter onSendAction={onSendAction} />
+                <ConversationFooter onSendAction={onSendAction} />
             </FlexBox>
         </ConversationContainerBackground>
     );

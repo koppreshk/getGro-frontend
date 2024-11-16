@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Login } from "@mui/icons-material";
 import { Button } from "@mui/material";
@@ -33,6 +33,12 @@ export const InstagramHeaderActionButtons = (props: InstagramHeaderActionButtons
     const handleOnClick = () => {
         window.open(`https://www.instagram.com/oauth/authorize?enable_fb_login=0&force_authentication=1&client_id=558293376682732&redirect_uri=https://intent.getgro.io/configurations/marketplace/instagram&response_type=code&scope=instagram_business_basic%2Cinstagram_business_manage_messages%2Cinstagram_business_manage_comments%2Cinstagram_business_content_publish`, '_self')
     }
+
+    useEffect(() => {
+        if(code){
+            setOpenDialog(true);
+        }
+    }, [code])
 
     return (
         <>

@@ -13,7 +13,7 @@ import { NativeFileUpload } from "lib/ui-ux/file-upload/native-file-upload-field
 import { usePresignedURL } from "modules/chats/apis/presigned-url";
 import { useAppSelector } from "lib/hooks";
 
-interface IWhatsappFooterProps {
+interface IConversationFooterProps {
     onSendAction: (newConversation: { message: string; mediaURL?: string, type?: string, caption?: string, filename?: string }) => Promise<{ status: boolean }>;
 }
 
@@ -34,7 +34,7 @@ interface IFileInfoState {
     parsedFile: IFileInfo[]
 }
 
-export const WhatsappFooter = (props: IWhatsappFooterProps) => {
+export const ConversationFooter = (props: IConversationFooterProps) => {
     const { onSendAction } = props;
     const [textareaValue, setTextAreaValue] = React.useState('');
     const [filePreviewDisplay, setFilePreviewDisplay] = React.useState(false);
@@ -110,7 +110,7 @@ export const WhatsappFooter = (props: IWhatsappFooterProps) => {
 }
 
 
-const UploadedFilePreview = (props: { toggleFileDisplay: () => void, filePreviewDisplay: boolean; fileInfo: IFileInfoState } & IWhatsappFooterProps) => {
+const UploadedFilePreview = (props: { toggleFileDisplay: () => void, filePreviewDisplay: boolean; fileInfo: IFileInfoState } & IConversationFooterProps) => {
     const { filePreviewDisplay, fileInfo, toggleFileDisplay, onSendAction } = props;
     const [textareaValue, setTextAreaValue] = React.useState('');
     const { mutateAsync: getPresignedURL } = usePresignedURL();

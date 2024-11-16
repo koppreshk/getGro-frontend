@@ -98,7 +98,7 @@ interface IChatContentProps {
     customerName: string;
 }
 
-export const WhatsAppChatContent = (props: IChatContentProps) => {
+export const ChatContent = (props: IChatContentProps) => {
     const { content, customerName } = props;
     const { created_at, direction, replied_by, media_url, message, status, mime_type, message_type, caption } = content;
     const isIncomingMessage = direction === 'incoming';
@@ -138,9 +138,10 @@ export const WhatsAppChatContent = (props: IChatContentProps) => {
 
 const MessageDeliveryStatuses = (props: { agtMsgDeliveryStatus: string }) => {
     const { agtMsgDeliveryStatus } = props;
+    const chatDetails = useAppSelector((state) => state.chat.chatDetails);
 
     const IconComponent = agtMsgDeliveryStatus === 'sent' ? Done : DoneAll;
     return (
-        <IconComponent sx={{ color: agtMsgDeliveryStatus === 'read' ? "#53bdeb" : '#8696a0', width: '16px', height: '16px' }} />
+        <IconComponent sx={{ color: agtMsgDeliveryStatus === 'read' ? "#53bdeb" : chatDetails!.chat_source === 'whatsapp' ? '#8696a0' : '#f7f7f7', width: '16px', height: '16px' }} />
     )
 }

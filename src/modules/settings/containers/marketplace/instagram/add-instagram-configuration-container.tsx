@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router-dom";
 import { useNotifications } from "lib";
 import { CenteredCircularProgress } from "lib/ui-ux";
 import { useCreateInstagramConfiguration } from "modules/settings/apis/marketplace/instagram";
@@ -8,6 +10,8 @@ export const AddInstagramConfigurationContainer = (props: { toggleAddPageDialog:
     const { data: allQueues, isLoading: isQueueLoading } = useFetchAllQueues();
     const { mutateAsync, isLoading: mutationLoading } = useCreateInstagramConfiguration();
     const { showNotification } = useNotifications();
+    const { t } = useTranslation();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const onSubmit = (formData: IAddInstagramConfigurationFormFields) => {
         mutateAsync({
@@ -19,11 +23,13 @@ export const AddInstagramConfigurationContainer = (props: { toggleAddPageDialog:
             auto_reply_message: formData.autoReplyMessage,
         }).then((res) => {
             if (res) {
-                showNotification({ message: 'add_insta_config_success', type: 'success' });
+                searchParams.delete('code');
+                setSearchParams(searchParams)
+                showNotification({ message: t('add_insta_config_success'), type: 'success' });
                 props.toggleAddPageDialog()
             }
         }).catch(() => {
-            showNotification({ message: 'add_insta_config_failure', type: 'error' });
+            showNotification({ message: t('add_insta_config_failure'), type: 'error' });
         });
     }
 

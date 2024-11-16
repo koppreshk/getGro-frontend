@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useNotifications } from "lib";
 import { CenteredCircularProgress } from "lib/ui-ux";
 import { IInstagramConfigDetails, useEditInstagramConfiguration } from "modules/settings/apis/marketplace/instagram";
@@ -9,6 +10,7 @@ export const EditInstagramConfigurationContainer = (props: { toggleAddPageDialog
     const { data: allQueues, isLoading: isQueueLoading } = useFetchAllQueues();
     const { mutateAsync, isLoading: mutationLoading } = useEditInstagramConfiguration();
     const { showNotification } = useNotifications();
+    const { t } = useTranslation();
 
     const onSubmit = (formData: IAddInstagramConfigurationFormFields) => {
         mutateAsync({
@@ -20,11 +22,11 @@ export const EditInstagramConfigurationContainer = (props: { toggleAddPageDialog
             "id": data.id
         }).then((res) => {
             if (res) {
-                showNotification({ message: 'edit_insta_config_success', type: 'success' });
+                showNotification({ message: t('edit_insta_config_success'), type: 'success' });
                 props.toggleAddPageDialog()
             }
         }).catch(() => {
-            showNotification({ message: 'edit_insta_config_failure', type: 'error' });
+            showNotification({ message: t('edit_insta_config_failure'), type: 'error' });
         });
     }
 
