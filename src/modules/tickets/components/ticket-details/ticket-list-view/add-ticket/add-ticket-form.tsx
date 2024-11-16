@@ -18,7 +18,7 @@ interface IAddTicketFormProps {
     onSubmit: (formData: IAddTIcketFormFields) => void
 }
 
-const StyledTags = styled(TagInputField)`
+export const StyledTagInputField = styled(TagInputField)`
     padding: 16.5px 14px;
     border-radius: ${({ theme }) => theme.semantics.borderRadius.xs};
     border: 1px solid ${({ theme }) => theme.pallete.formFieldBorderColor};
@@ -82,7 +82,7 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
                     </Grid>
                     <Grid item xs={12} >
                         <Typography variant="h6" sx={{ mb: '5px' }}>{t("tags")}</Typography>
-                        <StyledTags
+                        <StyledTagInputField
                             gap={"15px"}
                             name="tags"
                             allowToAddTagsViaText={false}

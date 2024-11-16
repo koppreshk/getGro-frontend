@@ -4,41 +4,33 @@ import { Login } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { AddAppConfigurationDialog } from "../add-app-configuration-dialog";
-// import { UpdateWhatsAppConfigContainer } from "modules/settings/containers/marketplace/whatsapp/update-whatsapp-config-container";
-// import { AddWhatsAppConfigContainer } from "modules/settings/containers/marketplace/whatsapp/add-whatsapp-config-container";
-// import { DeleteWhatsAppConfigurations } from "./delete-whatsapp-configurations";
+import { useSearchParams } from "react-router-dom";
+import { IInstagramConfigDetails } from "modules/settings/apis/marketplace/instagram";
+import { AddInstagramConfigurationContainer, EditInstagramConfigurationContainer } from "modules/settings/containers/marketplace/instagram";
 
 interface InstagramHeaderActionButtonsProps {
-    data: object,
-    showManageContent: boolean;
-    updateInstallation: () => void;
-    toggleManageDisplay: () => void
+    data: IInstagramConfigDetails,
 }
 
 export const InstagramHeaderActionButtons = (props: InstagramHeaderActionButtonsProps) => {
     const { t } = useTranslation();
-    const { toggleManageDisplay } = props;
     const [openDialog, setOpenDialog] = useState(false);
-    // const [openAddAccountDialog, setAddAccountDialogDisplay] = useState(false);
+    const [openEditDialog, setOpenEditDialog] = useState(false);
+    const [searchParams] = useSearchParams();
+    const code = searchParams.get('code');
 
     const toggleDialog = useCallback(() => {
         setOpenDialog((prevValue) => !prevValue)
     }, []);
 
-    // const toggleAddAccountDialog = useCallback(() => {
-    //     setAddAccountDialogDisplay((prevValue) => !prevValue)
-    // }, []);
+    const toggleEditDialog = useCallback(() => {
+        setOpenEditDialog((prevValue) => !prevValue)
+    }, []);
 
     const isInstalled = useMemo(() => Object.keys(props.data).length > 0, [props.data]);
 
-    // const appConfigDialogContent = () => {
-    //     return isInstalled
-    //         ? <UpdateWhatsAppConfigContainer togglePopup={toggleDialog} />
-    //         : <AddWhatsAppConfigContainer togglePopup={toggleDialog} updateInstallation={props.updateInstallation} />
-    // };
-
     const handleOnClick = () => {
-        window.open(`https://www.instagram.com/oauth/authorize?enable_fb_login=0&force_authentication=1&client_id=558293376682732&redirect_uri=https://intent.getgro.io/configurations/instagram&response_type=code&scope=instagram_business_basic%2Cinstagram_business_manage_messages%2Cinstagram_business_manage_comments%2Cinstagram_business_content_publish`)
+        window.open(`https://www.instagram.com/oauth/authorize?enable_fb_login=0&force_authentication=1&client_id=558293376682732&redirect_uri=https://intent.getgro.io/configurations/marketplace/instagram&response_type=code&scope=instagram_business_basic%2Cinstagram_business_manage_messages%2Cinstagram_business_manage_comments%2Cinstagram_business_content_publish`, '_self')
     }
 
     return (
@@ -46,36 +38,32 @@ export const InstagramHeaderActionButtons = (props: InstagramHeaderActionButtons
             <FlexBox gap={'10px'} height="fit-content">
                 {
                     isInstalled
-                        ? 
-                        // showManageContent
-                        //     ? (
-                        //         <>
-                        //             <BackButton variant="outlined" onClick={toggleManageDisplay} />
-                        //             <Button variant="contained" size="medium" onClick={toggleAddAccountDialog}>{t('add_account')}</Button>
-                        //         </>
-                        //     )
-                        //     : 
-                            (
-                                <>
-                                    <Button variant="outlined" size="medium" onClick={toggleManageDisplay}>{t('manage')}</Button>
-                                    {/* <DeleteWhatsAppConfigurations /> */}
-                                    <Button variant="contained" size="medium" onClick={toggleDialog} startIcon={<Login />}>{t('re_authenticate')}</Button>
-                                </>
-                            )
-                        : <Button variant="contained" size="medium" onClick={handleOnClick} endIcon={<Login />}>{t('authenticate')}</Button>}
+                        ?
+                        <>
+                            <Button variant="outlined" size="medium" onClick={toggleEditDialog}>{t('edit_account')}</Button>
+                            {/* <DeleteWhatsAppConfigurations /> */}
+                            <Button variant="contained" size="medium" onClick={handleOnClick} startIcon={<Login />}>{t('re_authenticate')}</Button>
+                        </>
+                        :
+                        code ?
+                            <>
+                                <Button variant="outlined" size="medium" onClick={toggleDialog}>{t('add_account')}</Button>
+                                <Button variant="contained" size="medium" onClick={handleOnClick} startIcon={<Login />}>{t('re_authenticate')}</Button>
+                            </>
+                            : <Button variant="contained" size="medium" onClick={handleOnClick} endIcon={<Login />}>{t('authenticate')}</Button>}
             </FlexBox>
             <AddAppConfigurationDialog
-                dialogContent={() => <></>}
+                dialogContent={() => <AddInstagramConfigurationContainer toggleAddPageDialog={toggleDialog} code={code!} />}
                 openPopup={openDialog}
                 togglePopup={toggleDialog}
-                title={t('whatsapp_configuration')}
+                title={t('add_instagram_configuration')}
                 maxWidth="md" />
-            {/* <AddAppConfigurationDialog
-                dialogContent={() => <AddWhatsAppNumberContainer toggleAddAccountDialog={toggleAddAccountDialog} />}
-                openPopup={openAddAccountDialog}
-                togglePopup={toggleAddAccountDialog}
-                title={t('add_account')}
-                maxWidth="md" /> */}
+            <AddAppConfigurationDialog
+                dialogContent={() => <EditInstagramConfigurationContainer toggleAddPageDialog={toggleEditDialog} data={props.data} />}
+                openPopup={openEditDialog}
+                togglePopup={toggleEditDialog}
+                title={t('edit_instagram_configuration')}
+                maxWidth="md" />
         </>
     )
 }

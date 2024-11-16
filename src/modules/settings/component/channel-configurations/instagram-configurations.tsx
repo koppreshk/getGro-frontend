@@ -21,7 +21,7 @@ const Conatainer = styled.div`
 export default function InstagramConfigurations() {
 
     const handleonClick = () => {
-        window.open(`https://www.instagram.com/oauth/authorize?enable_fb_login=0&force_authentication=1&client_id=558293376682732&redirect_uri=https://intent.getgro.io/configurations/instagram&response_type=code&scope=instagram_business_basic%2Cinstagram_business_manage_messages%2Cinstagram_business_manage_comments%2Cinstagram_business_content_publish`)
+        window.open(`https://www.instagram.com/oauth/authorize?enable_fb_login=0&force_authentication=1&client_id=558293376682732&redirect_uri=https://intent.getgro.io/configurations/marketplace/instagram&response_type=code&scope=instagram_business_basic%2Cinstagram_business_manage_messages%2Cinstagram_business_manage_comments%2Cinstagram_business_content_publish`, '_self')
     }
 
     return (

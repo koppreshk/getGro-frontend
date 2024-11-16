@@ -412,5 +412,11 @@
     "comments_specific_keywords": "Comments with specific keywords",
     "all_posts": "All Posts",
     "add_fb_page_success": "Facebook page added successfully",
-    "add_fb_page_failure": "Failed to add facebook page"
+    "add_fb_page_failure": "Failed to add facebook page",
+    "add_insta_config_success": "Instagram configuration was added successfully",
+    "add_insta_config_failure": "Failed to add Instagram configuration",
+    "edit_insta_config_success": "Instagram configuration was edited successfully",
+    "edit_insta_config_failure": "Failed to edit Instagram configuration",
+    "edit_instagram_configuration": "Edit Instagram Configuration",
+    "add_instagram_configuration": "Add Instagram Configuration"
 }
