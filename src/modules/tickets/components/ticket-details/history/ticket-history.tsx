@@ -1,5 +1,4 @@
 
-import { getTimeAgo } from "lib/utils";
 import { ChatHistory } from "modules/chats/components";
 import { TicketsHistory } from "modules/tickets/apis";
 
@@ -45,7 +44,7 @@ export const TicketHistory = (props: { data: TicketsHistory[] }) => {
 
     return (
         <>
-            <ChatHistory historyData={data.map((item) => ({ created_at: getTimeAgo(item.createdAt), history: item.description, user: item.userName }))} />
+            <ChatHistory historyData={data.map((item) => ({ created_at: item.createdAt, history: item.description, user: item.userName }))} useTimeAgoDate />
             {/* <DataGrid columns={columns} data={data} /> */}
         </>
     )

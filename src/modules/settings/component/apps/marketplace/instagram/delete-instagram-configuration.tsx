@@ -19,19 +19,19 @@ export const DeleteInstagramConfiguration = () => {
     const onDeleleHandler = React.useCallback((ev: React.MouseEvent<HTMLButtonElement>) => {
         ev.stopPropagation();
         mutateAsync()
-            .then(() => showNotification({ message: 'Instagram configuration uninstalled successfully', type: 'success' }))
-            .catch(() => showNotification({ message: 'Failed to uninstall instagram Configuration', type: 'error' }))
+            .then(() => showNotification({ message: 'Instagram configuration removeed successfully', type: 'success' }))
+            .catch(() => showNotification({ message: 'Failed to remove instagram Configuration', type: 'error' }))
             .finally(() => toggleDeleteDialogBox())
     }, [mutateAsync, showNotification])
 
     return (
         <>
-            <Button variant="outlined" size="medium" onClick={toggleDeleteDialogBox} startIcon={<DeleteForever />}>{t('uninstall')}</Button>
+            <Button variant="outlined" size="medium" onClick={toggleDeleteDialogBox} startIcon={<DeleteForever />}>{t('remove')}</Button>
             <NegativeActionDialog
                 open={open}
                 isLoading={isLoading}
-                content='Do you want to uninstall this instagram configuration?'
-                title='Uninstall Instagram Configuration'
+                content='Do you want to remove this instagram configuration?'
+                title='Remove Instagram Configuration'
                 negativeActionLabel={t("yes_delete")}
                 onNegativeActionClick={onDeleleHandler}
                 onClose={toggleDeleteDialogBox} />

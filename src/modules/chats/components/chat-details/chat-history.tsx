@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { Avatar, Typography } from "@mui/material"
 import { FlexBox } from "lib/ui-ux"
-import { chooseRandomColors, getInitialsByName } from "lib/utils";
+import { chooseRandomColors, getInitialsByName, getTimeAgo } from "lib/utils";
 import styled, { useTheme } from "styled-components";
 
 const TimeLine = styled.div`
@@ -22,11 +22,12 @@ interface ChatHistoryProps {
         created_at: string;
         history: string;
         user: string;
-    }[]
+    }[];
+    useTimeAgoDate?: boolean;
 }
 
 export const ChatHistory = (props: ChatHistoryProps) => {
-    const { historyData } = props;
+    const { historyData, useTimeAgoDate } = props;
     const { pallete } = useTheme();
 
     return (
@@ -41,7 +42,7 @@ export const ChatHistory = (props: ChatHistoryProps) => {
                     <FlexBox flexDirection="column" gap="6px" padding="0 10px 15px" width="90%">
                         <FlexBox flexDirection="column">
                             <Typography variant="h6">{item.user}</Typography>
-                            <Typography variant="caption" sx={{ color: pallete.grayNeutral }}>made changes - {item.created_at}</Typography>
+                            <Typography variant="caption" sx={{ color: pallete.grayNeutral }}>made changes - {useTimeAgoDate ? getTimeAgo(item.created_at) : item.created_at}</Typography>
                         </FlexBox>
                         <Typography variant="caption">
                             {item.history}

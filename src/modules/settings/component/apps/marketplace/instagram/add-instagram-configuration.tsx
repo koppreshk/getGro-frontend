@@ -25,15 +25,17 @@ const MessengerConfiguration = (props: Pick<IAddInstagramConfigurationFormProps,
     return (
         <>
             <FlexBox flexDirection="column" gap="20px" width="75%">
-                <FlexBox flexDirection="column">
-                    <FlexBox alignItems="center">
-                        <Typography variant="h6">{t('auto_reply')}</Typography>
-                        <SwitchField name="sendAutoReply" />
+                <FlexBox gap="20px" >
+                    <FlexBox flexDirection="column">
+                        <FlexBox gap={'10px'} alignItems="center">
+                            <Typography variant="h6">{t('auto_reply')}</Typography>
+                            <SwitchField name="sendAutoReply" size="small"/>
+                        </FlexBox>
+                        <Typography variant="body3">{t('auto_reply_description')}</Typography>
+                        {watch('sendAutoReply') ? <TextboxField sx={{ mt: '20px' }} name="autoReplyMessage" label={t("auto_reply_message")} multiline rows={4} /> : null}
                     </FlexBox>
-                    <Typography variant="body3">{t('auto_reply_description')}</Typography>
-                    {watch('sendAutoReply') ? <TextboxField name="autoReplyMessage" label={t("auto_reply_message")} multiline rows={4} /> : null}
                 </FlexBox>
-                <FlexBox flexDirection="column">
+                <FlexBox flexDirection="column" gap={'5px'}>
                     <SelectFieldWithLabel name="queueId" size="small" label={t('queue')} fullWidth menuOptions={props.allQueues.map((item) => ({ key: item.id.toString(), value: item.name })) || []} placeholder="Select Queue" rules={{ required: t('selection_is_required') }} />
                     <Typography variant="caption">Chats will automatically be assigned to the selected Queue</Typography>
                 </FlexBox>
@@ -54,7 +56,11 @@ const CommentConfiguration = () => {
                         ?
                         <FlexBox flexDirection="column" gap={'20px'} padding={'0 0 0 27px'}>
                             <Typography variant="body3">{'If you turn this feature on, comment with specific keywords for your post will be converted into conversation'}</Typography>
-                            <StyledTagInputField name="keywords" gap={"15px"} />
+                            <StyledTagInputField
+                                name="keywords"
+                                gap={"15px"}
+                                dontShowDashes
+                                placeholder="Add your keywords here..." />
                         </FlexBox>
                         : null
                 }

@@ -15,7 +15,7 @@ export const useFetchChatHistory = (conversationId: string) => {
     const fetchChatHistory = React.useCallback(() => getData(`${ChatEndPoint.FETCH_CHAT_HISTORY}?conversation_id=${conversationId}`).then((res) => res.json()), [conversationId, getData])
 
     return useQuery<ChatHistoryResponse[]>({
-        queryKey: ChatQueryKeys.FETCH_CHAT_HISTORY,
+        queryKey: [ChatQueryKeys.FETCH_CHAT_HISTORY, conversationId],
         queryFn: fetchChatHistory,
     })
 }

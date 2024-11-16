@@ -7,7 +7,7 @@ export const ChatHistoryContainer = () => {
     const match = useMatch('/chat/:conversationId');
     const id = match?.params.conversationId;
 
-    const { data, isLoading} = useFetchChatHistory(id!);
+    const { data, isLoading } = useFetchChatHistory(id!);
 
     if (isLoading) {
         return <CenteredCircularProgress />
@@ -15,7 +15,7 @@ export const ChatHistoryContainer = () => {
 
     if (data && id) {
         return (
-            <ChatHistory historyData={data}/>
+            <ChatHistory historyData={data} useTimeAgoDate />
         )
     }
 
