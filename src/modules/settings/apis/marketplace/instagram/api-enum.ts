@@ -1,7 +1,7 @@
 export enum InstagramConfigurationEndPoint {
     FETCH_INSTAGRAM_CONFIGURATION = 'meta/instagram',
     CREATE_INSTAGRAM_CONFIGURATION = 'meta/instagram/create',
-    EDIT_INSTAGRAM_CONFIGURATION = 'meta/facebook/edit_instagram',
+    EDIT_INSTAGRAM_CONFIGURATION = 'meta/instagram/edit',
     DELETE_INSTAGRAM_CONFIGURATION = 'meta/instagram/delete',
 }
 

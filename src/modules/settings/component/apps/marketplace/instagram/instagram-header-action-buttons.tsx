@@ -7,6 +7,7 @@ import { AddAppConfigurationDialog } from "../add-app-configuration-dialog";
 import { useSearchParams } from "react-router-dom";
 import { IInstagramConfigDetails } from "modules/settings/apis/marketplace/instagram";
 import { AddInstagramConfigurationContainer, EditInstagramConfigurationContainer } from "modules/settings/containers/marketplace/instagram";
+import { DeleteInstagramConfiguration } from "./delete-instagram-configuration";
 
 interface InstagramHeaderActionButtonsProps {
     data: IInstagramConfigDetails,
@@ -41,7 +42,7 @@ export const InstagramHeaderActionButtons = (props: InstagramHeaderActionButtons
                         ?
                         <>
                             <Button variant="outlined" size="medium" onClick={toggleEditDialog}>{t('edit_account')}</Button>
-                            {/* <DeleteWhatsAppConfigurations /> */}
+                            <DeleteInstagramConfiguration />
                             <Button variant="contained" size="medium" onClick={handleOnClick} startIcon={<Login />}>{t('re_authenticate')}</Button>
                         </>
                         :
