@@ -22,7 +22,7 @@ export const ManagePriorityContainer = () => {
 
     return (
         <>
-            <ManagePriority allPriorities={data!} priority={chatDetails?.priority_id.toString() ?? ''} onChangePriority={onChangePriority} />
+            <ManagePriority allPriorities={data!} priorityId={chatDetails?.priority_id.toString() ?? ''} onChangePriority={onChangePriority} />
         </>
     )
 }
