@@ -6,8 +6,6 @@ import { useTranslation } from "react-i18next";
 import { IFacebookConfiguredPages } from "modules/settings/apis/marketplace/facebook";
 import { DeleteFacebookPage } from "./delete-facebook-page";
 import { EditFacebookPage } from "./edit-facebook-page";
-// import { DeleteWhatsAppNumber } from "./delete-whatsapp-number";
-// import { EditWhatsappNumber } from "./edit-whatsapp-number";
 
 export interface IManageFacebookPageLayoutProps {
     data: IFacebookConfiguredPages[] | undefined;
@@ -44,7 +42,6 @@ const useColumns = () => {
             id: 'actions',
             header: () => t("actions"),
             cell: ({ row: { original } }) => {
-                console.log(original);
                 return (
                     <FlexBox flexDirection="row" gap="5px">
                         <EditFacebookPage pageDetails={original} />

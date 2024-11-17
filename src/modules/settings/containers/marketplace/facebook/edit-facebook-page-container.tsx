@@ -3,6 +3,7 @@ import { CenteredCircularProgress } from "lib/ui-ux";
 import { IFacebookConfiguredPages, useEditFacebookPage, useFetchAssociatedPages } from "modules/settings/apis/marketplace/facebook";
 import { useFetchAllQueues } from "modules/settings/apis/ticket-automation";
 import { AddFacebookPageFormBase, IAddFacebookPageFormFields } from "modules/settings/component/apps/marketplace/facebook"
+import { useTranslation } from "react-i18next";
 
 export const EditFacebookPageContainer = (props: { toggleAddPageDialog: () => void, pageDetails: IFacebookConfiguredPages }) => {
     const { pageDetails, toggleAddPageDialog } = props;
@@ -10,8 +11,7 @@ export const EditFacebookPageContainer = (props: { toggleAddPageDialog: () => vo
     const { data, isLoading } = useFetchAssociatedPages();
     const { mutateAsync, isLoading: mutationLoading } = useEditFacebookPage();
     const { showNotification } = useNotifications();
-
-    console.log("fb page data", data);
+    const { t } = useTranslation()
 
     const onSubmit = (formData: IAddFacebookPageFormFields) => {
         mutateAsync({
@@ -25,11 +25,11 @@ export const EditFacebookPageContainer = (props: { toggleAddPageDialog: () => vo
             id: props.pageDetails.id.toString(),
         }).then((res) => {
             if (res) {
-                showNotification({ message: 'edit_fb_page_success', type: 'success' });
+                showNotification({ message: t('edit_fb_page_success'), type: 'success' });
                 toggleAddPageDialog()
             }
         }).catch(() => {
-            showNotification({ message: 'edit_fb_page_failure', type: 'error' });
+            showNotification({ message: t('edit_fb_page_failure'), type: 'error' });
         });
     }
 
