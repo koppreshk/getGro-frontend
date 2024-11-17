@@ -7,6 +7,7 @@ import { BackButton, CancelButton, FlexBox, LoadingButton } from "lib/ui-ux";
 import { ConfigStepper } from "modules/settings/common";
 import { IQueueMetadata } from "modules/settings/apis/ticket-automation/escalations/fetch-all-queues";
 import { IFacebookAssociatedPages } from "modules/settings/apis/marketplace/facebook";
+import { StyledTagInputField } from "modules/tickets/components/ticket-details/ticket-list-view/add-ticket/add-ticket-form";
 
 const steps = [
     {
@@ -23,7 +24,7 @@ const steps = [
     }
 ];
 
-function PageConfigurations(props: Pick<IAddFacebookPageFormProps, 'allQueues' | 'associatedPages'>) {
+function PageConfigurations(props: Pick<IAddFacebookPageFormProps, 'allQueues' | 'associatedPages'> & {isEditing: boolean}) {
     const { t } = useTranslation();
 
     return (
@@ -32,7 +33,7 @@ function PageConfigurations(props: Pick<IAddFacebookPageFormProps, 'allQueues' |
                 <TextboxFieldWithLabel name="name" size="small" label={t('name')} type="text" fullWidth rules={{ required: 'This field is required.' }} placeholder="Enter Name" />
             </Grid>
             <Grid item md={12}>
-                <SelectFieldWithLabel name="facebookPageId" size="small" label={t('facebook_page')} rules={{ required: 'This field is required.' }} menuOptions={props.associatedPages.map((item) => ({ key: item.page_id.toString(), value: item.page_name })) || []} />
+                <SelectFieldWithLabel readOnly={props.isEditing} name="facebookPageId" size="small" label={t('facebook_page')} rules={{ required: 'This field is required.' }} menuOptions={props.associatedPages.map((item) => ({ key: item.page_id.toString(), value: item.page_name })) || []} />
             </Grid>
             <Grid item md={12}>
                 <SelectFieldWithLabel name="queueId" size="small" label={t('queue')} fullWidth menuOptions={props.allQueues.map((item) => ({ key: item.id.toString(), value: item.name })) || []} placeholder="Select Queue" />
@@ -74,7 +75,11 @@ const CommentConfiguration = () => {
                         ?
                         <FlexBox flexDirection="column" gap={'20px'} padding={'0 0 0 27px'}>
                             <Typography variant="body3">{'If you turn this feature on, comment with specific keywords for your post will be converted into conversation'}</Typography>
-                            <TextboxFieldWithLabel name="keywords" label="Specific Ketwords" size="small" fullWidth multiline rows={3} />
+                            <StyledTagInputField
+                                name="keywords"
+                                gap={"15px"}
+                                dontShowDashes
+                                placeholder="Add your keywords here..." />
                         </FlexBox>
                         : null
                 }
@@ -103,7 +108,7 @@ export interface IAddFacebookPageFormFields {
     commentsConfiguration: string;
     sendAutoReply: boolean;
     autoReplyMessage: string;
-    keywords: string;
+    keywords: string[];
 }
 
 
@@ -114,10 +119,11 @@ export interface IAddFacebookPageFormProps {
     associatedPages: IFacebookAssociatedPages[];
     togglePopup: () => void;
     onSubmit: (formData: IAddFacebookPageFormFields) => void;
+    isEditing?: boolean;
 }
 
 export const AddFacebookPageFormBase = (props: IAddFacebookPageFormProps) => {
-    const { togglePopup, isMutationLoading = false, onSubmit, defaultValues } = props;
+    const { togglePopup, isMutationLoading = false, onSubmit, defaultValues, isEditing = false } = props;
     const { t } = useTranslation();
 
     const [activeStep, setActiveStep] = React.useState(0);
@@ -147,7 +153,7 @@ export const AddFacebookPageFormBase = (props: IAddFacebookPageFormProps) => {
     const renderBasedOnStep = () => {
         switch (activeStep) {
             case 0:
-                return <PageConfigurations allQueues={props.allQueues} associatedPages={props.associatedPages} />
+                return <PageConfigurations allQueues={props.allQueues} associatedPages={props.associatedPages} isEditing={isEditing}/>
             case 1:
                 return <CommentConfiguration />
             default: return <MessengerConfiguration />

@@ -17,7 +17,7 @@ export const AddFacebookPageContainer = (props: { toggleAddPageDialog: () => voi
             can_send_auto_reply: formData.sendAutoReply,
             auto_reply_text: formData.autoReplyMessage,
             name: formData.name,
-            specific_keywords: formData.keywords.split(','),
+            specific_keywords: formData.keywords,
             queue_id: formData.queueId?.toString() ?? ''
         }).then((res) => {
             if (res) {
