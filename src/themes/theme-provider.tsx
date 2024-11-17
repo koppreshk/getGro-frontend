@@ -25,6 +25,7 @@ const defaultTheme: DefaultTheme = {
         grayNeutral: '#787f83',
         defaultTextColor: '#3b4455',
         genericBackgroundColor: '#F1F2F4',
+        disabledBgColor: '#0000001f',
         toolbarBgColor: '#323452',
         toolbarBgColorOnHover: '#ffffff1a'
     },

@@ -121,7 +121,7 @@ export const ConversationsWrapper = (props: WhatsAppConversationsProps) => {
                         )
                     }
                 </FlexBox>
-                <ConversationFooter onSendAction={onSendAction} />
+                <ConversationFooter onSendAction={onSendAction} is_expired={data.is_expired} />
             </FlexBox>
         </ConversationContainerBackground>
     );

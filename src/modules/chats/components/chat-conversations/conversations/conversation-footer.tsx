@@ -1,9 +1,10 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Send } from "@mui/icons-material";
 import styled from "styled-components";
-import { Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Chip } from "@mui/material";
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { useNotifications } from "lib";
 import { useUploadFileToS3 } from "modules/chats/apis/upload-file-s3";
 import { KeyCodes } from "lib/enums";
@@ -14,6 +15,7 @@ import { usePresignedURL } from "modules/chats/apis/presigned-url";
 import { useAppSelector } from "lib/hooks";
 
 interface IConversationFooterProps {
+    is_expired: boolean;
     onSendAction: (newConversation: { message: string; mediaURL?: string, type?: string, caption?: string, filename?: string }) => Promise<{ status: boolean }>;
 }
 
@@ -35,7 +37,7 @@ interface IFileInfoState {
 }
 
 export const ConversationFooter = (props: IConversationFooterProps) => {
-    const { onSendAction } = props;
+    const { is_expired, onSendAction } = props;
     const [textareaValue, setTextAreaValue] = React.useState('');
     const [filePreviewDisplay, setFilePreviewDisplay] = React.useState(false);
     const [fileInfo, setFileInfo] = React.useState<IFileInfoState>({ original: [], parsedFile: [] });
@@ -85,16 +87,21 @@ export const ConversationFooter = (props: IConversationFooterProps) => {
         }
     }, [onSendClick]);
 
+    const controlDisabled = useMemo(() => chatDetails?.is_conversation_closed || is_expired, [chatDetails?.is_conversation_closed, is_expired]);
+
     return (
         <FormProvider {...form}>
             <FooterWrapper>
-                <ContentArea flexDirection="column" width="100%">
-                    <TextArea onChange={onTextChange} value={textareaValue} onKeyDown={onKeyDown} placeholder="Shift + Enter to add a new line" />
+                <ContentArea flexDirection="column" width="100%" gap={'5px'}>
+                    <TextArea onChange={onTextChange} value={textareaValue} onKeyDown={onKeyDown} disabled={controlDisabled} placeholder={controlDisabled ? "Conversation expired" : "Shift + Enter to add a new line"} />
                     <FlexBox justifyContent="space-between" padding="0px 10px 10px">
-                        <NativeFileUpload onChange={onFileUpload} disabled={chatDetails?.is_conversation_closed} />
-                        <RoundedSendButton variant="contained" size="small" disabled={chatDetails?.is_conversation_closed} endIcon={<Send />} onClick={onSendClick} >
-                            {t('send')}
-                        </RoundedSendButton>
+                        <NativeFileUpload onChange={onFileUpload} disabled={controlDisabled} />
+                        <FlexBox gap={'10px'} alignItems="center">
+                            {is_expired ? <Chip icon={<AccessTimeIcon />} label={t("expired")} color="error" variant="outlined" size="medium" /> : null}
+                            <RoundedSendButton variant="contained" size="small" disabled={controlDisabled} endIcon={<Send />} onClick={onSendClick} >
+                                {t('send')}
+                            </RoundedSendButton>
+                        </FlexBox>
                     </FlexBox>
                 </ContentArea>
             </FooterWrapper>
@@ -110,7 +117,7 @@ export const ConversationFooter = (props: IConversationFooterProps) => {
 }
 
 
-const UploadedFilePreview = (props: { toggleFileDisplay: () => void, filePreviewDisplay: boolean; fileInfo: IFileInfoState } & IConversationFooterProps) => {
+const UploadedFilePreview = (props: { toggleFileDisplay: () => void, filePreviewDisplay: boolean; fileInfo: IFileInfoState } & Pick<IConversationFooterProps, 'onSendAction'>) => {
     const { filePreviewDisplay, fileInfo, toggleFileDisplay, onSendAction } = props;
     const [textareaValue, setTextAreaValue] = React.useState('');
     const { mutateAsync: getPresignedURL } = usePresignedURL();

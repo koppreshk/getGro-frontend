@@ -390,7 +390,7 @@
     "chat": "Chat",
     "all_conversations": "All Conversations",
     "chat_details": "Chat Details",
-    "create_and_link_ticket": "Create & link ticket",
+    "create_and_link_ticket": "Create & Link Ticket",
     "link_tickets": "Link Tickets",
     "phone_number_id": "Phone number id",
     "auto_reply": "Auto Reply",
@@ -425,5 +425,7 @@
     "delete_fb_dialog_content": "Do you want to delete this Facebook Page permanently?",
     "edit_fb_page_success": "Facebook page was edited successfully",
     "edit_fb_page_failure": "Failed to edit facebook page",
-    "edit_fb_page": "Edit Facebook Page"
+    "edit_fb_page": "Edit Facebook Page",
+    "create_link_ticket_success": "Created and linked the coversation with the ticket successfully",
+    "create_link_ticket_error": "Failed to create ticket and link the coversation"
 }
