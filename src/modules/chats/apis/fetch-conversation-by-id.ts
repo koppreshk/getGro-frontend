@@ -30,6 +30,7 @@ export interface Message {
     caption: null | string;
     media_url?: string;
     mime_type?: string;
+    filename?: string;
 }
 
 export const useFetchConversationById = (id?: string) => {

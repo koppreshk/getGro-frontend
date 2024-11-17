@@ -16,8 +16,8 @@ export const PreviewFileContent = (props: Pick<Message, 'media_url' | 'mime_type
 
     return (
         <>
-            <PreviewFile open={showFilePreview} onClose={toggleViewer} media_url={media_url!} mime_type={mime_type!} />
-            <CustomIconButton onClick={onDownloadClick} tooltipProps={{ title: "Preview File" }} iconComponent={<Panorama />} />
+            {media_url && mime_type ? <PreviewFile open={showFilePreview} onClose={toggleViewer} media_url={media_url} mime_type={mime_type} /> : null}
+            <CustomIconButton onClick={onDownloadClick} tooltipProps={{ title: "Preview File" }} iconComponent={<Panorama />} disabled={!mime_type || !media_url} />
         </>
     )
 }

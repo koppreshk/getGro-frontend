@@ -100,7 +100,7 @@ interface IChatContentProps {
 
 export const ChatContent = (props: IChatContentProps) => {
     const { content, customerName } = props;
-    const { created_at, direction, replied_by, media_url, message, status, mime_type, message_type, caption } = content;
+    const { created_at, direction, replied_by, media_url, message, status, mime_type, message_type, caption, filename } = content;
     const isIncomingMessage = direction === 'incoming';
     const containerRef = React.useRef<HTMLDivElement>(null);
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(isIncomingMessage ? customerName : replied_by || 'NA'), [replied_by, customerName, isIncomingMessage]);
@@ -117,7 +117,7 @@ export const ChatContent = (props: IChatContentProps) => {
             </Avatar>
             <Content $isIncomingMessage={isIncomingMessage} $source={chatDetails!.chat_source!} maxWidth="50%" flexDirection="column" >
                 {message_type != 'text'
-                    ? <AttachmentContent media_url={media_url} mime_type={mime_type} caption={caption} isIncomingMessage={isIncomingMessage} />
+                    ? <AttachmentContent media_url={media_url} mime_type={mime_type} caption={caption} isIncomingMessage={isIncomingMessage} filename={filename}/>
                     : (
                         <TextMessage variant="body2" $source={chatDetails!.chat_source!} $isIncomingMessage={isIncomingMessage} >
                             {message}

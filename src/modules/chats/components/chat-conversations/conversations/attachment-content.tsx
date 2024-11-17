@@ -3,6 +3,8 @@ import { FlexBox } from "lib/ui-ux";
 import { Message } from "modules/chats/apis";
 import styled from "styled-components";
 import { PreviewFileContent } from "./preview-file-content";
+import { StyledErrorMessage } from "lib/form-fields";
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 
 const FileType = styled(FlexBox)`
     height: 32px;
@@ -20,6 +22,7 @@ const AttachmentPreviewContainer = styled(FlexBox) <{ $isIncomingMessage: boolea
 `;
 
 const fileTypes = {
+    'audio/mpeg': 'audio',
     'application/pdf': 'pdf',
     'application/msword': 'doc',
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx',
@@ -40,22 +43,22 @@ const getFileExtension = (contentType: string): string | undefined => {
     return fileTypes[contentType.toLocaleLowerCase() as keyof typeof fileTypes];
 };
 
-export const AttachmentContent = (props: Pick<Message, 'media_url' | 'mime_type' | 'caption'> & { isIncomingMessage: boolean; }) => {
-    const { mime_type = 'image/jpeg', media_url, caption, isIncomingMessage } = props;
+export const AttachmentContent = (props: Pick<Message, 'media_url' | 'mime_type' | 'caption' | 'filename'> & { isIncomingMessage: boolean; }) => {
+    const { mime_type = 'image/jpeg', media_url, caption, isIncomingMessage, filename } = props;
 
     return (
         <FlexBox flexDirection="column" gap={'5px'}>
             <AttachmentPreviewContainer gap="8px" alignItems="center" $isIncomingMessage={isIncomingMessage}>
                 <FileType alignItems="center" justifyContent="center">
                     <Typography variant="caption" sx={{ color: 'inherit' }}>
-                        {getFileExtension(mime_type)?.toLocaleUpperCase()}
+                        {mime_type ? getFileExtension(mime_type)?.toLocaleUpperCase() : 'NA'}
                     </Typography>
                 </FileType>
                 <Typography
                     variant="body3"
                     title={'File'}
                     sx={{ maxWidth: '120px', minWidth: '80px', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}>
-                    {'File'}
+                    {filename ?? 'File'}
                 </Typography>
                 <FlexBox alignItems="center">
                     <PreviewFileContent media_url={media_url} mime_type={mime_type} />
@@ -64,6 +67,11 @@ export const AttachmentContent = (props: Pick<Message, 'media_url' | 'mime_type'
             <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap', marginRight: '21px' }} >
                 {caption}
             </Typography>
+            {!mime_type || !media_url ?
+                <StyledErrorMessage style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                    <WarningAmberIcon />
+                    Media URL or MIME type unavailable
+                </StyledErrorMessage> : null}
         </FlexBox>
     )
 }
