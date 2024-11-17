@@ -72,7 +72,7 @@ export const ManageAssignee = (props: IManageAssigneeProps) => {
                     }
                 }}
             >
-                <PopoverContent queues={queues} handleClose={handleClose} onChangeAssignee={props.onChangeAssignee} />
+                <PopoverContent queues={queues} handleClose={handleClose} onChangeAssignee={props.onChangeAssignee} assignedTo={assignedTo} />
             </Popover>
         </div>
     )
@@ -83,12 +83,12 @@ interface IFormFields {
     assigneeAgent?: string;
 }
 
-const PopoverContent = (props: { queues: Queue[], handleClose: () => void, onChangeAssignee: (args: IChangeAsigneeArgs) => Promise<void> }) => {
-    const { queues, handleClose, onChangeAssignee } = props;
+const PopoverContent = (props: { queues: Queue[], handleClose: () => void, onChangeAssignee: (args: IChangeAsigneeArgs) => Promise<void>, assignedTo?: number }) => {
+    const { queues, assignedTo, handleClose, onChangeAssignee } = props;
     const form = useForm<IFormFields>({
         defaultValues: {
             assigneeAgent: '',
-            assigneeQueue: ''
+            assigneeQueue: assignedTo?.toString()
         }
     });
     const { t } = useTranslation();

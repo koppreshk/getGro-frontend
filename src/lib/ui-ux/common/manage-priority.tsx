@@ -51,7 +51,7 @@ const PriorityIcon = styled.span<{ $priority: string }>`
 export const ManagePriority = (props: IManagePriorityProps) => {
     const { priority, allPriorities, onChangePriority } = props;
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const [selectedIndex, setSelectedIndex] = useState(allPriorities.findIndex((item) => item.name.toLocaleLowerCase() === priority.toLocaleLowerCase()) || 0);
+    const [selectedIndex, setSelectedIndex] = useState(allPriorities.findIndex((item) => item.id.toString() === priority) || 0);
 
     const open = Boolean(anchorEl);
 
@@ -68,7 +68,7 @@ export const ManagePriority = (props: IManagePriorityProps) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
-    const priorityValue = allPriorities.find((item) => item.id.toString() === priority)?.name;
+    const priorityValue = allPriorities.find((item) => item.id.toString() === priority.toString())?.name;
 
     return (
         <div>
