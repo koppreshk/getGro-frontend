@@ -418,5 +418,12 @@
     "edit_insta_config_success": "Instagram configuration was edited successfully",
     "edit_insta_config_failure": "Failed to edit Instagram configuration",
     "edit_instagram_configuration": "Edit Instagram Configuration",
-    "add_instagram_configuration": "Add Instagram Configuration"
+    "add_instagram_configuration": "Add Instagram Configuration",
+    "delete_fb_page_success": "Facebook page was deleted successfully",
+    "delete_fb_page_failure": "Failed to delete the Facebook page",
+    "delete_fb_page": "Delete Facebook Page",
+    "delete_fb_dialog_content": "Do you want to delete this Facebook Page permanently?",
+    "edit_fb_page_success": "Facebook page was edited successfully",
+    "edit_fb_page_failure": "Failed to edit facebook page",
+    "edit_fb_page": "Edit Facebook Page"
 }

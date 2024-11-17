@@ -4,6 +4,8 @@ import { ConfigDataGrid } from "lib/ui-ux/configuration-data-grid";
 import { styled } from "styled-components";
 import { useTranslation } from "react-i18next";
 import { IFacebookConfiguredPages } from "modules/settings/apis/marketplace/facebook";
+import { DeleteFacebookPage } from "./delete-facebook-page";
+import { EditFacebookPage } from "./edit-facebook-page";
 // import { DeleteWhatsAppNumber } from "./delete-whatsapp-number";
 // import { EditWhatsappNumber } from "./edit-whatsapp-number";
 
@@ -45,8 +47,8 @@ const useColumns = () => {
                 console.log(original);
                 return (
                     <FlexBox flexDirection="row" gap="5px">
-                        {/* <EditWhatsappNumber id={original.id} />
-                        <DeleteWhatsAppNumber id={original.id} /> */}
+                        <EditFacebookPage id={original.id} />
+                        <DeleteFacebookPage id={original.id.toString()} />
                     </FlexBox>
                 )
             },
