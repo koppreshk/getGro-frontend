@@ -47,7 +47,7 @@ const useColumns = () => {
                 console.log(original);
                 return (
                     <FlexBox flexDirection="row" gap="5px">
-                        <EditFacebookPage id={original.id} />
+                        <EditFacebookPage pageDetails={original} />
                         <DeleteFacebookPage id={original.id.toString()} />
                     </FlexBox>
                 )

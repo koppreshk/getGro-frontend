@@ -6,6 +6,7 @@ import { FacebookConfigurationEndPoint, FacebookConfigurationQueryKey } from "./
 export interface IFacebookConfiguredPages {
     id: number;
     page_name: string;
+    page_id: string;
     comment_configuration: string;
     specific_keywords: string[];
     can_send_auto_reply: boolean;
