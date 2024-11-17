@@ -8,7 +8,14 @@ const StyledTextArea = styled.textarea<Partial<Omit<ITextAreProps, 'canResize'>>
     width: 100%;
     border: none;
     outline: none;
+    border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
     box-sizing: border-box;
+
+    &:disabled {
+        background-color: ${({ theme }) => theme.pallete.disabledBgColor};
+        color: #00000042;
+        cursor: not-allowed;
+    }
 `;
 
 interface ITextAreProps extends React.HTMLProps<HTMLTextAreaElement> {
