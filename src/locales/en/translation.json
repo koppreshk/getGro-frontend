@@ -390,7 +390,7 @@
     "chat": "Chat",
     "all_conversations": "All Conversations",
     "chat_details": "Chat Details",
-    "create_and_link_ticket": "Create & link ticket",
+    "create_and_link_ticket": "Create & Link Ticket",
     "link_tickets": "Link Tickets",
     "phone_number_id": "Phone number id",
     "auto_reply": "Auto Reply",
@@ -418,5 +418,7 @@
     "edit_insta_config_success": "Instagram configuration was edited successfully",
     "edit_insta_config_failure": "Failed to edit Instagram configuration",
     "edit_instagram_configuration": "Edit Instagram Configuration",
-    "add_instagram_configuration": "Add Instagram Configuration"
+    "add_instagram_configuration": "Add Instagram Configuration",
+    "create_link_ticket_success": "Created and linked the coversation with the ticket successfully",
+    "create_link_ticket_error": "Failed to create ticket and link the coversation"
 }
