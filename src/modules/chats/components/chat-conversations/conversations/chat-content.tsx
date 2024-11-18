@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { Avatar, Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
 import { chooseRandomColors, getInitialsByName, getTime } from "lib/utils";
-import { Done, DoneAll, Person } from '@mui/icons-material';
+import { Done, DoneAll } from '@mui/icons-material';
 import { Message } from "modules/chats/apis";
 import { AttachmentContent } from "./attachment-content";
 import { useAppSelector } from "lib/hooks";
@@ -113,7 +113,7 @@ export const ChatContent = (props: IChatContentProps) => {
     return (
         <Wrapper gap="10px" alignItems="center" ref={containerRef} $isIncomingMessage={isIncomingMessage} flexDirection={isIncomingMessage ? 'row' : 'row-reverse'}>
             <Avatar sx={{ fontSize: '14px', color: textColor, bgcolor: backgroundColor }}>
-                {isIncomingMessage ? getInitialsByName(customerName) : <Person />}
+                {isIncomingMessage ? getInitialsByName(customerName) : getInitialsByName(replied_by ?? 'NA')}
             </Avatar>
             <Content $isIncomingMessage={isIncomingMessage} $source={chatDetails!.chat_source!} maxWidth="50%" flexDirection="column" >
                 {message_type != 'text'

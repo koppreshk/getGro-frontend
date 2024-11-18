@@ -51,6 +51,7 @@ export const ConversationsWrapper = (props: WhatsAppConversationsProps) => {
     const [chatData, setChatData] = React.useState(data.messages);
     const { mutateAsync } = useSendChatReply();
     const chatDetails = useAppSelector((state) => state.chat.chatDetails)
+    const user = useAppSelector((state) => state.core.config);
 
     React.useEffect(() => {
         setChatData(data.messages);
@@ -61,9 +62,9 @@ export const ConversationsWrapper = (props: WhatsAppConversationsProps) => {
         const { message, mediaURL, type, caption, filename } = newConversation;
         setChatData((prevValue) => ([...prevValue, {
             created_at: DateTime.local().toFormat("yyyy-MM-dd hh:mm a"),
-            caption: '',
+            caption: caption ?? '',
             direction: 'outgoing',
-            replied_by: 'agent',
+            replied_by: user?.user_details.first_name ?? 'agent',
             message: message,
             status: 'pending',
             message_type: mediaURL ? getFileType(type!) : "text",
@@ -80,7 +81,7 @@ export const ConversationsWrapper = (props: WhatsAppConversationsProps) => {
             filename: filename,
             mime_type: type
         })
-    }, [mutateAsync, conversationId, chatDetails])
+    }, [mutateAsync, conversationId, chatDetails, user?.user_details.first_name])
 
     // Group messages by date
     const groupedMessages = useMemo(() => chatData.reduce((acc, message) => {
