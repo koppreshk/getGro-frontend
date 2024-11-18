@@ -22,7 +22,7 @@ export const PreviewFileContent = (props: Pick<Message, 'media_url' | 'mime_type
     )
 }
 
-function isImageMimeType(mimeType: string): boolean {
+export function isImageMimeType(mimeType: string): boolean {
     return mimeType.startsWith("image/");
 }
 

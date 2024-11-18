@@ -13,6 +13,7 @@ import { getAllFilesInfo } from "lib/ui-ux/file-upload/utils";
 import { NativeFileUpload } from "lib/ui-ux/file-upload/native-file-upload-field";
 import { usePresignedURL } from "modules/chats/apis/presigned-url";
 import { useAppSelector } from "lib/hooks";
+import { isImageMimeType } from "./preview-file-content";
 
 interface IConversationFooterProps {
     is_expired: boolean;
@@ -158,19 +159,50 @@ const UploadedFilePreview = (props: { toggleFileDisplay: () => void, filePreview
         setTextAreaValue(ev.target.value);
     }, []);
 
+    const renderBasedOnFileType = () => {
+        if (isImageMimeType(fileInfo.parsedFile[0]!.type)) {
+            return (
+                <FlexBox style={{ overflow: "auto", textAlign: "center" }} alignItems="center" justifyContent="center" width="100%" height="100%">
+                    <img
+                        src={fileInfo.parsedFile[0].content! as string}
+                        alt="Description"
+                        style={{ display: "block", maxWidth: "100%", height: "100%" }}
+                    />
+                </FlexBox>
+            )
+        }
+        return (
+            <object data={fileInfo.parsedFile[0].content! as string} style={{ height: '100%', width: '100%' }}>
+                <p>Alternative text</p>
+            </object>
+        )
+    }
+
     return (
         <Dialog
             open={filePreviewDisplay}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
-            onClose={toggleFileDisplay}>
+            onClose={toggleFileDisplay}
+            maxWidth="lg" // Set the dialog width
+            fullWidth // Ensure it spans the full width
+            sx={{
+                "& .MuiPaper-root": {
+                    height: "80vh", // Set the height of the dialog
+                },
+            }}>
             <DialogTitle id="alert-dialog-title">
                 Preview
             </DialogTitle>
-            <DialogContent>
-                <object data={fileInfo.parsedFile[0].content! as string} type={fileInfo.parsedFile[0]!.type} width="100%" height="100%">
-                    <p>Alternative text</p>
-                </object>
+            <DialogContent sx={{
+                display: "flex",
+                flexDirection: "column",
+                height: "calc(100% - 64px)", // Adjust height (64px = Title + Padding)
+                padding: 0,
+            }}>
+                <div style={{ height: 'calc(100% - 56px)', width: '100%' }}>
+                    {renderBasedOnFileType()}
+                </div>
                 <TextArea onChange={onTextChange} value={textareaValue} onKeyDown={onKeyDown} placeholder="Shift + Enter to add a new line" />
             </DialogContent>
             <DialogActions>

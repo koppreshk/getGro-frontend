@@ -33,6 +33,10 @@ const PriorityIcon = styled.span<{ $priority: string }>`
                 return css`
                     background-color: #0D60B7;
                 `;
+            case 'medium':
+                return css`
+                    background-color: #0D60B7;
+                `;
             case 'high':
                 return css`
                     background-color: #EF6C00;
@@ -69,7 +73,7 @@ export const ManagePriority = (props: IManagePriorityProps) => {
         setAnchorEl(null);
     };
     const priorityValue = allPriorities.find((item) => item.id.toString() === priorityId)?.name;
-
+    console.log(priorityValue);
     return (
         <div>
             <FlexBox flexDirection="column" padding="0px 20px" gap={'5px'}>

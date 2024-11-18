@@ -15,6 +15,10 @@ export const NativeFileUpload = (props: { onChange: (fileList: File[]) => void, 
         if (props.onChange) {
             props.onChange(args.target.files ? Array.from(args.target.files) : []);
         }
+
+        if (inputRef.current) {
+            inputRef.current.value = "";
+        }
     }
 
     return (
