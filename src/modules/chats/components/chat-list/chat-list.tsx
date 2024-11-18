@@ -8,8 +8,7 @@ import { useEffect, useMemo } from "react";
 import { AllChatConversations } from "modules/chats/apis";
 
 const ChatListWrapper = styled(FlexBox)`
-    height: calc(100% - 65px);
-    overflow: auto;
+    height: calc(100% - 54px);
 `;
 
 interface ChatListProps {
@@ -30,11 +29,11 @@ export const ChatList = (props: ChatListProps) => {
     }, [data.conversations, doesconversationIdExist, navigate]);
 
     return (
-        <>
-            <ChatListWrapper flexDirection="column" width="100%">
-                <Typography variant="h5" sx={{ p: 2 }}><Trans i18nKey="all_conversations" /></Typography>
+        <FlexBox flexDirection="column" height="100%" width="100%">
+            <Typography variant="h5" sx={{ p: 2 }}><Trans i18nKey="all_conversations" /></Typography>
+            <ChatListWrapper flexDirection="column" width="100%" overflowY="auto">
                 {data.conversations.map((item) => <ChatItem key={item.id} {...item} />)}
             </ChatListWrapper>
-        </>
+        </FlexBox>
     )
 }
