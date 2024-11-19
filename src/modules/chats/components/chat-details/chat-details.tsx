@@ -1,15 +1,49 @@
-import { FlexBox, VerticalSeparator } from "lib/ui-ux"
+import { FlexBox, HorizontalSeparator, VerticalSeparator } from "lib/ui-ux"
 import { CustomSourceAvatar } from "../chat-list/custom-source-avatar"
-import { Typography } from "@mui/material"
+import { Link, Typography } from "@mui/material"
 import { CreateAndLinkTicket } from "./create-and-link-ticket"
 import { useAppSelector, useFeature } from "lib/hooks"
 import { ChatStatusContainer, ManageAssigneeContainer, ManagePriorityContainer, ManageTagsContainer } from "modules/chats/containers"
 import { Links } from "./links"
 import { LinkTicket } from "./link-ticket"
+import styled from "styled-components"
+import { useSourceIcon } from "modules/tickets/hooks"
+
+
+export const Platform = styled(Typography) <{ $platform: string }>`
+   && {
+    color: ${({ theme, $platform }) => {
+        switch ($platform) {
+            case 'facebook':
+                return theme.channelSpecific.facebook;
+            case 'email':
+                return theme.channelSpecific.email
+            case 'whatsapp':
+                return theme.channelSpecific.whatsApp
+            case 'twitter':
+                return theme.channelSpecific.twitter
+            case 'telephonic':
+                return theme.channelSpecific.telephonic
+            case 'instagram':
+                return theme.channelSpecific.instagram
+            case 'sms':
+                return theme.channelSpecific.sms
+            default:
+                return undefined
+        }
+    }};
+    font-weight: bold;
+   }
+`;
+
+const StyledPlatform = styled(Platform)`
+    text-transform: capitalize;
+`;
 
 export const ChatDetails = () => {
     const chatDetails = useAppSelector((state) => state.chat.chatDetails);
     const isFeatureAccessible = useFeature<undefined>();
+    const getSourceIcon = useSourceIcon();
 
     if (chatDetails) {
         return (
@@ -19,13 +53,30 @@ export const ChatDetails = () => {
                         <CustomSourceAvatar customer_name={chatDetails.customer_name} chat_source={chatDetails.chat_source} />
                         <FlexBox flexDirection="column">
                             <Typography variant="h6">{chatDetails.customer_name}</Typography>
-                            <Typography variant="body3">Verified</Typography>
+                            <FlexBox gap="5px">
+                                <Typography variant="body2">
+                                    <span>via</span>
+                                </Typography>
+                                <StyledPlatform variant="body2" $platform={chatDetails.chat_source.toLocaleLowerCase() ?? ''}>
+                                    {chatDetails?.chat_type ? chatDetails.chat_type.split('_').join(' ') : null}
+                                </StyledPlatform>
+                            </FlexBox>
                         </FlexBox>
                     </FlexBox>
+                    
                     {isFeatureAccessible('edit_conversation_status') ? <ChatStatusContainer /> : null}
                     {isFeatureAccessible('edit_conversation_assignee') ? <ManageAssigneeContainer /> : null}
                     {isFeatureAccessible('edit_conversation_priority') ? <ManagePriorityContainer /> : null}
                     {isFeatureAccessible('edit_conversation_tags') ? <ManageTagsContainer /> : null}
+                    {chatDetails.post_url &&
+                    <>
+                    <HorizontalSeparator $margin="20px 0px 10px 0px" />
+                        <FlexBox alignItems="center" gap="6px" padding="0 20px">
+                           { getSourceIcon(chatDetails.chat_source, { width: '24px', height: '24px' })}
+                            <Link href={chatDetails.post_url} underline="none" target="_blank">View Post</Link>
+                        </FlexBox>
+                    </>
+                    }
                     {chatDetails.linked_tickets.length ? <Links /> : null}
                 </FlexBox>
                 <FlexBox justifyContent="space-between" padding="0 20px">
