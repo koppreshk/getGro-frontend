@@ -1,6 +1,6 @@
 import { ExpandMore } from "@mui/icons-material";
 import { Accordion, AccordionSummary, Typography, AccordionDetails, IconButton } from "@mui/material";
-import { useAppSelector } from "lib/hooks";
+import { useAppSelector, useFeature } from "lib/hooks";
 import { FlexBox, TicketInfoContent, VerticalSeparator } from "lib/ui-ux";
 import LinkOffIcon from '@mui/icons-material/LinkOff';
 import { useUnLinkTicket } from "modules/chats/apis";
@@ -17,6 +17,8 @@ export const Links = () => {
             ticket_id: ticketId
         })
     }
+    const isUnlinkFeatureAccessible = useFeature('unlink_conversation_ticket');
+
     return (
         <>
             <Accordion disableGutters defaultExpanded sx={{ boxShadow: 'none', margin: '0px 16px', border: '1px solid #E9EBED', borderRadius: '8px' }} >
@@ -35,9 +37,10 @@ export const Links = () => {
                                             <VerticalSeparator height="auto" />
                                             <TicketInfoContent variant="h6">{link.status}</TicketInfoContent>
                                         </FlexBox>
-                                        <IconButton onClick={() => onUnlinkTicket(link.id)} title={t('unlink_ticket')}>
-                                            <LinkOffIcon />
-                                        </IconButton>
+                                        {isUnlinkFeatureAccessible
+                                            ? <IconButton onClick={() => onUnlinkTicket(link.id)} title={t('unlink_ticket')}>
+                                                <LinkOffIcon />
+                                            </IconButton> : null}
                                     </FlexBox>
                                     <TicketInfoContent variant="body3">{link.description}</TicketInfoContent>
                                 </FlexBox>

@@ -13,8 +13,7 @@ const TimeLine = styled.div`
 
 const FlexContainer = styled(FlexBox)`
     overflow-y: auto;
-    height: calc(100% - 70px);
-    padding: 20px 10px;
+    padding: 20px;
 `;
 
 interface ChatHistoryProps {
@@ -24,14 +23,15 @@ interface ChatHistoryProps {
         user: string;
     }[];
     useTimeAgoDate?: boolean;
+    className?: string;
 }
 
 export const ChatHistory = (props: ChatHistoryProps) => {
-    const { historyData, useTimeAgoDate } = props;
+    const { historyData, useTimeAgoDate, className } = props;
     const { pallete } = useTheme();
 
     return (
-        <FlexContainer flexDirection="column" width="100%">
+        <FlexContainer className={className} flexDirection="column" width="100%" height="100%">
             {historyData.map((item, index) => (
                 <FlexBox flexDirection="row" key={item.created_at + index}>
                     <FlexBox flexDirection="column" alignItems="center">

@@ -50,7 +50,7 @@ export enum KnowledgeBasePermissionKeys {
 /**
  * value 'all' will only come for account owner role, and has all permissions
  */
-export type AllPermissionKeys = `${TicketPermissionKeys}` | `${ConfigurationPermissionKeys}` | `${DashboardPermissionKeys}` | `${KnowledgeBasePermissionKeys}` | 'all'
+export type AllPermissionKeys = `${TicketPermissionKeys}` | `${ChatPermissionKeys}` | `${ConfigurationPermissionKeys}` | `${DashboardPermissionKeys}` | `${KnowledgeBasePermissionKeys}` | 'all'
 
 export enum ModuleKeys {
     TICKETS = 'tickets',

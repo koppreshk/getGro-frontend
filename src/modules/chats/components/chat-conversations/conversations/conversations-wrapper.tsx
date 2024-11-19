@@ -6,7 +6,7 @@ import { isToday, isYesterday } from "lib/utils";
 import { ChatConversationById, Message, MessageType, useSendChatReply } from "modules/chats/apis";
 import { ConversationFooter } from "./conversation-footer";
 import { ChatContent } from "./chat-content";
-import { useAppSelector } from "lib/hooks";
+import { useAppSelector, useFeature } from "lib/hooks";
 import { DateTime } from "luxon";
 
 const DateText = styled(Typography)`
@@ -98,6 +98,7 @@ export const ConversationsWrapper = (props: WhatsAppConversationsProps) => {
 
         return acc;
     }, {} as Record<string, Message[]>), [chatData]);
+    const isReplyFeatureAccessible = useFeature('reply_conversation');
 
     return (
         <ConversationContainerBackground style={{ width: '100%', height: 'calc(100% - 54px)' }}>
@@ -122,7 +123,7 @@ export const ConversationsWrapper = (props: WhatsAppConversationsProps) => {
                         )
                     }
                 </FlexBox>
-                <ConversationFooter onSendAction={onSendAction} is_expired={data.is_expired} />
+                {isReplyFeatureAccessible ? <ConversationFooter onSendAction={onSendAction} is_expired={data.is_expired} /> : null}
             </FlexBox>
         </ConversationContainerBackground>
     );

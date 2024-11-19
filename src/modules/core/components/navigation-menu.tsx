@@ -69,6 +69,7 @@ const usePrimaryOptions = () => {
         primaryKey: 'chat',
         route: 'chat',
         title: t('chat'),
+        hidden: !isModuleAccessible('chat')
     },
     {
         iconComponent: () => <Article />,

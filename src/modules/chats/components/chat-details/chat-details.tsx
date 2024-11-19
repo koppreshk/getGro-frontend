@@ -2,13 +2,14 @@ import { FlexBox, VerticalSeparator } from "lib/ui-ux"
 import { CustomSourceAvatar } from "../chat-list/custom-source-avatar"
 import { Typography } from "@mui/material"
 import { CreateAndLinkTicket } from "./create-and-link-ticket"
-import { useAppSelector } from "lib/hooks"
+import { useAppSelector, useFeature } from "lib/hooks"
 import { ChatStatusContainer, ManageAssigneeContainer, ManagePriorityContainer, ManageTagsContainer } from "modules/chats/containers"
 import { Links } from "./links"
 import { LinkTicket } from "./link-ticket"
 
 export const ChatDetails = () => {
     const chatDetails = useAppSelector((state) => state.chat.chatDetails);
+    const isFeatureAccessible = useFeature<undefined>();
 
     if (chatDetails) {
         return (
@@ -21,16 +22,16 @@ export const ChatDetails = () => {
                             <Typography variant="body3">Verified</Typography>
                         </FlexBox>
                     </FlexBox>
-                    <ChatStatusContainer />
-                    <ManageAssigneeContainer />
-                    <ManagePriorityContainer />
-                    <ManageTagsContainer />
+                    {isFeatureAccessible('edit_conversation_status') ? <ChatStatusContainer /> : null}
+                    {isFeatureAccessible('edit_conversation_assignee') ? <ManageAssigneeContainer /> : null}
+                    {isFeatureAccessible('edit_conversation_priority') ? <ManagePriorityContainer /> : null}
+                    {isFeatureAccessible('edit_conversation_tags') ? <ManageTagsContainer /> : null}
                     {chatDetails.linked_tickets.length ? <Links /> : null}
                 </FlexBox>
                 <FlexBox justifyContent="space-between" padding="0 20px">
-                    <CreateAndLinkTicket />
+                    {isFeatureAccessible('create_link_conversation_ticket') ? <CreateAndLinkTicket /> : null}
                     <VerticalSeparator />
-                    <LinkTicket />
+                    {isFeatureAccessible('link_conversation_ticket') ? <LinkTicket /> : null}
                 </FlexBox>
             </FlexBox>
         )
