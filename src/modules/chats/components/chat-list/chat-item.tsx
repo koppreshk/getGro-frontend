@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { DateTime } from "luxon";
 import { useMatch, useNavigate } from "react-router-dom";
-import { Chip, Typography, } from "@mui/material";
+import { Typography, } from "@mui/material";
 import { SouthWest, NorthEast, AttachFile } from '@mui/icons-material';
 import { FlexBox } from "lib/ui-ux";
 import styled, { css, useTheme } from "styled-components";
@@ -45,7 +45,7 @@ const StyledTypography = styled(Typography)`
 `;
 
 export const ChatItem = (props: ChatConversation) => {
-    const { chat_source, created_at, customer_name, id, last_message, chat_type } = props;
+    const { chat_source, created_at, customer_name, id, last_message } = props;
 
     const match = useMatch('/chat/:conversationId');
     const navigate = useNavigate();
@@ -90,7 +90,6 @@ export const ChatItem = (props: ChatConversation) => {
                     :
                     <StyledTypography variant="body2" title={last_message?.message}>{last_message?.message}</StyledTypography>
                 }
-                {chat_type ? <Chip label={chat_type.split('_').join(' ')} size="small" sx={{ width: 'fit-content' }} /> : null}
             </ChatContent>
         </ChatWrapper>
     )

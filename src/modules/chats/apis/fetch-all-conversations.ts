@@ -23,6 +23,7 @@ export interface ChatConversation {
     queue_id: number
     status_id: number
     tags: number[]
+    post_url: string | null
 }
 
 export interface LastMessage {
