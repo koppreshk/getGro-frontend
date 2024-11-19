@@ -1,4 +1,4 @@
-import { FlexBox } from "lib/ui-ux";
+import { FlexBox, RefreshButton } from "lib/ui-ux";
 import styled from "styled-components";
 import { ChatItem } from "./chat-item";
 import { Typography } from "@mui/material";
@@ -30,7 +30,10 @@ export const ChatList = (props: ChatListProps) => {
 
     return (
         <FlexBox flexDirection="column" height="100%" width="100%">
-            <Typography variant="h5" sx={{ p: 2 }}><Trans i18nKey="all_conversations" /></Typography>
+            <FlexBox justifyContent="space-between" width="100%">
+                <Typography variant="h5" sx={{ p: 2 }}><Trans i18nKey="all_conversations" /></Typography>
+                <RefreshButton />
+            </FlexBox>
             <ChatListWrapper flexDirection="column" width="100%" overflowY="auto">
                 {data.conversations.map((item) => <ChatItem key={item.id} {...item} />)}
             </ChatListWrapper>
