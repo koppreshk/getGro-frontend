@@ -4,18 +4,19 @@ import { ExpandMore } from "@mui/icons-material";
 import { Button, Popover, Typography } from "@mui/material"
 import { SelectField } from "lib/form-fields";
 import { CancelButton, FlexBox, HorizontalSeparator, StyledContainer, TypographyName } from "lib/ui-ux"
-import { ITicketQueues, Queue } from "modules/settings/apis";
+import { ITicketQueues } from "modules/settings/apis";
 import { IChangeAsigneeArgs } from "modules/tickets/apis";
 import { Trans, useTranslation } from "react-i18next";
 
 interface IManageAssigneeProps {
     data: ITicketQueues,
-    assignedTo: number | undefined;
+    assignedAgent?: number | null;
+    assignedQueue?: number | null;
     onChangeAssignee: (args: IChangeAsigneeArgs) => Promise<void>
 }
 
 export const ManageAssignee = (props: IManageAssigneeProps) => {
-    const { assignedTo } = props;
+    const { assignedQueue, assignedAgent } = props;
     const { queues } = props.data;
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -27,13 +28,16 @@ export const ManageAssignee = (props: IManageAssigneeProps) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
-    const name = queues.find((item) => item.id === assignedTo)?.name;
+
+    const selectedQueue = queues.find((item) => item.id === assignedQueue);
+    const selectedAgent = selectedQueue?.assignedEmployees.find((item) => item.id.toString() === assignedAgent?.toString())?.firstName;
+
     return (
         <div>
             <FlexBox flexDirection="column" padding="0px 20px" gap={'5px'}>
                 <TypographyName variant="h6"><Trans i18nKey={'assignee'} /></TypographyName>
                 <StyledContainer justifyContent="space-between" onClick={handleClick}>
-                    <Typography variant="h6">{name ?? '--'}</Typography>
+                    <Typography variant="h6">{selectedQueue?.name ? `${selectedQueue?.name} / ${selectedAgent}` : '--'}</Typography>
                     <ExpandMore sx={{ width: 16, height: 16 }} />
                 </StyledContainer>
             </FlexBox>
@@ -72,7 +76,7 @@ export const ManageAssignee = (props: IManageAssigneeProps) => {
                     }
                 }}
             >
-                <PopoverContent queues={queues} handleClose={handleClose} onChangeAssignee={props.onChangeAssignee} assignedTo={assignedTo} />
+                <PopoverContent handleClose={handleClose} {...props} />
             </Popover>
         </div>
     )
@@ -83,18 +87,18 @@ interface IFormFields {
     assigneeAgent?: string;
 }
 
-const PopoverContent = (props: { queues: Queue[], handleClose: () => void, onChangeAssignee: (args: IChangeAsigneeArgs) => Promise<void>, assignedTo?: number }) => {
-    const { queues, assignedTo, handleClose, onChangeAssignee } = props;
+const PopoverContent = (props: IManageAssigneeProps & { handleClose: () => void }) => {
+    const { data, assignedAgent, assignedQueue, handleClose, onChangeAssignee } = props;
     const form = useForm<IFormFields>({
         defaultValues: {
-            assigneeAgent: '',
-            assigneeQueue: assignedTo?.toString()
+            assigneeAgent: assignedAgent?.toString(),
+            assigneeQueue: assignedQueue?.toString()
         }
     });
     const { t } = useTranslation();
 
     const selectedQueue = form.watch('assigneeQueue');
-    const agents = queues.find((item) => item.id.toString() === selectedQueue)?.assignedEmployees.map((item) => ({ key: item.id.toString(), value: `${item.firstName} ${item?.lastName ?? ''}` }))
+    const agents = data.queues.find((item) => item.id.toString() === selectedQueue)?.assignedEmployees.map((item) => ({ key: item.id.toString(), value: `${item.firstName} ${item?.lastName ?? ''}` }))
 
     const onSave = (formData: IFormFields) => {
         onChangeAssignee({
@@ -106,7 +110,7 @@ const PopoverContent = (props: { queues: Queue[], handleClose: () => void, onCha
         <FormProvider {...form}>
             <FlexBox gap={'20px'} flexDirection="column" width="300px" padding='20px'>
                 <Typography variant="h6">{t('change_assignee')}</Typography>
-                <SelectField name="assigneeQueue" label={t("queue")} menuOptions={queues.map((item) => ({ key: item.id.toString(), value: item.name }))} rules={{ required: t('queue_validation') }} />
+                <SelectField name="assigneeQueue" label={t("queue")} menuOptions={data.queues.map((item) => ({ key: item.id.toString(), value: item.name }))} rules={{ required: t('queue_validation') }} />
                 <SelectField name="assigneeAgent" label={t("agent")} menuOptions={agents || []} />
                 <HorizontalSeparator />
                 <FlexBox justifyContent="flex-end" gap={'10px'}>

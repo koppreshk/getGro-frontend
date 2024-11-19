@@ -10,7 +10,8 @@ export interface AllChatConversations {
 }
 
 export interface ChatConversation {
-    assigned_to: number
+    assigned_queue: number | null;
+    assigned_agent: number | null;
     chat_source: string;
     chat_type: string;
     created_at: string
