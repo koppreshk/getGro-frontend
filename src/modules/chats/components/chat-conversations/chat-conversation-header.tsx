@@ -23,15 +23,16 @@ export const ChatConversationHeader = (props: ChatConversationHeaderProps) => {
             <CustomSourceAvatar customer_name={chatDetails?.customer_name ?? ''} chat_source={chatDetails?.chat_source ?? ''} />
             <FlexBox flexDirection="column">
                 <Typography variant="h6">{profile_name}</Typography>
-                <Typography variant="body3" sx={{ color: pallete.grayNeutral }}>{profile_number}</Typography>
-                <FlexBox gap="5px">
-                    <Typography variant="body2">
-                        <span>via</span>
-                    </Typography>
-                    <StyledPlatform variant="body2" $platform={chatDetails?.chat_source.toLocaleLowerCase() ?? ''}>
-                        {chatDetails?.chat_type ? chatDetails.chat_type.split('_').join(' ') : null}
-                    </StyledPlatform>
-                </FlexBox>
+                {chatDetails?.chat_source === 'whatsapp'
+                    ? <Typography variant="body3" sx={{ color: pallete.grayNeutral }}>{profile_number}</Typography>
+                    : <FlexBox gap="5px">
+                        <Typography variant="body2">
+                            <span>via</span>
+                        </Typography>
+                        <StyledPlatform variant="body2" $platform={chatDetails?.chat_source.toLocaleLowerCase() ?? ''}>
+                            {chatDetails?.chat_type ? chatDetails.chat_type.split('_').join(' ') : null}
+                        </StyledPlatform>
+                    </FlexBox>}
             </FlexBox>
         </FlexBox>
     )

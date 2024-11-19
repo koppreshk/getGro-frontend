@@ -63,19 +63,18 @@ export const ChatDetails = () => {
                             </FlexBox>
                         </FlexBox>
                     </FlexBox>
-                    
                     {isFeatureAccessible('edit_conversation_status') ? <ChatStatusContainer /> : null}
                     {isFeatureAccessible('edit_conversation_assignee') ? <ManageAssigneeContainer /> : null}
                     {isFeatureAccessible('edit_conversation_priority') ? <ManagePriorityContainer /> : null}
                     {isFeatureAccessible('edit_conversation_tags') ? <ManageTagsContainer /> : null}
                     {chatDetails.post_url &&
-                    <>
-                    <HorizontalSeparator $margin="20px 0px 10px 0px" />
-                        <FlexBox alignItems="center" gap="6px" padding="0 20px">
-                           { getSourceIcon(chatDetails.chat_source, { width: '24px', height: '24px' })}
-                            <Link href={chatDetails.post_url} underline="none" target="_blank">View Post</Link>
-                        </FlexBox>
-                    </>
+                        <>
+                            <HorizontalSeparator $margin="20px 0px 10px 0px" />
+                            <FlexBox alignItems="center" gap="6px" padding="0 20px">
+                                {getSourceIcon(chatDetails.chat_source, { width: '24px', height: '24px' })}
+                                <Link href={chatDetails.post_url} underline="none" target="_blank">View Post</Link>
+                            </FlexBox>
+                        </>
                     }
                     {chatDetails.linked_tickets.length ? <Links /> : null}
                 </FlexBox>
