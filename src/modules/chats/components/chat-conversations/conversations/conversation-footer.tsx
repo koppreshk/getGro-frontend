@@ -1,9 +1,9 @@
 import React, { useCallback, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Send } from "@mui/icons-material";
+import { Close, Send } from "@mui/icons-material";
 import styled from "styled-components";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Chip } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Chip, IconButton } from "@mui/material";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { useNotifications } from "lib";
 import { useUploadFileToS3 } from "modules/chats/apis/upload-file-s3";
@@ -186,13 +186,20 @@ const UploadedFilePreview = (props: { toggleFileDisplay: () => void, filePreview
             onClose={toggleFileDisplay}
             maxWidth="lg" // Set the dialog width
             fullWidth // Ensure it spans the full width
-            sx={{
-                "& .MuiPaper-root": {
-                    height: "80vh", // Set the height of the dialog
-                },
-            }}>
+            PaperProps={{ sx: { height: '-webkit-fill-available' } }}>
             <DialogTitle id="alert-dialog-title">
                 Preview
+                <IconButton
+                    aria-label="close"
+                    onClick={toggleFileDisplay}
+                    sx={{
+                        position: 'absolute',
+                        right: 8,
+                        top: 8,
+                    }}
+                >
+                    <Close />
+                </IconButton>
             </DialogTitle>
             <DialogContent sx={{
                 display: "flex",

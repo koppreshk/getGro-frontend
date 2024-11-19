@@ -81,7 +81,6 @@ const LoginForm = () => {
                 showNotification({ message: 'Failed to login, please check email or password', type: 'error' })
             })
     }, [isVerified, login, mutateAsync, showNotification, tokenValue]);
-    console.log('sitkey: ',import.meta.env.VITE_GOOGLE_SITE_KEY);
 
     return (
         <Box sx={{ width: '100%', padding: '50px', boxSizing: 'border-box' }}>

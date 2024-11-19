@@ -73,7 +73,7 @@ export const ManagePriority = (props: IManagePriorityProps) => {
         setAnchorEl(null);
     };
     const priorityValue = allPriorities.find((item) => item.id.toString() === priorityId)?.name;
-    console.log(priorityValue);
+
     return (
         <div>
             <FlexBox flexDirection="column" padding="0px 20px" gap={'5px'}>
