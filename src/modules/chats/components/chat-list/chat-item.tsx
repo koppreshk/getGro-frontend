@@ -77,7 +77,7 @@ export const ChatItem = (props: ChatConversation) => {
             <ChatContent flexDirection="column" gap="4px">
                 <FlexBox justifyContent="space-between">
                     <Typography variant="h6" sx={{ textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: 'calc(100% - 125px)', textWrap: 'nowrap' }}>{customer_name}</Typography>
-                    <FlexBox flexDirection="row" gap={'10px'} alignItems="flex-end">
+                    <FlexBox flexDirection="row" gap={'10px'}>
                         <Typography variant="caption" title="Created At" sx={{ color: pallete.grayNeutral }}>{isToday(isoDate!) ? `Today, ${time}` : isYesterday(isoDate!) ? `Yesterday, ${time}` : created_at}</Typography>
                         {last_message?.direction === "incoming" ? <SouthWest titleAccess="Incoming" sx={{ width: '16px', height: '16px', color: pallete.grayNeutral }} /> : <NorthEast titleAccess="Outgoing" sx={{ width: '16px', height: '16px', color: pallete.grayNeutral }} />}
                     </FlexBox>
