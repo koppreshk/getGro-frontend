@@ -1,5 +1,5 @@
 import { Theme } from '@emotion/react';
-import { Facebook, Email, WhatsApp, Twitter, LocalPhone, Instagram, Sms } from '@mui/icons-material';
+import { FacebookRounded as Facebook, Email, WhatsApp, Twitter, LocalPhone, Instagram, Sms } from '@mui/icons-material';
 import { SxProps } from '@mui/system';
 import { useTheme } from 'styled-components';
 
