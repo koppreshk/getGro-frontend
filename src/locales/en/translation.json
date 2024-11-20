@@ -416,6 +416,7 @@
     "facebook_page": "Facebook Page",
     "comments_specific_keywords": "Comments with specific keywords",
     "all_posts": "All Posts",
+    "page_name": "Page Name",
     "add_fb_page_success": "Facebook page added successfully",
     "add_fb_page_failure": "Failed to add facebook page",
     "add_insta_config_success": "Instagram configuration was added successfully",
