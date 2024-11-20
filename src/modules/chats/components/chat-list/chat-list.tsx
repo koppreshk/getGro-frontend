@@ -1,10 +1,10 @@
 import { FlexBox, RefreshButton } from "lib/ui-ux";
 import styled from "styled-components";
 import { ChatItem } from "./chat-item";
-import { Typography } from "@mui/material";
 import { Trans } from "react-i18next";
+import { FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import { useMatch, useNavigate } from "react-router-dom";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AllChatConversations } from "modules/chats/apis";
 
 const ChatListWrapper = styled(FlexBox)`
@@ -19,6 +19,7 @@ export const ChatList = (props: ChatListProps) => {
     const { data } = props;
     const navigate = useNavigate();
     const match = useMatch('/chat/:conversationId');
+    const [selectedView, setSelectedView] = useState('all-conversations');
 
     const doesconversationIdExist = useMemo(() => data.conversations.some((item) => item.id.toString() === match?.params.conversationId), [data.conversations, match?.params.conversationId]);
 
@@ -28,10 +29,35 @@ export const ChatList = (props: ChatListProps) => {
         }
     }, [data.conversations, doesconversationIdExist, navigate]);
 
+    const filters = [
+        { key: 'all-conversations' },
+        { key: 'my-pending' },
+        { key: 'my-unsolved' },
+        { key: 'my-conversations' },
+        { key: 'all-unassigned' },
+        { key: 'all-unsolved' },
+    ];
+
     return (
         <FlexBox flexDirection="column" height="100%" width="100%">
-            <FlexBox justifyContent="space-between" width="100%">
-                <Typography variant="h5" sx={{ p: 2 }}><Trans i18nKey="all_conversations" /></Typography>
+            <FlexBox justifyContent="space-between" width="100%" padding="15px 0px 15px 15px">
+                <FormControl sx={{ width: '80%' }} size="small">
+                    <InputLabel id="demo-select-small-label">View</InputLabel>
+                    <Select
+                        labelId="demo-select-small-label"
+                        id="demo-select-small-label"
+                        value={selectedView}
+                        label="Views"
+                        onChange={(ev) => setSelectedView(ev.target.value)}
+                    >
+                        {
+                            filters.map((item) => (
+                                <MenuItem key={item.key} value={item.key}>
+                                    <Typography variant="h5" ><Trans i18nKey={item.key.split('-').join('_')} /></Typography>
+                                </MenuItem>))
+                        }
+                    </Select>
+                </FormControl>
                 <RefreshButton />
             </FlexBox>
             <ChatListWrapper flexDirection="column" width="100%" overflowY="auto">
