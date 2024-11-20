@@ -214,6 +214,7 @@
     "choose_a_queue": "Choose a queue that is eligible for auto-assignment",
     "users_and_permissions": "Users and Permissions",
     "agents": "Agents",
+    "agents_in_queue": "Agents In Queue",
     "add_agents": "Add Agents",
     "edit_agent": "Edit Agent",
     "agents_long_description": "Agents are responsible for managing tickets and addressing customer issues. You can add as many agents as your license allows.",

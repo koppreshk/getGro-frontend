@@ -111,7 +111,7 @@ const PopoverContent = (props: IManageAssigneeProps & { handleClose: () => void 
             <FlexBox gap={'20px'} flexDirection="column" width="300px" padding='20px'>
                 <Typography variant="h6">{t('change_assignee')}</Typography>
                 <SelectField name="assigneeQueue" label={t("queue")} menuOptions={data.queues.map((item) => ({ key: item.id.toString(), value: item.name }))} rules={{ required: t('queue_validation') }} />
-                <SelectField name="assigneeAgent" label={t("agent")} menuOptions={agents || []} />
+                <SelectField name="assigneeAgent" label={t("agents_in_queue")} menuOptions={agents || []} />
                 <HorizontalSeparator />
                 <FlexBox justifyContent="flex-end" gap={'10px'}>
                     <CancelButton onClick={handleClose} />
