@@ -17,7 +17,7 @@ const OverviewContents = () => {
             <Typography variant="h5" paragraph>Features:</Typography>
             <ul>
                 <li><b>Converting Facebook Messages to Conversations:</b>  Automatically create helpdesk conversation whenever a customer initiates a chat or sends a private message on your Facebook page.</li>
-                <li><b>Two-way Communication:</b> Empower your support agents to reply to customer messages directly through BoldDesk, eliminating the need to switch between platforms. This ensures faster response times and a smoother customer experience.</li>
+                <li><b>Two-way Communication:</b> Empower your support agents to reply to customer messages directly through getGro, eliminating the need to switch between platforms. This ensures faster response times and a smoother customer experience.</li>
                 <li><b>Boosting Efficiency:</b>  Elevate your customer support experience and boost customer satisfaction with the power of Facebook integration</li>
             </ul>
         </FlexBox>
