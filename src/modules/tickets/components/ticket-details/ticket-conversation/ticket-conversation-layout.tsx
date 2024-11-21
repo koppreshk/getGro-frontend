@@ -3,8 +3,6 @@ import { CustomTabPanel, FlexBox, StyledTab, StyledTabs } from "lib/ui-ux"
 import { TicketConversationHeader } from "./ticket-conversation-header";
 import { useAppSelector } from "lib/hooks";
 import {
-    FacebookConversationsContainer,
-    InstagramConversationsContainer,
     TelephonicConversationContainer,
     EmailConversationContainer,
     WhatsAppConversationContainer,
@@ -38,10 +36,6 @@ export const TicketConversationLayout = () => {
                 return <TelephonicConversationContainer />
             case 'whatsapp':
                 return <WhatsAppConversationContainer />
-            case 'instagram':
-                return <InstagramConversationsContainer />
-            case 'facebook':
-                return <FacebookConversationsContainer />
             default:
                 return <></>
         }
