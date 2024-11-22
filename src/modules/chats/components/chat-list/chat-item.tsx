@@ -72,7 +72,7 @@ export const ChatItem = (props: ChatConversation) => {
     return (
         <ChatWrapper ref={ref} onClick={onChatItemClick} $isChatActive={isChatActive}>
             <FlexBox justifyContent="center" alignItems="center">
-                <CustomSourceAvatar chat_source={chat_source} customer_name={customer_name} />
+                <CustomSourceAvatar chat_source={chat_source} customer_name={customer_name} chat_type={props.chat_type} />
             </FlexBox>
             <ChatContent flexDirection="column" gap="4px">
                 <FlexBox justifyContent="space-between">

@@ -50,7 +50,7 @@ export const ChatDetails = () => {
             <FlexBox gap={'10px'} flexDirection="column" justifyContent="space-between" height="100%" overflowY="auto">
                 <FlexBox gap={'10px'} flexDirection="column">
                     <FlexBox gap={'10px'} padding="20px 20px 0">
-                        <CustomSourceAvatar customer_name={chatDetails.customer_name} chat_source={chatDetails.chat_source} />
+                        <CustomSourceAvatar customer_name={chatDetails.customer_name} chat_source={chatDetails.chat_source} chat_type={chatDetails?.chat_type ?? ''} />
                         <FlexBox flexDirection="column">
                             <Typography variant="h6">{chatDetails.customer_name}</Typography>
                             <FlexBox gap="5px">

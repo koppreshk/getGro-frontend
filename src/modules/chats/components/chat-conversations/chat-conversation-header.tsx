@@ -20,7 +20,7 @@ export const ChatConversationHeader = (props: ChatConversationHeaderProps) => {
 
     return (
         <FlexBox gap={'10px'} padding="15px 10px" height="" alignItems="center">
-            <CustomSourceAvatar customer_name={chatDetails?.customer_name ?? ''} chat_source={chatDetails?.chat_source ?? ''} />
+            <CustomSourceAvatar customer_name={chatDetails?.customer_name ?? ''} chat_source={chatDetails?.chat_source ?? ''} chat_type={chatDetails?.chat_type ?? ''} />
             <FlexBox flexDirection="column">
                 <Typography variant="h6">{profile_name}</Typography>
                 {chatDetails?.chat_source === 'whatsapp'

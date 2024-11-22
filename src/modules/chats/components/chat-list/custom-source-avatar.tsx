@@ -12,8 +12,8 @@ const SmallAvatar = styled(FlexBox)`
     padding: 1px;
 `;
 
-export const CustomSourceAvatar = (props: Pick<ChatConversation, 'chat_source' | 'customer_name'>) => {
-    const { customer_name, chat_source } = props;
+export const CustomSourceAvatar = (props: Pick<ChatConversation, 'chat_source' | 'customer_name' | 'chat_type'>) => {
+    const { customer_name, chat_source, chat_type } = props;
     const getSourceIcon = useSourceIcon();
     const { backgroundColor, textColor } = useMemo(() => chooseRandomColors(customer_name), [customer_name]);
 
@@ -23,7 +23,7 @@ export const CustomSourceAvatar = (props: Pick<ChatConversation, 'chat_source' |
             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
             badgeContent={
                 <SmallAvatar>
-                    {getSourceIcon(chat_source, { width: '16px', height: '16px' })}
+                    {getSourceIcon(chat_type === 'instagram_message' ? chat_type : chat_source, { width: '16px', height: '16px' })}
                 </SmallAvatar>
             }
         >
