@@ -1,44 +1,14 @@
 import { FlexBox, HorizontalSeparator, VerticalSeparator } from "lib/ui-ux"
 import { CustomSourceAvatar } from "../chat-list/custom-source-avatar"
-import { Link, Typography } from "@mui/material"
+import { Link } from "@mui/material"
 import { CreateAndLinkTicket } from "./create-and-link-ticket"
 import { useAppSelector, useFeature } from "lib/hooks"
 import { ChatStatusContainer, ManageAssigneeContainer, ManagePriorityContainer, ManageTagsContainer } from "modules/chats/containers"
 import { Links } from "./links"
 import { LinkTicket } from "./link-ticket"
-import styled from "styled-components"
 import { useSourceIcon } from "modules/tickets/hooks"
+import { ChatSubHeading } from "../chat-conversations/chat-conversation-header"
 
-
-export const Platform = styled(Typography) <{ $platform: string }>`
-   && {
-    color: ${({ theme, $platform }) => {
-        switch ($platform) {
-            case 'facebook':
-                return theme.channelSpecific.facebook;
-            case 'email':
-                return theme.channelSpecific.email
-            case 'whatsapp':
-                return theme.channelSpecific.whatsApp
-            case 'twitter':
-                return theme.channelSpecific.twitter
-            case 'telephonic':
-                return theme.channelSpecific.telephonic
-            case 'instagram':
-                return theme.channelSpecific.instagram
-            case 'sms':
-                return theme.channelSpecific.sms
-            default:
-                return undefined
-        }
-    }};
-    font-weight: bold;
-   }
-`;
-
-const StyledPlatform = styled(Platform)`
-    text-transform: capitalize;
-`;
 
 export const ChatDetails = () => {
     const chatDetails = useAppSelector((state) => state.chat.chatDetails);
@@ -51,17 +21,7 @@ export const ChatDetails = () => {
                 <FlexBox gap={'10px'} flexDirection="column">
                     <FlexBox gap={'10px'} padding="20px 20px 0">
                         <CustomSourceAvatar customer_name={chatDetails.customer_name} chat_source={chatDetails.chat_source} chat_type={chatDetails?.chat_type ?? ''} />
-                        <FlexBox flexDirection="column">
-                            <Typography variant="h6">{chatDetails.customer_name}</Typography>
-                            <FlexBox gap="5px">
-                                <Typography variant="body2">
-                                    <span>via</span>
-                                </Typography>
-                                <StyledPlatform variant="body2" $platform={chatDetails.chat_source.toLocaleLowerCase() ?? ''}>
-                                    {chatDetails?.chat_type ? chatDetails.chat_type.split('_').join(' ') : null}
-                                </StyledPlatform>
-                            </FlexBox>
-                        </FlexBox>
+                        <ChatSubHeading profileNumber="" />
                     </FlexBox>
                     {isFeatureAccessible('edit_conversation_status') ? <ChatStatusContainer /> : null}
                     {isFeatureAccessible('edit_conversation_assignee') ? <ManageAssigneeContainer /> : null}

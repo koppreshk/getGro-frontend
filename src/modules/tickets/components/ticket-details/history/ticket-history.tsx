@@ -1,5 +1,5 @@
 
-import { ChatHistory } from "modules/chats/components";
+import { ChatHistory } from "lib/ui-ux";
 import { TicketsHistory } from "modules/tickets/apis";
 import styled from "styled-components";
 
