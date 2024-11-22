@@ -1,7 +1,6 @@
 import { useMatch } from "react-router-dom"
 import { useFetchChatHistory } from "../apis";
-import { CenteredCircularProgress } from "lib/ui-ux";
-import { ChatHistory } from "../components";
+import { CenteredCircularProgress, ChatHistory } from "lib/ui-ux";
 
 export const ChatHistoryContainer = () => {
     const match = useMatch('/chat/:conversationId');
