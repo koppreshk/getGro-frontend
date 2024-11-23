@@ -27,7 +27,7 @@ export const CustomSourceAvatar = (props: Pick<ChatConversation, 'chat_source' |
                 </SmallAvatar>
             }
         >
-            <Avatar sx={{ fontSize: '14px', color: textColor, bgcolor: backgroundColor }}>{customer_name.slice(0, 2)}</Avatar>
+            <Avatar sx={{ fontSize: '14px', color: textColor, bgcolor: backgroundColor }}>{customer_name?.split(' ').length > 1 ? customer_name.split(' ').map((name) => name[0]).join('') : customer_name.slice(0, 2)}</Avatar>
         </Badge>
     )
 }
