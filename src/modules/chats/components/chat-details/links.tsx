@@ -5,6 +5,7 @@ import { FlexBox, TicketInfoContent, VerticalSeparator } from "lib/ui-ux";
 import LinkOffIcon from '@mui/icons-material/LinkOff';
 import { useUnLinkTicket } from "modules/chats/apis";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 export const Links = () => {
     const chatDetails = useAppSelector((state) => state.chat.chatDetails);
@@ -33,7 +34,9 @@ export const Links = () => {
                                 <FlexBox key={link.id} flexDirection="column" gap={'5px'}>
                                     <FlexBox justifyContent="space-between" alignItems="center">
                                         <FlexBox gap={'10px'}>
-                                            <TicketInfoContent variant="h6">#{link.id}</TicketInfoContent>
+                                            <Link to={`/tickets/all_tickets/${link.id}?noOfRecords=10&pageNumber=1&searchText=${link.id}`}>
+                                                <TicketInfoContent variant="h6">#{link.id}</TicketInfoContent>
+                                            </Link>
                                             <VerticalSeparator height="auto" />
                                             <TicketInfoContent variant="h6">{link.status}</TicketInfoContent>
                                         </FlexBox>
