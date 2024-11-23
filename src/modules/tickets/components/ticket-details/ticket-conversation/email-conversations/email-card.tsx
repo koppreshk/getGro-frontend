@@ -1,13 +1,12 @@
 import { useMemo, useState } from "react";
 import styled from "styled-components";
 import { Typography, Avatar } from "@mui/material";
-import { FlexBox } from "lib/ui-ux";
+import { FlexBox, MoreActions } from "lib/ui-ux";
 import { chooseRandomColors, getInitialsByName, getTimeAgo } from "lib/utils";
 import { EmailPopoverMetadata } from "./email-popover-metadata";
 import { DownloadAttachments } from "./download-attachments";
 import { IEmailConversations } from "./email-conversations-layout";
 import { CallSplit } from "@mui/icons-material";
-import { MoreActions } from "../../ticket-details-section/ticket-overview/more-actions";
 import { SplitTicket } from "./more-actions/split-ticket";
 import { useFeature } from "lib/hooks";
 

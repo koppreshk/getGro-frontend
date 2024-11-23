@@ -1,9 +1,13 @@
-import { FlexBox } from "lib/ui-ux"
+import { FlexBox, MoreActions } from "lib/ui-ux"
 import { CustomSourceAvatar } from "../chat-list/custom-source-avatar"
 import { Typography } from "@mui/material"
 import { useTheme } from "styled-components"
 import { ChatConversationById, ChatType } from "modules/chats/apis"
 import { useAppSelector } from "lib/hooks"
+import { useTranslation } from "react-i18next"
+import { DeleteOutlined } from "@mui/icons-material"
+import { useState } from "react"
+import { DeleteConversation } from "./delete-conversation"
 
 interface ChatConversationHeaderProps extends Pick<ChatConversationById, 'profile_name' | 'profile_number'> {
 
@@ -23,14 +27,56 @@ const getParsedChatType = (chatType: string) => {
     }
 }
 
+interface MenuRendererProps {
+    selectedMenu?: string;
+    showDrawer: DrawerDisplayTypes;
+    toggleDrawerDisplay: (key: string) => void
+}
+
+const MenuRenderer = (props: MenuRendererProps) => {
+    const { selectedMenu, showDrawer, toggleDrawerDisplay } = props;
+
+    switch (selectedMenu) {
+        case 'deleteConversation':
+            return <DeleteConversation showDialog={showDrawer.deleteConversation} onCloseDrawer={() => toggleDrawerDisplay('deleteConversation')} />
+        default: return <></>
+    }
+}
+
+enum MoreActionsEnum {
+    deleteConversation = 'deleteConversation',
+}
+
+type DrawerDisplayTypes = {
+    [key in MoreActionsEnum]: boolean;
+}
+
 export const ChatConversationHeader = (props: ChatConversationHeaderProps) => {
     const { profile_number } = props;
     const chatDetails = useAppSelector((state) => state.chat.chatDetails);
+    const { t } = useTranslation();
+    const [selectedMenu, setSelectedMenu] = useState<string | undefined>();
+    const [showDrawer, setDrawerDisplay] = useState<DrawerDisplayTypes>({
+        deleteConversation: false,
+    });
+
+    const toggleDrawerDisplay = (key: string) => {
+        setDrawerDisplay((prev) => ({ ...prev, [key]: !prev[key as keyof DrawerDisplayTypes] }))
+    }
+
+    const onMenuItemSelect = (key: string) => {
+        setSelectedMenu(key);
+        toggleDrawerDisplay(key)
+    }
 
     return (
-        <FlexBox gap={'10px'} padding="15px 10px" height="" alignItems="center">
-            <CustomSourceAvatar customer_name={chatDetails?.customer_name ?? ''} chat_source={chatDetails?.chat_source ?? ''} chat_type={chatDetails!.chat_type} />
-            <ChatSubHeading profileNumber={profile_number} />
+        <FlexBox gap={'10px'} padding="15px 10px" justifyContent="space-between" alignItems="center" width="100%">
+            <FlexBox width="80%" gap={'10px'} >
+                <CustomSourceAvatar customer_name={chatDetails?.customer_name ?? ''} chat_source={chatDetails?.chat_source ?? ''} chat_type={chatDetails!.chat_type} />
+                <ChatSubHeading profileNumber={profile_number} />
+            </FlexBox>
+            <MoreActions onMenuItemSelect={onMenuItemSelect} menuItems={[{ key: MoreActionsEnum.deleteConversation, label: t('delete_conversation'), icon: <DeleteOutlined /> }]} />
+            <MenuRenderer selectedMenu={selectedMenu} showDrawer={showDrawer} toggleDrawerDisplay={toggleDrawerDisplay} />
         </FlexBox>
     )
 }

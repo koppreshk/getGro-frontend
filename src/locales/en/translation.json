@@ -437,5 +437,6 @@
     "create_and_link_conversation_to_ticket": "Create And Link Conversation To Ticket",
     "link_conversation_to_ticket": "Link Conversation To Ticket",
     "unlink_converation_to_ticket": "Unlink Converation To Ticket",
-    "reply_conversation": "Reply Conversation"
+    "reply_conversation": "Reply Conversation",
+    "delete_conversation": "Delete Conversation"
 }

@@ -40,7 +40,7 @@ export const MoreActions = (props: MoreActionsProps) => {
             <IconButton onClick={handleOpen} className={className}>
                 <MoreVert />
             </IconButton>
-            <Menu open={Boolean(anchor)} onClose={handleClose} anchorEl={anchor as Element} slotProps={{ paper: { sx: { width: '200px' } } }}
+            <Menu open={Boolean(anchor)} onClose={handleClose} anchorEl={anchor as Element} slotProps={{ paper: { sx: { width: 'fit-content', minWidth: '200px' } } }}
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
                 {visibleMenuItems.map(item => (
