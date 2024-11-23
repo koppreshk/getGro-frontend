@@ -2,7 +2,7 @@ import { FlexBox } from "lib/ui-ux"
 import { CustomSourceAvatar } from "../chat-list/custom-source-avatar"
 import { Typography } from "@mui/material"
 import { useTheme } from "styled-components"
-import { ChatConversationById } from "modules/chats/apis"
+import { ChatConversationById, ChatType } from "modules/chats/apis"
 import { useAppSelector } from "lib/hooks"
 
 interface ChatConversationHeaderProps extends Pick<ChatConversationById, 'profile_name' | 'profile_number'> {
@@ -11,12 +11,14 @@ interface ChatConversationHeaderProps extends Pick<ChatConversationById, 'profil
 
 const getParsedChatType = (chatType: string) => {
     switch (chatType) {
-        case 'instagram_comment':
+        case ChatType.InstagramComment:
             return <span>Commented on <b>instagram</b> post</span>;
-        case 'instagram_message':
+        case ChatType.InstagramMessage:
             return <span>Messaged on <b>instagram</b></span>;
-        case 'fb_page_message':
+        case ChatType.FacebookPageMessage:
             return <span>Messaged on <b>facebook</b></span>
+        case ChatType.FacebookPageComment:
+            return <span>Commented on <b>facebook</b> post</span>
         default: return chatType.split('_').join(' ')
     }
 }
@@ -27,7 +29,7 @@ export const ChatConversationHeader = (props: ChatConversationHeaderProps) => {
 
     return (
         <FlexBox gap={'10px'} padding="15px 10px" height="" alignItems="center">
-            <CustomSourceAvatar customer_name={chatDetails?.customer_name ?? ''} chat_source={chatDetails?.chat_source ?? ''} chat_type={chatDetails?.chat_type ?? ''} />
+            <CustomSourceAvatar customer_name={chatDetails?.customer_name ?? ''} chat_source={chatDetails?.chat_source ?? ''} chat_type={chatDetails!.chat_type} />
             <ChatSubHeading profileNumber={profile_number} />
         </FlexBox>
     )
