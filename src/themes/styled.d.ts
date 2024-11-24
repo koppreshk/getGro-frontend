@@ -38,6 +38,7 @@ declare module 'styled-components' {
       defaultTextColor: string,
       primaryPurpleText: string,
       genericBackgroundColor: string,
+      disabledBgColor: string;
       toolbarBgColor: string,
       toolbarBgColorOnHover: string
     },

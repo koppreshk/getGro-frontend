@@ -6,7 +6,7 @@ import { Modules } from "./modules";
 import { PermissionList } from "./permission-list";
 import { useFormContext } from "react-hook-form";
 import { ICreateRoleFormFields, RoleModes } from "./create-role";
-import { AllPermissionKeys, ConfigurationPermissionKeys, DashboardPermissionKeys, KnowledgeBasePermissionKeys, ModuleKeys, TicketPermissionKeys } from "lib/enums";
+import { AllPermissionKeys, ChatPermissionKeys, ConfigurationPermissionKeys, DashboardPermissionKeys, KnowledgeBasePermissionKeys, ModuleKeys, TicketPermissionKeys } from "lib/enums";
 import { useTranslation } from "react-i18next";
 
 interface IPermissionList {
@@ -22,6 +22,9 @@ const modules = [{
     moduleName: 'Tickets',
     moduleKey: ModuleKeys.TICKETS,
     hideModule: true
+}, {
+    moduleName: 'Chat',
+    moduleKey: ModuleKeys.CHAT,
 }, {
     moduleName: 'Configurations',
     moduleKey: ModuleKeys.CONFIGURATIONS
@@ -71,6 +74,41 @@ const permissionList = [{
     {
         name: 'Manage Notes',
         permissionKey: TicketPermissionKeys.MANAGE_NOTES
+    }]
+},
+{
+    associatedModule: ModuleKeys.CHAT,
+    permissions: [{
+        name: 'Create And Link Conversation To Ticket',
+        permissionKey: ChatPermissionKeys.CREATE_LINK_CONVERSATION_TICKET
+    },
+    {
+        name: 'Link Conversation To Ticket',
+        permissionKey: ChatPermissionKeys.LINK_CONVERSATION_TICKET
+    },
+    {
+        name: 'Unlink Converation To Ticket',
+        permissionKey: ChatPermissionKeys.UNLINK_CONVERSATION_TICKET
+    },
+    {
+        name: 'Edit Assignee',
+        permissionKey: ChatPermissionKeys.EDIT_CONVERSATION_ASSIGNEE
+    },
+    {
+        name: 'Edit Status',
+        permissionKey: ChatPermissionKeys.EDIT_CONVERSATION_STATUS
+    },
+    {
+        name: 'Edit Tags',
+        permissionKey: ChatPermissionKeys.EDIT_CONVERSATION_TAGS
+    },
+    {
+        name: 'Edit Priority',
+        permissionKey: ChatPermissionKeys.EDIT_CONVERSATION_PRIORITY
+    },
+    {
+        name: 'Reply Conversation',
+        permissionKey: ChatPermissionKeys.REPLY_CONVERSATION
     }]
 },
 {

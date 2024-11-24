@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import { AllModules, AllPermissionKeys, ConfigurationPermissionKeys, DashboardPermissionKeys, KnowledgeBasePermissionKeys, ModuleKeys, TicketPermissionKeys } from "lib/enums";
+import { AllModules, AllPermissionKeys, ChatPermissionKeys, ConfigurationPermissionKeys, DashboardPermissionKeys, KnowledgeBasePermissionKeys, ModuleKeys, TicketPermissionKeys } from "lib/enums";
 import { CreateRole } from "modules/settings/component/user-and-permissions"
 import { IRoles } from "modules/settings/apis/users-and-permissions";
 
@@ -16,10 +16,11 @@ export const ViewRoleContainer = (props: ViewRoleContainerProps) => {
 
     //Showing all permissions for mode view as it will be only for account owner 
     const allTicketPermissions = Object.values(TicketPermissionKeys);
+    const allChatPermissions = Object.values(ChatPermissionKeys);
     const allConfigPermissions = Object.values(ConfigurationPermissionKeys);
     const allDashboardPermissions = Object.values(DashboardPermissionKeys);
     const allKnowledgeBasePermissions = Object.values(KnowledgeBasePermissionKeys);
-    const allPermissions = [...allTicketPermissions, ...allConfigPermissions, ...allDashboardPermissions, ...allKnowledgeBasePermissions] as AllPermissionKeys[];
+    const allPermissions = [...allTicketPermissions,  ...allChatPermissions, ...allConfigPermissions, ...allDashboardPermissions, ...allKnowledgeBasePermissions] as AllPermissionKeys[];
 
     const defaultValues = {
         description: selectedRole.description,

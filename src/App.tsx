@@ -9,6 +9,7 @@ import { ExotelServiceProvider, NotificationProvider, ServiceClientProvider } fr
 import ticketsReducer from './modules/tickets/storage/tickets-slice';
 import configurationsReducer from './modules/settings/storage/configurations-slice';
 import coreReducer from './modules/core/storage/core-slice';
+import chatReducer from './modules/chats/storage/chat-slice';
 import { AuthProvider } from "modules/login/auth-provider-context";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorFallback } from "lib/ui-ux";
@@ -18,7 +19,8 @@ const store = configureStore({
   reducer: {
     tickets: ticketsReducer,
     configurations: configurationsReducer,
-    core: coreReducer 
+    core: coreReducer ,
+    chat: chatReducer
   },
 })
 

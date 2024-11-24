@@ -66,22 +66,6 @@ const useConfigurations = () => {
             categoryName: t("channels"),
             categoryIcon: () => <Tag color="primary" />,
             categoryOptions: [
-                // {
-                //     label: t("facebook"),
-                //     route: 'facebook',
-                //     uniqueKey: 'facebook',
-                //     catOptionIcon: () => <Facebook />,
-                //     hidden: false,
-                //     description: t("facebook_short_description")
-                // },
-                // {
-                //     label: t("instagram"),
-                //     route: 'instagram',
-                //     uniqueKey: 'instagram',
-                //     catOptionIcon: () => <Instagram />,
-                //     hidden: false,
-                //     description: t("instagram_short_description")
-                // },
                 {
                     label: t("email"),
                     route: 'email',

@@ -12,8 +12,14 @@ export interface IWhatsAppNumbers {
     created_by: string
     updated_by: string | null;
     created_at: string
-    updated_at: string
+    updated_at: string;
+    queue_id: number | null;
+}
 
+export interface WhatsAppNumber extends IWhatsAppNumbers {
+    "is_active": boolean,
+    "send_auto_reply": boolean,
+    "auto_reply_message": string
 }
 
 export const useFetchWhatsAppNumbers = () => {
@@ -32,7 +38,7 @@ export const useFetchWhatsAppNumber = (id: number) => {
 
     const fetchExotelConfigurations = React.useCallback(() => getData(`${WhatsAppConfigurationEndPoint.FETCH_WHATSAPP_NUMBER}?id=${id}`).then((res) => res.json()), [getData, id]);
 
-    return useQuery<IWhatsAppNumbers[]>({
+    return useQuery<WhatsAppNumber>({
         queryFn: fetchExotelConfigurations,
         queryKey: [WhatsAppConfigurationQueryKey.FETCH_WHATSAPP_NUMBER, id]
     });

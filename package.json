@@ -19,6 +19,7 @@
     "@mui/x-date-pickers": "^6.18.7",
     "@reduxjs/toolkit": "^1.9.5",
     "@tanstack/react-table": "^8.10.1",
+    "@react-oauth/google": "^0.12.1",
     "apexcharts": "^3.46.0",
     "exotel-ip-calling-crm-websdk": "git+https://github.com/exotel/exotel-ip-calling-crm-websdk#v1.1.1",
     "i18next": "^23.14.0",

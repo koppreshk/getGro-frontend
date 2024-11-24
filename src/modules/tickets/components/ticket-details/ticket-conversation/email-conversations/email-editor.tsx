@@ -3,9 +3,9 @@ import { useFormContext } from "react-hook-form";
 import { useMemo, useRef } from "react";
 import styled from "styled-components";
 import { Delete, Send } from "@mui/icons-material";
-import { Avatar, Button, CircularProgress, IconButton } from "@mui/material";
+import { Avatar, CircularProgress, IconButton } from "@mui/material";
 import { chooseRandomColors, getInitialsByName } from "lib/utils";
-import { FlexBox } from "lib/ui-ux";
+import { FlexBox, RoundedSendButton } from "lib/ui-ux";
 import { FileUploadField, RichTextEditorField, validateAtLeastOneChar } from "lib/form-fields";
 import { IEmailFormFields } from "./email-conversations";
 import { UploadedAttachmentsPreview } from "./uploaded-attachments-preview";
@@ -31,17 +31,6 @@ const StyledForwardCardContainer = styled(FlexBox)`
     }
     .editor-error-message {
         margin-left: 20px
-    }
-`;
-
-export const RoundedSendButton = styled(Button)`
-    &&{
-        border-radius: 25px;
-        padding: 6px 25px;
-
-        .MuiButton-endIcon {
-            margin-left: 12px;
-        }
     }
 `;
 

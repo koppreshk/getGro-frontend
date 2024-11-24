@@ -13,6 +13,10 @@ interface ICreateManualTicketArgs {
     tags: string[];
     queue_id?: string;
     assigned_to?: string;
+    /**
+     * For chats only, send the below id so that ticket is created and linked
+     */
+    conversation_id?: string | number;
 }
 
 export const useCreateManualTicket = () => {

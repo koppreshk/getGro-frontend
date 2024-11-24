@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "react-query";
-import { AllPermissionKeys, ConfigurationPermissionKeys, DashboardPermissionKeys, KnowledgeBasePermissionKeys, ModuleKeys, TicketPermissionKeys } from "lib/enums";
+import { AllPermissionKeys, ChatPermissionKeys, ConfigurationPermissionKeys, DashboardPermissionKeys, KnowledgeBasePermissionKeys, ModuleKeys, TicketPermissionKeys } from "lib/enums";
 import { useDispatch } from "react-redux";
 import { setCoreData } from '../storage/core-slice';
 import { useServiceClient } from "lib";
@@ -24,7 +24,7 @@ export interface IConfig {
     }
 }
 
-export const useFetchUserConfig = (isEnabled: boolean) => {
+export const useFetchUserConfig = (user: object | null) => {
     const dispatch = useDispatch();
 
     const { getData } = useServiceClient();
@@ -34,16 +34,17 @@ export const useFetchUserConfig = (isEnabled: boolean) => {
 
     return useQuery<IConfig, { message: string }>({
         queryFn: getConfig,
-        queryKey: [AgentsQueryKey.FETCH_USER_CONFIG],
+        queryKey: [AgentsQueryKey.FETCH_USER_CONFIG, user],
         cacheTime: 0,
         onSuccess(data) {
             if (data?.modules?.includes('all') && data?.permissions?.includes('all')) {
                 const allTicketPermissions = Object.values(TicketPermissionKeys);
+                const allChatPermissions = Object.values(ChatPermissionKeys);
                 const allConfigPermissions = Object.values(ConfigurationPermissionKeys);
                 const allDashboardPermissions = Object.values(DashboardPermissionKeys);
                 const allKBPermissions = Object.values(KnowledgeBasePermissionKeys);
 
-                const allPermissions = [...allTicketPermissions, ...allConfigPermissions, ...allDashboardPermissions, ...allKBPermissions] as AllPermissionKeys[];
+                const allPermissions = [...allTicketPermissions, ...allChatPermissions, ...allConfigPermissions, ...allDashboardPermissions, ...allKBPermissions] as AllPermissionKeys[];
 
                 dispatch(setCoreData({ ...data, permissions: allPermissions, modules: Object.values(ModuleKeys) }));
                 return;
@@ -51,6 +52,6 @@ export const useFetchUserConfig = (isEnabled: boolean) => {
             dispatch(setCoreData(data))
 
         },
-        enabled: isEnabled
+        enabled: user ? true : false
     })
 }

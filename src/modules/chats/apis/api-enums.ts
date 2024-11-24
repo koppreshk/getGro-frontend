@@ -1,0 +1,36 @@
+export enum ChatEndPoint {
+    FETCH_ALL_CONVERSATIONS = 'chat/conversations',
+    FETCH_CONVERSATION_BY_ID = 'chat/conversation',
+    FETCH_MEDIA_CONTENT = 'chat/fetch_media',
+    SEND_REPLY = 'chat/reply',
+    PRESIGNED_URL = 'presigned_url',
+    FETCH_ALL_CHAT_STATUSES = 'chat/statuses',
+    FETCH_ALL_CHAT_TAGS = 'chat/tags',
+    FETCH_ALL_CHAT_PRIORITIES = 'chat/priorities',
+    UPDATE_CHAT_STATUS = 'chat/update_status',
+    UPDATE_CHAT_PRIORITY = 'chat/update_priority',
+    UPDATE_CHAT_ASSIGNEE = 'chat/update_assignee',
+    UPDATE_CHAT_TAGS = 'chat/update_tags',
+    LINK_TICKET = 'chat/link_to_ticket',
+    UNLINK_TICKET = 'chat/unlink_ticket',
+    FETCH_CHAT_HISTORY = 'chat/history'
+}
+
+export enum ChatQueryKeys {
+    FETCH_ALL_CONVERSATIONS = 'FETCH_ALL_CONVERSATIONS',
+    FETCH_CONVERSATION_BY_ID = 'FETCH_CONVERSATION_BY_ID',
+    FETCH_MEDIA_CONTENT = 'FETCH_MEDIA_CONTENT',
+    SEND_REPLY = 'SEND_REPLY',
+    PRESIGNED_URL = 'PRESIGNED_URL',
+    PRESIGNED_URL_S3 = 'PRESIGNED_URL_S3',
+    FETCH_ALL_CHAT_STATUSES = 'FETCH_ALL_CHAT_STATUSES',
+    FETCH_ALL_CHAT_PRIORITIES = 'FETCH_ALL_CHAT_PRIORITIES',
+    FETCH_ALL_CHAT_TAGS = 'FETCH_ALL_CHAT_TAGS',
+    UPDATE_CHAT_STATUS = 'UPDATE_CHAT_STATUS',
+    UPDATE_CHAT_PRIORITY = 'UPDATE_CHAT_PRIORITY',
+    UPDATE_CHAT_ASSIGNEE = 'UPDATE_CHAT_ASSIGNEE',
+    UPDATE_CHAT_TAGS = 'UPDATE_CHAT_TAGS',
+    LINK_TICKET = 'LINK_TICKET',
+    UNLINK_TICKET = 'UNLINK_TICKET',
+    FETCH_CHAT_HISTORY = 'FETCH_CHAT_HISTORY'
+}

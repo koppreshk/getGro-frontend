@@ -1,13 +1,12 @@
 import { useMemo, useState } from "react";
 import styled from "styled-components";
 import { Typography, Avatar } from "@mui/material";
-import { FlexBox } from "lib/ui-ux";
-import { chooseRandomColors, getInitialsByName } from "lib/utils";
+import { FlexBox, MoreActions } from "lib/ui-ux";
+import { chooseRandomColors, getInitialsByName, getTimeAgo } from "lib/utils";
 import { EmailPopoverMetadata } from "./email-popover-metadata";
 import { DownloadAttachments } from "./download-attachments";
 import { IEmailConversations } from "./email-conversations-layout";
 import { CallSplit } from "@mui/icons-material";
-import { MoreActions } from "../../ticket-details-section/ticket-overview/more-actions";
 import { SplitTicket } from "./more-actions/split-ticket";
 import { useFeature } from "lib/hooks";
 
@@ -125,7 +124,7 @@ export const EmailCard = (props: IEmailCardProps) => {
                             <FlexBox justifyContent="space-between">
                                 <Typography variant="h6">{from || fromEmail} <span className="print">{`<${fromEmail}>`}</span></Typography>
                                 <FlexBox alignItems="center" gap="10px">
-                                    <SubTextValue variant="caption">{(createdAt)}</SubTextValue>
+                                    <SubTextValue variant="caption">{(getTimeAgo(createdAt))}</SubTextValue>
                                     <StyledMoreActions onMenuItemSelect={onMenuItemSelect} menuItems={menuItems} />
                                 </FlexBox>
                             </FlexBox>

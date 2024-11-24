@@ -37,3 +37,26 @@ export function useDateDifference(date: string) {
         minsValue
     };
 }
+
+export const getTime = (date: string, format = 'yyyy-LL-dd hh:mm a') => {
+    const isoDate = DateTime.fromFormat(date, format).toISO();
+    return DateTime.fromISO(isoDate!).toFormat('hh:mm a');
+}
+
+export function getTimeAgo(dateStr: string, format = 'yyyy-LL-dd hh:mm a'): string {
+    const now = DateTime.now();
+    const isValidInThisFormat = DateTime.fromFormat(dateStr, format).isValid
+    const isoDate = DateTime.fromFormat(dateStr, format).toISO();
+    const inputDate = DateTime.fromISO(isValidInThisFormat ? isoDate! : dateStr);
+    const diff = now.diff(inputDate, ["days", "hours", "minutes", "seconds"]);
+
+    if (diff.days >= 1) {
+        return diff.days === 1 ? "1 day ago" : `${Math.floor(diff.days)} days ago`;
+    } else if (diff.hours >= 1) {
+        return diff.hours === 1 ? "1 hr ago" : `${Math.floor(diff.hours)} hrs ago`;
+    } else if (diff.minutes >= 1) {
+        return diff.minutes === 1 ? "1 min ago" : `${Math.floor(diff.minutes)} mins ago`;
+    } else {
+        return diff.seconds <= 1 ? "1 sec ago" : `${Math.floor(diff.seconds)} secs ago`;
+    }
+}

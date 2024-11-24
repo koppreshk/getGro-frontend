@@ -5,6 +5,7 @@ import { styled } from "styled-components";
 import { useTranslation } from "react-i18next";
 import { IWhatsAppNumbers } from "modules/settings/apis/marketplace/whatsapp";
 import { DeleteWhatsAppNumber } from "./delete-whatsapp-number";
+import { EditWhatsappNumber } from "./edit-whatsapp-number";
 
 export interface IManageWhatsAppNumbersLayoutProps {
     data: IWhatsAppNumbers[] | undefined;
@@ -48,6 +49,7 @@ const useColumns = () => {
             cell: ({ row: { original } }) => {
                 return (
                     <FlexBox flexDirection="row" gap="5px">
+                        <EditWhatsappNumber id={original.id} />
                         <DeleteWhatsAppNumber id={original.id} />
                     </FlexBox>
                 )

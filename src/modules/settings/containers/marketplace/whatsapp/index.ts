@@ -3,3 +3,4 @@ export * from './manage-whatsapp-numbers-container';
 export * from './update-whatsapp-config-container';
 export * from './add-whatsapp-config-container';
 export * from './add-whatsapp-number-container';
+export * from './edit-whatsapp-number-container';

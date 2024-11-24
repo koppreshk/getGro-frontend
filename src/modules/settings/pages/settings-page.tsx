@@ -3,8 +3,6 @@ import { Route, Routes } from "react-router-dom"
 import { Configurations } from "../component"
 import { ProtectedConfigurationsRoute } from "modules/login/protected-route";
 const TicketTagsContainer = lazy(() => import("../containers/ticket-tags/ticket-tags-container"))
-const FacebookConfigurations = lazy(() => import("../component/channel-configurations/facebook-configuration"));
-const InstagramConfigurations = lazy(() => import("../component/channel-configurations/instagram-configurations"));
 const EmailConfigLayout = lazy(() => import("../component/channel-configurations/email/email-config-layout"));
 const AgentsLayout = lazy(() => import("../component/user-and-permissions/agents/agents-layout"))
 const AgentAvailabilityLayout = lazy(() => import("../component/user-and-permissions/agent-availability/agent-avilability-layout"))
@@ -29,8 +27,6 @@ export default function ConfigurationsPage() {
                         <Route key="templates" path="templates/*" element={<TemplatesContainer />} />
                         <Route key="ticket-status" path="ticket-status/*" element={<TicketStatusContainer />} />
                         <Route key="ticket-tags" path="tags" element={<TicketTagsContainer />} />
-                        <Route key="facebook-login" path="facebook" element={<FacebookConfigurations />} />
-                        <Route key="instagram-login" path="instagram" element={<InstagramConfigurations />} />
                         <Route key="email-config" path="email/*" element={<EmailConfigLayout />} />
 
                         <Route key="ticket-escalation" path="ticket-escalation/*" element={<AllEscalationsContainer />} />

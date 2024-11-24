@@ -2,7 +2,7 @@ import React from "react";
 import { AttachFileOutlined } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 
-export const NativeFileUpload = (props: { onChange: (fileList: File[]) => void }) => {
+export const NativeFileUpload = (props: { onChange: (fileList: File[]) => void, disabled?: boolean }) => {
     const inputRef = React.useRef<HTMLInputElement>(null);
 
     const _onButtonClick = React.useCallback(() => {
@@ -15,11 +15,15 @@ export const NativeFileUpload = (props: { onChange: (fileList: File[]) => void }
         if (props.onChange) {
             props.onChange(args.target.files ? Array.from(args.target.files) : []);
         }
+
+        if (inputRef.current) {
+            inputRef.current.value = "";
+        }
     }
 
     return (
         <>
-            <IconButton onClick={_onButtonClick} title="Upload files(s)">
+            <IconButton onClick={_onButtonClick} title="Upload files(s)" disabled={props.disabled}>
                 <AttachFileOutlined />
             </IconButton>
             <input
