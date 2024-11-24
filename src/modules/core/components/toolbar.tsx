@@ -3,7 +3,7 @@
 import { FlexBox } from "lib/ui-ux";
 import styled from "styled-components";
 import GetGroLogoImg from './../../../assets/svg/favicon.svg?react';
-import { AccountMenu, AgentStatus, Notifications, AgentStatistics } from "./parts";
+import { AccountMenu, AgentStatus } from "./parts";
 
 const TopBarWrapper = styled.div`
     width: 100%;
@@ -23,9 +23,9 @@ export const Toolbar = () => {
                     <GetGroLogoImg />
                 </FlexBox>
                 <FlexBox justifyContent="flex-end" gap="12px" alignItems="center">
-                    <AgentStatistics />
+                    {/* <AgentStatistics /> */}
                     <AgentStatus />
-                    <Notifications />
+                    {/* <Notifications /> */}
                     <AccountMenu />
                 </FlexBox>
             </TopBar>

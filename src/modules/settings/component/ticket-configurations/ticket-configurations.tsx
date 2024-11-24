@@ -3,7 +3,7 @@ import {
     TaskOutlined, Tag, AccountCircle, WorkHistory, LockPerson, SellOutlined,
     GridViewRounded, StoreRounded, ThumbsUpDown, SettingsRounded, SupportAgentRounded,
     Groups2Outlined, EventNoteOutlined, AssignmentTurnedInOutlined, Email, ManageHistory,
-    ConfirmationNumber, AddCommentOutlined, PendingActions
+    ConfirmationNumber, PendingActions
 } from "@mui/icons-material";
 import styled from "styled-components";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -53,13 +53,13 @@ const useConfigurations = () => {
                     hidden: !isFeatureAccessible('manage_tags'),
                     description: t("tags_short_description")
                 },
-                {
-                    route: "templates",
-                    label: t("templates"),
-                    uniqueKey: "templates",
-                    catOptionIcon: () => <AddCommentOutlined />,
-                    description: t("templates_short_description")
-                }
+                // {
+                //     route: "templates",
+                //     label: t("templates"),
+                //     uniqueKey: "templates",
+                //     catOptionIcon: () => <AddCommentOutlined />,
+                //     description: t("templates_short_description")
+                // }
             ]
         },
         {
