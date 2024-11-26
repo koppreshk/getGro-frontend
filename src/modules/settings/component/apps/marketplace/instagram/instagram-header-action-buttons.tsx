@@ -31,11 +31,10 @@ export const InstagramHeaderActionButtons = (props: InstagramHeaderActionButtons
     const isInstalled = useMemo(() => Object.keys(props.data).length > 0, [props.data]);
 
     const handleOnClick = () => {
-        window.open(`https://www.instagram.com/oauth/authorize?enable_fb_login=0&force_authentication=1&client_id=558293376682732&redirect_uri=${import.meta.env.VITE_SUB_DOMAIN}configurations/marketplace/instagram&response_type=code&scope=instagram_business_basic%2Cinstagram_business_manage_messages%2Cinstagram_business_manage_comments%2Cinstagram_business_content_publish`, '_self')
+        window.open(`https://www.instagram.com/oauth/authorize?enable_fb_login=0&force_authentication=1&client_id=${import.meta.env.VITE_INSTAGRAM_CLIENT_ID}&redirect_uri=${import.meta.env.VITE_SUB_DOMAIN}configurations/marketplace/instagram&response_type=code&scope=instagram_business_basic%2Cinstagram_business_manage_messages%2Cinstagram_business_manage_comments`, '_self')
     }
-
     useEffect(() => {
-        if(code){
+        if (code) {
             setOpenDialog(true);
         }
     }, [code])
