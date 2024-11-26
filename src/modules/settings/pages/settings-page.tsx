@@ -16,6 +16,7 @@ const AllEscalationsContainer = lazy(() => import('../containers/ticket-automati
 const TicketStatusContainer = lazy(() => import("../containers/ticket-status/ticket-status-container"));
 const TicketQueuesContainer = lazy(() => import("../containers/ticket-queues/ticket-queues-container"));
 const AuditLogsContainer = lazy(() => import("../containers/audit-logs/audit-logs-container"));
+const WebFormsLayout = lazy(() => import("../component/channel-configurations/web-forms/web-forms-layout"));
 
 export default function ConfigurationsPage() {
     return (
@@ -27,7 +28,9 @@ export default function ConfigurationsPage() {
                         <Route key="templates" path="templates/*" element={<TemplatesContainer />} />
                         <Route key="ticket-status" path="ticket-status/*" element={<TicketStatusContainer />} />
                         <Route key="ticket-tags" path="tags" element={<TicketTagsContainer />} />
+
                         <Route key="email-config" path="email/*" element={<EmailConfigLayout />} />
+                        <Route key="web-forms" path="web-forms/*" element={<WebFormsLayout />} />
 
                         <Route key="ticket-escalation" path="ticket-escalation/*" element={<AllEscalationsContainer />} />
                         <Route key="auto-assignment" path="auto-assignments/*" element={<FetchAllAssignmentsContainer />} />

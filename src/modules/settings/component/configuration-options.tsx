@@ -3,7 +3,7 @@ import {
     TaskOutlined, Tag, AccountCircle, WorkHistory, LockPerson, SellOutlined,
     GridViewRounded, StoreRounded, ThumbsUpDown, SettingsRounded, SupportAgentRounded,
     Groups2Outlined, EventNoteOutlined, AssignmentTurnedInOutlined, Email, ManageHistory,
-    ConfirmationNumber, PendingActions
+    ConfirmationNumber, PendingActions, Feed
 } from "@mui/icons-material";
 import styled from "styled-components";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -73,6 +73,14 @@ const useConfigurations = () => {
                     catOptionIcon: () => <Email />,
                     hidden: !isFeatureAccessible('manage_email'),
                     description: t("email_short_description")
+                },
+                {
+                    label: t("web_forms"),
+                    route: 'web-forms',
+                    uniqueKey: 'web-forms',
+                    catOptionIcon: () => <Feed />,
+                    hidden: false,
+                    description: t("web_forms_short_description")
                 }
             ]
         },
@@ -226,7 +234,7 @@ const OptionWrapper = styled(FlexBox)`
   color: ${({ theme }) => theme.pallete.defaultTextColor};
 `;
 
-const TicketConfigOptions = (props: ICategoryOptions) => {
+const ConfigOption = (props: ICategoryOptions) => {
     const { label, route, description, catOptionIcon } = props;
     const navigate = useNavigate();
     const onLinkClick = () => {
@@ -246,7 +254,7 @@ const TicketConfigOptions = (props: ICategoryOptions) => {
     )
 }
 
-export const TicketsConfiguration = () => {
+export const ConfigurationOptions = () => {
     const [searchParmas] = useSearchParams();
     const searchText = searchParmas.get('searchText');
     const configurations = useConfigurations();
@@ -274,7 +282,7 @@ export const TicketsConfiguration = () => {
                         <GridLayout $padding="10px" $gridGap="14px 12px" $gridTemplateColumns={"repeat(4, 1fr)"}>
                             {data.categoryOptions.map((categoryData) =>
                             (<React.Fragment key={categoryData.uniqueKey}>
-                                {categoryData.hidden ? null : <TicketConfigOptions
+                                {categoryData.hidden ? null : <ConfigOption
                                     uniqueKey={categoryData.uniqueKey}
                                     label={categoryData.label} route={categoryData.route}
                                     description={categoryData.description} catOptionIcon={categoryData.catOptionIcon} />}
