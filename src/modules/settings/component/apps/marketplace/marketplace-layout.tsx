@@ -6,7 +6,7 @@ import { BreadCrumbs, FlexBox } from "lib/ui-ux"
 import ShopifyIcon from '../../../../../assets/svg/shopify-icon.svg?react';
 import ExotelIcon from '../../../../../assets/svg/exotel-icon.svg?react';
 import GupShupIcon from '../../../../../assets/svg/gupshup.svg?react';
-import WhatsAppIcon from '../../../../../assets/svg/whatsapp.svg?react';
+// import WhatsAppIcon from '../../../../../assets/svg/whatsapp.svg?react';
 import { GupShupConfigurationContainer } from "modules/settings/containers/marketplace/gupshup/gupshup-configuration-container";
 import { ExotelConfigurationContainer } from "modules/settings/containers/marketplace/exotel";
 import { ShopifyConfigurationContainer } from "modules/settings/containers/marketplace/shopify";
@@ -14,7 +14,7 @@ import { WhatsappConfigurationContainer } from "modules/settings/containers/mark
 import { InstagramConfigurationContainer } from "modules/settings/containers/marketplace/instagram";
 import { FacebookConfigurationContainer } from "modules/settings/containers/marketplace/facebook";
 
-import { Facebook, Instagram } from "@mui/icons-material";
+import { Instagram } from "@mui/icons-material";
 import { useTheme } from "styled-components";
 
 const MarketPlaceLayout = () => {
@@ -63,24 +63,24 @@ const useThirdPartyApps = () => {
             description: 'Enhance customer engagement with getgro WhatsApp integration via GupShup',
             iconElement: () => <GupShupIcon width="40px" height="40px" />,
         },
-        {
-            name: 'whatsapp',
-            label: 'WhatsApp',
-            description: 'Enhance customer engagement with getgro WhatsApp integration',
-            iconElement: () => <WhatsAppIcon width="40px" height="40px" />,
-        },
+        // {
+        //     name: 'whatsapp',
+        //     label: 'WhatsApp',
+        //     description: 'Enhance customer engagement with getgro WhatsApp integration',
+        //     iconElement: () => <WhatsAppIcon width="40px" height="40px" />,
+        // },
         {
             name: 'instagram',
             label: 'Instagram',
             description: 'Connect with Instagram and enhance customer engagement.',
             iconElement: () => <Instagram sx={{ width: '40px', height: '40px', fill: theme.channelSpecific.instagram + '!important', }} />,
         },
-        {
-            name: 'facebook',
-            label: 'Facebook',
-            description: 'Enhance customer engagement seamlessly with Getgro Facebook Integration.',
-            iconElement: () => <Facebook sx={{ width: '40px', height: '40px', fill: theme.channelSpecific.facebook + '!important', }} />,
-        }
+        // {
+        //     name: 'facebook',
+        //     label: 'Facebook',
+        //     description: 'Enhance customer engagement seamlessly with Getgro Facebook Integration.',
+        //     iconElement: () => <Facebook sx={{ width: '40px', height: '40px', fill: theme.channelSpecific.facebook + '!important', }} />,
+        // }
     ];
 }
 
