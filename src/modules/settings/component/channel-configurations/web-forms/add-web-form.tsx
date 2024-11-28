@@ -24,16 +24,17 @@ export const AddWebForm = () => {
     const { t } = useTranslation();
     const [embedCode, setEmbedCode] = useState("");
 
-    const formUrl = `${import.meta.env.VITE_SUB_DOMAIN}contactusform`;
+    const scriptUrl = `${import.meta.env.VITE_SUB_DOMAIN}webform/embedcode`;
 
     const onGenerateURL = () => {
-        const iframeCode = `<iframe src="${formUrl}" width="600" height="400" frameborder="0" allowfullscreen></iframe>`;
-
-        // Generate a script embed code (this depends on how your form is integrated, could be a form script tag)
-        const scriptCode = `<script src="${formUrl}/embed.js"></script>`;
 
         // Update the state with the generated code
-        setEmbedCode(iframeCode + scriptCode);
+        const embedCode = `
+        <div id="ggfeedbackwidgetframe" data-form-id="5b0afd10-655e-4a84-b76c-bc3927c721b2" data-height="500"></div>
+        <script src=${scriptUrl} type="application/javascript" async defer></script>
+        `;
+
+        setEmbedCode(embedCode);
     }
     console.log(embedCode);
 
@@ -49,7 +50,7 @@ export const AddWebForm = () => {
                     <HorizontalSeparator />
                     <TextboxFieldWithLabel name="submitBtnName" label={t('submit_btn_name')} />
                 </FlexBox>
-                <PreviewForm />
+                <PreviewForm formTitle={form.watch('formTitle')} formDescription={form.watch('formDescription')} />
             </FlexBox>
             <FlexBox gap={'20px'} padding="20px">
                 <Button variant="contained" onClick={onGenerateURL}>{t('add_web_form')}</Button>

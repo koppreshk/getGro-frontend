@@ -1,17 +1,21 @@
 import { Button, Paper, Typography } from "@mui/material"
 import { FlexBox } from "lib/ui-ux"
-import { useFormContext } from "react-hook-form"
-import { WebFormFields } from "./add-web-form";
 import { TextboxFieldWithLabel } from "lib/form-fields";
 
-export const PreviewForm = () => {
-    const { watch } = useFormContext<WebFormFields>();
+interface PreviewFormProps {
+    formTitle: string;
+    formDescription?: string;
+}
+
+export const PreviewForm = (props: PreviewFormProps) => {
+    const { formTitle, formDescription } = props;
+
     return (
         <Paper sx={{ minWidth: '300px', width: '30%', height: '100%', overflow: 'auto' }}>
             <FlexBox padding="20px" width="100%" flexDirection="column">
                 <FlexBox alignItems="center" gap={'10px'} width="100%" flexDirection="column">
-                    <Typography variant="h4">{watch('formTitle')}</Typography>
-                    <Typography variant="body3">{watch('formDescription')}</Typography>
+                    <Typography variant="h4">{formTitle}</Typography>
+                    <Typography variant="body3">{formDescription}</Typography>
                 </FlexBox>
                 <FlexBox flexDirection="column" gap={'10px'} >
                     <TextboxFieldWithLabel name="Name" label={'Name'} rules={{ required: 'Name is required' }} />
