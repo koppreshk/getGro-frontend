@@ -24,7 +24,7 @@ export const AddWebForm = () => {
     const { t } = useTranslation();
     const [embedCode, setEmbedCode] = useState("");
 
-    const scriptUrl = `${import.meta.env.VITE_SUB_DOMAIN}webform/embedcode`;
+    const scriptUrl = `${import.meta.env.VITE_SUB_DOMAIN}embed.js`;
 
     const onGenerateURL = () => {
 
