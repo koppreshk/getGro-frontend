@@ -21,7 +21,7 @@
         iframe.allowTransparency = "false";
         iframe.frameBorder = "0";
         iframe.border = "0";
-        iframe.src = `${import.meta.env.VITE_SUB_DOMAIN}/webform`;
+        iframe.src = `${import.meta.env.VITE_SUB_DOMAIN}/contact-us`;
 
         // Inject the iframe
         container.replaceWith(iframe);

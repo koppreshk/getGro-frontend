@@ -124,8 +124,8 @@ export const CoreLayout = () => {
                     </Suspense>
                 )} />
             <Route
-                key="webform"
-                path="webform/*"
+                key="contact-us"
+                path="contact-us/*"
                 element={(
                     <ExternalPreviewForm />
                 )} />
