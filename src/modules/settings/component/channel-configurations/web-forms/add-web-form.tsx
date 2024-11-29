@@ -19,7 +19,11 @@ export interface WebFormFields {
     textColor: string;
 }
 
-export const AddWebForm = (props: { mode: string }) => {
+interface AddWebFormProps {
+    mode?: string
+}
+
+export const AddWebForm = (props: AddWebFormProps) => {
     const { mode = 'add' } = props;
     const form = useForm<WebFormFields>({
         defaultValues: {
