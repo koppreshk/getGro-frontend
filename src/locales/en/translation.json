@@ -450,5 +450,7 @@
     "form_title": "Form Title",
     "form_description": "Form Description",
     "footer_message": "Footer Message",
-    "confirmation_message": "Confirmation Message"
+    "confirmation_message": "Confirmation Message",
+    "submit_btn_name": "Submit Button Name",
+    "embed_code": "Embed Code"
 }
