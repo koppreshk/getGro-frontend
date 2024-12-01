@@ -73,7 +73,7 @@ export const ChatConversationHeader = (props: ChatConversationHeaderProps) => {
         <FlexBox gap={'10px'} padding="15px 10px" justifyContent="space-between" alignItems="center" width="100%">
             <FlexBox width="80%" gap={'10px'} alignItems="center">
                 <CustomSourceAvatar customer_name={chatDetails?.customer_name ?? ''} chat_source={chatDetails?.chat_source ?? ''} chat_type={chatDetails!.chat_type} />
-                <ChatSubHeading profileNumber={profile_number} viewPostVisible={false} />
+                <ChatSubHeading profileNumber={profile_number} isPostVisible={false} />
             </FlexBox>
             <MoreActions onMenuItemSelect={onMenuItemSelect} menuItems={[{ key: MoreActionsEnum.deleteConversation, label: t('delete_conversation'), icon: <DeleteOutlined /> }]} />
             <MenuRenderer selectedMenu={selectedMenu} showDrawer={showDrawer} toggleDrawerDisplay={toggleDrawerDisplay} />
@@ -81,10 +81,11 @@ export const ChatConversationHeader = (props: ChatConversationHeaderProps) => {
     )
 }
 
-export const ChatSubHeading = (props: { profileNumber: string; viewPostVisible: boolean }) => {
+export const ChatSubHeading = (props: { profileNumber: string; isPostVisible: boolean }) => {
     const chatDetails = useAppSelector((state) => state.chat.chatDetails);
     const { pallete } = useTheme();
-    const { viewPostVisible = false } = props;
+    const { isPostVisible = false } = props;
+    const { t } = useTranslation();
 
     return (
         <FlexBox flexDirection="column">
@@ -93,10 +94,10 @@ export const ChatSubHeading = (props: { profileNumber: string; viewPostVisible: 
                 ? <Typography variant="body3" sx={{ color: pallete.grayNeutral }}>{props.profileNumber}</Typography>
                 : <Typography variant="body3" sx={{ color: pallete.grayNeutral }}> {chatDetails?.chat_type ? getParsedChatType(chatDetails.chat_type) : null}</Typography>
             }
-            {chatDetails?.post_url && viewPostVisible &&
+            {chatDetails?.post_url && isPostVisible &&
                 <Link href={chatDetails.post_url} underline="none" target="_blank" style={{ display: 'flex', alignItems: 'center', gap: '5px', marginTop: '5px' }}>
                     <OpenInNew />
-                    View Post
+                    {t('view_post')}
                 </Link>
             }
         </FlexBox>
