@@ -442,5 +442,22 @@
     "delete_conversation_success": "Conversation deleted successfully",
     "delete_conversation_error": "Failed to delete conversation",
     "delete_conversation_content": "Are you sure you want to delete this conversation?",
-    "view_post": "View Post"
+    "view_post": "View Post",
+    "web_forms": "Web Forms",
+    "add_web_form": "Add Web Form",
+    "web_forms_short_description": "Create and personalize a contact us web form for your website.",
+    "web_forms_long_description": "Create and personalize a contact us web form for your website. When you create a form, you will be given an embeddable script code that can be placed on your website.",
+    "web_form_name": "Web Form Name",
+    "form_title": "Form Title",
+    "form_description": "Form Description",
+    "footer_message": "Footer Message",
+    "confirmation_message": "Confirmation Message",
+    "submit_btn_name": "Submit Button Name",
+    "embed_code": "Embed Code",
+    "submit_btn": "Submit Button",
+    "background_color": "Background color",
+    "text_color": "Text Color",
+    "form_height": "Form Height",
+    "copied_to_clipboard": "Copied to clipboard",
+    "failed_to_copy": "Failed to copy"
 }

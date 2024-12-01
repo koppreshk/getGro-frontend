@@ -8,3 +8,4 @@ export * from './checkbox-field';
 export * from './switch-field';
 export * from './date-time-picker-field';
 export * from './radio-group-field';
+export * from './color-input-field';

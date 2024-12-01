@@ -47,11 +47,12 @@ const AccountDetailsForm = () => {
 const AccountWebhookDetails = () => {
     const { showNotification } = useNotifications();
     const { watch } = useFormContext<IAddWhatsAppFormField>();
-
+    const { t } = useTranslation();
+    
     const onCopy = () => {
         navigator.clipboard.writeText(watch('webhookURL')!)
-            .then(() => showNotification({ message: 'Copied to clipboard', type: 'success' }))
-            .catch(() => showNotification({ message: 'Failed to copy', type: 'error' }));
+            .then(() => showNotification({ message: t('copied_to_clipboard'), type: 'success' }))
+            .catch(() => showNotification({ message: t('failed_to_copy'), type: 'error' }));
     }
 
     return (
