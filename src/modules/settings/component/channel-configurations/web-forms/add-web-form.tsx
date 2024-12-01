@@ -82,7 +82,7 @@ export const AddWebForm = (props: AddWebFormProps) => {
                             </AccordionDetails>
                         </Accordion> : null}
                 </FlexBox>
-                <div style={{ background: '#eaebec', width: '40%', height: 'min-content', padding: '20px' }}>
+                <div style={{ background: '#eaebec', width: '40%', height: 'min-content', padding: '40px', borderRadius: '6px' }}>
                     <Typography variant="h6" sx={{ mb: '15px' }}>{t('preview')}</Typography>
                     <PreviewForm
                         formTitle={form.watch('formTitle')}

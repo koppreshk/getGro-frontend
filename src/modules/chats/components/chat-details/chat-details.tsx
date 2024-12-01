@@ -18,13 +18,12 @@ export const ChatDetails = () => {
                 <FlexBox gap={'10px'} flexDirection="column">
                     <FlexBox gap={'10px'} padding="10px 20px 0" alignItems="center">
                         <CustomSourceAvatar customer_name={chatDetails.customer_name} chat_source={chatDetails.chat_source} chat_type={chatDetails?.chat_type ?? ''} />
-                        <ChatSubHeading profileNumber="" viewPostVisible/>
+                        <ChatSubHeading profileNumber="" isPostVisible />
                     </FlexBox>
                     {isFeatureAccessible('edit_conversation_status') ? <ChatStatusContainer /> : null}
                     {isFeatureAccessible('edit_conversation_assignee') ? <ManageAssigneeContainer /> : null}
                     {isFeatureAccessible('edit_conversation_priority') ? <ManagePriorityContainer /> : null}
                     {isFeatureAccessible('edit_conversation_tags') ? <ManageTagsContainer /> : null}
-                    
                     {chatDetails.linked_tickets.length ? <Links /> : null}
                 </FlexBox>
                 <FlexBox justifyContent="space-between" padding="0 20px">

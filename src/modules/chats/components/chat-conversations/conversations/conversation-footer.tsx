@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Close, Send } from "@mui/icons-material";
 import styled from "styled-components";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Chip, IconButton } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Chip, IconButton, CircularProgress } from "@mui/material";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { useNotifications } from "lib";
 import { useUploadFileToS3 } from "modules/chats/apis/upload-file-s3";
@@ -121,9 +121,10 @@ export const ConversationFooter = (props: IConversationFooterProps) => {
 const UploadedFilePreview = (props: { toggleFileDisplay: () => void, filePreviewDisplay: boolean; fileInfo: IFileInfoState } & Pick<IConversationFooterProps, 'onSendAction'>) => {
     const { filePreviewDisplay, fileInfo, toggleFileDisplay, onSendAction } = props;
     const [textareaValue, setTextAreaValue] = React.useState('');
-    const { mutateAsync: getPresignedURL } = usePresignedURL();
-    const { mutateAsync: uploadFileToS3 } = useUploadFileToS3();
+    const { mutateAsync: getPresignedURL, isLoading } = usePresignedURL();
+    const { mutateAsync: uploadFileToS3, isLoading: fileUploadS3Loading } = useUploadFileToS3();
     const { showNotification } = useNotifications();
+    const isDisabled = isLoading || fileUploadS3Loading;
 
     const uploadFileToServer = useCallback(async () => {
         const res = await getPresignedURL({ content_type: fileInfo.original[0].type });
@@ -214,7 +215,7 @@ const UploadedFilePreview = (props: { toggleFileDisplay: () => void, filePreview
             </DialogContent>
             <DialogActions>
                 <CancelButton onClick={toggleFileDisplay} variant="text" />
-                <RoundedSendButton onClick={uploadFileToServer} endIcon={<Send />} variant="contained">
+                <RoundedSendButton onClick={uploadFileToServer} disabled={isDisabled} endIcon={isDisabled ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : <Send />} variant="contained">
                     Send
                 </RoundedSendButton>
             </DialogActions>
