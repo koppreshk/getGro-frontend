@@ -452,5 +452,11 @@
     "footer_message": "Footer Message",
     "confirmation_message": "Confirmation Message",
     "submit_btn_name": "Submit Button Name",
-    "embed_code": "Embed Code"
+    "embed_code": "Embed Code",
+    "submit_btn": "Submit Button",
+    "background_color": "Background color",
+    "text_color": "Text Color",
+    "form_height": "Form Height",
+    "copied_to_clipboard": "Copied to clipboard",
+    "failed_to_copy": "Failed to copy"
 }

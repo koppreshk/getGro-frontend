@@ -1,4 +1,4 @@
-import { ColorInputField, TextboxFieldWithLabel } from "lib/form-fields";
+import { ColorInputField, TextboxField, TextboxFieldWithLabel } from "lib/form-fields";
 import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
 import { FormProvider, useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next";
@@ -17,6 +17,7 @@ export interface WebFormFields {
     submitBtnName: string;
     backgroundColor: string;
     textColor: string;
+    formHeight: number;
 }
 
 interface AddWebFormProps {
@@ -30,7 +31,8 @@ export const AddWebForm = (props: AddWebFormProps) => {
             formTitle: 'Help & Support',
             backgroundColor: '#6a69f6',
             textColor: '#fff',
-            submitBtnName: 'Submit'
+            submitBtnName: 'Submit',
+            formHeight: 400
         }
     });
     const { t } = useTranslation();
@@ -39,13 +41,13 @@ export const AddWebForm = (props: AddWebFormProps) => {
 
     const navigateBack = () => navigate(-1);
     const embedCode = `
-    <iframe src="${import.meta.env.VITE_SUB_DOMAIN}contact-us" height="600" frameborder="0"></iframe>
+    <iframe src="${import.meta.env.VITE_SUB_DOMAIN}contact-us" height="${form.watch('formHeight')}" frameborder="0"></iframe>
     `;
 
     const onCopy = () => {
         navigator.clipboard.writeText(embedCode.trim())
-            .then(() => showNotification({ message: 'Copied to clipboard', type: 'success' }))
-            .catch(() => showNotification({ message: 'Failed to copy', type: 'error' }));
+            .then(() => showNotification({ message: t('copied_to_clipboard'), type: 'success' }))
+            .catch(() => showNotification({ message: t('failed_to_copy'), type: 'error' }));
     }
 
     return (
@@ -59,11 +61,14 @@ export const AddWebForm = (props: AddWebFormProps) => {
                     <TextboxFieldWithLabel name="confirmationMessage" label={t('confirmation_message')} rows={2} multiline />
                     <HorizontalSeparator />
                     <FlexBox flexDirection="column" gap={'20px'}>
-                        <Typography variant="h5">Submit Button</Typography>
+                        <Typography variant="h5">{t('submit_btn')}</Typography>
                         <TextboxFieldWithLabel name="submitBtnName" label={t('submit_btn_name')} />
                         <FlexBox gap={'20px'}>
-                            <ColorInputField name="backgroundColor" label="Background Color" sx={{ width: 'calc(50% - 20px)' }} />
-                            <ColorInputField name="textColor" label="Text Color" sx={{ width: '50%' }} />
+                            <ColorInputField name="backgroundColor" label={t("background_color")} sx={{ width: 'calc(33% - 20px)' }} />
+                            <ColorInputField name="textColor" label={t('text_color')} sx={{ width: '33%' }} />
+                            <div style={{ width: '33%'}}>
+                                <TextboxField name={'formHeight'} label={t('form_height')} type="number" rules={{ min: 1 }} />
+                            </div>
                         </FlexBox>
                     </FlexBox>
                     {mode === 'edit' ?
@@ -78,6 +83,7 @@ export const AddWebForm = (props: AddWebFormProps) => {
                         </Accordion> : null}
                 </FlexBox>
                 <div style={{ background: '#eaebec', width: '40%', height: 'min-content', padding: '20px' }}>
+                    <Typography variant="h6" sx={{ mb: '15px' }}>{t('preview')}</Typography>
                     <PreviewForm
                         formTitle={form.watch('formTitle')}
                         formDescription={form.watch('formDescription')}

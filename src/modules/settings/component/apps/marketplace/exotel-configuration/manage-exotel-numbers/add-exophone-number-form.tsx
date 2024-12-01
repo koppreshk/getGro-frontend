@@ -50,17 +50,18 @@ function AddExophoneNumberForm(props: {
 const AccountWebhookDetails = () => {
     const { showNotification } = useNotifications();
     const { watch } = useFormContext<IAddExophoneNumberFormFields>();
+    const { t } = useTranslation();
 
     const onCopy = () => {
         navigator.clipboard.writeText(watch('webHookUrl')!)
-            .then(() => showNotification({ message: 'Copied to clipboard', type: 'success' }))
-            .catch(() => showNotification({ message: 'Failed to copy', type: 'error' }));
+            .then(() => showNotification({ message: t('copied_to_clipboard'), type: 'success' }))
+            .catch(() => showNotification({ message: t('failed_to_copy'), type: 'error' }));
     }
 
     return (
         <>
             <FlexBox flexDirection="column" gap="20px" width="75%">
-                <Typography variant="h5">Webhook</Typography>
+                <Typography variant="h5">{t('webhook')}</Typography>
                 <TextboxField
                     label="Webhook URL"
                     name="webHookUrl"
