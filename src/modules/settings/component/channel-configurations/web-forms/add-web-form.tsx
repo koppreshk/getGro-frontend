@@ -12,7 +12,7 @@ import {
   TextboxField,
   TextboxFieldWithLabel,
 } from 'lib/form-fields';
-import { FlexBox, HorizontalSeparator } from 'lib/ui-ux';
+import { FlexBox, HorizontalSeparator, LoadingButton } from 'lib/ui-ux';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -33,10 +33,12 @@ export interface WebFormFields {
 
 interface AddWebFormProps {
   mode?: string;
+  mutationLoading: boolean;
+  onSubmit: (formData: WebFormFields) => Promise<any>;
 }
 
 export const AddWebForm = (props: AddWebFormProps) => {
-  const { mode = 'add' } = props;
+  const { mode = 'add', onSubmit } = props;
   const form = useForm<WebFormFields>({
     defaultValues: {
       formTitle: 'Help & Support',
@@ -176,7 +178,13 @@ export const AddWebForm = (props: AddWebFormProps) => {
         </div>
       </FlexBox>
       <FlexBox gap={'20px'} padding="20px">
-        <Button variant="contained">{t('add_web_form')}</Button>
+        <LoadingButton
+          isLoading={props.mutationLoading}
+          variant="contained"
+          onClick={form.handleSubmit(onSubmit)}
+        >
+          {t('add_web_form')}
+        </LoadingButton>
         <Button variant="outlined" onClick={navigateBack}>
           {t('cancel')}
         </Button>
