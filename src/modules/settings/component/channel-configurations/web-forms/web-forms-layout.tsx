@@ -11,6 +11,8 @@ import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
+import { WebFormsListList } from './web-forms-list';
+
 const WebFormsContent = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -47,7 +49,7 @@ const WebFormsContent = () => {
         </Button>
       </FlexBox>
       <div style={{ height: 'calc(100% - 179px)' }}>
-        <></>
+        <WebFormsListList />
       </div>
     </FlexBox>
   );
