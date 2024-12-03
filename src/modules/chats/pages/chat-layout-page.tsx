@@ -14,9 +14,9 @@ const StyledLayouts = styled(FlexBox)`
 `;
 
 export default function ChatLayoutPage() {
-    const { data, isLoading, error } = useFetchAllConversations();
+    const { data, isLoading, error, isFetching } = useFetchAllConversations();
 
-    if (isLoading) {
+    if (isLoading || isFetching) {
         return <CenteredCircularProgress />;
     }
 

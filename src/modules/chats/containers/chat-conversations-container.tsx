@@ -1,7 +1,8 @@
 import { useMatch } from "react-router-dom";
-import { CenteredCircularProgress } from "lib/ui-ux";
 import { useFetchConversationById } from "../apis";
-import { ChatConversations } from "../components/chat-conversations";
+import { ChatConversationsLayout } from "../components/chat-conversations";
+import { ChatConversationLoader } from "lib/ui-ux/loader-components";
+import { FlexBox } from "lib/ui-ux";
 
 export const ChatConversationsContainer = () => {
     const match = useMatch('/chat/:conversationId');
@@ -10,12 +11,16 @@ export const ChatConversationsContainer = () => {
     const { data, isLoading } = useFetchConversationById(id);
 
     if (isLoading) {
-        return <CenteredCircularProgress />
+        return (
+            <FlexBox width="100%" height="100%" flexDirection="column" padding="10px">
+                <ChatConversationLoader />
+            </FlexBox>
+        )
     }
 
     if (data && id) {
         return (
-            <ChatConversations data={data} conversationId={id} />
+            <ChatConversationsLayout data={data} conversationId={id} />
         )
     }
 

@@ -3,7 +3,6 @@ import { Route, Routes } from "react-router-dom"
 import { Configurations } from "../component"
 import { ProtectedConfigurationsRoute } from "modules/login/protected-route";
 const TicketTagsContainer = lazy(() => import("../containers/ticket-tags/ticket-tags-container"))
-const InstagramConfigurations = lazy(() => import("../component/channel-configurations/instagram-configurations"));
 const EmailConfigLayout = lazy(() => import("../component/channel-configurations/email/email-config-layout"));
 const AgentsLayout = lazy(() => import("../component/user-and-permissions/agents/agents-layout"))
 const AgentAvailabilityLayout = lazy(() => import("../component/user-and-permissions/agent-availability/agent-avilability-layout"))
@@ -17,6 +16,7 @@ const AllEscalationsContainer = lazy(() => import('../containers/ticket-automati
 const TicketStatusContainer = lazy(() => import("../containers/ticket-status/ticket-status-container"));
 const TicketQueuesContainer = lazy(() => import("../containers/ticket-queues/ticket-queues-container"));
 const AuditLogsContainer = lazy(() => import("../containers/audit-logs/audit-logs-container"));
+const WebFormsLayout = lazy(() => import("../component/channel-configurations/web-forms/web-forms-layout"));
 
 export default function ConfigurationsPage() {
     return (
@@ -28,8 +28,9 @@ export default function ConfigurationsPage() {
                         <Route key="templates" path="templates/*" element={<TemplatesContainer />} />
                         <Route key="ticket-status" path="ticket-status/*" element={<TicketStatusContainer />} />
                         <Route key="ticket-tags" path="tags" element={<TicketTagsContainer />} />
-                        <Route key="instagram-login" path="instagram" element={<InstagramConfigurations />} />
+
                         <Route key="email-config" path="email/*" element={<EmailConfigLayout />} />
+                        <Route key="web-forms" path="web-forms/*" element={<WebFormsLayout />} />
 
                         <Route key="ticket-escalation" path="ticket-escalation/*" element={<AllEscalationsContainer />} />
                         <Route key="auto-assignment" path="auto-assignments/*" element={<FetchAllAssignmentsContainer />} />

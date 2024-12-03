@@ -1,10 +1,10 @@
 import AppConfig from "modules/settings/common/app-config"
 import { FlexBox } from "lib/ui-ux";
 import { Typography } from "@mui/material";
-import { useState } from "react";
 import { useTheme } from "styled-components";
 import { Instagram } from "@mui/icons-material";
 import { InstagramHeaderActionButtons } from "./instagram-header-action-buttons";
+import { IInstagramConfigDetails } from "modules/settings/apis/marketplace/instagram";
 
 const OverviewContents = () => {
     return (
@@ -35,10 +35,7 @@ const InstallationContents = () => {
     )
 }
 
-export const InstagramConfigurationLayout = (props: { data: object, updateInstallation: () => void }) => {
-    const [showManageContent, setManageDisplay] = useState(false);
-
-    const toggleManageDisplay = () => setManageDisplay((prev) => !prev);
+export const InstagramConfigurationLayout = (props: { data: IInstagramConfigDetails }) => {
     const { channelSpecific } = useTheme();
 
     return (
@@ -47,10 +44,7 @@ export const InstagramConfigurationLayout = (props: { data: object, updateInstal
                 appDescription="Enhance customer engagement with getgro Instagram integration"
                 appTitle="Instagram"
                 appIcon={() => <Instagram sx={{ width: '60px', height: '60px', fill: channelSpecific.instagram + '!important', }} />}>
-                <InstagramHeaderActionButtons
-                    {...props}
-                    showManageContent={showManageContent}
-                    toggleManageDisplay={toggleManageDisplay} />
+                <InstagramHeaderActionButtons {...props} />
             </AppConfig.Header>
             <AppConfig.Body>
                 <>

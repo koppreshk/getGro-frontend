@@ -5,17 +5,10 @@ import { useServiceClient } from "lib";
 import { ChatEndPoint, ChatQueryKeys } from "./api-enums";
 
 export interface ChatConversationById {
-    id: number
     is_expired: boolean
     profile_name: string
     profile_number: string
     messages: Message[];
-    tags: any[]
-    linked_tickets: any[]
-    status_id: number
-    priority_id: number
-    assigned_to: number
-    queue_id: number
 }
 
 export type MessageType = 'image' | 'text' | 'video' | 'audio' | 'document';
@@ -30,6 +23,7 @@ export interface Message {
     caption: null | string;
     media_url?: string;
     mime_type?: string;
+    filename?: string;
 }
 
 export const useFetchConversationById = (id?: string) => {

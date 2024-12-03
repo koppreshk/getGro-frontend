@@ -1,7 +1,7 @@
 import { ArrowForwardRounded } from "@mui/icons-material";
 import { Box, Button, CircularProgress, FormControlLabel, Grid, Typography } from "@mui/material";
 import { FlexBox } from "lib/ui-ux";
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import { useAuth } from "./hooks/use-auth";
 import { PasswordField, TextboxField } from "lib/form-fields";
@@ -11,7 +11,7 @@ import GetGroLogoImg from '../../assets/svg/main.svg';
 import { CheckboxField } from "lib/form-fields/checkbox-field";
 import { useNotifications } from "lib";
 import { LoginResult, useLoginUser } from "./apis";
-import ReCAPTCHA from 'react-google-recaptcha';
+// import ReCAPTCHA from 'react-google-recaptcha';
 import { ForgotPassword } from "./forgot-password";
 
 interface ILoginFields {
@@ -56,20 +56,20 @@ const LoginForm = () => {
     const { handleSubmit } = useFormContext<ILoginFields>();
     const { showNotification } = useNotifications();
     const { isLoading, mutateAsync } = useLoginUser();
-    const [isVerified, setIsVerified] = useState(false);
-    const [tokenValue, setTokenValue] = useState<string | null>(null);
+    // const [isVerified, setIsVerified] = useState(false);
+    // const [tokenValue, setTokenValue] = useState<string | null>(null);
 
-    const onRecaptchaChange = (value: string | null) => {
-        setTokenValue(value);
-        setIsVerified(!!value); // set to true if reCAPTCHA token is received
-    };
+    // const onRecaptchaChange = (value: string | null) => {
+    //     setTokenValue(value);
+    //     setIsVerified(!!value); // set to true if reCAPTCHA token is received
+    // };
 
     const onSignIn = useCallback((data: ILoginFields) => {
-        if (import.meta.env.MODE === 'production' && !isVerified) {
-            alert("Please complete the reCAPTCHA.");
-            return;
-        }
-        mutateAsync({ email: data.email, password: data.password, recaptcha: tokenValue })
+        // if (import.meta.env.MODE === 'production' && !isVerified) {
+        //     alert("Please complete the reCAPTCHA.");
+        //     return;
+        // }
+        mutateAsync({ email: data.email, password: data.password, recaptcha: '' })
             .then((res: LoginResult) => {
                 login({
                     authToken: res.authToken, email: data.email,
@@ -80,8 +80,7 @@ const LoginForm = () => {
                 console.error(err);
                 showNotification({ message: 'Failed to login, please check email or password', type: 'error' })
             })
-    }, [isVerified, login, mutateAsync, showNotification, tokenValue]);
-    console.log('sitkey: ',import.meta.env.VITE_GOOGLE_SITE_KEY);
+    }, [login, mutateAsync, showNotification]);
 
     return (
         <Box sx={{ width: '100%', padding: '50px', boxSizing: 'border-box' }}>
@@ -100,14 +99,14 @@ const LoginForm = () => {
                     <Grid item md={12}>
                         <PasswordField name="password" label="Password" type="password" fullWidth rules={{ required: 'Password is required' }} />
                     </Grid>
-                    <Grid item md={12}>
+                    {/* <Grid item md={12}>
                         <div className="recaptcha-container">
                             <ReCAPTCHA
                                 sitekey={import.meta.env.VITE_GOOGLE_SITE_KEY}
                                 onChange={onRecaptchaChange}
                             />
                         </div>
-                    </Grid>
+                    </Grid> */}
                     <Grid item md={12}>
                         <Button onClick={handleSubmit(onSignIn)} variant="contained" fullWidth size="large" type="submit" disabled={isLoading} endIcon={isLoading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : <ArrowForwardRounded />}>Sign in</Button>
                     </Grid>

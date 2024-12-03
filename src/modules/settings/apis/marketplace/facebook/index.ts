@@ -4,3 +4,4 @@ export * from './delete-facebook-configuration';
 export * from './fetch-configured-pages';
 export * from './fetch-associated-pages';
 export * from './add-facebook-page';
+export * from './edit-facebook-page';

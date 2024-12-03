@@ -9,10 +9,18 @@ export interface AllChatConversations {
     total_pages: number
 }
 
+export enum ChatType {
+    WhatsappMessage = 'whatsapp_message',
+    InstagramComment = 'instagram_comment',
+    InstagramMessage = 'instagram_message',
+    FacebookPageComment = 'fb_page_comment',
+    FacebookPageMessage = 'fb_page_message'
+}
 export interface ChatConversation {
-    assigned_to: number
+    assigned_queue: number | null;
+    assigned_agent: number | null;
     chat_source: string;
-    chat_type: string;
+    chat_type: ChatType;
     created_at: string
     customer_name: string
     id: number
@@ -23,6 +31,7 @@ export interface ChatConversation {
     queue_id: number
     status_id: number
     tags: number[]
+    post_url: string | null
 }
 
 export interface LastMessage {

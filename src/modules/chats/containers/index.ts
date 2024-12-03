@@ -5,3 +5,4 @@ export * from './chat-status-container';
 export * from './manage-priority-container';
 export * from './manage-assignee-container';
 export * from './manage-tags-container';
+export * from './chat-history-container';

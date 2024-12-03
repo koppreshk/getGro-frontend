@@ -22,7 +22,6 @@ export * from './email-apis/fetch-email-conversations'
 export * from './telephonic-apis/fetch-calls-by-ticket-id';
 
 export * from './get-data-by-key';
-export * from './get-ticket-conversations';
 export * from './create-manual-ticket';
 export * from './fetch-priorities';
 export * from './merge-tickets/search-ticket';

@@ -10,6 +10,17 @@ export enum TicketPermissionKeys {
     MERGE_TICKET = "merge_ticket",
 }
 
+export enum ChatPermissionKeys {
+    CREATE_LINK_CONVERSATION_TICKET = "create_link_conversation_ticket",
+    LINK_CONVERSATION_TICKET = 'link_conversation_ticket',
+    UNLINK_CONVERSATION_TICKET = 'unlink_conversation_ticket',
+    REPLY_CONVERSATION = "reply_conversation",
+    EDIT_CONVERSATION_PRIORITY = "edit_conversation_priority",
+    EDIT_CONVERSATION_ASSIGNEE = "edit_conversation_assignee",
+    EDIT_CONVERSATION_STATUS = "edit_conversation_status",
+    EDIT_CONVERSATION_TAGS = "edit_conversation_tags",
+}
+
 export enum ConfigurationPermissionKeys {
     MANAGE_TICKET_STATUS = "manage_ticket_status",
     MANAGE_TAGS = "manage_tags",
@@ -39,12 +50,13 @@ export enum KnowledgeBasePermissionKeys {
 /**
  * value 'all' will only come for account owner role, and has all permissions
  */
-export type AllPermissionKeys = `${TicketPermissionKeys}` | `${ConfigurationPermissionKeys}` | `${DashboardPermissionKeys}` | `${KnowledgeBasePermissionKeys}` | 'all'
+export type AllPermissionKeys = `${TicketPermissionKeys}` | `${ChatPermissionKeys}` | `${ConfigurationPermissionKeys}` | `${DashboardPermissionKeys}` | `${KnowledgeBasePermissionKeys}` | 'all'
 
 export enum ModuleKeys {
     TICKETS = 'tickets',
     CONFIGURATIONS = 'configurations',
     DASHBOARDS = 'dashboards',
+    CHAT = 'chat',
     KNOWLEDGE_BASE = 'knowledge_base'
 }
 

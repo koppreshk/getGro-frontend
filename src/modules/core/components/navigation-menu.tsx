@@ -2,8 +2,8 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { FlexBox } from "lib/ui-ux";
-import { Popover, Tooltip, Typography } from "@mui/material";
-import { EventOutlined, GroupOutlined, InsertChartOutlined, SettingsOutlined, TaskOutlined, Article, Chat } from "@mui/icons-material";
+import { Tooltip } from "@mui/material";
+import { GroupOutlined, InsertChartOutlined, SettingsOutlined, TaskOutlined, Article, Chat } from "@mui/icons-material";
 import { useModule } from "lib/hooks";
 import { ExotelCallControls } from "./exotel-call-controls";
 import { useTranslation } from "react-i18next";
@@ -69,6 +69,7 @@ const usePrimaryOptions = () => {
         primaryKey: 'chat',
         route: 'chat',
         title: t('chat'),
+        hidden: !isModuleAccessible('chat')
     },
     {
         iconComponent: () => <Article />,
@@ -161,22 +162,22 @@ const PrimaryOption = React.memo((props: IPrimaryOptionProps) => {
 })
 
 const SecondaryOption = React.memo(() => {
-    const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | null>(null);
+    // const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | null>(null);
 
-    const handleClick: React.MouseEventHandler<HTMLDivElement> = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
+    // const handleClick: React.MouseEventHandler<HTMLDivElement> = (event) => {
+    //     setAnchorEl(event.currentTarget);
+    // };
 
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    // const handleClose = () => {
+    //     setAnchorEl(null);
+    // };
 
-    const open = Boolean(anchorEl);
+    // const open = Boolean(anchorEl);
 
     return (
         <>
             <ExotelCallControls />
-            <SecondaryIconWrapper onClick={handleClick} alignItems="center" justifyContent="center">
+            {/* <SecondaryIconWrapper onClick={handleClick} alignItems="center" justifyContent="center">
                 <Tooltip title="Reminders" arrow placement="right">
                     <EventOutlined />
                 </Tooltip>
@@ -195,15 +196,15 @@ const SecondaryOption = React.memo(() => {
                 }}
             >
                 <ReminderContent />
-            </Popover>
+            </Popover> */}
         </>
     )
 });
 
-const ReminderContent = () => {
-    return (
-        <FlexBox height="500px" width="300px">
-            <Typography variant="h5">Reminder content</Typography>
-        </FlexBox>
-    )
-}
+// const ReminderContent = () => {
+//     return (
+//         <FlexBox height="500px" width="300px">
+//             <Typography variant="h5">Reminder content</Typography>
+//         </FlexBox>
+//     )
+// }

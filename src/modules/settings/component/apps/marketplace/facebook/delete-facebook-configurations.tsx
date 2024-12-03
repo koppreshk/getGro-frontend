@@ -19,19 +19,19 @@ export const DeleteFacebookConfigurations = () => {
     const onDeleleHandler = React.useCallback((ev: React.MouseEvent<HTMLButtonElement>) => {
         ev.stopPropagation();
         mutateAsync()
-            .then(() => showNotification({ message: 'Facebook configuration uninstalled successfully', type: 'success' }))
-            .catch(() => showNotification({ message: 'Failed to uninstall facebook Configuration', type: 'error' }))
+            .then(() => showNotification({ message: 'Facebook configuration removeed successfully', type: 'success' }))
+            .catch(() => showNotification({ message: 'Failed to remove facebook Configuration', type: 'error' }))
             .finally(() => toggleDeleteDialogBox())
     }, [mutateAsync, showNotification])
 
     return (
         <>
-            <Button variant="outlined" size="medium" onClick={toggleDeleteDialogBox} startIcon={<DeleteForever />}>{t('uninstall')}</Button>
+            <Button variant="outlined" size="medium" onClick={toggleDeleteDialogBox} startIcon={<DeleteForever />}>{t('remove')}</Button>
             <NegativeActionDialog
                 open={open}
                 isLoading={isLoading}
-                content='Do you want to uninstall this facebook configuration?'
-                title='Uninstall Facebook Configuration'
+                content='Do you want to remove this facebook configuration?'
+                title='Remove Facebook Configuration'
                 negativeActionLabel={t("yes_delete")}
                 onNegativeActionClick={onDeleleHandler}
                 onClose={toggleDeleteDialogBox} />

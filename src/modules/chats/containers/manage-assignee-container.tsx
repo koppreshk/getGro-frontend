@@ -20,7 +20,7 @@ export const ManageAssigneeContainer = () => {
 
     return (
         <>
-            <ManageAssignee data={data!} assignedTo={chatDetails?.assigned_to} onChangeAssignee={onChangeAssignee} />
+            <ManageAssignee data={data!} assignedAgent={chatDetails?.assigned_agent} assignedQueue={chatDetails?.assigned_queue} onChangeAssignee={onChangeAssignee} />
         </>
     )
 }

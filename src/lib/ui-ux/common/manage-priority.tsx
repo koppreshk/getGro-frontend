@@ -7,7 +7,7 @@ import styled, { css } from "styled-components"
 import { Trans } from "react-i18next"
 
 interface IManagePriorityProps {
-    priority: string;
+    priorityId: string;
     allPriorities: IPriorities[];
     onChangePriority: (newPriority: number) => Promise<void>;
 }
@@ -33,6 +33,10 @@ const PriorityIcon = styled.span<{ $priority: string }>`
                 return css`
                     background-color: #0D60B7;
                 `;
+            case 'medium':
+                return css`
+                    background-color: #0D60B7;
+                `;
             case 'high':
                 return css`
                     background-color: #EF6C00;
@@ -49,9 +53,9 @@ const PriorityIcon = styled.span<{ $priority: string }>`
 `;
 
 export const ManagePriority = (props: IManagePriorityProps) => {
-    const { priority, allPriorities, onChangePriority } = props;
+    const { priorityId, allPriorities, onChangePriority } = props;
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const [selectedIndex, setSelectedIndex] = useState(allPriorities.findIndex((item) => item.name.toLocaleLowerCase() === priority.toLocaleLowerCase()) || 0);
+    const [selectedIndex, setSelectedIndex] = useState(allPriorities.findIndex((item) => item.id.toString() === priorityId) || 0);
 
     const open = Boolean(anchorEl);
 
@@ -68,7 +72,7 @@ export const ManagePriority = (props: IManagePriorityProps) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
-    const priorityValue = allPriorities.find((item) => item.id.toString() === priority)?.name;
+    const priorityValue = allPriorities.find((item) => item.id.toString() === priorityId)?.name;
 
     return (
         <div>

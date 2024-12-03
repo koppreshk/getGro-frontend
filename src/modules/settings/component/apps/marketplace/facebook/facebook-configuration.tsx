@@ -72,7 +72,7 @@ export const FacebookConfiguration = (props: { updateInstallation: () => void; m
             config_id: '1074101920418362',
             response_type: 'code',
             override_default_response_type: true,
-            redirect_uri: 'https://intent.getgro.io/configurations/marketplace/facebook'
+            redirect_uri: `${import.meta.env.VITE_SUB_DOMAIN}configurations/marketplace/facebook`
         });
     };
 

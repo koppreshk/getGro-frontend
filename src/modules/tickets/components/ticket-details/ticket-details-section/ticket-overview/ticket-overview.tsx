@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { DeleteOutlined, MergeOutlined, ReportOutlined } from "@mui/icons-material";
 import { Chip, Tooltip, Typography } from "@mui/material";
-import { FlexBox, HorizontalSeparator } from "lib/ui-ux";
+import { FlexBox, HorizontalSeparator, MoreActions } from "lib/ui-ux";
 import { Platform } from "../../ticket-conversation/ticket-conversation-header";
 import { ManageAssigneeContainer, ManagePriorityContainer, TicketStatusContainer, ManageTagsContainer } from "modules/tickets/containers";
 import { useAppSelector, useFeature } from "lib/hooks";
 import { ITicketDetails } from "modules/tickets/apis";
 import { ContactInfo, TypographyName } from "./contact-info";
 import { useDateDifference } from "lib/utils";
-import { MoreActions } from "./more-actions";
 import { MergeTicket } from "./more-actions/merge-ticket/merge-ticket";
 import { DeleteTicket } from "./more-actions/delete-ticket/delete-ticket";
 import { SpamTicket } from "./more-actions/spam-ticket/spam-ticket";
@@ -51,8 +50,8 @@ const useMenuItems = () => {
     const isFeatureAccessible = useFeature<undefined>();
     return [
         { key: MoreActionsEnum.mergeTicket as string, label: 'Merge Ticket', icon: <MergeOutlined />, hidden: !isFeatureAccessible('merge_ticket') },
-        { key: MoreActionsEnum.deleteTicket as string, label: 'Delete Ticket', icon: <DeleteOutlined /> },
-        { key: MoreActionsEnum.spamTicket as string, label: 'Mark as Spam', icon: <ReportOutlined /> },
+        { key: MoreActionsEnum.deleteTicket as string, label: 'Delete Ticket', icon: <DeleteOutlined />, hidden: true },
+        { key: MoreActionsEnum.spamTicket as string, label: 'Mark as Spam', icon: <ReportOutlined />, hidden: true },
     ];
 
 }

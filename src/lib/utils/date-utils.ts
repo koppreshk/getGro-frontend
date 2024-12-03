@@ -43,9 +43,11 @@ export const getTime = (date: string, format = 'yyyy-LL-dd hh:mm a') => {
     return DateTime.fromISO(isoDate!).toFormat('hh:mm a');
 }
 
-export function getTimeAgo(dateStr: string): string {
+export function getTimeAgo(dateStr: string, format = 'yyyy-LL-dd hh:mm a'): string {
     const now = DateTime.now();
-    const inputDate = DateTime.fromISO(dateStr);
+    const isValidInThisFormat = DateTime.fromFormat(dateStr, format).isValid
+    const isoDate = DateTime.fromFormat(dateStr, format).toISO();
+    const inputDate = DateTime.fromISO(isValidInThisFormat ? isoDate! : dateStr);
     const diff = now.diff(inputDate, ["days", "hours", "minutes", "seconds"]);
 
     if (diff.days >= 1) {

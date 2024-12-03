@@ -12,7 +12,9 @@ export enum ChatEndPoint {
     UPDATE_CHAT_ASSIGNEE = 'chat/update_assignee',
     UPDATE_CHAT_TAGS = 'chat/update_tags',
     LINK_TICKET = 'chat/link_to_ticket',
-    UNLINK_TICKET = 'chat/unlink_ticket'
+    UNLINK_TICKET = 'chat/unlink_ticket',
+    FETCH_CHAT_HISTORY = 'chat/history',
+    DELETE_CONVERSATION = 'chat/delete'
 }
 
 export enum ChatQueryKeys {
@@ -30,5 +32,7 @@ export enum ChatQueryKeys {
     UPDATE_CHAT_ASSIGNEE = 'UPDATE_CHAT_ASSIGNEE',
     UPDATE_CHAT_TAGS = 'UPDATE_CHAT_TAGS',
     LINK_TICKET = 'LINK_TICKET',
-    UNLINK_TICKET = 'UNLINK_TICKET'
+    UNLINK_TICKET = 'UNLINK_TICKET',
+    FETCH_CHAT_HISTORY = 'FETCH_CHAT_HISTORY',
+    DELETE_CONVERSATION = 'DELETE_CONVERSATION'
 }
