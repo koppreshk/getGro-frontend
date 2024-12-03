@@ -6,14 +6,24 @@ import {
   FlexBox,
   MoreInformation,
 } from 'lib/ui-ux';
-import { AddWebFormConfigContainer } from 'modules/settings/containers/channel-configurations';
+import {
+  IWebForms,
+  useFetchAllWebForms,
+} from 'modules/settings/apis/channel-configurations/webforms';
+import {
+  AddWebFormConfigContainer,
+  EditWebFormConfigContainer,
+} from 'modules/settings/containers/channel-configurations';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import { WebFormsListList } from './web-forms-list';
 
-const WebFormsContent = () => {
+const WebFormsContent = (props: {
+  data: IWebForms[] | undefined;
+  isLoading: boolean;
+}) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -49,23 +59,34 @@ const WebFormsContent = () => {
         </Button>
       </FlexBox>
       <div style={{ height: 'calc(100% - 179px)' }}>
-        <WebFormsListList />
+        <WebFormsListList {...props} />
       </div>
     </FlexBox>
   );
 };
 
 export default function WebFormsLayout() {
+  const { isLoading, data } = useFetchAllWebForms();
+
   return (
     <FlexBox width="100%" height="100%" flexDirection="column">
       <BreadCrumbs />
       <div style={{ height: 'calc(100% - 46px)' }}>
         <Routes>
-          <Route key="base-route" path="/" element={<WebFormsContent />} />
+          <Route
+            key="base-route"
+            path="/"
+            element={<WebFormsContent data={data} isLoading={isLoading} />}
+          />
           <Route
             key="add-route"
             path="/add-web-form"
             element={<AddWebFormConfigContainer />}
+          />
+          <Route
+            key="edit-route"
+            path="/edit-web-form/:formId"
+            element={<EditWebFormConfigContainer allWebforms={data! || []} />}
           />
         </Routes>
       </div>

@@ -15,7 +15,7 @@ import {
 import { FlexBox, HorizontalSeparator, LoadingButton } from 'lib/ui-ux';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { PreviewForm } from './preview-form';
 
@@ -34,13 +34,16 @@ export interface WebFormFields {
 interface AddWebFormProps {
   mode?: string;
   mutationLoading: boolean;
+  defaultValues?: WebFormFields;
   onSubmit: (formData: WebFormFields) => Promise<any>;
 }
 
 export const AddWebForm = (props: AddWebFormProps) => {
-  const { mode = 'add', onSubmit } = props;
+  const { mode = 'add', onSubmit, defaultValues } = props;
+  const { formId } = useParams();
+
   const form = useForm<WebFormFields>({
-    defaultValues: {
+    defaultValues: defaultValues ?? {
       formTitle: 'Help & Support',
       backgroundColor: '#6a69f6',
       textColor: '#fff',
@@ -54,7 +57,7 @@ export const AddWebForm = (props: AddWebFormProps) => {
 
   const navigateBack = () => navigate(-1);
   const embedCode = `
-    <iframe src="${import.meta.env.VITE_SUB_DOMAIN}contact-us" height="${form.watch('formHeight')}" frameborder="0"></iframe>
+    <iframe src="${import.meta.env.VITE_SUB_DOMAIN}contact-us/${formId}" height="${form.watch('formHeight')}" frameborder="0"></iframe>
     `;
 
   const onCopy = () => {

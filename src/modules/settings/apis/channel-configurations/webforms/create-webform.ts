@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 
 import {
   ConfigurationsWebFormsEndPoint,
@@ -21,8 +21,9 @@ export interface ContactFormArgs {
 
 export const useCreateWebForm = () => {
   const { postData } = useServiceClient();
+  const queryClient = useQueryClient();
 
-  const setupEmail = React.useCallback(
+  const createWebForm = React.useCallback(
     (args: ContactFormArgs) =>
       postData(`${ConfigurationsWebFormsEndPoint.CREATE_WEBFORM}`, args).then(
         (res) => res.json()
@@ -32,6 +33,11 @@ export const useCreateWebForm = () => {
 
   return useMutation({
     mutationKey: ConfigurationsWebFormsQueryKey.CREATE_WEBFORM,
-    mutationFn: setupEmail,
+    mutationFn: createWebForm,
+    onSuccess: () => {
+      queryClient.invalidateQueries(
+        ConfigurationsWebFormsQueryKey.FETCH_ALL_WEBFORMS
+      );
+    },
   });
 };

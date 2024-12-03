@@ -1,15 +1,15 @@
+import { Edit } from '@mui/icons-material';
 import { createColumnHelper } from '@tanstack/react-table';
-import { FlexBox } from 'lib/ui-ux';
+import { CustomIconButton, FlexBox } from 'lib/ui-ux';
 import { ConfigDataGrid } from 'lib/ui-ux/configuration-data-grid';
-import {
-  IWebForms,
-  useFetchAllWebForms,
-} from 'modules/settings/apis/channel-configurations/webforms';
+import { IWebForms } from 'modules/settings/apis/channel-configurations/webforms';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 const useColumns = () => {
   const columnHelper = createColumnHelper<IWebForms>();
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const columns = [
     columnHelper.accessor('web_form_name', {
@@ -26,10 +26,14 @@ const useColumns = () => {
     columnHelper.display({
       id: 'actions',
       header: () => t('actions'),
-      cell: () => {
+      cell: ({ row: { original } }) => {
         return (
           <FlexBox flexDirection="row" gap="5px">
-            {/* <EditStatus statusData={statusData} selectedData={original} /> */}
+            <CustomIconButton
+              iconComponent={<Edit />}
+              tooltipProps={{ title: 'Edit Webform', arrow: true }}
+              onClick={() => navigate(`edit-web-form/${original.form_id}`)}
+            />
           </FlexBox>
         );
       },
@@ -39,17 +43,19 @@ const useColumns = () => {
   return columns;
 };
 
-export const WebFormsListList = () => {
-  const { isLoading, data } = useFetchAllWebForms();
+export const WebFormsListList = (props: {
+  data: IWebForms[] | undefined;
+  isLoading: boolean;
+}) => {
   const columns = useColumns();
 
   return (
     <>
       <ConfigDataGrid
         columns={columns}
-        data={data!}
+        data={props.data!}
         hideTableControls
-        isLoading={isLoading}
+        isLoading={props.isLoading}
       />
     </>
   );

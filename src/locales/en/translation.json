@@ -460,5 +460,9 @@
     "form_height": "Form Height",
     "copied_to_clipboard": "Copied to clipboard",
     "failed_to_copy": "Failed to copy",
-    "preview": "Preview"
+    "preview": "Preview",
+    "edit_webform_config_success": "Edited webform config succussfully",
+    "edit_webform_config_failure": "Failed to edit webform config",
+    "add_webform_config_success": "Webform config wad added succussfully",
+    "add_webform_config_failure": "Failed to add webform config"
 }
