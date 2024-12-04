@@ -25,7 +25,7 @@ const LanguageSelector = () => {
   const menuOptions = [
     { key: 'en', label: 'English' },
     { key: 'fr', label: 'French' },
-    { key: 'zh_CN', label: 'Simp Chinease' },
+    { key: 'zh-CN', label: 'Simp Chinease' },
   ];
   return (
     <div>
