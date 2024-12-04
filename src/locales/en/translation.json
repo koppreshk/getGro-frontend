@@ -490,5 +490,22 @@
     "fcr": "FCR(First Contact Resolution)",
     "csat": "Customer Satisfaction (CSAT)",
     "survey_response": "Survey Response",
-    "total_login_hours": "Total Login Hours"
+    "total_login_hours": "Total Login Hours",
+    "sla_applied_tickets": "SLA Applied Tickets",
+    "unique_tickets": "Unique Tickets",
+    "sla_breached": "SLA Breached",
+    "tickets_count": "Tickets",
+    "sla_breaches": "SLA Breaches",
+    "response_breaches": "Response Breaches",
+    "resolution_breaches": "Resolution Breaches",
+    "times_count": "Times",
+    "breached": "Breached",
+    "response": "Response",
+    "sla_achieved_tickets": "SLA Achieved Tickets",
+    "sla_breached_tickets": "SLA Breached Tickets",
+    "total_sla_tickets": "Total SLA Tickets",
+    "ticket_count": "Ticket Count",
+    "sla_achieved_vs_breached_tickets": "SLA Achieved vs Breached Tickets",
+    "group_by": "Group By",
+    "sla_metrics": "SLA Metrics"
 }
