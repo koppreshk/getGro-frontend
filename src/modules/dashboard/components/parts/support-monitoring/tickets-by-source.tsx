@@ -3,6 +3,7 @@ import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 import { FlexBox, MoreInformation } from 'lib/ui-ux';
 import { styled } from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 const ChartContainer = styled(FlexBox)`
     background: ${({ theme }) => theme.pallete.white};
@@ -41,10 +42,11 @@ export const TicketsBySource = (props: { channelsInfo: { [key: string]: number }
     const { channelsInfo } = props;
     const chartMetadata = getChartMetadata(channelsInfo);
     const dataDoesNotExists = Object.values(channelsInfo).every((item) => item === 0);
+    const {t} = useTranslation();
     return (
         <>
             <ChartContainer flexDirection="column" justifyContent='space-between' width='30%'>
-                <Typography variant='h5'>Channel Contribution</Typography>
+                <Typography variant='h5'>{t('channel_contribution')}</Typography>
                 <FlexBox alignItems='center' justifyContent='center' height='100%'>
                     {dataDoesNotExists
                         ? <MoreInformation information='No results found' />

@@ -1,79 +1,88 @@
-import { Typography } from "@mui/material";
-import { ApexOptions } from "apexcharts";
-import ReactApexChart from "react-apexcharts";
-import { StyledContainer } from "./customer-satifaction";
-import { FlexBox, MoreInformation } from "lib/ui-ux";
+import { Typography } from '@mui/material';
+import { ApexOptions } from 'apexcharts';
+import { FlexBox, MoreInformation } from 'lib/ui-ux';
+import ReactApexChart from 'react-apexcharts';
+import { useTranslation } from 'react-i18next';
+
+import { StyledContainer } from './customer-satifaction';
 
 export const TotalLoginHours = (props: {
-    userStats: {
-        [key: string]: string
-    }
+  userStats: {
+    [key: string]: string;
+  };
 }) => {
-    const { userStats } = props;
-    const dataDoesNotExists = Object.keys(userStats).length === 0;
+  const { userStats } = props;
+  const dataDoesNotExists = Object.keys(userStats).length === 0;
+  const { t } = useTranslation();
 
-    const data = {
-        series: Object.values(userStats).map((item) => Number(item.split(' ')[0])),
-        options: {
-            chart: {
-                fontFamily: 'Poppins',
-                type: 'donut',
-            },
-            legend: {
-                fontSize: "14px",
+  const data = {
+    series: Object.values(userStats).map((item) => Number(item.split(' ')[0])),
+    options: {
+      chart: {
+        fontFamily: 'Poppins',
+        type: 'donut',
+      },
+      legend: {
+        fontSize: '14px',
+        fontWeight: 500,
+      },
+      labels: Object.keys(userStats),
+      plotOptions: {
+        pie: {
+          customScale: 1.1,
+          donut: {
+            labels: {
+              show: true,
+              name: {
+                show: true,
                 fontWeight: 500,
+                fontSize: '12px',
+              },
+              value: {
+                show: true,
+                fontWeight: 500,
+                fontSize: '12px',
+              },
+              total: {
+                show: true,
+                formatter(w) {
+                  const total = w.globals.series.reduce(
+                    (acc: number, curr: number) => (acc += curr)
+                  );
+                  const hours = Math.floor(total); // Get the whole number of hours
+                  const minutes = Math.round((total - hours) * 60);
+                  return `${hours} hr ${minutes} min`;
+                },
+              },
             },
-            labels: Object.keys(userStats),
-            plotOptions: {
-                pie: {
-                    customScale: 1.1,
-                    donut: {
-                        labels: {
-                            show: true,
-                            name: {
-                                show: true,
-                                fontWeight: 500,
-                                fontSize: '12px'
-                            },
-                            value: {
-                                show: true,
-                                fontWeight: 500,
-                                fontSize: '12px'
-                            },
-                            total: {
-                                show: true,
-                                formatter(w) {
-                                    const total = w.globals.series.reduce((acc: number, curr: number) => acc += curr);
-                                    const hours = Math.floor(total);  // Get the whole number of hours
-                                    const minutes = Math.round((total - hours) * 60);
-                                    return `${hours} hr ${minutes} min`
-                                },
-                            }
-                        }
-                    }
-                }
+          },
+        },
+      },
+      tooltip: {
+        y: {
+          formatter: function (val) {
+            return val < 1 ? `${val * 60} min` : `${val} hr`;
+          },
+        },
+      },
+      // colors: ['#17e254', '#ffef0e', '#c9c2c2']
+    } as ApexOptions,
+  };
 
-            },
-            tooltip: {
-                y: {
-                    formatter: function (val) {
-                        return val < 1 ? `${val * 60} min` : `${val} hr`
-                    }
-                }
-            },
-            // colors: ['#17e254', '#ffef0e', '#c9c2c2']
-        } as ApexOptions
-    };
-
-    return (
-        <StyledContainer gap="20px" flexDirection="column">
-            <Typography variant="h5">Total Login Hours</Typography>
-            <FlexBox alignItems='center' justifyContent='center' height='100%'>
-                {dataDoesNotExists
-                    ? <MoreInformation information='No results found' />
-                    : <ReactApexChart options={data.options} series={data.series} type="donut" />
-                }
-            </FlexBox>
-        </StyledContainer>
-    )
-}
+  return (
+    <StyledContainer gap="20px" flexDirection="column">
+      <Typography variant="h5">{t('total_login_hours')}</Typography>
+      <FlexBox alignItems="center" justifyContent="center" height="100%">
+        {dataDoesNotExists ? (
+          <MoreInformation information="No results found" />
+        ) : (
+          <ReactApexChart
+            options={data.options}
+            series={data.series}
+            type="donut"
+          />
+        )}
+      </FlexBox>
+    </StyledContainer>
+  );
+};
