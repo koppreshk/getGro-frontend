@@ -12,10 +12,10 @@ import {
   TextboxField,
   TextboxFieldWithLabel,
 } from 'lib/form-fields';
-import { FlexBox, HorizontalSeparator } from 'lib/ui-ux';
+import { FlexBox, HorizontalSeparator, LoadingButton } from 'lib/ui-ux';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { PreviewForm } from './preview-form';
 
@@ -33,12 +33,17 @@ export interface WebFormFields {
 
 interface AddWebFormProps {
   mode?: string;
+  mutationLoading: boolean;
+  defaultValues?: WebFormFields;
+  onSubmit: (formData: WebFormFields) => Promise<any>;
 }
 
 export const AddWebForm = (props: AddWebFormProps) => {
-  const { mode = 'add' } = props;
+  const { mode = 'add', onSubmit, defaultValues } = props;
+  const { formId } = useParams();
+
   const form = useForm<WebFormFields>({
-    defaultValues: {
+    defaultValues: defaultValues ?? {
       formTitle: 'Help & Support',
       backgroundColor: '#6a69f6',
       textColor: '#fff',
@@ -52,7 +57,7 @@ export const AddWebForm = (props: AddWebFormProps) => {
 
   const navigateBack = () => navigate(-1);
   const embedCode = `
-    <iframe src="${import.meta.env.VITE_SUB_DOMAIN}contact-us" height="${form.watch('formHeight')}" frameborder="0"></iframe>
+    <iframe src="${import.meta.env.VITE_SUB_DOMAIN}contact-us/${formId}" height="${form.watch('formHeight')}" frameborder="0"></iframe>
     `;
 
   const onCopy = () => {
@@ -176,7 +181,13 @@ export const AddWebForm = (props: AddWebFormProps) => {
         </div>
       </FlexBox>
       <FlexBox gap={'20px'} padding="20px">
-        <Button variant="contained">{t('add_web_form')}</Button>
+        <LoadingButton
+          isLoading={props.mutationLoading}
+          variant="contained"
+          onClick={form.handleSubmit(onSubmit)}
+        >
+          {t('add_web_form')}
+        </LoadingButton>
         <Button variant="outlined" onClick={navigateBack}>
           {t('cancel')}
         </Button>

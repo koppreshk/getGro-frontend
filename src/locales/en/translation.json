@@ -507,5 +507,13 @@
     "ticket_count": "Ticket Count",
     "sla_achieved_vs_breached_tickets": "SLA Achieved vs Breached Tickets",
     "group_by": "Group By",
-    "sla_metrics": "SLA Metrics"
+    "sla_metrics": "SLA Metrics",
+    "edit_webform_config_success": "Edited webform config succussfully",
+    "edit_webform_config_failure": "Failed to edit webform config",
+    "add_webform_config_success": "Webform config wad added succussfully",
+    "add_webform_config_failure": "Failed to add webform config",
+    "delete_webform": "Delete Webform",
+    "confirm_webform_delete_message": "Are you sure you want to delete this webform?",
+    "delete_webform_success": "Successfully deleted this webform",
+    "delete_webform_failed": "Failed to delete this webform"
 }

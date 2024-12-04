@@ -39,16 +39,16 @@
       "error",
       {
         "groups": [
-          ["builtin", "external"],
+          "builtin",
+          "external",
           "internal",
-          ["sibling", "parent"],
-          "index"
+          ["parent", "sibling", "index"]
         ],
+        "newlines-between": "always",
         "alphabetize": {
           "order": "asc",
           "caseInsensitive": true
-        },
-        "newlines-between": "always"
+        }
       }
     ]
   },
