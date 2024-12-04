@@ -460,5 +460,13 @@
     "form_height": "Form Height",
     "copied_to_clipboard": "Copied to clipboard",
     "failed_to_copy": "Failed to copy",
-    "preview": "Preview"
+    "preview": "Preview",
+    "edit_webform_config_success": "Edited webform config succussfully",
+    "edit_webform_config_failure": "Failed to edit webform config",
+    "add_webform_config_success": "Webform config wad added succussfully",
+    "add_webform_config_failure": "Failed to add webform config",
+    "delete_webform": "Delete Webform",
+    "confirm_webform_delete_message": "Are you sure you want to delete this webform?",
+    "delete_webform_success": "Successfully deleted this webform",
+    "delete_webform_failed": "Failed to delete this webform"
 }
