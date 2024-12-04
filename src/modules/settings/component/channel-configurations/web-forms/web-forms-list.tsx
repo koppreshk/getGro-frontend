@@ -6,6 +6,8 @@ import { IWebForms } from 'modules/settings/apis/channel-configurations/webforms
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
+import { DeleteWebForm } from './delete-webform';
+
 const useColumns = () => {
   const columnHelper = createColumnHelper<IWebForms>();
   const { t } = useTranslation();
@@ -34,6 +36,7 @@ const useColumns = () => {
               tooltipProps={{ title: 'Edit Webform', arrow: true }}
               onClick={() => navigate(`edit-web-form/${original.form_id}`)}
             />
+            <DeleteWebForm id={original.form_id} />
           </FlexBox>
         );
       },
