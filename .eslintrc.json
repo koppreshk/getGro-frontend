@@ -22,6 +22,8 @@
   },
   "plugins": ["react", "@typescript-eslint", "import", "prettier"],
   "rules": {
+    "react-hooks/rules-of-hooks": "error", // Enforce the rules of hooks
+    "react-hooks/exhaustive-deps": "warn",  // Warn for missing dependencies
     "react/react-in-jsx-scope": "off",
     "import/no-extraneous-dependencies": "off",
     "@typescript-eslint/no-unused-vars": "warn",

@@ -1,25 +1,41 @@
 import LanguageIcon from '@mui/icons-material/Language';
 import { Menu, MenuItem, ListItemText, IconButton } from '@mui/material';
-import React, { useState } from 'react';
+import { useAppSelector } from 'lib/hooks';
+import { useEditProfile } from 'modules/settings/apis/users-and-permissions';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const LanguageSelector = () => {
   const { i18n } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const { mutateAsync } = useEditProfile();
+  const config = useAppSelector((state) => state.core.config);
 
   const open = Boolean(anchorEl);
 
-  const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  useEffect(() => {
+    const defaultLanguage = config?.language || 'en'; // Fallback to English if API fails
+    i18n.changeLanguage(defaultLanguage); // Set default language
+  }, []);
+
+  const handleOpen = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorEl(event.currentTarget);
+    },
+    []
+  );
 
   const handleClose = () => {
     setAnchorEl(null);
   };
 
   const changeLanguage = (language: string) => {
-    i18n.changeLanguage(language);
-    handleClose();
+    mutateAsync({ language }).then((res) => {
+      if (res.status) {
+        i18n.changeLanguage(language);
+        handleClose();
+      }
+    });
   };
 
   const menuOptions = [
