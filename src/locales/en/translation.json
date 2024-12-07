@@ -515,5 +515,7 @@
     "delete_webform": "Delete Webform",
     "confirm_webform_delete_message": "Are you sure you want to delete this webform?",
     "delete_webform_success": "Successfully deleted this webform",
-    "delete_webform_failed": "Failed to delete this webform"
+    "delete_webform_failed": "Failed to delete this webform",
+    "ticket_delete_success": "Ticket deleted successfully",
+    "ticket_delete_eroor": "Failed to delete ticket"
 }

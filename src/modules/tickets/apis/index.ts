@@ -17,7 +17,7 @@ export * from './whatsapp-apis/upload-file';
 
 export * from './email-apis/reply-to-email';
 export * from './email-apis/fetch-attachment';
-export * from './email-apis/fetch-email-conversations'
+export * from './email-apis/fetch-email-conversations';
 
 export * from './telephonic-apis/fetch-calls-by-ticket-id';
 
@@ -28,6 +28,7 @@ export * from './merge-tickets/search-ticket';
 export * from './merge-tickets/merge-tickets';
 export * from './linked-tickets';
 export * from './tickets-history';
+export * from './delete-ticket';
 
 export * from './ticket-notes';
 

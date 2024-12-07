@@ -1,26 +1,49 @@
-import { NegativeActionDialog } from "lib/ui-ux";
-import { DeleteTicketContent } from "./delete-ticket-content";
-import { useTranslation } from "react-i18next";
+import { useNotifications } from 'lib';
+import { NegativeActionDialog } from 'lib/ui-ux';
+import { useDeleteTicket } from 'modules/tickets/apis';
+import { useTranslation } from 'react-i18next';
+
+import { DeleteTicketContent } from './delete-ticket-content';
 
 interface MergeTicketProps {
-    showDialog: boolean;
-    onCloseDrawer: () => void;
+  showDialog: boolean;
+  ticketId: string | number;
+  onCloseDrawer: () => void;
 }
 
 export const DeleteTicket = (props: MergeTicketProps) => {
-    const { onCloseDrawer, showDialog } = props;
-    const { t } = useTranslation();
+  const { onCloseDrawer, showDialog, ticketId } = props;
+  const { t } = useTranslation();
+  const { mutateAsync, isLoading } = useDeleteTicket();
+  const { showNotification } = useNotifications();
 
-    return (
-        <>
-            <NegativeActionDialog
-                open={showDialog}
-                isLoading={false}
-                content={<DeleteTicketContent />}
-                title='Delete Ticket'
-                negativeActionLabel={t("yes_delete")}
-                onNegativeActionClick={onCloseDrawer}
-                onClose={onCloseDrawer} />
-        </>
-    )
-}
+  const onDelete = () => {
+    mutateAsync({
+      ticket_id: ticketId,
+    })
+      .then(() => {
+        onCloseDrawer();
+        showNotification({
+          message: t('ticket_delete_success'),
+          type: 'success',
+        });
+      })
+      .catch(() =>
+        showNotification({ message: t('ticket_delete_eroor'), type: 'error' })
+      );
+  };
+
+  return (
+    <>
+      <NegativeActionDialog
+        open={showDialog}
+        isLoading={isLoading}
+        content={<DeleteTicketContent />}
+        title="Delete Ticket"
+        negativeActionLabel={t('yes_delete')}
+        onNegativeActionClick={onDelete}
+        onClose={onCloseDrawer}
+      />
+    </>
+  );
+};
