@@ -3,9 +3,9 @@ import { Outlet, useSearchParams } from 'react-router-dom';
 import { Search } from "@mui/icons-material"
 import { Typography, TextField, InputAdornment } from "@mui/material"
 import { FlexBox } from "lib/ui-ux"
-import { TicketsConfiguration } from "./ticket-configurations"
 import { Suspense } from "react";
 import { Trans } from "react-i18next";
+import { ConfigurationOptions } from "./configuration-options";
 
 
 const StyledHeader = styled(FlexBox)`
@@ -48,7 +48,7 @@ export const Configurations = () => {
                 }} />
             </StyledHeader>
             <StyledContent flexDirection="column" height="calc(100% - 81px)" overflowY="auto">
-                <TicketsConfiguration />
+                <ConfigurationOptions />
             </StyledContent>
         </>
     )

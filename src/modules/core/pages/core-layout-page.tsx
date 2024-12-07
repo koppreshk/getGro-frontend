@@ -10,6 +10,7 @@ import { Toolbar } from "../components/toolbar"
 import { useFetchUserConfig } from "../apis/fetch-user-config"
 import { IncomingCallMain } from "modules/tickets/components/ticket-details/ticket-conversation/telephonic-conversations"
 import LoginPage from '../../login/login';
+import { ExternalPreviewForm } from "modules/settings/component/channel-configurations/web-forms/preview-form-external"
 
 const CustomerSurveyPage = lazy(() => import('../../survey/pages/customer-survey'));
 const SetNewAgentPassword = lazy(() => import('../../login/set-new-agent-password'));
@@ -121,6 +122,12 @@ export const CoreLayout = () => {
                     <Suspense fallback="Loading Page...">
                         <CustomerSurveyPage />
                     </Suspense>
+                )} />
+            <Route
+                key="contact-us"
+                path="contact-us/*"
+                element={(
+                    <ExternalPreviewForm />
                 )} />
             <Route key="login" path="/login" element={<LoginPage />} />
             <Route key="not-found" path="*" element={<PageNotFound />} />
