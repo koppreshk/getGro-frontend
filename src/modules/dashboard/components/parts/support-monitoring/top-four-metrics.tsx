@@ -3,6 +3,7 @@ import { Typography } from "@mui/material";
 import { FlexBox, GridLayout } from "lib/ui-ux";
 import { getFormatedNumberByLocale } from "lib/utils";
 import { SupportMonitoringValues } from "modules/dashboard/apis";
+import { useTranslation } from "react-i18next";
 
 const Metric = styled(FlexBox)`
     background-color: ${({ theme }) => theme.pallete.white};
@@ -18,20 +19,21 @@ interface ITopMetricProps {
 
 export const TopFourMetrics = (props: Pick<SupportMonitoringValues, 'total_tickets' | 'pending_tickets' | 'resolution_overdue' | 'response_overdue'>) => {
     const { total_tickets, pending_tickets, resolution_overdue, response_overdue } = props;
+    const { t } = useTranslation();
     const data = [{
-        name: 'Total Tickets',
+        name: t('total_tickets'),
         value: total_tickets,
     },
     {
-        name: 'Pending TIckets',
+        name: t('pending_tickets'),
         value: pending_tickets,
     },
     {
-        name: 'Response Overdue',
+        name: t('response_overdue'),
         value: response_overdue,
     },
     {
-        name: 'Resolution Overdue',
+        name: t('resolution_overdue'),
         value: resolution_overdue,
     }] as ITopMetricProps[];
 
