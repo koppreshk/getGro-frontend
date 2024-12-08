@@ -199,6 +199,13 @@ const getParsedChatType = (chatType: string) => {
           <b>facebook</b> post
         </span>
       );
+    case ChatType.WhatsappMessage:
+      return (
+        <span>
+          <b>whatsapp message</b>
+        </span>
+      );
+
     default:
       return (
         <span>

@@ -43,6 +43,7 @@ export const useSourceIcon = () => {
           />
         );
       case 'whatsapp':
+      case 'whatsapp_message':
         return (
           <WhatsApp
             sx={{ fill: theme.channelSpecific.whatsApp + '!important', ...sx }}
