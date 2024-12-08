@@ -518,5 +518,7 @@
     "delete_webform_failed": "Failed to delete this webform",
     "ticket_delete_success": "Ticket deleted successfully",
     "ticket_delete_eroor": "Failed to delete ticket",
-    "language": "Language"
+    "language": "Language",
+    "logout": "Logout",
+    "user_profile": "User Profile"
 }

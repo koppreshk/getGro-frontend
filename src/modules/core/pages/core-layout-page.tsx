@@ -89,8 +89,7 @@ export const CoreLayout = () => {
   useEffect(() => {
     const defaultLanguage = config?.language || 'en'; // Fallback to English if API fails
     i18n.changeLanguage(defaultLanguage); // Set default language
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [config?.language, i18n]);
 
   if (isLoading) {
     return <CenteredCircularProgress />;

@@ -12,6 +12,7 @@ import { getInitialsByName } from 'lib/utils';
 import { useAuth } from 'modules/login';
 import { useLogoutUser } from 'modules/login/apis';
 import React, { useState } from 'react';
+import { Trans } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useTheme } from 'styled-components';
 
@@ -71,7 +72,7 @@ export const AccountMenu = () => {
             <ListItemIcon>
               <AccountCircle />
             </ListItemIcon>
-            User Profile
+            <Trans i18nKey={'user_profile'} />
           </Link>
         </MenuItem>
         {config.config?.modules.includes('configurations') ? (
@@ -89,7 +90,7 @@ export const AccountMenu = () => {
               <ListItemIcon>
                 <Settings />
               </ListItemIcon>
-              Settings
+              <Trans i18nKey={'configurations'} />
             </Link>
           </MenuItem>
         ) : null}
@@ -98,7 +99,7 @@ export const AccountMenu = () => {
           <ListItemIcon>
             <Logout sx={{ color: '#d32f2f' }} />
           </ListItemIcon>
-          Logout
+          <Trans i18nKey={'logout'} />
         </MenuItem>
       </Menu>
     </>
