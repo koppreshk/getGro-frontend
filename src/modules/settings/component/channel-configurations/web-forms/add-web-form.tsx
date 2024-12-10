@@ -186,7 +186,7 @@ export const AddWebForm = (props: AddWebFormProps) => {
           variant="contained"
           onClick={form.handleSubmit(onSubmit)}
         >
-          {t('add_web_form')}
+          {mode === 'edit' ? t('edit_web_form') : t('add_web_form')}
         </LoadingButton>
         <Button variant="outlined" onClick={navigateBack}>
           {t('cancel')}

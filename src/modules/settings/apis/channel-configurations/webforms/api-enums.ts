@@ -3,7 +3,8 @@ export enum ConfigurationsWebFormsEndPoint {
   FETCH_ALL_WEBFORMS = 'web_form/all',
   DELETE_WEBFORM = 'web_form/delete',
   EDIT_WEBFORM = 'web_form/edit',
-  FETCH_EXTERNAL_WEFORM = 'fetch_web_form',
+  FETCH_EXTERNAL_WEFORM = 'web_form/fetch',
+  SUBMIT_WEBFORM = 'web_form/submit',
 }
 
 export enum ConfigurationsWebFormsQueryKey {
@@ -12,4 +13,5 @@ export enum ConfigurationsWebFormsQueryKey {
   DELETE_WEBFORM = 'DELETE_WEBFORM',
   EDIT_WEBFORM = 'EDIT_WEBFORM',
   FETCH_EXTERNAL_WEFORM = 'FETCH_EXTERNAL_WEFORM',
+  SUBMIT_WEBFORM = 'SUBMIT_WEBFORM',
 }
