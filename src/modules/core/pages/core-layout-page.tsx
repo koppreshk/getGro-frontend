@@ -162,7 +162,7 @@ export const CoreLayout = () => {
       />
       <Route
         key="contact-us"
-        path="contact-us/*"
+        path="contact-us/:token"
         element={<ExternalPreviewForm />}
       />
       <Route key="login" path="/login" element={<LoginPage />} />

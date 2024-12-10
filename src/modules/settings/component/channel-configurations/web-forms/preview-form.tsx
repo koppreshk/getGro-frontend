@@ -10,6 +10,14 @@ interface PreviewFormProps {
   btnTextColor?: string;
   footerMessage?: string;
   submitBtnName?: string;
+  defaultValues?: any;
+}
+
+interface IPreviewFormFields {
+  Name: string;
+  Email: string;
+  Subject: string;
+  Help: string;
 }
 
 export const PreviewForm = (props: PreviewFormProps) => {
@@ -20,8 +28,11 @@ export const PreviewForm = (props: PreviewFormProps) => {
     btnTextColor,
     footerMessage,
     submitBtnName,
+    defaultValues,
   } = props;
-  const form = useForm();
+  const form = useForm<IPreviewFormFields>({
+    defaultValues: defaultValues,
+  });
 
   return (
     <FormProvider {...form}>
