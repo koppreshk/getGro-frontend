@@ -68,6 +68,7 @@ export const EditWebFormConfigContainer = (props: {
       onSubmit={onSubmit}
       mutationLoading={mutationLoading}
       mode="edit"
+      token={currentForm?.token}
       defaultValues={defaultValues}
     />
   );
