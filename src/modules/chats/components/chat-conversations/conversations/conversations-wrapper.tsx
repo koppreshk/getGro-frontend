@@ -10,6 +10,7 @@ import {
   useSendChatReply,
 } from 'modules/chats/apis';
 import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import { ChatContent } from './chat-content';
@@ -126,7 +127,7 @@ export const ConversationsWrapper = (props: WhatsAppConversationsProps) => {
     [chatData]
   );
   const isReplyFeatureAccessible = useFeature('reply_conversation');
-
+  const { t } = useTranslation();
   return (
     <ConversationContainerBackground
       style={{ width: '100%', height: 'calc(100% - 54px)' }}
