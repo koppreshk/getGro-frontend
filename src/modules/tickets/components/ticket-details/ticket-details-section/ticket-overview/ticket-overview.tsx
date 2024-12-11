@@ -16,7 +16,7 @@ import {
   ManageTagsContainer,
 } from 'modules/tickets/containers';
 import { useState } from 'react';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 import { ContactInfo, TypographyName } from './contact-info';
 import { Platform } from '../../ticket-conversation/ticket-conversation-header';
@@ -78,22 +78,23 @@ type DrawerDisplayTypes = {
 
 const useMenuItems = () => {
   const isFeatureAccessible = useFeature<undefined>();
+  const { t } = useTranslation();
   return [
     {
       key: MoreActionsEnum.mergeTicket as string,
-      label: 'Merge Ticket',
+      label: t('merge_ticket'),
       icon: <MergeOutlined />,
       hidden: !isFeatureAccessible('merge_ticket'),
     },
     {
       key: MoreActionsEnum.deleteTicket as string,
-      label: 'Delete Ticket',
+      label: t('delete_ticket'),
       icon: <DeleteOutlined />,
       hidden: false,
     },
     {
       key: MoreActionsEnum.spamTicket as string,
-      label: 'Mark as Spam',
+      label: t('mark_as_spam'),
       icon: <ReportOutlined />,
       hidden: true,
     },
@@ -157,6 +158,7 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
 
   const menuItems = useMenuItems();
   const isFeatureAccessible = useFeature<undefined>();
+  const { t } = useTranslation();
 
   return (
     <FlexBox gap="20px" padding="10px" flexDirection="column" height="100%">
@@ -221,13 +223,13 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
           <FlexBox padding="0px 20px" flexDirection="column" gap="10px">
             {ticketDetails?.responseDue ? (
               <DateInfo
-                label="Response due: "
+                label={t('response_due')}
                 date={ticketDetails.responseDue}
               />
             ) : null}
             {ticketDetails?.resolutionDue ? (
               <DateInfo
-                label="Resolution due: "
+                label={t('resolution_due')}
                 date={ticketDetails.resolutionDue}
               />
             ) : null}
