@@ -359,6 +359,7 @@
     "ticket_notes": "Ticket Notes",
     "past_tickets": "Past Tickets",
     "customer_profile": "Customer Profile",
+    "made_changes": "made changes",
     "order_details": "Order Details",
     "signature_update_success": "Signature was updated successfully",
     "signature_update_error": "Failed to update signature",
@@ -531,5 +532,7 @@
     "ticket_delete_eroor": "Failed to delete ticket",
     "language": "Language",
     "logout": "Logout",
-    "user_profile": "User Profile"
+    "user_profile": "User Profile",
+    "today": "Today",
+    "yesterday": "Yesterday"
 }

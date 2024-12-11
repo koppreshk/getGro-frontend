@@ -53,7 +53,7 @@ const usePrimaryOptions = () => {
       iconComponent: () => <InsertChartOutlined />,
       primaryKey: 'dashboard',
       route: 'dashboard',
-      title: 'Dashboard',
+      title: t('dashboards'),
       hidden: !isModuleAccessible('dashboards'),
     },
     {
@@ -64,14 +64,14 @@ const usePrimaryOptions = () => {
       ),
       primaryKey: 'tickets',
       route: 'tickets',
-      title: 'Tickets',
+      title: t('tickets'),
       hidden: !isModuleAccessible('tickets'),
     },
     {
       iconComponent: () => <GroupOutlined />,
       primaryKey: 'customers',
       route: 'customers',
-      title: 'Customers',
+      title: t('customers'),
       hidden: false,
     },
     {
@@ -85,14 +85,14 @@ const usePrimaryOptions = () => {
       iconComponent: () => <Article />,
       primaryKey: 'knowledge-base',
       route: 'knowledge-base',
-      title: 'Knowledge Base',
+      title: t('knowledge_base'),
       hidden: !isModuleAccessible('knowledge_base'),
     },
     {
       iconComponent: () => <SettingsOutlined />,
       primaryKey: 'configurations',
       route: 'configurations',
-      title: 'Configurations',
+      title: t('configurations'),
       hidden: !isModuleAccessible('configurations'),
     },
   ];

@@ -7,6 +7,7 @@ import { ITicketDetails } from 'modules/tickets/apis';
 import { useSourceIcon } from 'modules/tickets/hooks';
 import { setTicketDetails } from 'modules/tickets/storage';
 import React, { useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   createSearchParams,
   useMatch,
@@ -160,7 +161,7 @@ const TicketDetails = (props: ITicketDetailsProps) => {
 
   const isoDate = DateTime.fromFormat(createdAt, 'yyyy-LL-dd hh:mm a').toISO();
   const time = DateTime.fromISO(isoDate!).toFormat('hh:mm a');
-
+  const { t } = useTranslation();
   return (
     <TicketWrapper
       flexDirection="row"
@@ -190,9 +191,9 @@ const TicketDetails = (props: ITicketDetailsProps) => {
             sx={{ color: pallete.grayNeutral }}
           >
             {isToday(isoDate!)
-              ? `Today, ${time}`
+              ? `${t('today')}, ${time}`
               : isYesterday(isoDate!)
-                ? `Yesterday, ${time}`
+                ? `${t('yesterday')}, ${time}`
                 : createdAt}
           </Typography>
         </FlexBox>
