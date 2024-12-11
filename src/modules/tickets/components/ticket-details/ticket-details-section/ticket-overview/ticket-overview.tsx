@@ -8,6 +8,7 @@ import { useAppSelector, useFeature } from 'lib/hooks';
 import { FlexBox, HorizontalSeparator, MoreActions } from 'lib/ui-ux';
 import { useDateDifference } from 'lib/utils';
 import { ITicketDetails } from 'modules/tickets/apis';
+import { getParsedChatType } from 'modules/tickets/components/tickets-card-view/card-view';
 import {
   ManageAssigneeContainer,
   ManagePriorityContainer,
@@ -15,6 +16,7 @@ import {
   ManageTagsContainer,
 } from 'modules/tickets/containers';
 import { useState } from 'react';
+import { Trans } from 'react-i18next';
 
 import { ContactInfo, TypographyName } from './contact-info';
 import { Platform } from '../../ticket-conversation/ticket-conversation-header';
@@ -121,7 +123,7 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
   const { ticketDetails } = props;
   const {
     customerName,
-    source,
+    createdFrom,
     createdAt,
     ticketId,
     ticketStatus,
@@ -162,9 +164,14 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
         <FlexBox flexDirection="column" maxWidth="calc(100% - 50px)">
           <Typography variant="h5">{customerName}</Typography>
           <FlexBox gap="5px">
-            <Typography variant="body3"> messaged via</Typography>
-            <Platform variant="body3" $platform={source.toLocaleLowerCase()}>
-              {source}
+            <Typography variant="body3">
+              <Trans i18nKey={'initiated_via'} />
+            </Typography>
+            <Platform
+              variant="body3"
+              $platform={createdFrom.toLocaleLowerCase()}
+            >
+              {getParsedChatType(createdFrom)}
             </Platform>
           </FlexBox>
         </FlexBox>

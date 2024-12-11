@@ -200,7 +200,7 @@ const TicketDetails = (props: ITicketDetailsProps) => {
           {description}
         </StyledTypography>
         <FlexBox flexDirection="row" gap="10px" alignItems="center">
-          <>{getSourceIcon(source)}</>
+          <>{getSourceIcon(createdFrom)}</>
           <StyledTypography variant="body2">Id: {ticketId}</StyledTypography>
         </FlexBox>
       </TicketDetailsSectionRight>
