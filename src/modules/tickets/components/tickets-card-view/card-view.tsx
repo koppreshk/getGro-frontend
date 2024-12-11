@@ -209,7 +209,12 @@ const getParsedChatType = (chatType: string) => {
     default:
       return (
         <span>
-          <b>{chatType}</b>
+          <b>
+            {chatType
+              .split('_')
+              .map((i) => i[0].toLocaleUpperCase() + i.slice(1))
+              .join(' ')}
+          </b>
         </span>
       );
   }
