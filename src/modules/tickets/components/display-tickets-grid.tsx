@@ -70,7 +70,7 @@ const PriorityIcon = styled.div<{ $priority: string }>`
   align-items: center;
 `;
 
-const PriorityDot = styled.div<{ $priority: string }>`
+export const PriorityDot = styled.div<{ $priority: string }>`
   ${({ $priority }) => {
     switch ($priority.toLocaleLowerCase()) {
       case 'low':
