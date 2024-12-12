@@ -534,5 +534,15 @@
     "logout": "Logout",
     "user_profile": "User Profile",
     "today": "Today",
-    "yesterday": "Yesterday"
+    "yesterday": "Yesterday",
+    "add_a_secondary_ticket": "Add a secondary ticket link to the primary ticket.",
+    "after_the_merge": "After the merge, close all secondary tickets.",
+    "dont_send_email": "Don't send an email notification to customer",
+    "add_secondary_ticket": "Add Secondary Ticket:",
+    "first_message": "First Message",
+    "last_message": "Last Message",
+    "association_with_current_ticket": "Association with current ticket",
+    "no_association": "No Association",
+    "link_ticket": "Link Ticket",
+    "copy_attachment_from_current": "Copy attachment from current update to new ticket"
 }

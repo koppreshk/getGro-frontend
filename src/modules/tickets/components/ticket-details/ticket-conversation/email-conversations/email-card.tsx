@@ -4,6 +4,7 @@ import { useFeature } from 'lib/hooks';
 import { FlexBox, MoreActions } from 'lib/ui-ux';
 import { chooseRandomColors, getInitialsByName, getTimeAgo } from 'lib/utils';
 import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import { DownloadAttachments } from './download-attachments';
@@ -69,10 +70,11 @@ enum EmailActionsEnum {
 
 const useMenuItems = () => {
   const isFeatureAccessible = useFeature<undefined>();
+  const { t } = useTranslation();
   return [
     {
       key: EmailActionsEnum.splitTicket as string,
-      label: 'Split Ticket',
+      label: t('split_ticket'),
       icon: <CallSplit />,
       hidden: !isFeatureAccessible('split_ticket'),
     },
