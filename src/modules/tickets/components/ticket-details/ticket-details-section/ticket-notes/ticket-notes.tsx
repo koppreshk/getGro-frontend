@@ -16,7 +16,7 @@ import {
   DeleteNoteContainer,
 } from 'modules/tickets/containers/ticket-notes';
 import { useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import ReactQuill from 'react-quill';
 import styled, { useTheme } from 'styled-components';
 
@@ -41,7 +41,7 @@ const Note = (
     () => chooseRandomColors(getInitialsByName(userName)),
     [userName]
   );
-
+  const { t } = useTranslation();
   return (
     <Card
       sx={{
@@ -81,7 +81,7 @@ const Note = (
           <CustomIconButton
             iconComponent={<Edit />}
             onClick={() => onEdit(props.id, note)}
-            tooltipProps={{ title: 'Edit Note', arrow: true }}
+            tooltipProps={{ title: t('edit_note'), arrow: true }}
           />
           <DeleteNoteContainer id={props.id} />
         </FlexBox>
@@ -145,7 +145,9 @@ export const TicketNotes = (props: { notes: INotes[]; ticketId: number }) => {
             height="100%"
             width="inherit"
           >
-            <Typography>No Notes Found</Typography>
+            <Typography>
+              <Trans i18nKey="no_notes_found" />
+            </Typography>
           </FlexBox>
         )}
       </FlexBox>
@@ -160,7 +162,7 @@ export const TicketNotes = (props: { notes: INotes[]; ticketId: number }) => {
           <ReactQuill
             theme="snow"
             value={value}
-            placeholder="Type in here..."
+            placeholder={t('type_in_here')}
             preserveWhitespace
             onChange={onChange}
           />

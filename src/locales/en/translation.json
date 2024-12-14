@@ -544,5 +544,19 @@
     "association_with_current_ticket": "Association with current ticket",
     "no_association": "No Association",
     "link_ticket": "Link Ticket",
-    "copy_attachment_from_current": "Copy attachment from current update to new ticket"
+    "copy_attachment_from_current": "Copy attachment from current update to new ticket",
+    "related_tickets": "Related Tickets",
+    "no_tickets_found":"No Tickets found",
+    "no_notes_found": "No Notes Found",
+    "type_in_here": "Type in here...",
+    "edit_note": "Edit Note",
+    "days": "days",
+    "day": "day",
+    "hr": "hr",
+    "hrs": "hrs",
+    "min_singular": "min",
+    "mins": "mins",
+    "sec": "sec",
+    "secs": "secs",
+    "ago": "ago"
 }
