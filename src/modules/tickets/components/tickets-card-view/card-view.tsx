@@ -173,7 +173,7 @@ const ResponseDueIndicator = (props: Pick<ITicketDetails, 'responseDue'>) => {
   );
 };
 
-const getParsedChatType = (chatType: string) => {
+export const getParsedChatType = (chatType: string) => {
   switch (chatType) {
     case ChatType.InstagramComment:
       return (
@@ -199,10 +199,17 @@ const getParsedChatType = (chatType: string) => {
           <b>facebook</b> post
         </span>
       );
+    case ChatType.WhatsappMessage:
+      return (
+        <span>
+          <b>whatsapp message</b>
+        </span>
+      );
+
     default:
       return (
         <span>
-          <b>{chatType}</b>
+          <b>{chatType.split('_').join(' ')}</b>
         </span>
       );
   }

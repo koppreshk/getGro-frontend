@@ -14,6 +14,7 @@ export interface IWebForms {
   form_description: string;
   footer_message: string;
   confirmation_message: string;
+  token: string;
   submit_button_text: string;
   button_bg_color: string; // RGB or hex color as a string
   button_text_color: string; // Hex color as a string

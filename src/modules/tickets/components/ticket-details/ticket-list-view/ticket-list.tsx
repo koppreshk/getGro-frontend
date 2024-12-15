@@ -1,12 +1,13 @@
 import { Avatar, Typography } from '@mui/material';
 import { useAppDispatch } from 'lib/hooks';
 import { FlexBox } from 'lib/ui-ux';
-import { isToday, isYesterday } from 'lib/utils';
+import { chooseRandomColors, isToday, isYesterday } from 'lib/utils';
 import { DateTime } from 'luxon';
 import { ITicketDetails } from 'modules/tickets/apis';
 import { useSourceIcon } from 'modules/tickets/hooks';
 import { setTicketDetails } from 'modules/tickets/storage';
 import React, { useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   createSearchParams,
   useMatch,
@@ -160,7 +161,11 @@ const TicketDetails = (props: ITicketDetailsProps) => {
 
   const isoDate = DateTime.fromFormat(createdAt, 'yyyy-LL-dd hh:mm a').toISO();
   const time = DateTime.fromISO(isoDate!).toFormat('hh:mm a');
-
+  const { t } = useTranslation();
+  const { backgroundColor, textColor } = useMemo(
+    () => chooseRandomColors(customerName || ''),
+    [customerName]
+  );
   return (
     <TicketWrapper
       flexDirection="row"
@@ -169,7 +174,18 @@ const TicketDetails = (props: ITicketDetailsProps) => {
       onClick={onTicketClick}
     >
       <FlexBox justifyContent="center" alignItems="center">
-        <Avatar />
+        <Avatar
+          sx={{ fontSize: '14px', color: textColor, bgcolor: backgroundColor }}
+        >
+          {customerName
+            ? customerName?.split(' ').length > 1
+              ? customerName
+                  .split(' ')
+                  .map((name) => name[0])
+                  .join('')
+              : customerName.slice(0, 2)
+            : ''}
+        </Avatar>
       </FlexBox>
       <TicketDetailsSectionRight flexDirection="column" gap="4px">
         <FlexBox justifyContent="space-between">
@@ -190,9 +206,9 @@ const TicketDetails = (props: ITicketDetailsProps) => {
             sx={{ color: pallete.grayNeutral }}
           >
             {isToday(isoDate!)
-              ? `Today, ${time}`
+              ? `${t('today')}, ${time}`
               : isYesterday(isoDate!)
-                ? `Yesterday, ${time}`
+                ? `${t('yesterday')}, ${time}`
                 : createdAt}
           </Typography>
         </FlexBox>
@@ -200,7 +216,7 @@ const TicketDetails = (props: ITicketDetailsProps) => {
           {description}
         </StyledTypography>
         <FlexBox flexDirection="row" gap="10px" alignItems="center">
-          <>{getSourceIcon(source)}</>
+          <>{getSourceIcon(createdFrom)}</>
           <StyledTypography variant="body2">Id: {ticketId}</StyledTypography>
         </FlexBox>
       </TicketDetailsSectionRight>

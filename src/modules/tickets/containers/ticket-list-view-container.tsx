@@ -4,6 +4,7 @@ import { useMatch } from 'react-router-dom';
 
 import { useGetTicketsDataByKey } from '../apis';
 import { TicketsEndPoint } from '../apis/api-enums';
+import { TicketViewRoutes } from '../components';
 import { TicketListView } from '../components/ticket-details/ticket-list-view';
 
 export const useGetQueryEndPoint = () => {
@@ -11,17 +12,17 @@ export const useGetQueryEndPoint = () => {
 
   const getQueryEndPointByType = (): keyof typeof TicketsEndPoint => {
     switch (match?.params.ticketType || '') {
-      case 'all-closed':
+      case TicketViewRoutes.AllClosed:
         return 'FETCH_ALL_CLOSED_TICKETS';
-      case 'all-pending':
+      case TicketViewRoutes.AllPending:
         return 'FETCH_ALL_PENDING_TICKETS';
-      case 'all-resolved':
+      case TicketViewRoutes.AllResolved:
         return 'FETCH_ALL_RESOLVED_TICKETS';
-      case 'my-closed':
+      case TicketViewRoutes.MyClosed:
         return 'FETCH_MY_CLOSED';
-      case 'my-pending':
+      case TicketViewRoutes.MyPending:
         return 'FETCH_MY_PENDING';
-      case 'my-resolved':
+      case TicketViewRoutes.MyResolved:
         return 'FETCH_MY_RESOLVED';
       default:
         return 'FETCH_ALL_TICKETS';

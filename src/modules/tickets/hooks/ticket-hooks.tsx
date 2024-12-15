@@ -9,6 +9,7 @@ import {
   LocalPhone,
   Instagram,
   Sms,
+  Web,
 } from '@mui/icons-material';
 import { SvgIcon } from '@mui/material';
 import { SxProps } from '@mui/system';
@@ -43,6 +44,7 @@ export const useSourceIcon = () => {
           />
         );
       case 'whatsapp':
+      case 'whatsapp_message':
         return (
           <WhatsApp
             sx={{ fill: theme.channelSpecific.whatsApp + '!important', ...sx }}
@@ -83,6 +85,8 @@ export const useSourceIcon = () => {
         );
       case 'sms':
         return <Sms sx={{ fill: theme.channelSpecific.sms + '!important' }} />;
+      case 'web_form':
+        return <Web />;
       default:
         return <></>;
     }

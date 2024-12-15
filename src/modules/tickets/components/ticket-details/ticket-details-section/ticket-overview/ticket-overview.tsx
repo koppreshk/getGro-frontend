@@ -8,6 +8,7 @@ import { useAppSelector, useFeature } from 'lib/hooks';
 import { FlexBox, HorizontalSeparator, MoreActions } from 'lib/ui-ux';
 import { useDateDifference } from 'lib/utils';
 import { ITicketDetails } from 'modules/tickets/apis';
+import { getParsedChatType } from 'modules/tickets/components/tickets-card-view/card-view';
 import {
   ManageAssigneeContainer,
   ManagePriorityContainer,
@@ -15,6 +16,7 @@ import {
   ManageTagsContainer,
 } from 'modules/tickets/containers';
 import { useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import { ContactInfo, TypographyName } from './contact-info';
 import { Platform } from '../../ticket-conversation/ticket-conversation-header';
@@ -76,22 +78,23 @@ type DrawerDisplayTypes = {
 
 const useMenuItems = () => {
   const isFeatureAccessible = useFeature<undefined>();
+  const { t } = useTranslation();
   return [
     {
       key: MoreActionsEnum.mergeTicket as string,
-      label: 'Merge Ticket',
+      label: t('merge_ticket'),
       icon: <MergeOutlined />,
       hidden: !isFeatureAccessible('merge_ticket'),
     },
     {
       key: MoreActionsEnum.deleteTicket as string,
-      label: 'Delete Ticket',
+      label: t('delete_ticket'),
       icon: <DeleteOutlined />,
       hidden: false,
     },
     {
       key: MoreActionsEnum.spamTicket as string,
-      label: 'Mark as Spam',
+      label: t('mark_as_spam'),
       icon: <ReportOutlined />,
       hidden: true,
     },
@@ -121,7 +124,7 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
   const { ticketDetails } = props;
   const {
     customerName,
-    source,
+    createdFrom,
     createdAt,
     ticketId,
     ticketStatus,
@@ -155,6 +158,7 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
 
   const menuItems = useMenuItems();
   const isFeatureAccessible = useFeature<undefined>();
+  const { t } = useTranslation();
 
   return (
     <FlexBox gap="20px" padding="10px" flexDirection="column" height="100%">
@@ -162,9 +166,14 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
         <FlexBox flexDirection="column" maxWidth="calc(100% - 50px)">
           <Typography variant="h5">{customerName}</Typography>
           <FlexBox gap="5px">
-            <Typography variant="body3"> messaged via</Typography>
-            <Platform variant="body3" $platform={source.toLocaleLowerCase()}>
-              {source}
+            <Typography variant="body3">
+              <Trans i18nKey={'initiated_via'} />
+            </Typography>
+            <Platform
+              variant="body3"
+              $platform={createdFrom.toLocaleLowerCase()}
+            >
+              {getParsedChatType(createdFrom)}
             </Platform>
           </FlexBox>
         </FlexBox>
@@ -214,13 +223,13 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
           <FlexBox padding="0px 20px" flexDirection="column" gap="10px">
             {ticketDetails?.responseDue ? (
               <DateInfo
-                label="Response due: "
+                label={t('response_due')}
                 date={ticketDetails.responseDue}
               />
             ) : null}
             {ticketDetails?.resolutionDue ? (
               <DateInfo
-                label="Resolution due: "
+                label={t('resolution_due')}
                 date={ticketDetails.resolutionDue}
               />
             ) : null}

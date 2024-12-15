@@ -15,7 +15,7 @@ import {
 import { FlexBox, HorizontalSeparator, LoadingButton } from 'lib/ui-ux';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { PreviewForm } from './preview-form';
 
@@ -34,13 +34,13 @@ export interface WebFormFields {
 interface AddWebFormProps {
   mode?: string;
   mutationLoading: boolean;
+  token?: string;
   defaultValues?: WebFormFields;
   onSubmit: (formData: WebFormFields) => Promise<any>;
 }
 
 export const AddWebForm = (props: AddWebFormProps) => {
-  const { mode = 'add', onSubmit, defaultValues } = props;
-  const { formId } = useParams();
+  const { mode = 'add', onSubmit, defaultValues, token } = props;
 
   const form = useForm<WebFormFields>({
     defaultValues: defaultValues ?? {
@@ -57,7 +57,7 @@ export const AddWebForm = (props: AddWebFormProps) => {
 
   const navigateBack = () => navigate(-1);
   const embedCode = `
-    <iframe src="${import.meta.env.VITE_SUB_DOMAIN}contact-us/${formId}" height="${form.watch('formHeight')}" frameborder="0"></iframe>
+    <iframe src="${import.meta.env.VITE_SUB_DOMAIN}contact-us/${token}" height="${form.watch('formHeight')}" frameborder="0"></iframe>
     `;
 
   const onCopy = () => {
@@ -186,7 +186,7 @@ export const AddWebForm = (props: AddWebFormProps) => {
           variant="contained"
           onClick={form.handleSubmit(onSubmit)}
         >
-          {t('add_web_form')}
+          {mode === 'edit' ? t('edit_web_form') : t('add_web_form')}
         </LoadingButton>
         <Button variant="outlined" onClick={navigateBack}>
           {t('cancel')}

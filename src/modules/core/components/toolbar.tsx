@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 import GetGroLogoImg from './../../../assets/svg/favicon.svg?react';
 import { AccountMenu, AgentStatus } from './parts';
-import LanguageSelector from './parts/language-selector';
 
 const TopBarWrapper = styled.div`
   width: 100%;
@@ -26,7 +25,6 @@ export const Toolbar = () => {
         </FlexBox>
         <FlexBox justifyContent="flex-end" gap="12px" alignItems="center">
           {/* <AgentStatistics /> */}
-          <LanguageSelector />
           <AgentStatus />
           {/* <Notifications /> */}
           <AccountMenu />
