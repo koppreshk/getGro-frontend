@@ -4,7 +4,10 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { CustomerViews } from '../components';
-import { IndivisualCustomerContainer } from '../containers';
+import {
+  AllCustomersContainer,
+  IndivisualCustomerContainer,
+} from '../containers';
 
 const Container = styled(FlexBox)`
   ${commonStyles.sleekScrollStyle};
@@ -26,7 +29,11 @@ export default function CustomersPage() {
             path="active-customers"
             element={<IndivisualCustomerContainer />}
           />
-          <Route key="all-customers" path="all-customers" />
+          <Route
+            key="all-customers"
+            path="all-customers"
+            element={<AllCustomersContainer />}
+          />
           <Route key="verified-customers" path="verified-customers" />
         </Routes>
       </div>

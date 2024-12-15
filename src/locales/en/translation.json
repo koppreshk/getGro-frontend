@@ -369,6 +369,7 @@
     "audit_logs_long_description": "Activity logs provide information about specific events or operations, like what the change was and who made it",
     "user_name": "User Name",
     "created_at": "Created At",
+    "closed_at": "Closed At",
     "event_type": "Event Type",
     "summary": "Summary",
     "last_modified_at": "Last Modified At",
@@ -558,5 +559,6 @@
     "mins": "mins",
     "sec": "sec",
     "secs": "secs",
-    "ago": "ago"
+    "ago": "ago",
+    "customers": "Customers"
 }
