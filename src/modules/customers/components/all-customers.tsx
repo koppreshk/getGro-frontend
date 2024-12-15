@@ -1,21 +1,18 @@
 import { createColumnHelper } from '@tanstack/react-table';
 import { DataGrid, FlexBox } from 'lib/ui-ux';
 
-interface ICustomerData {
-  customerId: number;
-  name: string;
-  email: string;
-  customerGroup?: string;
-  status: string;
-}
+import { ICustomerData } from '../apis/fetch-all-customers';
 
 const useColumns = () => {
   const columnHelper = createColumnHelper<ICustomerData>();
 
   const columns = [
+    columnHelper.accessor('id', {
+      header: 'Id',
+      cell: (props) => props.getValue(),
+    }),
     columnHelper.accessor('name', {
       header: 'Customer Name',
-      id: 'name',
       cell: (props) => props.getValue(),
     }),
     columnHelper.accessor('email', {
@@ -23,15 +20,10 @@ const useColumns = () => {
       id: 'email',
       cell: (props) => props.getValue(),
     }),
-    columnHelper.accessor('customerGroup', {
-      header: 'Customer Group',
-      id: 'customerGroup',
-      cell: (props) => props.getValue(),
-    }),
-    columnHelper.accessor('status', {
-      header: 'Status',
-      id: 'stutus1',
-      cell: (props) => props.getValue(),
+    columnHelper.accessor('number', {
+      header: 'Phone',
+      id: 'number',
+      cell: (props) => props?.getValue(),
     }),
   ];
 
@@ -39,15 +31,16 @@ const useColumns = () => {
 };
 
 interface IAllCustomersProps {
-  data: ICustomerData[];
+  data?: ICustomerData[];
+  isLoading: boolean;
 }
 
 export const AllCustomers = (props: IAllCustomersProps) => {
-  const { data } = props;
+  const { data, isLoading } = props;
   const columns = useColumns();
   return (
     <FlexBox padding="10px">
-      <DataGrid columns={columns} data={data} />
+      <DataGrid columns={columns} data={data!} isLoading={isLoading} />
     </FlexBox>
   );
 };
