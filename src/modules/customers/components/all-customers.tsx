@@ -9,21 +9,22 @@ const useColumns = () => {
   const columns = [
     columnHelper.accessor('id', {
       header: 'Id',
+      id: 'id',
       cell: (props) => props.getValue(),
     }),
     columnHelper.accessor('name', {
       header: 'Customer Name',
-      cell: (props) => props.getValue(),
+      cell: (props) => props.getValue() ?? '-',
     }),
     columnHelper.accessor('email', {
       header: 'Email',
       id: 'email',
-      cell: (props) => props.getValue(),
+      cell: (props) => props.getValue() ?? '-',
     }),
     columnHelper.accessor('number', {
       header: 'Phone',
       id: 'number',
-      cell: (props) => props?.getValue(),
+      cell: (props) => props?.getValue() ?? '-',
     }),
   ];
 
