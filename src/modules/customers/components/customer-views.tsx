@@ -42,21 +42,21 @@ const Wrapper = styled.div<{ $isOptionSelected: boolean }>`
 `;
 
 const customerViewOptions = [
-  {
-    name: 'Active Customers',
-    route: 'active-customers',
-    primaryKey: 'active-customers',
-  },
+  // {
+  //   name: 'Active Customers',
+  //   route: 'active-customers',
+  //   primaryKey: 'active-customers',
+  // },
   {
     name: 'All Customers',
     route: 'all-customers',
     primaryKey: 'all-customers',
   },
-  {
-    name: 'Verified Customers',
-    route: 'verified-customers',
-    primaryKey: 'verified-customers',
-  },
+  // {
+  //   name: 'Verified Customers',
+  //   route: 'verified-customers',
+  //   primaryKey: 'verified-customers',
+  // },
 ];
 
 interface ICustomerViewOptionsProps {

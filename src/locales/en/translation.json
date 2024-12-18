@@ -487,6 +487,8 @@
     "tickets_resolved": "Tickets Resolved",
     "avg_resolved_per_day": "avg per day",
     "tickets_closed": "Tickets Closed",
+    "replies_by_customers": "Replies By Customers",
+    "resolution_pending": "Resolution Pending",
     "tickets_reopened": "Tickets Reopened",
     "avg_first_response_time": "Avg First Response Time",
     "avg_next_response_time": "Avg Next Response Time",

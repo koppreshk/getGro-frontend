@@ -1,38 +1,40 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Alert } from "@mui/material";
-import { useFetchEmailConversations } from "../../../apis";
-import { FlexBox } from "lib/ui-ux";
-import { EmailSkeletonLoader } from "lib/ui-ux/loader-components";
-import { EmailConversationLayout } from "../../../components/ticket-details/ticket-conversation/email-conversations/email-conversations-layout";
+import { ErrorMessage, FlexBox } from 'lib/ui-ux';
+import { EmailSkeletonLoader } from 'lib/ui-ux/loader-components';
 
-interface IEmailConversationContainerProps { }
+import { useFetchEmailConversations } from '../../../apis';
+import { EmailConversationLayout } from '../../../components/ticket-details/ticket-conversation/email-conversations/email-conversations-layout';
 
-export const EmailConversationContainer = (_props: IEmailConversationContainerProps) => {
-    const { data: conversationsData, isLoading: conversationLoading, isRefetching, isError, refetch } = useFetchEmailConversations();
+export const EmailConversationContainer = () => {
+  const {
+    data: conversationsData,
+    isLoading: conversationLoading,
+    isRefetching,
+    error,
+    refetch,
+  } = useFetchEmailConversations();
 
-    if (conversationLoading || isRefetching) {
-        return (
-            <FlexBox width="100%">
-                <EmailSkeletonLoader />
-            </FlexBox>
-        )
-    }
+  const fetchNewThreads = () => {
+    refetch();
+  };
 
-    if (conversationsData?.subject === undefined || isError) {
-        return (
-            <FlexBox alignItems="center" justifyContent="center" width="100%" height="100%">
-                <Alert sx={{ height: 'fit-content' }} severity="error">There was an error while fetching the data, please retry later</Alert>
-            </FlexBox>
-        )
-    }
-
-    const fetchNewThreads = () => {
-        refetch();
-    }
-
+  if (conversationLoading || isRefetching) {
     return (
-        <>
-            <EmailConversationLayout conversationsData={conversationsData} fetchNewThreads={fetchNewThreads} />
-        </>
-    )
-}
+      <FlexBox width="100%">
+        <EmailSkeletonLoader />
+      </FlexBox>
+    );
+  }
+
+  if (conversationsData && conversationsData?.subject !== undefined) {
+    return (
+      <>
+        <EmailConversationLayout
+          conversationsData={conversationsData}
+          fetchNewThreads={fetchNewThreads}
+        />
+      </>
+    );
+  }
+
+  return <ErrorMessage statusCode={error?.message} />;
+};
