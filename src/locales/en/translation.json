@@ -521,5 +521,6 @@
     "ticket_delete_eroor": "Failed to delete ticket",
     "language": "Language",
     "logout": "Logout",
-    "user_profile": "User Profile"
+    "user_profile": "User Profile",
+    "apply": "Apply"
 }

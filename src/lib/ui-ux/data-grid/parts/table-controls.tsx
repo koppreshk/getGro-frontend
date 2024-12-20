@@ -24,12 +24,12 @@ import {
   RefreshButton,
   VerticalSeparator,
 } from 'lib/ui-ux';
+import { AdvanceSearchContainer } from 'modules/tickets/containers';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSearchParams } from 'react-router-dom';
+import { useMatch, useSearchParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 
-import { AdvanceSearch } from './advance-search';
 import { ContentViewMode } from './content-view-mode';
 
 const StyledFlexBox = styled(FlexBox)`
@@ -147,6 +147,7 @@ export const TableControls = (props: ITableControlProps) => {
   } = props;
   const config = useAppSelector((state) => state.core.config);
   const [searchParams, setSearchParams] = useSearchParams();
+  const viewFilter = useMatch('tickets/all_tickets');
   const pageNumber = Number(searchParams.get('pageNumber')) || 1;
   const noOfRecords = searchParams.get('noOfRecords')
     ? searchParams.get('noOfRecords')!
@@ -230,6 +231,7 @@ export const TableControls = (props: ITableControlProps) => {
     setSearchParams(searchParams);
   };
 
+  console.log('match', viewFilter);
   return (
     <StyledFlexBox justifyContent="space-between" height="76px">
       <FlexBox alignItems="center">
@@ -257,8 +259,12 @@ export const TableControls = (props: ITableControlProps) => {
           noOfRows={noOfRows as Rows}
           onFilterChangeHandler={onFilterChangeHandler}
         />
-        <VerticalSeparator />
-        <AdvanceSearch />
+        {viewFilter && (
+          <>
+            <VerticalSeparator />
+            <AdvanceSearchContainer />
+          </>
+        )}
         <VerticalSeparator />
         <FlexBox>
           <IconButton
