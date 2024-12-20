@@ -1,7 +1,5 @@
-import { UserProfileLayout } from "../component"
+import { UserProfileLayout } from '../component';
 
 export default function UseProfilePage() {
-    return (
-        <UserProfileLayout />
-    )
+  return <UserProfileLayout />;
 }

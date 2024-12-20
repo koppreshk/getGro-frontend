@@ -1,26 +1,35 @@
-import React from "react";
-import { useQuery } from "react-query";
-import { useServiceClient } from "lib";
-import { ExotelConfigurationEndPoint, ExotelConfigurationQueryKey } from "./api-enums";
+import { useServiceClient } from 'lib';
+import React from 'react';
+import { useQuery } from 'react-query';
+
+import {
+  ExotelConfigurationEndPoint,
+  ExotelConfigurationQueryKey,
+} from './api-enums';
 
 export interface Exophone {
-    phone_number: string;
-    sid: string;
-    friendly_name: string;
+  phone_number: string;
+  sid: string;
+  friendly_name: string;
 }
 
 export interface IExophonesNumbers {
-    exophones: Exophone[];
+  exophones: Exophone[];
 }
 
 export const useFetchExophoneNumbers = () => {
-    const { getData } = useServiceClient();
+  const { getData } = useServiceClient();
 
-    const fetchExophoneNumbers = React.useCallback(() => getData(ExotelConfigurationEndPoint.FETCH_EXPHONE_NUMBERS)
-        .then((res) => res.json()), [getData]);
+  const fetchExophoneNumbers = React.useCallback(
+    () =>
+      getData(ExotelConfigurationEndPoint.FETCH_EXPHONE_NUMBERS).then((res) =>
+        res.json()
+      ),
+    [getData]
+  );
 
-    return useQuery<IExophonesNumbers>({
-        queryKey: ExotelConfigurationQueryKey.FETCH_EXPHONE_NUMBERS,
-        queryFn: fetchExophoneNumbers
-    })
-}
+  return useQuery<IExophonesNumbers>({
+    queryKey: ExotelConfigurationQueryKey.FETCH_EXPHONE_NUMBERS,
+    queryFn: fetchExophoneNumbers,
+  });
+};

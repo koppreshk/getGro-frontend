@@ -1,4 +1,4 @@
 export interface IGenericResponse {
-    id: number;
-    name: string;
+  id: number;
+  name: string;
 }

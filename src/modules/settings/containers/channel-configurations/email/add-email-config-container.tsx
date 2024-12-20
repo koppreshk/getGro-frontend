@@ -1,51 +1,71 @@
-import { AddEmail, IAddEmailConfigFormFields } from "modules/settings/component/channel-configurations";
-import { useNylasOAuth, useSetupEmail } from "modules/settings/apis/channel-configurations/email";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { useEffect } from "react";
-import { useNotifications } from "lib";
-import { useForm, FormProvider } from "react-hook-form";
-import { useTranslation } from "react-i18next";
+import { useNotifications } from 'lib';
+import {
+  useNylasOAuth,
+  useSetupEmail,
+} from 'modules/settings/apis/channel-configurations/email';
+import {
+  AddEmail,
+  IAddEmailConfigFormFields,
+} from 'modules/settings/component/channel-configurations';
+import { useEffect } from 'react';
+import { useForm, FormProvider } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 export const AddEmailConfigContainer = () => {
-    const { mutateAsync, isLoading: mutationLoading } = useSetupEmail();
-    const { mutateAsync: connectToNylasOAuth } = useNylasOAuth();
-    const [searchParams, setSearchParams] = useSearchParams();
-    const code = searchParams.get('code');
-    const { showNotification } = useNotifications();
-    const navigate = useNavigate();
-    const { t } = useTranslation();
+  const { mutateAsync, isLoading: mutationLoading } = useSetupEmail();
+  const { mutateAsync: connectToNylasOAuth } = useNylasOAuth();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const code = searchParams.get('code');
+  const { showNotification } = useNotifications();
+  const navigate = useNavigate();
+  const { t } = useTranslation();
 
-    const form = useForm<IAddEmailConfigFormFields>({
-        defaultValues: {
-            displayName: '',
-            emailAddress: '',
-            isActive: true
-        }
-    });
+  const form = useForm<IAddEmailConfigFormFields>({
+    defaultValues: {
+      displayName: '',
+      emailAddress: '',
+      isActive: true,
+    },
+  });
 
-    useEffect(() => {
-        if (code) {
-            const { displayName, isActive } = form.getValues();
-            connectToNylasOAuth({ code, displayName, isActive })
-                .then(() => {
-                    searchParams.delete('code');
-                    setSearchParams(searchParams);
-                    showNotification({ message: t('email_config_success'), type: 'success' });
-                    navigate('/configurations/email');
-                })
-                .catch(() => showNotification({ message: t('email_config_error'), type: 'error' }))
-        }
-    }, [code, connectToNylasOAuth, form, navigate, searchParams, setSearchParams, showNotification, t]);
-
-    const onSubmit = (formData: IAddEmailConfigFormFields) => {
-        mutateAsync({ email: formData.emailAddress }).then((res) => {
-            window.open(res.auth_url, "_self");
+  useEffect(() => {
+    if (code) {
+      const { displayName, isActive } = form.getValues();
+      connectToNylasOAuth({ code, displayName, isActive })
+        .then(() => {
+          searchParams.delete('code');
+          setSearchParams(searchParams);
+          showNotification({
+            message: t('email_config_success'),
+            type: 'success',
+          });
+          navigate('/configurations/email');
         })
+        .catch(() =>
+          showNotification({ message: t('email_config_error'), type: 'error' })
+        );
     }
+  }, [
+    code,
+    connectToNylasOAuth,
+    form,
+    navigate,
+    searchParams,
+    setSearchParams,
+    showNotification,
+    t,
+  ]);
 
-    return (
-        <FormProvider {...form}>
-            <AddEmail onSubmit={onSubmit} mutationLoading={mutationLoading} />
-        </FormProvider>
-    )
-}
+  const onSubmit = (formData: IAddEmailConfigFormFields) => {
+    mutateAsync({ email: formData.emailAddress }).then((res) => {
+      window.open(res.auth_url, '_self');
+    });
+  };
+
+  return (
+    <FormProvider {...form}>
+      <AddEmail onSubmit={onSubmit} mutationLoading={mutationLoading} />
+    </FormProvider>
+  );
+};

@@ -1,83 +1,86 @@
-import React, { useCallback } from "react";
-import { CustomTabPanel, FlexBox, StyledTab, StyledTabs } from "lib/ui-ux"
-import { TicketConversationHeader } from "./ticket-conversation-header";
-import { useAppSelector } from "lib/hooks";
+import { useAppSelector } from 'lib/hooks';
+import { CustomTabPanel, FlexBox, StyledTab, StyledTabs } from 'lib/ui-ux';
 import {
-    TelephonicConversationContainer,
-    EmailConversationContainer,
-    WhatsAppConversationContainer,
-    TicketLinksContainer,
-    TicketHistoryContainer
-} from "modules/tickets/containers";
-import styled from "styled-components";
-import { useTranslation } from "react-i18next";
+  TelephonicConversationContainer,
+  EmailConversationContainer,
+  WhatsAppConversationContainer,
+  TicketLinksContainer,
+  TicketHistoryContainer,
+} from 'modules/tickets/containers';
+import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 
-export interface ITicketConversationLayoutProps {
-}
+import { TicketConversationHeader } from './ticket-conversation-header';
+
+export interface ITicketConversationLayoutProps {}
 
 const LayoutWrapper = styled(FlexBox)`
-    background-color: ${({ theme: { pallete } }) => pallete.white};
+  background-color: ${({ theme: { pallete } }) => pallete.white};
 `;
 
 export const TicketConversationLayout = () => {
-    const ticketDetailsById = useAppSelector(state => state.tickets.ticketDetails);
-    const ticketSource = ticketDetailsById && ticketDetailsById.source?.toLocaleLowerCase();
-    const [value, setValue] = React.useState(0);
-    const { t } = useTranslation();
-    const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
-    };
+  const ticketDetailsById = useAppSelector(
+    (state) => state.tickets.ticketDetails
+  );
+  const ticketSource =
+    ticketDetailsById && ticketDetailsById.source?.toLocaleLowerCase();
+  const [value, setValue] = React.useState(0);
+  const { t } = useTranslation();
+  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
 
-    const renderConversations = React.useCallback(() => {
-        switch (ticketSource) {
-            case 'email':
-                return <EmailConversationContainer />
-            case 'ivr':
-                return <TelephonicConversationContainer />
-            case 'whatsapp':
-                return <WhatsAppConversationContainer />
-            default:
-                return <></>
-        }
-    }, [ticketSource]);
+  const renderConversations = React.useCallback(() => {
+    switch (ticketSource) {
+      case 'email':
+        return <EmailConversationContainer />;
+      case 'ivr':
+        return <TelephonicConversationContainer />;
+      case 'whatsapp':
+        return <WhatsAppConversationContainer />;
+      default:
+        return <></>;
+    }
+  }, [ticketSource]);
 
-    const renderLinks = useCallback(() => {
-        return <TicketLinksContainer />
-    }, [])
+  const renderLinks = useCallback(() => {
+    return <TicketLinksContainer />;
+  }, []);
 
-    const renderHistory = useCallback(() => {
-        return <TicketHistoryContainer />
-    }, [])
+  const renderHistory = useCallback(() => {
+    return <TicketHistoryContainer />;
+  }, []);
 
-    return (
-        <LayoutWrapper width="100%" flexDirection="column">
-            <TicketConversationHeader ticketDetailsById={ticketDetailsById!} />
-            <StyledTabs
-                value={value}
-                onChange={handleChange}
-                aria-label="styled tabs example"
-                sx={{ minHeight: 'unset' }}
-            >
-                <StyledTab label={t("conversations_label")} />
-                <StyledTab label={t("links_label")} />
-                <StyledTab label={t("history_label")} />
-            </StyledTabs>
-            {/* <Tabs value={value} onChange={handleChange} variant="fullWidth" aria-label="ticket-tabs" sx={{ minHeight: 'unset' }}>
+  return (
+    <LayoutWrapper width="100%" flexDirection="column">
+      <TicketConversationHeader ticketDetailsById={ticketDetailsById!} />
+      <StyledTabs
+        value={value}
+        onChange={handleChange}
+        aria-label="styled tabs example"
+        sx={{ minHeight: 'unset' }}
+      >
+        <StyledTab label={t('conversations_label')} />
+        <StyledTab label={t('links_label')} />
+        <StyledTab label={t('history_label')} />
+      </StyledTabs>
+      {/* <Tabs value={value} onChange={handleChange} variant="fullWidth" aria-label="ticket-tabs" sx={{ minHeight: 'unset' }}>
                 <StyledTab label="Conversations" />
                 <StyledTab label="Links" />
                 <StyledTab label="History" />
             </Tabs> */}
-            <div style={{ height: 'calc(100% - 114px)' }}>
-                <CustomTabPanel value={value} index={0} height="100%">
-                    {renderConversations()}
-                </CustomTabPanel>
-                <CustomTabPanel value={value} index={1} height="100%">
-                    {renderLinks()}
-                </CustomTabPanel>
-                <CustomTabPanel value={value} index={2} height="100%">
-                    {renderHistory()}
-                </CustomTabPanel>
-            </div>
-        </LayoutWrapper>
-    )
-}
+      <div style={{ height: 'calc(100% - 114px)' }}>
+        <CustomTabPanel value={value} index={0} height="100%">
+          {renderConversations()}
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={1} height="100%">
+          {renderLinks()}
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={2} height="100%">
+          {renderHistory()}
+        </CustomTabPanel>
+      </div>
+    </LayoutWrapper>
+  );
+};

@@ -1,54 +1,67 @@
-import { useServiceClient } from "lib";
-import React from "react";
-import { useMutation, useQueryClient } from "react-query";
-import { AutoAssignmentEndPoint, AutoAssignmentQueryKey } from "./api-enums";
+import { useServiceClient } from 'lib';
+import React from 'react';
+import { useMutation, useQueryClient } from 'react-query';
 
-export type AutoMationType = 'auto_assignment' | 'create_trigger' | 'update_trigger';
+import { AutoAssignmentEndPoint, AutoAssignmentQueryKey } from './api-enums';
+
+export type AutoMationType =
+  | 'auto_assignment'
+  | 'create_trigger'
+  | 'update_trigger';
 export interface ICreateAutoAssignmentArgs {
-    name: string
-    description: string
-    rules: Rule[]
-    /**
-     * needed if automation_type type is auto_assignment
-     */
-    associate_agent?: AssociateAgent;
-    /**
-     * needed if automation_type type is not auto_assignment
-     */
-    trigger_actions?: {
-        field_trigger_action_id: string
-        value: string | {
-            queue_id: string;
-            assignee_id: string;
-        }
-    }[]
-    automation_type: AutoMationType
+  name: string;
+  description: string;
+  rules: Rule[];
+  /**
+   * needed if automation_type type is auto_assignment
+   */
+  associate_agent?: AssociateAgent;
+  /**
+   * needed if automation_type type is not auto_assignment
+   */
+  trigger_actions?: {
+    field_trigger_action_id: string;
+    value:
+      | string
+      | {
+          queue_id: string;
+          assignee_id: string;
+        };
+  }[];
+  automation_type: AutoMationType;
 }
 
 export interface Rule {
-    ticket_field_id: number | string
-    operator_id: number | string
-    value: string | string[];
-    rule_type: string
+  ticket_field_id: number | string;
+  operator_id: number | string;
+  value: string | string[];
+  rule_type: string;
 }
 
 export interface AssociateAgent {
-    queue_id: number | string
-    assignment_mode: string
+  queue_id: number | string;
+  assignment_mode: string;
 }
-
 
 export const useCreateAutoAssignment = () => {
-    const { postData } = useServiceClient();
-    const queryClient = useQueryClient();
+  const { postData } = useServiceClient();
+  const queryClient = useQueryClient();
 
-    const createAutoAssignment = React.useCallback((args: ICreateAutoAssignmentArgs) => postData(AutoAssignmentEndPoint.CREATE_ASSIGNMENT, args).then((res) => res.json()), [postData]);
+  const createAutoAssignment = React.useCallback(
+    (args: ICreateAutoAssignmentArgs) =>
+      postData(AutoAssignmentEndPoint.CREATE_ASSIGNMENT, args).then((res) =>
+        res.json()
+      ),
+    [postData]
+  );
 
-    return useMutation({
-        mutationKey: AutoAssignmentQueryKey.CREATE_ASSIGNMENT,
-        mutationFn: createAutoAssignment,
-        onSuccess: () => {
-            queryClient.invalidateQueries(AutoAssignmentQueryKey.FETCH_ALL_ASSIGNMENTS);
-        }
-    });
-}
+  return useMutation({
+    mutationKey: AutoAssignmentQueryKey.CREATE_ASSIGNMENT,
+    mutationFn: createAutoAssignment,
+    onSuccess: () => {
+      queryClient.invalidateQueries(
+        AutoAssignmentQueryKey.FETCH_ALL_ASSIGNMENTS
+      );
+    },
+  });
+};

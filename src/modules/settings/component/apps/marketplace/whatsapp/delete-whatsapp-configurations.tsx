@@ -1,41 +1,61 @@
-import React from "react";
-import { useNotifications } from "lib";
-import { NegativeActionDialog } from "lib/ui-ux";
-import { useDeleteWhatsAppConfiguration } from "modules/settings/apis/marketplace/whatsapp";
-import { Button } from "@mui/material";
-import { DeleteForever } from "@mui/icons-material";
-import { useTranslation } from "react-i18next";
+import { DeleteForever } from '@mui/icons-material';
+import { Button } from '@mui/material';
+import { useNotifications } from 'lib';
+import { NegativeActionDialog } from 'lib/ui-ux';
+import { useDeleteWhatsAppConfiguration } from 'modules/settings/apis/marketplace/whatsapp';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const DeleteWhatsAppConfigurations = () => {
-    const { mutateAsync, isLoading } = useDeleteWhatsAppConfiguration();
-    const { showNotification } = useNotifications();
-    const [open, setOpen] = React.useState(false);
-    const { t } = useTranslation();
+  const { mutateAsync, isLoading } = useDeleteWhatsAppConfiguration();
+  const { showNotification } = useNotifications();
+  const [open, setOpen] = React.useState(false);
+  const { t } = useTranslation();
 
-    const toggleDeleteDialogBox = () => {
-        setOpen((prev) => !prev);
-    };
+  const toggleDeleteDialogBox = () => {
+    setOpen((prev) => !prev);
+  };
 
-    const onDeleleHandler = React.useCallback((ev: React.MouseEvent<HTMLButtonElement>) => {
-        ev.stopPropagation();
-        mutateAsync()
-            .then(() => showNotification({ message: 'whatsapp Configuration uninstalled successfully', type: 'success' }))
-            .catch(() => showNotification({ message: 'Failed to uninstall whatsapp Configuration', type: 'error' }))
-            .finally(() => toggleDeleteDialogBox())
-    }, [mutateAsync, showNotification])
+  const onDeleleHandler = React.useCallback(
+    (ev: React.MouseEvent<HTMLButtonElement>) => {
+      ev.stopPropagation();
+      mutateAsync()
+        .then(() =>
+          showNotification({
+            message: 'whatsapp Configuration uninstalled successfully',
+            type: 'success',
+          })
+        )
+        .catch(() =>
+          showNotification({
+            message: 'Failed to uninstall whatsapp Configuration',
+            type: 'error',
+          })
+        )
+        .finally(() => toggleDeleteDialogBox());
+    },
+    [mutateAsync, showNotification]
+  );
 
-    return (
-        <>
-            <Button variant="outlined" size="medium" onClick={toggleDeleteDialogBox} startIcon={<DeleteForever />}>Uninstall</Button>
-            <NegativeActionDialog
-                open={open}
-                isLoading={isLoading}
-                content='Do you want to uninstall this whatsapp Configuration?'
-                title='Uninstall whatsapp Configuration'
-                negativeActionLabel={t("yes_delete")}
-                onNegativeActionClick={onDeleleHandler}
-                onClose={toggleDeleteDialogBox} />
-        </>
-    )
-
-}
+  return (
+    <>
+      <Button
+        variant="outlined"
+        size="medium"
+        onClick={toggleDeleteDialogBox}
+        startIcon={<DeleteForever />}
+      >
+        Uninstall
+      </Button>
+      <NegativeActionDialog
+        open={open}
+        isLoading={isLoading}
+        content="Do you want to uninstall this whatsapp Configuration?"
+        title="Uninstall whatsapp Configuration"
+        negativeActionLabel={t('yes_delete')}
+        onNegativeActionClick={onDeleleHandler}
+        onClose={toggleDeleteDialogBox}
+      />
+    </>
+  );
+};

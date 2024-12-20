@@ -1,15 +1,20 @@
-import { AddNewStatusForm } from "modules/settings/component/user-and-permissions/agent-availability/add-new status-form";
+import { AddNewStatusForm } from 'modules/settings/component/user-and-permissions/agent-availability/add-new status-form';
 
-export const CreateNewStatusContainer = (props: { toggleAddStatusDrawer: () => void }) => {
-    const { toggleAddStatusDrawer } = props;
+export const CreateNewStatusContainer = (props: {
+  toggleAddStatusDrawer: () => void;
+}) => {
+  const { toggleAddStatusDrawer } = props;
 
-    const onFormSubmitHandler = () => {
-        toggleAddStatusDrawer()
-    }
+  const onFormSubmitHandler = () => {
+    toggleAddStatusDrawer();
+  };
 
-    return (
-        <>
-            <AddNewStatusForm mode="create" onFormSubmitHandler={onFormSubmitHandler} />
-        </>
-    )
-}
+  return (
+    <>
+      <AddNewStatusForm
+        mode="create"
+        onFormSubmitHandler={onFormSubmitHandler}
+      />
+    </>
+  );
+};
