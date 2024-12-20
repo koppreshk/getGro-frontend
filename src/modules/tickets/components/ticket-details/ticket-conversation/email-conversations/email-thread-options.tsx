@@ -1,4 +1,4 @@
-import { TurnLeft, TurnRight } from '@mui/icons-material';
+import { TurnLeft } from '@mui/icons-material';
 import { Tooltip, IconButton } from '@mui/material';
 import { useFeature } from 'lib/hooks';
 import React, { useMemo } from 'react';
@@ -10,7 +10,7 @@ interface IEmailThreadOptionsProps {
 }
 
 export const EmailThreadOptions = (props: IEmailThreadOptionsProps) => {
-  const { onReplyClick, onForwardClick } = props;
+  const { onReplyClick } = props;
   const { t } = useTranslation();
   const showReplyTicket = useFeature('reply_ticket');
 
@@ -22,13 +22,13 @@ export const EmailThreadOptions = (props: IEmailThreadOptionsProps) => {
         renderIcon: () => <TurnLeft />,
         hidden: !showReplyTicket,
       },
-      {
-        title: t('forward'),
-        onClick: onForwardClick,
-        renderIcon: () => <TurnRight />,
-      },
+      // {
+      //   title: t('forward'),
+      //   onClick: onForwardClick,
+      //   renderIcon: () => <TurnRight />,
+      // },
     ],
-    [onForwardClick, onReplyClick, showReplyTicket, t]
+    [onReplyClick, showReplyTicket, t]
   );
 
   return (
