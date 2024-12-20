@@ -1,5 +1,11 @@
 import { createColumnHelper } from '@tanstack/react-table';
-import { DataGrid, FlexBox, TableControls } from 'lib/ui-ux';
+import {
+  DataGrid,
+  FlexBox,
+  NoDataIllustration,
+  TableControls,
+} from 'lib/ui-ux';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import { ICustomerData } from '../apis/fetch-all-customers';
@@ -63,6 +69,7 @@ interface IAllCustomersProps {
 export const AllCustomers = (props: IAllCustomersProps) => {
   const { data, isLoading, totalPages } = props;
   const columns = useColumns();
+  const { t } = useTranslation();
   return (
     <FlexBox padding="10px" flexDirection="column" height="100%" width="100%">
       <TableControls
@@ -71,12 +78,16 @@ export const AllCustomers = (props: IAllCustomersProps) => {
         isContentViewModeVisible={false}
       />
       <ContentContainer>
-        <StyledDataGrid
-          columns={columns}
-          data={data!}
-          isLoading={isLoading}
-          hideTableControls={false}
-        />
+        {(data?.length ?? 0) > 0 || props.isLoading ? (
+          <StyledDataGrid
+            columns={columns}
+            data={data!}
+            isLoading={isLoading}
+            hideTableControls={false}
+          />
+        ) : (
+          <NoDataIllustration message={t('no_customers_display')} />
+        )}
       </ContentContainer>
     </FlexBox>
   );

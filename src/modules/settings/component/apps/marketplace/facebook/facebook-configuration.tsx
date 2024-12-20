@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Login } from '@mui/icons-material';
-import { Button } from '@mui/material';
+import { LoadingButton } from 'lib/ui-ux';
 import { useFacebookConfiguration } from 'modules/settings/apis/marketplace/facebook';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -28,7 +28,7 @@ export const FacebookConfiguration = (props: {
 }) => {
   const { mode = 'authenticate' } = props;
   const { t } = useTranslation();
-  const { mutateAsync } = useFacebookConfiguration();
+  const { mutateAsync, isLoading } = useFacebookConfiguration();
 
   useEffect(() => {
     // Initialize the Facebook SDK
@@ -82,15 +82,14 @@ export const FacebookConfiguration = (props: {
   };
 
   return (
-    <>
-      <Button
-        variant="contained"
-        size="medium"
-        onClick={handleFBLogin}
-        endIcon={<Login />}
-      >
-        {mode === 'authenticate' ? t('authenticate') : t('re_authenticate')}
-      </Button>
-    </>
+    <LoadingButton
+      variant="contained"
+      size="medium"
+      isLoading={isLoading}
+      onClick={handleFBLogin}
+      endIcon={<Login />}
+    >
+      {mode === 'authenticate' ? t('authenticate') : t('re_authenticate')}
+    </LoadingButton>
   );
 };

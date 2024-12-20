@@ -228,7 +228,7 @@ export const DisplayTicketsGrid = (props: IDisplayTicketsGridProps) => {
   }, [dispatch, props.totalPages]);
 
   const { totalPages } = useAppSelector((state) => state.tickets);
-
+  const { t } = useTranslation();
   return (
     <React.Fragment>
       {data.length > 0 || props.isLoading ? (
@@ -239,7 +239,7 @@ export const DisplayTicketsGrid = (props: IDisplayTicketsGridProps) => {
           totalPages={totalPages}
         />
       ) : (
-        <NoDataIllustration message="No tickets to display" />
+        <NoDataIllustration message={t('no_tickets_display')} />
       )}
     </React.Fragment>
   );

@@ -562,5 +562,7 @@
   "sec": "sec",
   "secs": "secs",
   "ago": "ago",
-  "customers": "Customers"
+  "customers": "Customers",
+  "no_customers_display": "No customers to display",
+  "no_tickets_display": "No tickets to display"
 }
