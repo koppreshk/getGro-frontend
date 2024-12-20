@@ -1,12 +1,12 @@
 import { Typography } from '@mui/material';
 import { FlexBox, GridLayout } from 'lib/ui-ux';
 import { IAgentPerformance } from 'modules/dashboard/apis';
+import { useTranslation } from 'react-i18next';
 import styled, { useTheme } from 'styled-components';
 
 import { FirstContactResolution } from './first-contact-resolution';
 import { SLAAchieved } from './sla-achieved';
 import { SLABreached } from './sla-breached';
-import { useTranslation } from 'react-i18next';
 
 interface ISingleStatProps {
   value: string;

@@ -1,16 +1,15 @@
-import { useFetchAllStatuses } from "modules/settings/apis/ticket-status";
-import { TicketStatusLayout } from "../../component/ticket-configurations/ticket-status/ticket-status-layout";
-import { ErrorMessage } from "lib/ui-ux";
+import { ErrorMessage } from 'lib/ui-ux';
+import { useFetchAllStatuses } from 'modules/settings/apis/ticket-status';
+
+import { TicketStatusLayout } from '../../component/ticket-configurations/ticket-status/ticket-status-layout';
 
 export default function TicketStatusContainer() {
-    const { data, isLoading, error, isFetching } = useFetchAllStatuses();
+  const { data, isLoading, error, isFetching } = useFetchAllStatuses();
 
-    if (data || isLoading) {
-        return (
-            <TicketStatusLayout data={data} isLoading={isLoading || isFetching} />
-        )
-    }
+  if (data || isLoading) {
     return (
-        <ErrorMessage statusCode={error?.message} />
-    )
+      <TicketStatusLayout data={data} isLoading={isLoading || isFetching} />
+    );
+  }
+  return <ErrorMessage statusCode={error?.message} />;
 }

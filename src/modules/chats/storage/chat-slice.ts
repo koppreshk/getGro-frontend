@@ -1,25 +1,26 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+
 import { ChatConversation } from '../apis';
 
 interface ChatState {
-    chatDetails?: ChatConversation;
+  chatDetails?: ChatConversation;
 }
 
 const initialState: ChatState = {
-    chatDetails: undefined
-}
+  chatDetails: undefined,
+};
 
 export const chatSlice = createSlice({
-    name: 'chat',
-    initialState,
-    reducers: {
-        setChatDetails: (state, action: PayloadAction<ChatConversation>) => {
-            state.chatDetails = action.payload
-        }
+  name: 'chat',
+  initialState,
+  reducers: {
+    setChatDetails: (state, action: PayloadAction<ChatConversation>) => {
+      state.chatDetails = action.payload;
     },
-})
+  },
+});
 
 // Action creators are generated for each case reducer function
-export const {  setChatDetails } = chatSlice.actions
+export const { setChatDetails } = chatSlice.actions;
 
-export default chatSlice.reducer
+export default chatSlice.reducer;
