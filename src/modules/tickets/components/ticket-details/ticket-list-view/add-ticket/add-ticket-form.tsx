@@ -66,6 +66,13 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
       tags: [],
     },
   });
+
+  const associatedTags = formMethods.watch('tags');
+  const suggestedTags: ITagInput[] = allTags.filter(
+    (tag) =>
+      !associatedTags.some((associatedTag) => associatedTag.id === tag.id)
+  );
+
   return (
     <FormProvider {...formMethods}>
       <FlexBox
@@ -150,10 +157,7 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
               name="tags"
               allowToAddTagsViaText={false}
               allowSuggestions
-              suggestedTags={allTags.map((item) => ({
-                name: item.name,
-                id: item.id,
-              }))}
+              suggestedTags={suggestedTags}
             />
           </Grid>
         </FlexBox>

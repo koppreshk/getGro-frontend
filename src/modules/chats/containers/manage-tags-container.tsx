@@ -1,4 +1,5 @@
 import { CircularProgress } from '@mui/material';
+import { useNotifications } from 'lib';
 import { useAppSelector } from 'lib/hooks';
 import { FlexBox, ManageTags } from 'lib/ui-ux';
 
@@ -8,11 +9,16 @@ export const ManageTagsContainer = () => {
   const chatDetails = useAppSelector((state) => state.chat.chatDetails);
   const { data: allTags, isLoading: tagsLoading } = useFetchAllChatTags();
   const { mutateAsync } = useUpdateChatTags();
+  const { showNotification } = useNotifications();
 
   const onTagsChange = (tag_ids: (string | number)[]) => {
     return mutateAsync({
       tag_ids,
       conversation_id: chatDetails!.id,
+    }).then((res) => {
+      if (!res.status) {
+        showNotification({ message: res.message, type: 'error' });
+      }
     });
   };
 
