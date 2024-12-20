@@ -76,8 +76,7 @@ export const ExotelServiceProvider = (props: {
     }
   };
 
-  const dialCallback: MakeCallCallback = (status, data) => {
-    console.log('Inside dialCallback', status, data);
+  const dialCallback: MakeCallCallback = (status) => {
     if (status === 'success') {
       webPhone.current?.AcceptCall();
       setCallActive(true);
