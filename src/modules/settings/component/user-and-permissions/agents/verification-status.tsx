@@ -6,23 +6,35 @@ import { FlexBox } from 'lib/ui-ux';
 import { VerificationStatusType } from 'modules/settings/apis/users-and-permissions';
 
 interface VerificationStatusProps {
-    status: VerificationStatusType;
+  status: VerificationStatusType;
 }
 
 export const VerificationStatus = (props: VerificationStatusProps) => {
-    const { status } = props;
-    return (
-        <>
-
-            <FlexBox gap={'5px'} alignItems='center'>
-                {
-                    status === 'Verified'
-                        ? <CheckCircleOutlineIcon sx={{ color: '#079455' }} />
-                        : (status === 'Unverified' ? <HighlightOffOutlinedIcon sx={{ color: '#475467' }} /> : <RemoveCircleOutlineIcon sx={{ color: '#dc6803' }} />)
-                }
-                <Typography variant='body3' sx={{ color: status === 'Verified' ? '#067647' : status === 'Unverified' ? '#3b4455' : '#dc6803' }}>{status.charAt(0).toUpperCase() + status.slice(1)}</Typography>
-            </FlexBox>
-
-        </>
-    )
-}
+  const { status } = props;
+  return (
+    <>
+      <FlexBox gap={'5px'} alignItems="center">
+        {status === 'Verified' ? (
+          <CheckCircleOutlineIcon sx={{ color: '#079455' }} />
+        ) : status === 'Unverified' ? (
+          <HighlightOffOutlinedIcon sx={{ color: '#475467' }} />
+        ) : (
+          <RemoveCircleOutlineIcon sx={{ color: '#dc6803' }} />
+        )}
+        <Typography
+          variant="body3"
+          sx={{
+            color:
+              status === 'Verified'
+                ? '#067647'
+                : status === 'Unverified'
+                  ? '#3b4455'
+                  : '#dc6803',
+          }}
+        >
+          {status.charAt(0).toUpperCase() + status.slice(1)}
+        </Typography>
+      </FlexBox>
+    </>
+  );
+};

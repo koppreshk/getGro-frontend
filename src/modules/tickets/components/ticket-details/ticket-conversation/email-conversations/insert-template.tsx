@@ -1,15 +1,28 @@
-import { ChevronLeftOutlined, ChevronRightOutlined, PostAddOutlined } from '@mui/icons-material';
+import {
+  ChevronLeftOutlined,
+  ChevronRightOutlined,
+  PostAddOutlined,
+} from '@mui/icons-material';
 import InsertCommentOutlinedIcon from '@mui/icons-material/InsertCommentOutlined';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Typography } from '@mui/material';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  IconButton,
+  Typography,
+} from '@mui/material';
 import { CustomIconButton, FlexBox } from 'lib/ui-ux';
 import { useCallback, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 const templates = [
-    {
-        header: 'Thank You Email Template',
-        content: `<div>
+  {
+    header: 'Thank You Email Template',
+    content: `<div>
         <p>Hi [Customer],</p>
         <br/>
         <p>Thank you so much for referring your friend [Friend‘s name] to us. I’ve enjoyed getting to know them and doing business with them. I‘m glad that you’ve stuck around with us for this long and brought your friend to share the experience with you.</p>
@@ -20,11 +33,11 @@ const templates = [
         <br/>
         <p>Cheers,</p>
         <p>[Your name]</p>
-        </div>`
-    },
-    {
-        header: 'Questionnaire Email Template',
-        content: `<div>
+        </div>`,
+  },
+  {
+    header: 'Questionnaire Email Template',
+    content: `<div>
         <p>Hey [Customer],</p>
         <br/>
         <p>Thanks for your recent purchase with us! I hope you're enjoying your [product/service].</p>
@@ -35,22 +48,22 @@ const templates = [
         <p>[Your name]</p>
         <br/>
         <p>&lt;&lt; Attach questionnaire &gt;&gt;</p>
-        </div>`
-    },
-    {
-        header: 'Feedback Appreciation Email Template',
-        content: `<div>
+        </div>`,
+  },
+  {
+    header: 'Feedback Appreciation Email Template',
+    content: `<div>
         <p>Hi [Customer Name],</p>
         <br/>
         <p>Thank you so much for taking the time to fill out our questionnaire. We’re always looking to improve the quality of our offerings, and we’re happy that you’re a part of that.</p>
         <br/>
         <p>Thanks again,</p>
         <p>[Your Brand/Service]</p>
-        </div>`
-    },
-    {
-        header: 'Angry Customer Response Email Template',
-        content: `<div>
+        </div>`,
+  },
+  {
+    header: 'Angry Customer Response Email Template',
+    content: `<div>
         <p>[Customer],</p>
         <br/>
         <p>I am so sorry to hear that you have had such a poor experience that you no longer want to work with us.</p>
@@ -61,11 +74,11 @@ const templates = [
         <p>Best,</p>
         <br/>
         <p>[Your name]</p>
-        </div>`
-    },
-    {
-        header: 'Customer Service Follow-up Email Template',
-        content: `<div>
+        </div>`,
+  },
+  {
+    header: 'Customer Service Follow-up Email Template',
+    content: `<div>
         <p>Hey [Customer],</p>
         <br/>
         <p>I hope you're enjoying your new product. I remember you were torn between two versions, but I firmly believe you went with the perfect choice for you.</p>
@@ -73,66 +86,85 @@ const templates = [
         <p>Cheers,</p>
         <br/>
         <p>[Your name]</p>
-        </div>`
-    }
-]
+        </div>`,
+  },
+];
 
 export const InsertTemplate = (props: { editorType: string }) => {
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const [selectedTemplateIndex, setTemplateIndex] = useState(0);
-    const { setValue } = useFormContext();
-    const open = Boolean(anchorEl);
-    const { t } = useTranslation();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [selectedTemplateIndex, setTemplateIndex] = useState(0);
+  const { setValue } = useFormContext();
+  const open = Boolean(anchorEl);
+  const { t } = useTranslation();
 
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-    const onNextClick = () => {
-        setTemplateIndex((prevValue) => prevValue + 1);
-    }
+  const onNextClick = () => {
+    setTemplateIndex((prevValue) => prevValue + 1);
+  };
 
-    const onPreviousClick = () => {
-        setTemplateIndex((prevValue) => prevValue - 1);
-    }
+  const onPreviousClick = () => {
+    setTemplateIndex((prevValue) => prevValue - 1);
+  };
 
-    const setEditorValue = useCallback(() => {
-        setValue(`${props.editorType}.editor`, templates[selectedTemplateIndex].content);
-        handleClose();
-    }, [props.editorType, selectedTemplateIndex, setValue]);
+  const setEditorValue = useCallback(() => {
+    setValue(
+      `${props.editorType}.editor`,
+      templates[selectedTemplateIndex].content
+    );
+    handleClose();
+  }, [props.editorType, selectedTemplateIndex, setValue]);
 
-    return (
-        <>
-            <IconButton onClick={handleClick} title={t('insert_template')}>
-                <InsertCommentOutlinedIcon />
-            </IconButton>
-            <Dialog
-                open={open}
-                onClose={handleClose}>
-                <DialogTitle id="alert-dialog-title">
-                    {templates[selectedTemplateIndex].header}
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        <Typography variant='caption'>
-                            <div dangerouslySetInnerHTML={{ __html: templates[selectedTemplateIndex].content }} />
-                        </Typography>
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions sx={{ justifyContent: 'space-between' }}>
-                    <FlexBox>
-                        <CustomIconButton tooltipProps={{ title: 'Previous template' }} iconComponent={<ChevronLeftOutlined />} onClick={onPreviousClick} disabled={selectedTemplateIndex === 0} />
-                        <CustomIconButton tooltipProps={{ title: 'Next template' }} iconComponent={<ChevronRightOutlined />} onClick={onNextClick} disabled={selectedTemplateIndex + 1 === templates.length} />
-                    </FlexBox>
-                    <Button variant='contained' endIcon={<PostAddOutlined />} onClick={setEditorValue}>
-                        {t('insert_template')}
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </>
-    )
-}
+  return (
+    <>
+      <IconButton onClick={handleClick} title={t('insert_template')}>
+        <InsertCommentOutlinedIcon />
+      </IconButton>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle id="alert-dialog-title">
+          {templates[selectedTemplateIndex].header}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            <Typography variant="caption">
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: templates[selectedTemplateIndex].content,
+                }}
+              />
+            </Typography>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions sx={{ justifyContent: 'space-between' }}>
+          <FlexBox>
+            <CustomIconButton
+              tooltipProps={{ title: 'Previous template' }}
+              iconComponent={<ChevronLeftOutlined />}
+              onClick={onPreviousClick}
+              disabled={selectedTemplateIndex === 0}
+            />
+            <CustomIconButton
+              tooltipProps={{ title: 'Next template' }}
+              iconComponent={<ChevronRightOutlined />}
+              onClick={onNextClick}
+              disabled={selectedTemplateIndex + 1 === templates.length}
+            />
+          </FlexBox>
+          <Button
+            variant="contained"
+            endIcon={<PostAddOutlined />}
+            onClick={setEditorValue}
+          >
+            {t('insert_template')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  );
+};

@@ -1,5 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table';
-import { DataGrid, FlexBox } from 'lib/ui-ux';
+import { DataGrid, FlexBox, TableControls } from 'lib/ui-ux';
+import styled from 'styled-components';
 
 import { ICustomerData } from '../apis/fetch-all-customers';
 
@@ -31,17 +32,52 @@ const useColumns = () => {
   return columns;
 };
 
+const StyledDataGrid = styled(DataGrid)`
+  margin: 0 20px;
+  width: calc(100% - 40px);
+  height: 100%;
+  && {
+    table {
+      border-collapse: collapse;
+    }
+    td,
+    th {
+      padding: 10px;
+    }
+  }
+`;
+
+const ContentContainer = styled.div`
+  padding: 20px 0px;
+  background: ${({ theme }) => theme.pallete.grayVariant6};
+  height: calc(100% - 76px);
+  box-sizing: border-box;
+`;
+
 interface IAllCustomersProps {
   data?: ICustomerData[];
   isLoading: boolean;
+  totalPages?: number;
 }
 
 export const AllCustomers = (props: IAllCustomersProps) => {
-  const { data, isLoading } = props;
+  const { data, isLoading, totalPages } = props;
   const columns = useColumns();
   return (
-    <FlexBox padding="10px">
-      <DataGrid columns={columns} data={data!} isLoading={isLoading} />
+    <FlexBox padding="10px" flexDirection="column" height="100%" width="100%">
+      <TableControls
+        totalPages={totalPages}
+        enableSerchField
+        isContentViewModeVisible={false}
+      />
+      <ContentContainer>
+        <StyledDataGrid
+          columns={columns}
+          data={data!}
+          isLoading={isLoading}
+          hideTableControls={false}
+        />
+      </ContentContainer>
     </FlexBox>
   );
 };

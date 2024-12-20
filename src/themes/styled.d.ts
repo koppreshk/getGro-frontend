@@ -1,7 +1,6 @@
 // import original module declarations
 import 'styled-components';
 
-
 // and extend them!
 declare module 'styled-components' {
   export interface IDashboardColors {
@@ -16,59 +15,59 @@ declare module 'styled-components' {
   }
   export interface DefaultTheme {
     pallete: {
-      white: string,
-      black: string,
-      blue: string,
-      standardBorderColor: string,
+      white: string;
+      black: string;
+      blue: string;
+      standardBorderColor: string;
       formFieldBorderColor: string;
       onHoverFormFieldBorderColor: string;
-      green: string,
-      powderBlue: string,
-      grayVariant1: string,
-      grayVariant2: string,
-      grayVariant3: string,
-      grayVariant4: string,
-      grayVariant5: string,
-      grayTextVariant5: string,
-      grayVariant6: string,
-      grayVariant7: string,
-      primaryPurple: string,
-      purpleLight: string,
-      grayNeutral: string,
-      defaultTextColor: string,
-      primaryPurpleText: string,
-      genericBackgroundColor: string,
+      green: string;
+      powderBlue: string;
+      grayVariant1: string;
+      grayVariant2: string;
+      grayVariant3: string;
+      grayVariant4: string;
+      grayVariant5: string;
+      grayTextVariant5: string;
+      grayVariant6: string;
+      grayVariant7: string;
+      primaryPurple: string;
+      purpleLight: string;
+      grayNeutral: string;
+      defaultTextColor: string;
+      primaryPurpleText: string;
+      genericBackgroundColor: string;
       disabledBgColor: string;
-      toolbarBgColor: string,
-      toolbarBgColorOnHover: string
-    },
+      toolbarBgColor: string;
+      toolbarBgColorOnHover: string;
+    };
     semantics: {
       standardBorder: string;
-      secondaryTextColor: string,
+      secondaryTextColor: string;
       borderRadius: {
-        xs: string,
-        sm: string,
-        md: string,
-        lg: string,
-        xl: string
-      }
-    }
+        xs: string;
+        sm: string;
+        md: string;
+        lg: string;
+        xl: string;
+      };
+    };
     channelSpecific: {
-      facebook: string,
-      email: string,
-      whatsApp: string,
-      instagram: string,
-      twitter: string,
-      telephonic: string,
-      sms: string
-    }
+      facebook: string;
+      email: string;
+      whatsApp: string;
+      instagram: string;
+      twitter: string;
+      telephonic: string;
+      sms: string;
+    };
     others: {
       scrollHandleColor: string;
       scrollContainerColor: string;
       sideMenuBg: string;
       sideMenuIconColor: string;
       sideMenuHoverColor: string;
-    },
-    dashboard: IDashboardColors
+    };
+    dashboard: IDashboardColors;
   }
 }

@@ -1,9 +1,9 @@
-import { ChatDetailsLayout } from "../components/chat-details";
+import { ChatDetailsLayout } from '../components/chat-details';
 
 export const ChatDetailsLayoutContainer = () => {
-    return (
-        <>
-            <ChatDetailsLayout />
-        </>
-    )
-}
+  return (
+    <>
+      <ChatDetailsLayout />
+    </>
+  );
+};

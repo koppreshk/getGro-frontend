@@ -1,32 +1,44 @@
-import { useEffect } from "react";
-import { CircularProgress } from "@mui/material";
-import { CasedAttachmentResposne, Conversations, IAttachments, useFetchAttachments } from "../../../apis"
-import { FileDownloadOutlined } from "@mui/icons-material";
-import { saveFile, toCamelCasedKeysFromUnderScores } from "lib/utils";
-import { CustomIconButton } from "lib/ui-ux";
+import { FileDownloadOutlined } from '@mui/icons-material';
+import { CircularProgress } from '@mui/material';
+import { CustomIconButton } from 'lib/ui-ux';
+import { saveFile, toCamelCasedKeysFromUnderScores } from 'lib/utils';
+import { useEffect } from 'react';
 
-export const DownloadAttachmentsContainer = (props: Pick<IAttachments, 'id'> & Pick<Conversations, 'messageId'>) => {
-    const { id, messageId } = props;
-    const [downloadAttachments, { isLoading, data, dataUpdatedAt }] = useFetchAttachments(`${id}-download`);
+import {
+  CasedAttachmentResposne,
+  Conversations,
+  IAttachments,
+  useFetchAttachments,
+} from '../../../apis';
 
-    useEffect(() => {
-        if (data) {
-            const { fileContent, fileName, fileType } = toCamelCasedKeysFromUnderScores(data) as CasedAttachmentResposne;
-            saveFile(fileContent, fileName, fileType)
-        }
-    }, [data, dataUpdatedAt])
+export const DownloadAttachmentsContainer = (
+  props: Pick<IAttachments, 'id'> & Pick<Conversations, 'messageId'>
+) => {
+  const { id, messageId } = props;
+  const [downloadAttachments, { isLoading, data, dataUpdatedAt }] =
+    useFetchAttachments(`${id}-download`);
 
-    const onDownloadClick = () => {
-        downloadAttachments({ 'attachment_id': id, 'message_id': messageId })
+  useEffect(() => {
+    if (data) {
+      const { fileContent, fileName, fileType } =
+        toCamelCasedKeysFromUnderScores(data) as CasedAttachmentResposne;
+      saveFile(fileContent, fileName, fileType);
     }
+  }, [data, dataUpdatedAt]);
 
-    if (isLoading) {
-        return (
-            <CircularProgress size={24} />
-        )
-    }
+  const onDownloadClick = () => {
+    downloadAttachments({ attachment_id: id, message_id: messageId });
+  };
 
-    return (
-        <CustomIconButton onClick={onDownloadClick} tooltipProps={{ title: "Download File" }} iconComponent={<FileDownloadOutlined />} />
-    )
-}
+  if (isLoading) {
+    return <CircularProgress size={24} />;
+  }
+
+  return (
+    <CustomIconButton
+      onClick={onDownloadClick}
+      tooltipProps={{ title: 'Download File' }}
+      iconComponent={<FileDownloadOutlined />}
+    />
+  );
+};

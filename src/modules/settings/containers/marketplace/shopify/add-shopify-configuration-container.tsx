@@ -1,38 +1,52 @@
-import React from "react";
-import { useNotifications } from "lib";
-import { useSetupShopifylConfigurations } from "modules/settings/apis/marketplace/shopify";
-import { AddShopifyConfigurationFormBase } from "modules/settings/component/apps/marketplace/shopify";
+import { useNotifications } from 'lib';
+import { useSetupShopifylConfigurations } from 'modules/settings/apis/marketplace/shopify';
+import { AddShopifyConfigurationFormBase } from 'modules/settings/component/apps/marketplace/shopify';
+import React from 'react';
 
 export interface IShopifyFormFields {
-    storeName: string;
-    storeUrl: string;
-    accessToken: string;
+  storeName: string;
+  storeUrl: string;
+  accessToken: string;
 }
 
-export const AddShopifyConfigContainer = (props: { togglePopup: () => void; }) => {
-    const {togglePopup} = props;
-    const { mutateAsync, isLoading: isMutationLoading } = useSetupShopifylConfigurations();
-    const { showNotification } = useNotifications();
-    
-    const onSubmit = React.useCallback((formData: IShopifyFormFields) => {
-        mutateAsync({
-            store_name: formData.storeName,
-            store_url: formData.storeUrl,
-            store_access_token: formData.accessToken,
-        }).then(() => {
-            togglePopup();
-            showNotification({ message: 'Shopify configured successfully', type: 'success' });
-        }).catch(() => {
-            togglePopup();
-            showNotification({ message: 'Failed to setup Shopify configurations', type: 'error' })
+export const AddShopifyConfigContainer = (props: {
+  togglePopup: () => void;
+}) => {
+  const { togglePopup } = props;
+  const { mutateAsync, isLoading: isMutationLoading } =
+    useSetupShopifylConfigurations();
+  const { showNotification } = useNotifications();
+
+  const onSubmit = React.useCallback(
+    (formData: IShopifyFormFields) => {
+      mutateAsync({
+        store_name: formData.storeName,
+        store_url: formData.storeUrl,
+        store_access_token: formData.accessToken,
+      })
+        .then(() => {
+          togglePopup();
+          showNotification({
+            message: 'Shopify configured successfully',
+            type: 'success',
+          });
         })
-    }, [mutateAsync, showNotification, togglePopup])
+        .catch(() => {
+          togglePopup();
+          showNotification({
+            message: 'Failed to setup Shopify configurations',
+            type: 'error',
+          });
+        });
+    },
+    [mutateAsync, showNotification, togglePopup]
+  );
 
-    return (
-        <AddShopifyConfigurationFormBase
-            togglePopup={props.togglePopup}
-            onSubmit={onSubmit}
-            isMutationLoading={isMutationLoading}
-        />
-    )
-}
+  return (
+    <AddShopifyConfigurationFormBase
+      togglePopup={props.togglePopup}
+      onSubmit={onSubmit}
+      isMutationLoading={isMutationLoading}
+    />
+  );
+};

@@ -3,9 +3,8 @@ import { FlexBox } from 'lib/ui-ux';
 import { ISLAValues } from 'modules/dashboard/apis';
 import React from 'react';
 
-import { DashboardDateRangePicker } from '../dashboard-date-range-picker';
-
 import { SLAmetricsChart, TicketsBreached } from '.';
+import { DashboardDateRangePicker } from '../dashboard-date-range-picker';
 
 interface ISLADashboardProps {
   data: ISLAValues;
