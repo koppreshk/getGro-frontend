@@ -10,15 +10,6 @@ const StyledFlexbox = styled(FlexBox)`
   /* background-color: ${(props) => props.theme.pallete.white}; */
 `;
 
-export const DashboardLayout = () => {
-  return (
-    <FlexBox flexDirection="column" height="100%" width="100%" overflowY="auto">
-      <UserDetails />
-      <DashboardCategoriesPanel />
-    </FlexBox>
-  );
-};
-
 const UserDetails = () => {
   const config = useAppSelector((state) => state.core.config);
   const { pallete } = useTheme();
@@ -31,5 +22,14 @@ const UserDetails = () => {
         <Trans i18nKey="welcome_back" />
       </Typography>
     </StyledFlexbox>
+  );
+};
+
+export const DashboardLayout = () => {
+  return (
+    <FlexBox flexDirection="column" height="100%" width="100%" overflowY="auto">
+      <UserDetails />
+      <DashboardCategoriesPanel />
+    </FlexBox>
   );
 };
