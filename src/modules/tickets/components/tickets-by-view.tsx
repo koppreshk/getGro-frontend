@@ -1,6 +1,6 @@
 import { TableControls } from 'lib/ui-ux';
 import { useSearchParams } from 'react-router-dom';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { ITicketDetails } from '../apis';
 import { DisplayTicketsGrid } from './display-tickets-grid';

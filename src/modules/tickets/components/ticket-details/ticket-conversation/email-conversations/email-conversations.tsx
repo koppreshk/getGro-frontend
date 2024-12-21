@@ -2,7 +2,7 @@ import { FlexBox, IChangeArgs } from 'lib/ui-ux';
 import { useReplyToEmail } from 'modules/tickets/apis';
 import { useCallback } from 'react';
 import { useFormContext } from 'react-hook-form';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { EmailCard } from './email-card';
 import { IEmailConversations } from './email-conversations-layout';

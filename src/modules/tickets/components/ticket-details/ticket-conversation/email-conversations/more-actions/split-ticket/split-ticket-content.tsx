@@ -13,7 +13,7 @@ import {
 import { StyledRichTextEditor } from 'modules/settings/component/ticket-configurations/templates/add-templates-form';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { QueueOptions } from './queue-options';
 import { SplitTicketProps } from './split-ticket';

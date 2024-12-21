@@ -6,7 +6,7 @@ import { Status } from 'modules/core/components/parts/agent-status';
 import { useFetchCurrentStatus } from 'modules/settings/apis/users-and-permissions';
 import React, { useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { ChangePassword, RolesPermissionsTab, Signature } from '.';
 import { General } from './general';

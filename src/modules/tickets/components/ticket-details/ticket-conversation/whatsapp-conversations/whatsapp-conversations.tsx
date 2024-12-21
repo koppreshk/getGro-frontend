@@ -7,7 +7,7 @@ import {
   useSendWhatsAppMessages,
 } from 'modules/tickets/apis';
 import React, { useMemo } from 'react';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { WhatsAppChatContent } from './whatsapp-chat-content';
 import { WhatsappFooter } from './whatsapp-footer';

@@ -5,7 +5,7 @@ import { FlexBox, NegativeActionDialog, CustomIconButton } from 'lib/ui-ux';
 import React from 'react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { ReassignForm } from './reassign-form';
 

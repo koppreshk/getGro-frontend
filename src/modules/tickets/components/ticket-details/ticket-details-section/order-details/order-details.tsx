@@ -10,7 +10,7 @@ import { commonStyles } from 'lib/ui-ux/common-styles';
 import { IOrders } from 'modules/tickets/apis';
 import React, { useEffect, useRef, useState, forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { OrderItem } from './order-item';
 

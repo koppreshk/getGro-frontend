@@ -1,7 +1,7 @@
 import { FlexBox, HorizontalSeparator } from 'lib/ui-ux';
 import { ISearchTickets, ITicketDetails } from 'modules/tickets/apis';
 import { useFormContext } from 'react-hook-form';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { IMergeTicketsFormFields } from './merge-tickets-content';
 import { SearchTickets } from './search-ticket';

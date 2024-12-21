@@ -17,7 +17,7 @@ import { ChangeEventHandler, useCallback, useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 const StyledCard = styled(FlexBox)`
   background: ${({ theme }) => theme.pallete.grayVariant5};

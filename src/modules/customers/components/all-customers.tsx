@@ -6,7 +6,7 @@ import {
   TableControls,
 } from 'lib/ui-ux';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { ICustomerData } from '../apis/fetch-all-customers';
 
@@ -75,6 +75,7 @@ export const AllCustomers = (props: IAllCustomersProps) => {
       <TableControls
         totalPages={totalPages}
         enableSerchField
+        searchPlaceholder={t('search_by_email_phone')}
         isContentViewModeVisible={false}
       />
       <ContentContainer>

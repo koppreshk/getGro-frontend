@@ -15,7 +15,7 @@ import {
   Outlet,
   Navigate,
 } from 'react-router-dom';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import LoginPage from '../../login/login';
 import { useFetchUserConfig } from '../apis/fetch-user-config';

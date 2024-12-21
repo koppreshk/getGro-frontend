@@ -2,7 +2,7 @@ import { PostAdd } from '@mui/icons-material';
 import { useFeature } from 'lib/hooks';
 import { CustomIconButton } from 'lib/ui-ux';
 import React, { useCallback } from 'react';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { AddTicket } from './add-ticket';
 

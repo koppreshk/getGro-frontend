@@ -10,7 +10,7 @@ import { ITemplatesFormFields } from 'modules/settings/containers/templates';
 import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 interface ITemplatesFormProps {
   mode: 'create' | 'edit';

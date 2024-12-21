@@ -9,7 +9,7 @@ import {
 } from 'modules/tickets/containers';
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { TicketConversationHeader } from './ticket-conversation-header';
 

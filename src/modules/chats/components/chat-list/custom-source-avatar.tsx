@@ -4,7 +4,7 @@ import { chooseRandomColors } from 'lib/utils';
 import { ChatConversation } from 'modules/chats/apis';
 import { useSourceIcon } from 'modules/tickets/hooks';
 import { useMemo } from 'react';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 const SmallAvatar = styled(FlexBox)`
   background: ${({ theme }) => theme.pallete.white};

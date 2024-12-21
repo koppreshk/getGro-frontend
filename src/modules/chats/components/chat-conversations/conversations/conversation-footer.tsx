@@ -27,7 +27,7 @@ import { useUploadFileToS3 } from 'modules/chats/apis/upload-file-s3';
 import React, { useCallback, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { isImageMimeType } from './preview-file-content';
 

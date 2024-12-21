@@ -4,7 +4,7 @@ import { SelectField } from 'lib/form-fields';
 import { FlexBox } from 'lib/ui-ux';
 import ReactApexChart from 'react-apexcharts';
 import { FormProvider, useForm } from 'react-hook-form';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 const ChartContainer = styled.div`
   background: ${({ theme }) => theme.pallete.white};

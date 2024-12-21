@@ -4,7 +4,7 @@ import { FlexBox } from 'lib/ui-ux';
 import { useFetchAllTicketQueues } from 'modules/settings/apis';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 const StyledSelectFields = styled(SelectField)`
   .MuiSelect-select {

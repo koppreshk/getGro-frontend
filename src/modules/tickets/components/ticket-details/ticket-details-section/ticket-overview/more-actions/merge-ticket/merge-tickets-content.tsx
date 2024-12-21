@@ -6,7 +6,7 @@ import { CancelButton, FlexBox, LoadingButton } from 'lib/ui-ux';
 import { ITicketDetails, useSearchTickets } from 'modules/tickets/apis';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { PrimaryTicketDetails } from './primary-ticket-details';
 

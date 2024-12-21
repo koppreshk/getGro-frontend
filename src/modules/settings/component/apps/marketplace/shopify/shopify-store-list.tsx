@@ -6,7 +6,7 @@ import { IShopifyStore } from 'modules/settings/apis/marketplace/shopify';
 import { EditShopifyConfigurationContainer } from 'modules/settings/containers/marketplace/shopify';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { DeleteShopifyStore } from './delete-shopify-store';
 import { AddAppConfigurationDialog } from '../add-app-configuration-dialog';

@@ -4,7 +4,7 @@ import { CustomIconButton, FlexBox, RefreshButton } from 'lib/ui-ux';
 import { convertToUnderscore } from 'lib/utils';
 import { Trans, useTranslation } from 'react-i18next';
 import { useMatch, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { TicketViewActionButtons } from '.';
 

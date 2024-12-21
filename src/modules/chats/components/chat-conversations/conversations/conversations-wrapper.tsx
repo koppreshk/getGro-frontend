@@ -11,7 +11,7 @@ import {
 } from 'modules/chats/apis';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { ChatContent } from './chat-content';
 import { ConversationFooter } from './conversation-footer';

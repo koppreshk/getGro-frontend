@@ -16,7 +16,7 @@ import {
   useFormContext,
   get,
 } from 'react-hook-form';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 type SelectFieldProps = Omit<SelectProps<unknown>, 'error' | 'required'> & {
   name: string;

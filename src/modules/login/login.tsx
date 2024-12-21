@@ -13,7 +13,7 @@ import { CheckboxField } from 'lib/form-fields/checkbox-field';
 import { FlexBox } from 'lib/ui-ux';
 import React, { useCallback } from 'react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { LoginResult, useLoginUser } from './apis';
 import { ForgotPassword } from './forgot-password';

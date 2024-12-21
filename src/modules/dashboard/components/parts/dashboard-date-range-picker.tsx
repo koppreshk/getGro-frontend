@@ -8,7 +8,7 @@ import { Popover, Typography } from '@mui/material';
 import { FlexBox } from 'lib/ui-ux';
 import { getFormattedDate } from 'lib/utils';
 import React from 'react';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 const DateRangeDisplay = styled(FlexBox)`
   border-radius: ${({ theme }) => theme.semantics.borderRadius.md};

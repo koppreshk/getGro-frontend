@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import { Row, flexRender } from '@tanstack/react-table';
 import React from 'react';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { IDataGridProps } from '../data-grid';
 

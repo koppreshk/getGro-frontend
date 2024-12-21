@@ -4,7 +4,7 @@ import {
   FlexBox,
   NoDataIllustration,
 } from 'lib/ui-ux';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { useFetchAllConversations } from '../apis';
 import { ChatList } from '../components';

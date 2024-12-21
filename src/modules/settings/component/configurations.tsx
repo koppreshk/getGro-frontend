@@ -4,7 +4,7 @@ import { FlexBox } from 'lib/ui-ux';
 import { Suspense } from 'react';
 import { Trans } from 'react-i18next';
 import { Outlet, useSearchParams } from 'react-router-dom';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { ConfigurationOptions } from './configuration-options';
 

@@ -5,7 +5,7 @@ import { FlexBox, HorizontalSeparator, TypographyName } from 'lib/ui-ux';
 import { IGenericResponse } from 'modules/settings/apis/ticket-status/types';
 import { useEffect, useState } from 'react';
 import { Trans } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 const StyledButton = styled(Button)`
   && {

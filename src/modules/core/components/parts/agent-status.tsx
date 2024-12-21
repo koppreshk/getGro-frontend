@@ -13,7 +13,7 @@ import {
   useUpdateStatus,
 } from 'modules/settings/apis/users-and-permissions';
 import { useState } from 'react';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export enum Statuses {
   Online = 'Online',

@@ -4,7 +4,7 @@ import { DrawerExtended, DrawerHeaderWrapper, FlexBox } from 'lib/ui-ux';
 import { getFormatedNumberByLocale } from 'lib/utils';
 import { IOrders } from 'modules/tickets/apis';
 import { useState, memo } from 'react';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import {
   CurrencyINR,

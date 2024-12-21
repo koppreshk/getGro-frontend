@@ -4,7 +4,7 @@ import { CustomIconButton, FlexBox } from 'lib/ui-ux';
 import { ITicketDetails } from 'modules/tickets/apis';
 import React, { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { CommonHeader } from '../common-header';
 import { PastTicketCard } from './past-ticket-card';
@@ -12,15 +12,6 @@ import { PastTicketCard } from './past-ticket-card';
 interface IPastTicketsLayoutProps {
   pastTickets: ITicketDetails[];
 }
-
-export const PastTicketsLayout = (props: IPastTicketsLayoutProps) => {
-  const { pastTickets } = props;
-  return (
-    <>
-      <PastTickets pastTickets={pastTickets} />
-    </>
-  );
-};
 
 const LayoutContainer = styled(FlexBox)`
   .parent-container:last-child {
@@ -93,6 +84,15 @@ const PastTickets = (props: IPastTicketsLayoutProps) => {
           </FlexBox>
         )}
       </LayoutContainer>
+    </>
+  );
+};
+
+export const PastTicketsLayout = (props: IPastTicketsLayoutProps) => {
+  const { pastTickets } = props;
+  return (
+    <>
+      <PastTickets pastTickets={pastTickets} />
     </>
   );
 };

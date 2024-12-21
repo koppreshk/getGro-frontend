@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export interface DonutSlice {
   id: number;

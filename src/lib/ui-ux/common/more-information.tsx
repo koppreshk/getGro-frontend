@@ -1,6 +1,6 @@
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Typography } from '@mui/material';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { FlexBox } from '..';
 

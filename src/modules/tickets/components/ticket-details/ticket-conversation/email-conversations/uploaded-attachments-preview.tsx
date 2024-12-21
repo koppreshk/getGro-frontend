@@ -1,7 +1,7 @@
 import { DeleteOutline } from '@mui/icons-material';
 import { Typography, IconButton } from '@mui/material';
 import { IFileInfo, IChangeArgs, FlexBox } from 'lib/ui-ux';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 interface IUploadedAttachmentsPreviewProps {
   item: IFileInfo;

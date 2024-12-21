@@ -7,10 +7,9 @@ import { Conversations, ITicketById } from 'modules/tickets/apis';
 import { useCallback, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { EmailConversations, IEmailFormFields } from './email-conversations';
-
 import './printable-content.css';
 import { EmailThreadOptions } from './email-thread-options';
 
@@ -119,7 +118,9 @@ export const EmailConversationLayout = (props: {
     (ev) => {
       ev.stopPropagation();
       toggleReplyEditorView();
-      showEditor && toggleEditorView();
+      if (showEditor) {
+        toggleEditorView();
+      }
     },
     [showEditor, toggleEditorView, toggleReplyEditorView]
   );
@@ -133,7 +134,9 @@ export const EmailConversationLayout = (props: {
           emailThreads[emailThreads.length - 1].htmlContent
         );
         toggleEditorView();
-        showReplyEditor && toggleReplyEditorView();
+        if (showReplyEditor) {
+          toggleReplyEditorView();
+        }
       },
       [
         emailThreads,

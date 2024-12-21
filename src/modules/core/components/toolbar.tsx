@@ -1,7 +1,7 @@
 /// <reference types="vite-plugin-svgr/client" />
 
 import { FlexBox } from 'lib/ui-ux';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import GetGroLogoImg from './../../../assets/svg/favicon.svg?react';
 import { AccountMenu, AgentStatus } from './parts';

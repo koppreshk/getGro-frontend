@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 import { FlexBox } from 'lib/ui-ux';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 interface IDateFiltersProps {
   filterValue: string;
