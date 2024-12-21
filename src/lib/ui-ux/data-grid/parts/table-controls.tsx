@@ -26,7 +26,6 @@ import {
   VerticalSeparator,
 } from 'lib/ui-ux';
 import React, { useCallback, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 
@@ -43,6 +42,7 @@ interface ITableControlProps {
   totalPages?: number;
   onDownloadBtnClick?: () => void;
   searchPlaceholder?: string;
+  searchLabel?: string;
 }
 
 const TableActions = () => {
@@ -145,7 +145,8 @@ export const TableControls = (props: ITableControlProps) => {
     enableSerchField,
     onDownloadBtnClick,
     isContentViewModeVisible,
-    searchPlaceholder = i18n.t('Search by Ticket ID/Subject'),
+    searchLabel = i18n.t('search_tickets'),
+    searchPlaceholder = i18n.t('search_by_ticket_id_subject'),
   } = props;
   const config = useAppSelector((state) => state.core.config);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -161,7 +162,6 @@ export const TableControls = (props: ITableControlProps) => {
       ? config?.ticket_layout_view === 'card_view'
       : 'true';
   const searchTextFromParams = searchParams.get('searchText');
-  const { t } = useTranslation();
   const [noOfRows, setFilters] = useState(noOfRecords);
 
   React.useEffect(() => {
@@ -242,7 +242,7 @@ export const TableControls = (props: ITableControlProps) => {
             defaultValue={searchTextFromParams}
             sx={{ width: '300px' }}
             size="small"
-            label={t('search_tickets')}
+            label={searchLabel}
             onChange={debouncedSearchChange}
           />
         ) : null}

@@ -5,6 +5,8 @@ import {
   NoDataIllustration,
   TableControls,
 } from 'lib/ui-ux';
+import { saveAsCSV } from 'lib/utils';
+import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { styled } from 'styled-components';
 
@@ -70,13 +72,22 @@ export const AllCustomers = (props: IAllCustomersProps) => {
   const { data, isLoading, totalPages } = props;
   const columns = useColumns();
   const { t } = useTranslation();
+
+  const onDownloadBtnClick = useCallback(() => {
+    if (props.data) {
+      saveAsCSV(props.data, { fileName: 'all-customers' });
+    }
+  }, [props.data]);
+
   return (
     <FlexBox padding="10px" flexDirection="column" height="100%" width="100%">
       <TableControls
         totalPages={totalPages}
         enableSerchField
+        searchLabel={t('search_customers')}
         searchPlaceholder={t('search_by_email_phone')}
         isContentViewModeVisible={false}
+        onDownloadBtnClick={onDownloadBtnClick}
       />
       <ContentContainer>
         {(data?.length ?? 0) > 0 || props.isLoading ? (

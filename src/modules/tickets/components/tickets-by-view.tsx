@@ -1,4 +1,6 @@
 import { TableControls } from 'lib/ui-ux';
+import { saveAsCSV } from 'lib/utils';
+import { useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 
@@ -28,22 +30,11 @@ export const TicketsByView = (props: TicketsByViewProps) => {
   const [searchParams] = useSearchParams();
   const cardView = searchParams.get('cardView') || 'true';
 
-  const onDownloadBtnClick = () => {
+  const onDownloadBtnClick = useCallback(() => {
     if (props.data) {
-      const headers = Object.keys(props.data[0]).join(',') + '\n';
-      const rows = props.data
-        .map((obj) => Object.values(obj).join(','))
-        .join('\n');
-      const csvContent = headers + rows;
-
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'data.csv');
-      link.click();
+      saveAsCSV(props.data, { fileName: 'tickets' });
     }
-  };
+  }, [props.data]);
 
   return (
     <>

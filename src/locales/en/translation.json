@@ -566,5 +566,6 @@
   "no_customers_display": "No customers to display",
   "no_tickets_display": "No tickets to display",
   "search_by_email_phone": "Search by email/phone",
-  "search_by_ticket_id_subject": "Search by Ticket ID/Subject"
+  "search_by_ticket_id_subject": "Search by Ticket ID/Subject",
+  "search_customers": "Search Customers"
 }

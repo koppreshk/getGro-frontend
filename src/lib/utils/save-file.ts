@@ -14,6 +14,12 @@ function downloadFromURLOnSafariBrowser(url: string, mimeType: string) {
   }
   location.href = url;
 }
+const regexToTestIfSafariBrowser =
+  /(Version)\/(\d+)\.(\d+)(?:\.(\d+))?.*Safari\//;
+
+export function isSafariBrowser() {
+  return regexToTestIfSafariBrowser.test(navigator.userAgent);
+}
 export function downloadFromURL(
   url: string,
   fileName: string,
@@ -40,9 +46,11 @@ function generateURL(content: Blob | string, mimeType: string) {
   return new Promise<string>((resolve) => {
     if (typeof content === 'string') {
       try {
-        content.startsWith('data:')
-          ? resolve(content)
-          : resolve('data:' + mimeType + ';base64,' + content);
+        if (content.startsWith('data:')) {
+          resolve(content);
+        } else {
+          resolve('data:' + mimeType + ';base64,' + content);
+        }
       } catch (y) {
         resolve('data:' + mimeType + ',' + encodeURIComponent(content));
       }
@@ -72,8 +80,19 @@ export function saveFile(
   return true;
 }
 
-const regexToTestIfSafariBrowser =
-  /(Version)\/(\d+)\.(\d+)(?:\.(\d+))?.*Safari\//;
-export function isSafariBrowser() {
-  return regexToTestIfSafariBrowser.test(navigator.userAgent);
+export function saveAsCSV(
+  data: Array<object>,
+  args: { fileName?: string } = { fileName: 'data' }
+) {
+  args = args || { fileName: 'data' };
+  const headers = Object.keys(data[0]).join(',') + '\n';
+  const rows = data.map((obj) => Object.values(obj).join(',')).join('\n');
+  const csvContent = headers + rows;
+
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.setAttribute('download', `${args.fileName}.csv`);
+  link.click();
 }

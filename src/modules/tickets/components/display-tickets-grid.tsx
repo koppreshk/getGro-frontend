@@ -6,7 +6,7 @@ import { useDateDifference } from 'lib/utils';
 import React, { MouseEventHandler } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMatch, useNavigate, useSearchParams } from 'react-router-dom';
-import styled, { css } from 'styled-components';
+import { styled, css } from 'styled-components';
 
 import { ITicketDetails } from '../apis';
 import { useSourceIcon } from '../hooks/ticket-hooks';
