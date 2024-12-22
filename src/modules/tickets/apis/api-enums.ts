@@ -34,6 +34,8 @@ export enum TicketsEndPoint {
   SPLIT_TICKET = 'split',
 
   FETCH_ALL_ORDERS = 'fetch_all_orders',
+
+  FETCH_ALL_TAGS = 'tag/all',
 }
 
 export enum TicketsQueryKey {
@@ -71,4 +73,6 @@ export enum TicketsQueryKey {
   SPLIT_TICKET = 'SPLIT_TICKET',
 
   FETCH_ALL_ORDERS = 'FETCH_ALL_ORDERS',
+
+  FETCH_ALL_TAGS = 'FETCH_ALL_TAGS',
 }
