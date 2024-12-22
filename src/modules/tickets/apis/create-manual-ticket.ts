@@ -11,7 +11,7 @@ interface ICreateManualTicketArgs {
   description: string;
   ticket_assignee_type: 'auto' | 'manual';
   priority_id: string;
-  tags: string[];
+  tags: (string | number)[];
   queue_id?: string;
   assigned_to?: string;
   /**

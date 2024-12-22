@@ -6,7 +6,7 @@ import { SlaComparisondata } from 'modules/dashboard/apis';
 import ReactApexChart from 'react-apexcharts';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 const ChartContainer = styled.div`
   background: ${({ theme }) => theme.pallete.white};

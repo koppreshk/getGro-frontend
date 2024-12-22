@@ -1,10 +1,8 @@
 import { CircularProgress } from '@mui/material';
+import { useNotifications } from 'lib';
 import { FlexBox } from 'lib/ui-ux';
-import {
-  ITicketDetails,
-  useFetchAllTags,
-  useUpdateTags,
-} from 'modules/tickets/apis';
+import { useFetchAllTags } from 'modules/settings/apis/tags';
+import { ITicketDetails, useUpdateTags } from 'modules/tickets/apis';
 import { ManageTags } from 'modules/tickets/components/ticket-details/ticket-details-section/ticket-overview';
 
 interface IManageTagsContainerProps
@@ -14,11 +12,16 @@ export const ManageTagsContainer = (props: IManageTagsContainerProps) => {
   const { ticketId, tags } = props;
   const { data: allTags, isLoading: tagsLoading } = useFetchAllTags();
   const { mutateAsync } = useUpdateTags();
+  const { showNotification } = useNotifications();
 
-  const onTagsChange = (newTags: number[]) => {
+  const onTagsChange = (newTags: (number | string)[]) => {
     return mutateAsync({
       tags: newTags,
       ticket_id: ticketId,
+    }).then((res) => {
+      if (!res.status) {
+        showNotification({ message: res.message, type: 'error' });
+      }
     });
   };
 

@@ -11,7 +11,7 @@ import { FlexBox } from 'lib/ui-ux';
 import { useCallback, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router-dom';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { useRateConversation } from '../apis';
 

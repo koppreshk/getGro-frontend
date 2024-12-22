@@ -51,47 +51,63 @@ import styled, { IDashboardColors, useTheme } from 'styled-components';
 //     },],
 // }
 
-const getChartMetadata = (totalCompletedByUsers: TotalCompletedByUsers, dashboard: IDashboardColors) => {
-    return {
-        series: [{ data: Object.values(totalCompletedByUsers) }],
-        options: {
-            chart: {
-                fontFamily: 'Poppins',
-                type: 'bar',
-            },
-            xaxis: {
-                categories: Object.keys(totalCompletedByUsers)
-            },
-            plotOptions: {
-                bar: {
-                    borderRadius: 4,
-                    borderRadiusApplication: 'end',
-                }
-            },
-            colors: [dashboard.graphBgColor2, dashboard.graphBgColor3, dashboard.graphBgColor4, dashboard.graphBgColor5, dashboard.graphBgColor6, dashboard.graphBgColor7],
-        } as ApexOptions,
-    }
-}
+const getChartMetadata = (
+  totalCompletedByUsers: TotalCompletedByUsers,
+  dashboard: IDashboardColors
+) => {
+  return {
+    series: [{ data: Object.values(totalCompletedByUsers) }],
+    options: {
+      chart: {
+        fontFamily: 'Poppins',
+        type: 'bar',
+      },
+      xaxis: {
+        categories: Object.keys(totalCompletedByUsers),
+      },
+      plotOptions: {
+        bar: {
+          borderRadius: 4,
+          borderRadiusApplication: 'end',
+        },
+      },
+      colors: [
+        dashboard.graphBgColor2,
+        dashboard.graphBgColor3,
+        dashboard.graphBgColor4,
+        dashboard.graphBgColor5,
+        dashboard.graphBgColor6,
+        dashboard.graphBgColor7,
+      ],
+    } as ApexOptions,
+  };
+};
 
 export const ChartContainer = styled(FlexBox)`
-    background: ${({ theme }) => theme.pallete.white};
-    padding: 20px 20px 0 20px;
-    border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
+  background: ${({ theme }) => theme.pallete.white};
+  padding: 20px 20px 0 20px;
+  border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
 `;
 
 interface ITotalDisposedProps {
-    totalCompletedByUsers: TotalCompletedByUsers;
+  totalCompletedByUsers: TotalCompletedByUsers;
 }
 
 export const TotalDisposed = (props: ITotalDisposedProps) => {
-    const { totalCompletedByUsers } = props;
-    const { dashboard } = useTheme();
-    const chartMetadata = getChartMetadata(totalCompletedByUsers, dashboard);
+  const { totalCompletedByUsers } = props;
+  const { dashboard } = useTheme();
+  const chartMetadata = getChartMetadata(totalCompletedByUsers, dashboard);
 
-    return (
-        <ChartContainer flexDirection='column' justifyContent='space-between'>
-            <Typography variant='h4'>Total Disposed</Typography>
-            <Chart options={chartMetadata.options} series={chartMetadata.series} type="bar" height="350px" width={'100%'} />
-        </ChartContainer>
-    )
-}
+  return (
+    <ChartContainer flexDirection="column" justifyContent="space-between">
+      <Typography variant="h4">Total Disposed</Typography>
+      <Chart
+        options={chartMetadata.options}
+        series={chartMetadata.series}
+        type="bar"
+        height="350px"
+        width={'100%'}
+      />
+    </ChartContainer>
+  );
+};

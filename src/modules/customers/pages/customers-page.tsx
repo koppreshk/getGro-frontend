@@ -1,7 +1,7 @@
 import { FlexBox } from 'lib/ui-ux';
 import { commonStyles } from 'lib/ui-ux/common-styles';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { CustomerViews } from '../components';
 import { AllCustomersContainer } from '../containers';

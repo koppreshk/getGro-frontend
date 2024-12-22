@@ -4,7 +4,7 @@ import { FlexBox } from 'lib/ui-ux';
 import { LinkedTickets } from 'modules/tickets/apis';
 import { Trans } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 const StyledContainer = styled(FlexBox)`
   background: ${({ theme }) => theme.pallete.grayVariant5};

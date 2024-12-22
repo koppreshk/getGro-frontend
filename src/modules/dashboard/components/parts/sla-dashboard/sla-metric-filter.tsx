@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import { FlexBox } from 'lib/ui-ux';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { DateFilters } from '../tickets-monitor/date-filters';
 

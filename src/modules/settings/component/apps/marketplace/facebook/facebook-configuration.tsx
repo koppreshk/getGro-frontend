@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Login } from '@mui/icons-material';
-import { Button } from '@mui/material';
+import { LoadingButton } from 'lib/ui-ux';
 import { useFacebookConfiguration } from 'modules/settings/apis/marketplace/facebook';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -28,7 +28,7 @@ export const FacebookConfiguration = (props: {
 }) => {
   const { mode = 'authenticate' } = props;
   const { t } = useTranslation();
-  const { mutateAsync } = useFacebookConfiguration();
+  const { mutateAsync, isLoading } = useFacebookConfiguration();
 
   useEffect(() => {
     // Initialize the Facebook SDK
@@ -58,7 +58,6 @@ export const FacebookConfiguration = (props: {
     window.FB.login(
       (response: FacebookResponse) => {
         if (response.authResponse) {
-          console.log('Logged in!', response);
           mutateAsync({
             code: response.authResponse.code,
           }).then(() => {
@@ -66,11 +65,11 @@ export const FacebookConfiguration = (props: {
           });
 
           // Fetch user details like name and email
-          window.FB.api('/me', { fields: 'name, email' }, (userInfo: any) => {
-            console.log('User info:', userInfo);
-          });
+          // window.FB.api('/me', { fields: 'name, email' }, (userInfo: any) => {
+          //   console.log('User info:', userInfo);
+          // });
         } else {
-          console.log('User cancelled login or did not fully authorize.');
+          console.error('User cancelled login or did not fully authorize.');
         }
       },
       {
@@ -83,15 +82,14 @@ export const FacebookConfiguration = (props: {
   };
 
   return (
-    <>
-      <Button
-        variant="contained"
-        size="medium"
-        onClick={handleFBLogin}
-        endIcon={<Login />}
-      >
-        {mode === 'authenticate' ? t('authenticate') : t('re_authenticate')}
-      </Button>
-    </>
+    <LoadingButton
+      variant="contained"
+      size="medium"
+      isLoading={isLoading}
+      onClick={handleFBLogin}
+      endIcon={<Login />}
+    >
+      {mode === 'authenticate' ? t('authenticate') : t('re_authenticate')}
+    </LoadingButton>
   );
 };

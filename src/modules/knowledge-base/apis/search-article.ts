@@ -1,25 +1,28 @@
-import React from "react";
-import { useServiceClient } from "lib"
-import { useMutation } from "react-query";
-import { KnowledgeBaseEndPoint, KnowledgeBaseQueryKeys } from "./api-enums";
-import { IKnowledgeBase } from ".";
+import { useServiceClient } from 'lib';
+import React from 'react';
+import { useMutation } from 'react-query';
+
+import { IKnowledgeBase } from '.';
+import { KnowledgeBaseEndPoint, KnowledgeBaseQueryKeys } from './api-enums';
 
 interface ISearchArticleArgs {
-    title: string;
+  title: string;
 }
 
 export const useSearchArticle = () => {
-    const { postData } = useServiceClient();
+  const { postData } = useServiceClient();
 
-    const searchArticle = React.useCallback((args: ISearchArticleArgs) => {
-        return postData(`${KnowledgeBaseEndPoint.SEARCH_ARTICLE}`, {
-            title: args.title,
-        })
-            .then((res) => res.json())
-    }, [postData]);
+  const searchArticle = React.useCallback(
+    (args: ISearchArticleArgs) => {
+      return postData(`${KnowledgeBaseEndPoint.SEARCH_ARTICLE}`, {
+        title: args.title,
+      }).then((res) => res.json());
+    },
+    [postData]
+  );
 
-    return useMutation<IKnowledgeBase[], unknown, ISearchArticleArgs>({
-        mutationFn: searchArticle,
-        mutationKey: [KnowledgeBaseQueryKeys.SEARCH_ARTICLE]
-    });
-}
+  return useMutation<IKnowledgeBase[], unknown, ISearchArticleArgs>({
+    mutationFn: searchArticle,
+    mutationKey: [KnowledgeBaseQueryKeys.SEARCH_ARTICLE],
+  });
+};

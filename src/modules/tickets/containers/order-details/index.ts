@@ -1,1 +1,1 @@
-export * from './order-details-container'
+export * from './order-details-container';

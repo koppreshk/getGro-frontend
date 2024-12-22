@@ -1,6 +1,14 @@
 import { createColumnHelper } from '@tanstack/react-table';
-import { DataGrid, FlexBox, TableControls } from 'lib/ui-ux';
-import styled from 'styled-components';
+import {
+  DataGrid,
+  FlexBox,
+  NoDataIllustration,
+  TableControls,
+} from 'lib/ui-ux';
+import { saveAsCSV } from 'lib/utils';
+import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import { styled } from 'styled-components';
 
 import { ICustomerData } from '../apis/fetch-all-customers';
 
@@ -63,20 +71,35 @@ interface IAllCustomersProps {
 export const AllCustomers = (props: IAllCustomersProps) => {
   const { data, isLoading, totalPages } = props;
   const columns = useColumns();
+  const { t } = useTranslation();
+
+  const onDownloadBtnClick = useCallback(() => {
+    if (props.data) {
+      saveAsCSV(props.data, { fileName: 'all-customers' });
+    }
+  }, [props.data]);
+
   return (
     <FlexBox padding="10px" flexDirection="column" height="100%" width="100%">
       <TableControls
         totalPages={totalPages}
         enableSerchField
+        searchLabel={t('search_customers')}
+        searchPlaceholder={t('search_by_email_phone')}
         isContentViewModeVisible={false}
+        onDownloadBtnClick={onDownloadBtnClick}
       />
       <ContentContainer>
-        <StyledDataGrid
-          columns={columns}
-          data={data!}
-          isLoading={isLoading}
-          hideTableControls={false}
-        />
+        {(data?.length ?? 0) > 0 || props.isLoading ? (
+          <StyledDataGrid
+            columns={columns}
+            data={data!}
+            isLoading={isLoading}
+            hideTableControls={false}
+          />
+        ) : (
+          <NoDataIllustration message={t('no_customers_display')} />
+        )}
       </ContentContainer>
     </FlexBox>
   );

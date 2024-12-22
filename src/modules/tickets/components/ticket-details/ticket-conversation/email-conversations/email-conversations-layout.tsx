@@ -1,135 +1,216 @@
-import { useCallback, useEffect, useState } from "react";
-import { Typography } from "@mui/material"
-import { CustomIconButton, FlexBox } from "lib/ui-ux"
-import styled from "styled-components"
-import { EmailConversations, IEmailFormFields } from "./email-conversations";
 import { UnfoldMore, UnfoldLess, Print } from '@mui/icons-material';
-import { Conversations, ITicketById } from "modules/tickets/apis";
-import { toCamelCasedKeysFromUnderScores } from "lib/utils";
+import { Typography } from '@mui/material';
+import { useAppSelector } from 'lib/hooks';
+import { CustomIconButton, FlexBox } from 'lib/ui-ux';
+import { toCamelCasedKeysFromUnderScores } from 'lib/utils';
+import { Conversations, ITicketById } from 'modules/tickets/apis';
+import { useCallback, useEffect, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { styled } from 'styled-components';
+
+import { EmailConversations, IEmailFormFields } from './email-conversations';
 import './printable-content.css';
-import { EmailThreadOptions } from "./email-thread-options";
-import { FormProvider, useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
-import { useAppSelector } from "lib/hooks";
+import { EmailThreadOptions } from './email-thread-options';
+
 // import { useSocket } from "lib/providers/socket";
 
-const LayoutWrapper = styled(FlexBox)`
-`;
+const LayoutWrapper = styled(FlexBox)``;
 
 export interface IEmailConversations extends Conversations {
-    isCollapsed: boolean;
+  isCollapsed: boolean;
 }
 
 const useEmailActionHelpers = () => {
-    const [showEditor, setShowEditor] = useState(false);
+  const [showEditor, setShowEditor] = useState(false);
 
-    const toggleEditorView = useCallback(() => {
-        setShowEditor(!showEditor);
-    }, [showEditor]);
+  const toggleEditorView = useCallback(() => {
+    setShowEditor(!showEditor);
+  }, [showEditor]);
 
-    return {
-        showEditor,
-        toggleEditorView
+  return {
+    showEditor,
+    toggleEditorView,
+  };
+};
+
+export const EmailConversationLayout = (props: {
+  conversationsData: ITicketById;
+  fetchNewThreads: () => void;
+}) => {
+  const { conversationsData, fetchNewThreads } = props;
+  const { subject, conversations, thread_id: threadId } = conversationsData;
+  const casedConversation = conversations.map((item) => ({
+    ...toCamelCasedKeysFromUnderScores(item),
+    isCollapsed: true,
+  })) as IEmailConversations[];
+  casedConversation[casedConversation.length - 1].isCollapsed = false; //making the last thread open
+  const signature = useAppSelector((state) => state.core.config?.signature);
+
+  // const { socket } = useSocket();
+  const formContext = useForm<IEmailFormFields>({
+    mode: 'onChange',
+    defaultValues: {
+      reply: {
+        editor: signature ? '<br><br><br><br><br>' + signature : '',
+      },
+    },
+    shouldUnregister: true,
+  });
+  const [emailThreads, setEmailThreads] = useState(casedConversation);
+  const {
+    showEditor: showReplyEditor,
+    toggleEditorView: toggleReplyEditorView,
+  } = useEmailActionHelpers();
+  const { showEditor, toggleEditorView } = useEmailActionHelpers();
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    if (casedConversation.length !== emailThreads.length) {
+      setEmailThreads(casedConversation);
     }
-}
+    // socket.on('production_email_channel', (_info) => {
+    //     //TODO: need to use this info obj which contains id and has to be consumed
+    //     fetchNewThreads();
+    // })
+    // return () => {
+    //     socket.off('production_email_channel')
+    // }
+  }, [
+    casedConversation,
+    casedConversation.length,
+    emailThreads.length,
+    fetchNewThreads,
+  ]);
 
-export const EmailConversationLayout = (props: { conversationsData: ITicketById, fetchNewThreads: () => void; }) => {
-    const { conversationsData, fetchNewThreads } = props;
-    const { subject, conversations, thread_id: threadId } = conversationsData;
-    const casedConversation = conversations.map((item) => ({ ...toCamelCasedKeysFromUnderScores(item), isCollapsed: true })) as IEmailConversations[];
-    casedConversation[casedConversation.length - 1].isCollapsed = false //making the last thread open 
-    const signature = useAppSelector((state) => state.core.config?.signature);
+  const onPrintHandler = () => {
+    window.print();
+  };
 
-    // const { socket } = useSocket();
-    const formContext = useForm<IEmailFormFields>({
-        mode: 'onChange',
-        defaultValues: {
-            reply: {
-                editor: signature ? "<br><br><br><br><br>" + signature : ""
-            }
-        },
-        shouldUnregister: true
-    });
-    const [emailThreads, setEmailThreads] = useState(casedConversation);
-    const { showEditor: showReplyEditor, toggleEditorView: toggleReplyEditorView } = useEmailActionHelpers();
-    const { showEditor, toggleEditorView } = useEmailActionHelpers();
-    const { t } = useTranslation();
+  const onSingleEmailCollapseHandler = (args: {
+    messageId: string;
+    isCollapsed: boolean;
+  }) => {
+    const modifiedEmailThreads = emailThreads.slice().map((item) => {
+      if (item.messageId === args.messageId) {
+        return {
+          ...item,
+          isCollapsed: args.isCollapsed,
+        };
+      }
+      return item;
+    })!;
+    setEmailThreads(modifiedEmailThreads);
+  };
 
-    useEffect(() => {
-        if (casedConversation.length !== emailThreads.length) {
-            setEmailThreads(casedConversation);
-        }
-        // socket.on('production_email_channel', (_info) => {
-        //     //TODO: need to use this info obj which contains id and has to be consumed
-        //     fetchNewThreads();
-        // })
-        // return () => {
-        //     socket.off('production_email_channel')
-        // }
-    }, [casedConversation, casedConversation.length, emailThreads.length, fetchNewThreads]);
+  const onExpandAll = () =>
+    setEmailThreads(
+      emailThreads.slice().map((item) => ({ ...item, isCollapsed: false }))
+    );
+  const onCollapseAll = () =>
+    setEmailThreads(
+      emailThreads.slice().map((item) => ({ ...item, isCollapsed: true }))
+    );
 
-    const onPrintHandler = () => {
-        window.print();
-    }
+  const isCollapsedAll = emailThreads.every((item) => item.isCollapsed);
 
-    const onSingleEmailCollapseHandler = (args: { messageId: string, isCollapsed: boolean }) => {
-        const modifiedEmailThreads = emailThreads.slice().map((item) => {
-            if (item.messageId === args.messageId) {
-                return {
-                    ...item,
-                    isCollapsed: args.isCollapsed
-                }
-            }
-            return item;
-        })!;
-        setEmailThreads(modifiedEmailThreads)
-    }
-
-    const onExpandAll = () => setEmailThreads(emailThreads.slice().map((item) => ({ ...item, isCollapsed: false })));
-    const onCollapseAll = () => setEmailThreads(emailThreads.slice().map((item) => ({ ...item, isCollapsed: true })));
-
-    const isCollapsedAll = emailThreads.every((item) => item.isCollapsed);
-
-    const onReplyClick: React.MouseEventHandler<HTMLButtonElement> = useCallback((ev) => {
-        ev.stopPropagation();
-        toggleReplyEditorView();
-        showEditor && toggleEditorView();
-    }, [showEditor, toggleEditorView, toggleReplyEditorView])
-
-    const onForwardClick: React.MouseEventHandler<HTMLButtonElement> = useCallback((ev) => {
-        ev.stopPropagation();
-        formContext.setValue('forward.editor', emailThreads[emailThreads.length - 1].htmlContent);
+  const onReplyClick: React.MouseEventHandler<HTMLButtonElement> = useCallback(
+    (ev) => {
+      ev.stopPropagation();
+      toggleReplyEditorView();
+      if (showEditor) {
         toggleEditorView();
-        showReplyEditor && toggleReplyEditorView();
-    }, [emailThreads, formContext, showReplyEditor, toggleEditorView, toggleReplyEditorView])
+      }
+    },
+    [showEditor, toggleEditorView, toggleReplyEditorView]
+  );
 
-    return (
-        <FormProvider {...formContext}>
-            <LayoutWrapper id="printable-content" flexDirection="column" gap="10px" width="100%" height="100%">
-                <FlexBox justifyContent="space-between" alignItems="center">
-                    <Typography variant="h5" title={subject} textOverflow={'ellipsis'} overflow={'hidden'} whiteSpace='nowrap' width={'calc(100% - 90px)'}>{subject}</Typography>
-                    <FlexBox gap="10px">
-                        {!isCollapsedAll ? <EmailThreadOptions onReplyClick={onReplyClick} onForwardClick={onForwardClick} /> : null}
-                        {
-                            isCollapsedAll ?
-                                <CustomIconButton className="no-print" tooltipProps={{ title: t('expand_all') }} iconComponent={<UnfoldMore />} sx={{ width: '24px', height: '24px' }} onClick={onExpandAll} />
-                                :
-                                <CustomIconButton className="no-print" tooltipProps={{ title: t('collapse_all') }} iconComponent={<UnfoldLess />} sx={{ width: '24px', height: '24px' }} onClick={onCollapseAll} />
-                        }
-                        <CustomIconButton tooltipProps={{ title: t('print_all') }} iconComponent={<Print />} sx={{ width: '24px', height: '24px' }} onClick={onPrintHandler} />
-                    </FlexBox>
-                </FlexBox>
-                <EmailConversations
-                    subject={subject}
-                    isCollapsedAll={isCollapsedAll}
-                    emailThreads={emailThreads}
-                    showEditor={showEditor}
-                    showReplyEditor={showReplyEditor}
-                    threadId={threadId}
-                    toggleEditorView={toggleEditorView}
-                    toggleReplyEditorView={toggleReplyEditorView}
-                    onSingleEmailCollapseHandler={onSingleEmailCollapseHandler} />
-            </LayoutWrapper>
-        </FormProvider>
-    )
-}
+  const onForwardClick: React.MouseEventHandler<HTMLButtonElement> =
+    useCallback(
+      (ev) => {
+        ev.stopPropagation();
+        formContext.setValue(
+          'forward.editor',
+          emailThreads[emailThreads.length - 1].htmlContent
+        );
+        toggleEditorView();
+        if (showReplyEditor) {
+          toggleReplyEditorView();
+        }
+      },
+      [
+        emailThreads,
+        formContext,
+        showReplyEditor,
+        toggleEditorView,
+        toggleReplyEditorView,
+      ]
+    );
+
+  return (
+    <FormProvider {...formContext}>
+      <LayoutWrapper
+        id="printable-content"
+        flexDirection="column"
+        gap="10px"
+        width="100%"
+        height="100%"
+      >
+        <FlexBox justifyContent="space-between" alignItems="center">
+          <Typography
+            variant="h5"
+            title={subject}
+            textOverflow={'ellipsis'}
+            overflow={'hidden'}
+            whiteSpace="nowrap"
+            width={'calc(100% - 90px)'}
+          >
+            {subject}
+          </Typography>
+          <FlexBox gap="10px">
+            {!isCollapsedAll ? (
+              <EmailThreadOptions
+                onReplyClick={onReplyClick}
+                onForwardClick={onForwardClick}
+              />
+            ) : null}
+            {isCollapsedAll ? (
+              <CustomIconButton
+                className="no-print"
+                tooltipProps={{ title: t('expand_all') }}
+                iconComponent={<UnfoldMore />}
+                sx={{ width: '24px', height: '24px' }}
+                onClick={onExpandAll}
+              />
+            ) : (
+              <CustomIconButton
+                className="no-print"
+                tooltipProps={{ title: t('collapse_all') }}
+                iconComponent={<UnfoldLess />}
+                sx={{ width: '24px', height: '24px' }}
+                onClick={onCollapseAll}
+              />
+            )}
+            <CustomIconButton
+              tooltipProps={{ title: t('print_all') }}
+              iconComponent={<Print />}
+              sx={{ width: '24px', height: '24px' }}
+              onClick={onPrintHandler}
+            />
+          </FlexBox>
+        </FlexBox>
+        <EmailConversations
+          subject={subject}
+          isCollapsedAll={isCollapsedAll}
+          emailThreads={emailThreads}
+          showEditor={showEditor}
+          showReplyEditor={showReplyEditor}
+          threadId={threadId}
+          toggleEditorView={toggleEditorView}
+          toggleReplyEditorView={toggleReplyEditorView}
+          onSingleEmailCollapseHandler={onSingleEmailCollapseHandler}
+        />
+      </LayoutWrapper>
+    </FormProvider>
+  );
+};

@@ -1,38 +1,45 @@
-import React from "react";
-import { AttachFileOutlined } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
+import { AttachFileOutlined } from '@mui/icons-material';
+import { IconButton } from '@mui/material';
+import React from 'react';
 
-export const NativeFileUpload = (props: { onChange: (fileList: File[]) => void, disabled?: boolean }) => {
-    const inputRef = React.useRef<HTMLInputElement>(null);
+export const NativeFileUpload = (props: {
+  onChange: (fileList: File[]) => void;
+  disabled?: boolean;
+}) => {
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
-    const _onButtonClick = React.useCallback(() => {
-        const { current } = inputRef;
-        current?.click();
-    }, []);
+  const _onButtonClick = React.useCallback(() => {
+    const { current } = inputRef;
+    current?.click();
+  }, []);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const _onChange = (args: React.ChangeEvent<HTMLInputElement>) => {
-        if (props.onChange) {
-            props.onChange(args.target.files ? Array.from(args.target.files) : []);
-        }
-
-        if (inputRef.current) {
-            inputRef.current.value = "";
-        }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const _onChange = (args: React.ChangeEvent<HTMLInputElement>) => {
+    if (props.onChange) {
+      props.onChange(args.target.files ? Array.from(args.target.files) : []);
     }
 
-    return (
-        <>
-            <IconButton onClick={_onButtonClick} title="Upload files(s)" disabled={props.disabled}>
-                <AttachFileOutlined />
-            </IconButton>
-            <input
-                type="file"
-                style={{ display: 'none' }}
-                multiple={false}
-                ref={inputRef}
-                onChange={_onChange}
-            />
-        </>
-    )
-}
+    if (inputRef.current) {
+      inputRef.current.value = '';
+    }
+  };
+
+  return (
+    <>
+      <IconButton
+        onClick={_onButtonClick}
+        title="Upload files(s)"
+        disabled={props.disabled}
+      >
+        <AttachFileOutlined />
+      </IconButton>
+      <input
+        type="file"
+        style={{ display: 'none' }}
+        multiple={false}
+        ref={inputRef}
+        onChange={_onChange}
+      />
+    </>
+  );
+};

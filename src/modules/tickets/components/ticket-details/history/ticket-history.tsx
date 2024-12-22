@@ -1,7 +1,6 @@
-
-import { ChatHistory } from "lib/ui-ux";
-import { TicketsHistory } from "modules/tickets/apis";
-import styled from "styled-components";
+import { ChatHistory } from 'lib/ui-ux';
+import { TicketsHistory } from 'modules/tickets/apis';
+import { styled } from 'styled-components';
 
 // const useColumns = () => {
 //     const columnHelper = createColumnHelper<TicketsHistory>();
@@ -40,17 +39,24 @@ import styled from "styled-components";
 // }
 
 const StyledChatHistory = styled(ChatHistory)`
-  padding: 0;  
+  padding: 0;
 `;
 
 export const TicketHistory = (props: { data: TicketsHistory[] }) => {
-    const { data } = props;
-    // const columns = useColumns();
+  const { data } = props;
+  // const columns = useColumns();
 
-    return (
-        <>
-            <StyledChatHistory historyData={data.map((item) => ({ created_at: item.createdAt, history: item.description, user: item.userName }))} useTimeAgoDate />
-            {/* <DataGrid columns={columns} data={data} /> */}
-        </>
-    )
-}
+  return (
+    <>
+      <StyledChatHistory
+        historyData={data.map((item) => ({
+          created_at: item.createdAt,
+          history: item.description,
+          user: item.userName,
+        }))}
+        useTimeAgoDate
+      />
+      {/* <DataGrid columns={columns} data={data} /> */}
+    </>
+  );
+};

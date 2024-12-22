@@ -1,146 +1,260 @@
-import styled, { useTheme } from "styled-components";
-import { UseFieldArrayRemove, useFieldArray, useFormContext } from "react-hook-form";
-import { FlexBox } from "lib/ui-ux";
-import { Box, Button, CircularProgress, IconButton, Typography } from "@mui/material"
-import { RadioGroupField, SelectField, TextboxField } from "lib/form-fields"
-import { IEscalationsNew, IField, IPriority, useFetchAllQueues } from "modules/settings/apis/ticket-automation/escalations";
-import { IEscalationFormFields } from "./add-escalation-layout";
-import { useFetchAllChannels } from "modules/settings/apis/tags";
-import { useFetchAllStatuses } from "modules/settings/apis/ticket-status";
-import { useCallback } from "react";
-import { DeleteOutline } from "@mui/icons-material";
-import { useTranslation } from "react-i18next";
+import { DeleteOutline } from '@mui/icons-material';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  IconButton,
+  Typography,
+} from '@mui/material';
+import { RadioGroupField, SelectField, TextboxField } from 'lib/form-fields';
+import { FlexBox } from 'lib/ui-ux';
+import { useFetchAllChannels } from 'modules/settings/apis/tags';
+import {
+  IEscalationsNew,
+  IField,
+  IPriority,
+  useFetchAllQueues,
+} from 'modules/settings/apis/ticket-automation/escalations';
+import { useFetchAllStatuses } from 'modules/settings/apis/ticket-status';
+import { useCallback } from 'react';
+import {
+  UseFieldArrayRemove,
+  useFieldArray,
+  useFormContext,
+} from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import styled, { useTheme } from 'styled-components';
+
+import { IEscalationFormFields } from './add-escalation-layout';
 
 const StyledRadioFields = styled(RadioGroupField)`
-    .MuiFormControlLabel-label {
-        font-size: 14px;
-    }
+  .MuiFormControlLabel-label {
+    font-size: 14px;
+  }
 `;
 
 interface IKeyValue {
-    key: string;
-    value: string;
+  key: string;
+  value: string;
 }
 
 interface IChooseConditionProps {
-    ticketField: IField[];
-    priorities: IPriority[];
-    mode?: 'add' | 'edit';
-    slaName?: string;
-    allEscalations?: IEscalationsNew[];
+  ticketField: IField[];
+  priorities: IPriority[];
+  mode?: 'add' | 'edit';
+  slaName?: string;
+  allEscalations?: IEscalationsNew[];
 }
 
 export const ChooseCondition = (props: IChooseConditionProps) => {
-    const { ticketField, allEscalations, mode, slaName } = props;
-    const ticketFieldDropdownData = ticketField.map((data) => ({ key: data.id.toString(), value: data.name }))
-    const { pallete, semantics } = useTheme();
-    const { t } = useTranslation();
+  const { ticketField, allEscalations, mode, slaName } = props;
+  const ticketFieldDropdownData = ticketField.map((data) => ({
+    key: data.id.toString(),
+    value: data.name,
+  }));
+  const { pallete, semantics } = useTheme();
+  const { t } = useTranslation();
 
-    const validateEscalationName = (value: string) => {
-        const modifiedData = mode === 'edit' ? allEscalations?.filter((item) => item.name !== slaName) : allEscalations;
-        const doesNameExist = modifiedData?.some((item) => item.name === value);
-        if (doesNameExist) {
-            return t('value_exists_validation');
-        }
+  const validateEscalationName = (value: string) => {
+    const modifiedData =
+      mode === 'edit'
+        ? allEscalations?.filter((item) => item.name !== slaName)
+        : allEscalations;
+    const doesNameExist = modifiedData?.some((item) => item.name === value);
+    if (doesNameExist) {
+      return t('value_exists_validation');
     }
-    const { fields, append, remove } = useFieldArray({
-        name: 'conditionsArray'
-    });
+  };
+  const { fields, append, remove } = useFieldArray({
+    name: 'conditionsArray',
+  });
 
-    const onAddCondition = useCallback(() => {
-        append({ ticketFields: '', condition: '', conditionValue: '' })
-    }, [append]);
+  const onAddCondition = useCallback(() => {
+    append({ ticketFields: '', condition: '', conditionValue: '' });
+  }, [append]);
 
-    return (
-        <>
-            <FlexBox width="100%" flexDirection="column" gap="20px">
-                <TextboxField name="chooseCondition.name" label={t('name')} variant="outlined" rules={{ required: t('name_is_required'), validate: validateEscalationName }} />
-                <TextboxField name="chooseCondition.description"
-                    label={t('description')} variant="outlined"
-                    multiline
-                    rows={4} />
-                <FlexBox flexDirection="column">
-                    <Typography variant="h6">{t('sla_evaluation_label')}</Typography>
-                    <StyledRadioFields name="chooseCondition.slaEvalutaion" radioOptions={[{ key: '0', label: t('ticket_creation_time') }, { key: '1', label: t('time_when_conditions_are_met') }]} />
-                </FlexBox>
-                <Box
-                    display="flex"
-                    flexDirection='column'
-                    gap={4}
-                    p={2}
-                    sx={{ border: `1px solid ${pallete.formFieldBorderColor}`, borderRadius: semantics.borderRadius.sm }}>
-                    <Typography variant="body2">{t('sla_condition_desctext')}</Typography>
-                    {fields.map((field, index) => <Conditions key={field.id} fieldArrayName="conditionsArray" index={index} remove={remove} ticketFieldDropdownData={ticketFieldDropdownData} priorities={props.priorities} />)}
-                    <Button variant="contained" size="small" sx={{ width: 'fit-content' }} onClick={onAddCondition}>{t('add_condition')}</Button>
-                </Box>
-            </FlexBox>
-        </>
-    )
-}
-
-const Conditions = (props: { index: number; fieldArrayName: string; ticketFieldDropdownData: IKeyValue[], priorities: IPriority[]; remove: UseFieldArrayRemove; }) => {
-    const { index, fieldArrayName, priorities, ticketFieldDropdownData, remove } = props;
-    const { pallete, semantics } = useTheme();
-    const { t } = useTranslation();
-
-    return (
+  return (
+    <>
+      <FlexBox width="100%" flexDirection="column" gap="20px">
+        <TextboxField
+          name="chooseCondition.name"
+          label={t('name')}
+          variant="outlined"
+          rules={{
+            required: t('name_is_required'),
+            validate: validateEscalationName,
+          }}
+        />
+        <TextboxField
+          name="chooseCondition.description"
+          label={t('description')}
+          variant="outlined"
+          multiline
+          rows={4}
+        />
+        <FlexBox flexDirection="column">
+          <Typography variant="h6">{t('sla_evaluation_label')}</Typography>
+          <StyledRadioFields
+            name="chooseCondition.slaEvalutaion"
+            radioOptions={[
+              { key: '0', label: t('ticket_creation_time') },
+              { key: '1', label: t('time_when_conditions_are_met') },
+            ]}
+          />
+        </FlexBox>
         <Box
-            display="flex"
-            gap={4}
-            p={2}
-            sx={{ border: `1px solid ${pallete.formFieldBorderColor}`, borderRadius: semantics.borderRadius.sm }}>
-            <SelectField name={`${fieldArrayName}.${index}.ticketFields`} menuOptions={ticketFieldDropdownData} sx={{ width: '33%' }} label={t("ticket_fields")} />
-            <SelectField name={`${fieldArrayName}.${index}.condition`} menuOptions={[{ key: 'is', value: 'Is' }]} sx={{ width: '33%' }} />
-            <ConditionValueContainer ticketFieldDropdownData={ticketFieldDropdownData} priorities={priorities} fieldArrayName={fieldArrayName} index={index} />
-            <IconButton onClick={() => remove(index)} sx={{ width: 'fit-content' }}>
-                <DeleteOutline />
-            </IconButton>
+          display="flex"
+          flexDirection="column"
+          gap={4}
+          p={2}
+          sx={{
+            border: `1px solid ${pallete.formFieldBorderColor}`,
+            borderRadius: semantics.borderRadius.sm,
+          }}
+        >
+          <Typography variant="body2">{t('sla_condition_desctext')}</Typography>
+          {fields.map((field, index) => (
+            <Conditions
+              key={field.id}
+              fieldArrayName="conditionsArray"
+              index={index}
+              remove={remove}
+              ticketFieldDropdownData={ticketFieldDropdownData}
+              priorities={props.priorities}
+            />
+          ))}
+          <Button
+            variant="contained"
+            size="small"
+            sx={{ width: 'fit-content' }}
+            onClick={onAddCondition}
+          >
+            {t('add_condition')}
+          </Button>
         </Box>
-    )
-}
+      </FlexBox>
+    </>
+  );
+};
 
-const ConditionValueContainer = (props: { ticketFieldDropdownData: IKeyValue[], priorities: IPriority[]; index: number; fieldArrayName: string; }) => {
-    const { ticketFieldDropdownData, priorities, fieldArrayName, index } = props;
-    const { watch } = useFormContext<IEscalationFormFields>();
-    const ticketFieldValue = watch(`conditionsArray.${index}.ticketFields`);
-    const isSourceSelected = ticketFieldDropdownData.find((item) => item.key === ticketFieldValue)?.value.toLocaleLowerCase() === 'source';
-    const isPrioritySelected = ticketFieldDropdownData.find((item) => item.key === ticketFieldValue)?.value.toLocaleLowerCase() === 'priority';
-    const isQueueSelected = ticketFieldDropdownData.find((item) => item.key === ticketFieldValue)?.value.toLocaleLowerCase() === 'queue';
-    const isStutusSelected = ticketFieldDropdownData.find((item) => item.key === ticketFieldValue)?.value.toLocaleLowerCase() === 'status';
+const Conditions = (props: {
+  index: number;
+  fieldArrayName: string;
+  ticketFieldDropdownData: IKeyValue[];
+  priorities: IPriority[];
+  remove: UseFieldArrayRemove;
+}) => {
+  const { index, fieldArrayName, priorities, ticketFieldDropdownData, remove } =
+    props;
+  const { pallete, semantics } = useTheme();
+  const { t } = useTranslation();
 
-    const { data, isLoading } = useFetchAllStatuses(isStutusSelected);
-    const { data: allSources, isLoading: isSourcesLoading } = useFetchAllChannels(isSourceSelected);
-    const { data: allQueues, isLoading: isQueueLoading } = useFetchAllQueues(isQueueSelected);
+  return (
+    <Box
+      display="flex"
+      gap={4}
+      p={2}
+      sx={{
+        border: `1px solid ${pallete.formFieldBorderColor}`,
+        borderRadius: semantics.borderRadius.sm,
+      }}
+    >
+      <SelectField
+        name={`${fieldArrayName}.${index}.ticketFields`}
+        menuOptions={ticketFieldDropdownData}
+        sx={{ width: '33%' }}
+        label={t('ticket_fields')}
+      />
+      <SelectField
+        name={`${fieldArrayName}.${index}.condition`}
+        menuOptions={[{ key: 'is', value: 'Is' }]}
+        sx={{ width: '33%' }}
+      />
+      <ConditionValueContainer
+        ticketFieldDropdownData={ticketFieldDropdownData}
+        priorities={priorities}
+        fieldArrayName={fieldArrayName}
+        index={index}
+      />
+      <IconButton onClick={() => remove(index)} sx={{ width: 'fit-content' }}>
+        <DeleteOutline />
+      </IconButton>
+    </Box>
+  );
+};
 
-    const getMenuOptions = () => {
-        if (isSourceSelected) {
-            return allSources!.map((item) => ({ key: item.channel_id.toString(), value: item.name }))
-        }
-        else if (isPrioritySelected) {
-            return priorities.map((item) => ({ key: item.id.toString(), value: item.name }))
-        }
-        else if (isQueueSelected) {
-            return allQueues!.map((item) => ({ key: item.id.toString(), value: item.name }))
-        }
-        else if (isStutusSelected) {
-            return data!.map((item) => ({ key: item.id.toString(), value: item.name }))
-        }
-        return [];
+const ConditionValueContainer = (props: {
+  ticketFieldDropdownData: IKeyValue[];
+  priorities: IPriority[];
+  index: number;
+  fieldArrayName: string;
+}) => {
+  const { ticketFieldDropdownData, priorities, fieldArrayName, index } = props;
+  const { watch } = useFormContext<IEscalationFormFields>();
+  const ticketFieldValue = watch(`conditionsArray.${index}.ticketFields`);
+  const isSourceSelected =
+    ticketFieldDropdownData
+      .find((item) => item.key === ticketFieldValue)
+      ?.value.toLocaleLowerCase() === 'source';
+  const isPrioritySelected =
+    ticketFieldDropdownData
+      .find((item) => item.key === ticketFieldValue)
+      ?.value.toLocaleLowerCase() === 'priority';
+  const isQueueSelected =
+    ticketFieldDropdownData
+      .find((item) => item.key === ticketFieldValue)
+      ?.value.toLocaleLowerCase() === 'queue';
+  const isStutusSelected =
+    ticketFieldDropdownData
+      .find((item) => item.key === ticketFieldValue)
+      ?.value.toLocaleLowerCase() === 'status';
+
+  const { data, isLoading } = useFetchAllStatuses(isStutusSelected);
+  const { data: allSources, isLoading: isSourcesLoading } =
+    useFetchAllChannels(isSourceSelected);
+  const { data: allQueues, isLoading: isQueueLoading } =
+    useFetchAllQueues(isQueueSelected);
+
+  const getMenuOptions = () => {
+    if (isSourceSelected) {
+      return allSources!.map((item) => ({
+        key: item.channel_id.toString(),
+        value: item.name,
+      }));
+    } else if (isPrioritySelected) {
+      return priorities.map((item) => ({
+        key: item.id.toString(),
+        value: item.name,
+      }));
+    } else if (isQueueSelected) {
+      return allQueues!.map((item) => ({
+        key: item.id.toString(),
+        value: item.name,
+      }));
+    } else if (isStutusSelected) {
+      return data!.map((item) => ({
+        key: item.id.toString(),
+        value: item.name,
+      }));
     }
-    const { t } = useTranslation();
-    return (
-        <>
-            {isLoading || isSourcesLoading || isQueueLoading
-                ? <CircularProgress />
-                :
-                <div style={{ width: '33%' }}>
-                    <SelectField
-                        name={`${fieldArrayName}.${index}.conditionValue`}
-                        label={t("field_options")}
-                        rules={{ required: t('please_select_an_option') }}
-                        menuOptions={getMenuOptions()} sx={{ width: '100%' }} />
-                </div>
-            }
-        </>
-    )
-}
+    return [];
+  };
+  const { t } = useTranslation();
+  return (
+    <>
+      {isLoading || isSourcesLoading || isQueueLoading ? (
+        <CircularProgress />
+      ) : (
+        <div style={{ width: '33%' }}>
+          <SelectField
+            name={`${fieldArrayName}.${index}.conditionValue`}
+            label={t('field_options')}
+            rules={{ required: t('please_select_an_option') }}
+            menuOptions={getMenuOptions()}
+            sx={{ width: '100%' }}
+          />
+        </div>
+      )}
+    </>
+  );
+};

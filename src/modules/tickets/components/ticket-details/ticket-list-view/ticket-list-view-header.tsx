@@ -1,55 +1,63 @@
-import { CustomIconButton, FlexBox, RefreshButton } from "lib/ui-ux"
 import { ArrowBack } from '@mui/icons-material/';
-import { Typography } from "@mui/material";
-import styled from "styled-components";
-import { useMatch, useNavigate } from "react-router-dom";
-import { TicketViewActionButtons } from ".";
-import { Trans, useTranslation } from "react-i18next";
-import { convertToUnderscore } from "lib/utils";
+import { Typography } from '@mui/material';
+import { CustomIconButton, FlexBox, RefreshButton } from 'lib/ui-ux';
+import { convertToUnderscore } from 'lib/utils';
+import { Trans, useTranslation } from 'react-i18next';
+import { useMatch, useNavigate } from 'react-router-dom';
+import { styled } from 'styled-components';
 
+import { TicketViewActionButtons } from '.';
 
 export const HeaderWrapper = styled(FlexBox)`
-    box-sizing: border-box;
-    padding: 15px 10px;
-    border-bottom: ${({ theme }) => theme.semantics.standardBorder};
+  box-sizing: border-box;
+  padding: 15px 10px;
+  border-bottom: ${({ theme }) => theme.semantics.standardBorder};
 `;
 
 export const TicketListViewHeader = () => {
-    const match = useMatch('/tickets/:ticketType/:ticketId')
-    const header = convertToUnderscore(match?.params.ticketType || '')
-    const navigate = useNavigate();
-    const { t } = useTranslation();
+  const match = useMatch('/tickets/:ticketType/:ticketId');
+  const header = convertToUnderscore(match?.params.ticketType || '');
+  const navigate = useNavigate();
+  const { t } = useTranslation();
 
-    // const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+  // const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
-    // const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    //     setAnchorEl(event.currentTarget);
-    // };
+  // const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  //     setAnchorEl(event.currentTarget);
+  // };
 
-    // const handleClose = () => {
-    //     setAnchorEl(null);
-    // };
+  // const handleClose = () => {
+  //     setAnchorEl(null);
+  // };
 
-    // const open = Boolean(anchorEl);
+  // const open = Boolean(anchorEl);
 
-    return (
-        <HeaderWrapper width="100%" justifyContent="space-between">
-            <FlexBox>
-                <CustomIconButton onClick={() => { navigate(-1) }} iconComponent={<ArrowBack />} tooltipProps={{ title: t('back') }} />
-                <FlexBox alignItems="center" gap="5px">
-                    <Typography variant="h5"><Trans i18nKey={`${header}`} /></Typography>
-                    <FlexBox>
-                        <RefreshButton />
-                        {/* <CustomIconButton tooltipProps={{ title: 'Sort' }} iconComponent={<SortIcon />} onClick={handleClick} /> */}
-                    </FlexBox>
-                    {/* <Menu open={open} anchorEl={anchorEl} onClose={handleClose} >
+  return (
+    <HeaderWrapper width="100%" justifyContent="space-between">
+      <FlexBox>
+        <CustomIconButton
+          onClick={() => {
+            navigate(-1);
+          }}
+          iconComponent={<ArrowBack />}
+          tooltipProps={{ title: t('back') }}
+        />
+        <FlexBox alignItems="center" gap="5px">
+          <Typography variant="h5">
+            <Trans i18nKey={`${header}`} />
+          </Typography>
+          <FlexBox>
+            <RefreshButton />
+            {/* <CustomIconButton tooltipProps={{ title: 'Sort' }} iconComponent={<SortIcon />} onClick={handleClick} /> */}
+          </FlexBox>
+          {/* <Menu open={open} anchorEl={anchorEl} onClose={handleClose} >
                         <MenuItem>Status</MenuItem>
                         <MenuItem>Due Date</MenuItem>
                         <MenuItem>Source</MenuItem>
                     </Menu> */}
-                </FlexBox>
-            </FlexBox>
-            <TicketViewActionButtons />
-        </HeaderWrapper>
-    )
-}
+        </FlexBox>
+      </FlexBox>
+      <TicketViewActionButtons />
+    </HeaderWrapper>
+  );
+};

@@ -1,117 +1,141 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { memoizeFunction } from "./memoize-utils";
-import { v1 } from 'uuid';
+import { v4 } from 'uuid';
+
+import { memoizeFunction } from './memoize-utils';
 
 export function isArray(value: any): value is Array<any> {
-    return value instanceof Array;
+  return value instanceof Array;
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 export function isFunction(value: any): value is Function {
-    return value instanceof Function;
+  return value instanceof Function;
 }
 
 export function isObject(value: any): value is object {
-    return (value === Object(value) && !isArray(value) && !isFunction(value));
+  return value === Object(value) && !isArray(value) && !isFunction(value);
 }
 
-export const toCamelCasedKeysFromUnderScores = (obj: { [key: string]: any }) => {
-
-    const getValue = (key: string): any => {
-        if (obj[key] !== null && typeof obj[key] === 'object') {
-            return isArray(obj[key]) ? obj[key].map((item: any) => typeof item === 'string' ? item : toCamelCasedKeysFromUnderScores(item)) : toCamelCasedKeysFromUnderScores(obj[key])
-        }
-        return obj[key];
+export const toCamelCasedKeysFromUnderScores = (obj: {
+  [key: string]: any;
+}) => {
+  const getValue = (key: string): any => {
+    if (obj[key] !== null && typeof obj[key] === 'object') {
+      return isArray(obj[key])
+        ? obj[key].map((item: any) =>
+            typeof item === 'string'
+              ? item
+              : toCamelCasedKeysFromUnderScores(item)
+          )
+        : toCamelCasedKeysFromUnderScores(obj[key]);
     }
+    return obj[key];
+  };
 
-    return (
-        Object.keys(obj).reduce((acc, key) => {
-            const modifiedKey = key.replace(/_([a-z])/g, function f(g) {
-                return g[1].toUpperCase();
-            });
-            return ({
-                ...acc,
-                ...{ [modifiedKey]: getValue(key) },
-            });
-        }, {} as any))
+  return Object.keys(obj).reduce((acc, key) => {
+    const modifiedKey = key.replace(/_([a-z])/g, function f(g) {
+      return g[1].toUpperCase();
+    });
+    return {
+      ...acc,
+      ...{ [modifiedKey]: getValue(key) },
+    };
+  }, {} as any);
 };
 
 export const convertToCamelCase = (str: string, splitter = '-') => {
-    return str
-        .toLowerCase()
-        .split(splitter)
-        .map((word, index) =>
-            index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1)
-        )
-        .join('');
+  return str
+    .toLowerCase()
+    .split(splitter)
+    .map((word, index) =>
+      index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1)
+    )
+    .join('');
 };
 
 export const convertToUnderscore = (str: string, splitter = '-') => {
-    return str
-        .toLowerCase()
-        .split(splitter)
-        .join('_');
+  return str.toLowerCase().split(splitter).join('_');
 };
 
 export const capitalizeFirstLetter = (string: string, splitter?: string) => {
-    const words = string.split(splitter ?? " ");
+  const words = string.split(splitter ?? ' ');
 
-    return words.map((word) => {
-        return word[0].toUpperCase() + word.substring(1);
-    }).join(" ");
-}
+  return words
+    .map((word) => {
+      return word[0].toUpperCase() + word.substring(1);
+    })
+    .join(' ');
+};
 interface IInitialsColorCodes {
-    backgroundColor: string;
-    textColor: string;
+  backgroundColor: string;
+  textColor: string;
 }
 
-const COLORCODES = [{
+const COLORCODES = [
+  {
     backgroundColor: '#DDECF7',
-    textColor: '#0077D9'
-}, {
+    textColor: '#0077D9',
+  },
+  {
     backgroundColor: '#ECE5F6',
-    textColor: '#6E40CF'
-}, {
+    textColor: '#6E40CF',
+  },
+  {
     backgroundColor: '#F5E2EE',
-    textColor: '#B32181'
-}, {
+    textColor: '#B32181',
+  },
+  {
     backgroundColor: '#DFEEE5',
-    textColor: '#008334'
-}, {
+    textColor: '#008334',
+  },
+  {
     backgroundColor: '#F4E6E6',
-    textColor: '#B6383E'
-}, {
+    textColor: '#B6383E',
+  },
+  {
     backgroundColor: '#F5EDDE',
-    textColor: '#B96E02'
-}, {
+    textColor: '#B96E02',
+  },
+  {
     backgroundColor: '#EFE1ED',
-    textColor: '#8C007E'
-}, {
+    textColor: '#8C007E',
+  },
+  {
     backgroundColor: '#EAEBEC',
-    textColor: '#5F6672'
-}, {
+    textColor: '#5F6672',
+  },
+  {
     backgroundColor: '#EFE8E0',
-    textColor: '#934F00'
-}, {
+    textColor: '#934F00',
+  },
+  {
     backgroundColor: '#E4EAEE',
-    textColor: '#19628F'
-}, {
+    textColor: '#19628F',
+  },
+  {
     backgroundColor: '#DEEDEE',
-    textColor: '#00828C'
-}, {
+    textColor: '#00828C',
+  },
+  {
     backgroundColor: '#E3EAF5',
-    textColor: '#165DCB'
-}] as IInitialsColorCodes[];
+    textColor: '#165DCB',
+  },
+] as IInitialsColorCodes[];
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const chooseRandomColors = memoizeFunction((_name: string): IInitialsColorCodes => {
+export const chooseRandomColors = memoizeFunction(
+  (_name: string): IInitialsColorCodes => {
     const idx = Math.floor(Math.random() * COLORCODES.length);
     return COLORCODES[idx];
-}, 500);
+  },
+  500
+);
 
-export const generateId = () => v1();
+export const generateId = () => v4();
 
-export const getFormatedNumberByLocale = (number: number | string, locale = 'en-IN') => {
-    return new Intl.NumberFormat(locale).format(Number(number))
-}
+export const getFormatedNumberByLocale = (
+  number: number | string,
+  locale = 'en-IN'
+) => {
+  return new Intl.NumberFormat(locale).format(Number(number));
+};

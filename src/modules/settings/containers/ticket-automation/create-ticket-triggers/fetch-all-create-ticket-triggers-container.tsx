@@ -1,22 +1,34 @@
-import { ErrorMessage } from "lib/ui-ux";
-import { AutoMationType, useFetchAllAssignments } from "modules/settings/apis/ticket-automation";
-import { CreateTicketTriggersLayout } from "modules/settings/component/ticket-automation/create-ticket-triggers";
-import { UpdateTicketTriggersLayout } from "modules/settings/component/ticket-automation/update-ticket-triggers";
+import { ErrorMessage } from 'lib/ui-ux';
+import {
+  AutoMationType,
+  useFetchAllAssignments,
+} from 'modules/settings/apis/ticket-automation';
+import { CreateTicketTriggersLayout } from 'modules/settings/component/ticket-automation/create-ticket-triggers';
+import { UpdateTicketTriggersLayout } from 'modules/settings/component/ticket-automation/update-ticket-triggers';
 
 export default function FetchAllCreateTicketTriggersContainer(props: {
-    autoMationType: AutoMationType;
+  autoMationType: AutoMationType;
 }) {
-    const { data, isError, error, isLoading, isFetching } = useFetchAllAssignments(props.autoMationType);
+  const { data, isError, error, isLoading, isFetching } =
+    useFetchAllAssignments(props.autoMationType);
 
-    if (isError) return <ErrorMessage statusCode={error?.message} />
+  if (isError) return <ErrorMessage statusCode={error?.message} />;
 
-    return (
-        <>
-            {
-                props.autoMationType === 'create_trigger'
-                    ? <CreateTicketTriggersLayout data={data} isLoading={isLoading || isFetching} autoMationType={props.autoMationType} />
-                    : <UpdateTicketTriggersLayout data={data} isLoading={isLoading || isFetching} autoMationType={props.autoMationType} />
-            }
-        </>
-    )
+  return (
+    <>
+      {props.autoMationType === 'create_trigger' ? (
+        <CreateTicketTriggersLayout
+          data={data}
+          isLoading={isLoading || isFetching}
+          autoMationType={props.autoMationType}
+        />
+      ) : (
+        <UpdateTicketTriggersLayout
+          data={data}
+          isLoading={isLoading || isFetching}
+          autoMationType={props.autoMationType}
+        />
+      )}
+    </>
+  );
 }
