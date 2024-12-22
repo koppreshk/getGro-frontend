@@ -9,8 +9,8 @@ import {
 } from 'modules/dashboard/apis';
 import ReactApexChart from 'react-apexcharts';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
-import styled, { useTheme } from 'styled-components';
+import { Trans, useTranslation } from 'react-i18next';
+import { styled, useTheme } from 'styled-components';
 
 const StyledContainer = styled(FlexBox)`
   background-color: ${({ theme }) => theme.pallete.white};
@@ -170,7 +170,9 @@ export const TicketStats = (props: { dateRange: DateRange }) => {
         width="calc(70% - 20px)"
       >
         <FlexBox justifyContent="space-between" alignItems="center">
-          <Typography variant="h5">Ticket Statistics</Typography>
+          <Typography variant="h5">
+            <Trans i18nKey={'ticket_statistics'} />
+          </Typography>
           {/* <DateFilters onFilterChangeHandler={onFilterChangeHandler} filterValue={filterValue} dateFilterTypes={dateFilters} /> */}
         </FlexBox>
         <FlexBox width="100%" style={{ minHeight: '340px' }}>
