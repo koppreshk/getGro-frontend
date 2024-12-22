@@ -66,7 +66,7 @@ export const FacebookConfiguration = (props: {
 
           // Fetch user details like name and email
           // window.FB.api('/me', { fields: 'name, email' }, (userInfo: any) => {
-          //   console.log('User info:', userInfo);
+
           // });
         } else {
           console.error('User cancelled login or did not fully authorize.');
