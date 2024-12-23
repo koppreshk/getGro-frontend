@@ -25,6 +25,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src", "update-translations.js"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
