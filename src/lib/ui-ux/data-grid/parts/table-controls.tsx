@@ -18,6 +18,7 @@ import {
   debounce,
 } from '@mui/material';
 import i18n from 'i18n';
+import { t } from 'i18next';
 import { useAppSelector } from 'lib/hooks';
 import {
   CustomIconButton,
@@ -123,7 +124,7 @@ const NoOfPages = (props: INoOfRowsProps) => {
     <>
       <StyledFilterContainer gap="4px">
         {['10', '20', '30', '40', '50'].map((item) => (
-          <Tooltip key={item} title={`${item} rows per page`}>
+          <Tooltip key={item} title={`${item} ${t('rows_per_page')}`}>
             <Text
               variant="subheading1"
               $isSelected={noOfRows === item}
@@ -304,7 +305,7 @@ export const TableControls = (props: ITableControlProps) => {
           <>
             <CustomIconButton
               iconComponent={<DownloadForOfflineOutlined fontSize="small" />}
-              tooltipProps={{ title: 'Download as csv' }}
+              tooltipProps={{ title: t('download_as_csv') }}
               onClick={onDownloadBtnClick}
             />
             <VerticalSeparator />

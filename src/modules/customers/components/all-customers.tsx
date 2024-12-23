@@ -1,4 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table';
+import { t } from 'i18next';
 import {
   DataGrid,
   FlexBox,
@@ -7,7 +8,6 @@ import {
 } from 'lib/ui-ux';
 import { saveAsCSV } from 'lib/utils';
 import { useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
 import { styled } from 'styled-components';
 
 import { ICustomerData } from '../apis/fetch-all-customers';
@@ -17,21 +17,21 @@ const useColumns = () => {
 
   const columns = [
     columnHelper.accessor('id', {
-      header: 'Id',
+      header: t('id'),
       id: 'id',
       cell: (props) => props.getValue(),
     }),
     columnHelper.accessor('name', {
-      header: 'Customer Name',
+      header: t('customer_name'),
       cell: (props) => props.getValue() ?? '-',
     }),
     columnHelper.accessor('email', {
-      header: 'Email',
+      header: t('email'),
       id: 'email',
       cell: (props) => props.getValue() ?? '-',
     }),
     columnHelper.accessor('number', {
-      header: 'Phone',
+      header: t('phone_number'),
       id: 'number',
       cell: (props) => props?.getValue() ?? '-',
     }),
@@ -71,7 +71,6 @@ interface IAllCustomersProps {
 export const AllCustomers = (props: IAllCustomersProps) => {
   const { data, isLoading, totalPages } = props;
   const columns = useColumns();
-  const { t } = useTranslation();
 
   const onDownloadBtnClick = useCallback(() => {
     if (props.data) {
