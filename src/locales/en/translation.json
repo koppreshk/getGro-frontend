@@ -201,6 +201,7 @@
   "display_name_helper": "Name specified here will be used as a display name for email sent through the portal.",
   "display_name_validation": "Display name is required",
   "dont_send_email": "Don't send an email notification to customer",
+  "download_as_csv": "Download as csv",
   "drag_and_drop": "Drag and drop files to upload",
   "due_in": "Due In",
   "due_since": "Due Since",
@@ -426,6 +427,7 @@
   "roles_and_permissions_short_description": "Establish custom roles for agents with tailored permissions to meet your needs.",
   "round_robin_even_distribution": "Round Robin(Even Distribution)",
   "round_robin_load_based": "Round Robin(Load Based)",
+  "rows_per_page": "rows per page",
   "rule_name": "Rule Name",
   "rule_name_validation": "Rule name is required",
   "rule_text_all_condtions": "Apply this rule to the tickets that meet <strong>All</strong> of these conditions.",
@@ -577,7 +579,5 @@
   "whatsapp_phone_number_id": "Whatsapp phone number id",
   "yes_delete": "Yes, Delete",
   "yesterday": "Yesterday",
-  "you": "You",
-  "rows_per_page": "rows per page",
-  "download_as_csv": "Download as csv"
+  "you": "You"
 }
