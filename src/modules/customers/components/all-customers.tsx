@@ -23,6 +23,7 @@ const useColumns = () => {
     }),
     columnHelper.accessor('name', {
       header: t('customer_name'),
+      id: 'Custoemer Name',
       cell: (props) => props.getValue() ?? '-',
     }),
     columnHelper.accessor('email', {
