@@ -9,9 +9,9 @@ import {
 import { Tooltip } from '@mui/material';
 import { useModule } from 'lib/hooks';
 import { FlexBox } from 'lib/ui-ux';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useMatch } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 import { ExotelCallControls } from './exotel-call-controls';
@@ -201,11 +201,15 @@ const SecondaryOption = React.memo(() => {
 SecondaryOption.displayName = 'SecondaryOption';
 
 export const NavigationMenu = React.memo(() => {
-  const { pathname } = useLocation();
-  const [selectedMenu, setMenu] = React.useState(() =>
-    pathname === '/' ? 'dashboard' : (pathname?.split('/')[1] ?? 'dashboard')
-  );
+  const match = useMatch(':module');
+  const [selectedMenu, setMenu] = React.useState('');
   const primaryOptions = usePrimaryOptions();
+
+  useEffect(() => {
+    if (match?.params.module) {
+      setMenu(match?.params.module);
+    }
+  }, [match]);
 
   return (
     <MenuWrapper flexDirection="column" justifyContent="space-between">
