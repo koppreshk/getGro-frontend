@@ -201,7 +201,7 @@ const SecondaryOption = React.memo(() => {
 SecondaryOption.displayName = 'SecondaryOption';
 
 export const NavigationMenu = React.memo(() => {
-  const match = useMatch(':module');
+  const match = useMatch(':module/*');
   const [selectedMenu, setMenu] = React.useState('');
   const primaryOptions = usePrimaryOptions();
 
