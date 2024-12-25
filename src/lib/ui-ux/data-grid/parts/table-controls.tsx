@@ -1,37 +1,83 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 import {
   ArchiveOutlined,
   AssignmentIndOutlined,
+  CheckBox,
+  CheckBoxOutlineBlank,
   ChevronLeft,
   ChevronRight,
   DeleteOutline,
   DownloadForOfflineOutlined,
+  FilterAlt,
+  FilterAltOutlined,
   KeyboardDoubleArrowLeft,
   KeyboardDoubleArrowRight,
   MarkChatReadOutlined,
   MarkUnreadChatAltOutlined,
 } from '@mui/icons-material';
 import {
+  Badge,
+  Box,
+  Button,
+  Checkbox,
+  CircularProgress,
   IconButton,
+  Popover,
   TextField,
   Tooltip,
   Typography,
   debounce,
 } from '@mui/material';
+import i18n from 'i18n';
+import {
+  SelectFieldWithLabel,
+  DateTimePickerFieldWithLabel,
+  TextboxFieldWithLabel,
+  AutoCompleteFieldWithLabel,
+  AutoCompleteRenderOptionProps,
+} from 'lib/form-fields';
 import { useAppSelector } from 'lib/hooks';
 import {
   CustomIconButton,
   FlexBox,
+  GridLayout,
   RefreshButton,
   VerticalSeparator,
 } from 'lib/ui-ux';
-import { AdvanceSearchContainer } from 'modules/tickets/components/ticket-search/advance-search';
+import { DateTime } from 'luxon';
+import {
+  IQueueMetadata,
+  useFetchTicketMetadata,
+} from 'modules/settings/apis/queues/fetch-queue-metadata';
+import { useFetchAllTags } from 'modules/settings/apis/tags/fetch-all-tags';
+import { useFetchAllStatuses } from 'modules/settings/apis/ticket-status/fetch_all_statuses';
+import { IGenericResponse } from 'modules/settings/apis/ticket-status/types';
+import { ITag } from 'modules/tickets/apis';
+import {
+  IPriorities,
+  useFetchPriorities,
+} from 'modules/tickets/apis/fetch-priorities';
 import React, { useCallback, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useSearchParams } from 'react-router-dom';
+import { useMatch, useSearchParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 import { ContentViewMode } from './content-view-mode';
+
+const StyledFlexBox = styled(FlexBox)`
+  padding: 0px 20px 0 20px;
+`;
+
+interface ITableControlProps {
+  isTableActionsvisible?: boolean;
+  enableSerchField?: boolean;
+  isContentViewModeVisible?: boolean;
+  totalPages?: number;
+  onDownloadBtnClick?: () => void;
+  searchPlaceholder?: string;
+  searchLabel?: string;
+  fetchAllTicketsWithSearchQuery?: (args?: Record<string, string>) => void;
+}
 
 const TableActions = () => {
   const tableActionOptions = [
@@ -126,17 +172,331 @@ const NoOfPages = (props: INoOfRowsProps) => {
   );
 };
 
-const StyledFlexBox = styled(FlexBox)`
-  padding: 0px 20px 0 20px;
-`;
-
-interface ITableControlProps {
-  isTableActionsvisible?: boolean;
-  enableSerchField?: boolean;
-  isContentViewModeVisible?: boolean;
-  totalPages?: number;
-  onDownloadBtnClick?: () => void;
+interface IKeyValue {
+  key: string;
+  value: string;
 }
+export interface ISearchTickets {
+  requesterEmail: string;
+  priority: IKeyValue[];
+  assignee: IKeyValue[];
+  status: IKeyValue[];
+  createdDate: DateTime | null;
+  tags: IKeyValue[];
+  source: string;
+}
+
+interface IAdvanceSearchProps {
+  combinedData: {
+    priorities: IPriorities[] | undefined;
+    statuses: IGenericResponse[] | undefined;
+    tags: ITag[] | undefined;
+    agents: IQueueMetadata | undefined;
+  };
+  fetchAllTicketsWithSearchQuery?: (args?: Record<string, string>) => void;
+}
+
+const AdvanceSearch = (props: IAdvanceSearchProps) => {
+  const {
+    combinedData: { agents, priorities, statuses, tags },
+    fetchAllTicketsWithSearchQuery,
+  } = props;
+  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+  const formMethods = useForm<ISearchTickets>({
+    defaultValues: {
+      requesterEmail: '',
+      priority: [],
+      assignee: [],
+      status: [],
+      tags: [],
+      source: '',
+      createdDate: null,
+    },
+  });
+  const { t } = useTranslation();
+
+  const [isfilterApplied, setisfilterApplied] = useState(false);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleSubmit = (formData: ISearchTickets) => {
+    console.log('formData', formData);
+
+    const createdDate = formData.createdDate
+      ? formData.createdDate.toFormat('yyyy-MM-dd HH:mm:ss')
+      : '';
+    const formObject = {
+      createdDate: createdDate,
+      priority: formData.priority.map((item) => Number(item.key)).join(','),
+      assignee: formData.assignee.map((item) => Number(item.key)).join(','),
+      status: formData.status.map((item) => Number(item.key)).join(','),
+      tags: formData.tags.map((item) => Number(item.key)).join(','),
+      source: formData.source ? formData.source : '',
+      email: formData.requesterEmail ? formData.requesterEmail : '',
+    };
+    console.log('formObject', formObject);
+    if (fetchAllTicketsWithSearchQuery) {
+      fetchAllTicketsWithSearchQuery(formObject);
+      setisfilterApplied(true);
+      handleClose();
+    }
+  };
+
+  const onClearFilter = () => {
+    formMethods.reset();
+    handleClose();
+    if (fetchAllTicketsWithSearchQuery) {
+      fetchAllTicketsWithSearchQuery({});
+      setisfilterApplied(false);
+    }
+  };
+
+  const open = Boolean(anchorEl);
+
+  const renderAgentOption: AutoCompleteRenderOptionProps = (
+    optionprops,
+    option,
+    state
+  ) => {
+    return (
+      <li {...optionprops}>
+        <Checkbox
+          icon={<CheckBoxOutlineBlank fontSize="small" />}
+          checkedIcon={<CheckBox fontSize="small" />}
+          style={{ marginRight: 8 }}
+          checked={state.selected}
+        />
+        <FlexBox flexDirection="column">
+          <Typography variant="h6">{option.value.split(';')[0]}</Typography>
+          <Typography variant="body3">{option.value.split(';')[1]}</Typography>
+        </FlexBox>
+      </li>
+    );
+  };
+
+  return (
+    <FormProvider {...formMethods}>
+      <Badge
+        color="warning"
+        variant="dot"
+        invisible={!isfilterApplied}
+        overlap="circular"
+      >
+        <CustomIconButton
+          iconComponent={
+            isfilterApplied ? (
+              <FilterAlt fontSize="small" />
+            ) : (
+              <FilterAltOutlined fontSize="small" />
+            )
+          }
+          tooltipProps={{
+            title: isfilterApplied ? 'Filters Applied' : 'Show Filter',
+          }}
+          onClick={handleClick}
+          color={isfilterApplied ? 'primary' : 'default'}
+        />
+      </Badge>
+      <Popover
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+        PaperProps={{
+          style: {
+            width: '50%',
+          },
+        }}
+      >
+        <Box p={2} height="100%">
+          <Typography>Filters</Typography>
+          <GridLayout
+            $padding="10px 0"
+            $gridGap="14px 12px"
+            $gridTemplateColumns={'repeat(2, 1fr)'}
+          >
+            <AutoCompleteFieldWithLabel
+              size="small"
+              name="priority"
+              placeholder="Priority"
+              label={t('priority')}
+              options={
+                priorities?.map((priority) => ({
+                  key: priority.id.toString(),
+                  value: priority.name,
+                })) || []
+              }
+            />
+            <AutoCompleteFieldWithLabel
+              size="small"
+              name="assignee"
+              placeholder="Assignee"
+              label={t('assignee')}
+              getOptionLabel={(option) => option.value.split(';')[0]}
+              options={
+                agents?.employees.map((agent) => ({
+                  key: agent.id.toString(),
+                  value: [
+                    `${agent.firstName} ${agent.lastName ?? ''}`,
+                    agent?.email,
+                  ].join(';'),
+                })) || []
+              }
+              renderOption={renderAgentOption}
+            />
+            <AutoCompleteFieldWithLabel
+              size="small"
+              name="status"
+              placeholder="Status"
+              label={t('status')}
+              options={
+                statuses?.map((status) => ({
+                  key: status.id.toString(),
+                  value: status.name,
+                })) || []
+              }
+            />
+            <AutoCompleteFieldWithLabel
+              size="small"
+              name="tags"
+              placeholder="Tags"
+              label={t('tags')}
+              options={
+                tags?.map((tag) => ({
+                  key: tag.id.toString(),
+                  value: tag.name,
+                })) || []
+              }
+            />
+            <DateTimePickerFieldWithLabel
+              label="Crated date"
+              name="createdDate"
+              size="small"
+              views={['year', 'day']}
+            />
+            <SelectFieldWithLabel
+              sx={{ width: '100%' }}
+              size="small"
+              name="source"
+              label={t('source')}
+              menuOptions={[
+                { key: '1', value: 'Low' },
+                { key: '2', value: 'High' },
+              ]}
+              fullWidth
+            />
+            <TextboxFieldWithLabel
+              name="requesterEmail"
+              type="email"
+              label={t('requester_email')}
+              size="small"
+              sx={{ width: '100%' }}
+            />
+          </GridLayout>
+          <FlexBox
+            justifyContent="space-between"
+            gap={'15px'}
+            padding="16px 0 0 0"
+            style={{ borderTop: '1px solid #E9EBED' }}
+          >
+            <Button variant="outlined" onClick={handleClose} color="error">
+              {t('close')}
+            </Button>
+            <FlexBox gap={'15px'}>
+              <Button variant="text" onClick={onClearFilter}>
+                Clear Filter
+              </Button>
+              <Button
+                variant="contained"
+                onClick={formMethods.handleSubmit(handleSubmit)}
+              >
+                {t('apply')}
+              </Button>
+            </FlexBox>
+          </FlexBox>
+        </Box>
+      </Popover>
+    </FormProvider>
+  );
+};
+
+interface IAdvanceSearchContainerProps {
+  fetchAllTicketsWithSearchQuery?: (args?: Record<string, string>) => void;
+}
+
+const AdvanceSearchContainer = (props: IAdvanceSearchContainerProps) => {
+  const {
+    data: prioritiesData,
+    isLoading: isPrioritiesLoading,
+    error: prioritiesError,
+  } = useFetchPriorities();
+
+  const {
+    data: statusesData,
+    isLoading: isStatusesLoading,
+    error: statusesError,
+  } = useFetchAllStatuses();
+
+  const {
+    data: tagsData,
+    isLoading: isTagsLoading,
+    error: tagsError,
+  } = useFetchAllTags();
+
+  const {
+    data: agentsData,
+    isLoading: isAgentsdataLoading,
+    error: agentsDataError,
+  } = useFetchTicketMetadata();
+
+  const isLoading =
+    isPrioritiesLoading ||
+    isStatusesLoading ||
+    isTagsLoading ||
+    isAgentsdataLoading;
+
+  const errors = {
+    prioritiesError,
+    statusesError,
+    tagsError,
+    agentsDataError,
+  };
+
+  const combinedData = {
+    priorities: prioritiesData,
+    statuses: statusesData,
+    tags: tagsData,
+    agents: agentsData,
+  };
+
+  if (isLoading) {
+    return <CircularProgress />;
+  }
+
+  if (Object.values(errors).some((error) => error)) {
+    return <div>Error loading data</div>;
+  }
+
+  return (
+    <AdvanceSearch
+      combinedData={combinedData}
+      fetchAllTicketsWithSearchQuery={props.fetchAllTicketsWithSearchQuery}
+    />
+  );
+};
 
 export const TableControls = (props: ITableControlProps) => {
   const {
@@ -145,9 +505,13 @@ export const TableControls = (props: ITableControlProps) => {
     enableSerchField,
     onDownloadBtnClick,
     isContentViewModeVisible,
+    searchLabel = i18n.t('search_tickets'),
+    searchPlaceholder = i18n.t('search_by_ticket_id_subject'),
+    fetchAllTicketsWithSearchQuery,
   } = props;
   const config = useAppSelector((state) => state.core.config);
   const [searchParams, setSearchParams] = useSearchParams();
+  const viewFilter = useMatch('tickets/all_tickets');
   const pageNumber = Number(searchParams.get('pageNumber')) || 1;
   const noOfRecords = searchParams.get('noOfRecords')
     ? searchParams.get('noOfRecords')!
@@ -160,15 +524,15 @@ export const TableControls = (props: ITableControlProps) => {
       ? config?.ticket_layout_view === 'card_view'
       : 'true';
   const searchTextFromParams = searchParams.get('searchText');
-  const { t } = useTranslation();
   const [noOfRows, setFilters] = useState(noOfRecords);
 
   React.useEffect(() => {
     searchParams.set('noOfRecords', noOfRecords);
     searchParams.set('pageNumber', pageNumber.toString());
     searchParams.set('cardView', cardView.toString());
-    searchTextFromParams &&
+    if (searchTextFromParams) {
       searchParams.set('searchText', searchTextFromParams);
+    }
     setSearchParams(searchParams);
   }, [
     cardView,
@@ -236,11 +600,11 @@ export const TableControls = (props: ITableControlProps) => {
         {isTableActionsvisible ? <TableActions /> : null}
         {enableSerchField ? (
           <TextField
-            placeholder="Search by Ticket ID/Subject"
+            placeholder={searchPlaceholder}
             defaultValue={searchTextFromParams}
             sx={{ width: '300px' }}
             size="small"
-            label={t('search_tickets')}
+            label={searchLabel}
             onChange={debouncedSearchChange}
           />
         ) : null}
@@ -257,10 +621,14 @@ export const TableControls = (props: ITableControlProps) => {
           noOfRows={noOfRows as Rows}
           onFilterChangeHandler={onFilterChangeHandler}
         />
-
-        <VerticalSeparator />
-        <AdvanceSearchContainer />
-
+        {viewFilter && (
+          <>
+            <VerticalSeparator />
+            <AdvanceSearchContainer
+              fetchAllTicketsWithSearchQuery={fetchAllTicketsWithSearchQuery}
+            />
+          </>
+        )}
         <VerticalSeparator />
         <FlexBox>
           <IconButton

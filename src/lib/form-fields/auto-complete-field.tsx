@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CheckBoxOutlineBlank, CheckBox } from '@mui/icons-material';
-import { ChipTypeMap, TextField } from '@mui/material';
+import { ChipTypeMap, TextField, Typography } from '@mui/material';
 import Autocomplete, {
   AutocompleteOwnerState,
   AutocompleteRenderOptionState,
 } from '@mui/material/Autocomplete/Autocomplete';
 import Checkbox from '@mui/material/Checkbox/Checkbox';
+import { FlexBox } from 'lib/ui-ux';
 import { Controller, useFormContext } from 'react-hook-form';
 
 export type AutoCompleteRenderOptionProps = (
@@ -23,7 +24,7 @@ export type AutoCompleteRenderOptionProps = (
 
 interface IAutocompleteFieldProps {
   name: string;
-  label: string;
+  label?: string;
   placeholder: string;
   size?: 'small' | 'medium';
   getOptionLabel?: (option: any) => string;
@@ -62,13 +63,18 @@ export const AutocompleteField = (props: IAutocompleteFieldProps) => {
             getOptionLabel ? getOptionLabel(option) : option.value
           }
           onChange={(_ev, newValue) => onChange(newValue)}
-          renderOption={(props, option, state, ownerState) => {
+          renderOption={(renderProps, option, state, ownerState) => {
             if (renderOption) {
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              return renderOption(props, option, state, ownerState as any);
+              return renderOption(
+                renderProps,
+                option,
+                state,
+                ownerState as any
+              );
             }
             return (
-              <li {...props}>
+              <li {...renderProps}>
                 <Checkbox
                   icon={<CheckBoxOutlineBlank fontSize="small" />}
                   checkedIcon={<CheckBox fontSize="small" />}
@@ -94,5 +100,18 @@ export const AutocompleteField = (props: IAutocompleteFieldProps) => {
       control={control}
       name={name}
     />
+  );
+};
+
+export const AutoCompleteFieldWithLabel = (props: IAutocompleteFieldProps) => {
+  const { label, ...rest } = props;
+
+  return (
+    <FlexBox flexDirection={'column'} gap={'5px'}>
+      <Typography variant="h6" className="select-field-header-label">
+        {label}
+      </Typography>
+      <AutocompleteField {...rest} />
+    </FlexBox>
   );
 };

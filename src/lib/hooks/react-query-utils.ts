@@ -32,7 +32,7 @@ export default function useLazyQuery<TData>(args: {
       apiParams !== undefined ? new URLSearchParams(apiParams).toString() : '',
     [apiParams]
   );
-  const getOrderDetailsData = useCallback(
+  const executeGetAPICall = useCallback(
     () =>
       getData(`${apiEndPoint}?${finalParams}`)
         .then((res) => res.json())
@@ -42,7 +42,7 @@ export default function useLazyQuery<TData>(args: {
 
   const queryresult = useQuery<TData, unknown, unknown, QueryKey>({
     queryKey: [queryKey],
-    queryFn: getOrderDetailsData,
+    queryFn: executeGetAPICall,
     ...queryOptions,
     enabled,
   });
@@ -55,7 +55,9 @@ export default function useLazyQuery<TData>(args: {
     (_apiParams?: Record<string, string>) => {
       if (!enabled) {
         setEnabled(true);
-        _apiParams !== undefined && setAPIParmas(_apiParams);
+        if (_apiParams !== undefined) {
+          setAPIParmas(_apiParams);
+        }
       }
     },
     [enabled]

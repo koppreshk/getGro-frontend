@@ -11,7 +11,7 @@ import {
 import React, { useMemo, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import styled, { css } from 'styled-components';
+import { styled, css } from 'styled-components';
 
 import { TableBody } from './parts/table-body';
 import { TableHeader } from './parts/table-header';
@@ -69,7 +69,7 @@ const StyledTable = styled.table<{
   }
 `;
 
-export function DataGrid<T extends object>(props: IDataGridProps<T>) {
+export const DataGrid = <T extends object>(props: IDataGridProps<T>) => {
   const {
     data,
     columns,
@@ -160,4 +160,4 @@ export function DataGrid<T extends object>(props: IDataGridProps<T>) {
       </DataGridWrapper>
     </DndProvider>
   );
-}
+};
