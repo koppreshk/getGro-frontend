@@ -5,7 +5,7 @@ import { Card, CardActionArea, CardContent, Typography } from '@mui/material';
 import { BreadCrumbs, FlexBox } from 'lib/ui-ux';
 import { ExotelConfigurationContainer } from 'modules/settings/containers/marketplace/exotel';
 import { FacebookConfigurationContainer } from 'modules/settings/containers/marketplace/facebook';
-import { GupShupConfigurationContainer } from 'modules/settings/containers/marketplace/gupshup/gupshup-configuration-container';
+// import { GupShupConfigurationContainer } from 'modules/settings/containers/marketplace/gupshup/gupshup-configuration-container';
 import { InstagramConfigurationContainer } from 'modules/settings/containers/marketplace/instagram';
 import { ShopifyConfigurationContainer } from 'modules/settings/containers/marketplace/shopify';
 import { WhatsappConfigurationContainer } from 'modules/settings/containers/marketplace/whatsapp';
@@ -13,7 +13,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useTheme } from 'styled-components';
 
 import ExotelIcon from '../../../../../assets/svg/exotel-icon.svg?react';
-import GupShupIcon from '../../../../../assets/svg/gupshup.svg?react';
+// import GupShupIcon from '../../../../../assets/svg/gupshup.svg?react';
 import ShopifyIcon from '../../../../../assets/svg/shopify-icon.svg?react';
 import WhatsAppIcon from '../../../../../assets/svg/whatsapp.svg?react';
 
@@ -34,13 +34,13 @@ const useThirdPartyApps = () => {
         'Connect your Shopify store and display customer order information',
       iconElement: () => <ShopifyIcon width="40px" height="40px" />,
     },
-    {
-      name: 'gupshup',
-      label: 'Gupshup',
-      description:
-        'Enhance customer engagement with getgro WhatsApp integration via GupShup',
-      iconElement: () => <GupShupIcon width="40px" height="40px" />,
-    },
+    // {
+    //   name: 'gupshup',
+    //   label: 'Gupshup',
+    //   description:
+    //     'Enhance customer engagement with getgro WhatsApp integration via GupShup',
+    //   iconElement: () => <GupShupIcon width="40px" height="40px" />,
+    // },
     {
       name: 'whatsapp',
       label: 'WhatsApp',
@@ -161,11 +161,11 @@ export default function MarketplaceRoutes() {
           path="exotel"
           element={<ExotelConfigurationContainer />}
         />
-        <Route
+        {/* <Route
           key="gupshup-route"
           path="gupshup"
           element={<GupShupConfigurationContainer />}
-        />
+        /> */}
         <Route
           key="whatsapp-meta-route"
           path="whatsapp"
