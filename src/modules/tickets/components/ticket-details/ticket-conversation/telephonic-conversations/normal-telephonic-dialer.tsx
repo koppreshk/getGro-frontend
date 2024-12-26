@@ -15,7 +15,7 @@ import { useFetchExotelAddedNumbers } from 'modules/settings/apis/marketplace/ex
 import { useOutboundCall } from 'modules/tickets/apis/telephonic-apis';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 const StyledDialogActions = styled(DialogActions)`
   && {

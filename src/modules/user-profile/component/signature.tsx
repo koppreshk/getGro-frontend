@@ -6,7 +6,7 @@ import { FlexBox, LoadingButton, MoreInformation } from 'lib/ui-ux';
 import { useEditProfile } from 'modules/settings/apis/users-and-permissions';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export const StyledRichTextEditor = styled(RichTextEditorField)`
   border: 1px solid ${({ theme }) => theme.pallete.formFieldBorderColor};

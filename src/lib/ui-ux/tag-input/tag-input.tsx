@@ -6,7 +6,7 @@ import { Property } from 'csstype';
 import { KeyCodes } from 'lib/enums';
 import { generateId } from 'lib/utils';
 import React, { useCallback, useState } from 'react';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { FlexBox } from '../flexbox/flexbox';
 

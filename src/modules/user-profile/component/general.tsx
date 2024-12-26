@@ -9,7 +9,7 @@ import { usePrimaryViewOptions } from 'modules/tickets/components';
 import { useState } from 'react';
 import { useForm, FormProvider, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 interface IGeneralTabFormFeilds {
   fullName: string;
@@ -130,6 +130,7 @@ export const General = () => {
     { key: 'en', value: 'English' },
     { key: 'fr', value: 'French' },
     { key: 'zh-CN', value: 'Simplified Chinease' },
+    { key: 'hi', value: 'Hindi' },
   ];
 
   return (

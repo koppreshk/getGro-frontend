@@ -7,10 +7,10 @@ import {
 import { FlexBox, LoadingButton } from 'lib/ui-ux';
 import { IGenericResponse } from 'modules/settings/apis/templates/types';
 import { ITemplatesFormFields } from 'modules/settings/containers/templates';
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 interface ITemplatesFormProps {
   mode: 'create' | 'edit';
@@ -48,11 +48,6 @@ export const TemplatesForm = (props: ITemplatesFormProps) => {
       template: '',
     },
   });
-
-  const onSubmit = useCallback(async (formvalues: ITemplatesFormFields) => {
-    console.log(formvalues);
-    // onFormSubmitHandler(formvalues);
-  }, []);
 
   const validateTitle = (value: string) => {
     const modifiedData =
@@ -119,7 +114,7 @@ export const TemplatesForm = (props: ITemplatesFormProps) => {
             variant="contained"
             size="large"
             type="submit"
-            onClick={methods.handleSubmit(onSubmit)}
+            // onClick={methods.handleSubmit(onSubmit)}
           >
             {isInEditMode ? 'Edit Template' : 'Add Template'}
           </LoadingButton>

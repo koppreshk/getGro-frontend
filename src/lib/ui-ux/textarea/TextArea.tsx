@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 const StyledTextArea = styled.textarea<
   Partial<Omit<ITextAreProps, 'canResize'>> & { $canResize?: boolean }

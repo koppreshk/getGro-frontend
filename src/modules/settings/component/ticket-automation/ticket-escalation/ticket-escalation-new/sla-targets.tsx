@@ -7,7 +7,7 @@ import {
   IPriority,
 } from 'modules/settings/apis/ticket-automation/escalations/fetch-sla-metadata';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 const PriorityLabel = styled(FlexBox)`
   height: 50px;

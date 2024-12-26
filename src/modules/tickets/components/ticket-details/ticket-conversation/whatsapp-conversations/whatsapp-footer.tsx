@@ -19,7 +19,7 @@ import { getAllFilesInfo } from 'lib/ui-ux/file-upload/utils';
 import { useUploadFile } from 'modules/tickets/apis';
 import React, { useCallback } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { NativeFileUpload } from '../../../../../../lib/ui-ux/file-upload/native-file-upload-field';
 

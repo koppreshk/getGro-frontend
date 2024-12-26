@@ -11,7 +11,7 @@ import { StyledRichTextEditor } from 'modules/settings/component/ticket-configur
 import { IPriorities } from 'modules/tickets/apis';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { StyledRadioGroupFields } from '../../ticket-conversation/email-conversations/more-actions/split-ticket';
 import { QueueOptions } from '../../ticket-conversation/email-conversations/more-actions/split-ticket/queue-options';

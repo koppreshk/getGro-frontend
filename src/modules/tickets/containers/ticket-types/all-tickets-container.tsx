@@ -1,20 +1,37 @@
+/* eslint-disable react/display-name */
 import { ErrorMessage } from 'lib/ui-ux';
 import { useFetchAllTickets } from 'modules/tickets/apis';
+import {
+  ITicketDetailsWithSearchQuey,
+  useFetchALLTicketsWithSearchuery,
+} from 'modules/tickets/apis/ticket-type-apis/fetch-all-tickets-with-search-query';
 import { TicketsByView } from 'modules/tickets/components';
 import React from 'react';
 
 export const AllTicketsContainer = React.memo(() => {
   const { data, isLoading, isFetching, error } = useFetchAllTickets();
+  const [
+    fetchAllTicketsWithSearchQuery,
+    { isLoading: queryLoading, data: queryData },
+  ] = useFetchALLTicketsWithSearchuery();
 
-  if (data || isLoading) {
-    const ticketsData = data?.data ?? [];
-    const totalTickets = data?.total_pages ?? 0;
+  // Determine which data to use as ticketsData
+  const ticketsData =
+    queryData && (queryData as ITicketDetailsWithSearchQuey)?.data?.length > 0
+      ? (queryData as ITicketDetailsWithSearchQuey)?.data
+      : (data?.data ?? []);
 
+  const totalTickets = queryData
+    ? ((queryData as ITicketDetailsWithSearchQuey)?.total_pages ?? 0)
+    : (data?.total_pages ?? 0);
+
+  if (data || isLoading || queryLoading || queryData) {
     return (
       <TicketsByView
-        isLoading={isLoading || isFetching}
+        isLoading={isLoading || isFetching || queryLoading}
         data={ticketsData}
         totalPages={totalTickets}
+        fetchAllTicketsWithSearchQuery={fetchAllTicketsWithSearchQuery}
       />
     );
   }

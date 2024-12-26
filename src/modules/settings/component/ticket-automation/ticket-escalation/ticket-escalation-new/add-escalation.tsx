@@ -7,7 +7,7 @@ import {
   IUser,
 } from 'modules/settings/apis/ticket-automation/escalations/fetch-sla-metadata';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 const Wrapper = styled(FlexBox)`
   border-radius: ${({ theme }) => theme.semantics.borderRadius.md};

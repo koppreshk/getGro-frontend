@@ -3,7 +3,7 @@ import { RadioGroupField, SelectField } from 'lib/form-fields';
 import { FlexBox } from 'lib/ui-ux';
 import { useFetchAllQueues } from 'modules/settings/apis/ticket-automation/escalations';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 const StyledRadioGroupFields = styled(RadioGroupField)`
   .MuiRadio-sizeSmall {

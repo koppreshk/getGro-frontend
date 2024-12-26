@@ -1,6 +1,6 @@
 import { ChatHistory } from 'lib/ui-ux';
 import { TicketsHistory } from 'modules/tickets/apis';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 // const useColumns = () => {
 //     const columnHelper = createColumnHelper<TicketsHistory>();

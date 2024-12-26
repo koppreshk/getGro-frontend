@@ -4,7 +4,7 @@ import { KeyCodes } from 'lib/enums';
 import { CustomIconButton, FlexBox } from 'lib/ui-ux';
 import { generateId } from 'lib/utils';
 import { useCallback, useState } from 'react';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { ChartContainer } from './total-disposed';
 

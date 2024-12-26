@@ -11,7 +11,7 @@ import { FlexBox, HorizontalSeparator } from 'lib/ui-ux';
 import { setShowHideTicketDetails } from 'modules/tickets/storage';
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import ShopifyIcon from '../../../../../assets/svg/shopify-icon.svg?react';
 

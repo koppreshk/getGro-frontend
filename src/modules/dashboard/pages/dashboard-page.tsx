@@ -2,7 +2,7 @@ import { Alert } from '@mui/material';
 import { useModule } from 'lib/hooks';
 import { FlexBox } from 'lib/ui-ux';
 import { Trans } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { DashboardLayout } from '../components';
 

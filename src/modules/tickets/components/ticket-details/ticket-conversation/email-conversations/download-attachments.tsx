@@ -4,7 +4,7 @@ import {
   DownloadAttachmentsContainer,
   PreviewFileContainer,
 } from 'modules/tickets/containers';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { IEmailConversations } from './email-conversations-layout';
 

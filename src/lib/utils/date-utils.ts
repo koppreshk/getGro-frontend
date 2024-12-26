@@ -1,4 +1,5 @@
 import i18n from 'i18n';
+import { t } from 'i18next';
 import { DateTime, DateTimeFormatOptions, Duration } from 'luxon';
 import { useMemo } from 'react';
 
@@ -42,11 +43,11 @@ export function useDateDifference(date: string) {
         : 'success';
   }, [diff]);
 
-  const prefix = `${dateColor === 'error' ? 'Due since' : 'Due in'}`;
-  const daysValue = days! === 0 ? '' : `${Math.abs(days!)} days`;
-  const hoursValue = hours! === 0 ? '' : `${Math.abs(hours!)} hours`;
+  const prefix = `${dateColor === 'error' ? t('due_since') : t('due_in')}`;
+  const daysValue = days! === 0 ? '' : `${Math.abs(days!)} ${t('days')}`;
+  const hoursValue = hours! === 0 ? '' : `${Math.abs(hours!)} ${t('hours')}`;
   const minsValue =
-    minutes! === 0 ? '' : `${Math.abs(Math.round(minutes!))} mins`;
+    minutes! === 0 ? '' : `${Math.abs(Math.round(minutes!))} ${t('mins')}`;
   const parsedDateString = `${prefix} ${daysValue} ${hoursValue} ${minsValue}`;
 
   return {

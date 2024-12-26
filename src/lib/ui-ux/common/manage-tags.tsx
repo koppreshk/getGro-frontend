@@ -2,7 +2,7 @@ import { FlexBox, ITagInput, TagInput, TypographyName } from 'lib/ui-ux';
 import { IGenericResponse } from 'modules/settings/apis/ticket-status/types';
 import { useCallback, useEffect, useState } from 'react';
 import { Trans } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export const StyledTags = styled(TagInput)`
   padding: 8px;

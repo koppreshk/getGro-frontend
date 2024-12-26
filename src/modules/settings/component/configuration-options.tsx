@@ -25,7 +25,7 @@ import { FlexBox, GridLayout } from 'lib/ui-ux';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 interface ICategoryOptions {
   route: string;

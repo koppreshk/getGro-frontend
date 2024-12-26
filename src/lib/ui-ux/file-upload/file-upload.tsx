@@ -3,7 +3,7 @@ import { IconButton } from '@mui/material';
 import { useNotifications } from 'lib';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { IFileUploadProps, IFileInfo } from './file-upload.types';
 import { getAllFilesInfo, useFileRepository } from './utils';
@@ -21,6 +21,7 @@ export const parseFileInfo = (
     ? settledResult.value
     : settledResult.reason;
 
+// eslint-disable-next-line react/display-name
 export const FileUpload = React.memo((props: IFileUploadProps) => {
   const {
     hidden,
@@ -39,7 +40,7 @@ export const FileUpload = React.memo((props: IFileUploadProps) => {
     onChange,
     allowDuplicateFiles,
   });
-  const _onButtonClick = React.useCallback(() => {
+  const onButtonClick = React.useCallback(() => {
     const { current } = inputRef;
     current?.click();
   }, []);
@@ -77,7 +78,7 @@ export const FileUpload = React.memo((props: IFileUploadProps) => {
     [readMode, showNotification, upsert]
   );
 
-  const _onFileSelect = React.useCallback(
+  const onFileSelect = React.useCallback(
     (ev: React.ChangeEvent<HTMLInputElement>) => {
       loadSelectedFiles(ev.target.files ? Array.from(ev.target.files) : null);
     },
@@ -86,7 +87,7 @@ export const FileUpload = React.memo((props: IFileUploadProps) => {
 
   return hidden ? null : (
     <>
-      <IconButton onClick={_onButtonClick} title={t('upload_file')}>
+      <IconButton onClick={onButtonClick} title={t('upload_file')}>
         <AttachFileOutlined />
       </IconButton>
       <DefaultFileInput
@@ -95,7 +96,7 @@ export const FileUpload = React.memo((props: IFileUploadProps) => {
         ref={inputRef}
         accept={accept}
         multiple={multiple}
-        onChange={_onFileSelect}
+        onChange={onFileSelect}
       />
     </>
   );

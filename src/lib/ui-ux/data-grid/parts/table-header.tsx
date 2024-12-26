@@ -10,7 +10,7 @@ import {
 } from '@tanstack/react-table';
 import { FlexBox } from 'lib/ui-ux';
 import { useDrag, useDrop } from 'react-dnd';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 interface ITableHeaderProps<T> {
   header: Header<T, unknown>;
   table: Table<T>;

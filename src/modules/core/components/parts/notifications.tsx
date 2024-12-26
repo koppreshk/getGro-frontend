@@ -2,7 +2,7 @@ import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined
 import { Badge, IconButton, Typography } from '@mui/material';
 import { FlexBox, PopoverWithBeak } from 'lib/ui-ux';
 import { useState } from 'react';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 const notifications = [
   {

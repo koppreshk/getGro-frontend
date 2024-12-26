@@ -17,7 +17,7 @@ import { getInitialsByName } from 'lib/utils';
 import { ITicketDetails } from 'modules/tickets/apis';
 import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { BrowserTelephonicDialer } from '../../ticket-conversation/telephonic-conversations';
 

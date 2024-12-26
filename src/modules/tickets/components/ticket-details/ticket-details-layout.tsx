@@ -1,7 +1,7 @@
 import { useAppSelector } from 'lib/hooks';
 import { FlexBox } from 'lib/ui-ux';
 import { TicketListViewContainer } from 'modules/tickets/containers';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { TicketConversationLayout } from './ticket-conversation';
 import { TicketDetailsSection } from './ticket-details-section/ticket-details-section';

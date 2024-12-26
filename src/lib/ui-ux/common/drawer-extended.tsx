@@ -1,6 +1,6 @@
 import { Close } from '@mui/icons-material';
 import { Drawer, DrawerProps, IconButton, Typography } from '@mui/material';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { FlexBox } from '../flexbox/flexbox';
 

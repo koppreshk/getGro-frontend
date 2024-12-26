@@ -7,7 +7,7 @@ import { IChangeAsigneeArgs, ITicketDetails } from 'modules/tickets/apis';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { TypographyName } from './contact-info';
 
@@ -25,6 +25,69 @@ interface IManageAssigneeProps extends Pick<ITicketDetails, 'assigneeInfo'> {
   data: ITicketQueues;
   onChangeAssignee: (args: IChangeAsigneeArgs) => Promise<void>;
 }
+
+interface IFormFields {
+  assigneeQueue: string;
+  assigneeAgent?: string;
+}
+
+const PopoverContent = (props: {
+  queues: Queue[];
+  handleClose: () => void;
+  onChangeAssignee: (args: IChangeAsigneeArgs) => Promise<void>;
+}) => {
+  const { queues, handleClose, onChangeAssignee } = props;
+  const form = useForm<IFormFields>({
+    defaultValues: {
+      assigneeAgent: '',
+      assigneeQueue: '',
+    },
+  });
+  const { t } = useTranslation();
+
+  const selectedQueue = form.watch('assigneeQueue');
+  const agents = queues
+    .find((item) => item.id.toString() === selectedQueue)
+    ?.assignedEmployees.map((item) => ({
+      key: item.id.toString(),
+      value: `${item.firstName} ${item?.lastName ?? ''}`,
+    }));
+
+  const onSave = (formData: IFormFields) => {
+    onChangeAssignee({
+      queueId: formData.assigneeQueue,
+      agent: formData.assigneeAgent,
+    }).finally(() => handleClose());
+  };
+  return (
+    <FormProvider {...form}>
+      <FlexBox gap={'20px'} flexDirection="column" width="300px" padding="20px">
+        <Typography variant="h6">{t('change_assignee')}</Typography>
+        <SelectField
+          name="assigneeQueue"
+          label={t('queue')}
+          menuOptions={queues.map((item) => ({
+            key: item.id.toString(),
+            value: item.name,
+          }))}
+          rules={{ required: t('queue_validation') }}
+        />
+        <SelectField
+          name="assigneeAgent"
+          label={t('agent')}
+          menuOptions={agents || []}
+        />
+        <HorizontalSeparator />
+        <FlexBox justifyContent="flex-end" gap={'10px'}>
+          <CancelButton onClick={handleClose} />
+          <Button variant="contained" onClick={form.handleSubmit(onSave)}>
+            {t('save')}
+          </Button>
+        </FlexBox>
+      </FlexBox>
+    </FormProvider>
+  );
+};
 
 export const ManageAssignee = (props: IManageAssigneeProps) => {
   const { assigneeInfo } = props;
@@ -97,68 +160,5 @@ export const ManageAssignee = (props: IManageAssigneeProps) => {
         />
       </Popover>
     </div>
-  );
-};
-
-interface IFormFields {
-  assigneeQueue: string;
-  assigneeAgent?: string;
-}
-
-const PopoverContent = (props: {
-  queues: Queue[];
-  handleClose: () => void;
-  onChangeAssignee: (args: IChangeAsigneeArgs) => Promise<void>;
-}) => {
-  const { queues, handleClose, onChangeAssignee } = props;
-  const form = useForm<IFormFields>({
-    defaultValues: {
-      assigneeAgent: '',
-      assigneeQueue: '',
-    },
-  });
-  const { t } = useTranslation();
-
-  const selectedQueue = form.watch('assigneeQueue');
-  const agents = queues
-    .find((item) => item.id.toString() === selectedQueue)
-    ?.assignedEmployees.map((item) => ({
-      key: item.id.toString(),
-      value: `${item.firstName} ${item?.lastName ?? ''}`,
-    }));
-
-  const onSave = (formData: IFormFields) => {
-    onChangeAssignee({
-      queueId: formData.assigneeQueue,
-      agent: formData.assigneeAgent,
-    }).finally(() => handleClose());
-  };
-  return (
-    <FormProvider {...form}>
-      <FlexBox gap={'20px'} flexDirection="column" width="300px" padding="20px">
-        <Typography variant="h6">{t('change_assignee')}</Typography>
-        <SelectField
-          name="assigneeQueue"
-          label={t('queue')}
-          menuOptions={queues.map((item) => ({
-            key: item.id.toString(),
-            value: item.name,
-          }))}
-          rules={{ required: t('queue_validation') }}
-        />
-        <SelectField
-          name="assigneeAgent"
-          label={t('agent')}
-          menuOptions={agents || []}
-        />
-        <HorizontalSeparator />
-        <FlexBox justifyContent="flex-end" gap={'10px'}>
-          <CancelButton onClick={handleClose} />
-          <Button variant="contained" onClick={form.handleSubmit(onSave)}>
-            {t('save')}
-          </Button>
-        </FlexBox>
-      </FlexBox>
-    </FormProvider>
   );
 };

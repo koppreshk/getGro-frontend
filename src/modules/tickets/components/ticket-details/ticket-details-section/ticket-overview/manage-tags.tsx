@@ -2,7 +2,7 @@ import { FlexBox, ITagInput, TagInput } from 'lib/ui-ux';
 import { ITag } from 'modules/settings/apis/tags';
 import { useCallback, useEffect, useState } from 'react';
 import { Trans } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { TypographyName } from './contact-info';
 

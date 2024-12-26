@@ -10,7 +10,7 @@ import { chooseRandomColors, getInitialsByName } from 'lib/utils';
 import React, { useMemo, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { IEmailFormFields } from './email-conversations';
 import { EmailHeaderOptions } from './email-header-options';
@@ -88,8 +88,12 @@ export const EmailEditor = (props: IEmailEditorProps) => {
             }}
           />
           <FlexBox gap="8px" padding="0px 16px" flexWrap="wrap">
-            {attachmets?.selectedFiles.map((item) => (
-              <UploadedAttachmentsPreview item={item} attachmets={attachmets} />
+            {attachmets?.selectedFiles.map((item, index) => (
+              <UploadedAttachmentsPreview
+                key={index}
+                item={item}
+                attachmets={attachmets}
+              />
             ))}
           </FlexBox>
         </div>

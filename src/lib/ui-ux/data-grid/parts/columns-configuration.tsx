@@ -4,7 +4,7 @@ import { Column, VisibilityInstance } from '@tanstack/table-core';
 import { FlexBox } from 'lib/ui-ux';
 import { convertCamelCaseStringToSpaceSeparated } from 'lib/utils';
 import { useState } from 'react';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { CustomIconButton } from '../../common/custom-icon-button';
 

@@ -16,7 +16,7 @@ import { FlexBox, MoreInformation } from 'lib/ui-ux';
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import {
   CallStatusIconWrapper,

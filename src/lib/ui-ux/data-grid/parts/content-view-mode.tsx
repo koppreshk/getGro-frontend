@@ -8,7 +8,7 @@ import { Menu, MenuItem, Typography } from '@mui/material';
 import { FlexBox } from 'lib/ui-ux';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 const StyledFlexBox = styled(FlexBox)`
   cursor: pointer;
@@ -35,8 +35,8 @@ export const ContentViewMode = (props: ContentViewModeProps) => {
     setAnchorEl(null);
   };
 
-  const onMenuSelect = (selectedValue: string) => {
-    onGridModeChange(selectedValue);
+  const onMenuSelect = (newSelectedValue: string) => {
+    onGridModeChange(newSelectedValue);
     handleClose();
   };
   return (

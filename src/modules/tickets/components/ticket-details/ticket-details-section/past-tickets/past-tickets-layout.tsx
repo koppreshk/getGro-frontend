@@ -3,8 +3,9 @@ import { Typography } from '@mui/material';
 import { CustomIconButton, FlexBox } from 'lib/ui-ux';
 import { ITicketDetails } from 'modules/tickets/apis';
 import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { CommonHeader } from '../common-header';
 import { PastTicketCard } from './past-ticket-card';
@@ -12,15 +13,6 @@ import { PastTicketCard } from './past-ticket-card';
 interface IPastTicketsLayoutProps {
   pastTickets: ITicketDetails[];
 }
-
-export const PastTicketsLayout = (props: IPastTicketsLayoutProps) => {
-  const { pastTickets } = props;
-  return (
-    <>
-      <PastTickets pastTickets={pastTickets} />
-    </>
-  );
-};
 
 const LayoutContainer = styled(FlexBox)`
   .parent-container:last-child {
@@ -34,6 +26,8 @@ const PastTickets = (props: IPastTicketsLayoutProps) => {
   const { pastTickets } = props;
   const { pathname, search } = useLocation();
   const [isAcscending, setSortOrder] = React.useState(false);
+  const { t } = useTranslation();
+
   const sortedPastTickets = useMemo(
     () =>
       isAcscending
@@ -71,7 +65,7 @@ const PastTickets = (props: IPastTicketsLayoutProps) => {
   return (
     <>
       <CommonHeader
-        headerName="Past Tickets"
+        headerName={t('past_tickets')}
         renderFarPositionedItems={renderFarPositionedItems}
       />
       <LayoutContainer
@@ -89,10 +83,19 @@ const PastTickets = (props: IPastTicketsLayoutProps) => {
           ))
         ) : (
           <FlexBox alignItems="center" justifyContent="center" height="100%">
-            <Typography>No past tickets found</Typography>
+            <Typography>{t('no_past_tickets_found')}</Typography>
           </FlexBox>
         )}
       </LayoutContainer>
+    </>
+  );
+};
+
+export const PastTicketsLayout = (props: IPastTicketsLayoutProps) => {
+  const { pastTickets } = props;
+  return (
+    <>
+      <PastTickets pastTickets={pastTickets} />
     </>
   );
 };

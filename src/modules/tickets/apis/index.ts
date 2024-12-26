@@ -35,3 +35,5 @@ export * from './ticket-notes';
 export * from './split-ticket/split-ticket';
 
 export * from './orders/fetch-all-orders';
+
+export * from './fetch-all-tags';

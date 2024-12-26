@@ -1,5 +1,5 @@
 import { Button, Typography } from '@mui/material';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export const StyledEllipsisTypography = styled(Typography)`
   && {

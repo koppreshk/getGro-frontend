@@ -3,7 +3,7 @@ import { Typography } from '@mui/material';
 import { StyledErrorMessage } from 'lib/form-fields';
 import { FlexBox } from 'lib/ui-ux';
 import { Message } from 'modules/chats/apis';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { PreviewFileContent } from './preview-file-content';
 

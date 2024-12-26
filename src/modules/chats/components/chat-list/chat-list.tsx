@@ -10,7 +10,7 @@ import { AllChatConversations } from 'modules/chats/apis';
 import { useEffect, useMemo, useState } from 'react';
 import { Trans } from 'react-i18next';
 import { useMatch, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { ChatItem } from './chat-item';
 

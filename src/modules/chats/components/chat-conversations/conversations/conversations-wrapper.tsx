@@ -11,7 +11,7 @@ import {
 } from 'modules/chats/apis';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { ChatContent } from './chat-content';
 import { ConversationFooter } from './conversation-footer';
@@ -107,25 +107,29 @@ export const ConversationsWrapper = (props: WhatsAppConversationsProps) => {
   // Group messages by date
   const groupedMessages = useMemo(
     () =>
-      chatData.reduce(
-        (acc, message) => {
-          // Extract just the date portion (YYYY-MM-DD) from `created_at`
-          const date = new Date(message.created_at).toISOString().split('T')[0];
+      chatData.reduce((acc: { [key: string]: Message[] }, message) => {
+        // Parse the date string using luxon
+        const parsedDate = DateTime.fromFormat(
+          message.created_at,
+          'yyyy-MM-dd hh:mm a'
+        );
 
-          // Initialize the group if it doesn't exist
-          if (!acc[date]) {
-            acc[date] = [];
-          }
+        // Format the date to just the date portion (YYYY-MM-DD)
+        const date = parsedDate.toFormat('yyyy-MM-dd');
 
-          // Push the current message into the corresponding date group
-          acc[date].push(message);
+        // Initialize the group if it doesn't exist
+        if (!acc[date]) {
+          acc[date] = [];
+        }
 
-          return acc;
-        },
-        {} as Record<string, Message[]>
-      ),
+        // Push the current message into the corresponding date group
+        acc[date].push(message);
+
+        return acc;
+      }, {}),
     [chatData]
   );
+
   const isReplyFeatureAccessible = useFeature('reply_conversation');
   const { t } = useTranslation();
   return (

@@ -4,8 +4,8 @@ import { useFeature } from 'lib/hooks';
 import { FlexBox, MoreActions } from 'lib/ui-ux';
 import { chooseRandomColors, getInitialsByName, getTimeAgo } from 'lib/utils';
 import { useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { Trans, useTranslation } from 'react-i18next';
+import { styled } from 'styled-components';
 
 import { DownloadAttachments } from './download-attachments';
 import { IEmailConversations } from './email-conversations-layout';
@@ -188,7 +188,7 @@ export const EmailCard = (props: IEmailCardProps) => {
               ) : (
                 <FlexBox gap="4px" alignItems="center">
                   <SubTextValue fontSize="12px">
-                    to {toEmail?.split('@')[0]}{' '}
+                    <Trans i18nKey={'to'} /> {toEmail?.split('@')[0]}{' '}
                     <span className="print">{`<${toEmail}>`}</span>
                   </SubTextValue>
                   <EmailPopoverMetadata

@@ -3,7 +3,7 @@
 import { Typography } from '@mui/material';
 import { FlexBox, PopoverWithBeak } from 'lib/ui-ux';
 import { useState } from 'react';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { DonutChart, DonutSlice } from './donut-chart';
 // import DonutIcon from '../../../../assets/svg/donut-chart.svg?react'

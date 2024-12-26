@@ -1,7 +1,7 @@
 import { GetApp, Edit } from '@mui/icons-material';
 import { Button, Typography } from '@mui/material';
 import { BackButton, FlexBox } from 'lib/ui-ux';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { IAppConfigurationLayout } from './app-configuration-layout';
 

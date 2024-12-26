@@ -2,7 +2,7 @@ import { Typography } from '@mui/material';
 import { FlexBox } from 'lib/ui-ux';
 import { ITicketDetails } from 'modules/tickets/apis';
 import { Trans } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { getParsedChatType } from '../../tickets-card-view/card-view';
 import { HeaderWrapper } from '../ticket-list-view';

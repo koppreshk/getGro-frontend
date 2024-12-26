@@ -15,7 +15,7 @@ import {
   SetStateAction,
 } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { IFile } from './create-article';
 

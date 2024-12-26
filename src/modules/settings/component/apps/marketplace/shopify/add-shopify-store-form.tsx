@@ -5,7 +5,7 @@ import { ConfigStepper } from 'modules/settings/common';
 import { IShopifyFormFields } from 'modules/settings/containers/marketplace/shopify';
 import React from 'react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export interface IAddShopifyConfigurationFormProps {
   isMutationLoading: boolean;

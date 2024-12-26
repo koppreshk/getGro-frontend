@@ -1,6 +1,14 @@
 import { createColumnHelper } from '@tanstack/react-table';
-import { DataGrid, FlexBox, TableControls } from 'lib/ui-ux';
-import styled from 'styled-components';
+import { t } from 'i18next';
+import {
+  DataGrid,
+  FlexBox,
+  NoDataIllustration,
+  TableControls,
+} from 'lib/ui-ux';
+import { saveAsCSV } from 'lib/utils';
+import { useCallback } from 'react';
+import { styled } from 'styled-components';
 
 import { ICustomerData } from '../apis/fetch-all-customers';
 
@@ -9,21 +17,22 @@ const useColumns = () => {
 
   const columns = [
     columnHelper.accessor('id', {
-      header: 'Id',
+      header: t('id'),
       id: 'id',
       cell: (props) => props.getValue(),
     }),
     columnHelper.accessor('name', {
-      header: 'Customer Name',
+      header: t('customer_name'),
+      id: 'Custoemer Name',
       cell: (props) => props.getValue() ?? '-',
     }),
     columnHelper.accessor('email', {
-      header: 'Email',
+      header: t('email'),
       id: 'email',
       cell: (props) => props.getValue() ?? '-',
     }),
     columnHelper.accessor('number', {
-      header: 'Phone',
+      header: t('phone_number'),
       id: 'number',
       cell: (props) => props?.getValue() ?? '-',
     }),
@@ -63,20 +72,34 @@ interface IAllCustomersProps {
 export const AllCustomers = (props: IAllCustomersProps) => {
   const { data, isLoading, totalPages } = props;
   const columns = useColumns();
+
+  const onDownloadBtnClick = useCallback(() => {
+    if (props.data) {
+      saveAsCSV(props.data, { fileName: 'all-customers' });
+    }
+  }, [props.data]);
+
   return (
     <FlexBox padding="10px" flexDirection="column" height="100%" width="100%">
       <TableControls
         totalPages={totalPages}
         enableSerchField
+        searchLabel={t('search_customers')}
+        searchPlaceholder={t('search_by_email_phone')}
         isContentViewModeVisible={false}
+        onDownloadBtnClick={onDownloadBtnClick}
       />
       <ContentContainer>
-        <StyledDataGrid
-          columns={columns}
-          data={data!}
-          isLoading={isLoading}
-          hideTableControls={false}
-        />
+        {(data?.length ?? 0) > 0 || props.isLoading ? (
+          <StyledDataGrid
+            columns={columns}
+            data={data!}
+            isLoading={isLoading}
+            hideTableControls={false}
+          />
+        ) : (
+          <NoDataIllustration message={t('no_customers_display')} />
+        )}
       </ContentContainer>
     </FlexBox>
   );

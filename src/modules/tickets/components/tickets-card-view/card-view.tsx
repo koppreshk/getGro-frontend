@@ -1,5 +1,6 @@
 import { AccessTime, CalendarToday, SupportAgent } from '@mui/icons-material';
 import { Avatar, Tooltip, Typography, SxProps, Chip } from '@mui/material';
+import { t } from 'i18next';
 import { useFeature } from 'lib/hooks';
 import {
   CircularSeparator,
@@ -18,7 +19,7 @@ import { ChatType } from 'modules/chats/apis';
 import { useSourceIcon } from 'modules/tickets/hooks';
 import React, { useCallback, useMemo } from 'react';
 import { useMatch, useNavigate, useSearchParams } from 'react-router-dom';
-import styled, { css } from 'styled-components';
+import { styled, css } from 'styled-components';
 
 import { ITicketDetails } from '../../apis';
 import { TicketStatusContainer } from '../../containers';
@@ -89,18 +90,18 @@ const CreatedAt = (props: Pick<ITicketDetails, 'createdAt'>) => {
     .toObject();
   const parsedDateValue =
     Math.abs(days!) > 0
-      ? `${Math.abs(days!)} days`
+      ? `${Math.abs(days!)} ${t('days')}`
       : Math.abs(hours!) > 0
-        ? `${Math.abs(hours!)} hours`
+        ? `${Math.abs(hours!)} ${t('hours')}`
         : Math.abs(minutes!) > 0
-          ? `${Math.abs(Math.round(minutes!))} mins`
-          : `${Math.abs(Math.round(seconds!))} seconds`;
+          ? `${Math.abs(Math.round(minutes!))} ${t('mins')}`
+          : `${Math.abs(Math.round(seconds!))} ${t('seconds')}`;
 
   return (
-    <Tooltip title={`Created ${parsedDateValue} ago`}>
+    <Tooltip title={`${t('created')} ${parsedDateValue} ${t('ago')}`}>
       <FlexBox gap={'10px'} alignItems="center" width="198px">
         <CalendarToday sx={iconStyles} />
-        <TicketInfoContent variant="body2">{`Created ${parsedDateValue} ago`}</TicketInfoContent>
+        <TicketInfoContent variant="body2">{`${t('created')} ${parsedDateValue} ${t('ago')}`}</TicketInfoContent>
       </FlexBox>
     </Tooltip>
   );
@@ -109,7 +110,7 @@ const CreatedAt = (props: Pick<ITicketDetails, 'createdAt'>) => {
 const ResolutionDue = (props: Pick<ITicketDetails, 'resolutionDue'>) => {
   return (
     <Tooltip
-      title={`Resolution time: ${props.resolutionDue ? props.resolutionDue : '--'}`}
+      title={`${t('resolution_time')}: ${props.resolutionDue ? props.resolutionDue : '--'}`}
     >
       <FlexBox gap={'10px'} alignItems="center" width="198px">
         <AccessTime sx={iconStyles} />
@@ -129,12 +130,13 @@ const AgentAssigned = (props: Pick<ITicketDetails, 'assigneeInfo'>) => {
       <>
         {assigneeInfo?.email ? (
           <FlexBox flexDirection="column">
-            <Typography variant="subheading1">Assignee</Typography>
+            <Typography variant="subheading1">{t('assignee')}</Typography>
             <Typography variant="subheading1">
-              Name: {assigneeInfo?.first_name} {assigneeInfo?.last_name ?? ''}
+              {t('name')}: {assigneeInfo?.first_name}{' '}
+              {assigneeInfo?.last_name ?? ''}
             </Typography>
             <Typography variant="subheading1">
-              Email: {assigneeInfo?.email}
+              {t('email')}: {assigneeInfo?.email}
             </Typography>
           </FlexBox>
         ) : (
@@ -166,7 +168,7 @@ const ResponseDueIndicator = (props: Pick<ITicketDetails, 'responseDue'>) => {
   );
   return (
     <>
-      <Tooltip title={`Response ${prefix} ${responseDue}`}>
+      <Tooltip title={`${t('response')} ${prefix} ${responseDue}`}>
         {<Chip label={parsedDateString} color={dateColor} size="small" />}
       </Tooltip>
     </>
@@ -273,7 +275,7 @@ export const CardView = (props: ITicketDetails) => {
                 </Tooltip>
                 <FlexBox gap={'5px'} alignItems="center">
                   <TicketInfoContent variant="subheading1">
-                    via
+                    {t('via')}
                   </TicketInfoContent>
                   {getSourceIcon(createdFrom)}
                   <TicketInfoContent variant="body2">

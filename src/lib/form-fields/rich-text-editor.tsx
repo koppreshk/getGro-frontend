@@ -8,7 +8,7 @@ import {
   useFormContext,
 } from 'react-hook-form';
 import ReactQuill, { ReactQuillProps } from 'react-quill';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { StyledErrorMessage } from './select-field';
 

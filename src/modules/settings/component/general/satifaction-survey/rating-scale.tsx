@@ -2,7 +2,7 @@ import { Typography } from '@mui/material';
 import { RadioGroupField, TextboxField } from 'lib/form-fields';
 import { FlexBox } from 'lib/ui-ux';
 import { useFormContext } from 'react-hook-form';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 const ratingData = [
   {

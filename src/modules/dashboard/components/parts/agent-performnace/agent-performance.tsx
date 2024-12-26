@@ -8,7 +8,7 @@ import { AgentPerformancecontentContainer } from 'modules/dashboard/container';
 import { useAuth } from 'modules/login';
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { DashboardDateRangePicker } from '../dashboard-date-range-picker';
 

@@ -6,7 +6,7 @@ import {
 } from 'modules/tickets/containers';
 import { TicketNotesContainer } from 'modules/tickets/containers/ticket-notes';
 import React from 'react';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { OrderDetailsLayout } from './order-details';
 import { MenuOptions, TicketSideMenu } from './ticket-side-menu';
