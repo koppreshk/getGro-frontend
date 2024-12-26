@@ -1,4 +1,4 @@
-import { Edit } from '@mui/icons-material';
+import { Edit, GetApp } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import { BackButton, FlexBox } from 'lib/ui-ux';
 import { IExotelConfigDetails } from 'modules/settings/apis/marketplace/exotel';
@@ -88,7 +88,16 @@ export const ExotelHeaderActionButtons = (
               </Button>
             </>
           )
-        ) : null}
+        ) : (
+          <Button
+            variant="contained"
+            size="medium"
+            onClick={togglePopup}
+            endIcon={<GetApp />}
+          >
+            {t('install')}
+          </Button>
+        )}
       </FlexBox>
       <AddAppConfigurationDialog
         dialogContent={() => appConfigDialogContent()}
