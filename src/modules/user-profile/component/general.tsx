@@ -130,6 +130,7 @@ export const General = () => {
     { key: 'en', value: 'English' },
     { key: 'fr', value: 'French' },
     { key: 'zh-CN', value: 'Simplified Chinease' },
+    { key: 'hi', value: 'Hindi' },
   ];
 
   return (

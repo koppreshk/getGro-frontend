@@ -39,7 +39,7 @@ export const DeleteTicket = (props: MergeTicketProps) => {
         open={showDialog}
         isLoading={isLoading}
         content={<DeleteTicketContent />}
-        title="Delete Ticket"
+        title={t('delete_ticket')}
         negativeActionLabel={t('yes_delete')}
         onNegativeActionClick={onDelete}
         onClose={onCloseDrawer}

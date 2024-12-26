@@ -6,10 +6,12 @@ import {
   Typography,
   debounce,
 } from '@mui/material';
+import { t } from 'i18next';
 import { StyledErrorMessage } from 'lib/form-fields';
 import { FlexBox } from 'lib/ui-ux';
 import React from 'react';
 import { Controller, get, useFormContext } from 'react-hook-form';
+import { Trans } from 'react-i18next';
 
 import { IPrimaryTicketDetailsProps } from './primary-ticket-details';
 import { TicketInfo } from './ticket-info';
@@ -26,7 +28,7 @@ export const SearchTickets = (
 
   const validateField = (val: []) => {
     if (val.length <= 0) {
-      return 'Please make at least 1 selection to merge tickets';
+      return t('merge_ticket_validation');
     }
   };
 
@@ -53,7 +55,7 @@ export const SearchTickets = (
               <TextField
                 {...params}
                 fullWidth
-                placeholder="Search a secondary ticket by ID or Subject"
+                placeholder={t('search_secondary_placeholder')}
                 size="small"
                 autoFocus
                 error={hasError}
@@ -72,9 +74,9 @@ export const SearchTickets = (
                 onChange={debouncedChange}
               />
             )}
-            renderOption={(props, option, { selected }) => {
+            renderOption={(optionProps, option, { selected }) => {
               return (
-                <li {...props} key={option.ticketId}>
+                <li {...optionProps} key={option.ticketId}>
                   <TicketInfo
                     multiSelect
                     checked={selected}
@@ -100,8 +102,7 @@ export const SearchTickets = (
         as={StyledErrorMessage}
       />
       <Typography variant="body3">
-        Search and add secondary tickets that you want to merge with primary
-        tickets
+        <Trans i18nKey={'search_and_add'} />
       </Typography>
     </FlexBox>
   );
