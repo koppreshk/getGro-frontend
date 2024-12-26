@@ -6,7 +6,6 @@ export enum TicketsEndPoint {
   FETCH_MY_PENDING = 'my_pending',
   FETCH_MY_RESOLVED = 'my_resolved',
   FETCH_MY_CLOSED = 'my_closed',
-  GET_CUSTOMER_DETAILS = 'fetch_user_details',
   FETCH_EMAIL_CONVERSATIONS = 'fetch_email_conversations',
   REPLY_TO_EMAIL = 'reply_to_email',
   FETCH_ATTACHMENT = 'fetch_attachment',
@@ -34,6 +33,8 @@ export enum TicketsEndPoint {
   SPLIT_TICKET = 'split',
 
   FETCH_ALL_ORDERS = 'fetch_all_orders',
+
+  FETCH_ALL_TAGS = 'tag/all',
 }
 
 export enum TicketsQueryKey {
@@ -44,7 +45,6 @@ export enum TicketsQueryKey {
   FETCH_MY_PENDING = 'FETCH_MY_PENDING',
   FETCH_MY_RESOLVED = 'FETCH_MY_RESOLVED',
   FETCH_MY_CLOSED = 'FETCH_MY_CLOSED',
-  GET_CUSTOMER_DETAILS = 'GET_CUSTOMER_DETAILS',
   FETCH_EMAIL_CONVERSATIONS = 'FETCH_EMAIL_CONVERSATIONS',
   REPLY_TO_EMAIL = 'REPLY_TO_EMAIL',
   FETCH_ATTACHMENT = 'FETCH_ATTACHMENT',
@@ -71,4 +71,6 @@ export enum TicketsQueryKey {
   SPLIT_TICKET = 'SPLIT_TICKET',
 
   FETCH_ALL_ORDERS = 'FETCH_ALL_ORDERS',
+
+  FETCH_ALL_TAGS = 'FETCH_ALL_TAGS',
 }
