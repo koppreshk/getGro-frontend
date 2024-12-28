@@ -215,6 +215,7 @@ const AdvanceSearch = (props: IAdvanceSearchProps) => {
   });
 
   const [isfilterApplied, setisfilterApplied] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -225,8 +226,6 @@ const AdvanceSearch = (props: IAdvanceSearchProps) => {
   };
 
   const handleSubmit = (formData: ISearchTickets) => {
-    console.log('formData', formData);
-
     const createdDate = formData.createdDate
       ? formData.createdDate.toFormat('yyyy-MM-dd HH:mm:ss')
       : '';
@@ -255,6 +254,8 @@ const AdvanceSearch = (props: IAdvanceSearchProps) => {
       );
       fetchAllTicketsWithSearchQuery(finalArgs);
       setisfilterApplied(true);
+      searchParams.set('advanceFilters', 'enabled');
+      setSearchParams(searchParams);
       handleClose();
     }
   };
@@ -265,6 +266,8 @@ const AdvanceSearch = (props: IAdvanceSearchProps) => {
     if (fetchAllTicketsWithSearchQuery) {
       fetchAllTicketsWithSearchQuery({});
       setisfilterApplied(false);
+      searchParams.delete('advanceFilters');
+      setSearchParams(searchParams);
     }
   };
 
