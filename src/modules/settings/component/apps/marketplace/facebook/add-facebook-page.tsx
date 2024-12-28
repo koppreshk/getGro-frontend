@@ -201,7 +201,15 @@ export const AddFacebookPageFormBase = (props: IAddFacebookPageFormProps) => {
 
   const form = useForm<IAddFacebookPageFormFields>({
     mode: 'onChange',
-    defaultValues: defaultValues,
+    defaultValues: defaultValues ?? {
+      name: '',
+      facebookPageId: '',
+      queueId: null,
+      commentsConfiguration: 'all_posts',
+      sendAutoReply: false,
+      autoReplyMessage: '',
+      keywords: [],
+    },
   });
 
   const onSubmitForm = async (formFields: IAddFacebookPageFormFields) => {

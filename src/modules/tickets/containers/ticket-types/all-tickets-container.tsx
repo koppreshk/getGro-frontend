@@ -7,21 +7,24 @@ import {
 } from 'modules/tickets/apis/ticket-type-apis/fetch-all-tickets-with-search-query';
 import { TicketsByView } from 'modules/tickets/components';
 import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 export const AllTicketsContainer = React.memo(() => {
   const { data, isLoading, isFetching, error } = useFetchAllTickets();
+  const [searchParams] = useSearchParams();
+  const isAdvanceFiltersEnabled =
+    searchParams.get('advanceFilters') === 'enabled';
   const [
     fetchAllTicketsWithSearchQuery,
     { isLoading: queryLoading, data: queryData },
   ] = useFetchALLTicketsWithSearchuery();
 
   // Determine which data to use as ticketsData
-  const ticketsData =
-    queryData && (queryData as ITicketDetailsWithSearchQuey)?.data?.length > 0
-      ? (queryData as ITicketDetailsWithSearchQuey)?.data
-      : (data?.data ?? []);
+  const ticketsData = isAdvanceFiltersEnabled
+    ? ((queryData as ITicketDetailsWithSearchQuey)?.data ?? [])
+    : (data?.data ?? []);
 
-  const totalTickets = queryData
+  const totalTickets = isAdvanceFiltersEnabled
     ? ((queryData as ITicketDetailsWithSearchQuey)?.total_pages ?? 0)
     : (data?.total_pages ?? 0);
 

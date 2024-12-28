@@ -43,6 +43,7 @@ interface ITicketStatusProps {
   statusUpdateString: string;
   menuOptions: IGenericResponse[];
   renderMode?: string;
+  className?: string;
   onStatusChange: (statusId: number) => Promise<void>;
 }
 
@@ -52,6 +53,7 @@ export const TicketStatus = (props: ITicketStatusProps) => {
     ticketStatus,
     statusUpdateString,
     renderMode,
+    className,
     onStatusChange,
   } = props;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -108,7 +110,7 @@ export const TicketStatus = (props: ITicketStatusProps) => {
   };
 
   return (
-    <div>
+    <div className={className}>
       {renderMode === 'card' ? null : (
         <HorizontalSeparator $margin="0px 0px 10px 0px" />
       )}
@@ -123,9 +125,13 @@ export const TicketStatus = (props: ITicketStatusProps) => {
           onClick={handleClick}
           size="small"
           endIcon={<ExpandMore sx={{ width: 16, height: 16 }} />}
-          sx={{ textTransform: 'unset' }}
+          sx={{
+            textTransform: 'unset',
+          }}
         >
-          {ticketStatus}
+          <span className="btn-text" title={ticketStatus}>
+            {ticketStatus}
+          </span>
         </StyledButton>
         {renderMode === 'card' ? null : (
           <TypographyName variant="subheading2">

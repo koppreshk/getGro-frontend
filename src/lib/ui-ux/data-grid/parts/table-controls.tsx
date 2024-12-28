@@ -59,7 +59,6 @@ import {
 } from 'modules/tickets/apis/fetch-priorities';
 import React, { useCallback, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { useMatch, useSearchParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 
@@ -214,9 +213,9 @@ const AdvanceSearch = (props: IAdvanceSearchProps) => {
       createdDate: null,
     },
   });
-  const { t } = useTranslation();
 
   const [isfilterApplied, setisfilterApplied] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -227,12 +226,10 @@ const AdvanceSearch = (props: IAdvanceSearchProps) => {
   };
 
   const handleSubmit = (formData: ISearchTickets) => {
-    console.log('formData', formData);
-
     const createdDate = formData.createdDate
       ? formData.createdDate.toFormat('yyyy-MM-dd HH:mm:ss')
       : '';
-    const formObject = {
+    const formObject: Record<string, string> = {
       createdDate: createdDate,
       priority: formData.priority.map((item) => Number(item.key)).join(','),
       assignee: formData.assignee.map((item) => Number(item.key)).join(','),
@@ -241,10 +238,24 @@ const AdvanceSearch = (props: IAdvanceSearchProps) => {
       source: formData.source ? formData.source : '',
       email: formData.requesterEmail ? formData.requesterEmail : '',
     };
-    console.log('formObject', formObject);
     if (fetchAllTicketsWithSearchQuery) {
-      fetchAllTicketsWithSearchQuery(formObject);
+      const finalArgs = Object.keys(formObject).reduce(
+        (acc, key) => {
+          const typedKey = key as keyof typeof formObject;
+          if (
+            formObject[typedKey] !== undefined &&
+            formObject[typedKey] !== ''
+          ) {
+            acc[typedKey] = formObject[typedKey];
+          }
+          return acc;
+        },
+        {} as Record<string, string>
+      );
+      fetchAllTicketsWithSearchQuery(finalArgs);
       setisfilterApplied(true);
+      searchParams.set('advanceFilters', 'enabled');
+      setSearchParams(searchParams);
       handleClose();
     }
   };
@@ -255,6 +266,8 @@ const AdvanceSearch = (props: IAdvanceSearchProps) => {
     if (fetchAllTicketsWithSearchQuery) {
       fetchAllTicketsWithSearchQuery({});
       setisfilterApplied(false);
+      searchParams.delete('advanceFilters');
+      setSearchParams(searchParams);
     }
   };
 
