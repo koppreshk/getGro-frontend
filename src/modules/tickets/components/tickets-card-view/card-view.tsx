@@ -98,7 +98,7 @@ const CreatedAt = (props: Pick<ITicketDetails, 'createdAt'>) => {
           : `${Math.abs(Math.round(seconds!))} ${t('seconds')}`;
 
   return (
-    <Tooltip title={`${t('created')} ${parsedDateValue} ${t('ago')}`}>
+    <Tooltip title={`${t('created_at')}: ${props.createdAt}`}>
       <FlexBox gap={'10px'} alignItems="center" width="198px">
         <CalendarToday sx={iconStyles} />
         <TicketInfoContent variant="body2">{`${t('created')} ${parsedDateValue} ${t('ago')}`}</TicketInfoContent>
