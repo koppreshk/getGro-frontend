@@ -10,10 +10,12 @@ interface ITicketStatusContainerProps
     'ticketId' | 'ticketStatus' | 'statusUpdateString'
   > {
   renderMode?: string;
+  className?: string;
 }
 
 export const TicketStatusContainer = (props: ITicketStatusContainerProps) => {
-  const { ticketId, ticketStatus, statusUpdateString, renderMode } = props;
+  const { ticketId, ticketStatus, statusUpdateString, renderMode, className } =
+    props;
   const { data, isLoading } = useFetchAllStatuses();
   const { mutateAsync } = useUpdateStatus();
 
@@ -40,6 +42,7 @@ export const TicketStatusContainer = (props: ITicketStatusContainerProps) => {
         menuOptions={data!}
         onStatusChange={onStatusChange}
         renderMode={renderMode}
+        className={className}
       />
     </>
   );

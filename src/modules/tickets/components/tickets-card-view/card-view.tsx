@@ -22,7 +22,7 @@ import { useMatch, useNavigate, useSearchParams } from 'react-router-dom';
 import { styled, css } from 'styled-components';
 
 import { ITicketDetails } from '../../apis';
-import { TicketStatusContainer } from '../../containers';
+import { TicketStatusContainer } from '../../containers/overview/ticket-status-container';
 import { Priority } from '../display-tickets-grid';
 
 const StyledCard = styled(FlexBox)<{ $ticketStatus: string }>`
@@ -217,6 +217,18 @@ export const getParsedChatType = (chatType: string) => {
   }
 };
 
+const StyledTicketStatus = styled(TicketStatusContainer)`
+  && {
+    .btn-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 60px; /* Adjust as needed */
+      flex: 1; /* Ensures the text takes up available space */
+    }
+  }
+`;
+
 export const CardView = (props: ITicketDetails) => {
   const {
     ticketId,
@@ -309,7 +321,7 @@ export const CardView = (props: ITicketDetails) => {
       <FlexBox alignItems="center">
         <Priority priority={priority} />
         {isFeatureAccessible('edit_status') ? (
-          <TicketStatusContainer
+          <StyledTicketStatus
             ticketStatus={ticketStatus}
             ticketId={ticketId}
             statusUpdateString={''}
