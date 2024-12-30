@@ -87,6 +87,7 @@ const SearchTickets = (props: {
                 placeholder={t('search_secondary_placeholder')}
                 size="small"
                 autoFocus
+                type="search"
                 error={hasError}
                 required={true}
                 InputProps={{

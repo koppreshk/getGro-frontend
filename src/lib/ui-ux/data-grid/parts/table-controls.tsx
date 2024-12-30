@@ -618,6 +618,7 @@ export const TableControls = (props: ITableControlProps) => {
             defaultValue={searchTextFromParams}
             sx={{ width: '300px' }}
             size="small"
+            type="search"
             label={searchLabel}
             onChange={debouncedSearchChange}
           />
