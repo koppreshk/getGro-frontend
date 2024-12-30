@@ -139,6 +139,7 @@ export const TableHeader = <T extends object>(props: ITableHeaderProps<T>) => {
             gap="10px"
             alignItems="center"
             width={isGroupedHeader ? '100%' : 'auto'}
+            padding="0 10px"
           >
             <Typography
               variant="h6"

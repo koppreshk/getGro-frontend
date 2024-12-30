@@ -1,9 +1,9 @@
-import { Checkbox, Chip, Tooltip } from '@mui/material';
+import { Chip, Tooltip } from '@mui/material';
 import { Row, createColumnHelper } from '@tanstack/react-table';
 import { useAppDispatch, useAppSelector } from 'lib/hooks';
 import { DataGrid, NoDataIllustration } from 'lib/ui-ux';
 import { useDateDifference } from 'lib/utils';
-import React, { MouseEventHandler } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMatch, useNavigate, useSearchParams } from 'react-router-dom';
 import { styled, css } from 'styled-components';
@@ -113,40 +113,40 @@ const useColumns = () => {
   const columnHelper = createColumnHelper<ITicketDetails>();
 
   const columns = [
-    columnHelper.display({
-      id: 'select',
-      header: ({ table }) => (
-        <Checkbox
-          {...{
-            checked: table.getIsAllPageRowsSelected(),
-            indeterminate: table.getIsSomePageRowsSelected(),
-            onChange: table.getToggleAllPageRowsSelectedHandler(),
-          }}
-        />
-      ),
-      cell: ({ row }) => {
-        const onClick: MouseEventHandler<HTMLButtonElement> = (event) => {
-          event.stopPropagation();
-        };
-        return (
-          <Checkbox
-            onClick={onClick}
-            {...{
-              checked: row.getIsSelected(),
-              disabled: !row.getCanSelect(),
-              indeterminate: row.getIsSomeSelected(),
-              onChange: row.getToggleSelectedHandler(),
-            }}
-          />
-        );
-      },
-      maxSize: 58,
-      enableResizing: false,
-      enableHiding: false,
-      meta: {
-        disableColReorder: true,
-      },
-    }),
+    // columnHelper.display({
+    //   id: 'select',
+    //   header: ({ table }) => (
+    //     <Checkbox
+    //       {...{
+    //         checked: table.getIsAllPageRowsSelected(),
+    //         indeterminate: table.getIsSomePageRowsSelected(),
+    //         onChange: table.getToggleAllPageRowsSelectedHandler(),
+    //       }}
+    //     />
+    //   ),
+    //   cell: ({ row }) => {
+    //     const onClick: MouseEventHandler<HTMLButtonElement> = (event) => {
+    //       event.stopPropagation();
+    //     };
+    //     return (
+    //       <Checkbox
+    //         onClick={onClick}
+    //         {...{
+    //           checked: row.getIsSelected(),
+    //           disabled: !row.getCanSelect(),
+    //           indeterminate: row.getIsSomeSelected(),
+    //           onChange: row.getToggleSelectedHandler(),
+    //         }}
+    //       />
+    //     );
+    //   },
+    //   maxSize: 58,
+    //   enableResizing: false,
+    //   enableHiding: false,
+    //   meta: {
+    //     disableColReorder: true,
+    //   },
+    // }),
     columnHelper.accessor('ticketId', {
       header: t('ticket_id'),
       id: 'ticketId',
