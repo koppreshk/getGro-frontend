@@ -30,7 +30,6 @@ import {
 import i18n from 'i18n';
 import { t } from 'i18next';
 import {
-  SelectFieldWithLabel,
   DateTimePickerFieldWithLabel,
   TextboxFieldWithLabel,
   AutoCompleteFieldWithLabel,
@@ -49,6 +48,10 @@ import {
   IQueueMetadata,
   useFetchTicketMetadata,
 } from 'modules/settings/apis/queues/fetch-queue-metadata';
+import {
+  IChannels,
+  useFetchAllChannels,
+} from 'modules/settings/apis/tags/fetch-all-channels';
 import { useFetchAllTags } from 'modules/settings/apis/tags/fetch-all-tags';
 import { useFetchAllStatuses } from 'modules/settings/apis/ticket-status/fetch_all_statuses';
 import { IGenericResponse } from 'modules/settings/apis/ticket-status/types';
@@ -183,7 +186,7 @@ export interface ISearchTickets {
   status: IKeyValue[];
   createdDate: DateTime | null;
   tags: IKeyValue[];
-  source: string;
+  source: IKeyValue[];
 }
 
 interface IAdvanceSearchProps {
@@ -192,13 +195,14 @@ interface IAdvanceSearchProps {
     statuses: IGenericResponse[] | undefined;
     tags: ITag[] | undefined;
     agents: IQueueMetadata | undefined;
+    channels: IChannels[] | undefined;
   };
   fetchAllTicketsWithSearchQuery?: (args?: Record<string, string>) => void;
 }
 
 const AdvanceSearch = (props: IAdvanceSearchProps) => {
   const {
-    combinedData: { agents, priorities, statuses, tags },
+    combinedData: { agents, priorities, statuses, tags, channels },
     fetchAllTicketsWithSearchQuery,
   } = props;
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
@@ -209,7 +213,7 @@ const AdvanceSearch = (props: IAdvanceSearchProps) => {
       assignee: [],
       status: [],
       tags: [],
-      source: '',
+      source: [],
       createdDate: null,
     },
   });
@@ -235,7 +239,7 @@ const AdvanceSearch = (props: IAdvanceSearchProps) => {
       assignee: formData.assignee.map((item) => Number(item.key)).join(','),
       status: formData.status.map((item) => Number(item.key)).join(','),
       tags: formData.tags.map((item) => Number(item.key)).join(','),
-      source: formData.source ? formData.source : '',
+      source: formData.source.map((item) => Number(item.key)).join(','),
       email: formData.requesterEmail ? formData.requesterEmail : '',
     };
     if (fetchAllTicketsWithSearchQuery) {
@@ -401,16 +405,17 @@ const AdvanceSearch = (props: IAdvanceSearchProps) => {
               size="small"
               views={['year', 'day']}
             />
-            <SelectFieldWithLabel
-              sx={{ width: '100%' }}
+            <AutoCompleteFieldWithLabel
               size="small"
               name="source"
+              placeholder="Source"
               label={t('source')}
-              menuOptions={[
-                { key: '1', value: 'Low' },
-                { key: '2', value: 'High' },
-              ]}
-              fullWidth
+              options={
+                channels?.map((channel) => ({
+                  key: channel.channel_id.toString(),
+                  value: channel.name,
+                })) || []
+              }
             />
             <TextboxFieldWithLabel
               name="requesterEmail"
@@ -476,17 +481,25 @@ const AdvanceSearchContainer = (props: IAdvanceSearchContainerProps) => {
     error: agentsDataError,
   } = useFetchTicketMetadata();
 
+  const {
+    data: channelsData,
+    isLoading: channelLoading,
+    error: channelsError,
+  } = useFetchAllChannels();
+
   const isLoading =
     isPrioritiesLoading ||
     isStatusesLoading ||
     isTagsLoading ||
-    isAgentsdataLoading;
+    isAgentsdataLoading ||
+    channelLoading;
 
   const errors = {
     prioritiesError,
     statusesError,
     tagsError,
     agentsDataError,
+    channelsError,
   };
 
   const combinedData = {
@@ -494,6 +507,7 @@ const AdvanceSearchContainer = (props: IAdvanceSearchContainerProps) => {
     statuses: statusesData,
     tags: tagsData,
     agents: agentsData,
+    channels: channelsData,
   };
 
   if (isLoading) {

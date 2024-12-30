@@ -33,7 +33,10 @@ export const TableBody = <T extends object>(props: ITableBodyProps<T>) => {
       $isRead={isread.status}
     >
       {row.getVisibleCells().map((cell) => (
-        <td key={cell.id} style={{ width: cell.column.getSize() }}>
+        <td
+          key={cell.id}
+          style={{ width: cell.column.getSize(), padding: '0px 10px' }}
+        >
           <Typography
             variant="body2"
             title={cell.getValue() as string}
