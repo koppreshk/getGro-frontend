@@ -86,6 +86,37 @@ interface IAddEscalationLayoutProps {
   onFormSubmit: (formData: IEscalationFormFields) => Promise<void>;
 }
 
+const AddEscalaltionSteps = (props: {
+  activeStep: number;
+  steps: {
+    label: string;
+  }[];
+}) => {
+  const { activeStep, steps } = props;
+  return (
+    <>
+      <Box>
+        <Stepper activeStep={activeStep} orientation="horizontal">
+          {steps.map((step, index) => (
+            <Step key={step.label}>
+              <StepLabel
+                optional={
+                  index === 3 ? (
+                    <Typography variant="body3">Last step</Typography>
+                  ) : null
+                }
+              >
+                {step.label}
+              </StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+      </Box>
+    </>
+  );
+};
+
+// eslint-disable-next-line react/display-name
 export const AddEscalationLayout = React.memo(
   (props: IAddEscalationLayoutProps) => {
     const {
@@ -108,7 +139,7 @@ export const AddEscalationLayout = React.memo(
         },
         conditionsArray: [
           {
-            ticketFields: data.ticket_fields[0].id.toString(),
+            ticketFields: data.ticket_fields[0]?.id.toString(),
             condition: 'is',
             conditionValue: '',
           },
@@ -173,24 +204,24 @@ export const AddEscalationLayout = React.memo(
         },
         addReminders: {
           ftrAgent: [],
-          ftrDuration: data.reminder_times[0].id.toString(),
+          ftrDuration: data.reminder_times[0]?.id.toString(),
           ftrGroup: [],
           ntrAgent: [],
-          ntrDuration: data.reminder_times[0].id.toString(),
+          ntrDuration: data.reminder_times[0]?.id.toString(),
           ntrGroup: [],
           resolutionAgent: [],
-          resolutionDuration: data.reminder_times[0].id.toString(),
+          resolutionDuration: data.reminder_times[0]?.id.toString(),
           resolutionGroup: [],
         },
         addEscalation: {
           ftrAgent: [],
-          ftrDuration: data.escalation_types[0].id.toString(),
+          ftrDuration: data.escalation_types[0]?.id.toString(),
           ftrGroup: [],
           ntrAgent: [],
-          ntrDuration: data.escalation_types[0].id.toString(),
+          ntrDuration: data.escalation_types[0]?.id.toString(),
           ntrGroup: [],
           resolutionAgent: [],
-          resolutionDuration: data.escalation_types[0].id.toString(),
+          resolutionDuration: data.escalation_types[0]?.id.toString(),
           resolutionGroup: [],
         },
       },
@@ -330,33 +361,3 @@ export const AddEscalationLayout = React.memo(
     );
   }
 );
-
-const AddEscalaltionSteps = (props: {
-  activeStep: number;
-  steps: {
-    label: string;
-  }[];
-}) => {
-  const { activeStep, steps } = props;
-  return (
-    <>
-      <Box>
-        <Stepper activeStep={activeStep} orientation="horizontal">
-          {steps.map((step, index) => (
-            <Step key={step.label}>
-              <StepLabel
-                optional={
-                  index === 3 ? (
-                    <Typography variant="body3">Last step</Typography>
-                  ) : null
-                }
-              >
-                {step.label}
-              </StepLabel>
-            </Step>
-          ))}
-        </Stepper>
-      </Box>
-    </>
-  );
-};
