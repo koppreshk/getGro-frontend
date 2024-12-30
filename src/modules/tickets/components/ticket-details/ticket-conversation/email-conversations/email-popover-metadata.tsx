@@ -1,6 +1,7 @@
 import { ArrowDropDown } from '@mui/icons-material';
 import { IconButton, Popover, Typography } from '@mui/material';
 import { FlexBox } from 'lib/ui-ux';
+import { getFormattedDate } from 'lib/utils';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -30,7 +31,7 @@ export const EmailPopoverMetadata = (props: IEmailPopoverMetadataProps) => {
     { name: t('from'), value: fromEmail },
     { name: t('to'), value: toEmail },
     { name: t('subject'), value: subject },
-    { name: t('date'), value: createdAt },
+    { name: t('date'), value: getFormattedDate(createdAt) },
   ];
 
   return (
