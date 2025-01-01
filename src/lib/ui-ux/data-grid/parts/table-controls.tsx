@@ -35,7 +35,7 @@ import {
   AutoCompleteFieldWithLabel,
   AutoCompleteRenderOptionProps,
 } from 'lib/form-fields';
-import { useAppSelector } from 'lib/hooks';
+import { useAppDispatch, useAppSelector } from 'lib/hooks';
 import {
   CustomIconButton,
   FlexBox,
@@ -60,6 +60,7 @@ import {
   IPriorities,
   useFetchPriorities,
 } from 'modules/tickets/apis/fetch-priorities';
+import { toggleAdvanceFilters } from 'modules/tickets/storage';
 import React, { useCallback, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useMatch, useSearchParams } from 'react-router-dom';
@@ -219,7 +220,7 @@ const AdvanceSearch = (props: IAdvanceSearchProps) => {
   });
 
   const [isfilterApplied, setisfilterApplied] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const dispatch = useAppDispatch();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -258,8 +259,7 @@ const AdvanceSearch = (props: IAdvanceSearchProps) => {
       );
       fetchAllTicketsWithSearchQuery(finalArgs);
       setisfilterApplied(true);
-      searchParams.set('advanceFilters', 'enabled');
-      setSearchParams(searchParams);
+      dispatch(toggleAdvanceFilters());
       handleClose();
     }
   };
@@ -270,8 +270,7 @@ const AdvanceSearch = (props: IAdvanceSearchProps) => {
     if (fetchAllTicketsWithSearchQuery) {
       fetchAllTicketsWithSearchQuery({});
       setisfilterApplied(false);
-      searchParams.delete('advanceFilters');
-      setSearchParams(searchParams);
+      dispatch(toggleAdvanceFilters());
     }
   };
 

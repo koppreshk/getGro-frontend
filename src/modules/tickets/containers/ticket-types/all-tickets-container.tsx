@@ -1,4 +1,5 @@
 /* eslint-disable react/display-name */
+import { useAppSelector } from 'lib/hooks';
 import { ErrorMessage } from 'lib/ui-ux';
 import { useFetchAllTickets } from 'modules/tickets/apis';
 import {
@@ -7,13 +8,13 @@ import {
 } from 'modules/tickets/apis/ticket-type-apis/fetch-all-tickets-with-search-query';
 import { TicketsByView } from 'modules/tickets/components';
 import React from 'react';
-import { useSearchParams } from 'react-router-dom';
 
 export const AllTicketsContainer = React.memo(() => {
   const { data, isLoading, isFetching, error } = useFetchAllTickets();
-  const [searchParams] = useSearchParams();
-  const isAdvanceFiltersEnabled =
-    searchParams.get('advanceFilters') === 'enabled';
+  const isAdvanceFiltersEnabled = useAppSelector(
+    (state) => state.tickets.isAdvanceFiltersEnabled
+  );
+
   const [
     fetchAllTicketsWithSearchQuery,
     { isLoading: queryLoading, data: queryData },
