@@ -1,18 +1,19 @@
+import { Chip } from '@mui/material';
 import { createColumnHelper } from '@tanstack/react-table';
 import { FlexBox } from 'lib/ui-ux';
 import { ConfigDataGrid } from 'lib/ui-ux/configuration-data-grid';
-import { IGenericResponse } from 'modules/settings/apis/ticket-status/types';
+import { IFetchAllStatuses } from 'modules/settings/apis/ticket-status';
 import { useTranslation } from 'react-i18next';
 
 import { EditStatus } from './edit-status';
 
 interface ITicketStatusListProps {
-  statusData: IGenericResponse[] | undefined;
+  statusData: IFetchAllStatuses[] | undefined;
   isLoading: boolean;
 }
 
-const useColumns = (statusData: IGenericResponse[]) => {
-  const columnHelper = createColumnHelper<IGenericResponse>();
+const useColumns = (statusData: IFetchAllStatuses[]) => {
+  const columnHelper = createColumnHelper<IFetchAllStatuses>();
   const { t } = useTranslation();
 
   const columns = [
@@ -24,7 +25,14 @@ const useColumns = (statusData: IGenericResponse[]) => {
     columnHelper.accessor('name', {
       id: 'name',
       header: () => t('name'),
-      cell: (info) => info.getValue(),
+      cell: (info) => (
+        <FlexBox gap={'10px'} alignItems="center">
+          {info.getValue()}
+          {info.row.original.type === 'system' ? (
+            <Chip label={info.row.original.type} size="small" />
+          ) : null}
+        </FlexBox>
+      ),
       minSize: 300,
     }),
     columnHelper.display({

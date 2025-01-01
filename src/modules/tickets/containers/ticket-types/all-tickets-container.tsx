@@ -4,7 +4,7 @@ import { ErrorMessage } from 'lib/ui-ux';
 import { useFetchAllTickets } from 'modules/tickets/apis';
 import {
   ITicketDetailsWithSearchQuey,
-  useFetchALLTicketsWithSearchuery,
+  useFetchALLTicketsWithSearchQuery,
 } from 'modules/tickets/apis/ticket-type-apis/fetch-all-tickets-with-search-query';
 import { TicketsByView } from 'modules/tickets/components';
 import React from 'react';
@@ -18,7 +18,7 @@ export const AllTicketsContainer = React.memo(() => {
   const [
     fetchAllTicketsWithSearchQuery,
     { isLoading: queryLoading, data: queryData, error: queryError },
-  ] = useFetchALLTicketsWithSearchuery();
+  ] = useFetchALLTicketsWithSearchQuery();
 
   // Determine which data to use as ticketsData
   const ticketsData = isAdvanceFiltersEnabled

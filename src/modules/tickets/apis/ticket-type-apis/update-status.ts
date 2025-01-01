@@ -1,4 +1,5 @@
 import { useServiceClient } from 'lib';
+import { useAppSelector } from 'lib/hooks';
 import { useGetQueryEndPoint } from 'modules/tickets/containers';
 import { useCallback } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
@@ -14,6 +15,9 @@ export const useUpdateStatus = () => {
   const { postData } = useServiceClient();
   const queryClient = useQueryClient();
   const queryKey = useGetQueryEndPoint();
+  const isAdvanceFiltersEnabled = useAppSelector(
+    (state) => state.tickets.isAdvanceFiltersEnabled
+  );
 
   const updateStatus = useCallback(
     (args: IUpdateStatusArgs) =>
@@ -27,7 +31,10 @@ export const useUpdateStatus = () => {
     mutationKey: [TicketsQueryKey.UPDATE_STATUS],
     mutationFn: updateStatus,
     onSuccess: () => {
-      queryClient.invalidateQueries(queryKey);
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      isAdvanceFiltersEnabled
+        ? queryClient.refetchQueries('ALL_TICKETS_ADVANCED')
+        : queryClient.invalidateQueries(queryKey);
     },
   });
 };

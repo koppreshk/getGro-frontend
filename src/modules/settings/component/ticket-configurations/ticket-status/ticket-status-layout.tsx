@@ -6,6 +6,7 @@ import {
   DrawerExtended,
   FlexBox,
 } from 'lib/ui-ux';
+import { IFetchAllStatuses } from 'modules/settings/apis/ticket-status';
 import { IGenericResponse } from 'modules/settings/apis/ticket-status/types';
 import { TicketStatusList } from 'modules/settings/component/ticket-configurations/ticket-status';
 import React, { useCallback } from 'react';
@@ -42,7 +43,7 @@ const AddNewTicketStatus = (props: IAddNewTicketStatusProps) => {
 };
 
 interface ITicketStatusLayoutProps {
-  data: IGenericResponse[] | undefined;
+  data: IFetchAllStatuses[] | undefined;
   isLoading: boolean;
 }
 
