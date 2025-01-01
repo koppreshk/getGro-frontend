@@ -29,8 +29,8 @@ export const ticketsSlice = createSlice({
     setTicketDetails: (state, action: PayloadAction<ITicketDetails>) => {
       state.ticketDetails = action.payload;
     },
-    toggleAdvanceFilters: (state) => {
-      state.isAdvanceFiltersEnabled = !state.isAdvanceFiltersEnabled;
+    setAdvanceFiltersState: (state, action: PayloadAction<boolean>) => {
+      state.isAdvanceFiltersEnabled = action.payload;
     },
   },
 });
@@ -40,7 +40,7 @@ export const {
   setTotalPages,
   setShowHideTicketDetails,
   setTicketDetails,
-  toggleAdvanceFilters,
+  setAdvanceFiltersState,
 } = ticketsSlice.actions;
 
 export default ticketsSlice.reducer;

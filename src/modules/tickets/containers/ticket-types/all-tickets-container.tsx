@@ -17,28 +17,32 @@ export const AllTicketsContainer = React.memo(() => {
 
   const [
     fetchAllTicketsWithSearchQuery,
-    { isLoading: queryLoading, data: queryData },
+    { isLoading: queryLoading, data: queryData, error: queryError },
   ] = useFetchALLTicketsWithSearchuery();
 
   // Determine which data to use as ticketsData
   const ticketsData = isAdvanceFiltersEnabled
-    ? ((queryData as ITicketDetailsWithSearchQuey)?.data ?? [])
-    : (data?.data ?? []);
+    ? (queryData as ITicketDetailsWithSearchQuey)?.data
+    : data?.data;
 
   const totalTickets = isAdvanceFiltersEnabled
     ? ((queryData as ITicketDetailsWithSearchQuey)?.total_pages ?? 0)
     : (data?.total_pages ?? 0);
 
-  if (data || isLoading || queryLoading || queryData) {
+  if (queryError || error) {
     return (
-      <TicketsByView
-        isLoading={isLoading || isFetching || queryLoading}
-        data={ticketsData}
-        totalPages={totalTickets}
-        fetchAllTicketsWithSearchQuery={fetchAllTicketsWithSearchQuery}
+      <ErrorMessage
+        statusCode={(queryError as any)?.message || (error as any)?.message}
       />
     );
   }
 
-  return <ErrorMessage statusCode={error?.message} />;
+  return (
+    <TicketsByView
+      isLoading={isLoading || isFetching || queryLoading}
+      data={ticketsData ?? []}
+      totalPages={totalTickets}
+      fetchAllTicketsWithSearchQuery={fetchAllTicketsWithSearchQuery}
+    />
+  );
 });

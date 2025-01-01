@@ -33,10 +33,7 @@ export default function useLazyQuery<TData>(args: {
     [apiParams]
   );
   const executeGetAPICall = useCallback(
-    () =>
-      getData(`${apiEndPoint}?${finalParams}`)
-        .then((res) => res.json())
-        .catch((err) => err),
+    () => getData(`${apiEndPoint}?${finalParams}`).then((res) => res.json()),
     [apiEndPoint, finalParams, getData]
   );
 

@@ -60,7 +60,7 @@ import {
   IPriorities,
   useFetchPriorities,
 } from 'modules/tickets/apis/fetch-priorities';
-import { toggleAdvanceFilters } from 'modules/tickets/storage';
+import { setAdvanceFiltersState } from 'modules/tickets/storage';
 import React, { useCallback, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useMatch, useSearchParams } from 'react-router-dom';
@@ -259,7 +259,7 @@ const AdvanceSearch = (props: IAdvanceSearchProps) => {
       );
       fetchAllTicketsWithSearchQuery(finalArgs);
       setisfilterApplied(true);
-      dispatch(toggleAdvanceFilters());
+      dispatch(setAdvanceFiltersState(true));
       handleClose();
     }
   };
@@ -270,7 +270,7 @@ const AdvanceSearch = (props: IAdvanceSearchProps) => {
     if (fetchAllTicketsWithSearchQuery) {
       fetchAllTicketsWithSearchQuery({});
       setisfilterApplied(false);
-      dispatch(toggleAdvanceFilters());
+      dispatch(setAdvanceFiltersState(false));
     }
   };
 
