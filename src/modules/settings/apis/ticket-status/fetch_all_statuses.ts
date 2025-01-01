@@ -5,6 +5,10 @@ import { useQuery } from 'react-query';
 import { StatusTypeEndPoint, StatusTypeQueryKey } from './api-enums';
 import { IGenericResponse } from './types';
 
+export interface IFetchAllStatuses extends IGenericResponse {
+  type: string;
+}
+
 export const useFetchAllStatuses = (isEnabled = true) => {
   const { getData } = useServiceClient();
 
@@ -14,7 +18,7 @@ export const useFetchAllStatuses = (isEnabled = true) => {
     [getData]
   );
 
-  return useQuery<IGenericResponse[], { message: string }>({
+  return useQuery<IFetchAllStatuses[], { message: string }>({
     queryKey: StatusTypeQueryKey.FETCH_ALL_STATUSES,
     queryFn: fetchAllStatuses,
     enabled: isEnabled,

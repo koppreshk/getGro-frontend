@@ -218,8 +218,9 @@ const AdvanceSearch = (props: IAdvanceSearchProps) => {
       createdDate: null,
     },
   });
-
-  const [isfilterApplied, setisfilterApplied] = useState(false);
+  const isFilterApplied = useAppSelector(
+    (state) => state.tickets.isAdvanceFiltersEnabled
+  );
   const dispatch = useAppDispatch();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -258,7 +259,6 @@ const AdvanceSearch = (props: IAdvanceSearchProps) => {
         {} as Record<string, string>
       );
       fetchAllTicketsWithSearchQuery(finalArgs);
-      setisfilterApplied(true);
       dispatch(setAdvanceFiltersState(true));
       handleClose();
     }
@@ -269,7 +269,6 @@ const AdvanceSearch = (props: IAdvanceSearchProps) => {
     handleClose();
     if (fetchAllTicketsWithSearchQuery) {
       fetchAllTicketsWithSearchQuery({});
-      setisfilterApplied(false);
       dispatch(setAdvanceFiltersState(false));
     }
   };
@@ -302,22 +301,22 @@ const AdvanceSearch = (props: IAdvanceSearchProps) => {
       <Badge
         color="warning"
         variant="dot"
-        invisible={!isfilterApplied}
+        invisible={!isFilterApplied}
         overlap="circular"
       >
         <CustomIconButton
           iconComponent={
-            isfilterApplied ? (
+            isFilterApplied ? (
               <FilterAlt fontSize="small" />
             ) : (
               <FilterAltOutlined fontSize="small" />
             )
           }
           tooltipProps={{
-            title: isfilterApplied ? 'Filters Applied' : 'Show Filter',
+            title: isFilterApplied ? 'Filters Applied' : 'Show Filter',
           }}
           onClick={handleClick}
-          color={isfilterApplied ? 'primary' : 'default'}
+          color={isFilterApplied ? 'primary' : 'default'}
         />
       </Badge>
       <Popover
