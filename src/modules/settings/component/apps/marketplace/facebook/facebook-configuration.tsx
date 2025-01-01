@@ -52,7 +52,10 @@ export const FacebookConfiguration = (props: {
       fjs?.parentNode?.insertBefore(js, fjs);
     })(document, 'script', 'facebook-jssdk');
   }, []);
-
+  console.log(
+    'redirect_uri',
+    `${import.meta.env.VITE_SUB_DOMAIN}configurations/marketplace/facebook`
+  );
   // Facebook login handler
   const handleFBLogin = () => {
     window.FB.login(
