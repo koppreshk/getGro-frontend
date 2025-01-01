@@ -7,8 +7,9 @@ import {
   Chat,
 } from '@mui/icons-material';
 import { Tooltip } from '@mui/material';
-import { useModule } from 'lib/hooks';
+import { useAppDispatch, useModule } from 'lib/hooks';
 import { FlexBox } from 'lib/ui-ux';
+import { setAdvanceFiltersState } from 'modules/tickets/storage';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useMatch } from 'react-router-dom';
@@ -202,14 +203,19 @@ SecondaryOption.displayName = 'SecondaryOption';
 
 export const NavigationMenu = React.memo(() => {
   const match = useMatch(':module/*');
+  const matchAllTickets = useMatch(':module/:view');
   const [selectedMenu, setMenu] = React.useState('');
   const primaryOptions = usePrimaryOptions();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (match?.params.module) {
+      if (matchAllTickets?.params.view === 'all_tickets') {
+        dispatch(setAdvanceFiltersState(false));
+      }
       setMenu(match?.params.module);
     }
-  }, [match]);
+  }, [dispatch, match, matchAllTickets]);
 
   return (
     <MenuWrapper flexDirection="column" justifyContent="space-between">

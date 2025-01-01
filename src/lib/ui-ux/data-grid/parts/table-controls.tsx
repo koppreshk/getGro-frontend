@@ -30,13 +30,12 @@ import {
 import i18n from 'i18n';
 import { t } from 'i18next';
 import {
-  SelectFieldWithLabel,
   DateTimePickerFieldWithLabel,
   TextboxFieldWithLabel,
   AutoCompleteFieldWithLabel,
   AutoCompleteRenderOptionProps,
 } from 'lib/form-fields';
-import { useAppSelector } from 'lib/hooks';
+import { useAppDispatch, useAppSelector } from 'lib/hooks';
 import {
   CustomIconButton,
   FlexBox,
@@ -49,6 +48,10 @@ import {
   IQueueMetadata,
   useFetchTicketMetadata,
 } from 'modules/settings/apis/queues/fetch-queue-metadata';
+import {
+  IChannels,
+  useFetchAllChannels,
+} from 'modules/settings/apis/tags/fetch-all-channels';
 import { useFetchAllTags } from 'modules/settings/apis/tags/fetch-all-tags';
 import { useFetchAllStatuses } from 'modules/settings/apis/ticket-status/fetch_all_statuses';
 import { IGenericResponse } from 'modules/settings/apis/ticket-status/types';
@@ -57,6 +60,7 @@ import {
   IPriorities,
   useFetchPriorities,
 } from 'modules/tickets/apis/fetch-priorities';
+import { setAdvanceFiltersState } from 'modules/tickets/storage';
 import React, { useCallback, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useMatch, useSearchParams } from 'react-router-dom';
@@ -183,7 +187,7 @@ export interface ISearchTickets {
   status: IKeyValue[];
   createdDate: DateTime | null;
   tags: IKeyValue[];
-  source: string;
+  source: IKeyValue[];
 }
 
 interface IAdvanceSearchProps {
@@ -192,13 +196,14 @@ interface IAdvanceSearchProps {
     statuses: IGenericResponse[] | undefined;
     tags: ITag[] | undefined;
     agents: IQueueMetadata | undefined;
+    channels: IChannels[] | undefined;
   };
   fetchAllTicketsWithSearchQuery?: (args?: Record<string, string>) => void;
 }
 
 const AdvanceSearch = (props: IAdvanceSearchProps) => {
   const {
-    combinedData: { agents, priorities, statuses, tags },
+    combinedData: { agents, priorities, statuses, tags, channels },
     fetchAllTicketsWithSearchQuery,
   } = props;
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
@@ -209,13 +214,14 @@ const AdvanceSearch = (props: IAdvanceSearchProps) => {
       assignee: [],
       status: [],
       tags: [],
-      source: '',
+      source: [],
       createdDate: null,
     },
   });
-
-  const [isfilterApplied, setisfilterApplied] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const isFilterApplied = useAppSelector(
+    (state) => state.tickets.isAdvanceFiltersEnabled
+  );
+  const dispatch = useAppDispatch();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -235,7 +241,7 @@ const AdvanceSearch = (props: IAdvanceSearchProps) => {
       assignee: formData.assignee.map((item) => Number(item.key)).join(','),
       status: formData.status.map((item) => Number(item.key)).join(','),
       tags: formData.tags.map((item) => Number(item.key)).join(','),
-      source: formData.source ? formData.source : '',
+      source: formData.source.map((item) => Number(item.key)).join(','),
       email: formData.requesterEmail ? formData.requesterEmail : '',
     };
     if (fetchAllTicketsWithSearchQuery) {
@@ -253,9 +259,7 @@ const AdvanceSearch = (props: IAdvanceSearchProps) => {
         {} as Record<string, string>
       );
       fetchAllTicketsWithSearchQuery(finalArgs);
-      setisfilterApplied(true);
-      searchParams.set('advanceFilters', 'enabled');
-      setSearchParams(searchParams);
+      dispatch(setAdvanceFiltersState(true));
       handleClose();
     }
   };
@@ -265,9 +269,7 @@ const AdvanceSearch = (props: IAdvanceSearchProps) => {
     handleClose();
     if (fetchAllTicketsWithSearchQuery) {
       fetchAllTicketsWithSearchQuery({});
-      setisfilterApplied(false);
-      searchParams.delete('advanceFilters');
-      setSearchParams(searchParams);
+      dispatch(setAdvanceFiltersState(false));
     }
   };
 
@@ -299,22 +301,22 @@ const AdvanceSearch = (props: IAdvanceSearchProps) => {
       <Badge
         color="warning"
         variant="dot"
-        invisible={!isfilterApplied}
+        invisible={!isFilterApplied}
         overlap="circular"
       >
         <CustomIconButton
           iconComponent={
-            isfilterApplied ? (
+            isFilterApplied ? (
               <FilterAlt fontSize="small" />
             ) : (
               <FilterAltOutlined fontSize="small" />
             )
           }
           tooltipProps={{
-            title: isfilterApplied ? 'Filters Applied' : 'Show Filter',
+            title: isFilterApplied ? 'Filters Applied' : 'Show Filter',
           }}
           onClick={handleClick}
-          color={isfilterApplied ? 'primary' : 'default'}
+          color={isFilterApplied ? 'primary' : 'default'}
         />
       </Badge>
       <Popover
@@ -401,16 +403,17 @@ const AdvanceSearch = (props: IAdvanceSearchProps) => {
               size="small"
               views={['year', 'day']}
             />
-            <SelectFieldWithLabel
-              sx={{ width: '100%' }}
+            <AutoCompleteFieldWithLabel
               size="small"
               name="source"
+              placeholder="Source"
               label={t('source')}
-              menuOptions={[
-                { key: '1', value: 'Low' },
-                { key: '2', value: 'High' },
-              ]}
-              fullWidth
+              options={
+                channels?.map((channel) => ({
+                  key: channel.channel_id.toString(),
+                  value: channel.name,
+                })) || []
+              }
             />
             <TextboxFieldWithLabel
               name="requesterEmail"
@@ -476,17 +479,25 @@ const AdvanceSearchContainer = (props: IAdvanceSearchContainerProps) => {
     error: agentsDataError,
   } = useFetchTicketMetadata();
 
+  const {
+    data: channelsData,
+    isLoading: channelLoading,
+    error: channelsError,
+  } = useFetchAllChannels();
+
   const isLoading =
     isPrioritiesLoading ||
     isStatusesLoading ||
     isTagsLoading ||
-    isAgentsdataLoading;
+    isAgentsdataLoading ||
+    channelLoading;
 
   const errors = {
     prioritiesError,
     statusesError,
     tagsError,
     agentsDataError,
+    channelsError,
   };
 
   const combinedData = {
@@ -494,6 +505,7 @@ const AdvanceSearchContainer = (props: IAdvanceSearchContainerProps) => {
     statuses: statusesData,
     tags: tagsData,
     agents: agentsData,
+    channels: channelsData,
   };
 
   if (isLoading) {
@@ -618,6 +630,7 @@ export const TableControls = (props: ITableControlProps) => {
             defaultValue={searchTextFromParams}
             sx={{ width: '300px' }}
             size="small"
+            type="search"
             label={searchLabel}
             onChange={debouncedSearchChange}
           />

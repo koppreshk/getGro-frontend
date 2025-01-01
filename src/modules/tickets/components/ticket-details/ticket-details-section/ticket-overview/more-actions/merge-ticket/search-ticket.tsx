@@ -57,6 +57,7 @@ export const SearchTickets = (
                 fullWidth
                 placeholder={t('search_secondary_placeholder')}
                 size="small"
+                type="search"
                 autoFocus
                 error={hasError}
                 required={true}

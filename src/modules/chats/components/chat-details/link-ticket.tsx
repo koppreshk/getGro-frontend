@@ -2,7 +2,7 @@ import { Button } from '@mui/material';
 import React, { useCallback } from 'react';
 import { Trans } from 'react-i18next';
 
-import { LinkTicketDialog } from './link-ticket-popup';
+import { LinkTicketDialog } from './link-ticket-dialog';
 
 export const LinkTicket = () => {
   const [openLinkTicketDialog, setOpenLinkTicketDialog] = React.useState(false);

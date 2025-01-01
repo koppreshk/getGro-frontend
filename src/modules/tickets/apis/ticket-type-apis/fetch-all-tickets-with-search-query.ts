@@ -1,6 +1,6 @@
 import useLazyQuery from 'lib/hooks/react-query-utils';
 
-import { TicketsEndPoint, TicketsQueryKey } from '../api-enums';
+import { TicketsEndPoint } from '../api-enums';
 import { ITicketDetails } from './types';
 
 export interface ITicketDetailsWithSearchQuey {
@@ -8,10 +8,10 @@ export interface ITicketDetailsWithSearchQuey {
   total_pages: number;
 }
 
-export const useFetchALLTicketsWithSearchuery = () => {
+export const useFetchALLTicketsWithSearchQuery = () => {
   return useLazyQuery<ITicketDetailsWithSearchQuey>({
     apiEndPoint: TicketsEndPoint.FETCH_ALL_TICKETS,
-    queryKey: TicketsQueryKey.FETCH_ALL_TICKETS,
+    queryKey: 'ALL_TICKETS_ADVANCED',
     queryOptions: {
       cacheTime: 0,
     },

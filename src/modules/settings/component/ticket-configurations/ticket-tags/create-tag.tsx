@@ -36,6 +36,7 @@ export const CreateTag = (props: ICreateTagProps) => {
   const { showNotification } = useNotifications();
   const form = useForm<IFormFields>({
     mode: 'onChange',
+    shouldUnregister: true,
   });
   const { t } = useTranslation();
 
@@ -58,6 +59,8 @@ export const CreateTag = (props: ICreateTagProps) => {
     );
     if (someTagExists) {
       return t('tags_exist_validation');
+    } else if (values === undefined || values.length === 0) {
+      return t('tags_empty_validation');
     }
   };
 

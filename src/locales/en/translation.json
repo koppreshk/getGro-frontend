@@ -15,6 +15,7 @@
   "add_email_ticket": "Add Email Ticket",
   "add_escalation": "Add Escalation",
   "add_escalation_header_label": "Send escalation when the SLA is violated",
+  "add_exotel_number": "Add Exotel Number",
   "add_fb_page_failure": "Failed to add facebook page",
   "add_fb_page_success": "Facebook page added successfully",
   "add_insta_config_failure": "Failed to add Instagram configuration",
@@ -497,6 +498,7 @@
   "tags_delete_li1": "Associated ticket's tag will be removed.",
   "tags_edit_error": "Failed to edit the tag",
   "tags_edit_success": "Successfully edited the tag",
+  "tags_empty_validation": "Please add atleast one tag before saving",
   "tags_exist_validation": "One or more tags already exists, please remove and continue",
   "tags_helptext": "Add tags by pressing enter key and then save",
   "tags_long_description": "Tags are labels that you can assign to tickets. They help with categorizing, filtering, and automating processes.",
@@ -556,6 +558,7 @@
   "updated_at": "Updated At",
   "upload_file": "Upload file(s)",
   "uploaded_files": "Uploaded Files",
+  "user": "User",
   "user_name": "User Name",
   "user_profile": "User Profile",
   "users_and_permissions": "Users and Permissions",
@@ -579,6 +582,5 @@
   "whatsapp_phone_number_id": "Whatsapp phone number id",
   "yes_delete": "Yes, Delete",
   "yesterday": "Yesterday",
-  "you": "You",
-  "add_exotel_number": "Add Exotel Number"
+  "you": "You"
 }

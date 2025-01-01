@@ -1,4 +1,5 @@
 import { DateRange } from '@matharumanpreet00/react-daterange-picker';
+import { t } from 'i18next';
 import { SelectField } from 'lib/form-fields';
 import { RadioGroupField } from 'lib/form-fields/radio-group-field';
 import { FlexBox } from 'lib/ui-ux';
@@ -78,6 +79,11 @@ export const AgentPerformance = (props: IAgentPerformanceProps) => {
     }
   }, [employees, filterType, form, queues]);
 
+  const filterTypeOptions = [
+    { key: 'queue', label: t('queue') },
+    { key: 'user', label: t('user') },
+  ];
+
   return (
     <FormProvider {...form}>
       <FlexBox flexDirection="column" gap="15px" height="100%" padding="20px">
@@ -85,10 +91,11 @@ export const AgentPerformance = (props: IAgentPerformanceProps) => {
           <FilterContainer alignItems="center">
             <RadioGroupField
               name="filterType"
-              radioOptions={[
-                { key: 'queue', label: 'Queue' },
-                { key: 'user', label: 'User' },
-              ]}
+              radioOptions={
+                queues.length > 0
+                  ? filterTypeOptions
+                  : filterTypeOptions.filter((item) => item.key !== 'queue')
+              }
             />
             <SelectField
               name="filterValue"
