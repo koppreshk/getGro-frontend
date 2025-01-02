@@ -77,7 +77,7 @@ export const BrowserTelephonicDialer = (props: ITelephonicDialerProps) => {
             alignItems: 'center',
           }}
         >
-          Make Browser Call
+          {t('make_browser_call')}
           <IconButton onClick={onClose}>
             <CloseIcon />
           </IconButton>
@@ -103,13 +103,13 @@ export const BrowserTelephonicDialer = (props: ITelephonicDialerProps) => {
                         {getCallStatusIcon('outgoing')}
                       </CallStatusIconWrapper>
                       <FlexBox flexDirection="column">
-                        <Typography variant="body2">Calling</Typography>
+                        <Typography variant="body2">{t('calling')}</Typography>
                         <Typography variant="h6">
                           {methods.watch('phoneNumber')}
                         </Typography>
                       </FlexBox>
                     </FlexBox>
-                    <MoreInformation information="Once the call is connected, the current dialog box will be closed and a different incoming call dialog box will appear, you need to accept that call to connect with customer" />
+                    <MoreInformation information={t('more_info_call')} />
                   </FlexBox>
                 ) : (
                   <TextboxField
@@ -140,7 +140,7 @@ export const BrowserTelephonicDialer = (props: ITelephonicDialerProps) => {
                 fullWidth
                 startIcon={<Call />}
               >
-                Hangup
+                {t('hangup')}
               </Button>
             </StyledDialogActions>
           </>

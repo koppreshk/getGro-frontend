@@ -36,7 +36,7 @@ export const ExotelServiceProvider = (props: {
   children?: React.ReactNode;
 }) => {
   const { user } = useAuth();
-  const { data } = useFetchSDKToken(user ? true : false);
+  const { data } = useFetchSDKToken(user ? true : false, user?.email || '');
   const userId = user?.email || '';
 
   const webPhone = useRef<ExotelWebPhoneSDK | null>(null);
