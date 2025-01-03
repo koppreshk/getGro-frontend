@@ -32,6 +32,9 @@ export const StyledTagInputField = styled(TagInputField)`
   &:hover {
     border-color: ${({ theme }) => theme.pallete.onHoverFormFieldBorderColor};
   }
+  input {
+    min-width: 155px;
+  }
 `;
 
 export interface IAddTIcketFormFields {
