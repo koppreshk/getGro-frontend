@@ -25,7 +25,7 @@ export const AddFacebookPageContainer = (props: {
       can_send_auto_reply: formData.sendAutoReply,
       auto_reply_text: formData.autoReplyMessage,
       name: formData.name,
-      specific_keywords: formData.keywords,
+      specific_keywords: formData.keywords.map((item) => item.name),
       queue_id: formData.queueId?.toString() ?? '',
     })
       .then((res) => {

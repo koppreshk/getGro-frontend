@@ -6,7 +6,13 @@ import {
   TextboxField,
   TextboxFieldWithLabel,
 } from 'lib/form-fields';
-import { BackButton, CancelButton, FlexBox, LoadingButton } from 'lib/ui-ux';
+import {
+  BackButton,
+  CancelButton,
+  FlexBox,
+  ITagInput,
+  LoadingButton,
+} from 'lib/ui-ux';
 import { IFacebookAssociatedPages } from 'modules/settings/apis/marketplace/facebook';
 import { IQueueMetadata } from 'modules/settings/apis/ticket-automation/escalations/fetch-all-queues';
 import { ConfigStepper } from 'modules/settings/common';
@@ -174,7 +180,7 @@ export interface IAddFacebookPageFormFields {
   commentsConfiguration: string;
   sendAutoReply: boolean;
   autoReplyMessage: string;
-  keywords: string[];
+  keywords: ITagInput[];
 }
 
 export interface IAddFacebookPageFormProps {

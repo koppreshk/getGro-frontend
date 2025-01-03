@@ -5,7 +5,13 @@ import {
   SwitchField,
   TextboxField,
 } from 'lib/form-fields';
-import { BackButton, CancelButton, FlexBox, LoadingButton } from 'lib/ui-ux';
+import {
+  BackButton,
+  CancelButton,
+  FlexBox,
+  ITagInput,
+  LoadingButton,
+} from 'lib/ui-ux';
 import { IQueueMetadata } from 'modules/settings/apis/ticket-automation/escalations/fetch-all-queues';
 import { ConfigStepper } from 'modules/settings/common';
 import { StyledTagInputField } from 'modules/tickets/components/ticket-details/ticket-list-view/add-ticket/add-ticket-form';
@@ -132,7 +138,7 @@ export interface IAddInstagramConfigurationFormFields {
   commentsConfiguration: string;
   sendAutoReply: boolean;
   autoReplyMessage: string;
-  keywords: string[];
+  keywords: ITagInput[];
 }
 
 export interface IAddInstagramConfigurationFormProps {

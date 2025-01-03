@@ -1,5 +1,6 @@
 import { useNotifications } from 'lib';
 import { CenteredCircularProgress } from 'lib/ui-ux';
+import { generateId } from 'lib/utils';
 import {
   IInstagramConfigDetails,
   useEditInstagramConfiguration,
@@ -26,7 +27,7 @@ export const EditInstagramConfigurationContainer = (props: {
     mutateAsync({
       queue_id: formData.queueId,
       comment_configuration: formData.commentsConfiguration,
-      specific_keywords: formData.keywords,
+      specific_keywords: formData.keywords.map((item) => item.name),
       send_auto_reply: formData.sendAutoReply,
       auto_reply_message: formData.autoReplyMessage,
       id: data.id,
@@ -60,7 +61,11 @@ export const EditInstagramConfigurationContainer = (props: {
           defaultValues={{
             autoReplyMessage: data.auto_reply_message,
             commentsConfiguration: data.comment_configuration,
-            keywords: data.specific_keywords ?? [],
+            keywords:
+              data.specific_keywords?.map((item) => ({
+                id: generateId(),
+                name: item,
+              })) ?? [],
             queueId: data.queue_id,
             sendAutoReply: data.send_auto_reply,
           }}

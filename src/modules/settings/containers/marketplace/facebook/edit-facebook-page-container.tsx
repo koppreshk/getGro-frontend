@@ -1,5 +1,6 @@
 import { useNotifications } from 'lib';
 import { CenteredCircularProgress } from 'lib/ui-ux';
+import { generateId } from 'lib/utils';
 import {
   IFacebookConfiguredPages,
   useEditFacebookPage,
@@ -30,7 +31,7 @@ export const EditFacebookPageContainer = (props: {
       can_send_auto_reply: formData.sendAutoReply,
       auto_reply_text: formData.autoReplyMessage,
       name: formData.name,
-      specific_keywords: formData.keywords,
+      specific_keywords: formData.keywords.map((item) => item.name),
       queue_id: formData.queueId?.toString() ?? '',
       id: props.pageDetails.id.toString(),
     })
@@ -65,7 +66,10 @@ export const EditFacebookPageContainer = (props: {
             autoReplyMessage: pageDetails.auto_reply_text,
             commentsConfiguration: pageDetails.comment_configuration,
             facebookPageId: pageDetails.page_id,
-            keywords: pageDetails.specific_keywords,
+            keywords: pageDetails.specific_keywords.map((item) => ({
+              id: generateId(),
+              name: item,
+            })),
             name: pageDetails.page_name,
             sendAutoReply: pageDetails.can_send_auto_reply,
             queueId: pageDetails.queue_id,

@@ -85,7 +85,7 @@ export const BrowserTelephonicDialer = (props: ITelephonicDialerProps) => {
         {!isDeviceRegistered ? (
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Waiting for device to register
+              Current user is not registered for telephonic services
             </DialogContentText>
           </DialogContent>
         ) : (
