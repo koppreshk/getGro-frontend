@@ -9,6 +9,28 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
+interface IEditEmailFormProps {
+  defaultValues: IAddEmailConfigFormFields;
+  mutationLoading: boolean;
+  onSubmit: (formData: IAddEmailConfigFormFields) => void;
+}
+
+const EditEmailForm = (props: IEditEmailFormProps) => {
+  const form = useForm({
+    defaultValues: props.defaultValues,
+  });
+
+  return (
+    <FormProvider {...form}>
+      <AddEmail
+        onSubmit={props.onSubmit}
+        formType="EDIT"
+        mutationLoading={props.mutationLoading}
+      />
+    </FormProvider>
+  );
+};
+
 export const EditEmailConfigContainer = () => {
   const [searchParams] = useSearchParams();
   const { mutateAsync, isLoading: mutationLoading } = useEditEmailConfig();
@@ -26,7 +48,7 @@ export const EditEmailConfigContainer = () => {
     })
       .then(() => {
         showNotification({
-          message: t('email__edit_config_success'),
+          message: t('email_edit_config_success'),
           type: 'success',
         });
         navigate(-1);
@@ -63,26 +85,4 @@ export const EditEmailConfigContainer = () => {
   }
 
   return <ErrorMessage statusCode={error?.message} />;
-};
-
-interface IEditEmailFormProps {
-  defaultValues: IAddEmailConfigFormFields;
-  mutationLoading: boolean;
-  onSubmit: (formData: IAddEmailConfigFormFields) => void;
-}
-
-const EditEmailForm = (props: IEditEmailFormProps) => {
-  const form = useForm({
-    defaultValues: props.defaultValues,
-  });
-
-  return (
-    <FormProvider {...form}>
-      <AddEmail
-        onSubmit={props.onSubmit}
-        formType="EDIT"
-        mutationLoading={props.mutationLoading}
-      />
-    </FormProvider>
-  );
 };
