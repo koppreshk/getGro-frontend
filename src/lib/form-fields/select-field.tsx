@@ -133,6 +133,9 @@ export const SelectFieldWithLabel = (
         sx={{ color: hasError ? '#d32f2f' : '#3b4455' }}
       >
         {label}
+        {props.rules?.required?.toString().length && (
+          <span style={{ color: '#d32f2f' }}> *</span>
+        )}
       </Typography>
       <SelectField {...rest} />
     </FlexBox>
