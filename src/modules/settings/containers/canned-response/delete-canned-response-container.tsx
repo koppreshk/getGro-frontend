@@ -1,14 +1,14 @@
 import { Delete } from '@mui/icons-material';
 import { useNotifications } from 'lib';
 import { CustomIconButton, NegativeActionDialog } from 'lib/ui-ux';
-import { useDeleteTag } from 'modules/settings/apis/tags';
+import { useDeleteCannedResponse } from 'modules/settings/apis/canned-response';
 import { DeleteTagContent } from 'modules/settings/component/ticket-configurations';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const DeleteTemplatesContainer = (props: { id: number }) => {
+export const DeleteCannedResponseContainer = (props: { id: number }) => {
   const { id } = props;
-  const { mutateAsync, isLoading } = useDeleteTag();
+  const { mutateAsync, isLoading } = useDeleteCannedResponse();
   const { showNotification } = useNotifications();
   const [open, setOpen] = React.useState(false);
   const { t } = useTranslation();
@@ -25,19 +25,19 @@ export const DeleteTemplatesContainer = (props: { id: number }) => {
       })
         .then(() =>
           showNotification({
-            message: 'Templates was deleted successfully',
+            message: t('canned_response_delete_successfull'),
             type: 'success',
           })
         )
         .catch(() =>
           showNotification({
-            message: 'Failed to delete the Template',
+            message: t('canned_response_delete_failure'),
             type: 'error',
           })
         )
         .finally(() => toggleDeleteDialogBox());
     },
-    [mutateAsync, props.id, showNotification]
+    [mutateAsync, props.id, showNotification, t]
   );
   return (
     <>

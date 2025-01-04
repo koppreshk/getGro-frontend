@@ -1,33 +1,46 @@
 import { Edit } from '@mui/icons-material';
+import { Chip } from '@mui/material';
 import { Row, createColumnHelper } from '@tanstack/react-table';
 import { CustomIconButton, DrawerExtended, FlexBox } from 'lib/ui-ux';
 import { ConfigDataGrid } from 'lib/ui-ux/configuration-data-grid';
-import { IGenericResponse } from 'modules/settings/apis/templates/types';
+import { CannedResponse } from 'modules/settings/apis/canned-response';
 import {
-  DeleteTemplatesContainer,
-  EditTemplatesContainer,
-} from 'modules/settings/containers/templates';
+  DeleteCannedResponseContainer,
+  EditCannedResponseContainer,
+} from 'modules/settings/containers/canned-response';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-interface ITemplatesListProps {
-  statusData: IGenericResponse[] | undefined;
+interface ICannedResponseListProps {
+  cannedResponseData: CannedResponse[] | undefined;
   isLoading: boolean;
 }
 
 const useColumns = () => {
-  const columnHelper = createColumnHelper<IGenericResponse>();
+  const columnHelper = createColumnHelper<CannedResponse>();
   const { t } = useTranslation();
 
   const columns = [
     columnHelper.accessor('id', {
       id: 'id',
-      header: () => 'Status ID',
+      header: () => 'ID',
       cell: (info) => info.getValue(),
     }),
     columnHelper.accessor('name', {
       id: 'name',
-      header: () => 'Status Name',
+      header: () => 'Title',
+      cell: (info) => (
+        <FlexBox gap={'10px'} alignItems="center">
+          {info.getValue()}
+          {info.row.original.response_type === 'system' ? (
+            <Chip label={info.row.original.response_type} size="small" />
+          ) : null}
+        </FlexBox>
+      ),
+    }),
+    columnHelper.accessor('created_at', {
+      id: 'created_at',
+      header: () => t('created_at'),
       cell: (info) => info.getValue(),
     }),
     columnHelper.display({
@@ -38,9 +51,11 @@ const useColumns = () => {
           <FlexBox flexDirection="row" gap="5px">
             <CustomIconButton
               iconComponent={<Edit />}
-              tooltipProps={{ title: 'Edit Status', arrow: true }}
+              tooltipProps={{ title: 'Edit Canned Response', arrow: true }}
             />
-            <DeleteTemplatesContainer id={original.id} />
+            {original.response_type === 'system' ? null : (
+              <DeleteCannedResponseContainer id={original.id} />
+            )}
           </FlexBox>
         );
       },
@@ -50,8 +65,8 @@ const useColumns = () => {
   return columns;
 };
 
-export const TemplatesList = (props: ITemplatesListProps) => {
-  const { isLoading, statusData } = props;
+export const CannedResponseList = (props: ICannedResponseListProps) => {
+  const { isLoading, cannedResponseData } = props;
   const columns = useColumns();
   const [rowData, setRowData] = useState({});
   const [showDrawer, setShowDrawer] = useState(false);
@@ -61,7 +76,7 @@ export const TemplatesList = (props: ITemplatesListProps) => {
   }, []);
 
   const onRowClick = useCallback(
-    (row: Row<IGenericResponse>) => {
+    (row: Row<CannedResponse>) => {
       setRowData(row.original);
       toggleDrawer();
     },
@@ -72,7 +87,7 @@ export const TemplatesList = (props: ITemplatesListProps) => {
     <>
       <ConfigDataGrid
         columns={columns}
-        data={[]}
+        data={cannedResponseData!}
         hideTableControls
         isLoading={isLoading}
         onRowClick={onRowClick}
@@ -81,12 +96,12 @@ export const TemplatesList = (props: ITemplatesListProps) => {
         open={showDrawer}
         anchor="right"
         width="500px"
-        header="View or Edit Ticket Status"
+        header="View or Edit Canned Response"
         onRenderContent={() => (
-          <EditTemplatesContainer
-            onSelectRowMetaData={rowData as IGenericResponse}
+          <EditCannedResponseContainer
+            onSelectRowMetaData={rowData as CannedResponse}
             toggleDrawer={toggleDrawer}
-            statusData={statusData}
+            statusData={cannedResponseData}
           />
         )}
         onClose={toggleDrawer}
