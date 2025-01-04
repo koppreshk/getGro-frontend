@@ -7,7 +7,7 @@ import {
 } from 'lib/form-fields';
 import { FlexBox, ITagInput, LoadingButton } from 'lib/ui-ux';
 import { ITag } from 'modules/settings/apis/tags';
-import { StyledRichTextEditor } from 'modules/settings/component/ticket-configurations/templates/add-templates-form';
+import { StyledRichTextEditor } from 'modules/settings/component/ticket-configurations/canned-response/add-canned-response-form';
 import { IPriorities } from 'modules/tickets/apis';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';

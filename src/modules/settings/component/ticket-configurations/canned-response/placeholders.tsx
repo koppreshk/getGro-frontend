@@ -13,15 +13,15 @@ export const PlaceHolders = () => {
   const { setValue, watch } = useFormContext();
   const placeholders = [
     {
-      key: 'ticketID',
+      key: 'ticketId',
       name: 'Ticket ID',
     },
     {
-      key: 'requesterDisplayName',
+      key: 'name',
       name: 'Requester Display Name',
     },
     {
-      key: 'agentDisplayName',
+      key: 'agentName',
       name: 'Agent Display Name',
     },
   ];
