@@ -59,7 +59,7 @@ export const PastTicketCard = (props: {
         alignItems="center"
         onClick={() => onPastTicketClick(item.ticketId)}
       >
-        {getSourceIcon(item.source, { width: '1.5em', height: '1.5em' })}
+        {getSourceIcon(item.createdFrom, { width: '1.5em', height: '1.5em' })}
         <FlexBox flexDirection="column" width="calc(100% - 46px)">
           <StyledChip label={item.createdAt} variant="filled" />
           <Typography marginTop={'8px'} variant="caption">
@@ -73,7 +73,7 @@ export const PastTicketCard = (props: {
               overflow: 'hidden',
             }}
           >
-            {item.ticketId}
+            #{item.ticketId}
           </Typography>
         </FlexBox>
       </StyledContainer>

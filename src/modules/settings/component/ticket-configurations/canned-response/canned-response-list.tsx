@@ -1,22 +1,19 @@
-import { Edit } from '@mui/icons-material';
 import { Chip } from '@mui/material';
-import { Row, createColumnHelper } from '@tanstack/react-table';
-import { CustomIconButton, DrawerExtended, FlexBox } from 'lib/ui-ux';
+import { createColumnHelper } from '@tanstack/react-table';
+import { FlexBox } from 'lib/ui-ux';
 import { ConfigDataGrid } from 'lib/ui-ux/configuration-data-grid';
 import { CannedResponse } from 'modules/settings/apis/canned-response';
-import {
-  DeleteCannedResponseContainer,
-  EditCannedResponseContainer,
-} from 'modules/settings/containers/canned-response';
-import { useCallback, useState } from 'react';
+import { DeleteCannedResponseContainer } from 'modules/settings/containers/canned-response';
 import { useTranslation } from 'react-i18next';
+
+import { EditCannedResponse } from './edit-canned-response';
 
 interface ICannedResponseListProps {
   cannedResponseData: CannedResponse[] | undefined;
   isLoading: boolean;
 }
 
-const useColumns = () => {
+const useColumns = (cannedResponseData?: CannedResponse[]) => {
   const columnHelper = createColumnHelper<CannedResponse>();
   const { t } = useTranslation();
 
@@ -49,9 +46,9 @@ const useColumns = () => {
       cell: ({ row: { original } }) => {
         return (
           <FlexBox flexDirection="row" gap="5px">
-            <CustomIconButton
-              iconComponent={<Edit />}
-              tooltipProps={{ title: 'Edit Canned Response', arrow: true }}
+            <EditCannedResponse
+              currentData={original}
+              allData={cannedResponseData!}
             />
             {original.response_type === 'system' ? null : (
               <DeleteCannedResponseContainer id={original.id} />
@@ -67,21 +64,7 @@ const useColumns = () => {
 
 export const CannedResponseList = (props: ICannedResponseListProps) => {
   const { isLoading, cannedResponseData } = props;
-  const columns = useColumns();
-  const [rowData, setRowData] = useState({});
-  const [showDrawer, setShowDrawer] = useState(false);
-
-  const toggleDrawer = useCallback(() => {
-    setShowDrawer((preValue) => !preValue);
-  }, []);
-
-  const onRowClick = useCallback(
-    (row: Row<CannedResponse>) => {
-      setRowData(row.original);
-      toggleDrawer();
-    },
-    [toggleDrawer]
-  );
+  const columns = useColumns(cannedResponseData);
 
   return (
     <>
@@ -90,21 +73,6 @@ export const CannedResponseList = (props: ICannedResponseListProps) => {
         data={cannedResponseData!}
         hideTableControls
         isLoading={isLoading}
-        onRowClick={onRowClick}
-      />
-      <DrawerExtended
-        open={showDrawer}
-        anchor="right"
-        width="500px"
-        header="View or Edit Canned Response"
-        onRenderContent={() => (
-          <EditCannedResponseContainer
-            onSelectRowMetaData={rowData as CannedResponse}
-            toggleDrawer={toggleDrawer}
-            statusData={cannedResponseData}
-          />
-        )}
-        onClose={toggleDrawer}
       />
     </>
   );
