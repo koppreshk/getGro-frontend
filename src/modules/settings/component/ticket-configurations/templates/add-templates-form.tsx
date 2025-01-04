@@ -1,9 +1,5 @@
 import { Button, Grid, Typography } from '@mui/material';
-import {
-  RadioGroupField,
-  RichTextEditorField,
-  TextboxFieldWithLabel,
-} from 'lib/form-fields';
+import { RichTextEditorField, TextboxFieldWithLabel } from 'lib/form-fields';
 import { FlexBox, LoadingButton } from 'lib/ui-ux';
 import { IGenericResponse } from 'modules/settings/apis/templates/types';
 import { ITemplatesFormFields } from 'modules/settings/containers/templates';
@@ -11,6 +7,8 @@ import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { styled } from 'styled-components';
+
+import { PlaceHolders } from './placeholders';
 
 interface ITemplatesFormProps {
   mode: 'create' | 'edit';
@@ -80,11 +78,17 @@ export const TemplatesForm = (props: ITemplatesFormProps) => {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="h6" sx={{ mb: '5px' }}>
+              {t('placeholders')}
+            </Typography>
+            <PlaceHolders />
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="h6" sx={{ mb: '5px' }}>
               {t('description')}
             </Typography>
             <StyledRichTextEditor name={`template`} disableAutoFocus />
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <Typography variant="h6" sx={{ mb: '5px' }}>
               {t('access_scope')}
             </Typography>
@@ -96,7 +100,7 @@ export const TemplatesForm = (props: ITemplatesFormProps) => {
                 { key: 'public', label: 'Public' },
               ]}
             />
-          </Grid>
+          </Grid> */}
         </Grid>
         <FlexBox gap="10px" width="100%" justifyContent="flex-end">
           {isInEditMode ? (
