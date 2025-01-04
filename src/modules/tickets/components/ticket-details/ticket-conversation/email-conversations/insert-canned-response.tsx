@@ -21,7 +21,11 @@ import { useTranslation } from 'react-i18next';
 import { styled } from 'styled-components';
 
 const StyledItemsContent = styled(FlexBox)`
-  flex: 1;
+  height: 400px;
+  overflow-y: scroll;
+  border-radius: 5px;
+  background: #f9f7f7;
+  padding: 5px;
 `;
 
 const StyledItem = styled(FlexBox)<{ isSelected: boolean }>`
@@ -118,7 +122,9 @@ export const InsertCannedResponse = (props: IInsertCannedResponseProps) => {
         tooltipProps={{ title: t('insert_canned_response'), arrow: true }}
       />
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="lg">
-        <DialogTitle sx={{ fontSize: '16px' }}>Canned Response</DialogTitle>
+        <DialogTitle sx={{ fontSize: '16px' }}>
+          {t('canned_response')}
+        </DialogTitle>
         <IconButton
           aria-label="close"
           onClick={handleClose}
@@ -133,7 +139,7 @@ export const InsertCannedResponse = (props: IInsertCannedResponseProps) => {
         </IconButton>
         <DialogContent>
           <FlexBox flexDirection="row" gap="20px">
-            <StyledItemsContent flexDirection="column">
+            <FlexBox flexDirection="column" style={{ flex: 1 }}>
               <TextField
                 name="search"
                 size="small"
@@ -148,11 +154,7 @@ export const InsertCannedResponse = (props: IInsertCannedResponseProps) => {
                 }}
                 sx={{ marginBottom: '10px' }}
               />
-              <FlexBox
-                flexDirection="column"
-                gap="5px"
-                style={{ height: '400px', overflowY: 'scroll' }}
-              >
+              <StyledItemsContent flexDirection="column" gap="5px">
                 {cannedResponse?.map((item) => (
                   <StyledItem
                     key={item.id}
@@ -163,12 +165,12 @@ export const InsertCannedResponse = (props: IInsertCannedResponseProps) => {
                     <span title={item.name}>{item.name}</span>
                   </StyledItem>
                 ))}
-              </FlexBox>
-            </StyledItemsContent>
+              </StyledItemsContent>
+            </FlexBox>
             <StyledCannedResponseContent flexDirection="column" gap="20px">
               {!selectedCannedResponse ? (
                 <Typography variant="h5" style={{ margin: 'auto' }}>
-                  No canned response selected
+                  {t('no_canned_response_selected')}
                 </Typography>
               ) : (
                 <>

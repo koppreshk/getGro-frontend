@@ -593,5 +593,6 @@
   "canned_response_delete_successfull": "Canned response deleted successfully",
   "canned_response_delete_failure": "Failed to delete canned response",
   "canned_response_edit_success": "Canned response edited successfully",
-  "canned_response_edit_failure": "Failed to edit canned response"
+  "canned_response_edit_failure": "Failed to edit canned response",
+  "no_canned_response_selected": "No canned response selected"
 }
