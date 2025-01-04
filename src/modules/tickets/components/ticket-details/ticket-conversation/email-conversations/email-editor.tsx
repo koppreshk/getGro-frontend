@@ -7,7 +7,6 @@ import {
 } from 'lib/form-fields';
 import { FlexBox, RoundedSendButton } from 'lib/ui-ux';
 import { chooseRandomColors, getInitialsByName } from 'lib/utils';
-import { InsertCannedResponseContainer } from 'modules/tickets/containers/conversations/email/more-actions/insert-canned-response/insert-canned-resposnse-container';
 import React, { useMemo, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -16,6 +15,7 @@ import { styled } from 'styled-components';
 import { IEmailFormFields } from './email-conversations';
 import { EmailHeaderOptions } from './email-header-options';
 import { InsertArticle } from './insert-article';
+import { InsertCannedResponse } from './insert-canned-response';
 import { UploadedAttachmentsPreview } from './uploaded-attachments-preview';
 
 interface IEmailEditorProps {
@@ -78,7 +78,7 @@ const EmailFooterOptions = (
           multiple
           readMode="readAsDataURL"
         />
-        <InsertCannedResponseContainer editorType={editorType} />
+        <InsertCannedResponse editorType={editorType} />
         <InsertArticle editorType={editorType} editorValue={editorValue} />
       </FlexBox>
       <IconButton onClick={onCancelClick} title={t('delete')}>
