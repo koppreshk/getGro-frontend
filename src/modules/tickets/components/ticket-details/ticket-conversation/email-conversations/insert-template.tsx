@@ -14,8 +14,9 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
+import { useAppSelector } from 'lib/hooks';
 import { CustomIconButton, FlexBox } from 'lib/ui-ux';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -23,16 +24,16 @@ const templates = [
   {
     header: 'Thank You Email Template',
     content: `<div>
-        <p>Hi [Customer],</p>
+        <p>Hi {{requesterDisplayName}},</p>
         <br/>
-        <p>Thank you so much for referring your friend [Friend‘s name] to us. I’ve enjoyed getting to know them and doing business with them. I‘m glad that you’ve stuck around with us for this long and brought your friend to share the experience with you.</p>
+        <p>Thank you so much for referring your friend to us. I’ve enjoyed getting to know them and doing business with them. I‘m glad that you’ve stuck around with us for this long and brought your friend to share the experience with you.</p>
         <p>We‘re lucky to have you.
         <br/>
         <br/>
-        Thanks again for being such a fantastic customer! As a token of our appreciation, here’s a [coupon/discount] for you to enjoy.</p>
+        Thanks again for being such a fantastic customer! As a token of our appreciation,</p>
         <br/>
         <p>Cheers,</p>
-        <p>[Your name]</p>
+        <p>{{agentDisplayName}}</p>
         </div>`,
   },
   {
@@ -96,6 +97,15 @@ export const InsertTemplate = (props: { editorType: string }) => {
   const { setValue } = useFormContext();
   const open = Boolean(anchorEl);
   const { t } = useTranslation();
+  const ticketMetadata = useAppSelector((state) => state.tickets.ticketDetails);
+  const agentData = useAppSelector((state) => state.core.config);
+
+  const resultObject = useMemo(() => {
+    return {
+      requesterDisplayName: ticketMetadata?.customerName ?? '',
+      agentDisplayName: agentData?.user_details.display_name ?? '',
+    };
+  }, [agentData?.user_details.display_name, ticketMetadata?.customerName]);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -114,12 +124,15 @@ export const InsertTemplate = (props: { editorType: string }) => {
   };
 
   const setEditorValue = useCallback(() => {
-    setValue(
-      `${props.editorType}.editor`,
-      templates[selectedTemplateIndex].content
+    const currentValue = templates[selectedTemplateIndex].content;
+    const parsedContent = currentValue.replace(
+      /{{(.*?)}}/g,
+      (_, key: string) => resultObject[key as keyof typeof resultObject] || ''
     );
+
+    setValue(`${props.editorType}.editor`, parsedContent);
     handleClose();
-  }, [props.editorType, selectedTemplateIndex, setValue]);
+  }, [props.editorType, resultObject, selectedTemplateIndex, setValue]);
 
   return (
     <>
