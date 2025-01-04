@@ -1,5 +1,6 @@
 import { Add, ArrowBack } from '@mui/icons-material';
 import { Button, Typography } from '@mui/material';
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import {
   BreadCrumbs,
   CustomIconButton,
@@ -14,6 +15,55 @@ import {
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Route, Routes, useNavigate } from 'react-router-dom';
+
+const EmailConfigContent = () => {
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  const toggleAddEscalationDrawer = useCallback(() => {
+    navigate('add-email');
+  }, [navigate]);
+
+  const responseMessage = (response: any) => {
+    console.log(response);
+  };
+  const errorMessage = () => {
+    console.log('error');
+  };
+
+  return (
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID}>
+      <FlexBox
+        width="100%"
+        justifyContent="space-between"
+        padding="10px"
+        alignItems="center"
+      >
+        <FlexBox alignItems="center" gap="10px">
+          <CustomIconButton
+            onClick={() => {
+              navigate('/configurations');
+            }}
+            iconComponent={<ArrowBack />}
+            tooltipProps={{ title: t('back') }}
+          />
+          <Typography variant="h5">{t('email_configurations')}</Typography>
+        </FlexBox>
+        <FlexBox gap={'10px'}>
+          <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
+          <Button
+            variant="contained"
+            onClick={toggleAddEscalationDrawer}
+            startIcon={<Add />}
+          >
+            {t('add_email')}
+          </Button>
+        </FlexBox>
+      </FlexBox>
+      <FetchAllEmailsContainer />
+    </GoogleOAuthProvider>
+  );
+};
 
 export default function EmailConfigLayout() {
   const { t } = useTranslation();
@@ -46,42 +96,3 @@ export default function EmailConfigLayout() {
     </FlexBox>
   );
 }
-
-const EmailConfigContent = () => {
-  const navigate = useNavigate();
-  const { t } = useTranslation();
-
-  const toggleAddEscalationDrawer = useCallback(() => {
-    navigate('add-email');
-  }, [navigate]);
-
-  return (
-    <>
-      <FlexBox
-        width="100%"
-        justifyContent="space-between"
-        padding="10px"
-        alignItems="center"
-      >
-        <FlexBox alignItems="center" gap="10px">
-          <CustomIconButton
-            onClick={() => {
-              navigate('/configurations');
-            }}
-            iconComponent={<ArrowBack />}
-            tooltipProps={{ title: t('back') }}
-          />
-          <Typography variant="h5">{t('email_configurations')}</Typography>
-        </FlexBox>
-        <Button
-          variant="contained"
-          onClick={toggleAddEscalationDrawer}
-          startIcon={<Add />}
-        >
-          {t('add_email')}
-        </Button>
-      </FlexBox>
-      <FetchAllEmailsContainer />
-    </>
-  );
-};
