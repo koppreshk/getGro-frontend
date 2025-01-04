@@ -7,6 +7,7 @@ import {
 } from 'lib/form-fields';
 import { FlexBox, RoundedSendButton } from 'lib/ui-ux';
 import { chooseRandomColors, getInitialsByName } from 'lib/utils';
+import { InsertCannedResponseContainer } from 'modules/tickets/containers/conversations/email/more-actions/insert-canned-response/insert-canned-resposnse-container';
 import React, { useMemo, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -15,7 +16,6 @@ import { styled } from 'styled-components';
 import { IEmailFormFields } from './email-conversations';
 import { EmailHeaderOptions } from './email-header-options';
 import { InsertArticle } from './insert-article';
-import { InsertTemplate } from './insert-template';
 import { UploadedAttachmentsPreview } from './uploaded-attachments-preview';
 
 interface IEmailEditorProps {
@@ -40,6 +40,53 @@ const StyledForwardCardContainer = styled(FlexBox)`
     margin-left: 20px;
   }
 `;
+
+const EmailFooterOptions = (
+  props: Pick<
+    IEmailEditorProps,
+    'onSendClick' | 'onCancelClick' | 'editorType' | 'isMutationLoading'
+  > & { editorValue: string }
+) => {
+  const {
+    editorType,
+    isMutationLoading,
+    editorValue,
+    onCancelClick,
+    onSendClick,
+  } = props;
+  const { t } = useTranslation();
+  return (
+    <FlexBox justifyContent="space-between" padding="0px 16px 10px">
+      <FlexBox gap="5px">
+        <RoundedSendButton
+          disabled={isMutationLoading}
+          variant="contained"
+          endIcon={
+            isMutationLoading ? (
+              <CircularProgress size={24} sx={{ color: '#fff' }} />
+            ) : (
+              <Send />
+            )
+          }
+          title={t('send')}
+          onClick={onSendClick}
+        >
+          {t('send')}
+        </RoundedSendButton>
+        <FileUploadField
+          name={`${editorType}.attachments`}
+          multiple
+          readMode="readAsDataURL"
+        />
+        <InsertCannedResponseContainer editorType={editorType} />
+        <InsertArticle editorType={editorType} editorValue={editorValue} />
+      </FlexBox>
+      <IconButton onClick={onCancelClick} title={t('delete')}>
+        <Delete />
+      </IconButton>
+    </FlexBox>
+  );
+};
 
 export const EmailEditor = (props: IEmailEditorProps) => {
   const {
@@ -105,53 +152,6 @@ export const EmailEditor = (props: IEmailEditorProps) => {
           editorValue={watch(`${editorType}.editor`)}
         />
       </StyledForwardCardContainer>
-    </FlexBox>
-  );
-};
-
-const EmailFooterOptions = (
-  props: Pick<
-    IEmailEditorProps,
-    'onSendClick' | 'onCancelClick' | 'editorType' | 'isMutationLoading'
-  > & { editorValue: string }
-) => {
-  const {
-    editorType,
-    isMutationLoading,
-    editorValue,
-    onCancelClick,
-    onSendClick,
-  } = props;
-  const { t } = useTranslation();
-  return (
-    <FlexBox justifyContent="space-between" padding="0px 16px 10px">
-      <FlexBox gap="5px">
-        <RoundedSendButton
-          disabled={isMutationLoading}
-          variant="contained"
-          endIcon={
-            isMutationLoading ? (
-              <CircularProgress size={24} sx={{ color: '#fff' }} />
-            ) : (
-              <Send />
-            )
-          }
-          title={t('send')}
-          onClick={onSendClick}
-        >
-          {t('send')}
-        </RoundedSendButton>
-        <FileUploadField
-          name={`${editorType}.attachments`}
-          multiple
-          readMode="readAsDataURL"
-        />
-        <InsertTemplate editorType={editorType} />
-        <InsertArticle editorType={editorType} editorValue={editorValue} />
-      </FlexBox>
-      <IconButton onClick={onCancelClick} title={t('delete')}>
-        <Delete />
-      </IconButton>
     </FlexBox>
   );
 };
