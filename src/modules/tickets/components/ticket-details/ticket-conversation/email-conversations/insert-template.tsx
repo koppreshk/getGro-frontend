@@ -1,8 +1,4 @@
-import {
-  ChevronLeftOutlined,
-  ChevronRightOutlined,
-  PostAddOutlined,
-} from '@mui/icons-material';
+import { Close, PostAddOutlined, Search } from '@mui/icons-material';
 import InsertCommentOutlinedIcon from '@mui/icons-material/InsertCommentOutlined';
 import {
   Button,
@@ -12,15 +8,23 @@ import {
   DialogContentText,
   DialogTitle,
   IconButton,
+  InputAdornment,
+  TextField,
   Typography,
 } from '@mui/material';
 import { useAppSelector } from 'lib/hooks';
-import { CustomIconButton, FlexBox } from 'lib/ui-ux';
+import { CancelButton, CustomIconButton, FlexBox } from 'lib/ui-ux';
 import { useCallback, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { styled } from 'styled-components';
 
-const templates = [
+interface ICannedResponse {
+  header: string;
+  content: string;
+}
+
+const templates: ICannedResponse[] = [
   {
     header: 'Thank You Email Template',
     content: `<div>
@@ -91,12 +95,41 @@ const templates = [
   },
 ];
 
+const StyledItemsContent = styled(FlexBox)`
+  flex: 1;
+`;
+
+const StyledItem = styled(FlexBox)<{ isSelected: boolean }>`
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: ${({ isSelected }) =>
+    isSelected ? '#e5e4fc' : 'transparent'};
+  &:hover {
+    background-color: #f3f3f3;
+  }
+`;
+
+const StyledCannedResponseContent = styled(FlexBox)`
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: ${({ theme }) => theme.semantics.standardBorder};
+  flex: 3;
+`;
+
 export const InsertTemplate = (props: { editorType: string }) => {
+  const [cannedResponse, setCannedResponse] = useState(templates);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selectedTemplateIndex, setTemplateIndex] = useState(0);
+  const [selectedCannedResponse, setSelectedCannedResponse] =
+    useState<ICannedResponse | null>(null);
+
   const { setValue } = useFormContext();
+
   const open = Boolean(anchorEl);
+
   const { t } = useTranslation();
+
   const ticketMetadata = useAppSelector((state) => state.tickets.ticketDetails);
   const agentData = useAppSelector((state) => state.core.config);
 
@@ -113,66 +146,120 @@ export const InsertTemplate = (props: { editorType: string }) => {
 
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const onNextClick = () => {
-    setTemplateIndex((prevValue) => prevValue + 1);
-  };
-
-  const onPreviousClick = () => {
-    setTemplateIndex((prevValue) => prevValue - 1);
+    setSelectedCannedResponse(null);
   };
 
   const setEditorValue = useCallback(() => {
-    const currentValue = templates[selectedTemplateIndex].content;
-    const parsedContent = currentValue.replace(
-      /{{(.*?)}}/g,
-      (_, key: string) => resultObject[key as keyof typeof resultObject] || ''
-    );
+    if (selectedCannedResponse) {
+      const currentValue = selectedCannedResponse.content;
+      const parsedContent = currentValue.replace(
+        /{{(.*?)}}/g,
+        (_, key: string) => resultObject[key as keyof typeof resultObject] || ''
+      );
 
-    setValue(`${props.editorType}.editor`, parsedContent);
-    handleClose();
-  }, [props.editorType, resultObject, selectedTemplateIndex, setValue]);
+      setValue(`${props.editorType}.editor`, parsedContent);
+      handleClose();
+    }
+  }, [props.editorType, resultObject, selectedCannedResponse, setValue]);
+
+  const onChange: React.ChangeEventHandler<HTMLInputElement> = (ev) => {
+    if (ev.target.value.length) {
+      const filteredTemplates = templates.filter((item) =>
+        item.header.toLowerCase().includes(ev.target.value.toLowerCase())
+      );
+      setCannedResponse(filteredTemplates);
+    } else {
+      setCannedResponse(templates);
+    }
+  };
 
   return (
     <>
-      <IconButton onClick={handleClick} title={t('insert_template')}>
-        <InsertCommentOutlinedIcon />
-      </IconButton>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle id="alert-dialog-title">
-          {templates[selectedTemplateIndex].header}
-        </DialogTitle>
+      <CustomIconButton
+        onClick={handleClick}
+        iconComponent={<InsertCommentOutlinedIcon />}
+        tooltipProps={{ title: t('insert_template'), arrow: true }}
+      />
+      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="lg">
+        <DialogTitle sx={{ fontSize: '16px' }}>Canned Response</DialogTitle>
+        <IconButton
+          aria-label="close"
+          onClick={handleClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <Close />
+        </IconButton>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            <Typography variant="caption">
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: templates[selectedTemplateIndex].content,
+          <FlexBox flexDirection="row" gap="20px">
+            <StyledItemsContent flexDirection="column">
+              <TextField
+                name="search"
+                size="small"
+                onChange={onChange}
+                placeholder="Search canned response"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Search />
+                    </InputAdornment>
+                  ),
                 }}
+                sx={{ marginBottom: '10px' }}
               />
-            </Typography>
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions sx={{ justifyContent: 'space-between' }}>
-          <FlexBox>
-            <CustomIconButton
-              tooltipProps={{ title: 'Previous template' }}
-              iconComponent={<ChevronLeftOutlined />}
-              onClick={onPreviousClick}
-              disabled={selectedTemplateIndex === 0}
-            />
-            <CustomIconButton
-              tooltipProps={{ title: 'Next template' }}
-              iconComponent={<ChevronRightOutlined />}
-              onClick={onNextClick}
-              disabled={selectedTemplateIndex + 1 === templates.length}
-            />
+              <FlexBox
+                flexDirection="column"
+                style={{ maxHeight: '350px', overflowY: 'scroll' }}
+              >
+                {cannedResponse.map((item, index) => (
+                  <StyledItem
+                    key={index}
+                    onClick={() => setSelectedCannedResponse(item)}
+                    title={item.header}
+                    isSelected={selectedCannedResponse?.header === item.header}
+                  >
+                    <span title={item.header}>{item.header}</span>
+                  </StyledItem>
+                ))}
+              </FlexBox>
+            </StyledItemsContent>
+            <StyledCannedResponseContent flexDirection="column" gap="20px">
+              {!selectedCannedResponse ? (
+                <Typography variant="h5" style={{ margin: 'auto' }}>
+                  No canned response selected
+                </Typography>
+              ) : (
+                <>
+                  <Typography variant="h5">
+                    {selectedCannedResponse?.header}
+                  </Typography>
+                  <Typography variant="caption">
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: selectedCannedResponse?.content ?? '',
+                      }}
+                    />
+                  </Typography>
+                </>
+              )}
+            </StyledCannedResponseContent>
           </FlexBox>
+
+          <DialogContentText id="alert-dialog-description"></DialogContentText>
+        </DialogContent>
+        <DialogActions
+          sx={{ justifyContent: 'flex-end', padding: '0 24px 16px' }}
+        >
+          <CancelButton onClick={handleClose} />
           <Button
             variant="contained"
             endIcon={<PostAddOutlined />}
             onClick={setEditorValue}
+            disabled={!selectedCannedResponse}
           >
             {t('insert_template')}
           </Button>
