@@ -28,7 +28,7 @@ const templates: ICannedResponse[] = [
   {
     header: 'Thank You Email Template',
     content: `<div>
-        <p>Hi {{requesterDisplayName}},</p>
+        <p>Hi {{name}},</p>
         <br/>
         <p>Thank you so much for referring your friend to us. I’ve enjoyed getting to know them and doing business with them. I‘m glad that you’ve stuck around with us for this long and brought your friend to share the experience with you.</p>
         <p>We‘re lucky to have you.
@@ -37,7 +37,7 @@ const templates: ICannedResponse[] = [
         Thanks again for being such a fantastic customer! As a token of our appreciation,</p>
         <br/>
         <p>Cheers,</p>
-        <p>{{agentDisplayName}}</p>
+        <p>{{agentName}}</p>
         </div>`,
   },
   {
@@ -135,10 +135,15 @@ export const InsertTemplate = (props: { editorType: string }) => {
 
   const resultObject = useMemo(() => {
     return {
-      requesterDisplayName: ticketMetadata?.customerName ?? '',
-      agentDisplayName: agentData?.user_details.display_name ?? '',
+      ticketId: ticketMetadata?.ticketId.toString() ?? '',
+      name: ticketMetadata?.customerName ?? '',
+      agentName: agentData?.user_details.display_name ?? '',
     };
-  }, [agentData?.user_details.display_name, ticketMetadata?.customerName]);
+  }, [
+    agentData?.user_details.display_name,
+    ticketMetadata?.customerName,
+    ticketMetadata?.ticketId,
+  ]);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -261,7 +266,7 @@ export const InsertTemplate = (props: { editorType: string }) => {
             onClick={setEditorValue}
             disabled={!selectedCannedResponse}
           >
-            {t('insert_template')}
+            {t('insert_canned_response')}
           </Button>
         </DialogActions>
       </Dialog>

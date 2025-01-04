@@ -1,6 +1,6 @@
 import { Edit } from '@mui/icons-material';
 import { CustomIconButton, DrawerExtended } from 'lib/ui-ux';
-import { IGenericResponse } from 'modules/settings/apis/templates/types';
+import { IGenericResponse } from 'modules/settings/apis/canned-response/types';
 import { EditTicketStatusContainer } from 'modules/settings/containers/ticket-status';
 import { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';

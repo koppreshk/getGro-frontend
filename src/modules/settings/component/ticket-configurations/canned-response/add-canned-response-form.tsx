@@ -1,8 +1,8 @@
 import { Button, Grid, Typography } from '@mui/material';
 import { RichTextEditorField, TextboxFieldWithLabel } from 'lib/form-fields';
 import { FlexBox, LoadingButton } from 'lib/ui-ux';
-import { IGenericResponse } from 'modules/settings/apis/templates/types';
-import { ITemplatesFormFields } from 'modules/settings/containers/templates';
+import { IGenericResponse } from 'modules/settings/apis/canned-response/types';
+import { ICannedResponseFormFields } from 'modules/settings/containers/canned-response';
 import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -10,12 +10,12 @@ import { styled } from 'styled-components';
 
 import { PlaceHolders } from './placeholders';
 
-interface ITemplatesFormProps {
+interface ICannedResponseFormProps {
   mode: 'create' | 'edit';
-  defaultValues?: ITemplatesFormFields;
+  defaultValues?: ICannedResponseFormFields;
   mutationLoading: boolean;
   statusData?: IGenericResponse[];
-  onFormSubmitHandler: (data: ITemplatesFormFields) => void;
+  onFormSubmitHandler: (data: ICannedResponseFormFields) => void;
 }
 
 export const StyledRichTextEditor = styled(RichTextEditorField)`
@@ -35,12 +35,18 @@ export const StyledRichTextEditor = styled(RichTextEditorField)`
   }
 `;
 
-export const TemplatesForm = (props: ITemplatesFormProps) => {
-  const { mode, defaultValues, mutationLoading, statusData } = props;
+export const CannedResponseForm = (props: ICannedResponseFormProps) => {
+  const {
+    mode,
+    defaultValues,
+    mutationLoading,
+    statusData,
+    onFormSubmitHandler: submitCannedResponse,
+  } = props;
   const isInEditMode = useMemo(() => mode === 'edit', [mode]);
   const { t } = useTranslation();
 
-  const methods = useForm<ITemplatesFormFields>({
+  const methods = useForm<ICannedResponseFormFields>({
     defaultValues: defaultValues ?? {
       name: '',
       template: '',
@@ -73,7 +79,7 @@ export const TemplatesForm = (props: ITemplatesFormProps) => {
               name="name"
               label="Title"
               fullWidth
-              rules={{ required: 'Title is required', validate: validateTitle }}
+              rules={{ required: t('title_required'), validate: validateTitle }}
             />
           </Grid>
           <Grid item xs={12}>
@@ -118,9 +124,11 @@ export const TemplatesForm = (props: ITemplatesFormProps) => {
             variant="contained"
             size="large"
             type="submit"
-            // onClick={methods.handleSubmit(onSubmit)}
+            onClick={methods.handleSubmit(submitCannedResponse)}
           >
-            {isInEditMode ? 'Edit Template' : 'Add Template'}
+            {isInEditMode
+              ? t('edit_canned_response')
+              : t('add_canned_response')}
           </LoadingButton>
         </FlexBox>
       </FlexBox>
