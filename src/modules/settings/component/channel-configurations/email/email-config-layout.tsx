@@ -1,12 +1,14 @@
 import { Add, ArrowBack } from '@mui/icons-material';
 import { Button, Typography } from '@mui/material';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import { useNotifications } from 'lib';
 import {
   BreadCrumbs,
   CustomIconButton,
   FlexBox,
   MoreInformation,
 } from 'lib/ui-ux';
+import { useNylasGoogleOAuth } from 'modules/settings/apis';
 import { FetchAllEmailsContainer } from 'modules/settings/containers/channel-configurations';
 import {
   AddEmailConfigContainer,
@@ -19,6 +21,8 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 const EmailConfigContent = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { showNotification } = useNotifications();
+  const { mutateAsync } = useNylasGoogleOAuth();
 
   const toggleAddEscalationDrawer = useCallback(() => {
     navigate('add-email');
@@ -26,9 +30,27 @@ const EmailConfigContent = () => {
 
   const responseMessage = (response: any) => {
     console.log(response);
+    mutateAsync({ code: response.credential })
+      .then((res) => {
+        if (res.status) {
+          showNotification({
+            message: t('google_login_success'),
+            type: 'success',
+          });
+          return;
+        }
+        showNotification({ message: res.message, type: 'error' });
+      })
+      .catch(() => {
+        showNotification({
+          message: t('google_login_failure'),
+          type: 'error',
+        });
+      });
   };
+
   const errorMessage = () => {
-    console.log('error');
+    console.error('error');
   };
 
   return (

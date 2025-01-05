@@ -126,7 +126,9 @@ export const InsertCannedResponseDialog = (
 
   return (
     <Dialog open={openPopup} onClose={handleClose} fullWidth maxWidth="lg">
-      <DialogTitle sx={{ fontSize: '16px' }}>Canned Response</DialogTitle>
+      <DialogTitle sx={{ fontSize: '16px' }}>
+        {t('canned_response')}
+      </DialogTitle>
       <IconButton
         aria-label="close"
         onClick={handleClose}
@@ -176,7 +178,7 @@ export const InsertCannedResponseDialog = (
           <StyledCannedResponseContent flexDirection="column" gap="20px">
             {!selectedCannedResponse ? (
               <Typography variant="h5" style={{ margin: 'auto' }}>
-                No canned response selected
+                {t('no_canned_response_selected')}
               </Typography>
             ) : (
               <>
