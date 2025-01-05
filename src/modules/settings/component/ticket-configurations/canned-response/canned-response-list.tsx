@@ -18,9 +18,9 @@ const useColumns = (cannedResponseData?: CannedResponse[]) => {
   const { t } = useTranslation();
 
   const columns = [
-    columnHelper.accessor('id', {
-      id: 'id',
-      header: () => 'ID',
+    columnHelper.accessor('created_by', {
+      id: 'created_by',
+      header: () => t('created_by'),
       cell: (info) => info.getValue(),
     }),
     columnHelper.accessor('name', {
@@ -38,6 +38,11 @@ const useColumns = (cannedResponseData?: CannedResponse[]) => {
     columnHelper.accessor('created_at', {
       id: 'created_at',
       header: () => t('created_at'),
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor('updated_at', {
+      id: 'updated_at',
+      header: () => t('updated_at'),
       cell: (info) => info.getValue(),
     }),
     columnHelper.display({
@@ -67,13 +72,11 @@ export const CannedResponseList = (props: ICannedResponseListProps) => {
   const columns = useColumns(cannedResponseData);
 
   return (
-    <>
-      <ConfigDataGrid
-        columns={columns}
-        data={cannedResponseData!}
-        hideTableControls
-        isLoading={isLoading}
-      />
-    </>
+    <ConfigDataGrid
+      columns={columns}
+      data={cannedResponseData!}
+      hideTableControls
+      isLoading={isLoading}
+    />
   );
 };

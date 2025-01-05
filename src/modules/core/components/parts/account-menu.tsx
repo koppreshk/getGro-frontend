@@ -45,7 +45,7 @@ export const AccountMenu = () => {
           sx={{
             width: 32,
             height: 32,
-            fontSize: '1rem',
+            fontSize: '14px',
             background: pallete.primaryPurple,
           }}
         >
