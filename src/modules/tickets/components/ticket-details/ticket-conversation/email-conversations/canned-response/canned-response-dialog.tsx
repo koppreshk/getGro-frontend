@@ -17,7 +17,7 @@ import {
   CannedResponse,
   useFetchAllCannedResponses,
 } from 'modules/settings/apis/canned-response';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { styled } from 'styled-components';
@@ -60,7 +60,7 @@ export const InsertCannedResponseDialog = (
 ) => {
   const { openPopup, togglePopup } = props;
   const { data, isLoading } = useFetchAllCannedResponses();
-  const [cannedResponse, setCannedResponse] = useState(data);
+  const [cannedResponse, setCannedResponse] = useState<CannedResponse[]>([]);
   const [selectedCannedResponse, setSelectedCannedResponse] =
     useState<CannedResponse | null>(null);
 
@@ -112,11 +112,18 @@ export const InsertCannedResponseDialog = (
       const filteredTemplates = data?.filter((item) =>
         item.body.toLowerCase().includes(ev.target.value.toLowerCase())
       );
-      setCannedResponse(filteredTemplates);
+      setCannedResponse(filteredTemplates || []);
     } else {
-      setCannedResponse(data);
+      setCannedResponse(data || []);
     }
   };
+
+  useEffect(() => {
+    if (data) {
+      setCannedResponse(data);
+    }
+  }, [data]);
+
   return (
     <Dialog open={openPopup} onClose={handleClose} fullWidth maxWidth="lg">
       <DialogTitle sx={{ fontSize: '16px' }}>Canned Response</DialogTitle>
@@ -149,18 +156,21 @@ export const InsertCannedResponseDialog = (
               }}
               sx={{ marginBottom: '10px' }}
             />
-            {isLoading && <Typography>Loading...</Typography>}
             <StyledItemsContent flexDirection="column" gap="5px">
-              {cannedResponse?.map((item) => (
-                <StyledItem
-                  key={item.id}
-                  onClick={() => setSelectedCannedResponse(item)}
-                  title={item.name}
-                  isSelected={selectedCannedResponse?.id === item.id}
-                >
-                  <span title={item.name}>{item.name}</span>
-                </StyledItem>
-              ))}
+              {isLoading ? (
+                <Typography>Loading...</Typography>
+              ) : (
+                cannedResponse.map((item) => (
+                  <StyledItem
+                    key={item.id}
+                    onClick={() => setSelectedCannedResponse(item)}
+                    title={item.name}
+                    isSelected={selectedCannedResponse?.id === item.id}
+                  >
+                    <span title={item.name}>{item.name}</span>
+                  </StyledItem>
+                ))
+              )}
             </StyledItemsContent>
           </FlexBox>
           <StyledCannedResponseContent flexDirection="column" gap="20px">
