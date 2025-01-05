@@ -5,13 +5,17 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  IconButton,
   Link,
   TextField,
   Typography,
 } from '@mui/material';
 import { CheckboxField } from 'lib/form-fields';
-import { CancelButton, CenteredCircularProgress, FlexBox } from 'lib/ui-ux';
+import {
+  CancelButton,
+  CenteredCircularProgress,
+  CustomIconButton,
+  FlexBox,
+} from 'lib/ui-ux';
 import { IKnowledgeBase, useSearchArticle } from 'modules/knowledge-base/apis';
 import { ChangeEventHandler, useCallback, useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
@@ -29,6 +33,27 @@ interface ArticleFormFields {
     [key: string]: boolean;
   };
 }
+
+const ArticleContent = (props: { item: IKnowledgeBase }) => {
+  const { item } = props;
+  return (
+    <StyledCard
+      padding="12px"
+      gap={'8px'}
+      alignItems="flex-start"
+      height="fit-content"
+    >
+      <CheckboxField name={`articles.${item.id}`} sx={{ padding: 0 }} />
+      <FlexBox flexDirection="column" gap={'8px'}>
+        <Link variant="h6" href={item.url} underline="none" target="_blank">
+          {item.title}
+        </Link>
+        <Typography variant="body3">{item.added_by}</Typography>
+        <Typography variant="body3">{item.created_at}</Typography>
+      </FlexBox>
+    </StyledCard>
+  );
+};
 
 export const InsertArticle = (props: {
   editorType: string;
@@ -101,9 +126,11 @@ export const InsertArticle = (props: {
 
   return (
     <>
-      <IconButton onClick={handleClick} title={t('insert_article')}>
-        <ArticleOutlined />
-      </IconButton>
+      <CustomIconButton
+        onClick={handleClick}
+        iconComponent={<ArticleOutlined />}
+        tooltipProps={{ title: t('insert_article'), arrow: true }}
+      />
       <Dialog
         open={open}
         fullWidth
@@ -164,26 +191,5 @@ export const InsertArticle = (props: {
         </FormProvider>
       </Dialog>
     </>
-  );
-};
-
-const ArticleContent = (props: { item: IKnowledgeBase }) => {
-  const { item } = props;
-  return (
-    <StyledCard
-      padding="12px"
-      gap={'8px'}
-      alignItems="flex-start"
-      height="fit-content"
-    >
-      <CheckboxField name={`articles.${item.id}`} sx={{ padding: 0 }} />
-      <FlexBox flexDirection="column" gap={'8px'}>
-        <Link variant="h6" href={item.url} underline="none" target="_blank">
-          {item.title}
-        </Link>
-        <Typography variant="body3">{item.added_by}</Typography>
-        <Typography variant="body3">{item.created_at}</Typography>
-      </FlexBox>
-    </StyledCard>
   );
 };
