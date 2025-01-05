@@ -594,5 +594,7 @@
   "canned_response_delete_failure": "Failed to delete canned response",
   "canned_response_edit_success": "Canned response edited successfully",
   "canned_response_edit_failure": "Failed to edit canned response",
-  "no_canned_response_selected": "No canned response selected"
+  "no_canned_response_selected": "No canned response selected",
+  "google_login_success": "Successfully logged in with Google",
+  "google_login_failure": "Failed to login with Google"
 }

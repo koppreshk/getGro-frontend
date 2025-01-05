@@ -30,14 +30,23 @@ const EmailConfigContent = () => {
 
   const responseMessage = (response: any) => {
     console.log(response);
-    mutateAsync({ code: response.credential }).then((res) => {
-      if (res.status) {
+    mutateAsync({ code: response.credential })
+      .then((res) => {
+        if (res.status) {
+          showNotification({
+            message: t('google_login_success'),
+            type: 'success',
+          });
+          return;
+        }
+        showNotification({ message: res.message, type: 'error' });
+      })
+      .catch(() => {
         showNotification({
-          message: 'Successfully added google login',
-          type: 'success',
+          message: t('google_login_failure'),
+          type: 'error',
         });
-      }
-    });
+      });
   };
 
   const errorMessage = () => {
