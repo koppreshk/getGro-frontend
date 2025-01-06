@@ -63,7 +63,7 @@ const modules = {
       { indent: '-1' },
       { indent: '+1' },
     ],
-    ['link'],
+    ['link', 'image'],
     ['clean'],
   ],
 };
@@ -81,6 +81,7 @@ const formats = [
   'bullet',
   'indent',
   'link',
+  'image',
   'clean', // Clean formatting button
 ];
 
