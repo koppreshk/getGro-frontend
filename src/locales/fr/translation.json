@@ -574,6 +574,7 @@
   "update_ticket_triggers_long_description": "Configurez les déclencheurs de ticket pour automatiser une série d'actions en fonction de critères spécifiés chaque fois qu'un ticket existant est modifié.",
   "update_ticket_triggers_short_description": "Configurez des règles d'automatisation pour déclencher des actions chaque fois qu'un ticket est mis à jour.",
   "updated_at": "Mis à jour à",
+  "upload_attachments": "Télécharger des pièces jointes",
   "upload_file": "Télécharger des fichiers",
   "uploaded_files": "Fichiers téléchargés",
   "user": "Utilisateur",

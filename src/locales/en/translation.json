@@ -570,6 +570,7 @@
   "update_ticket_triggers_long_description": "Configure ticket triggers to automate a series of actions based on specified criteria whenever an existing ticket is modified.",
   "update_ticket_triggers_short_description": "Configure automation rules to trigger actions whenever a ticket is updated.",
   "updated_at": "Updated At",
+  "upload_attachments": "Upload Attachments",
   "upload_file": "Upload file(s)",
   "uploaded_files": "Uploaded Files",
   "user": "User",

@@ -574,6 +574,7 @@
   "update_ticket_triggers_long_description": "配置工单触发器，以便在修改现有工单时根据指定条件自动执行一系列操作。",
   "update_ticket_triggers_short_description": "配置自动化规则以在票证更新时触发操作。",
   "updated_at": "更新于",
+  "upload_attachments": "上传附件",
   "upload_file": "上传文件",
   "uploaded_files": "上传的文件",
   "user": "用户",

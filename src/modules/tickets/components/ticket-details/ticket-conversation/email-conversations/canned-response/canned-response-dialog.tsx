@@ -147,6 +147,7 @@ export const InsertCannedResponseDialog = (
             <TextField
               name="search"
               size="small"
+              type="search"
               onChange={onChange}
               placeholder="Search canned response"
               InputProps={{

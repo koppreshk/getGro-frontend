@@ -1,11 +1,11 @@
 import { Delete, Send } from '@mui/icons-material';
-import { Avatar, CircularProgress, IconButton } from '@mui/material';
+import { Avatar, CircularProgress } from '@mui/material';
 import {
   FileUploadField,
   RichTextEditorField,
   validateAtLeastOneChar,
 } from 'lib/form-fields';
-import { FlexBox, RoundedSendButton } from 'lib/ui-ux';
+import { CustomIconButton, FlexBox, RoundedSendButton } from 'lib/ui-ux';
 import { chooseRandomColors, getInitialsByName } from 'lib/utils';
 import React, { useMemo, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -81,9 +81,11 @@ const EmailFooterOptions = (
         <InsertCannedResponse editorType={editorType} />
         <InsertArticle editorType={editorType} editorValue={editorValue} />
       </FlexBox>
-      <IconButton onClick={onCancelClick} title={t('delete')}>
-        <Delete />
-      </IconButton>
+      <CustomIconButton
+        onClick={onCancelClick}
+        tooltipProps={{ title: t('delete'), arrow: true, placement: 'top' }}
+        iconComponent={<Delete />}
+      />
     </FlexBox>
   );
 };
