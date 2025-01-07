@@ -1,14 +1,12 @@
 import { Add, ArrowBack } from '@mui/icons-material';
 import { Button, Typography } from '@mui/material';
-import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
-import { useNotifications } from 'lib';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import {
   BreadCrumbs,
   CustomIconButton,
   FlexBox,
   MoreInformation,
 } from 'lib/ui-ux';
-import { useNylasGoogleOAuth } from 'modules/settings/apis';
 import { FetchAllEmailsContainer } from 'modules/settings/containers/channel-configurations';
 import {
   AddEmailConfigContainer,
@@ -18,43 +16,15 @@ import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
+import GoogleSignInButton from './google-sigin-button';
+
 const EmailConfigContent = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { showNotification } = useNotifications();
-  const { mutateAsync } = useNylasGoogleOAuth();
 
   const toggleAddEscalationDrawer = useCallback(() => {
     navigate('add-email');
   }, [navigate]);
-
-  const login = useGoogleLogin({
-    flow: 'auth-code', // Use Authorization Code Flow
-    onSuccess: (response) => {
-      console.log('response', response);
-      mutateAsync({ code: response.code })
-        .then((res) => {
-          if (res.status) {
-            showNotification({
-              message: t('google_login_success'),
-              type: 'success',
-            });
-            return;
-          }
-          showNotification({ message: res.message, type: 'error' });
-        })
-        .catch(() => {
-          showNotification({
-            message: t('google_login_failure'),
-            type: 'error',
-          });
-        });
-      // Send this code to your backend to exchange for tokens
-    },
-    onError: (error) => {
-      console.error('Login Failed:', error);
-    },
-  });
 
   return (
     <>
@@ -75,9 +45,7 @@ const EmailConfigContent = () => {
           <Typography variant="h5">{t('email_configurations')}</Typography>
         </FlexBox>
         <FlexBox gap={'10px'}>
-          <Button variant="contained" onClick={login} startIcon={<Add />}>
-            {'Google Login'}
-          </Button>
+          <GoogleSignInButton />
           <Button
             variant="contained"
             onClick={toggleAddEscalationDrawer}
