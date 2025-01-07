@@ -36,9 +36,9 @@ export const ErrorMessage = (props: { statusCode?: string }) => {
       case 504:
         return 'Gateway timeout. The server took too long to respond.';
       default:
-        return 'Unable to fetch this content. Please try again later.';
+        return `${statusCode}. Please try again later.`;
     }
-  }, [parsedStatusCode]);
+  }, [parsedStatusCode, statusCode]);
 
   return (
     <Suspense fallback={<span>Loading illustration...</span>}>

@@ -1,5 +1,6 @@
 import { Add, ArrowBack } from '@mui/icons-material';
 import { Button, Typography } from '@mui/material';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import {
   BreadCrumbs,
   CustomIconButton,
@@ -15,37 +16,7 @@ import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
-export default function EmailConfigLayout() {
-  const { t } = useTranslation();
-
-  return (
-    <FlexBox
-      width="100%"
-      height="100%"
-      flexDirection="column"
-      padding="20px"
-      gap={'10px'}
-    >
-      <BreadCrumbs />
-      <MoreInformation information={t('email_more_info')} />
-      <div style={{ height: 'calc(100% - 34px)' }}>
-        <Routes>
-          <Route key="base-route" path="/" element={<EmailConfigContent />} />
-          <Route
-            key="add-email-route"
-            path="/add-email"
-            element={<AddEmailConfigContainer />}
-          />
-          <Route
-            key="edit-email-route"
-            path="/edit-email"
-            element={<EditEmailConfigContainer />}
-          />
-        </Routes>
-      </div>
-    </FlexBox>
-  );
-}
+import GoogleSignInButton from './google-sigin-button';
 
 const EmailConfigContent = () => {
   const navigate = useNavigate();
@@ -73,15 +44,60 @@ const EmailConfigContent = () => {
           />
           <Typography variant="h5">{t('email_configurations')}</Typography>
         </FlexBox>
-        <Button
-          variant="contained"
-          onClick={toggleAddEscalationDrawer}
-          startIcon={<Add />}
-        >
-          {t('add_email')}
-        </Button>
+        <FlexBox gap={'10px'}>
+          <GoogleSignInButton />
+          <Button
+            variant="contained"
+            onClick={toggleAddEscalationDrawer}
+            startIcon={<Add />}
+          >
+            {t('add_email')}
+          </Button>
+        </FlexBox>
       </FlexBox>
       <FetchAllEmailsContainer />
     </>
   );
 };
+
+export default function EmailConfigLayout() {
+  const { t } = useTranslation();
+
+  return (
+    <FlexBox
+      width="100%"
+      height="100%"
+      flexDirection="column"
+      padding="20px"
+      gap={'10px'}
+    >
+      <BreadCrumbs />
+      <MoreInformation information={t('email_more_info')} />
+      <div style={{ height: 'calc(100% - 34px)' }}>
+        <Routes>
+          <Route
+            key="base-route"
+            path="/"
+            element={
+              <GoogleOAuthProvider
+                clientId={import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID}
+              >
+                <EmailConfigContent />{' '}
+              </GoogleOAuthProvider>
+            }
+          />
+          <Route
+            key="add-email-route"
+            path="/add-email"
+            element={<AddEmailConfigContainer />}
+          />
+          <Route
+            key="edit-email-route"
+            path="/edit-email"
+            element={<EditEmailConfigContainer />}
+          />
+        </Routes>
+      </div>
+    </FlexBox>
+  );
+}

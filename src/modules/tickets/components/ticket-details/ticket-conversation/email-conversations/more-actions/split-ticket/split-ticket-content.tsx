@@ -10,7 +10,7 @@ import {
   HorizontalSeparator,
   LoadingButton,
 } from 'lib/ui-ux';
-import { StyledRichTextEditor } from 'modules/settings/component/ticket-configurations/templates/add-templates-form';
+import { StyledRichTextEditor } from 'modules/settings/component/ticket-configurations/canned-response/add-canned-response-form';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { styled } from 'styled-components';

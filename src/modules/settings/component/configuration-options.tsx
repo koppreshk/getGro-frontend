@@ -18,6 +18,7 @@ import {
   ConfirmationNumber,
   PendingActions,
   Feed,
+  AddCommentOutlined,
 } from '@mui/icons-material';
 import { Typography } from '@mui/material';
 import { useFeature } from 'lib/hooks';
@@ -67,13 +68,13 @@ const useConfigurations = () => {
           hidden: !isFeatureAccessible('manage_tags'),
           description: t('tags_short_description'),
         },
-        // {
-        //     route: "templates",
-        //     label: t("templates"),
-        //     uniqueKey: "templates",
-        //     catOptionIcon: () => <AddCommentOutlined />,
-        //     description: t("templates_short_description")
-        // }
+        {
+          route: 'canned-responses',
+          label: t('canned_response'),
+          uniqueKey: 'canned_response',
+          catOptionIcon: () => <AddCommentOutlined />,
+          description: t('canned_response_short_description'),
+        },
       ],
     },
     {

@@ -1,5 +1,4 @@
 import { AttachFileOutlined } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
 import { useNotifications } from 'lib';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -7,6 +6,7 @@ import { styled } from 'styled-components';
 
 import { IFileUploadProps, IFileInfo } from './file-upload.types';
 import { getAllFilesInfo, useFileRepository } from './utils';
+import { CustomIconButton } from '../common';
 
 const DefaultFileInput = styled.input.attrs({
   type: 'file',
@@ -87,9 +87,15 @@ export const FileUpload = React.memo((props: IFileUploadProps) => {
 
   return hidden ? null : (
     <>
-      <IconButton onClick={onButtonClick} title={t('upload_file')}>
-        <AttachFileOutlined />
-      </IconButton>
+      <CustomIconButton
+        onClick={onButtonClick}
+        tooltipProps={{
+          title: t('upload_attachments'),
+          arrow: true,
+          placement: 'top',
+        }}
+        iconComponent={<AttachFileOutlined />}
+      />
       <DefaultFileInput
         id={id}
         type="file"

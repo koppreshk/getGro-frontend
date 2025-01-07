@@ -41,8 +41,8 @@ const FetchAllCreateTicketTriggersContainer = lazy(
       '../containers/ticket-automation/create-ticket-triggers/fetch-all-create-ticket-triggers-container'
     )
 );
-const TemplatesContainer = lazy(
-  () => import('../containers/templates/templates-container')
+const CannedResponseContainer = lazy(
+  () => import('../containers/canned-response/canned-response-container')
 );
 const AllEscalationsContainer = lazy(
   () =>
@@ -71,9 +71,9 @@ export default function ConfigurationsPage() {
           <Route key="configuration-home" path="/">
             <Route key="homepath" path="/" element={<Configurations />} />
             <Route
-              key="templates"
-              path="templates/*"
-              element={<TemplatesContainer />}
+              key="canned-responses"
+              path="canned-responses/*"
+              element={<CannedResponseContainer />}
             />
             <Route
               key="ticket-status"

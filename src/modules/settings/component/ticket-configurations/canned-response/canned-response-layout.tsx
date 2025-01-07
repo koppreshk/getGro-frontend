@@ -1,5 +1,6 @@
 import { AddCircleOutline, ArrowBack } from '@mui/icons-material';
 import { Button, Typography } from '@mui/material';
+import { t } from 'i18next';
 import {
   BreadCrumbs,
   CustomIconButton,
@@ -7,33 +8,33 @@ import {
   FlexBox,
   MoreInformation,
 } from 'lib/ui-ux';
-import { IGenericResponse } from 'modules/settings/apis/templates/types';
-import { CreateTemplatesContainer } from 'modules/settings/containers/templates';
+import { CannedResponse } from 'modules/settings/apis/canned-response';
+import { CreateCannedResponseContainer } from 'modules/settings/containers/canned-response';
 import React, { useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-import { TemplatesList } from './templates-list';
+import { CannedResponseList } from './canned-response-list';
 
-interface IAddNewTemplatesProps {
+interface IAddNewCannedResponseProps {
   openAddStatusDrawer: boolean;
-  statusData?: IGenericResponse[];
+  cannedResponseData?: CannedResponse[];
   toggleAddStatusDrawer: () => void;
 }
 
-const AddNewTemplates = (props: IAddNewTemplatesProps) => {
-  const { openAddStatusDrawer, statusData, toggleAddStatusDrawer } = props;
+const AddNewCannedResponse = (props: IAddNewCannedResponseProps) => {
+  const { openAddStatusDrawer, cannedResponseData, toggleAddStatusDrawer } =
+    props;
 
   return (
     <DrawerExtended
-      width="800px"
-      header="Add Templates"
+      width="500px"
+      header={t('add_canned_response')}
       anchor="right"
       open={openAddStatusDrawer}
       onRenderContent={() => (
-        <CreateTemplatesContainer
+        <CreateCannedResponseContainer
           toggleAddStatusDrawer={toggleAddStatusDrawer}
-          statusData={statusData}
+          cannedResponseData={cannedResponseData}
         />
       )}
       onClose={toggleAddStatusDrawer}
@@ -41,19 +42,18 @@ const AddNewTemplates = (props: IAddNewTemplatesProps) => {
   );
 };
 
-interface ITemplatesLayoutProps {
-  data: IGenericResponse[] | undefined;
+interface ICannedResponseLayoutProps {
+  data: CannedResponse[] | undefined;
   isLoading: boolean;
 }
 
-export const TemplatesLayout = (props: ITemplatesLayoutProps) => {
+export const CannedResponseLayout = (props: ICannedResponseLayoutProps) => {
   const [openAddStatusDrawer, setOpenAddStatusDrawer] = React.useState(false);
   const navigate = useNavigate();
 
   const toggleAddStatusDrawer = useCallback(() => {
     setOpenAddStatusDrawer((prevValue) => !prevValue);
   }, []);
-  const { t } = useTranslation();
 
   return (
     <FlexBox
@@ -64,7 +64,7 @@ export const TemplatesLayout = (props: ITemplatesLayoutProps) => {
       flexDirection="column"
     >
       <BreadCrumbs />
-      <MoreInformation information={t('templates_long_description')} />
+      <MoreInformation information={t('canned_response_long_description')} />
       <FlexBox
         width="100%"
         justifyContent="space-between"
@@ -79,22 +79,25 @@ export const TemplatesLayout = (props: ITemplatesLayoutProps) => {
             iconComponent={<ArrowBack />}
             tooltipProps={{ title: t('back') }}
           />
-          <Typography variant="h5">{t('templates')}</Typography>
+          <Typography variant="h5">{t('canned_response')}</Typography>
         </FlexBox>
         <Button
           variant="contained"
           onClick={toggleAddStatusDrawer}
           startIcon={<AddCircleOutline />}
         >
-          {t('add_templates')}
+          {t('add_canned_response')}
         </Button>
-        <AddNewTemplates
+        <AddNewCannedResponse
           openAddStatusDrawer={openAddStatusDrawer}
           toggleAddStatusDrawer={toggleAddStatusDrawer}
-          statusData={props.data}
+          cannedResponseData={props.data}
         />
       </FlexBox>
-      <TemplatesList isLoading={props.isLoading} statusData={props.data} />
+      <CannedResponseList
+        isLoading={props.isLoading}
+        cannedResponseData={props.data}
+      />
     </FlexBox>
   );
 };

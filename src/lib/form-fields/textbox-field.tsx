@@ -17,7 +17,7 @@ import {
   useFormContext,
 } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import styled, { useTheme } from 'styled-components';
+import { styled, useTheme } from 'styled-components';
 
 type ITextboxFieldProps = Omit<TextFieldProps, 'error' | 'required'> & {
   name: string;
@@ -148,6 +148,9 @@ export const TextboxFieldWithLabel = (
           sx={{ color: hasError ? '#d32f2f' : '#3b4455' }}
         >
           {label}
+          {props.rules?.required?.toString().length && (
+            <span style={{ color: '#d32f2f' }}> *</span>
+          )}
         </Typography>
       )}
       <TextboxField {...rest} />
@@ -217,7 +220,12 @@ export const PasswordFieldWithLabel = (
           linkLabel={linkLabel}
         />
       ) : (
-        <Typography variant="h6">{label}</Typography>
+        <Typography variant="h6">
+          {label}
+          {props.rules?.required?.toString().length && (
+            <span style={{ color: '#d32f2f' }}> *</span>
+          )}
+        </Typography>
       )}
       <PasswordField {...rest} />
     </FlexBox>

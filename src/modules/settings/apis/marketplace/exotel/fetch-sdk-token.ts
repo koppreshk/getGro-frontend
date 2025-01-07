@@ -11,7 +11,7 @@ export interface ISDKToken {
   access_token: string;
 }
 
-export const useFetchSDKToken = (isEnabled: boolean) => {
+export const useFetchSDKToken = (isEnabled: boolean, email?: string) => {
   const { getData } = useServiceClient();
 
   const fetchSDKToken = React.useCallback(
@@ -23,7 +23,7 @@ export const useFetchSDKToken = (isEnabled: boolean) => {
   );
 
   return useQuery<ISDKToken>({
-    queryKey: ExotelConfigurationQueryKey.FETCH_SDK_ACCESS_TOKEN,
+    queryKey: [ExotelConfigurationQueryKey.FETCH_SDK_ACCESS_TOKEN, email],
     queryFn: fetchSDKToken,
     enabled: isEnabled,
   });

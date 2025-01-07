@@ -7,10 +7,14 @@ import {
   RegisterOptions,
   useFormContext,
 } from 'react-hook-form';
-import ReactQuill, { ReactQuillProps } from 'react-quill';
+import ReactQuill, { Quill, ReactQuillProps } from 'react-quill';
 import { styled } from 'styled-components';
 
 import { StyledErrorMessage } from './select-field';
+
+var Block = Quill.import('blots/block');
+Block.tagName = 'div';
+Quill.register(Block);
 
 type IRichTextEditorFieldProps = ReactQuillProps & {
   name: string;
@@ -59,7 +63,7 @@ const modules = {
       { indent: '-1' },
       { indent: '+1' },
     ],
-    ['link'],
+    ['link', 'image'],
     ['clean'],
   ],
 };
@@ -77,6 +81,7 @@ const formats = [
   'bullet',
   'indent',
   'link',
+  'image',
   'clean', // Clean formatting button
 ];
 
