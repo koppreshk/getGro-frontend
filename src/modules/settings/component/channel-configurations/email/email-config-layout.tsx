@@ -1,6 +1,6 @@
 import { Add, ArrowBack } from '@mui/icons-material';
 import { Button, Typography } from '@mui/material';
-import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
 import { useNotifications } from 'lib';
 import {
   BreadCrumbs,
@@ -28,33 +28,36 @@ const EmailConfigContent = () => {
     navigate('add-email');
   }, [navigate]);
 
-  const responseMessage = (response: any) => {
-    console.log(response);
-    mutateAsync({ code: response.credential })
-      .then((res) => {
-        if (res.status) {
+  const login = useGoogleLogin({
+    flow: 'auth-code', // Use Authorization Code Flow
+    onSuccess: (response) => {
+      console.log('response', response);
+      mutateAsync({ code: response.code })
+        .then((res) => {
+          if (res.status) {
+            showNotification({
+              message: t('google_login_success'),
+              type: 'success',
+            });
+            return;
+          }
+          showNotification({ message: res.message, type: 'error' });
+        })
+        .catch(() => {
           showNotification({
-            message: t('google_login_success'),
-            type: 'success',
+            message: t('google_login_failure'),
+            type: 'error',
           });
-          return;
-        }
-        showNotification({ message: res.message, type: 'error' });
-      })
-      .catch(() => {
-        showNotification({
-          message: t('google_login_failure'),
-          type: 'error',
         });
-      });
-  };
-
-  const errorMessage = () => {
-    console.error('error');
-  };
+      // Send this code to your backend to exchange for tokens
+    },
+    onError: (error) => {
+      console.error('Login Failed:', error);
+    },
+  });
 
   return (
-    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID}>
+    <>
       <FlexBox
         width="100%"
         justifyContent="space-between"
@@ -72,7 +75,9 @@ const EmailConfigContent = () => {
           <Typography variant="h5">{t('email_configurations')}</Typography>
         </FlexBox>
         <FlexBox gap={'10px'}>
-          <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
+          <Button variant="contained" onClick={login} startIcon={<Add />}>
+            {'Google Login'}
+          </Button>
           <Button
             variant="contained"
             onClick={toggleAddEscalationDrawer}
@@ -83,7 +88,7 @@ const EmailConfigContent = () => {
         </FlexBox>
       </FlexBox>
       <FetchAllEmailsContainer />
-    </GoogleOAuthProvider>
+    </>
   );
 };
 
@@ -102,7 +107,17 @@ export default function EmailConfigLayout() {
       <MoreInformation information={t('email_more_info')} />
       <div style={{ height: 'calc(100% - 34px)' }}>
         <Routes>
-          <Route key="base-route" path="/" element={<EmailConfigContent />} />
+          <Route
+            key="base-route"
+            path="/"
+            element={
+              <GoogleOAuthProvider
+                clientId={import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID}
+              >
+                <EmailConfigContent />{' '}
+              </GoogleOAuthProvider>
+            }
+          />
           <Route
             key="add-email-route"
             path="/add-email"
