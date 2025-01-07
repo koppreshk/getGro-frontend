@@ -10,6 +10,18 @@ declare global {
   }
 }
 
+const scopes = {
+  send: 'https://www.googleapis.com/auth/gmail.send',
+  readOnly: 'https://www.googleapis.com/auth/gmail.readonly',
+  modify: 'https://www.googleapis.com/auth/gmail.modify',
+  compose: 'https://www.googleapis.com/auth/gmail.compose',
+  metadata: 'https://www.googleapis.com/auth/gmail.metadata',
+  email: 'https://www.googleapis.com/auth/userinfo.email',
+  profile: 'https://www.googleapis.com/auth/userinfo.profile',
+  labels: 'https://www.googleapis.com/auth/gmail.labels',
+  openid: 'openid',
+};
+
 const GoogleSignInButton = () => {
   const buttonRef = useRef(null);
   const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false);
@@ -43,8 +55,7 @@ const GoogleSignInButton = () => {
     onError: (error) => {
       console.error('Login Failed:', error);
     },
-    scope:
-      'https://www.googleapis.com/auth/gmail.send https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/gmail.compose https://www.googleapis.com/auth/gmail.metadata https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/gmail.labels openid',
+    scope: Object.values(scopes).join(' '),
   });
 
   useEffect(() => {
