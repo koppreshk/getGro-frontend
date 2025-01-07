@@ -56,6 +56,7 @@ const GoogleSignInButton = () => {
       console.error('Login Failed:', error);
     },
     scope: Object.values(scopes).join(' '),
+    redirect_uri: `${import.meta.env.VITE_SUB_DOMAIN}configurations/email`,
   });
 
   useEffect(() => {
