@@ -11,7 +11,7 @@ export const AgentPerformanceDashContainer = () => {
   }
 
   if (data) {
-    return <AgentPerformance data={data!} />;
+    return <AgentPerformance data={data} />;
   }
 
   return <ErrorMessage statusCode={error?.message} />;

@@ -47,6 +47,28 @@
   <script>
     var global = global || window
   </script>
+  <script>
+    //For vercel cache issue, we need to reload the page when we detect an error
+    var unhandledErrorDefaultHandler = function (event) {
+      console.error("UNHANDLED ERROR:", event.message, event.filename, event.lineno, event.colno);
+
+      if (event.message.includes("Unexpected token '<'") || event.message.includes("Failed to fetch")) {
+        var lastReload = sessionStorage.getItem("error_reload");
+        if (lastReload && (+lastReload + 10000) > new Date().valueOf()) {
+          console.log("Error loop detected. Skipping reload.");
+        } else {
+          sessionStorage.setItem("error_reload", new Date().valueOf());
+          alert("Application was updated and will be reloaded.");
+          window.location.reload();
+        }
+      }
+
+      return false; // Prevent default browser error handling
+    };
+
+    window.addEventListener("error", unhandledErrorDefaultHandler);
+  </script>
+
 </body>
 
 </html>
