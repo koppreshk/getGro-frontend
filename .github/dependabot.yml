@@ -13,14 +13,16 @@ updates:
     labels:
       - "dependencies"
       - "npm"
+    package-manager: "yarn"
     # Security updates configuration
     allow:
       - dependency-type: "direct"
         dependency-name: "*"
-    # Version update strategy
-    versioning-strategy:
-      increase: "patch"
-    # Ignore specific dependencies if needed
+    versioning-strategy: "increase"
     ignore:
       - dependency-name: "*"
-        update-types: ["version-update:semver-major"]  # Ignores major version updates
+        update-types: ["version-update:semver-major"]
+    # Ensure yarn.lock is updated
+    commit-message:
+      prefix: "chore"
+      include: "scope"
