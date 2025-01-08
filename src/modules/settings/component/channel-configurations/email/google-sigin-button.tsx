@@ -29,7 +29,7 @@ const GoogleSignInButton = () => {
 
   const { showNotification } = useNotifications();
   const { mutateAsync } = useNylasGoogleOAuth();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const code = searchParams.get('code');
 
   const login = useGoogleLogin({
@@ -54,6 +54,8 @@ const GoogleSignInButton = () => {
               message: t('google_login_success'),
               type: 'success',
             });
+            searchParams.delete('code');
+            setSearchParams(searchParams);
             return;
           }
           showNotification({ message: res.message, type: 'error' });
@@ -65,7 +67,7 @@ const GoogleSignInButton = () => {
           });
         });
     }
-  }, [code, mutateAsync, showNotification]);
+  }, [code, mutateAsync, searchParams, setSearchParams, showNotification]);
 
   useEffect(() => {
     // Function to check if Google script is loaded
