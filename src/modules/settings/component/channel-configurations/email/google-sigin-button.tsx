@@ -3,6 +3,7 @@ import { t } from 'i18next';
 import { useNotifications } from 'lib';
 import { useNylasGoogleOAuth } from 'modules/settings/apis';
 import { useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 declare global {
   interface Window {
@@ -28,12 +29,25 @@ const GoogleSignInButton = () => {
 
   const { showNotification } = useNotifications();
   const { mutateAsync } = useNylasGoogleOAuth();
+  const [searchParams] = useSearchParams();
+  const code = searchParams.get('code');
 
   const login = useGoogleLogin({
     flow: 'auth-code', // Use Authorization Code Flow
     onSuccess: (response) => {
       console.log('response', response);
-      mutateAsync({ code: response.code })
+    },
+    onError: (error) => {
+      console.error('Login Failed:', error);
+    },
+    scope: Object.values(scopes).join(' '),
+    redirect_uri: `${import.meta.env.VITE_SUB_DOMAIN}configurations/email`,
+    ux_mode: 'redirect',
+  });
+
+  useEffect(() => {
+    if (code) {
+      mutateAsync({ code: code })
         .then((res) => {
           if (res.status) {
             showNotification({
@@ -50,14 +64,8 @@ const GoogleSignInButton = () => {
             type: 'error',
           });
         });
-      // Send this code to your backend to exchange for tokens
-    },
-    onError: (error) => {
-      console.error('Login Failed:', error);
-    },
-    scope: Object.values(scopes).join(' '),
-    redirect_uri: `${import.meta.env.VITE_SUB_DOMAIN}configurations/email`,
-  });
+    }
+  }, [code, mutateAsync, showNotification]);
 
   useEffect(() => {
     // Function to check if Google script is loaded
