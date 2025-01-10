@@ -1,10 +1,10 @@
 import { Button, Grid, Typography } from '@mui/material';
 import {
   SelectField,
-  TagInputField,
   TextboxFieldWithLabel,
   validateAtLeastOneChar,
 } from 'lib/form-fields';
+import { TagInputField } from 'lib/form-fields/tag-input-field';
 import { FlexBox, ITagInput, LoadingButton } from 'lib/ui-ux';
 import { ITag } from 'modules/settings/apis/tags';
 import { StyledRichTextEditor } from 'modules/settings/component/ticket-configurations/canned-response/add-canned-response-form';

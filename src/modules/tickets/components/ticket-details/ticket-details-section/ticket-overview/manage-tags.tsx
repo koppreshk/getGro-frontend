@@ -1,4 +1,5 @@
-import { FlexBox, ITagInput, TagInput } from 'lib/ui-ux';
+import { FlexBox } from 'lib/ui-ux';
+import { ITagInput, TagInput } from 'lib/ui-ux/tag-input/tag-input';
 import { ITag } from 'modules/settings/apis/tags';
 import { useCallback, useEffect, useState } from 'react';
 import { Trans } from 'react-i18next';

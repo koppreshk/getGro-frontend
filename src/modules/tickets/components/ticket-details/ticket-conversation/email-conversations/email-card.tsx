@@ -1,7 +1,8 @@
 import { CallSplit } from '@mui/icons-material';
 import { Typography, Avatar } from '@mui/material';
 import { useFeature } from 'lib/hooks';
-import { FlexBox, MoreActions } from 'lib/ui-ux';
+import { FlexBox } from 'lib/ui-ux';
+import { MoreActions } from 'lib/ui-ux/common/more-actions';
 import { chooseRandomColors, getInitialsByName, getTimeAgo } from 'lib/utils';
 import { useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';

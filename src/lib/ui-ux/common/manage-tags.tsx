@@ -1,4 +1,5 @@
-import { FlexBox, ITagInput, TagInput, TypographyName } from 'lib/ui-ux';
+import { FlexBox, ITagInput, TypographyName } from 'lib/ui-ux';
+import { TagInput } from 'lib/ui-ux/tag-input/tag-input';
 import { IGenericResponse } from 'modules/settings/apis/ticket-status/types';
 import { useCallback, useEffect, useState } from 'react';
 import { Trans } from 'react-i18next';
