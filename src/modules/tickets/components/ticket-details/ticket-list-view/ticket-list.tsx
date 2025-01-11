@@ -240,8 +240,13 @@ export const TicketList = (props: ITicketListProps) => {
 
   useEffect(() => {
     if (!doesTicketIdExist) {
-      navigate(
-        `/tickets/${match?.params.ticketType}/${data[0].ticketId}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`
+      if (data[0]) {
+        return navigate(
+          `/tickets/${match?.params.ticketType}/${data[0].ticketId}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`
+        );
+      }
+      return navigate(
+        `/tickets/${match?.params.ticketType}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`
       );
     }
   }, [
