@@ -1,8 +1,8 @@
-import { useGoogleLogin } from '@react-oauth/google';
 import { t } from 'i18next';
 import { useNotifications } from 'lib';
 import { useNylasGoogleOAuth } from 'modules/settings/apis';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 declare global {
   interface Window {
@@ -10,36 +10,48 @@ declare global {
   }
 }
 
-const scopes = {
-  send: 'https://www.googleapis.com/auth/gmail.send',
-  readOnly: 'https://www.googleapis.com/auth/gmail.readonly',
-  modify: 'https://www.googleapis.com/auth/gmail.modify',
-  compose: 'https://www.googleapis.com/auth/gmail.compose',
-  metadata: 'https://www.googleapis.com/auth/gmail.metadata',
-  email: 'https://www.googleapis.com/auth/userinfo.email',
-  profile: 'https://www.googleapis.com/auth/userinfo.profile',
-  labels: 'https://www.googleapis.com/auth/gmail.labels',
-  openid: 'openid',
-};
-
 const GoogleSignInButton = () => {
+  const { showNotification } = useNotifications();
+  const { mutateAsync } = useNylasGoogleOAuth();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const code = searchParams.get('code');
   const buttonRef = useRef(null);
   const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false);
 
-  const { showNotification } = useNotifications();
-  const { mutateAsync } = useNylasGoogleOAuth();
+  const scopes = {
+    send: 'https://www.googleapis.com/auth/gmail.send',
+    readOnly: 'https://www.googleapis.com/auth/gmail.readonly',
+    modify: 'https://www.googleapis.com/auth/gmail.modify',
+    compose: 'https://www.googleapis.com/auth/gmail.compose',
+    metadata: 'https://www.googleapis.com/auth/gmail.metadata',
+    email: 'https://www.googleapis.com/auth/userinfo.email',
+    profile: 'https://www.googleapis.com/auth/userinfo.profile',
+    labels: 'https://www.googleapis.com/auth/gmail.labels',
+    openid: 'openid',
+  };
 
-  const login = useGoogleLogin({
-    flow: 'auth-code', // Use Authorization Code Flow
-    onSuccess: (response) => {
-      console.log('response', response);
-      mutateAsync({ code: response.code })
+  const clientId = import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID;
+
+  const allScopes = Object.values(scopes).join(' ');
+  const redirectUri = `${import.meta.env.VITE_SUB_DOMAIN}configurations/email`;
+
+  const url = `https://accounts.google.com/o/oauth2/auth?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${encodeURIComponent(allScopes)}&access_type=offline&prompt=consent`;
+
+  const login = useCallback(() => {
+    window.open(url, '_blank')?.focus();
+  }, [url]);
+
+  useEffect(() => {
+    if (code) {
+      mutateAsync({ code: code })
         .then((res) => {
           if (res.status) {
             showNotification({
               message: t('google_login_success'),
               type: 'success',
             });
+            searchParams.delete('code');
+            setSearchParams(searchParams);
             return;
           }
           showNotification({ message: res.message, type: 'error' });
@@ -50,13 +62,8 @@ const GoogleSignInButton = () => {
             type: 'error',
           });
         });
-      // Send this code to your backend to exchange for tokens
-    },
-    onError: (error) => {
-      console.error('Login Failed:', error);
-    },
-    scope: Object.values(scopes).join(' '),
-  });
+    }
+  }, [code, mutateAsync, searchParams, setSearchParams, showNotification]);
 
   useEffect(() => {
     // Function to check if Google script is loaded
@@ -98,7 +105,7 @@ const GoogleSignInButton = () => {
     return <div>Loading Google Sign-In...</div>;
   }
 
-  return <div>{<div ref={buttonRef}></div>}</div>; // Container for the button
+  return <div ref={buttonRef} />;
 };
 
 export default GoogleSignInButton;

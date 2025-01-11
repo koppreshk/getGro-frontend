@@ -47,6 +47,5 @@ export const useFetchEmailConversations = () => {
   return useQuery<ITicketById, { message: string }>({
     queryKey: [TicketsQueryKey.FETCH_EMAIL_CONVERSATIONS, ticketId],
     queryFn: getOrderDetailsData,
-    cacheTime: 0,
   });
 };

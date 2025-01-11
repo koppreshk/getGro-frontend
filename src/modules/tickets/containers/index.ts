@@ -8,3 +8,4 @@ export * from './add-ticket-container';
 export * from './overview';
 export * from './links';
 export * from './history';
+export * from './advance-search-container';

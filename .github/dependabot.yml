@@ -1,15 +1,23 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
-# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
-
 version: 2
 updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
-    allow:
-      - group-name: "React Dependencies"
-        dependency-type: "direct"
-
+    target-branch: "dev"
+    open-pull-requests-limit: 5
+    assignees:
+      - "koppreshk"
+    reviewers:
+      - "koppreshk"
+    labels:
+      - "dependencies"
+      - "npm"
+    versioning-strategy: "increase"
+    ignore:
+      # Ignore major updates
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+      # Ignore patch updates
+      - dependency-name: "*"
+        update-types: ["version-update:semver-patch"]

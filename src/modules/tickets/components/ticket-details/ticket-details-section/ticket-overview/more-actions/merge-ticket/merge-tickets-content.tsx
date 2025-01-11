@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material';
 import { useNotifications } from 'lib';
-import { CheckboxField, RadioGroupField } from 'lib/form-fields';
+import { CheckboxField } from 'lib/form-fields';
+import { RadioGroupField } from 'lib/form-fields/radio-group-field';
 import { useAppSelector } from 'lib/hooks';
 import { CancelButton, FlexBox, LoadingButton } from 'lib/ui-ux';
 import { ITicketDetails, useSearchTickets } from 'modules/tickets/apis';

@@ -58,7 +58,6 @@
           console.log("Error loop detected. Skipping reload.");
         } else {
           sessionStorage.setItem("error_reload", new Date().valueOf());
-          alert("Application was updated and will be reloaded.");
           window.location.reload();
         }
       }

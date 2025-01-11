@@ -1,5 +1,6 @@
 import { Button, Grid, Typography } from '@mui/material';
-import { RichTextEditorField, TextboxFieldWithLabel } from 'lib/form-fields';
+import { TextboxFieldWithLabel } from 'lib/form-fields';
+import { RichTextEditorField } from 'lib/form-fields/rich-text-editor';
 import { FlexBox, LoadingButton } from 'lib/ui-ux';
 import { IGenericResponse } from 'modules/settings/apis/canned-response/types';
 import { ICannedResponseFormFields } from 'modules/settings/containers/canned-response';

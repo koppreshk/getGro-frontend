@@ -1,6 +1,6 @@
 import { FlexBox } from 'lib/ui-ux';
 import { TicketListViewLoader } from 'lib/ui-ux/loader-components';
-import { useMatch } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import { useGetTicketsDataByKey } from '../apis';
 import { TicketsEndPoint } from '../apis/api-enums';
@@ -8,10 +8,10 @@ import { TicketViewRoutes } from '../components';
 import { TicketListView } from '../components/ticket-details/ticket-list-view';
 
 export const useGetQueryEndPoint = () => {
-  const match = useMatch('/tickets/:ticketType/:ticketId');
+  const location = useLocation();
 
   const getQueryEndPointByType = (): keyof typeof TicketsEndPoint => {
-    switch (match?.params.ticketType || '') {
+    switch (location.pathname.split('/')[2] || '') {
       case TicketViewRoutes.AllClosed:
         return 'FETCH_ALL_CLOSED_TICKETS';
       case TicketViewRoutes.AllPending:
