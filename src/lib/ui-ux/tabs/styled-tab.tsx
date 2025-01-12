@@ -1,10 +1,6 @@
-import { Tab, styled as MUIStyled } from '@mui/material';
+import { Tab, styled as MUIStyled, TabProps } from '@mui/material';
 
-interface StyledTabProps {
-  label: string;
-}
-
-export const StyledTab = MUIStyled((props: StyledTabProps) => (
+export const StyledTab = MUIStyled((props: TabProps) => (
   <Tab disableRipple {...props} />
 ))(({ theme }) => ({
   textTransform: 'none',
@@ -17,4 +13,5 @@ export const StyledTab = MUIStyled((props: StyledTabProps) => (
   '&.Mui-selected': {
     fontWeight: theme.typography.fontWeightMedium,
   },
+  minHeight: '48px !important',
 }));

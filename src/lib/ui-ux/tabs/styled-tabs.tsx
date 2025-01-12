@@ -24,4 +24,5 @@ export const StyledTabs = MUIStyled((props: StyledTabsProps) => (
     backgroundColor: '#635ee7',
   },
   background: whitebackground ? '#fff' : '#f1f1f1',
+  minHeight: '48px !important',
 }));
