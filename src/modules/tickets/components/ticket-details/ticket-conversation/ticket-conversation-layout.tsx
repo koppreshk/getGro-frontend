@@ -1,5 +1,8 @@
+import { InfoOutlined } from '@mui/icons-material';
+import { Tooltip } from '@mui/material';
 import { useAppSelector } from 'lib/hooks';
 import { CustomTabPanel, FlexBox, StyledTab, StyledTabs } from 'lib/ui-ux';
+import { ChatType } from 'modules/chats/apis';
 import {
   TelephonicConversationContainer,
   EmailConversationContainer,
@@ -18,6 +21,23 @@ export interface ITicketConversationLayoutProps {}
 const LayoutWrapper = styled(FlexBox)`
   background-color: ${({ theme: { pallete } }) => pallete.white};
 `;
+
+export const getParsedChatTypeAsString = (chatType: string): string => {
+  switch (chatType) {
+    case ChatType.InstagramComment:
+      return 'instagram post';
+    case ChatType.InstagramMessage:
+      return 'instagram message';
+    case ChatType.FacebookPageMessage:
+      return 'facebook message';
+    case ChatType.FacebookPageComment:
+      return 'facebook post';
+    case ChatType.WhatsappMessage:
+      return 'whatsapp message';
+    default:
+      return chatType.split('_').join(' ');
+  }
+};
 
 export const TicketConversationLayout = () => {
   const ticketDetailsById = useAppSelector(
@@ -61,7 +81,25 @@ export const TicketConversationLayout = () => {
         aria-label="styled tabs example"
         sx={{ minHeight: 'unset' }}
       >
-        <StyledTab label={t('conversations_label')} />
+        <StyledTab
+          label={t('conversations_label')}
+          icon={
+            ticketDetailsById?.createdFrom !== 'email' ? (
+              <Tooltip
+                title={`Conversation started through ${getParsedChatTypeAsString(ticketDetailsById?.createdFrom ?? '')}, but responses will continue as email communication.`}
+                arrow
+              >
+                <InfoOutlined
+                  fontSize="small"
+                  sx={{ width: '16px', height: '16px' }}
+                />
+              </Tooltip>
+            ) : (
+              <></>
+            )
+          }
+          iconPosition="end"
+        />
         <StyledTab label={t('links_label')} />
         <StyledTab label={t('history_label')} />
       </StyledTabs>

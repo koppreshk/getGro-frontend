@@ -74,6 +74,50 @@ type DrawerDisplayTypes = {
   [key in MoreActionsEnum]: boolean;
 };
 
+export const ChatSubHeading = (props: {
+  profileNumber: string;
+  isPostVisible: boolean;
+}) => {
+  const chatDetails = useAppSelector((state) => state.chat.chatDetails);
+  const { pallete } = useTheme();
+  const { isPostVisible = false } = props;
+  const { t } = useTranslation();
+
+  return (
+    <FlexBox flexDirection="column">
+      <Typography variant="h6">{chatDetails?.customer_name}</Typography>
+      {chatDetails?.chat_source === 'whatsapp' ? (
+        <Typography variant="body3" sx={{ color: pallete.grayNeutral }}>
+          {props.profileNumber}
+        </Typography>
+      ) : (
+        <Typography variant="body3" sx={{ color: pallete.grayNeutral }}>
+          {' '}
+          {chatDetails?.chat_type
+            ? getParsedChatType(chatDetails.chat_type)
+            : null}
+        </Typography>
+      )}
+      {chatDetails?.post_url && isPostVisible && (
+        <Link
+          href={chatDetails.post_url}
+          underline="none"
+          target="_blank"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '5px',
+            marginTop: '5px',
+          }}
+        >
+          <OpenInNew />
+          {t('view_post')}
+        </Link>
+      )}
+    </FlexBox>
+  );
+};
+
 export const ChatConversationHeader = (props: ChatConversationHeaderProps) => {
   const { profile_number } = props;
   const chatDetails = useAppSelector((state) => state.chat.chatDetails);
@@ -126,50 +170,6 @@ export const ChatConversationHeader = (props: ChatConversationHeaderProps) => {
         showDrawer={showDrawer}
         toggleDrawerDisplay={toggleDrawerDisplay}
       />
-    </FlexBox>
-  );
-};
-
-export const ChatSubHeading = (props: {
-  profileNumber: string;
-  isPostVisible: boolean;
-}) => {
-  const chatDetails = useAppSelector((state) => state.chat.chatDetails);
-  const { pallete } = useTheme();
-  const { isPostVisible = false } = props;
-  const { t } = useTranslation();
-
-  return (
-    <FlexBox flexDirection="column">
-      <Typography variant="h6">{chatDetails?.customer_name}</Typography>
-      {chatDetails?.chat_source === 'whatsapp' ? (
-        <Typography variant="body3" sx={{ color: pallete.grayNeutral }}>
-          {props.profileNumber}
-        </Typography>
-      ) : (
-        <Typography variant="body3" sx={{ color: pallete.grayNeutral }}>
-          {' '}
-          {chatDetails?.chat_type
-            ? getParsedChatType(chatDetails.chat_type)
-            : null}
-        </Typography>
-      )}
-      {chatDetails?.post_url && isPostVisible && (
-        <Link
-          href={chatDetails.post_url}
-          underline="none"
-          target="_blank"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '5px',
-            marginTop: '5px',
-          }}
-        >
-          <OpenInNew />
-          {t('view_post')}
-        </Link>
-      )}
     </FlexBox>
   );
 };
