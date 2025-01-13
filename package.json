@@ -32,7 +32,7 @@
     "apexcharts": "^3.46.0",
     "exotel-ip-calling-crm-websdk": "git+https://github.com/exotel/exotel-ip-calling-crm-websdk#v1.1.1",
     "i18next": "^23.14.0",
-    "luxon": "^3.4.4",
+    "luxon": "^3.5.0",
     "mui-color-input": "^2.0.3",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.1",
@@ -55,7 +55,7 @@
   },
   "devDependencies": {
     "@types/i18next": "^13.0.0",
-    "@types/luxon": "^3.3.7",
+    "@types/luxon": "^3.4.2",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@types/react-facebook-login": "^4.1.11",
