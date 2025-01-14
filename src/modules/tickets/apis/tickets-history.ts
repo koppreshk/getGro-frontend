@@ -20,9 +20,9 @@ export const useTicketsHistory = () => {
 
   const getTicketsHistoryData = React.useCallback(
     () =>
-      getData(`${TicketsEndPoint.TICKET_HISTORY}?ticket_id=${ticketId}`)
-        .then((res) => res.json())
-        .catch((err) => err),
+      getData(`${TicketsEndPoint.TICKET_HISTORY}?ticket_id=${ticketId}`).then(
+        (res) => res.json()
+      ),
     [getData, ticketId]
   );
 

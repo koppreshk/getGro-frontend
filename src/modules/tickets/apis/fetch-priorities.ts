@@ -14,9 +14,9 @@ export const useFetchPriorities = () => {
 
   const getOrderDetailsData = React.useCallback(
     () =>
-      getData(`${TicketsEndPoint.FETCH_PRIORITY_DROPDOWN_VALUES}`)
-        .then((res) => res.json())
-        .catch((err) => err),
+      getData(`${TicketsEndPoint.FETCH_PRIORITY_DROPDOWN_VALUES}`).then((res) =>
+        res.json()
+      ),
     [getData]
   );
   return useQuery<IPriorities[], { message: string }>({
