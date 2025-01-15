@@ -17,13 +17,13 @@ export const useLinkedTickets = () => {
 
   const getLinkedTicketsData = React.useCallback(
     () =>
-      getData(`${TicketsEndPoint.LINKED_TICKETS}?ticket_id=${ticketId}`)
-        .then((res) => res.json())
-        .catch((err) => err),
+      getData(`${TicketsEndPoint.LINKED_TICKETS}?ticket_id=${ticketId}`).then(
+        (res) => res.json()
+      ),
     [getData, ticketId]
   );
 
-  return useQuery<{ linked_tickets: LinkedTickets[] }>({
+  return useQuery<{ linked_tickets: LinkedTickets[] }, { message: string }>({
     queryKey: [TicketsQueryKey.LINKED_TICKETS, ticketId],
     queryFn: getLinkedTicketsData,
   });

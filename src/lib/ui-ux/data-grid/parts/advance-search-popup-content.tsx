@@ -12,6 +12,7 @@ import { FlexBox } from 'lib/ui-ux/flexbox/flexbox';
 import { GridLayout } from 'lib/ui-ux/grid-layout';
 import { setAdvanceFiltersState } from 'modules/tickets/storage';
 import { useFormContext } from 'react-hook-form';
+import { useSearchParams } from 'react-router-dom';
 
 import { IAdvanceSearchProps, ISearchTickets } from './advance-search';
 
@@ -26,6 +27,12 @@ export const AdvanceSearchPopupContent = (
   const { agents, channels, priorities, statuses, tags } = combinedData;
   const dispatch = useAppDispatch();
   const { reset, handleSubmit } = useFormContext<ISearchTickets>();
+
+  const [searchParams] = useSearchParams();
+  const itemsPerPage = searchParams.get('noOfRecords');
+  const getPageNumber = searchParams.get('pageNumber');
+
+  const pageNumber = getPageNumber === undefined ? '' : (getPageNumber ?? '1');
 
   const onSubmit = (formData: ISearchTickets) => {
     const createdDate = formData.createdDate
@@ -54,6 +61,14 @@ export const AdvanceSearchPopupContent = (
         },
         {} as Record<string, string>
       );
+
+      // Add itemsPerPage and pageNumber to finalArgs
+      if (itemsPerPage) {
+        finalArgs.items_per_page = itemsPerPage;
+      }
+      if (pageNumber) {
+        finalArgs.page = pageNumber;
+      }
       fetchAllTicketsWithSearchQuery(finalArgs);
       dispatch(setAdvanceFiltersState(true));
       handleClose();

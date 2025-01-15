@@ -27,9 +27,7 @@ export const useFetchCallsByTicketId = () => {
     () =>
       getData(
         `${TicketsEndPoint.FETCH_CALLS_BY_TICKETID}?ticket_id=${ticketId}`
-      )
-        .then((res) => res.json())
-        .catch((err) => err),
+      ).then((res) => res.json()),
     [getData, ticketId]
   );
   return useQuery<ICallsByTicketId>({

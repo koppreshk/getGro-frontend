@@ -18,11 +18,8 @@ interface IManagePriorityProps {
 export const ManagePriority = (props: IManagePriorityProps) => {
   const { priority, allPriorities, onChangePriority } = props;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selectedIndex, setSelectedIndex] = useState(
-    allPriorities.findIndex(
-      (item) => item.name.toLocaleLowerCase() === priority.toLocaleLowerCase()
-    ) || 0
-  );
+
+  const getselectedId = allPriorities.find((p) => p.name === priority)?.id;
 
   const open = Boolean(anchorEl);
 
@@ -32,11 +29,10 @@ export const ManagePriority = (props: IManagePriorityProps) => {
 
   const handleMenuItemClick = (
     _event: React.MouseEvent<HTMLElement>,
-    index: number
+    id: number
   ) => {
-    setSelectedIndex(index);
     setAnchorEl(null);
-    onChangePriority(allPriorities[index].id);
+    onChangePriority(id);
   };
 
   const handleClose = () => {
@@ -93,11 +89,11 @@ export const ManagePriority = (props: IManagePriorityProps) => {
           },
         }}
       >
-        {allPriorities.map((option, index) => (
+        {allPriorities.map((option) => (
           <MenuItem
             key={option.id}
-            selected={index === selectedIndex}
-            onClick={(event) => handleMenuItemClick(event, index)}
+            selected={option.id === getselectedId}
+            onClick={(event) => handleMenuItemClick(event, option.id)}
           >
             {option.name}
           </MenuItem>

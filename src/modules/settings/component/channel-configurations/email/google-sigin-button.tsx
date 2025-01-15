@@ -23,7 +23,6 @@ const GoogleSignInButton = () => {
     readOnly: 'https://www.googleapis.com/auth/gmail.readonly',
     modify: 'https://www.googleapis.com/auth/gmail.modify',
     compose: 'https://www.googleapis.com/auth/gmail.compose',
-    metadata: 'https://www.googleapis.com/auth/gmail.metadata',
     email: 'https://www.googleapis.com/auth/userinfo.email',
     profile: 'https://www.googleapis.com/auth/userinfo.profile',
     labels: 'https://www.googleapis.com/auth/gmail.labels',
