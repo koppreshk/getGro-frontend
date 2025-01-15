@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 
 import {
   ConfigurationsEmailEndPoint,
@@ -15,6 +15,7 @@ export interface INylasOAuthArgs {
 
 export const useNylasOAuth = () => {
   const { postData } = useServiceClient();
+  const queryClient = useQueryClient();
 
   const nylasOAuth = React.useCallback(
     (args: INylasOAuthArgs) =>
@@ -29,5 +30,10 @@ export const useNylasOAuth = () => {
   return useMutation({
     mutationKey: ConfigurationsEmailQueryKey.NYLAS_OAUTH,
     mutationFn: nylasOAuth,
+    onSuccess: () => {
+      queryClient.invalidateQueries(
+        ConfigurationsEmailQueryKey.FETCH_ALL_EMAILS
+      );
+    },
   });
 };
