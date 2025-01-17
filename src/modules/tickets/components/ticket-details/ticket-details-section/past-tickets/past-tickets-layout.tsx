@@ -71,6 +71,7 @@ const PastTickets = (props: IPastTicketsLayoutProps) => {
       <LayoutContainer
         padding="8px"
         flexDirection="column"
+        overflowY="auto"
         height="calc(100% - 72px)"
       >
         {sortedPastTickets.length ? (
