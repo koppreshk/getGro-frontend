@@ -1,5 +1,5 @@
-import { Add, ArrowBack } from '@mui/icons-material';
-import { Button, Typography } from '@mui/material';
+import { ArrowBack } from '@mui/icons-material';
+import { Typography } from '@mui/material';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import {
   BreadCrumbs,
@@ -12,7 +12,6 @@ import {
   AddEmailConfigContainer,
   EditEmailConfigContainer,
 } from 'modules/settings/containers/channel-configurations/email';
-import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
@@ -22,9 +21,9 @@ const EmailConfigContent = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const toggleAddEscalationDrawer = useCallback(() => {
-    navigate('add-email');
-  }, [navigate]);
+  // const toggleAddEscalationDrawer = useCallback(() => {
+  //   navigate('add-email');
+  // }, [navigate]);
 
   return (
     <>
@@ -46,13 +45,13 @@ const EmailConfigContent = () => {
         </FlexBox>
         <FlexBox gap={'10px'}>
           <GoogleSignInButton />
-          <Button
+          {/* <Button
             variant="contained"
             onClick={toggleAddEscalationDrawer}
             startIcon={<Add />}
           >
             {t('add_email')}
-          </Button>
+          </Button> */}
         </FlexBox>
       </FlexBox>
       <FetchAllEmailsContainer />
