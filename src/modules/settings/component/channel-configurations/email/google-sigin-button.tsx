@@ -1,5 +1,6 @@
 import { t } from 'i18next';
 import { useNotifications } from 'lib';
+import { PageBlockingLoader } from 'lib/ui-ux';
 import { useNylasGoogleOAuth } from 'modules/settings/apis';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -12,7 +13,7 @@ declare global {
 
 const GoogleSignInButton = () => {
   const { showNotification } = useNotifications();
-  const { mutateAsync } = useNylasGoogleOAuth();
+  const { mutateAsync, isLoading } = useNylasGoogleOAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const code = searchParams.get('code');
   const buttonRef = useRef(null);
@@ -49,7 +50,9 @@ const GoogleSignInButton = () => {
               message: t('google_login_success'),
               type: 'success',
             });
-            searchParams.delete('code');
+            searchParams.forEach((_value, key) => {
+              searchParams.delete(key);
+            });
             setSearchParams(searchParams);
             return;
           }
@@ -104,7 +107,15 @@ const GoogleSignInButton = () => {
     return <div>Loading Google Sign-In...</div>;
   }
 
-  return <div ref={buttonRef} />;
+  return (
+    <>
+      {isLoading ? (
+        <PageBlockingLoader loading={isLoading} />
+      ) : (
+        <div ref={buttonRef} />
+      )}
+    </>
+  );
 };
 
 export default GoogleSignInButton;
