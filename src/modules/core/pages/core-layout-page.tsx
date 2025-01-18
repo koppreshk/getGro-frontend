@@ -1,5 +1,5 @@
 import { useAppSelector } from 'lib/hooks';
-import { CenteredCircularProgress, ErrorMessage, FlexBox } from 'lib/ui-ux';
+import { CenteredCircularProgress, FlexBox } from 'lib/ui-ux';
 import { commonStyles } from 'lib/ui-ux/common-styles';
 import { useAuth } from 'modules/login';
 import { ProtectedRoute } from 'modules/login/protected-route';
@@ -75,7 +75,7 @@ export const CoreLayout = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const { isLoading, error } = useFetchUserConfig(user);
+  const { isLoading } = useFetchUserConfig(user);
   const config = useAppSelector((state) => state.core.config);
   const { i18n } = useTranslation();
 
@@ -95,9 +95,9 @@ export const CoreLayout = () => {
     return <CenteredCircularProgress />;
   }
 
-  if (error) {
-    return <ErrorMessage statusCode={error.message} />;
-  }
+  // if (error) {
+  //   return <ErrorMessage statusCode={error.message} />;
+  // }
 
   return (
     <Routes>
