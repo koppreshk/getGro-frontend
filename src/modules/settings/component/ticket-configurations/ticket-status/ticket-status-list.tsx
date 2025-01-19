@@ -41,7 +41,9 @@ const useColumns = (statusData: IFetchAllStatuses[]) => {
       cell: ({ row: { original } }) => {
         return (
           <FlexBox flexDirection="row" gap="5px">
-            <EditStatus statusData={statusData} selectedData={original} />
+            {original.type === 'system' ? null : (
+              <EditStatus statusData={statusData} selectedData={original} />
+            )}
           </FlexBox>
         );
       },
