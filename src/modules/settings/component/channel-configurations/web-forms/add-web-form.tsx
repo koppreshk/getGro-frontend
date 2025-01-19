@@ -171,6 +171,7 @@ export const AddWebForm = (props: AddWebFormProps) => {
             {t('preview')}
           </Typography>
           <PreviewForm
+            runOnPreviewMode
             formTitle={form.watch('formTitle')}
             formDescription={form.watch('formDescription')}
             btnBgColor={form.watch('backgroundColor')}

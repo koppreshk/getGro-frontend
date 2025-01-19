@@ -12,6 +12,7 @@ interface PreviewFormProps {
   submitBtnName?: string;
   confirmationMessage?: string;
   isSuccess?: boolean;
+  runOnPreviewMode?: boolean;
   onSubmit?: (formdata: IPreviewFormFields) => Promise<any>;
 }
 
@@ -33,6 +34,7 @@ export const PreviewForm = (props: PreviewFormProps) => {
     submitBtnName,
     isSuccess,
     confirmationMessage,
+    runOnPreviewMode,
     onSubmit,
   } = props;
 
@@ -64,12 +66,16 @@ export const PreviewForm = (props: PreviewFormProps) => {
               <TextboxFieldWithLabel
                 name="Name"
                 label={'Name'}
-                rules={{ required: 'Name is required' }}
+                rules={{
+                  required: runOnPreviewMode ? undefined : 'Name is required',
+                }}
               />
               <TextboxFieldWithLabel
                 name="Email"
                 label={'Email'}
-                rules={{ required: 'Email is required' }}
+                rules={{
+                  required: runOnPreviewMode ? undefined : 'Email is required',
+                }}
               />
               <TextboxFieldWithLabel
                 name="PhoneNumber"
@@ -78,7 +84,11 @@ export const PreviewForm = (props: PreviewFormProps) => {
               <TextboxFieldWithLabel
                 name="Subject"
                 label={'Subject'}
-                rules={{ required: 'Subject is required' }}
+                rules={{
+                  required: runOnPreviewMode
+                    ? undefined
+                    : 'Subject is required',
+                }}
               />
               <TextboxFieldWithLabel name="Help" label={'How can we help?'} />
               <Typography variant="body3">{footerMessage}</Typography>
