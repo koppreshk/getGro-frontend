@@ -210,6 +210,11 @@ export const PasswordFieldWithLabel = (
     linkLabel,
     ...rest
   } = props;
+  const {
+    formState: { errors },
+  } = useFormContext();
+  const hasError = get(errors, props.name) !== undefined;
+
   return (
     <FlexBox flexDirection={flexDirection} gap={gap}>
       {helperText || link ? (
@@ -220,7 +225,10 @@ export const PasswordFieldWithLabel = (
           linkLabel={linkLabel}
         />
       ) : (
-        <Typography variant="h6">
+        <Typography
+          variant="h6"
+          sx={{ color: hasError ? '#d32f2f' : '#3b4455' }}
+        >
           {label}
           {props.rules?.required?.toString().length && (
             <span style={{ color: '#d32f2f' }}> *</span>
