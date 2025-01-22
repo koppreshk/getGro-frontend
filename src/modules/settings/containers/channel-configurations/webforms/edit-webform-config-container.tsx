@@ -1,3 +1,4 @@
+import { t } from 'i18next';
 import { useNotifications } from 'lib';
 import {
   IWebForms,
@@ -37,7 +38,7 @@ export const EditWebFormConfigContainer = (props: {
       .then((res) => {
         if (res) {
           showNotification({
-            message: 'edit_webform_config_success',
+            message: t('edit_webform_config_success'),
             type: 'success',
           });
           navigate(-1);
@@ -45,7 +46,7 @@ export const EditWebFormConfigContainer = (props: {
       })
       .catch(() => {
         showNotification({
-          message: 'edit_webform_config_failure',
+          message: t('edit_webform_config_failure'),
           type: 'error',
         });
       });
