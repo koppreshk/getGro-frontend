@@ -148,57 +148,57 @@ export const AddEscalationLayout = React.memo(
           critical: {
             firstResponse: {
               timePrefix: '1',
-              timeFields: '1',
+              timeFields: data.run_types[0]?.id.toString(),
             },
             nextResponse: {
               timePrefix: '1',
-              timeFields: '1',
+              timeFields: data.run_types[1]?.id.toString(),
             },
             resolution: {
               timePrefix: '1',
-              timeFields: '1',
+              timeFields: data.run_types[1]?.id.toString(),
             },
           },
           high: {
             firstResponse: {
               timePrefix: '1',
-              timeFields: '1',
+              timeFields: data.run_types[0]?.id.toString(),
             },
             nextResponse: {
               timePrefix: '1',
-              timeFields: '1',
+              timeFields: data.run_types[1]?.id.toString(),
             },
             resolution: {
               timePrefix: '1',
-              timeFields: '1',
+              timeFields: data.run_types[1]?.id.toString(),
             },
           },
           normal: {
             firstResponse: {
               timePrefix: '1',
-              timeFields: '1',
+              timeFields: data.run_types[0]?.id.toString(),
             },
             nextResponse: {
               timePrefix: '1',
-              timeFields: '1',
+              timeFields: data.run_types[1]?.id.toString(),
             },
             resolution: {
               timePrefix: '1',
-              timeFields: '1',
+              timeFields: data.run_types[1]?.id.toString(),
             },
           },
           low: {
             firstResponse: {
               timePrefix: '1',
-              timeFields: '1',
+              timeFields: data.run_types[0]?.id.toString(),
             },
             nextResponse: {
               timePrefix: '1',
-              timeFields: '1',
+              timeFields: data.run_types[1]?.id.toString(),
             },
             resolution: {
               timePrefix: '1',
-              timeFields: '1',
+              timeFields: data.run_types[1]?.id.toString(),
             },
           },
         },

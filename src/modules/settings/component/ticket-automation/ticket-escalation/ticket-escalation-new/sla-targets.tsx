@@ -25,6 +25,33 @@ interface ISLATargetsProps {
   slaTargetPriorities: IPriority[];
 }
 
+interface ITimeInputsProps {
+  timePrefixName: string;
+  timeFieldsName: string;
+  timeFieldOptions: IKeyValue[];
+}
+
+const TimeInputs = (props: ITimeInputsProps) => {
+  const { timeFieldsName, timePrefixName, timeFieldOptions } = props;
+  return (
+    <FlexBox>
+      <TextboxField
+        name={timePrefixName}
+        type="number"
+        sx={{ width: '70px' }}
+        size="small"
+        rules={{ min: 1 }}
+      />
+      <SelectField
+        name={timeFieldsName}
+        sx={{ width: '150px' }}
+        size="small"
+        menuOptions={timeFieldOptions}
+      />
+    </FlexBox>
+  );
+};
+
 export const SLATargets = (props: ISLATargetsProps) => {
   const { timeOptions, slaTargetPriorities } = props;
   const priorities = slaTargetPriorities.map((data) => ({
@@ -41,7 +68,9 @@ export const SLATargets = (props: ISLATargetsProps) => {
     <FlexBox flexDirection="column" gap="20px">
       {priorities.map((item) => (
         <Container width="100%" flexDirection="column" key={item.key}>
-          <PriorityLabel width="100%">{item.value}</PriorityLabel>
+          <PriorityLabel width="100%">
+            {item.value} {t('priority')}
+          </PriorityLabel>
           <FlexBox padding="0 20px" gap={'10px'}>
             <FlexBox padding="20px" flexDirection="column" gap="10px">
               <Typography variant="body3">
@@ -74,33 +103,6 @@ export const SLATargets = (props: ISLATargetsProps) => {
           </FlexBox>
         </Container>
       ))}
-    </FlexBox>
-  );
-};
-
-interface ITimeInputsProps {
-  timePrefixName: string;
-  timeFieldsName: string;
-  timeFieldOptions: IKeyValue[];
-}
-
-const TimeInputs = (props: ITimeInputsProps) => {
-  const { timeFieldsName, timePrefixName, timeFieldOptions } = props;
-  return (
-    <FlexBox>
-      <TextboxField
-        name={timePrefixName}
-        type="number"
-        sx={{ width: '70px' }}
-        size="small"
-        rules={{ min: 1 }}
-      />
-      <SelectField
-        name={timeFieldsName}
-        sx={{ width: '150px' }}
-        size="small"
-        menuOptions={timeFieldOptions}
-      />
     </FlexBox>
   );
 };
