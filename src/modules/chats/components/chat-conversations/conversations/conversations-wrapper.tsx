@@ -82,7 +82,7 @@ export const ConversationsWrapper = (props: WhatsAppConversationsProps) => {
           created_at: DateTime.local().toFormat('yyyy-MM-dd hh:mm a'),
           caption: caption ?? '',
           direction: 'outgoing',
-          replied_by: user?.user_details.first_name ?? 'agent',
+          replied_by: user?.user_details.full_name ?? 'agent',
           message: message,
           status: 'pending',
           message_type: mediaURL ? getFileType(type!) : 'text',
@@ -101,7 +101,7 @@ export const ConversationsWrapper = (props: WhatsAppConversationsProps) => {
         mime_type: type,
       });
     },
-    [mutateAsync, conversationId, chatDetails, user?.user_details.first_name]
+    [mutateAsync, conversationId, chatDetails, user?.user_details.full_name]
   );
 
   // Group messages by date
