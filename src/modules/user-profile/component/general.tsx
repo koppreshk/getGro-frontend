@@ -85,7 +85,7 @@ export const General = () => {
   const config = useAppSelector((state) => state.core.config);
   const formMethods = useForm<IGeneralTabFormFeilds>({
     defaultValues: {
-      fullName: config?.user_details.first_name,
+      fullName: config?.user_details.full_name,
       displayName: config?.user_details.display_name,
       phoneNumber: config?.user_details.phone_number,
       defaultTicketView: config?.default_ticket_view,
@@ -150,7 +150,7 @@ export const General = () => {
               <EditUserDetails
                 label={t('full_name')}
                 formFieldName="fullName"
-                value={config?.user_details.first_name}
+                value={config?.user_details.full_name}
               />
               <EditUserDetails
                 label={t('display_name')}

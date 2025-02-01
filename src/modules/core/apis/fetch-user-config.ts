@@ -28,7 +28,7 @@ export interface IConfig {
   default_ticket_view: string;
   signature: string;
   user_details: {
-    first_name: string;
+    full_name: string;
     display_name: string;
     email: string;
     phone_number: string;
