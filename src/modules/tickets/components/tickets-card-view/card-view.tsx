@@ -248,6 +248,8 @@ export const CardView = (props: ITicketDetails) => {
   const [searchParams] = useSearchParams();
   const noOfRecords = searchParams.get('noOfRecords');
   const pageNumber = searchParams.get('pageNumber');
+  const searchText = searchParams.get('searchText');
+
   const isFeatureAccessible = useFeature<undefined>();
 
   const onRowClick = React.useCallback(() => {
@@ -256,6 +258,20 @@ export const CardView = (props: ITicketDetails) => {
       { replace: true }
     );
   }, [match?.pathname, navigate, noOfRecords, pageNumber, ticketId]);
+
+  const highlightText = (text: string, query?: string | null) => {
+    if (!query) return text;
+    const regex = new RegExp(`(${query})`, 'gi');
+    return text.split(regex).map((part, index) =>
+      regex.test(part) ? (
+        <span key={index} style={{ backgroundColor: 'yellow' }}>
+          {part}
+        </span>
+      ) : (
+        part
+      )
+    );
+  };
 
   return (
     <StyledCard
@@ -272,7 +288,7 @@ export const CardView = (props: ITicketDetails) => {
           <FlexBox flexDirection="column" width="calc(100% - 70px)">
             <Tooltip title={'Subject: ' + description} placement="bottom-start">
               <StyledEllipsisTypography variant="h5">
-                {description}
+                {highlightText(description, searchText)}
               </StyledEllipsisTypography>
             </Tooltip>
 
@@ -309,7 +325,7 @@ export const CardView = (props: ITicketDetails) => {
             alignItems="center"
           >
             <TicketInfoContent variant="body2" width={'80px'}>
-              {'#' + ticketId}
+              {highlightText('#' + ticketId, searchText)}
             </TicketInfoContent>
             <CreatedAt createdAt={createdAt} />
             <ResolutionDue resolutionDue={resolutionDue} />
