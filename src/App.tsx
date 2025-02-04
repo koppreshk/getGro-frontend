@@ -5,6 +5,7 @@ import {
   NotificationProvider,
   ServiceClientProvider,
 } from 'lib';
+// import { SocketProvider } from 'lib/providers/socket-provider';
 import { ErrorFallback } from 'lib/ui-ux';
 import { AuthProvider } from 'modules/login/auth-provider-context';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -18,8 +19,6 @@ import { CoreLayout } from './modules/core/pages/core-layout-page';
 import coreReducer from './modules/core/storage/core-slice';
 import configurationsReducer from './modules/settings/storage/configurations-slice';
 import ticketsReducer from './modules/tickets/storage/tickets-slice';
-
-// import { SocketProvider } from "lib/providers/socket";
 
 const store = configureStore({
   reducer: {

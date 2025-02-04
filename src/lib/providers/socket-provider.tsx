@@ -21,4 +21,6 @@ export const SocketProvider = React.memo(
   }
 );
 
+SocketProvider.displayName = 'SocketProvider';
+
 export const useSocket = () => useContext(SocketContext);
