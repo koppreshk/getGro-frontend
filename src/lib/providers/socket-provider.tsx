@@ -14,6 +14,7 @@ export enum SocketEventKeys {
   EMAIL_CONVERSATIONS = 'email_channel',
   CHAT_COVERSATION_LIST = 'conversation_list',
   CHAT_MESSAGE_LIST = 'message_list',
+  EMAIL_LIST = 'email_list',
 }
 
 export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
