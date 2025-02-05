@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import { Socket, io } from 'socket.io-client';
 
 export interface ISocketProps {
@@ -11,7 +11,18 @@ export const SocketContext = React.createContext<ISocketProps>(
 
 export const SocketProvider = React.memo(
   (props: { children: React.ReactNode }) => {
-    const socket = io('https://test.socket.getgro.io/');
+    const socket = useMemo(
+      () => io('https://test.socket.getgro.io/', { autoConnect: false }),
+      []
+    );
+
+    useEffect(() => {
+      socket.connect(); // Manually connect when the provider mounts
+
+      return () => {
+        socket.disconnect(); // Clean up when unmounting
+      };
+    }, [socket]);
 
     return (
       <SocketContext.Provider value={{ socket: socket }}>

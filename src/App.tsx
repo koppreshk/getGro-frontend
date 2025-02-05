@@ -5,7 +5,7 @@ import {
   NotificationProvider,
   ServiceClientProvider,
 } from 'lib';
-// import { SocketProvider } from 'lib/providers/socket-provider';
+import { SocketProvider } from 'lib/providers/socket-provider';
 import { ErrorFallback } from 'lib/ui-ux';
 import { AuthProvider } from 'modules/login/auth-provider-context';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -47,25 +47,25 @@ export default function App() {
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <MUIthemeProvider theme={defaultMUITheme}>
-        {/* <SocketProvider> */}
-        <QueryClientProvider client={queryClient}>
-          <Provider store={store}>
-            <NotificationProvider>
-              <BrowserRouter>
-                <ThemeProvider>
-                  <AuthProvider>
-                    <ServiceClientProvider>
-                      <ExotelServiceProvider>
-                        <CoreLayout />
-                      </ExotelServiceProvider>
-                    </ServiceClientProvider>
-                  </AuthProvider>
-                </ThemeProvider>
-              </BrowserRouter>
-            </NotificationProvider>
-          </Provider>
-        </QueryClientProvider>
-        {/* </SocketProvider> */}
+        <SocketProvider>
+          <QueryClientProvider client={queryClient}>
+            <Provider store={store}>
+              <NotificationProvider>
+                <BrowserRouter>
+                  <ThemeProvider>
+                    <AuthProvider>
+                      <ServiceClientProvider>
+                        <ExotelServiceProvider>
+                          <CoreLayout />
+                        </ExotelServiceProvider>
+                      </ServiceClientProvider>
+                    </AuthProvider>
+                  </ThemeProvider>
+                </BrowserRouter>
+              </NotificationProvider>
+            </Provider>
+          </QueryClientProvider>
+        </SocketProvider>
       </MUIthemeProvider>
     </ErrorBoundary>
   );
