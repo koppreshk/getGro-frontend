@@ -1,25 +1,28 @@
 import { Alert } from '@mui/material';
+import { useSocket } from 'lib/providers/socket-provider';
 import { FlexBox } from 'lib/ui-ux';
 import { ChatConversationLoader } from 'lib/ui-ux/loader-components';
+import React from 'react';
 
 import { useFetchWhatsAppMessages } from '../../../apis';
-// import { useSocket } from "lib/providers/socket";
 import { WhatsAppConversations } from '../../../components/ticket-details/ticket-conversation/whatsapp-conversations';
 
 export const WhatsAppConversationContainer = () => {
-  const { isLoading, data, isError, isRefetching } = useFetchWhatsAppMessages();
-  // const { socket } = useSocket();
+  const { isLoading, data, isError, isRefetching, refetch } =
+    useFetchWhatsAppMessages();
+  const { socket } = useSocket();
 
-  // React.useEffect(() => {
-  //     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  //     socket.on('production_whatsapp_channel', (_info) => {
-  //         //TODO: need to use this info obj which contains id and has to be consumed
-  //         refetch();
-  //     })
-  //     return () => {
-  //         socket.off('production_whatsapp_channel')
-  //     }
-  // }, [refetch, socket])
+  React.useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    socket.on('test_whatsapp_channel', (_info: any) => {
+      //TODO: need to use this info obj which contains id and has to be consumed
+      console.log(_info);
+      refetch();
+    });
+    return () => {
+      socket.off('test_whatsapp_channel');
+    };
+  }, [refetch, socket]);
 
   if (isLoading || isRefetching) {
     return (

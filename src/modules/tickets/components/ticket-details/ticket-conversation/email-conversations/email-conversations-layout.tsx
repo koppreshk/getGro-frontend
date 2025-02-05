@@ -1,6 +1,7 @@
 import { UnfoldMore, UnfoldLess, Print } from '@mui/icons-material';
 import { Typography } from '@mui/material';
 import { useAppSelector } from 'lib/hooks';
+import { useSocket } from 'lib/providers/socket-provider';
 import { CustomIconButton, FlexBox } from 'lib/ui-ux';
 import { toCamelCasedKeysFromUnderScores } from 'lib/utils';
 import { Conversations, ITicketById } from 'modules/tickets/apis';
@@ -12,8 +13,6 @@ import { styled } from 'styled-components';
 import { EmailConversations, IEmailFormFields } from './email-conversations';
 import './printable-content.css';
 import { EmailThreadOptions } from './email-thread-options';
-
-// import { useSocket } from "lib/providers/socket";
 
 const LayoutWrapper = styled(FlexBox)``;
 
@@ -47,7 +46,8 @@ export const EmailConversationLayout = (props: {
   casedConversation[casedConversation.length - 1].isCollapsed = false; //making the last thread open
   const signature = useAppSelector((state) => state.core.config?.signature);
 
-  // const { socket } = useSocket();
+  const { socket } = useSocket();
+
   const formContext = useForm<IEmailFormFields>({
     mode: 'onChange',
     defaultValues: {
@@ -69,19 +69,28 @@ export const EmailConversationLayout = (props: {
     if (casedConversation.length !== emailThreads.length) {
       setEmailThreads(casedConversation);
     }
-    // socket.on('production_email_channel', (_info) => {
-    //     //TODO: need to use this info obj which contains id and has to be consumed
-    //     fetchNewThreads();
-    // })
-    // return () => {
-    //     socket.off('production_email_channel')
-    // }
   }, [
     casedConversation,
     casedConversation.length,
     emailThreads.length,
     fetchNewThreads,
   ]);
+
+  useEffect(() => {
+    if (!socket) return; // Prevent running if socket is null
+
+    const handleSocketEvent = (_info: any) => {
+      //TODO: need to use this info obj which contains id and has to be consumed
+      console.log('test_email_channel', _info);
+      fetchNewThreads();
+    };
+
+    socket.on('test_email_channel', handleSocketEvent);
+
+    return () => {
+      socket.off('test_email_channel', handleSocketEvent);
+    };
+  }, [fetchNewThreads, socket]);
 
   const onPrintHandler = () => {
     window.print();
