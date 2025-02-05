@@ -1,7 +1,7 @@
 import { UnfoldMore, UnfoldLess, Print } from '@mui/icons-material';
 import { Typography } from '@mui/material';
 import { useAppSelector } from 'lib/hooks';
-import { useSocket } from 'lib/providers/socket-provider';
+import { SocketEventKeys, useSocket } from 'lib/providers/socket-provider';
 import { CustomIconButton, FlexBox } from 'lib/ui-ux';
 import { toCamelCasedKeysFromUnderScores } from 'lib/utils';
 import { Conversations, ITicketById } from 'modules/tickets/apis';
@@ -46,7 +46,7 @@ export const EmailConversationLayout = (props: {
   casedConversation[casedConversation.length - 1].isCollapsed = false; //making the last thread open
   const signature = useAppSelector((state) => state.core.config?.signature);
 
-  const { socket } = useSocket();
+  const { socket, getEventName } = useSocket();
 
   const formContext = useForm<IEmailFormFields>({
     mode: 'onChange',
@@ -84,13 +84,14 @@ export const EmailConversationLayout = (props: {
       console.log('test_email_channel', _info);
       fetchNewThreads();
     };
+    const eventName = getEventName(SocketEventKeys.EMAIL_CONVERSATIONS);
 
-    socket.on('test_email_channel', handleSocketEvent);
+    socket.on(eventName, handleSocketEvent);
 
     return () => {
-      socket.off('test_email_channel', handleSocketEvent);
+      socket.off(eventName, handleSocketEvent);
     };
-  }, [fetchNewThreads, socket]);
+  }, [fetchNewThreads, getEventName, socket]);
 
   const onPrintHandler = () => {
     window.print();

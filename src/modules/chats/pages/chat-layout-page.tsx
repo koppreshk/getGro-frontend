@@ -1,12 +1,14 @@
+import { SocketEventKeys, useSocket } from 'lib/providers/socket-provider';
 import {
   CenteredCircularProgress,
   ErrorMessage,
   FlexBox,
   NoDataIllustration,
 } from 'lib/ui-ux';
+import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 
-import { useFetchAllConversations } from '../apis';
+import { AllChatConversations, useFetchAllConversations } from '../apis';
 import { ChatList } from '../components';
 import {
   ChatConversationsContainer,
@@ -24,18 +26,44 @@ const StyledLayouts = styled(FlexBox)`
 
 export default function ChatLayoutPage() {
   const { data, isLoading, error, isFetching } = useFetchAllConversations();
+  const { socket, getEventName } = useSocket();
+  const [conversationList, setConversationList] =
+    useState<AllChatConversations | null>(null);
+
+  // Update state when API data is initially loaded
+  useEffect(() => {
+    if (data) {
+      setConversationList(data);
+    }
+  }, [data]); // Only runs when `data` changes (i.e., API call success)
+
+  // Listen for real-time updates from the socket
+  useEffect(() => {
+    if (!socket) return; // Prevent running if socket is null
+
+    const handleSocketEvent = (newData: string) => {
+      setConversationList(JSON.parse(newData) as AllChatConversations); // Replace entire list with new socket data
+    };
+
+    const eventName = getEventName(SocketEventKeys.CHAT_COVERSATION_LIST);
+    socket.on(eventName, handleSocketEvent);
+
+    return () => {
+      socket.off(eventName, handleSocketEvent);
+    };
+  }, [getEventName, socket]);
 
   if (isLoading || isFetching) {
     return <CenteredCircularProgress />;
   }
 
-  if (data) {
+  if (conversationList) {
     return (
       <>
-        {data?.conversations.length ? (
+        {conversationList.conversations.length ? (
           <StyledLayoutWrapper height={'100%'} gap={'20px'}>
             <StyledLayouts width="calc(25% - 20px)">
-              <ChatList data={data} />
+              <ChatList data={conversationList} />
             </StyledLayouts>
             <StyledLayouts width="calc(50% - 20px)">
               <ChatConversationsContainer />

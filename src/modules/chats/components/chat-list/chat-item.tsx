@@ -51,8 +51,16 @@ const StyledTypography = styled(Typography)`
   }
 `;
 
+const NewMessageIndicator = styled.div`
+  width: 10px;
+  height: 10px;
+  background-color: ${(props) => props.theme.pallete.primaryPurple};
+  border-radius: 100%;
+`;
+
 export const ChatItem = (props: ChatConversation) => {
-  const { chat_source, created_at, customer_name, id, last_message } = props;
+  const { chat_source, created_at, customer_name, id, last_message, has_seen } =
+    props;
 
   const match = useMatch('/chat/:conversationId');
   const navigate = useNavigate();
@@ -133,6 +141,7 @@ export const ChatItem = (props: ChatConversation) => {
                 }}
               />
             )}
+            {has_seen ? null : <NewMessageIndicator />}
           </FlexBox>
         </FlexBox>
         {last_message?.message_type === 'attachment' ? (

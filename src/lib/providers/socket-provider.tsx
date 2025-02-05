@@ -1,37 +1,57 @@
-import React, { useContext, useEffect, useMemo } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { Socket, io } from 'socket.io-client';
 
 export interface ISocketProps {
   socket: Socket;
+  getEventName: (key: SocketEventKeys) => string;
 }
 
-export const SocketContext = React.createContext<ISocketProps>(
-  {} as ISocketProps
+export const SocketContext = React.createContext<ISocketProps | undefined>(
+  undefined
 );
 
-export const SocketProvider = React.memo(
-  (props: { children: React.ReactNode }) => {
-    const socket = useMemo(
-      () => io('https://test.socket.getgro.io/', { autoConnect: false }),
-      []
-    );
+export enum SocketEventKeys {
+  EMAIL_CONVERSATIONS = 'email_channel',
+  CHAT_COVERSATION_LIST = 'conversation_list',
+  CHAT_MESSAGE_LIST = 'message_list',
+}
 
-    useEffect(() => {
-      socket.connect(); // Manually connect when the provider mounts
+export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const socketRef = useRef<Socket | null>(null);
 
-      return () => {
-        socket.disconnect(); // Clean up when unmounting
-      };
-    }, [socket]);
-
-    return (
-      <SocketContext.Provider value={{ socket: socket }}>
-        {props.children}
-      </SocketContext.Provider>
-    );
+  if (!socketRef.current) {
+    socketRef.current = io('https://test.socket.getgro.io/', {
+      autoConnect: false,
+    });
   }
-);
 
-SocketProvider.displayName = 'SocketProvider';
+  useEffect(() => {
+    const socket = socketRef.current;
+    socket?.connect();
 
-export const useSocket = () => useContext(SocketContext);
+    return () => {
+      socket?.removeAllListeners();
+      socket?.disconnect();
+    };
+  }, []);
+
+  const getEventName = (key: SocketEventKeys) => {
+    return `${import.meta.env.VITE_SOCKET_ENV}_${key}`;
+  };
+
+  return (
+    <SocketContext.Provider value={{ socket: socketRef.current, getEventName }}>
+      {children}
+    </SocketContext.Provider>
+  );
+};
+
+export const useSocket = (): ISocketProps => {
+  const context = useContext(SocketContext);
+  if (!context) {
+    throw new Error('useSocket must be used within a SocketProvider');
+  }
+  return context;
+};
