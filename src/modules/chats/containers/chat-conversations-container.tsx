@@ -1,15 +1,44 @@
+import { SocketEventKeys, useSocket } from 'lib/providers/socket-provider';
 import { FlexBox } from 'lib/ui-ux';
 import { ChatConversationLoader } from 'lib/ui-ux/loader-components';
+import { useState, useEffect } from 'react';
 import { useMatch } from 'react-router-dom';
 
-import { useFetchConversationById } from '../apis';
+import { ChatConversationById, useFetchConversationById } from '../apis';
 import { ChatConversationsLayout } from '../components/chat-conversations';
 
 export const ChatConversationsContainer = () => {
   const match = useMatch('/chat/:conversationId');
   const id = match?.params.conversationId;
+  const { socket, getEventName } = useSocket();
 
   const { data, isLoading } = useFetchConversationById(id);
+
+  const [conversationById, setConversationById] =
+    useState<ChatConversationById | null>(null);
+
+  // Update state when API data is initially loaded
+  useEffect(() => {
+    if (data) {
+      setConversationById(data);
+    }
+  }, [data]);
+
+  // Listen for real-time updates from the socket
+  useEffect(() => {
+    if (!socket) return; // Prevent running if socket is null
+
+    const handleSocketEvent = (newData: string) => {
+      setConversationById(JSON.parse(newData) as ChatConversationById);
+    };
+
+    const eventName = getEventName(SocketEventKeys.CHAT_MESSAGE_LIST);
+    socket.on(eventName, handleSocketEvent);
+
+    return () => {
+      socket.off(eventName, handleSocketEvent);
+    };
+  }, [getEventName, socket]);
 
   if (isLoading) {
     return (
@@ -19,8 +48,10 @@ export const ChatConversationsContainer = () => {
     );
   }
 
-  if (data && id) {
-    return <ChatConversationsLayout data={data} conversationId={id} />;
+  if (conversationById && id) {
+    return (
+      <ChatConversationsLayout data={conversationById} conversationId={id} />
+    );
   }
 
   return <span>Error</span>;
