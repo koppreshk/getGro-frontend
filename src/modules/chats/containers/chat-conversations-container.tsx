@@ -29,7 +29,10 @@ export const ChatConversationsContainer = () => {
     if (!socket) return; // Prevent running if socket is null
 
     const handleSocketEvent = (newData: string) => {
-      setConversationById(JSON.parse(newData) as ChatConversationById);
+      const parsedData = JSON.parse(newData) as ChatConversationById;
+      if (parsedData.conversation_id.toString() === id) {
+        setConversationById(parsedData);
+      }
     };
 
     const eventName = getEventName(SocketEventKeys.CHAT_MESSAGE_LIST);
@@ -38,7 +41,7 @@ export const ChatConversationsContainer = () => {
     return () => {
       socket.off(eventName, handleSocketEvent);
     };
-  }, [getEventName, socket]);
+  }, [getEventName, id, socket]);
 
   if (isLoading) {
     return (

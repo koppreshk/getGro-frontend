@@ -10,6 +10,7 @@ export interface ChatConversationById {
   profile_name: string;
   profile_number: string;
   messages: Message[];
+  conversation_id: number;
 }
 
 export type MessageType = 'image' | 'text' | 'video' | 'audio' | 'document';
