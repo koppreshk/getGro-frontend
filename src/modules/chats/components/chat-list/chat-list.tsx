@@ -16,7 +16,7 @@ import { ChatItem } from './chat-item';
 import { FilterChat } from './filter-chat';
 
 const ChatListWrapper = styled(FlexBox)`
-  height: calc(100% - 54px);
+  height: calc(100% - 70px);
 `;
 
 interface ChatListProps {
@@ -108,7 +108,7 @@ export const ChatList = (props: ChatListProps) => {
           ))
         ) : (
           <FlexBox justifyContent="center" alignItems="center" height="100%">
-            No Conversations found
+            <Trans i18nKey={'no_conversations_cound'} />
           </FlexBox>
         )}
       </ChatListWrapper>

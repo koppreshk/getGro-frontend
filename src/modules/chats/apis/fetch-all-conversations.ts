@@ -33,6 +33,7 @@ export interface ChatConversation {
   status_id: number;
   tags: number[];
   post_url: string | null;
+  has_seen: boolean;
 }
 
 export interface LastMessage {
