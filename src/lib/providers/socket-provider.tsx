@@ -23,9 +23,12 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
   const socketRef = useRef<Socket | null>(null);
 
   if (!socketRef.current) {
-    socketRef.current = io('https://test.socket.getgro.io/', {
-      autoConnect: false,
-    });
+    socketRef.current = io(
+      `https://${import.meta.env.VITE_SOCKET_ENV}.socket.getgro.io/`,
+      {
+        autoConnect: false,
+      }
+    );
   }
 
   useEffect(() => {
