@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import { CustomIconButton, FlexBox } from 'lib/ui-ux';
 import { chooseRandomColors, getInitialsByName } from 'lib/utils';
+import { DateTime } from 'luxon';
 import { INotes, useEditNote } from 'modules/tickets/apis';
 import { useAddNote } from 'modules/tickets/apis/ticket-notes/add-note';
 import {
@@ -32,6 +33,12 @@ const EditorContainer = styled.div`
   }
 `;
 
+const formatDate = (dateString: string) => {
+  return DateTime.fromFormat(dateString, 'yyyy-MM-dd hh:mm a')
+    .setLocale('en')
+    .toFormat('d LLLL yyyy hh:mm a');
+};
+
 const Note = (
   props: INotes & { onEdit: (id: number, note: string) => void }
 ) => {
@@ -48,11 +55,18 @@ const Note = (
         width: '100%',
         height: 'fit-content',
         overflow: 'unset',
-        background: pallete.genericBackgroundColor,
+        background: pallete.grayVariant7,
+        boxShadow: 'none',
       }}
     >
       <CardContent>
-        <FlexBox alignItems="center" justifyContent="space-between">
+        <FlexBox gap={'5px'} flexDirection="column">
+          <Typography
+            variant="subheading2"
+            sx={{ color: pallete.grayVariant2 }}
+          >
+            {formatDate(createdAt)}
+          </Typography>
           <FlexBox gap={'5px'} alignItems="center">
             <Avatar
               sx={{
@@ -68,7 +82,6 @@ const Note = (
             </Avatar>
             <Typography variant="h6">{userName}</Typography>
           </FlexBox>
-          <Typography variant="h6">{createdAt}</Typography>
         </FlexBox>
         <Typography
           variant="body2"
