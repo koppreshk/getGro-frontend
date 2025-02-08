@@ -8,7 +8,11 @@ import {
   Typography,
 } from '@mui/material';
 import { CustomIconButton, FlexBox } from 'lib/ui-ux';
-import { chooseRandomColors, getInitialsByName } from 'lib/utils';
+import {
+  chooseRandomColors,
+  getFormattedDate,
+  getInitialsByName,
+} from 'lib/utils';
 import { DateTime } from 'luxon';
 import { INotes, useEditNote } from 'modules/tickets/apis';
 import { useAddNote } from 'modules/tickets/apis/ticket-notes/add-note';
@@ -33,12 +37,6 @@ const EditorContainer = styled.div`
   }
 `;
 
-const formatDate = (dateString: string) => {
-  return DateTime.fromFormat(dateString, 'yyyy-MM-dd hh:mm a')
-    .setLocale('en')
-    .toFormat('d LLLL yyyy hh:mm a');
-};
-
 const Note = (
   props: INotes & { onEdit: (id: number, note: string) => void }
 ) => {
@@ -49,6 +47,12 @@ const Note = (
     [userName]
   );
   const { t } = useTranslation();
+
+  const formattedDate = getFormattedDate(
+    DateTime.fromFormat(createdAt, 'yyyy-MM-dd hh:mm a').toISO() || '',
+    { dateStyle: 'long', hour12: true, timeStyle: 'short' }
+  );
+
   return (
     <Card
       sx={{
@@ -65,7 +69,7 @@ const Note = (
             variant="subheading2"
             sx={{ color: pallete.grayVariant2 }}
           >
-            {formatDate(createdAt)}
+            {formattedDate}
           </Typography>
           <FlexBox gap={'5px'} alignItems="center">
             <Avatar
