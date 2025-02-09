@@ -8,7 +8,12 @@ import {
   Typography,
 } from '@mui/material';
 import { CustomIconButton, FlexBox } from 'lib/ui-ux';
-import { chooseRandomColors, getInitialsByName } from 'lib/utils';
+import {
+  chooseRandomColors,
+  getFormattedDate,
+  getInitialsByName,
+} from 'lib/utils';
+import { DateTime } from 'luxon';
 import { INotes, useEditNote } from 'modules/tickets/apis';
 import { useAddNote } from 'modules/tickets/apis/ticket-notes/add-note';
 import {
@@ -42,17 +47,30 @@ const Note = (
     [userName]
   );
   const { t } = useTranslation();
+
+  const formattedDate = getFormattedDate(
+    DateTime.fromFormat(createdAt, 'yyyy-MM-dd hh:mm a').toISO() || '',
+    { dateStyle: 'long', hour12: true, timeStyle: 'short' }
+  );
+
   return (
     <Card
       sx={{
         width: '100%',
         height: 'fit-content',
         overflow: 'unset',
-        background: pallete.genericBackgroundColor,
+        background: pallete.grayVariant7,
+        boxShadow: 'none',
       }}
     >
       <CardContent>
-        <FlexBox alignItems="center" justifyContent="space-between">
+        <FlexBox gap={'5px'} flexDirection="column">
+          <Typography
+            variant="subheading2"
+            sx={{ color: pallete.grayVariant2 }}
+          >
+            {formattedDate}
+          </Typography>
           <FlexBox gap={'5px'} alignItems="center">
             <Avatar
               sx={{
@@ -68,7 +86,6 @@ const Note = (
             </Avatar>
             <Typography variant="h6">{userName}</Typography>
           </FlexBox>
-          <Typography variant="h6">{createdAt}</Typography>
         </FlexBox>
         <Typography
           variant="body2"
