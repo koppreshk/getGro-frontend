@@ -1,10 +1,10 @@
 import { useNotifications } from 'lib';
-import { CenteredCircularProgress } from 'lib/ui-ux';
+import { CenteredCircularProgress, ErrorMessage } from 'lib/ui-ux';
 import { useFetchExotelConfiguration } from 'modules/settings/apis/marketplace/exotel';
 import { ExotelConfiguration } from 'modules/settings/component/apps/marketplace/exotel-configuration';
 
 export const ExotelConfigurationContainer = () => {
-  const { data, isLoading, refetch } = useFetchExotelConfiguration();
+  const { data, isLoading, refetch, error } = useFetchExotelConfiguration();
   const { showNotification } = useNotifications();
 
   const updateInstallation = () => {
@@ -29,5 +29,5 @@ export const ExotelConfigurationContainer = () => {
     );
   }
 
-  return <span>Error</span>;
+  return <ErrorMessage statusCode={error?.message} />;
 };

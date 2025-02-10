@@ -1,9 +1,9 @@
-import { CenteredCircularProgress } from 'lib/ui-ux';
+import { CenteredCircularProgress, ErrorMessage } from 'lib/ui-ux';
 import { useFetchAllShopifyStores } from 'modules/settings/apis/marketplace/shopify';
 import { ShopifyConfiguration } from 'modules/settings/component/apps/marketplace/shopify';
 
 export const ShopifyConfigurationContainer = () => {
-  const { data, isLoading } = useFetchAllShopifyStores();
+  const { data, isLoading, error } = useFetchAllShopifyStores();
 
   if (isLoading) {
     return <CenteredCircularProgress />;
@@ -13,5 +13,5 @@ export const ShopifyConfigurationContainer = () => {
     return <ShopifyConfiguration data={data} />;
   }
 
-  return <span>Error</span>;
+  return <ErrorMessage statusCode={error?.message} />;
 };

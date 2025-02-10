@@ -134,7 +134,7 @@ export const ConversationsWrapper = (props: WhatsAppConversationsProps) => {
   const { t } = useTranslation();
   return (
     <ConversationContainerBackground
-      style={{ width: '100%', height: 'calc(100% - 54px)' }}
+      style={{ width: '100%', height: 'calc(100% - 72px)' }}
     >
       <FlexBox height="100%" flexDirection="column">
         <FlexBox

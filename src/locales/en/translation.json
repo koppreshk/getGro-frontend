@@ -581,6 +581,7 @@
   "value_exists_validation": "{{value}} already exists, please use a different name and save",
   "verified": "Verified",
   "via": "Via",
+  "view": "View",
   "view_or_edit_agent": "View or Edit Agent",
   "view_or_edit_queue": "View or Edit Queue",
   "view_post": "View Post",

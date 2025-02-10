@@ -1,5 +1,5 @@
 import { DateRange } from '@matharumanpreet00/react-daterange-picker';
-import { CenteredCircularProgress } from 'lib/ui-ux';
+import { CenteredCircularProgress, ErrorMessage } from 'lib/ui-ux';
 import { DateTime } from 'luxon';
 import React from 'react';
 
@@ -12,7 +12,7 @@ export const TicketMonitoringDashContainer = () => {
     endDate: new Date(),
   });
 
-  const { data, isLoading } = useFetchDashboardData(dateRange);
+  const { data, isLoading, error } = useFetchDashboardData(dateRange);
 
   if (isLoading) {
     return <CenteredCircularProgress />;
@@ -28,5 +28,5 @@ export const TicketMonitoringDashContainer = () => {
     );
   }
 
-  return <span>Error</span>;
+  return <ErrorMessage statusCode={error?.message} />;
 };

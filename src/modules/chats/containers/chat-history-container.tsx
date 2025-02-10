@@ -1,4 +1,4 @@
-import { CenteredCircularProgress, ChatHistory } from 'lib/ui-ux';
+import { CenteredCircularProgress, ChatHistory, ErrorMessage } from 'lib/ui-ux';
 import { useMatch } from 'react-router-dom';
 
 import { useFetchChatHistory } from '../apis';
@@ -7,7 +7,7 @@ export const ChatHistoryContainer = () => {
   const match = useMatch('/chat/:conversationId');
   const id = match?.params.conversationId;
 
-  const { data, isLoading } = useFetchChatHistory(id!);
+  const { data, isLoading, error } = useFetchChatHistory(id!);
 
   if (isLoading) {
     return <CenteredCircularProgress />;
@@ -17,5 +17,5 @@ export const ChatHistoryContainer = () => {
     return <ChatHistory historyData={data} useTimeAgoDate />;
   }
 
-  return <span>Error</span>;
+  return <ErrorMessage statusCode={error?.message} />;
 };

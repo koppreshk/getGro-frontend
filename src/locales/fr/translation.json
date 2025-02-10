@@ -585,6 +585,7 @@
   "value_exists_validation": "{{value}} existe déjà, veuillez utiliser un nom différent et enregistrer",
   "verified": "Vérifié",
   "via": "Via",
+  "view": "Voir",
   "view_or_edit_agent": "Afficher ou modifier un agent",
   "view_or_edit_queue": "Afficher ou modifier la file d'attente",
   "view_post": "Voir le message",

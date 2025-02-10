@@ -1,5 +1,5 @@
 import { useAppSelector } from 'lib/hooks';
-import { CenteredCircularProgress } from 'lib/ui-ux';
+import { CenteredCircularProgress, ErrorMessage } from 'lib/ui-ux';
 
 import { TicketOverview } from '../../components/ticket-details/ticket-details-section/ticket-overview/ticket-overview';
 
@@ -18,5 +18,5 @@ export const TicketOverviewContainer = () => {
     );
   }
 
-  return <span>Error</span>;
+  return <ErrorMessage />;
 };
