@@ -19,7 +19,7 @@ export const useFetchExotelConfiguration = () => {
     [getData]
   );
 
-  return useQuery<IExotelConfigDetails>({
+  return useQuery<IExotelConfigDetails, { message: string }>({
     queryFn: fetchExotelConfigurations,
     queryKey: ExotelConfigurationQueryKey.FETCH_EXOTEL_CONFIG,
   });

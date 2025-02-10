@@ -5,7 +5,6 @@ import {
   ChecklistOutlined,
   ConfirmationNumberOutlined,
   Email,
-  EmailOutlined,
   ImportExportRounded,
   Message,
   Phone,
@@ -60,7 +59,7 @@ interface IContactInfoActionsProps {
 }
 
 const ContactInfoActions = (props: IContactInfoActionsProps) => {
-  const { email, phoneNumber, toggleCallBtn } = props;
+  const { phoneNumber, toggleCallBtn } = props;
 
   const contactInfoIcons = [
     {
@@ -74,11 +73,11 @@ const ContactInfoActions = (props: IContactInfoActionsProps) => {
       renderIcon: () => <Message />,
       hidden: !!phoneNumber,
     },
-    {
-      title: 'Email',
-      renderIcon: () => <EmailOutlined />,
-      hidden: !!email,
-    },
+    // {
+    //   title: 'Email',
+    //   renderIcon: () => <EmailOutlined />,
+    //   hidden: !!email,
+    // },
   ];
 
   return (

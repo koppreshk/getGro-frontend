@@ -21,7 +21,7 @@ export const useFetchChatHistory = (conversationId: string) => {
     [conversationId, getData]
   );
 
-  return useQuery<ChatHistoryResponse[]>({
+  return useQuery<ChatHistoryResponse[], { message: string }>({
     queryKey: [ChatQueryKeys.FETCH_CHAT_HISTORY, conversationId],
     queryFn: fetchChatHistory,
   });

@@ -5,6 +5,7 @@ import {
   Select,
   Typography,
 } from '@mui/material';
+import { t } from 'i18next';
 import { FlexBox, RefreshButton } from 'lib/ui-ux';
 import { AllChatConversations } from 'modules/chats/apis';
 import { useEffect, useMemo, useState } from 'react';
@@ -77,7 +78,7 @@ export const ChatList = (props: ChatListProps) => {
       >
         <FlexBox gap={'10px'}>
           <FormControl size="small">
-            <InputLabel id="demo-select-small-label">View</InputLabel>
+            <InputLabel id="demo-select-small-label">{t('view')}</InputLabel>
             <Select
               labelId="demo-select-small-label"
               id="demo-select-small-label"

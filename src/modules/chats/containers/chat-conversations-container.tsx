@@ -1,5 +1,5 @@
 import { SocketEventKeys, useSocket } from 'lib/providers/socket-provider';
-import { FlexBox } from 'lib/ui-ux';
+import { ErrorMessage, FlexBox } from 'lib/ui-ux';
 import { ChatConversationLoader } from 'lib/ui-ux/loader-components';
 import { useState, useEffect } from 'react';
 import { useMatch } from 'react-router-dom';
@@ -12,7 +12,7 @@ export const ChatConversationsContainer = () => {
   const id = match?.params.conversationId;
   const { socket, getEventName } = useSocket();
 
-  const { data, isLoading } = useFetchConversationById(id);
+  const { data, isLoading, error } = useFetchConversationById(id);
 
   const [conversationById, setConversationById] =
     useState<ChatConversationById | null>(null);
@@ -57,5 +57,5 @@ export const ChatConversationsContainer = () => {
     );
   }
 
-  return <span>Error</span>;
+  return <ErrorMessage statusCode={error?.message} />;
 };

@@ -585,6 +585,7 @@
   "value_exists_validation": "{{value}} 已存在，请使用其他名称并保存",
   "verified": "已验证",
   "via": "通过",
+  "view": "看法",
   "view_or_edit_agent": "查看或编辑代理",
   "view_or_edit_queue": "查看或编辑队列",
   "view_post": "查看帖子",

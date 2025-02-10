@@ -40,7 +40,7 @@ export const useFetchDashboardData = (dateRange: DateRange) => {
     [getData, parsedFromDate, parsedToDate]
   );
 
-  return useQuery<IDashboardData>({
+  return useQuery<IDashboardData, { message: string }>({
     queryKey: [DashboardQueryKeys.FETCH_DASHBOARD_DATA, dateRange],
     queryFn: fetchAllDashboardData,
   });
