@@ -53,6 +53,22 @@ export default function ChatLayoutPage() {
     };
   }, [getEventName, socket]);
 
+  const onChatItemClick = (conversationId: number) => {
+    const res = conversationList?.conversations.map((conversation) => {
+      if (conversation.id === conversationId && !conversation.has_seen) {
+        conversation.has_seen = true;
+      }
+      return conversation;
+    });
+    setConversationList((prevValues) => {
+      if (!prevValues) return null;
+      return {
+        ...prevValues,
+        conversations: res || [],
+      };
+    });
+  };
+
   if (isLoading || isFetching) {
     return <CenteredCircularProgress />;
   }
@@ -63,7 +79,10 @@ export default function ChatLayoutPage() {
         {conversationList.conversations.length ? (
           <StyledLayoutWrapper height={'100%'} gap={'20px'}>
             <StyledLayouts width="calc(25% - 20px)">
-              <ChatList data={conversationList} />
+              <ChatList
+                data={conversationList}
+                onChatItemClick={onChatItemClick}
+              />
             </StyledLayouts>
             <StyledLayouts width="calc(50% - 20px)">
               <ChatConversationsContainer />
