@@ -58,9 +58,21 @@ const NewMessageIndicator = styled.div`
   border-radius: 100%;
 `;
 
-export const ChatItem = (props: ChatConversation) => {
-  const { chat_source, created_at, customer_name, id, last_message, has_seen } =
-    props;
+export const ChatItem = (
+  props: ChatConversation & {
+    onChatItemClick: (conversationId: number) => void;
+  }
+) => {
+  const {
+    chat_source,
+    created_at,
+    customer_name,
+    id,
+    last_message,
+    has_seen,
+    onChatItemClick: modifyChatItem,
+    ...rest
+  } = props;
 
   const match = useMatch('/chat/:conversationId');
   const navigate = useNavigate();
@@ -74,12 +86,34 @@ export const ChatItem = (props: ChatConversation) => {
     if (convId === id.toString() && ref.current) {
       ref.current.scrollIntoView({ behavior: 'smooth' });
 
-      dispatch(setChatDetails(props));
+      dispatch(
+        setChatDetails({
+          chat_source,
+          created_at,
+          customer_name,
+          id,
+          last_message,
+          has_seen,
+          ...rest,
+        })
+      );
     }
-  }, [convId, dispatch, id, props]);
+  }, [
+    chat_source,
+    convId,
+    created_at,
+    customer_name,
+    dispatch,
+    has_seen,
+    id,
+    last_message,
+    props,
+    rest,
+  ]);
 
   const onChatItemClick = () => {
     navigate(`${id}`);
+    modifyChatItem(id);
   };
   const isoDate = DateTime.fromFormat(created_at, 'yyyy-LL-dd hh:mm a').toISO();
   const time = DateTime.fromISO(isoDate!).toFormat('hh:mm a');

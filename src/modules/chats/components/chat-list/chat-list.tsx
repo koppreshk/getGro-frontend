@@ -22,10 +22,11 @@ const ChatListWrapper = styled(FlexBox)`
 
 interface ChatListProps {
   data: AllChatConversations;
+  onChatItemClick: (conversationId: number) => void;
 }
 
 export const ChatList = (props: ChatListProps) => {
-  const { data } = props;
+  const { data, onChatItemClick } = props;
   const navigate = useNavigate();
   const match = useMatch('/chat/:conversationId');
   const [selectedView, setSelectedView] = useState('all-conversations');
@@ -105,7 +106,11 @@ export const ChatList = (props: ChatListProps) => {
       <ChatListWrapper flexDirection="column" width="100%" overflowY="auto">
         {filteredConversations.length ? (
           filteredConversations.map((item) => (
-            <ChatItem key={item.id} {...item} />
+            <ChatItem
+              key={item.id}
+              {...item}
+              onChatItemClick={onChatItemClick}
+            />
           ))
         ) : (
           <FlexBox justifyContent="center" alignItems="center" height="100%">
