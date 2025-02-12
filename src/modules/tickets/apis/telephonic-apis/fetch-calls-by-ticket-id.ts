@@ -30,7 +30,7 @@ export const useFetchCallsByTicketId = () => {
       ).then((res) => res.json()),
     [getData, ticketId]
   );
-  return useQuery<ICallsByTicketId>({
+  return useQuery<ICallsByTicketId, { message: string }>({
     queryKey: [TicketsQueryKey.FETCH_CALLS_BY_TICKETID, ticketId],
     queryFn: getCallsData,
   });
