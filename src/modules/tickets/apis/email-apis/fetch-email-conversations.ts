@@ -25,6 +25,7 @@ export interface Conversations {
   toEmail: string;
   createdAt: string;
   htmlContent: string;
+  snippet: string;
   attachments: IAttachments[];
 }
 export interface ITicketById {

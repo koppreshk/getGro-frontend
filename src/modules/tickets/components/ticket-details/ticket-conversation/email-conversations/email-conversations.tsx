@@ -43,6 +43,11 @@ export type IEmailFormFields = {
   };
 };
 
+function strip(html: string) {
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  return doc.body.textContent || '';
+}
+
 export const EmailConversations = (props: IEmailConversationsProps) => {
   const {
     emailThreads,
@@ -69,6 +74,7 @@ export const EmailConversations = (props: IEmailConversationsProps) => {
         messageId: emailThreads[emailThreads.length - 1].messageId,
         attachments: attachments,
         threadId: threadId,
+        snippet: strip(formValues.reply.editor),
       }).then(() => toggleReplyEditorView());
     },
     [mutateAsync, emailThreads, threadId, toggleReplyEditorView]

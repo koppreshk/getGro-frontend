@@ -7,6 +7,7 @@ import { TicketsEndPoint, TicketsQueryKey } from '../api-enums';
 export interface IReplyToEmailArgs {
   messageId: string;
   htmlContent: string;
+  snippet: string;
   threadId: string;
   attachments?: {
     file_name: string;
@@ -27,6 +28,7 @@ export const useReplyToEmail = () => {
         message_id: args.messageId,
         attachments: args.attachments,
         thread_id: args.threadId,
+        snippet: args.snippet,
       })
         .then((res) => res.json())
         .then(() =>

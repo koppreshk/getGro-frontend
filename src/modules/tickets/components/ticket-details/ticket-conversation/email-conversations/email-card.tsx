@@ -60,11 +60,6 @@ const StyledMoreActions = styled(MoreActions)`
   }
 `;
 
-function strip(html: string) {
-  const doc = new DOMParser().parseFromString(html, 'text/html');
-  return doc.body.textContent || '';
-}
-
 enum EmailActionsEnum {
   splitTicket = 'splitTicket',
 }
@@ -121,6 +116,7 @@ export const EmailCard = (props: IEmailCardProps) => {
       toEmail,
       isCollapsed,
       attachments,
+      snippet,
     },
     onSingleEmailCollapseHandler,
   } = props;
@@ -184,7 +180,7 @@ export const EmailCard = (props: IEmailCardProps) => {
               </FlexBox>
               {isCollapsed ? (
                 <StripedEmailContent variant="body3">
-                  {strip(htmlContent)}
+                  {snippet}
                 </StripedEmailContent>
               ) : (
                 <FlexBox gap="4px" alignItems="center">
