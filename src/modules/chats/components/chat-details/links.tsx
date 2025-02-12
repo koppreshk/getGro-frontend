@@ -50,14 +50,18 @@ export const Links = () => {
           <FlexBox gap="15px" flexDirection="column">
             {chatDetails?.linked_tickets.map((link) => {
               return (
-                <FlexBox key={link.id} flexDirection="column" gap={'5px'}>
+                <FlexBox
+                  key={link.ticket_id}
+                  flexDirection="column"
+                  gap={'5px'}
+                >
                   <FlexBox justifyContent="space-between" alignItems="center">
                     <FlexBox gap={'10px'}>
                       <Link
-                        to={`/tickets/all_tickets/${link.id}?noOfRecords=10&pageNumber=1&searchText=${link.id}`}
+                        to={`/tickets/all_tickets/${link.ticket_id}?noOfRecords=10&pageNumber=1&searchText=${link.ticket_id}`}
                       >
                         <TicketInfoContent variant="h6">
-                          #{link.id}
+                          #{link.ticket_id}
                         </TicketInfoContent>
                       </Link>
                       <VerticalSeparator height="auto" />
@@ -67,7 +71,7 @@ export const Links = () => {
                     </FlexBox>
                     {isUnlinkFeatureAccessible ? (
                       <IconButton
-                        onClick={() => onUnlinkTicket(link.id)}
+                        onClick={() => onUnlinkTicket(link.ticket_id)}
                         title={t('unlink_ticket')}
                       >
                         <LinkOffIcon />

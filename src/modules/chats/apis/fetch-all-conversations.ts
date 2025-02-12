@@ -43,7 +43,7 @@ export interface LastMessage {
 }
 
 export interface LinkedTicket {
-  id: number;
+  ticket_id: number;
   status: string;
   description: string;
 }
