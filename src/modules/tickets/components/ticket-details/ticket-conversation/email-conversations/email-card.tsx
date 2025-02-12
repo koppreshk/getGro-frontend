@@ -114,6 +114,7 @@ export const EmailCard = (props: IEmailCardProps) => {
       messageId,
       subject,
       toEmail,
+      to,
       isCollapsed,
       attachments,
       snippet,
@@ -185,7 +186,7 @@ export const EmailCard = (props: IEmailCardProps) => {
               ) : (
                 <FlexBox gap="4px" alignItems="center">
                   <SubTextValue fontSize="12px">
-                    <Trans i18nKey={'to'} /> {toEmail?.split('@')[0]}{' '}
+                    <Trans i18nKey={'to'} /> {to}{' '}
                     <span className="print">{`<${toEmail}>`}</span>
                   </SubTextValue>
                   <EmailPopoverMetadata
