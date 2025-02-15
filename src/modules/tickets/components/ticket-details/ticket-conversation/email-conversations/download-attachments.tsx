@@ -64,7 +64,7 @@ export const DownloadAttachments = (
         <AttachmentPreviewContainer
           gap="8px"
           alignItems="center"
-          key={attachment.id}
+          key={attachment.attachmentId}
         >
           <FileType alignItems="center" justifyContent="center">
             <Typography variant="caption" sx={{ color: 'inherit' }}>
@@ -76,7 +76,7 @@ export const DownloadAttachments = (
           </FileType>
           <Typography
             variant="body3"
-            title={attachment.filename}
+            title={attachment.fileName}
             sx={{
               maxWidth: '120px',
               textOverflow: 'ellipsis',
@@ -84,17 +84,15 @@ export const DownloadAttachments = (
               overflow: 'hidden',
             }}
           >
-            {attachment.filename}
+            {attachment.fileName}
           </Typography>
           <FlexBox alignItems="center">
-            <PreviewFileContainer
-              id={attachment.id}
-              contentType={attachment.contentType}
-              messageId={messageId}
-            />
+            <PreviewFileContainer fileUrl={attachment.fileUrl} />
             <DownloadAttachmentsContainer
-              id={attachment.id}
+              attachmentId={attachment.attachmentId}
               messageId={messageId}
+              fileUrl={attachment.fileUrl}
+              fileName={attachment.fileName}
             />
           </FlexBox>
         </AttachmentPreviewContainer>

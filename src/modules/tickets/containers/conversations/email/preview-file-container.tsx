@@ -1,60 +1,16 @@
 import { Close, Panorama } from '@mui/icons-material';
-import { CircularProgress, Dialog, IconButton } from '@mui/material';
+import { Dialog, IconButton } from '@mui/material';
 import { CustomIconButton } from 'lib/ui-ux';
-import { toCamelCasedKeysFromUnderScores } from 'lib/utils';
 import { useState } from 'react';
 
-import {
-  Conversations,
-  IAttachments,
-  useFetchAttachments,
-} from '../../../apis';
-
-export const PreviewFileContainer = (
-  props: Pick<IAttachments, 'id' | 'contentType'> &
-    Pick<Conversations, 'messageId'>
-) => {
-  const { id, contentType, messageId } = props;
-  const [downloadAttachments, { isLoading, data }] = useFetchAttachments(id);
-  const [showFilePreview, setFilePreviewDisplay] = useState(false);
-
-  const toggleViewer = () => setFilePreviewDisplay((prevValue) => !prevValue);
-
-  const onDownloadClick = () => {
-    toggleViewer();
-    downloadAttachments({ attachment_id: id, message_id: messageId });
-  };
-
-  if (isLoading) {
-    return <CircularProgress size={24} />;
-  }
-
-  return (
-    <>
-      {data ? (
-        <PreviewFile
-          open={showFilePreview}
-          onClose={toggleViewer}
-          content={toCamelCasedKeysFromUnderScores(data).fileContent}
-          contentType={contentType}
-        />
-      ) : null}
-      <CustomIconButton
-        onClick={onDownloadClick}
-        tooltipProps={{ title: 'Preview File' }}
-        iconComponent={<Panorama />}
-      />
-    </>
-  );
-};
+import { IAttachments } from '../../../apis';
 
 const PreviewFile = (props: {
   open: boolean;
   onClose: () => void;
-  content: string;
-  contentType: string;
+  fileUrl: string;
 }) => {
-  const { onClose, open, content, contentType } = props;
+  const { onClose, open, fileUrl } = props;
   return (
     <Dialog
       open={open}
@@ -76,12 +32,35 @@ const PreviewFile = (props: {
       >
         <Close />
       </IconButton>
-      <object
-        data={`data:${contentType.split(';')[0]};base64,${content}`}
-        style={{ height: '100%' }}
-      >
+      <object data={fileUrl} style={{ height: '100%' }}>
         <p>Alternative text</p>
       </object>
     </Dialog>
+  );
+};
+
+export const PreviewFileContainer = (props: Pick<IAttachments, 'fileUrl'>) => {
+  const { fileUrl } = props;
+  const [showFilePreview, setFilePreviewDisplay] = useState(false);
+
+  const toggleViewer = () => setFilePreviewDisplay((prevValue) => !prevValue);
+
+  const onPreviewClick = () => {
+    toggleViewer();
+  };
+
+  return (
+    <>
+      <PreviewFile
+        open={showFilePreview}
+        onClose={toggleViewer}
+        fileUrl={fileUrl}
+      />
+      <CustomIconButton
+        onClick={onPreviewClick}
+        tooltipProps={{ title: 'Preview File' }}
+        iconComponent={<Panorama />}
+      />
+    </>
   );
 };
