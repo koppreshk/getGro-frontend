@@ -29,6 +29,7 @@ export enum TicketsEndPoint {
 
   LINKED_TICKETS = 'linked_tickets',
   TICKET_HISTORY = 'history',
+  PAST_TICKETS = 'past_tickets',
 
   SPLIT_TICKET = 'split',
 
@@ -67,7 +68,7 @@ export enum TicketsQueryKey {
   LINKED_TICKETS = 'LINKED_TICKETS',
   TICKET_HISTORY = 'TICKET_HISTORY',
   DELETE_TICKET = 'DELETE_TICKET',
-
+  PAST_TICKETS = 'PAST_TICKETS',
   SPLIT_TICKET = 'SPLIT_TICKET',
 
   FETCH_ALL_ORDERS = 'FETCH_ALL_ORDERS',
