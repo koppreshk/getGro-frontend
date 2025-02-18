@@ -1,7 +1,7 @@
 import { Close, Info, Paid, ShoppingBagOutlined } from '@mui/icons-material';
 import { Chip, IconButton, Tooltip, Typography } from '@mui/material';
 import { DrawerExtended, DrawerHeaderWrapper, FlexBox } from 'lib/ui-ux';
-import { getFormatedNumberByLocale } from 'lib/utils';
+import { useFormatedNumberByLocale } from 'lib/utils';
 import { IOrders } from 'modules/tickets/apis';
 import { useState, memo } from 'react';
 import { styled } from 'styled-components';
@@ -61,6 +61,7 @@ export const TextFieldValue = styled(Typography)`
   }
 `;
 
+// eslint-disable-next-line react/display-name
 export const OrderItem = memo((props: IOrderViewProps) => {
   const { order } = props;
   const {
@@ -71,6 +72,7 @@ export const OrderItem = memo((props: IOrderViewProps) => {
     order_status_url,
   } = order;
   const [showDrawer, setDrawerDisplay] = useState(false);
+  const getFormatedNumberByLocale = useFormatedNumberByLocale();
 
   const toggleOrderDetailsDrawer = () => {
     setDrawerDisplay((preValue) => !preValue);

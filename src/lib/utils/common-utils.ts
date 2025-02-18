@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { useAppSelector } from 'lib/hooks';
 import { v4 } from 'uuid';
 
 import { memoizeFunction } from './memoize-utils';
@@ -133,9 +134,12 @@ export const chooseRandomColors = memoizeFunction(
 
 export const generateId = () => v4();
 
-export const getFormatedNumberByLocale = (
-  number: number | string,
-  locale = 'en-IN'
-) => {
-  return new Intl.NumberFormat(locale).format(Number(number));
+export const useFormatedNumberByLocale = () => {
+  const lang = useAppSelector((state) => state?.core?.config?.language);
+  const getFormatedNumberByLocale = (number: number | string) => {
+    const locale = lang === 'en' ? 'en-IN' : lang || 'en-IN';
+    return new Intl.NumberFormat(locale).format(Number(number));
+  };
+
+  return getFormatedNumberByLocale;
 };

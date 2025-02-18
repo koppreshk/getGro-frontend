@@ -3,6 +3,7 @@ import { Typography } from '@mui/material';
 import { ApexOptions } from 'apexcharts';
 import { SelectField } from 'lib/form-fields';
 import { CenteredCircularProgress, FlexBox } from 'lib/ui-ux';
+import { useFormatedNumberByLocale } from 'lib/utils';
 import {
   useFetchSupportMonitoringStatistics,
   useFetchSupportMonitoringTicketsCreated,
@@ -29,6 +30,7 @@ const QuickStats = (props: {
 }) => {
   const { name, value } = props.item;
   const { dashboard, pallete } = useTheme();
+  const getFormatedNumberByLocale = useFormatedNumberByLocale();
   return (
     <FlexBox
       flexDirection="column"
@@ -41,7 +43,7 @@ const QuickStats = (props: {
       <Typography sx={{ color: pallete.grayVariant3 }} variant="h6">
         {name}
       </Typography>
-      <Typography variant="h3">{value}</Typography>
+      <Typography variant="h3">{getFormatedNumberByLocale(value)}</Typography>
     </FlexBox>
   );
 };

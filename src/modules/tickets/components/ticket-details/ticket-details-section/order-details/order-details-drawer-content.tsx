@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import { Typography } from '@mui/material';
 import { FlexBox } from 'lib/ui-ux';
-import { getFormatedNumberByLocale, getFormattedDate } from 'lib/utils';
+import { getFormattedDate, useFormatedNumberByLocale } from 'lib/utils';
 import { IOrders } from 'modules/tickets/apis';
 
 import { TextFieldValue } from './order-item';
@@ -15,6 +16,7 @@ export const OrderDetailsDrawerContent = (props: { orderDetails: IOrders }) => {
     total_price,
     payment_gateway_names,
   } = props.orderDetails;
+  const getFormatedNumberByLocale = useFormatedNumberByLocale();
 
   return (
     <FlexBox flexDirection="column" padding="20px" gap="10px">
