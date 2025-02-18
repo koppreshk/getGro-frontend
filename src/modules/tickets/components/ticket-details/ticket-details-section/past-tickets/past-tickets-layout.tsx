@@ -2,9 +2,10 @@ import { Sort } from '@mui/icons-material';
 import { Typography } from '@mui/material';
 import { CustomIconButton, FlexBox } from 'lib/ui-ux';
 import { ITicketDetails } from 'modules/tickets/apis';
-import React, { useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
+import { FixedSizeList as List, ListChildComponentProps } from 'react-window';
 import { styled } from 'styled-components';
 
 import { CommonHeader } from '../common-header';
@@ -15,29 +16,48 @@ interface IPastTicketsLayoutProps {
 }
 
 const LayoutContainer = styled(FlexBox)`
-  .parent-container:last-child {
-    .child-container {
-      margin-bottom: 0;
-    }
-  }
+  flex: 1;
+  height: calc(100% - 72px);
+  overflow: hidden; /* Prevent parent from scrolling */
 `;
 
-const PastTickets = (props: IPastTicketsLayoutProps) => {
-  const { pastTickets } = props;
+const ListWrapper = styled.div`
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Allow list scrolling */
+`;
+
+const PastTickets = ({ pastTickets }: IPastTicketsLayoutProps) => {
   const { pathname, search } = useLocation();
-  const [isAcscending, setSortOrder] = React.useState(false);
+  const [isAcscending, setSortOrder] = useState(false);
   const { t } = useTranslation();
+  const listContainerRef = useRef<HTMLDivElement | null>(null);
+  const [listHeight, setListHeight] = useState(400); // Default height
+
+  // Update height dynamically based on parent container
+  useEffect(() => {
+    if (!listContainerRef.current) return;
+
+    const updateHeight = () => {
+      setListHeight(listContainerRef.current?.clientHeight || 400);
+    };
+
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(listContainerRef.current);
+
+    updateHeight(); // Initial height update
+
+    return () => observer.disconnect();
+  }, []);
 
   const sortedPastTickets = useMemo(
     () =>
       isAcscending
-        ? pastTickets
-            .slice()
-            .sort(
-              (a, b) =>
-                new Date(a.createdAt).valueOf() -
-                new Date(b.createdAt).valueOf()
-            )
+        ? [...pastTickets].sort(
+            (a, b) =>
+              new Date(a.createdAt).valueOf() - new Date(b.createdAt).valueOf()
+          )
         : pastTickets,
     [isAcscending, pastTickets]
   );
@@ -49,54 +69,57 @@ const PastTickets = (props: IPastTicketsLayoutProps) => {
   };
 
   const onSortOrder = () => {
-    setSortOrder((preValue) => !preValue);
+    setSortOrder((prev) => !prev);
   };
-  const renderFarPositionedItems = () => {
-    return (
-      <CustomIconButton
-        tooltipProps={{ title: 'Sort By Created Date' }}
-        iconComponent={
-          <Sort sx={{ transform: isAcscending ? 'rotate(180deg)' : 'unset' }} />
-        }
-        onClick={onSortOrder}
+
+  const renderFarPositionedItems = () => (
+    <CustomIconButton
+      tooltipProps={{ title: 'Sort By Created Date' }}
+      iconComponent={
+        <Sort sx={{ transform: isAcscending ? 'rotate(180deg)' : 'unset' }} />
+      }
+      onClick={onSortOrder}
+    />
+  );
+
+  // Render function for react-window
+  const Row = ({ index, style }: ListChildComponentProps) => (
+    <div style={style}>
+      <PastTicketCard
+        item={sortedPastTickets[index]}
+        onPastTicketClick={onPastTicketClick}
       />
-    );
-  };
+    </div>
+  );
+
   return (
     <>
       <CommonHeader
         headerName={t('past_tickets')}
         renderFarPositionedItems={renderFarPositionedItems}
       />
-      <LayoutContainer
-        padding="8px"
-        flexDirection="column"
-        overflowY="auto"
-        height="calc(100% - 72px)"
-      >
-        {sortedPastTickets.length ? (
-          sortedPastTickets.map((item, idx) => (
-            <PastTicketCard
-              key={idx}
-              item={item}
-              onPastTicketClick={onPastTicketClick}
-            />
-          ))
-        ) : (
-          <FlexBox alignItems="center" justifyContent="center" height="100%">
-            <Typography>{t('no_past_tickets_found')}</Typography>
-          </FlexBox>
-        )}
+      <LayoutContainer>
+        <ListWrapper ref={listContainerRef}>
+          {sortedPastTickets.length ? (
+            <List
+              height={listHeight} // Dynamically set height
+              itemCount={sortedPastTickets.length}
+              itemSize={87} // Adjust this based on estimated row height
+              width="100%"
+            >
+              {Row}
+            </List>
+          ) : (
+            <FlexBox alignItems="center" justifyContent="center" height="100%">
+              <Typography>{t('no_past_tickets_found')}</Typography>
+            </FlexBox>
+          )}
+        </ListWrapper>
       </LayoutContainer>
     </>
   );
 };
 
 export const PastTicketsLayout = (props: IPastTicketsLayoutProps) => {
-  const { pastTickets } = props;
-  return (
-    <>
-      <PastTickets pastTickets={pastTickets} />
-    </>
-  );
+  return <PastTickets pastTickets={props.pastTickets} />;
 };
