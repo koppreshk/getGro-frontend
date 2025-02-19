@@ -4,7 +4,10 @@ import { useAppSelector } from 'lib/hooks';
 import { FlexBox, HorizontalSeparator, StyledTab, StyledTabs } from 'lib/ui-ux';
 import { chooseRandomColors, getInitialsByName } from 'lib/utils';
 import { Status } from 'modules/core/components/parts/agent-status';
-import { useFetchCurrentStatus } from 'modules/settings/apis/users-and-permissions';
+import {
+  useEditProfile,
+  useFetchCurrentStatus,
+} from 'modules/settings/apis/users-and-permissions';
 import React, { ChangeEvent, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { styled } from 'styled-components';
@@ -45,18 +48,30 @@ const HiddenFileInput = styled.input`
   display: none;
 `;
 
-const CustomerAvatar = (props: { customerName: string }) => {
-  const { customerName } = props;
+const CustomerAvatar = (props: {
+  customerName: string;
+  profile_picture?: string;
+}) => {
+  const { customerName, profile_picture } = props;
   const { backgroundColor, textColor } = useMemo(
     () => chooseRandomColors(getInitialsByName(customerName)),
     [customerName]
   );
+  const { mutateAsync } = useEditProfile();
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      console.log('Selected file:', file);
-      // Call your API here to upload the image
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        const base64String = fileReader.result?.toString();
+        if (base64String) {
+          mutateAsync({
+            profile_picture: base64String,
+          });
+        }
+      };
     }
   };
 
@@ -78,6 +93,7 @@ const CustomerAvatar = (props: { customerName: string }) => {
             fontSize: '4rem',
             textDecoration: 'uppercase',
           }}
+          src={profile_picture}
         >
           {getInitialsByName(customerName).toLocaleUpperCase()}
         </Avatar>
@@ -107,6 +123,7 @@ const ProfileHeader = () => {
       <FlexBox gap="12px" flexDirection="column" width="100%">
         <CustomerAvatar
           customerName={config?.user_details.display_name || ''}
+          profile_picture={config?.user_details?.profile_picture}
         />
         <FlexBox flexDirection="column" padding="0 0 0 20px" gap="6px">
           <Typography variant="h5">
