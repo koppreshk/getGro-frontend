@@ -1,10 +1,11 @@
-import { Avatar, Box, Typography } from '@mui/material';
+import { Edit } from '@mui/icons-material';
+import { Avatar, Box, IconButton, Typography } from '@mui/material';
 import { useAppSelector } from 'lib/hooks';
 import { FlexBox, HorizontalSeparator, StyledTab, StyledTabs } from 'lib/ui-ux';
 import { chooseRandomColors, getInitialsByName } from 'lib/utils';
 import { Status } from 'modules/core/components/parts/agent-status';
 import { useFetchCurrentStatus } from 'modules/settings/apis/users-and-permissions';
-import React, { useMemo } from 'react';
+import React, { ChangeEvent, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { styled } from 'styled-components';
 
@@ -21,12 +22,43 @@ const StyledFlexbox = styled(FlexBox)`
   background-color: ${({ theme }) => theme.pallete.white};
 `;
 
+const AvatarContainer = styled.div`
+  position: relative;
+  display: inline-block;
+`;
+
+const EditIconButton = styled(IconButton)`
+  && {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 4px;
+    &:hover {
+      background: #f0f0f0;
+    }
+  }
+`;
+
+const HiddenFileInput = styled.input`
+  display: none;
+`;
+
 const CustomerAvatar = (props: { customerName: string }) => {
   const { customerName } = props;
   const { backgroundColor, textColor } = useMemo(
     () => chooseRandomColors(getInitialsByName(customerName)),
     [customerName]
   );
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      console.log('Selected file:', file);
+      // Call your API here to upload the image
+    }
+  };
 
   return (
     <FlexBox
@@ -36,18 +68,31 @@ const CustomerAvatar = (props: { customerName: string }) => {
       padding="30px 0"
     >
       <HorizontalSeparator />
-      <Avatar
-        sx={{
-          color: textColor,
-          bgcolor: backgroundColor,
-          width: '120px',
-          height: '120px',
-          fontSize: '4rem',
-          textDecoration: 'uppercase',
-        }}
-      >
-        {getInitialsByName(customerName).toLocaleUpperCase()}
-      </Avatar>
+      <AvatarContainer>
+        <Avatar
+          sx={{
+            color: textColor,
+            bgcolor: backgroundColor,
+            width: '120px',
+            height: '120px',
+            fontSize: '4rem',
+            textDecoration: 'uppercase',
+          }}
+        >
+          {getInitialsByName(customerName).toLocaleUpperCase()}
+        </Avatar>
+        <label htmlFor="avatar-upload">
+          <EditIconButton size="small" component="span">
+            <Edit fontSize="small" />
+          </EditIconButton>
+        </label>
+        <HiddenFileInput
+          type="file"
+          id="avatar-upload"
+          accept="image/*"
+          onChange={handleFileChange}
+        />
+      </AvatarContainer>
       <HorizontalSeparator />
     </FlexBox>
   );
