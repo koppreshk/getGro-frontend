@@ -48,6 +48,7 @@ export const AccountMenu = () => {
             fontSize: '14px',
             background: pallete.primaryPurple,
           }}
+          src={config.config?.user_details.profile_picture}
         >
           {getInitialsByName(user?.email || 'M')}
         </Avatar>
