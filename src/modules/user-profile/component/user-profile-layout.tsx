@@ -123,7 +123,7 @@ const ProfileHeader = () => {
       <FlexBox gap="12px" flexDirection="column" width="100%">
         <CustomerAvatar
           customerName={config?.user_details.display_name || ''}
-          profile_picture={config?.user_details?.profile_picture}
+          profile_picture={config?.user_details?.image_url}
         />
         <FlexBox flexDirection="column" padding="0 0 0 20px" gap="6px">
           <Typography variant="h5">
