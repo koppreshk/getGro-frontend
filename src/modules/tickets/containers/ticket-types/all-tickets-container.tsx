@@ -11,7 +11,7 @@ import { TicketsByView } from 'modules/tickets/components';
 import React, { useEffect } from 'react';
 
 export const AllTicketsContainer = React.memo(() => {
-  const { data, isLoading, error, refetch } = useFetchAllTickets();
+  const { data, isLoading, isFetching, error, refetch } = useFetchAllTickets();
   const isAdvanceFiltersEnabled = useAppSelector(
     (state) => state.tickets.isAdvanceFiltersEnabled
   );
@@ -50,7 +50,7 @@ export const AllTicketsContainer = React.memo(() => {
 
   return (
     <TicketsByView
-      isLoading={isLoading || queryLoading}
+      isLoading={isLoading || isFetching || queryLoading}
       data={ticketsData ?? []}
       totalPages={totalTickets}
       fetchAllTicketsWithSearchQuery={fetchAllTicketsWithSearchQuery}

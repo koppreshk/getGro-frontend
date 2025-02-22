@@ -13,6 +13,7 @@ export interface IEditProfileArgs {
   phone_number: string;
   signature?: string;
   language?: string;
+  profile_picture?: string;
 }
 
 export const useEditProfile = () => {

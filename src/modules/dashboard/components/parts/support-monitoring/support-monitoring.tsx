@@ -6,6 +6,7 @@ import { TicketsBySource } from './tickets-by-source';
 import { TopFourMetrics } from './top-four-metrics';
 import { SupportMonitoringValues } from '../../../apis/fetch-support-monitoring-values';
 import { DashboardDateRangePicker } from '../dashboard-date-range-picker';
+import { DownloadSMData } from './download-sm-data';
 
 interface ISupportMonitoringProps {
   data: SupportMonitoringValues;
@@ -34,11 +35,12 @@ export const SupportMonitoring = (props: ISupportMonitoringProps) => {
         width="100%"
         padding="0px 25px"
       >
-        <FlexBox justifyContent="flex-end" alignItems="center">
+        <FlexBox justifyContent="flex-end" alignItems="center" gap={'20px'}>
           <DashboardDateRangePicker
             dateRange={dateRange}
             setDateRange={setDateRange}
           />
+          <DownloadSMData data={props.data} dateRange={dateRange} />
         </FlexBox>
         <TopFourMetrics
           resolution_overdue={resolution_overdue}

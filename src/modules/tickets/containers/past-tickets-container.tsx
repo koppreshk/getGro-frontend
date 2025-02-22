@@ -1,22 +1,24 @@
-import { useAppSelector } from 'lib/hooks';
 import { CenteredCircularProgress, ErrorMessage } from 'lib/ui-ux';
 
+import { usePastTickets } from '../apis/fetch-past-tickets';
 import { PastTicketsLayout } from '../components/ticket-details';
 
 export const PastTicketsContainer = () => {
-  const ticketDetails = useAppSelector((state) => state.tickets.ticketDetails);
+  const { isLoading, data, error } = usePastTickets();
 
-  if (ticketDetails === undefined) {
+  if (isLoading) {
     return <CenteredCircularProgress />;
   }
 
-  if (ticketDetails) {
+  if (data) {
     return (
       <>
-        <PastTicketsLayout pastTickets={ticketDetails.pastTickets} />
+        <PastTicketsLayout pastTickets={data.data} />
       </>
     );
   }
 
-  return <ErrorMessage />;
+  return (
+    <ErrorMessage statusCode={error?.message || 'An unknown error occurred'} />
+  );
 };

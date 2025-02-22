@@ -8,7 +8,6 @@ export interface ITicketDetails {
   priority: string;
   createdAt: string;
   createdFrom: string;
-  pastTickets: ITicketDetails[];
   customerInfo?: {
     email: string;
     name: string;

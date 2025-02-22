@@ -1,38 +1,39 @@
 import { FileDownloadOutlined } from '@mui/icons-material';
-import { CircularProgress } from '@mui/material';
+import { useNotifications } from 'lib';
 import { CustomIconButton } from 'lib/ui-ux';
-import { saveFile, toCamelCasedKeysFromUnderScores } from 'lib/utils';
-import { useEffect } from 'react';
 
-import {
-  CasedAttachmentResposne,
-  Conversations,
-  IAttachments,
-  useFetchAttachments,
-} from '../../../apis';
+import { Conversations, IAttachments } from '../../../apis';
 
 export const DownloadAttachmentsContainer = (
-  props: Pick<IAttachments, 'id'> & Pick<Conversations, 'messageId'>
+  props: Pick<IAttachments, 'attachmentId' | 'fileUrl' | 'fileName'> &
+    Pick<Conversations, 'messageId'>
 ) => {
-  const { id, messageId } = props;
-  const [downloadAttachments, { isLoading, data, dataUpdatedAt }] =
-    useFetchAttachments(`${id}-download`);
+  const { fileUrl, fileName } = props;
+  const { showNotification } = useNotifications();
 
-  useEffect(() => {
-    if (data) {
-      const { fileContent, fileName, fileType } =
-        toCamelCasedKeysFromUnderScores(data) as CasedAttachmentResposne;
-      saveFile(fileContent, fileName, fileType);
+  const downloadFile = async () => {
+    try {
+      const response = await fetch(fileUrl);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', fileName);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      window.URL.revokeObjectURL(url); // Clean up
+    } catch (error) {
+      console.error('Download failed', error);
+      showNotification({ message: (error as Error).message, type: 'error' });
     }
-  }, [data, dataUpdatedAt]);
-
-  const onDownloadClick = () => {
-    downloadAttachments({ attachment_id: id, message_id: messageId });
   };
 
-  if (isLoading) {
-    return <CircularProgress size={24} />;
-  }
+  const onDownloadClick = () => {
+    downloadFile();
+  };
 
   return (
     <CustomIconButton

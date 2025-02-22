@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 import { FlexBox, GridLayout } from 'lib/ui-ux';
-import { getFormatedNumberByLocale } from 'lib/utils';
+import { useFormatedNumberByLocale } from 'lib/utils';
 import { SupportMonitoringValues } from 'modules/dashboard/apis';
 import { useTranslation } from 'react-i18next';
 import styled, { useTheme } from 'styled-components';
@@ -16,6 +16,23 @@ interface ITopMetricProps {
   name: string;
   value: number;
 }
+
+const TopMetric = (props: { item: ITopMetricProps }) => {
+  const { name, value } = props.item;
+  const { pallete } = useTheme();
+  const getFormatedNumberByLocale = useFormatedNumberByLocale();
+
+  return (
+    <Metric flexDirection="column" gap="10px" alignItems="center">
+      <Typography sx={{ color: pallete.grayNeutral }} variant="subheading1">
+        {name}
+      </Typography>
+      <FlexBox gap="20px" alignItems="center">
+        <Typography variant="h2">{getFormatedNumberByLocale(value)}</Typography>
+      </FlexBox>
+    </Metric>
+  );
+};
 
 export const TopFourMetrics = (
   props: Pick<
@@ -58,21 +75,5 @@ export const TopFourMetrics = (
         <TopMetric item={item} key={idx} />
       ))}
     </GridLayout>
-  );
-};
-
-const TopMetric = (props: { item: ITopMetricProps }) => {
-  const { name, value } = props.item;
-  const { pallete } = useTheme();
-
-  return (
-    <Metric flexDirection="column" gap="10px" alignItems="center">
-      <Typography sx={{ color: pallete.grayNeutral }} variant="subheading1">
-        {name}
-      </Typography>
-      <FlexBox gap="20px" alignItems="center">
-        <Typography variant="h2">{getFormatedNumberByLocale(value)}</Typography>
-      </FlexBox>
-    </Metric>
   );
 };

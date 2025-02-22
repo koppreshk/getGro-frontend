@@ -1,0 +1,25 @@
+import { useServiceClient } from 'lib';
+import React from 'react';
+import { useQuery } from 'react-query';
+import { useParams } from 'react-router-dom';
+
+import { TicketsEndPoint, TicketsQueryKey } from './api-enums';
+import { ITicketDetails } from './ticket-type-apis/types';
+
+export const usePastTickets = () => {
+  const { ticketId } = useParams();
+  const { getData } = useServiceClient();
+
+  const getPastTicketsData = React.useCallback(
+    () =>
+      getData(`${TicketsEndPoint.PAST_TICKETS}?ticket_id=${ticketId}`).then(
+        (res) => res.json()
+      ),
+    [getData, ticketId]
+  );
+
+  return useQuery<{ data: ITicketDetails[] }, { message: string }>({
+    queryKey: [TicketsQueryKey.PAST_TICKETS, ticketId],
+    queryFn: getPastTicketsData,
+  });
+};

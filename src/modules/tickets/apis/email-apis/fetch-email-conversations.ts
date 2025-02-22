@@ -6,15 +6,10 @@ import { useParams } from 'react-router-dom';
 import { TicketsEndPoint, TicketsQueryKey } from '../api-enums';
 
 export interface IAttachments {
-  id: string;
-  accountId: string | null;
-  contentId: string;
-  messageIds: string | null;
-  object: string | null;
   contentType: string;
-  filename: string;
-  size: number;
-  contentDisposition: string;
+  fileUrl: string;
+  fileName: string;
+  attachmentId: string;
 }
 
 export interface Conversations {
@@ -25,6 +20,7 @@ export interface Conversations {
   toEmail: string;
   createdAt: string;
   htmlContent: string;
+  snippet: string;
   attachments: IAttachments[];
 }
 export interface ITicketById {

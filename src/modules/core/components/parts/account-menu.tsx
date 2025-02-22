@@ -18,7 +18,7 @@ import { useTheme } from 'styled-components';
 
 export const AccountMenu = () => {
   const [anchor, setAnchor] = useState<unknown>(null);
-  const { logout, user } = useAuth();
+  const { logout } = useAuth();
   const { pallete } = useTheme();
   const config = useAppSelector((state) => state.core);
   const { mutateAsync } = useLogoutUser();
@@ -37,7 +37,6 @@ export const AccountMenu = () => {
       handleClose();
     });
   };
-
   return (
     <>
       <IconButton onClick={handleOpen}>
@@ -48,8 +47,9 @@ export const AccountMenu = () => {
             fontSize: '14px',
             background: pallete.primaryPurple,
           }}
+          src={config.config?.user_details.image_url}
         >
-          {getInitialsByName(user?.email || 'M')}
+          {getInitialsByName(config.config?.user_details.display_name || 'M')}
         </Avatar>
       </IconButton>
       <Menu

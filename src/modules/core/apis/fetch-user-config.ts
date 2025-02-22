@@ -32,6 +32,7 @@ export interface IConfig {
     display_name: string;
     email: string;
     phone_number: string;
+    image_url?: string;
   };
 }
 

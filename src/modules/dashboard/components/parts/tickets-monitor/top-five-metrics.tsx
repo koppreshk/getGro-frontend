@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import { TrendingUp, TrendingDown } from '@mui/icons-material';
 import { LinearProgressProps, Typography } from '@mui/material';
 import { FlexBox, GridLayout } from 'lib/ui-ux';
-import { getFormatedNumberByLocale } from 'lib/utils';
+import { useFormatedNumberByLocale } from 'lib/utils';
 import { IDashboardData } from 'modules/dashboard/apis';
 import styled, { useTheme } from 'styled-components';
 
@@ -80,7 +81,7 @@ export const TopFiveMetrics = (
 const TopMetric = (props: { item: ITopMetricProps }) => {
   const { name, value, trends } = props.item;
   const { pallete } = useTheme();
-
+  const getFormatedNumberByLocale = useFormatedNumberByLocale();
   return (
     <Metric flexDirection="column" gap="10px" alignItems="center">
       <Typography sx={{ color: pallete.grayNeutral }} variant="subheading1">
