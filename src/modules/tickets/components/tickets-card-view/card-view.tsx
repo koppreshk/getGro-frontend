@@ -122,7 +122,7 @@ const ResolutionDue = (props: Pick<ITicketDetails, 'resolutionDue'>) => {
   );
 };
 
-const AgentAssigned = (props: Pick<ITicketDetails, 'assigneeInfo'>) => {
+export const AgentAssigned = (props: Pick<ITicketDetails, 'assigneeInfo'>) => {
   const { assigneeInfo } = props;
 
   const assignedAgentInfo = useCallback(

@@ -11,6 +11,7 @@ import { styled, css } from 'styled-components';
 import { ITicketDetails } from '../apis';
 import { useSourceIcon } from '../hooks/ticket-hooks';
 import { setTotalPages } from '../storage';
+import { AgentAssigned } from './tickets-card-view/card-view';
 
 interface IDisplayTicketsGridProps {
   data: ITicketDetails[];
@@ -169,6 +170,14 @@ const useColumns = () => {
       header: () => t('status'),
       id: 'ticketStatus',
       cell: (info) => info.renderValue(),
+    }),
+    columnHelper.accessor('assigneeInfo', {
+      header: () => t('assignee'),
+      id: 'assigneeInfo',
+      cell: (info) => (
+        <AgentAssigned assigneeInfo={info.row.original.assigneeInfo} />
+      ),
+      minSize: 200,
     }),
     columnHelper.accessor('createdAt', {
       header: () => t('created_at'),
