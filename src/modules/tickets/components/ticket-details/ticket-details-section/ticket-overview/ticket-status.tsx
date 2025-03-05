@@ -114,7 +114,12 @@ export const TicketStatus = (props: ITicketStatusProps) => {
       {renderMode === 'card' ? null : (
         <HorizontalSeparator $margin="0px 0px 10px 0px" />
       )}
-      <FlexBox flexDirection="column" padding="0px 20px" gap={'5px'}>
+      <FlexBox
+        className="status-container"
+        flexDirection="column"
+        padding="0px 20px"
+        gap={'5px'}
+      >
         {renderMode === 'card' ? null : (
           <TypographyName variant="h6">
             <Trans i18nKey={'status'} />

@@ -217,7 +217,7 @@ export const getParsedChatType = (chatType: string) => {
   }
 };
 
-const StyledTicketStatus = styled(TicketStatusContainer)`
+export const StyledTicketStatus = styled(TicketStatusContainer)`
   && {
     .btn-text {
       overflow: hidden;

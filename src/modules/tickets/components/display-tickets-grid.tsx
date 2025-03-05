@@ -1,6 +1,6 @@
 import { Chip, Tooltip } from '@mui/material';
 import { Row, createColumnHelper } from '@tanstack/react-table';
-import { useAppDispatch, useAppSelector } from 'lib/hooks';
+import { useAppDispatch, useAppSelector, useFeature } from 'lib/hooks';
 import { DataGrid, NoDataIllustration } from 'lib/ui-ux';
 import { useDateDifference } from 'lib/utils';
 import React from 'react';
@@ -11,7 +11,10 @@ import { styled, css } from 'styled-components';
 import { ITicketDetails } from '../apis';
 import { useSourceIcon } from '../hooks/ticket-hooks';
 import { setTotalPages } from '../storage';
-import { AgentAssigned } from './tickets-card-view/card-view';
+import {
+  AgentAssigned,
+  StyledTicketStatus,
+} from './tickets-card-view/card-view';
 
 interface IDisplayTicketsGridProps {
   data: ITicketDetails[];
@@ -98,6 +101,13 @@ export const PriorityDot = styled.div<{ $priority: string }>`
   margin-right: 8px;
 `;
 
+const StyledTicketStatusForGrid = styled(StyledTicketStatus)`
+  &&,
+  .status-container {
+    padding: 0;
+  }
+`;
+
 export const Priority = (args: { priority: string; className?: string }) => {
   const { priority, className } = args;
   return (
@@ -112,7 +122,7 @@ const useColumns = () => {
   const getSourceIcon = useSourceIcon();
   const { t } = useTranslation();
   const columnHelper = createColumnHelper<ITicketDetails>();
-
+  const isEditStatusAccessible = useFeature('edit_status');
   const columns = [
     // columnHelper.display({
     //   id: 'select',
@@ -169,7 +179,18 @@ const useColumns = () => {
     columnHelper.accessor('ticketStatus', {
       header: () => t('status'),
       id: 'ticketStatus',
-      cell: (info) => info.renderValue(),
+      cell: (info) => (
+        <>
+          {isEditStatusAccessible ? (
+            <StyledTicketStatusForGrid
+              ticketStatus={info.row.original.ticketStatus}
+              ticketId={info.row.original.ticketId}
+              statusUpdateString={''}
+              renderMode="card"
+            />
+          ) : null}
+        </>
+      ),
     }),
     columnHelper.accessor('assigneeInfo', {
       header: () => t('assignee'),
