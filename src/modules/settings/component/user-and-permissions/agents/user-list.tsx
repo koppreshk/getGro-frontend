@@ -100,11 +100,6 @@ const useColumns = () => {
   const { t } = useTranslation();
 
   const columns = [
-    columnHelper.accessor('id', {
-      id: 'id',
-      cell: (info) => info.getValue(),
-      header: () => t('id'),
-    }),
     columnHelper.accessor('name', {
       id: 'name',
       cell: (info) => (

@@ -122,7 +122,7 @@ const ResolutionDue = (props: Pick<ITicketDetails, 'resolutionDue'>) => {
   );
 };
 
-const AgentAssigned = (props: Pick<ITicketDetails, 'assigneeInfo'>) => {
+export const AgentAssigned = (props: Pick<ITicketDetails, 'assigneeInfo'>) => {
   const { assigneeInfo } = props;
 
   const assignedAgentInfo = useCallback(
@@ -217,7 +217,7 @@ export const getParsedChatType = (chatType: string) => {
   }
 };
 
-const StyledTicketStatus = styled(TicketStatusContainer)`
+export const StyledTicketStatus = styled(TicketStatusContainer)`
   && {
     .btn-text {
       overflow: hidden;
