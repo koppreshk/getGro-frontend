@@ -17,12 +17,14 @@ export const StyledContainer = styled(FlexBox)`
   border: ${({ theme }) => theme.semantics.standardBorder};
   cursor: pointer;
   &:hover {
-    background-color: ${({ theme }) => theme.pallete.grayVariant5};
+    background-color: ${({ theme }) => theme.pallete.grayVariant5} !important;
   }
 `;
 
 interface IManageAssigneeProps extends Pick<ITicketDetails, 'assigneeInfo'> {
   data: ITicketQueues;
+  mode?: 'normal' | 'card';
+  className?: string;
   onChangeAssignee: (args: IChangeAsigneeArgs) => Promise<void>;
 }
 
@@ -90,12 +92,13 @@ const PopoverContent = (props: {
 };
 
 export const ManageAssignee = (props: IManageAssigneeProps) => {
-  const { assigneeInfo } = props;
+  const { assigneeInfo, mode, className } = props;
   const { queues } = props.data;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
     setAnchorEl(event.currentTarget);
   };
 
@@ -104,12 +107,23 @@ export const ManageAssignee = (props: IManageAssigneeProps) => {
   };
 
   return (
-    <div>
-      <FlexBox flexDirection="column" padding="0px 20px" gap={'5px'}>
-        <TypographyName variant="h6">
-          <Trans i18nKey={'assignee'} />
-        </TypographyName>
-        <StyledContainer justifyContent="space-between" onClick={handleClick}>
+    <div className={className}>
+      <FlexBox
+        flexDirection="column"
+        className="assignee-container"
+        padding="0px 20px"
+        gap={'5px'}
+      >
+        {mode !== 'card' ? (
+          <TypographyName variant="h6">
+            <Trans i18nKey={'assignee'} />
+          </TypographyName>
+        ) : null}
+        <StyledContainer
+          className={'assignee-content-container'}
+          justifyContent="space-between"
+          onClick={handleClick}
+        >
           <Typography variant="h6">
             {assigneeInfo?.email
               ? `${assigneeInfo?.first_name} ${assigneeInfo?.last_name ?? ''}`
@@ -122,6 +136,7 @@ export const ManageAssignee = (props: IManageAssigneeProps) => {
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}
+        onClick={(ev) => ev.stopPropagation()}
         anchorOrigin={{
           vertical: 'center',
           horizontal: 'left',

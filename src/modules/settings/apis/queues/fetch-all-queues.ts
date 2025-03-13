@@ -39,5 +39,7 @@ export const useFetchAllTicketQueues = () => {
     queryKey: ConfigurationsQueryKey.FETCH_ALL_TICKETS_QUEUE,
     queryFn: fetchAllTicketsQueue,
     keepPreviousData: true,
+    staleTime: 600000, // Data is considered fresh for 10 minutes
+    cacheTime: 900000,
   });
 };

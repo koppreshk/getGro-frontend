@@ -9,7 +9,10 @@ import {
 import { ManageAssignee } from 'modules/tickets/components/ticket-details/ticket-details-section/ticket-overview';
 
 interface IManageAssigneeContainerProps
-  extends Pick<ITicketDetails, 'ticketId' | 'assigneeInfo'> {}
+  extends Pick<ITicketDetails, 'ticketId' | 'assigneeInfo'> {
+  mode?: 'normal' | 'card';
+  className?: string;
+}
 
 export const ManageAssigneeContainer = (
   props: IManageAssigneeContainerProps
@@ -32,6 +35,8 @@ export const ManageAssigneeContainer = (
   return (
     <>
       <ManageAssignee
+        mode={props.mode}
+        className={props.className}
         data={data!}
         assigneeInfo={props.assigneeInfo}
         onChangeAssignee={onChangeAssignee}

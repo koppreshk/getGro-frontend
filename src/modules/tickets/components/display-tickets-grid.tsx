@@ -12,7 +12,7 @@ import { ITicketDetails } from '../apis';
 import { useSourceIcon } from '../hooks/ticket-hooks';
 import { setTotalPages } from '../storage';
 import {
-  AgentAssigned,
+  ManageAssignee,
   StyledTicketStatus,
 } from './tickets-card-view/card-view';
 
@@ -108,6 +108,18 @@ const StyledTicketStatusForGrid = styled(StyledTicketStatus)`
   }
 `;
 
+const ManageAssigneeForGrid = styled(ManageAssignee)`
+  && {
+    .assignee-container {
+      padding: 0;
+    }
+    .assignee-content-container {
+      margin: 5px 0 !important;
+      background-color: white !important;
+    }
+  }
+`;
+
 export const Priority = (args: { priority: string; className?: string }) => {
   const { priority, className } = args;
   return (
@@ -123,6 +135,8 @@ const useColumns = () => {
   const { t } = useTranslation();
   const columnHelper = createColumnHelper<ITicketDetails>();
   const isEditStatusAccessible = useFeature('edit_status');
+  const isManageAssigneeAccessible = useFeature('edit_assignee');
+
   const columns = [
     // columnHelper.display({
     //   id: 'select',
@@ -170,6 +184,12 @@ const useColumns = () => {
       cell: (info) => info.getValue(),
       minSize: 200,
     }),
+    columnHelper.accessor('description', {
+      header: t('description'),
+      id: 'description',
+      cell: (info) => info.getValue(),
+      minSize: 200,
+    }),
     columnHelper.accessor('source', {
       id: 'source',
       header: t('source'),
@@ -196,7 +216,15 @@ const useColumns = () => {
       header: () => t('assignee'),
       id: 'assigneeInfo',
       cell: (info) => (
-        <AgentAssigned assigneeInfo={info.row.original.assigneeInfo} />
+        <>
+          {isManageAssigneeAccessible ? (
+            <ManageAssigneeForGrid
+              ticketId={info.row.original.ticketId}
+              assigneeInfo={info.row.original.assigneeInfo}
+              mode="card"
+            />
+          ) : null}
+        </>
       ),
       minSize: 200,
     }),
