@@ -16,6 +16,7 @@ import {
 } from 'lib/utils';
 import { DateTime } from 'luxon';
 import { ChatType } from 'modules/chats/apis';
+import { ManageAssigneeContainer } from 'modules/tickets/containers/overview/manage-assignee-container';
 import { useSourceIcon } from 'modules/tickets/hooks';
 import React, { useCallback, useMemo } from 'react';
 import { useMatch, useNavigate, useSearchParams } from 'react-router-dom';
@@ -45,6 +46,17 @@ const StyledCard = styled(FlexBox)<{ $ticketStatus: string }>`
 
   &:hover {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  }
+`;
+
+export const ManageAssignee = styled(ManageAssigneeContainer)`
+  && {
+    .assignee-container {
+      padding-right: 0;
+    }
+    .assignee-content-container {
+      background-color: ${({ theme }) => theme.pallete.grayVariant6};
+    }
   }
 `;
 
@@ -226,6 +238,9 @@ export const StyledTicketStatus = styled(TicketStatusContainer)`
       max-width: 60px; /* Adjust as needed */
       flex: 1; /* Ensures the text takes up available space */
     }
+    .status-container {
+      padding-right: 0;
+    }
   }
 `;
 
@@ -281,7 +296,7 @@ export const CardView = (props: ITicketDetails) => {
       justifyContent="space-between"
       width="calc(100% - 40px)"
     >
-      <FlexBox alignItems="center" gap="18px" width="calc(100% - 210px)">
+      <FlexBox alignItems="center" gap="18px" width="calc(100% - 350px)">
         <CustomerName customerName={customerName} />
 
         <FlexBox flexDirection="column" gap="14px" width="100%">
@@ -342,6 +357,13 @@ export const CardView = (props: ITicketDetails) => {
             ticketId={ticketId}
             statusUpdateString={''}
             renderMode="card"
+          />
+        ) : null}
+        {isFeatureAccessible('edit_assignee') ? (
+          <ManageAssignee
+            ticketId={ticketId}
+            assigneeInfo={assigneeInfo}
+            mode="card"
           />
         ) : null}
       </FlexBox>
