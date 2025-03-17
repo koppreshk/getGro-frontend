@@ -16,7 +16,6 @@ export * from './whatsapp-apis/send-whatsapp-messages';
 export * from './whatsapp-apis/upload-file';
 
 export * from './email-apis/reply-to-email';
-export * from './email-apis/fetch-attachment';
 export * from './email-apis/fetch-email-conversations';
 
 export * from './telephonic-apis/fetch-calls-by-ticket-id';

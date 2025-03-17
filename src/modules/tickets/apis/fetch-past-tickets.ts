@@ -6,6 +6,18 @@ import { useParams } from 'react-router-dom';
 import { TicketsEndPoint, TicketsQueryKey } from './api-enums';
 import { ITicketDetails } from './ticket-type-apis/types';
 
+export type PastTickets = Pick<
+  ITicketDetails,
+  | 'customerName'
+  | 'ticketId'
+  | 'source'
+  | 'channelId'
+  | 'ticketStatus'
+  | 'priority'
+  | 'tags'
+  | 'createdAt'
+  | 'createdFrom'
+>;
 export const usePastTickets = () => {
   const { ticketId } = useParams();
   const { getData } = useServiceClient();
@@ -18,7 +30,7 @@ export const usePastTickets = () => {
     [getData, ticketId]
   );
 
-  return useQuery<{ data: ITicketDetails[] }, { message: string }>({
+  return useQuery<{ data: PastTickets[] }, { message: string }>({
     queryKey: [TicketsQueryKey.PAST_TICKETS, ticketId],
     queryFn: getPastTicketsData,
   });

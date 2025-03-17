@@ -1,7 +1,7 @@
 import { Sort } from '@mui/icons-material';
 import { Typography } from '@mui/material';
 import { CustomIconButton, FlexBox } from 'lib/ui-ux';
-import { ITicketDetails } from 'modules/tickets/apis';
+import { PastTickets as PastTicketsType } from 'modules/tickets/apis/fetch-past-tickets';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
@@ -10,9 +10,8 @@ import { styled } from 'styled-components';
 
 import { CommonHeader } from '../common-header';
 import { PastTicketCard } from './past-ticket-card';
-
 interface IPastTicketsLayoutProps {
-  pastTickets: ITicketDetails[];
+  pastTickets: PastTicketsType[];
 }
 
 const LayoutContainer = styled(FlexBox)`
