@@ -4,6 +4,7 @@ import { FlexBox, MoreInformation } from 'lib/ui-ux';
 import { useState } from 'react';
 import Chart from 'react-apexcharts';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 const ChartContainer = styled(FlexBox)`
@@ -60,6 +61,7 @@ export const TicketsBySource = (props: {
   const { channelsInfo } = props;
   const { t } = useTranslation();
   const [chartType, setChartType] = useState<'pie' | 'bar'>('pie');
+  const navigate = useNavigate();
 
   const handleChartTypeChange = (event: SelectChangeEvent) => {
     setChartType(event.target.value as 'pie' | 'bar');
@@ -69,6 +71,15 @@ export const TicketsBySource = (props: {
   const dataDoesNotExist = Object.values(channelsInfo).every(
     (item) => item === 0
   );
+
+  const handleChartClick = (_event: any, _chartContext: any, config: any) => {
+    const { dataPointIndex } = config;
+    const clickedItem = chartMetadata.series[dataPointIndex];
+    console.log('Clicked item:', clickedItem);
+
+    // Navigate to a different route based on the clicked item
+    navigate(`/tickets`);
+  };
 
   return (
     <ChartContainer
@@ -90,7 +101,15 @@ export const TicketsBySource = (props: {
           <MoreInformation information="No results found" />
         ) : (
           <Chart
-            options={chartMetadata.options}
+            options={{
+              ...chartMetadata.options,
+              chart: {
+                ...chartMetadata.options.chart,
+                events: {
+                  dataPointSelection: handleChartClick,
+                },
+              },
+            }}
             series={chartMetadata.series}
             type={chartType}
             width={380}
