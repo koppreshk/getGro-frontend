@@ -32,13 +32,15 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
   }
 
   useEffect(() => {
-    const socket = socketRef.current;
-    socket?.connect();
+    if (import.meta.env.VITE_SOCKET_ENV !== 'test') {
+      const socket = socketRef.current;
+      socket?.connect();
 
-    return () => {
-      socket?.removeAllListeners();
-      socket?.disconnect();
-    };
+      return () => {
+        socket?.removeAllListeners();
+        socket?.disconnect();
+      };
+    }
   }, []);
 
   const getEventName = (key: SocketEventKeys) => {
