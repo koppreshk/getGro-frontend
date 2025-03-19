@@ -1,14 +1,16 @@
 import { useNotifications } from 'lib';
-import { useEditTicketStatus } from 'modules/settings/apis/ticket-status';
-import { IGenericResponse } from 'modules/settings/apis/ticket-status/types';
+import {
+  IFetchAllStatuses,
+  useEditTicketStatus,
+} from 'modules/settings/apis/ticket-status';
 import { TicketStatusForm } from 'modules/settings/component/ticket-configurations/ticket-status';
 import React from 'react';
 
 import { ITicketStatusFormFields } from './create-ticket-status-container';
 
 interface IEditTicketStatusContainerProps {
-  onSelectRowMetaData: IGenericResponse;
-  statusData: IGenericResponse[] | undefined;
+  onSelectRowMetaData: IFetchAllStatuses;
+  statusData: IFetchAllStatuses[] | undefined;
   toggleDrawer: () => void;
 }
 
@@ -53,6 +55,7 @@ export const EditTicketStatusContainer = (
       defaultValues={{
         ticketStatusName: onSelectRowMetaData.name,
         ticketStatusId: onSelectRowMetaData.id,
+        ticketStatusDescription: onSelectRowMetaData.description,
       }}
     />
   );

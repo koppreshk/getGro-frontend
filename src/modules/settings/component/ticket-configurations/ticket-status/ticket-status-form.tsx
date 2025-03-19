@@ -84,18 +84,6 @@ export const TicketStatusForm = (props: ITicketStatusFormProps) => {
               rows={4}
             />
           </Grid>
-          <Grid item xs={12}>
-            {isInEditMode ? (
-              <TextboxFieldWithLabel
-                name="ticketStatusId"
-                label={t('id')}
-                fullWidth
-                disabled
-              />
-            ) : (
-              <></>
-            )}
-          </Grid>
         </Grid>
         <FlexBox gap="10px" width="100%" justifyContent="flex-end">
           <CancelButton onClick={toggleDrawer} />
