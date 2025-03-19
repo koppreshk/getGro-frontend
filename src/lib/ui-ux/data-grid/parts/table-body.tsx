@@ -30,7 +30,7 @@ export const TableBody = <T extends object>(props: ITableBodyProps<T>) => {
     <StyledTR
       onClick={onClick}
       className="table-row-group"
-      $isRead={isread.status}
+      $isRead={isread?.has_read}
     >
       {row.getVisibleCells().map((cell) => (
         <td
