@@ -12,6 +12,7 @@ import {
   AddEmailConfigContainer,
   EditEmailConfigContainer,
 } from 'modules/settings/containers/channel-configurations/email';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
@@ -20,10 +21,14 @@ import GoogleSignInButton from './google-sigin-button';
 const EmailConfigContent = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-
+  const [isBtnDisabled, setBtnStatus] = useState(false);
   // const toggleAddEscalationDrawer = useCallback(() => {
   //   navigate('add-email');
   // }, [navigate]);
+
+  const toggleBtnStatus = useCallback((status: boolean) => {
+    setBtnStatus(status);
+  }, []);
 
   return (
     <>
@@ -44,7 +49,7 @@ const EmailConfigContent = () => {
           <Typography variant="h5">{t('email_configurations')}</Typography>
         </FlexBox>
         <FlexBox gap={'10px'}>
-          <GoogleSignInButton />
+          <GoogleSignInButton isDisabled={isBtnDisabled} />
           {/* <Button
             variant="contained"
             onClick={toggleAddEscalationDrawer}
@@ -54,7 +59,7 @@ const EmailConfigContent = () => {
           </Button> */}
         </FlexBox>
       </FlexBox>
-      <FetchAllEmailsContainer />
+      <FetchAllEmailsContainer toggleBtnStatus={toggleBtnStatus} />
     </>
   );
 };
