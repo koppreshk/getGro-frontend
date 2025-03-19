@@ -1,5 +1,5 @@
 import { Button, Grid } from '@mui/material';
-import { TextboxField } from 'lib/form-fields';
+import { TextboxFieldWithLabel } from 'lib/form-fields';
 import { CancelButton, FlexBox, LoadingButton } from 'lib/ui-ux';
 import { IGenericResponse } from 'modules/settings/apis/ticket-status/types';
 import { ITicketStatusFormFields } from 'modules/settings/containers/ticket-status';
@@ -65,7 +65,7 @@ export const TicketStatusForm = (props: ITicketStatusFormProps) => {
       >
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <TextboxField
+            <TextboxFieldWithLabel
               name="ticketStatusName"
               label={t('name')}
               fullWidth
@@ -76,8 +76,17 @@ export const TicketStatusForm = (props: ITicketStatusFormProps) => {
             />
           </Grid>
           <Grid item xs={12}>
+            <TextboxFieldWithLabel
+              name="ticketStatusDescription"
+              label={t('description')}
+              fullWidth
+              multiline
+              rows={4}
+            />
+          </Grid>
+          <Grid item xs={12}>
             {isInEditMode ? (
-              <TextboxField
+              <TextboxFieldWithLabel
                 name="ticketStatusId"
                 label={t('id')}
                 fullWidth

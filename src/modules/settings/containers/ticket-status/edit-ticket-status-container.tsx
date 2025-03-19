@@ -20,10 +20,11 @@ export const EditTicketStatusContainer = (
   const { showNotification } = useNotifications();
 
   const onEditStatusTicket = React.useCallback(
-    (data: ITicketStatusFormFields) => {
+    (formValues: ITicketStatusFormFields) => {
       editTicketStatus({
-        id: data.ticketStatusId!,
-        name: data.ticketStatusName,
+        id: formValues.ticketStatusId!,
+        name: formValues.ticketStatusName,
+        description: formValues.ticketStatusDescription,
       })
         .then(() => {
           showNotification({

@@ -1,6 +1,6 @@
 import { Avatar, Typography } from '@mui/material';
 import { useAppDispatch } from 'lib/hooks';
-import { FlexBox } from 'lib/ui-ux';
+import { FlexBox, NewMessageIndicator } from 'lib/ui-ux';
 import { chooseRandomColors, isToday, isYesterday } from 'lib/utils';
 import { DateTime } from 'luxon';
 import { ITicketDetails } from 'modules/tickets/apis';
@@ -63,13 +63,6 @@ const StyledTypography = styled(Typography)`
     overflow: hidden;
     color: ${(props) => props.theme.pallete.grayNeutral};
   }
-`;
-
-const NewMessageIndicator = styled.div`
-  width: 10px;
-  height: 10px;
-  background-color: ${(props) => props.theme.pallete.primaryPurple};
-  border-radius: 100%;
 `;
 
 interface ITicketDetailsProps extends ITicketDetails {}

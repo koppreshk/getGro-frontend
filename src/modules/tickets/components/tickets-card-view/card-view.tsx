@@ -8,6 +8,7 @@ import {
   TicketInfoContent,
   VerticalSeparator,
   StyledEllipsisTypography,
+  NewMessageIndicator,
 } from 'lib/ui-ux';
 import {
   chooseRandomColors,
@@ -256,6 +257,7 @@ export const CardView = (props: ITicketDetails) => {
     assigneeInfo,
     createdFrom,
     responseDue,
+    has_read,
   } = props;
   const getSourceIcon = useSourceIcon();
   const navigate = useNavigate();
@@ -296,9 +298,20 @@ export const CardView = (props: ITicketDetails) => {
       justifyContent="space-between"
       width="calc(100% - 40px)"
     >
-      <FlexBox alignItems="center" gap="18px" width="calc(100% - 350px)">
+      <FlexBox
+        alignItems="center"
+        gap="18px"
+        width="calc(100% - 350px)"
+        style={{ position: 'relative' }}
+      >
+        {has_read ? null : (
+          <Tooltip title={t('view_new_message')}>
+            <NewMessageIndicator
+              style={{ position: 'absolute', top: '-5px', left: '-12px' }}
+            />
+          </Tooltip>
+        )}
         <CustomerName customerName={customerName} />
-
         <FlexBox flexDirection="column" gap="14px" width="100%">
           <FlexBox flexDirection="column" width="calc(100% - 70px)">
             <Tooltip title={'Subject: ' + description} placement="bottom-start">

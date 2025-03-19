@@ -46,3 +46,10 @@ export const TicketInfoContent = styled(Typography)`
     color: ${({ theme }) => theme.pallete.grayVariant3};
   }
 `;
+
+export const NewMessageIndicator = styled.div`
+  width: 10px;
+  height: 10px;
+  background-color: ${(props) => props.theme.pallete.primaryPurple};
+  border-radius: 100%;
+`;
