@@ -317,6 +317,7 @@
   "last_modified": "Dernière modification",
   "last_modified_at": "Dernière modification à",
   "last_modified_by": "Dernière modification par",
+  "last_updated": "Dernière mise à jour",
   "link_conversation_to_ticket": "Lier la conversation au ticket",
   "link_ticket": "Billet de lien",
   "link_ticket_failure": "Échec de l'association du ticket à cette conversation",

@@ -2,7 +2,9 @@ import { Typography } from '@mui/material';
 import { FlexBox, GridLayout } from 'lib/ui-ux';
 import { useFormatedNumberByLocale } from 'lib/utils';
 import { SupportMonitoringValues } from 'modules/dashboard/apis';
+import { TicketViewRoutes } from 'modules/tickets/components';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
 
 const Metric = styled(FlexBox)`
@@ -15,15 +17,22 @@ const Metric = styled(FlexBox)`
 interface ITopMetricProps {
   name: string;
   value: number;
+  onClick?: () => void;
 }
 
 const TopMetric = (props: { item: ITopMetricProps }) => {
-  const { name, value } = props.item;
+  const { name, value, onClick } = props.item;
   const { pallete } = useTheme();
   const getFormatedNumberByLocale = useFormatedNumberByLocale();
 
   return (
-    <Metric flexDirection="column" gap="10px" alignItems="center">
+    <Metric
+      flexDirection="column"
+      gap="10px"
+      alignItems="center"
+      onClick={onClick}
+      style={{ cursor: onClick ? 'pointer' : 'default' }}
+    >
       <Typography sx={{ color: pallete.grayNeutral }} variant="subheading1">
         {name}
       </Typography>
@@ -50,14 +59,17 @@ export const TopFourMetrics = (
     response_overdue,
   } = props;
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const data = [
     {
       name: t('total_tickets'),
       value: total_tickets,
+      onClick: () => navigate(`/tickets/${TicketViewRoutes.AllTickets}`),
     },
     {
       name: t('pending_tickets'),
       value: pending_tickets,
+      onClick: () => navigate(`/tickets/${TicketViewRoutes.AllPending}`),
     },
     {
       name: t('response_overdue'),

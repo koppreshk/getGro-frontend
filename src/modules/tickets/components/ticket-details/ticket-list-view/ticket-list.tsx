@@ -15,7 +15,7 @@ import {
   useParams,
   useSearchParams,
 } from 'react-router-dom';
-import styled, { css, useTheme } from 'styled-components';
+import { styled, css, useTheme } from 'styled-components';
 
 interface ITicketListProps {
   data: ITicketDetails[];
@@ -65,27 +65,23 @@ const StyledTypography = styled(Typography)`
   }
 `;
 
+const NewMessageIndicator = styled.div`
+  width: 10px;
+  height: 10px;
+  background-color: ${(props) => props.theme.pallete.primaryPurple};
+  border-radius: 100%;
+`;
+
 interface ITicketDetailsProps extends ITicketDetails {}
 
 const TicketDetails = (props: ITicketDetailsProps) => {
   const {
-    createdAt,
+    updatedAt,
     customerName,
     ticketId,
-    source,
-    priority,
-    ticketStatus,
-    assigneeInfo,
-    customerInfo,
-    channelId,
-    resolutionDue,
-    responseDue,
-    statusUpdateString,
-    closedAt,
     description,
-    tags,
-    shopifyCustomerId,
     createdFrom,
+    has_read,
   } = props;
   const params = useParams();
   const navigate = useNavigate();
@@ -108,47 +104,11 @@ const TicketDetails = (props: ITicketDetailsProps) => {
 
       dispatch(
         setTicketDetails({
-          source,
-          ticketId,
-          customerName,
-          ticketStatus,
-          createdAt,
-          priority,
-          assigneeInfo,
-          customerInfo,
-          channelId,
-          responseDue,
-          resolutionDue,
-          statusUpdateString,
-          closedAt,
-          description,
-          tags,
-          shopifyCustomerId,
-          createdFrom,
+          ...props,
         })
       );
     }
-  }, [
-    customerInfo,
-    createdAt,
-    customerName,
-    dispatch,
-    params.ticketId,
-    priority,
-    source,
-    ticketId,
-    ticketStatus,
-    channelId,
-    responseDue,
-    resolutionDue,
-    assigneeInfo,
-    statusUpdateString,
-    closedAt,
-    description,
-    tags,
-    shopifyCustomerId,
-    createdFrom,
-  ]);
+  }, [dispatch, params.ticketId, props, ticketId]);
 
   const onTicketClick = React.useCallback(() => {
     navigate(
@@ -156,7 +116,7 @@ const TicketDetails = (props: ITicketDetailsProps) => {
     );
   }, [match?.params.ticketType, navigate, noOfRecords, pageNumber, ticketId]);
 
-  const isoDate = DateTime.fromFormat(createdAt, 'yyyy-LL-dd hh:mm a').toISO();
+  const isoDate = DateTime.fromFormat(updatedAt, 'yyyy-LL-dd hh:mm a').toISO();
   const time = DateTime.fromISO(isoDate!).toFormat('hh:mm a');
   const { t } = useTranslation();
   const { backgroundColor, textColor } = useMemo(
@@ -197,17 +157,20 @@ const TicketDetails = (props: ITicketDetailsProps) => {
           >
             {customerName}
           </Typography>
-          <Typography
-            variant="caption"
-            title="Created At"
-            sx={{ color: pallete.grayNeutral }}
-          >
-            {isToday(isoDate!)
-              ? `${t('today')}, ${time}`
-              : isYesterday(isoDate!)
-                ? `${t('yesterday')}, ${time}`
-                : createdAt}
-          </Typography>
+          <FlexBox gap="8px" alignItems="baseline">
+            <Typography
+              variant="caption"
+              title={t('last_updated')}
+              sx={{ color: pallete.grayNeutral }}
+            >
+              {isToday(isoDate!)
+                ? `${t('today')}, ${time}`
+                : isYesterday(isoDate!)
+                  ? `${t('yesterday')}, ${time}`
+                  : updatedAt}
+            </Typography>
+            {has_read ? null : <NewMessageIndicator />}
+          </FlexBox>
         </FlexBox>
         <StyledTypography variant="body2" title={description}>
           {description}

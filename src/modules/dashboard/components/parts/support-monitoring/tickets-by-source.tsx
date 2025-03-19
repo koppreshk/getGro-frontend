@@ -35,7 +35,8 @@ const getChartMetadata = (
           : undefined,
       dataLabels: {
         enabled: true,
-        formatter: (value: number) => `${value}`, // Show only numbers, not percentage
+        formatter: (value: number) =>
+          chartType === 'bar' ? `${value}` : undefined, // Show only numbers, not percentage
       },
       tooltip: {
         y: {
