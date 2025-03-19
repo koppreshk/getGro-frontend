@@ -28,12 +28,13 @@ const useColumns = (statusData: IFetchAllStatuses[]) => {
           ) : null}
         </FlexBox>
       ),
-      minSize: 300,
     }),
     columnHelper.accessor('description', {
       id: 'description',
       header: () => t('description'),
       cell: (info) => info.getValue(),
+      size: 600,
+      maxSize: 600,
     }),
     columnHelper.display({
       id: 'actions',
