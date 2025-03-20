@@ -1,11 +1,11 @@
 import { Avatar, Typography } from '@mui/material';
-import { useAppDispatch } from 'lib/hooks';
+import { useAppDispatch, useAppSelector } from 'lib/hooks';
 import { FlexBox, NewMessageIndicator } from 'lib/ui-ux';
 import { chooseRandomColors, isToday, isYesterday } from 'lib/utils';
 import { DateTime } from 'luxon';
 import { ITicketDetails } from 'modules/tickets/apis';
 import { useSourceIcon } from 'modules/tickets/hooks';
-import { setTicketDetails } from 'modules/tickets/storage';
+import { setTicketDetails, setTicketReadStatus } from 'modules/tickets/storage';
 import React, { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -90,6 +90,9 @@ const TicketDetails = (props: ITicketDetailsProps) => {
   const dispatch = useAppDispatch();
   const getSourceIcon = useSourceIcon();
   const { pallete } = useTheme();
+  const ticketReduxData = useAppSelector(
+    (state) => state.tickets.ticketReadStatus
+  );
 
   React.useEffect(() => {
     if (params.ticketId === ticketId.toString() && ref.current) {
@@ -104,10 +107,25 @@ const TicketDetails = (props: ITicketDetailsProps) => {
   }, [dispatch, params.ticketId, props, ticketId]);
 
   const onTicketClick = React.useCallback(() => {
+    const mappedData = ticketReduxData.map((ticket) => {
+      if (ticket.ticketId === ticketId) {
+        return { ...ticket, has_read: true };
+      }
+      return ticket;
+    });
+    dispatch(setTicketReadStatus(mappedData));
     navigate(
       `/tickets/${match?.params.ticketType}/${ticketId}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`
     );
-  }, [match?.params.ticketType, navigate, noOfRecords, pageNumber, ticketId]);
+  }, [
+    dispatch,
+    match?.params.ticketType,
+    navigate,
+    noOfRecords,
+    pageNumber,
+    ticketId,
+    ticketReduxData,
+  ]);
 
   const isoDate = DateTime.fromFormat(updatedAt, 'yyyy-LL-dd hh:mm a').toISO();
   const time = DateTime.fromISO(isoDate!).toFormat('hh:mm a');
@@ -116,6 +134,13 @@ const TicketDetails = (props: ITicketDetailsProps) => {
     () => chooseRandomColors(customerName || ''),
     [customerName]
   );
+  const hasRead = useMemo(() => {
+    return (
+      ticketReduxData.find((ticket) => ticket.ticketId === ticketId)
+        ?.has_read ?? has_read
+    );
+  }, [has_read, ticketId, ticketReduxData]);
+
   return (
     <TicketWrapper
       flexDirection="row"
@@ -162,7 +187,7 @@ const TicketDetails = (props: ITicketDetailsProps) => {
                   ? `${t('yesterday')}, ${time}`
                   : updatedAt}
             </Typography>
-            {has_read ? null : <NewMessageIndicator />}
+            {hasRead ? null : <NewMessageIndicator />}
           </FlexBox>
         </FlexBox>
         <StyledTypography variant="body2" title={description}>

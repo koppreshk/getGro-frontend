@@ -7,6 +7,7 @@ interface TicketsState {
   showHideTicketDetails: boolean;
   isAdvanceFiltersEnabled: boolean;
   ticketDetails?: ITicketDetails;
+  ticketReadStatus: Pick<ITicketDetails, 'ticketId' | 'has_read'>[];
 }
 
 const initialState: TicketsState = {
@@ -14,6 +15,7 @@ const initialState: TicketsState = {
   showHideTicketDetails: true,
   isAdvanceFiltersEnabled: false,
   ticketDetails: undefined,
+  ticketReadStatus: [],
 };
 
 export const ticketsSlice = createSlice({
@@ -29,6 +31,12 @@ export const ticketsSlice = createSlice({
     setTicketDetails: (state, action: PayloadAction<ITicketDetails>) => {
       state.ticketDetails = action.payload;
     },
+    setTicketReadStatus: (
+      state,
+      action: PayloadAction<Pick<ITicketDetails, 'ticketId' | 'has_read'>[]>
+    ) => {
+      state.ticketReadStatus = action.payload;
+    },
     setAdvanceFiltersState: (state, action: PayloadAction<boolean>) => {
       state.isAdvanceFiltersEnabled = action.payload;
     },
@@ -40,6 +48,7 @@ export const {
   setTotalPages,
   setShowHideTicketDetails,
   setTicketDetails,
+  setTicketReadStatus,
   setAdvanceFiltersState,
 } = ticketsSlice.actions;
 

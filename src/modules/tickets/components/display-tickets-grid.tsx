@@ -3,14 +3,14 @@ import { Row, createColumnHelper } from '@tanstack/react-table';
 import { useAppDispatch, useAppSelector, useFeature } from 'lib/hooks';
 import { DataGrid, NoDataIllustration } from 'lib/ui-ux';
 import { useDateDifference } from 'lib/utils';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMatch, useNavigate, useSearchParams } from 'react-router-dom';
 import { styled, css } from 'styled-components';
 
 import { ITicketDetails } from '../apis';
 import { useSourceIcon } from '../hooks/ticket-hooks';
-import { setTotalPages } from '../storage';
+import { setTicketReadStatus, setTotalPages } from '../storage';
 import {
   ManageAssignee,
   StyledTicketStatus,
@@ -270,15 +270,32 @@ export const DisplayTicketsGrid = (props: IDisplayTicketsGridProps) => {
   const noOfRecords = searchParams.get('noOfRecords');
   const pageNumber = searchParams.get('pageNumber');
   const match = useMatch('/:tickets/:ticketType');
+  const ticketReduxData = useAppSelector(
+    (state) => state.tickets.ticketReadStatus
+  );
 
   const onRowClick = React.useCallback(
     (row: Row<ITicketDetails>) => {
+      const modifiedData = ticketReduxData.map((ticket) => {
+        if (ticket.ticketId === row.original.ticketId) {
+          return { ...ticket, has_read: true };
+        }
+        return ticket;
+      });
+      dispatch(setTicketReadStatus(modifiedData));
       navigate(
         `${match?.pathname}/${row.original.ticketId}?noOfRecords=${noOfRecords}&pageNumber=${pageNumber}`,
         { replace: true }
       );
     },
-    [match?.pathname, navigate, noOfRecords, pageNumber]
+    [
+      dispatch,
+      match?.pathname,
+      navigate,
+      noOfRecords,
+      pageNumber,
+      ticketReduxData,
+    ]
   );
 
   React.useEffect(() => {
@@ -287,11 +304,22 @@ export const DisplayTicketsGrid = (props: IDisplayTicketsGridProps) => {
 
   const { totalPages } = useAppSelector((state) => state.tickets);
   const { t } = useTranslation();
+
+  const tableData = useMemo(() => {
+    return data?.map((item) => ({
+      ...item,
+      has_read:
+        ticketReduxData.find((ticket) => ticket.ticketId === item.ticketId)
+          ?.has_read ?? item.has_read,
+    }));
+  }, [data, ticketReduxData]);
+
   return (
     <React.Fragment>
       {data.length > 0 || props.isLoading ? (
         <DataGrid
           {...props}
+          data={tableData}
           columns={columns}
           onRowClick={onRowClick}
           totalPages={totalPages}

@@ -1,12 +1,14 @@
+import { useAppDispatch } from 'lib/hooks';
 import { TableControls } from 'lib/ui-ux';
 import { saveAsCSV } from 'lib/utils';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 import { ITicketDetails } from '../apis';
 import { DisplayTicketsGrid } from './display-tickets-grid';
 import { TicketsCardview } from './tickets-card-view';
+import { setTicketReadStatus } from '../storage';
 
 interface TicketsByViewProps {
   data: ITicketDetails[];
@@ -30,6 +32,20 @@ const StyledDataGrid = styled(DisplayTicketsGrid)`
 export const TicketsByView = (props: TicketsByViewProps) => {
   const [searchParams] = useSearchParams();
   const cardView = searchParams.get('cardView') || 'true';
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (props.data) {
+      dispatch(
+        setTicketReadStatus(
+          props.data.map((item) => ({
+            ticketId: item.ticketId,
+            has_read: item.has_read,
+          }))
+        )
+      );
+    }
+  }, [dispatch, props.data]);
 
   const onDownloadBtnClick = useCallback(() => {
     if (props.data) {
