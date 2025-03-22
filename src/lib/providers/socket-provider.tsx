@@ -1,3 +1,4 @@
+import { useAuth } from 'modules/login';
 import React, { useContext, useEffect, useRef } from 'react';
 import { Socket, io } from 'socket.io-client';
 
@@ -21,6 +22,7 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const socketRef = useRef<Socket | null>(null);
+  const userAuth = useAuth();
 
   if (!socketRef.current) {
     socketRef.current = io(
@@ -32,16 +34,20 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
   }
 
   useEffect(() => {
-    if (import.meta.env.VITE_SOCKET_ENV !== 'test') {
-      const socket = socketRef.current;
-      socket?.connect();
+    // if (import.meta.env.VITE_SOCKET_ENV !== 'test') {
+    const socket = socketRef.current;
+    socket?.connect();
+    socket?.emit('register', {
+      client_id: userAuth.user?.clientId,
+      user_id: userAuth.user?.userId,
+    });
 
-      return () => {
-        socket?.removeAllListeners();
-        socket?.disconnect();
-      };
-    }
-  }, []);
+    return () => {
+      socket?.removeAllListeners();
+      socket?.disconnect();
+    };
+    // }
+  }, [userAuth.user?.clientId, userAuth.user?.userId]);
 
   const getEventName = (key: SocketEventKeys) => {
     return `${import.meta.env.VITE_SOCKET_ENV}_${key}`;
