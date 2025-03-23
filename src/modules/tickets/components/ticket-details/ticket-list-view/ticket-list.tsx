@@ -5,7 +5,7 @@ import { chooseRandomColors, isToday, isYesterday } from 'lib/utils';
 import { DateTime } from 'luxon';
 import { ITicketDetails } from 'modules/tickets/apis';
 import { useSourceIcon } from 'modules/tickets/hooks';
-import { setTicketDetails, setTicketReadStatus } from 'modules/tickets/storage';
+import { setTicketDetails, setTicketsList } from 'modules/tickets/storage';
 import React, { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -16,6 +16,8 @@ import {
   useSearchParams,
 } from 'react-router-dom';
 import { styled, css, useTheme } from 'styled-components';
+
+import { useTicketsListSocket } from '../../tickets-by-view';
 
 interface ITicketListProps {
   data: ITicketDetails[];
@@ -90,9 +92,7 @@ const TicketDetails = (props: ITicketDetailsProps) => {
   const dispatch = useAppDispatch();
   const getSourceIcon = useSourceIcon();
   const { pallete } = useTheme();
-  const ticketReduxData = useAppSelector(
-    (state) => state.tickets.ticketReadStatus
-  );
+  const ticketsList = useAppSelector((state) => state.tickets.ticketsList);
 
   React.useEffect(() => {
     if (params.ticketId === ticketId.toString() && ref.current) {
@@ -107,13 +107,13 @@ const TicketDetails = (props: ITicketDetailsProps) => {
   }, [dispatch, params.ticketId, props, ticketId]);
 
   const onTicketClick = React.useCallback(() => {
-    const mappedData = ticketReduxData.map((ticket) => {
+    const mappedData = ticketsList.map((ticket) => {
       if (ticket.ticketId === ticketId) {
         return { ...ticket, has_read: true };
       }
       return ticket;
     });
-    dispatch(setTicketReadStatus(mappedData));
+    dispatch(setTicketsList(mappedData));
     navigate(
       `/tickets/${match?.params.ticketType}/${ticketId}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`
     );
@@ -124,7 +124,7 @@ const TicketDetails = (props: ITicketDetailsProps) => {
     noOfRecords,
     pageNumber,
     ticketId,
-    ticketReduxData,
+    ticketsList,
   ]);
 
   const isoDate = DateTime.fromFormat(updatedAt, 'yyyy-LL-dd hh:mm a').toISO();
@@ -134,12 +134,6 @@ const TicketDetails = (props: ITicketDetailsProps) => {
     () => chooseRandomColors(customerName || ''),
     [customerName]
   );
-  const hasRead = useMemo(() => {
-    return (
-      ticketReduxData.find((ticket) => ticket.ticketId === ticketId)
-        ?.has_read ?? has_read
-    );
-  }, [has_read, ticketId, ticketReduxData]);
 
   return (
     <TicketWrapper
@@ -187,7 +181,7 @@ const TicketDetails = (props: ITicketDetailsProps) => {
                   ? `${t('yesterday')}, ${time}`
                   : updatedAt}
             </Typography>
-            {hasRead ? null : <NewMessageIndicator />}
+            {has_read ? null : <NewMessageIndicator />}
           </FlexBox>
         </FlexBox>
         <StyledTypography variant="body2" title={description}>
@@ -206,21 +200,31 @@ export const TicketList = (props: ITicketListProps) => {
   const { data } = props;
   const params = useParams();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const match = useMatch(`/tickets/:ticketType/:ticketId`);
   const [searchParams] = useSearchParams();
   const noOfRecords = searchParams.get('noOfRecords');
   const pageNumber = searchParams.get('pageNumber');
+  const ticketList = useAppSelector((state) => state.tickets.ticketsList);
+
+  useEffect(() => {
+    if (data) {
+      dispatch(setTicketsList(data));
+    }
+  }, [dispatch, data]);
+  useTicketsListSocket();
 
   const doesTicketIdExist = useMemo(
-    () => data.some((item) => item.ticketId.toString() === params.ticketId),
-    [data, params.ticketId]
+    () =>
+      ticketList.some((item) => item.ticketId.toString() === params.ticketId),
+    [ticketList, params.ticketId]
   );
 
   useEffect(() => {
     if (!doesTicketIdExist) {
-      if (data[0]) {
+      if (ticketList[0]) {
         return navigate(
-          `/tickets/${match?.params.ticketType}/${data[0].ticketId}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`
+          `/tickets/${match?.params.ticketType}/${ticketList[0].ticketId}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`
         );
       }
       return navigate(
@@ -228,7 +232,7 @@ export const TicketList = (props: ITicketListProps) => {
       );
     }
   }, [
-    data,
+    ticketList,
     doesTicketIdExist,
     match?.params.ticketType,
     navigate,
@@ -236,7 +240,7 @@ export const TicketList = (props: ITicketListProps) => {
     pageNumber,
   ]);
 
-  const ticketViewDetails = data.map((item) => (
+  const ticketViewDetails = ticketList.map((item) => (
     <TicketDetails key={item.ticketId} {...item} />
   ));
 

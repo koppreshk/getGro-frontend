@@ -1,7 +1,5 @@
-import { SocketEventKeys, useSocket } from 'lib/providers/socket-provider';
 import { FlexBox } from 'lib/ui-ux';
 import { TicketListViewLoader } from 'lib/ui-ux/loader-components';
-import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { useGetTicketsDataByKey } from '../apis';
@@ -36,20 +34,10 @@ export const useGetQueryEndPoint = () => {
 
 export const TicketListViewContainer = () => {
   const queryEndPoint = useGetQueryEndPoint();
-  const { data, isLoading, isRefetching, refetch } = useGetTicketsDataByKey(
+  const { data, isLoading, isRefetching } = useGetTicketsDataByKey(
     queryEndPoint,
     queryEndPoint
   );
-  const { socket, getEventName } = useSocket();
-
-  useEffect(() => {
-    socket?.on(getEventName(SocketEventKeys.EMAIL_LIST), () => {
-      refetch();
-    });
-    return () => {
-      socket.off(getEventName(SocketEventKeys.EMAIL_LIST));
-    };
-  }, [getEventName, refetch, socket]);
 
   if (isLoading || isRefetching) {
     return (
