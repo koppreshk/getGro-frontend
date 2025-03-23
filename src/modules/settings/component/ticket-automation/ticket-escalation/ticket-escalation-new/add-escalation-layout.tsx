@@ -55,25 +55,25 @@ export interface IEscalationFormFields {
   slaTargets: ISLATargetsFormFields;
   addReminders: {
     ftrDuration: string;
-    ftrGroup: IKeyValue[];
-    ftrAgent: IKeyValue[];
+    ftrGroup: IKeyValue | null;
+    ftrAgent: IKeyValue | null;
     ntrDuration: string;
-    ntrGroup: IKeyValue[];
-    ntrAgent: IKeyValue[];
+    ntrGroup: IKeyValue | null;
+    ntrAgent: IKeyValue | null;
     resolutionDuration: string;
-    resolutionGroup: IKeyValue[];
-    resolutionAgent: IKeyValue[];
+    resolutionGroup: IKeyValue | null;
+    resolutionAgent: IKeyValue | null;
   };
   addEscalation: {
     ftrDuration: string;
-    ftrGroup: IKeyValue[];
-    ftrAgent: IKeyValue[];
+    ftrGroup: IKeyValue | null;
+    ftrAgent: IKeyValue | null;
     ntrDuration: string;
-    ntrGroup: IKeyValue[];
-    ntrAgent: IKeyValue[];
+    ntrGroup: IKeyValue | null;
+    ntrAgent: IKeyValue | null;
     resolutionDuration: string;
-    resolutionGroup: IKeyValue[];
-    resolutionAgent: IKeyValue[];
+    resolutionGroup: IKeyValue | null;
+    resolutionAgent: IKeyValue | null;
   };
 }
 
@@ -203,26 +203,26 @@ export const AddEscalationLayout = React.memo(
           },
         },
         addReminders: {
-          ftrAgent: [],
+          ftrAgent: null,
           ftrDuration: data.reminder_times[0]?.id.toString(),
-          ftrGroup: [],
-          ntrAgent: [],
+          ftrGroup: null,
+          ntrAgent: null,
           ntrDuration: data.reminder_times[0]?.id.toString(),
-          ntrGroup: [],
-          resolutionAgent: [],
+          ntrGroup: null,
+          resolutionAgent: null,
           resolutionDuration: data.reminder_times[0]?.id.toString(),
-          resolutionGroup: [],
+          resolutionGroup: null,
         },
         addEscalation: {
-          ftrAgent: [],
+          ftrAgent: null,
           ftrDuration: data.escalation_types[0]?.id.toString(),
-          ftrGroup: [],
-          ntrAgent: [],
+          ftrGroup: null,
+          ntrAgent: null,
           ntrDuration: data.escalation_types[0]?.id.toString(),
-          ntrGroup: [],
-          resolutionAgent: [],
+          ntrGroup: null,
+          resolutionAgent: null,
           resolutionDuration: data.escalation_types[0]?.id.toString(),
-          resolutionGroup: [],
+          resolutionGroup: null,
         },
       },
       mode: 'onBlur',

@@ -33,7 +33,9 @@ interface IAutocompleteFieldProps {
     key: string;
     value: string;
   }[];
+  multiple?: boolean;
 }
+
 export const AutocompleteField = (props: IAutocompleteFieldProps) => {
   const {
     name,
@@ -43,29 +45,34 @@ export const AutocompleteField = (props: IAutocompleteFieldProps) => {
     size = 'medium',
     getOptionLabel,
     renderOption,
+    multiple = true,
   } = props;
   const { control } = useFormContext();
 
   return (
     <Controller
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      render={({ field: { onChange, ref, ...rest } }) => (
+      render={({ field: { onChange, ref, value, ...rest } }) => (
         <Autocomplete
           {...rest}
-          multiple
-          isOptionEqualToValue={(option, value) => option.key === value.key}
-          id="checkboxes-tags-demo"
+          multiple={multiple}
           options={options}
-          disableCloseOnSelect
-          limitTags={3}
+          disableCloseOnSelect={multiple} // Only disable close when multiple is true
+          limitTags={multiple ? 3 : undefined}
           size={size}
-          getOptionLabel={(option) =>
-            getOptionLabel ? getOptionLabel(option) : option.value
+          value={
+            multiple
+              ? (value ?? []) // Ensure value is an array for multiple selection
+              : (value ?? null) // Ensure value is a single object for single selection
           }
-          onChange={(_ev, newValue) => onChange(newValue)}
+          isOptionEqualToValue={(option, val) => option.key === val?.key}
+          getOptionLabel={(option) =>
+            option?.value ?? getOptionLabel?.(option) ?? ''
+          }
+          onChange={(_ev, newValue) => {
+            onChange(multiple ? newValue : (newValue ?? null)); // Ensure correct type
+          }}
           renderOption={(renderProps, option, state, ownerState) => {
             if (renderOption) {
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               return renderOption(
                 renderProps,
                 option,
@@ -75,12 +82,14 @@ export const AutocompleteField = (props: IAutocompleteFieldProps) => {
             }
             return (
               <li {...renderProps}>
-                <Checkbox
-                  icon={<CheckBoxOutlineBlank fontSize="small" />}
-                  checkedIcon={<CheckBox fontSize="small" />}
-                  style={{ marginRight: 8 }}
-                  checked={state.selected}
-                />
+                {multiple && (
+                  <Checkbox
+                    icon={<CheckBoxOutlineBlank fontSize="small" />}
+                    checkedIcon={<CheckBox fontSize="small" />}
+                    style={{ marginRight: 8 }}
+                    checked={state.selected}
+                  />
+                )}
                 {option.value}
               </li>
             );

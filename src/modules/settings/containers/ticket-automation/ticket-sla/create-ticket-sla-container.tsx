@@ -28,6 +28,8 @@ export const CreateTicketSLAContainer = (props: {
       conditionsArray,
     } = formData;
 
+    console.log(formData.addReminders.ftrGroup);
+
     return mutateAsync({
       name: chooseCondition.name,
       description: chooseCondition.description,
@@ -55,23 +57,35 @@ export const CreateTicketSLAContainer = (props: {
         fr_reminder_id: addReminders.ftrDuration,
         nr_reminder_id: addReminders.ntrDuration,
         rs_reminder_id: addReminders.resolutionDuration,
-        fr_queue_ids: addReminders.ftrGroup.map((item) => item.key),
-        fr_user_ids: addReminders.ftrAgent.map((item) => item.key),
-        nr_queue_ids: addReminders.ntrGroup.map((item) => item.key),
-        nr_user_ids: addReminders.ntrAgent.map((item) => item.key),
-        rs_queue_ids: addReminders.resolutionGroup.map((item) => item.key),
-        rs_user_ids: addReminders.resolutionAgent.map((item) => item.key),
+        fr_queue_ids: addReminders.ftrGroup ? [addReminders.ftrGroup.key] : [],
+        fr_user_ids: addReminders.ftrAgent ? [addReminders.ftrAgent.key] : [],
+        nr_queue_ids: addReminders.ntrGroup ? [addReminders.ntrGroup.key] : [],
+        nr_user_ids: addReminders.ntrAgent ? [addReminders.ntrAgent.key] : [],
+        rs_queue_ids: addReminders.resolutionGroup
+          ? [addReminders.resolutionGroup.key]
+          : [],
+        rs_user_ids: addReminders.resolutionAgent
+          ? [addReminders.resolutionAgent.key]
+          : [],
       },
       escalations: {
         fr_escalation_id: addEscalation.ftrDuration,
         nr_escalation_id: addEscalation.ntrDuration,
         rs_escalation_id: addEscalation.resolutionDuration,
-        fr_queue_ids: addEscalation.ftrGroup.map((item) => item.key),
-        fr_user_ids: addEscalation.ftrAgent.map((item) => item.key),
-        nr_queue_ids: addEscalation.ntrGroup.map((item) => item.key),
-        nr_user_ids: addEscalation.ntrAgent.map((item) => item.key),
-        rs_queue_ids: addEscalation.resolutionGroup.map((item) => item.key),
-        rs_user_ids: addEscalation.resolutionAgent.map((item) => item.key),
+        fr_queue_ids: addEscalation.ftrGroup
+          ? [addEscalation.ftrGroup.key]
+          : [],
+        fr_user_ids: addEscalation.ftrAgent ? [addEscalation.ftrAgent.key] : [],
+        nr_queue_ids: addEscalation.ntrGroup
+          ? [addEscalation.ntrGroup.key]
+          : [],
+        nr_user_ids: addEscalation.ntrAgent ? [addEscalation.ntrAgent.key] : [],
+        rs_queue_ids: addEscalation.resolutionGroup
+          ? [addEscalation.resolutionGroup.key]
+          : [],
+        rs_user_ids: addEscalation.resolutionAgent
+          ? [addEscalation.resolutionAgent.key]
+          : [],
       },
     })
       .then((res) => {

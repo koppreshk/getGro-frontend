@@ -35,7 +35,7 @@ export const AddEscalation = (props: IAddEscalationProps) => {
         <Grid container spacing={4}>
           <Grid item xs={4}>
             <HeaderLabel>
-              <Typography variant="body2">
+              <Typography variant="subheading2">
                 {' '}
                 {t('first_response_escalation_note')}{' '}
               </Typography>
@@ -52,18 +52,19 @@ export const AddEscalation = (props: IAddEscalationProps) => {
           </Grid>
           <Grid item xs={8}>
             <HeaderLabel>
-              <Typography variant="body2">{t('to')}</Typography>
+              <Typography variant="subheading2">{t('to')}</Typography>
             </HeaderLabel>
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <AutocompleteField
-                  label={t('group')}
+                  label={t('queue')}
                   name="addEscalation.ftrGroup"
                   options={queueList.map((data) => ({
                     key: data.id.toString(),
                     value: data.name,
                   }))}
-                  placeholder={t('group')}
+                  placeholder={t('queue')}
+                  multiple={false}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -74,6 +75,7 @@ export const AddEscalation = (props: IAddEscalationProps) => {
                     key: data.id.toString(),
                     value: `${data.firstName} ${data.lastName ?? ''}`,
                   }))}
+                  multiple={false}
                   placeholder={t('agent')}
                 />
               </Grid>
@@ -87,7 +89,7 @@ export const AddEscalation = (props: IAddEscalationProps) => {
         <Grid container spacing={4}>
           <Grid item xs={4}>
             <HeaderLabel>
-              <Typography variant="body2">
+              <Typography variant="subheading2">
                 {' '}
                 {t('next_response_escalation_note')}{' '}
               </Typography>
@@ -104,18 +106,19 @@ export const AddEscalation = (props: IAddEscalationProps) => {
           </Grid>
           <Grid item xs={8}>
             <HeaderLabel>
-              <Typography variant="body2"> {t('to')} </Typography>
+              <Typography variant="subheading2"> {t('to')} </Typography>
             </HeaderLabel>
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <AutocompleteField
-                  label={t('group')}
+                  label={t('queue')}
                   name="addEscalation.ntrGroup"
                   options={queueList.map((data) => ({
                     key: data.id.toString(),
                     value: data.name,
                   }))}
-                  placeholder={t('group')}
+                  placeholder={t('queue')}
+                  multiple={false}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -127,6 +130,7 @@ export const AddEscalation = (props: IAddEscalationProps) => {
                     value: `${data.firstName} ${data.lastName ?? ''}`,
                   }))}
                   placeholder={t('agent')}
+                  multiple={false}
                 />
               </Grid>
             </Grid>
@@ -139,7 +143,7 @@ export const AddEscalation = (props: IAddEscalationProps) => {
         <Grid container spacing={4}>
           <Grid item xs={4}>
             <HeaderLabel>
-              <Typography variant="body2">
+              <Typography variant="subheading2">
                 {' '}
                 {t('resolution_escalation_note')}{' '}
               </Typography>
@@ -156,18 +160,19 @@ export const AddEscalation = (props: IAddEscalationProps) => {
           </Grid>
           <Grid item xs={8}>
             <HeaderLabel>
-              <Typography variant="body2"> {t('to')} </Typography>
+              <Typography variant="subheading2"> {t('to')} </Typography>
             </HeaderLabel>
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <AutocompleteField
-                  label={t('group')}
+                  label={t('queue')}
                   name="addEscalation.resolutionGroup"
                   options={queueList.map((data) => ({
                     key: data.id.toString(),
                     value: data.name,
                   }))}
-                  placeholder={t('group')}
+                  placeholder={t('queue')}
+                  multiple={false}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -179,6 +184,7 @@ export const AddEscalation = (props: IAddEscalationProps) => {
                     value: `${data.firstName} ${data.lastName ?? ''}`,
                   }))}
                   placeholder={t('agent')}
+                  multiple={false}
                 />
               </Grid>
             </Grid>
