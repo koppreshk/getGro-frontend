@@ -66,23 +66,35 @@ export const EditTicketSLAContainer = (props: {
         fr_reminder_id: addReminders.ftrDuration,
         nr_reminder_id: addReminders.ntrDuration,
         rs_reminder_id: addReminders.resolutionDuration,
-        fr_queue_ids: addReminders.ftrGroup.map((item) => item.key),
-        fr_user_ids: addReminders.ftrAgent.map((item) => item.key),
-        nr_queue_ids: addReminders.ntrGroup.map((item) => item.key),
-        nr_user_ids: addReminders.ntrAgent.map((item) => item.key),
-        rs_queue_ids: addReminders.resolutionGroup.map((item) => item.key),
-        rs_user_ids: addReminders.resolutionAgent.map((item) => item.key),
+        fr_queue_ids: addReminders.ftrGroup ? [addReminders.ftrGroup.key] : [],
+        fr_user_ids: addReminders.ftrAgent ? [addReminders.ftrAgent.key] : [],
+        nr_queue_ids: addReminders.ntrGroup ? [addReminders.ntrGroup.key] : [],
+        nr_user_ids: addReminders.ntrAgent ? [addReminders.ntrAgent.key] : [],
+        rs_queue_ids: addReminders.resolutionGroup
+          ? [addReminders.resolutionGroup.key]
+          : [],
+        rs_user_ids: addReminders.resolutionAgent
+          ? [addReminders.resolutionAgent.key]
+          : [],
       },
       escalations: {
         fr_escalation_id: addEscalation.ftrDuration,
         nr_escalation_id: addEscalation.ntrDuration,
         rs_escalation_id: addEscalation.resolutionDuration,
-        fr_queue_ids: addEscalation.ftrGroup.map((item) => item.key),
-        fr_user_ids: addEscalation.ftrAgent.map((item) => item.key),
-        nr_queue_ids: addEscalation.ntrGroup.map((item) => item.key),
-        nr_user_ids: addEscalation.ntrAgent.map((item) => item.key),
-        rs_queue_ids: addEscalation.resolutionGroup.map((item) => item.key),
-        rs_user_ids: addEscalation.resolutionAgent.map((item) => item.key),
+        fr_queue_ids: addEscalation.ftrGroup
+          ? [addEscalation.ftrGroup.key]
+          : [],
+        fr_user_ids: addEscalation.ftrAgent ? [addEscalation.ftrAgent.key] : [],
+        nr_queue_ids: addEscalation.ntrGroup
+          ? [addEscalation.ntrGroup.key]
+          : [],
+        nr_user_ids: addEscalation.ntrAgent ? [addEscalation.ntrAgent.key] : [],
+        rs_queue_ids: addEscalation.resolutionGroup
+          ? [addEscalation.resolutionGroup.key]
+          : [],
+        rs_user_ids: addEscalation.resolutionAgent
+          ? [addEscalation.resolutionAgent.key]
+          : [],
       },
     })
       .then((res) => {
@@ -143,104 +155,156 @@ export const EditTicketSLAContainer = (props: {
         return acc;
       }, {} as ISLATargetsFormFields),
       addReminders: {
-        ftrAgent: reminder.fr_user_ids.map((item) => {
-          const valueObj = data.user_list.find(
-            (q) => q.id.toString() === item.toString()
-          )!;
-          return {
-            key: item.toString(),
-            value: `${valueObj.firstName} ${valueObj.lastName ?? ''}`,
-          };
-        }),
+        ftrAgent: reminder.fr_user_ids[0]
+          ? (() => {
+              const user = data.user_list.find(
+                (q) => q.id.toString() === reminder.fr_user_ids[0].toString()
+              );
+              return user
+                ? {
+                    key: user.id.toString(),
+                    value: `${user.firstName} ${user.lastName || ''}`.trim(),
+                  }
+                : null;
+            })()
+          : null,
         ftrDuration: reminder.fr_reminder_id.toString(),
-        ftrGroup: reminder.fr_queue_ids.map((item) => ({
-          key: item.toString(),
-          value: data.queue_list.find(
-            (q) => q.id.toString() === item.toString()
-          )!.name,
-        })),
-        ntrAgent: reminder.nr_user_ids.map((item) => {
-          const valueObj = data.user_list.find(
-            (q) => q.id.toString() === item.toString()
-          )!;
-          return {
-            key: item.toString(),
-            value: `${valueObj.firstName} ${valueObj.lastName ?? ''}`,
-          };
-        }),
+        ftrGroup: reminder.fr_queue_ids[0]
+          ? (() => {
+              const queue = data.queue_list.find(
+                (q) => q.id.toString() === reminder.fr_queue_ids[0].toString()
+              );
+              return queue
+                ? { key: queue.id.toString(), value: queue.name }
+                : null;
+            })()
+          : null,
+        ntrAgent: reminder.nr_user_ids[0]
+          ? (() => {
+              const user = data.user_list.find(
+                (q) => q.id.toString() === reminder.nr_user_ids[0].toString()
+              );
+
+              return user
+                ? {
+                    key: user.id.toString(),
+                    value: `${user.firstName} ${user.lastName || ''}`.trim(),
+                  }
+                : null;
+            })()
+          : null,
         ntrDuration: reminder.nr_reminder_id.toString(),
-        ntrGroup: reminder.nr_queue_ids.map((item) => ({
-          key: item.toString(),
-          value: data.queue_list.find(
-            (q) => q.id.toString() === item.toString()
-          )!.name,
-        })),
-        resolutionAgent: reminder.rs_user_ids.map((item) => {
-          const valueObj = data.user_list.find(
-            (q) => q.id.toString() === item.toString()
-          )!;
-          return {
-            key: item.toString(),
-            value: `${valueObj.firstName} ${valueObj.lastName ?? ''}`,
-          };
-        }),
+        ntrGroup: reminder.nr_queue_ids[0]
+          ? (() => {
+              const queue = data.queue_list.find(
+                (q) => q.id.toString() === reminder.nr_queue_ids[0].toString()
+              );
+              return queue
+                ? { key: queue.id.toString(), value: queue.name }
+                : null;
+            })()
+          : null,
+        resolutionAgent: reminder.rs_user_ids[0]
+          ? (() => {
+              const user = data.user_list.find(
+                (q) => q.id.toString() === reminder.fr_user_ids[0].toString()
+              );
+              return user
+                ? {
+                    key: user.id.toString(),
+                    value: `${user.firstName} ${user.lastName || ''}`.trim(),
+                  }
+                : null;
+            })()
+          : null,
         resolutionDuration: reminder.rs_reminder_id.toString(),
-        resolutionGroup: reminder.rs_queue_ids.map((item) => ({
-          key: item.toString(),
-          value: data.queue_list.find(
-            (q) => q.id.toString() === item.toString()
-          )!.name,
-        })),
+        resolutionGroup: reminder.rs_queue_ids[0]
+          ? (() => {
+              const queue = data.queue_list.find(
+                (q) => q.id.toString() === reminder.rs_queue_ids[0].toString()
+              );
+              return queue
+                ? { key: queue.id.toString(), value: queue.name }
+                : null;
+            })()
+          : null,
       },
       addEscalation: {
-        ftrAgent: escalations.fr_user_ids.map((item) => {
-          const valueObj = data.user_list.find(
-            (q) => q.id.toString() === item.toString()
-          )!;
-          return {
-            key: item.toString(),
-            value: `${valueObj.firstName} ${valueObj.lastName ?? ''}`,
-          };
-        }),
+        ftrAgent: escalations.fr_user_ids[0]
+          ? (() => {
+              const user = data.user_list.find(
+                (q) => q.id.toString() === escalations.fr_user_ids[0].toString()
+              );
+              return user
+                ? {
+                    key: user.id.toString(),
+                    value: `${user.firstName} ${user.lastName || ''}`.trim(),
+                  }
+                : null;
+            })()
+          : null,
         ftrDuration: escalations.fr_escalation_id.toString(),
-        ftrGroup: escalations.fr_queue_ids.map((item) => ({
-          key: item.toString(),
-          value: data.queue_list.find(
-            (q) => q.id.toString() === item.toString()
-          )!.name,
-        })),
-        ntrAgent: escalations.nr_user_ids.map((item) => {
-          const valueObj = data.user_list.find(
-            (q) => q.id.toString() === item.toString()
-          )!;
-          return {
-            key: item.toString(),
-            value: `${valueObj.firstName} ${valueObj.lastName ?? ''}`,
-          };
-        }),
+        ftrGroup: escalations.fr_queue_ids[0]
+          ? (() => {
+              const queue = data.queue_list.find(
+                (q) =>
+                  q.id.toString() === escalations.fr_queue_ids[0].toString()
+              );
+              return queue
+                ? { key: queue.id.toString(), value: queue.name }
+                : null;
+            })()
+          : null,
+        ntrAgent: escalations.nr_user_ids[0]
+          ? (() => {
+              const user = data.user_list.find(
+                (q) => q.id.toString() === escalations.nr_user_ids[0].toString()
+              );
+              return user
+                ? {
+                    key: user.id.toString(),
+                    value: `${user.firstName} ${user.lastName || ''}`.trim(),
+                  }
+                : null;
+            })()
+          : null,
         ntrDuration: escalations.nr_escalation_id.toString(),
-        ntrGroup: escalations.nr_queue_ids.map((item) => ({
-          key: item.toString(),
-          value: data.queue_list.find(
-            (q) => q.id.toString() === item.toString()
-          )!.name,
-        })),
-        resolutionAgent: escalations.rs_user_ids.map((item) => {
-          const valueObj = data.user_list.find(
-            (q) => q.id.toString() === item.toString()
-          )!;
-          return {
-            key: item.toString(),
-            value: `${valueObj.firstName} ${valueObj.lastName ?? ''}`,
-          };
-        }),
+        ntrGroup: escalations.nr_queue_ids[0]
+          ? (() => {
+              const queue = data.queue_list.find(
+                (q) =>
+                  q.id.toString() === escalations.nr_queue_ids[0].toString()
+              );
+              return queue
+                ? { key: queue.id.toString(), value: queue.name }
+                : null;
+            })()
+          : null,
+        resolutionAgent: escalations.rs_user_ids[0]
+          ? (() => {
+              const user = data.user_list.find(
+                (q) => q.id.toString() === escalations.rs_user_ids[0].toString()
+              );
+              return user
+                ? {
+                    key: user.id.toString(),
+                    value: `${user.firstName} ${user.lastName || ''}`.trim(),
+                  }
+                : null;
+            })()
+          : null,
         resolutionDuration: escalations.rs_escalation_id.toString(),
-        resolutionGroup: escalations.rs_queue_ids.map((item) => ({
-          key: item.toString(),
-          value: data.queue_list.find(
-            (q) => q.id.toString() === item.toString()
-          )!.name,
-        })),
+        resolutionGroup: escalations.rs_queue_ids[0]
+          ? (() => {
+              const queue = data.queue_list.find(
+                (q) =>
+                  q.id.toString() === escalations.rs_queue_ids[0].toString()
+              );
+              return queue
+                ? { key: queue.id.toString(), value: queue.name }
+                : null;
+            })()
+          : null,
       },
     } as IEscalationFormFields;
 

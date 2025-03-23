@@ -36,7 +36,7 @@ export const AddReminder = (props: IAddReminderProps) => {
         <Grid container spacing={4}>
           <Grid item xs={4}>
             <HeaderLabel>
-              <Typography variant="body2">
+              <Typography variant="subheading2">
                 {' '}
                 {t('first_response_label')}{' '}
               </Typography>
@@ -53,7 +53,10 @@ export const AddReminder = (props: IAddReminderProps) => {
           </Grid>
           <Grid item xs={8}>
             <HeaderLabel>
-              <Typography variant="body2"> {t('send_reminder_to')} </Typography>
+              <Typography variant="subheading2">
+                {' '}
+                {t('send_reminder_to')}{' '}
+              </Typography>
             </HeaderLabel>
             <Grid container spacing={2}>
               <Grid item xs={6}>
@@ -65,6 +68,7 @@ export const AddReminder = (props: IAddReminderProps) => {
                     value: data.name,
                   }))}
                   placeholder={t('queue')}
+                  multiple={false}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -76,6 +80,7 @@ export const AddReminder = (props: IAddReminderProps) => {
                     value: `${data.firstName} ${data.lastName ?? ''}`,
                   }))}
                   placeholder={t('agent')}
+                  multiple={false}
                 />
               </Grid>
             </Grid>
@@ -88,7 +93,7 @@ export const AddReminder = (props: IAddReminderProps) => {
         <Grid container spacing={4}>
           <Grid item xs={4}>
             <HeaderLabel>
-              <Typography variant="body2">
+              <Typography variant="subheading2">
                 {' '}
                 {t('next_response_label')}{' '}
               </Typography>
@@ -105,7 +110,10 @@ export const AddReminder = (props: IAddReminderProps) => {
           </Grid>
           <Grid item xs={8}>
             <HeaderLabel>
-              <Typography variant="body2"> {t('send_reminder_to')} </Typography>
+              <Typography variant="subheading2">
+                {' '}
+                {t('send_reminder_to')}{' '}
+              </Typography>
             </HeaderLabel>
             <Grid container spacing={2}>
               <Grid item xs={6}>
@@ -117,6 +125,7 @@ export const AddReminder = (props: IAddReminderProps) => {
                     value: data.name,
                   }))}
                   placeholder={t('queue')}
+                  multiple={false}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -128,6 +137,7 @@ export const AddReminder = (props: IAddReminderProps) => {
                     value: `${data.firstName} ${data.lastName ?? ''}`,
                   }))}
                   placeholder={t('agent')}
+                  multiple={false}
                 />
               </Grid>
             </Grid>
@@ -140,7 +150,10 @@ export const AddReminder = (props: IAddReminderProps) => {
         <Grid container spacing={4}>
           <Grid item xs={4}>
             <HeaderLabel>
-              <Typography variant="body2"> {t('resolution_label')} </Typography>
+              <Typography variant="subheading2">
+                {' '}
+                {t('resolution_label')}{' '}
+              </Typography>
             </HeaderLabel>
             <SelectField
               name="addReminders.resolutionDuration"
@@ -154,7 +167,10 @@ export const AddReminder = (props: IAddReminderProps) => {
           </Grid>
           <Grid item xs={8}>
             <HeaderLabel>
-              <Typography variant="body2"> {t('send_reminder_to')} </Typography>
+              <Typography variant="subheading2">
+                {' '}
+                {t('send_reminder_to')}{' '}
+              </Typography>
             </HeaderLabel>
             <Grid container spacing={2}>
               <Grid item xs={6}>
@@ -166,6 +182,7 @@ export const AddReminder = (props: IAddReminderProps) => {
                     value: data.name,
                   }))}
                   placeholder={t('queue')}
+                  multiple={false}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -177,6 +194,7 @@ export const AddReminder = (props: IAddReminderProps) => {
                     value: `${data.firstName} ${data.lastName ?? ''}`,
                   }))}
                   placeholder={t('agent')}
+                  multiple={false}
                 />
               </Grid>
             </Grid>
