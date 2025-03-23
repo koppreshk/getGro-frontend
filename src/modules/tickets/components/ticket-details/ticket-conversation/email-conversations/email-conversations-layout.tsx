@@ -68,23 +68,13 @@ export const EmailConversationLayout = (props: {
   const { showNotification } = useNotifications();
 
   useEffect(() => {
-    if (casedConversation.length !== emailThreads.length) {
-      setEmailThreads(casedConversation);
-    }
-  }, [
-    casedConversation,
-    casedConversation.length,
-    emailThreads.length,
-    fetchNewThreads,
-  ]);
-
-  useEffect(() => {
     if (!socket) return; // Prevent running if socket is null
 
-    const handleSocketEvent = (_info: any) => {
-      //TODO: need to use this info obj which contains id and has to be consumed
-      console.log('test_email_channel', _info);
-      fetchNewThreads();
+    const handleSocketEvent = (newMessage: Conversations) => {
+      setEmailThreads((prev) => [
+        ...prev,
+        { ...toCamelCasedKeysFromUnderScores(newMessage), isCollapsed: false },
+      ]);
       showNotification({ message: 'You have a new message', type: 'info' });
     };
     const eventName = getEventName(SocketEventKeys.EMAIL_CONVERSATIONS);

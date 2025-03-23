@@ -19,7 +19,7 @@ import { DateTime } from 'luxon';
 import { ChatType } from 'modules/chats/apis';
 import { ManageAssigneeContainer } from 'modules/tickets/containers/overview/manage-assignee-container';
 import { useSourceIcon } from 'modules/tickets/hooks';
-import { setTicketReadStatus } from 'modules/tickets/storage';
+import { setTicketsList } from 'modules/tickets/storage';
 import React, { useCallback, useMemo } from 'react';
 import { useMatch, useNavigate, useSearchParams } from 'react-router-dom';
 import { styled, css } from 'styled-components';
@@ -267,9 +267,7 @@ export const CardView = (props: ITicketDetails) => {
   const noOfRecords = searchParams.get('noOfRecords');
   const pageNumber = searchParams.get('pageNumber');
   const searchText = searchParams.get('searchText');
-  const ticketReduxData = useAppSelector(
-    (state) => state.tickets.ticketReadStatus
-  );
+  const ticketReduxData = useAppSelector((state) => state.tickets.ticketsList);
   const dispatch = useAppDispatch();
 
   const isFeatureAccessible = useFeature<undefined>();
@@ -281,7 +279,7 @@ export const CardView = (props: ITicketDetails) => {
       }
       return ticket;
     });
-    dispatch(setTicketReadStatus(modifiedData));
+    dispatch(setTicketsList(modifiedData));
     navigate(
       `${match?.pathname}/${ticketId}?noOfRecords=${noOfRecords}&pageNumber=${pageNumber}`,
       { replace: true }

@@ -12,10 +12,10 @@ export const SocketContext = React.createContext<ISocketProps | undefined>(
 );
 
 export enum SocketEventKeys {
-  EMAIL_CONVERSATIONS = 'email_channel',
-  CHAT_COVERSATION_LIST = 'conversation_list',
-  CHAT_MESSAGE_LIST = 'message_list',
-  EMAIL_LIST = 'email_list',
+  EMAIL_CONVERSATIONS = 'new_ticket_message',
+  CHAT_COVERSATION_LIST = 'new_conversation',
+  CHAT_MESSAGE_LIST = 'new_conversation_message',
+  EMAIL_LIST = 'new_ticket',
 }
 
 export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -50,7 +50,7 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [userAuth.user?.clientId, userAuth.user?.userId]);
 
   const getEventName = (key: SocketEventKeys) => {
-    return `${import.meta.env.VITE_SOCKET_ENV}_${key}`;
+    return `${key}`;
   };
 
   return (

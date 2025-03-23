@@ -3,21 +3,20 @@ import { Row, createColumnHelper } from '@tanstack/react-table';
 import { useAppDispatch, useAppSelector, useFeature } from 'lib/hooks';
 import { DataGrid, NoDataIllustration } from 'lib/ui-ux';
 import { useDateDifference } from 'lib/utils';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMatch, useNavigate, useSearchParams } from 'react-router-dom';
 import { styled, css } from 'styled-components';
 
 import { ITicketDetails } from '../apis';
 import { useSourceIcon } from '../hooks/ticket-hooks';
-import { setTicketReadStatus, setTotalPages } from '../storage';
+import { setTicketsList, setTotalPages } from '../storage';
 import {
   ManageAssignee,
   StyledTicketStatus,
 } from './tickets-card-view/card-view';
 
 interface IDisplayTicketsGridProps {
-  data: ITicketDetails[];
   isLoading?: boolean;
   totalPages: number;
 }
@@ -262,7 +261,6 @@ const useColumns = () => {
 };
 
 export const DisplayTicketsGrid = (props: IDisplayTicketsGridProps) => {
-  const { data } = props;
   const navigate = useNavigate();
   const columns = useColumns();
   const dispatch = useAppDispatch();
@@ -270,32 +268,23 @@ export const DisplayTicketsGrid = (props: IDisplayTicketsGridProps) => {
   const noOfRecords = searchParams.get('noOfRecords');
   const pageNumber = searchParams.get('pageNumber');
   const match = useMatch('/:tickets/:ticketType');
-  const ticketReduxData = useAppSelector(
-    (state) => state.tickets.ticketReadStatus
-  );
+  const ticketsList = useAppSelector((state) => state.tickets.ticketsList);
 
   const onRowClick = React.useCallback(
     (row: Row<ITicketDetails>) => {
-      const modifiedData = ticketReduxData.map((ticket) => {
+      const modifiedData = ticketsList.map((ticket) => {
         if (ticket.ticketId === row.original.ticketId) {
           return { ...ticket, has_read: true };
         }
         return ticket;
       });
-      dispatch(setTicketReadStatus(modifiedData));
+      dispatch(setTicketsList(modifiedData));
       navigate(
         `${match?.pathname}/${row.original.ticketId}?noOfRecords=${noOfRecords}&pageNumber=${pageNumber}`,
         { replace: true }
       );
     },
-    [
-      dispatch,
-      match?.pathname,
-      navigate,
-      noOfRecords,
-      pageNumber,
-      ticketReduxData,
-    ]
+    [dispatch, match?.pathname, navigate, noOfRecords, pageNumber, ticketsList]
   );
 
   React.useEffect(() => {
@@ -305,21 +294,12 @@ export const DisplayTicketsGrid = (props: IDisplayTicketsGridProps) => {
   const { totalPages } = useAppSelector((state) => state.tickets);
   const { t } = useTranslation();
 
-  const tableData = useMemo(() => {
-    return data?.map((item) => ({
-      ...item,
-      has_read:
-        ticketReduxData.find((ticket) => ticket.ticketId === item.ticketId)
-          ?.has_read ?? item.has_read,
-    }));
-  }, [data, ticketReduxData]);
-
   return (
     <React.Fragment>
-      {data.length > 0 || props.isLoading ? (
+      {ticketsList.length > 0 || props.isLoading ? (
         <DataGrid
           {...props}
-          data={tableData}
+          data={ticketsList}
           columns={columns}
           onRowClick={onRowClick}
           totalPages={totalPages}
