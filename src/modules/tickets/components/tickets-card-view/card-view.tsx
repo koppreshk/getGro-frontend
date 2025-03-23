@@ -307,12 +307,6 @@ export const CardView = (props: ITicketDetails) => {
       )
     );
   };
-  const hasRead = useMemo(() => {
-    return (
-      ticketReduxData.find((ticket) => ticket.ticketId === ticketId)
-        ?.has_read ?? has_read
-    );
-  }, [has_read, ticketId, ticketReduxData]);
 
   return (
     <StyledCard
@@ -328,7 +322,7 @@ export const CardView = (props: ITicketDetails) => {
         width="calc(100% - 350px)"
         style={{ position: 'relative' }}
       >
-        {hasRead ? null : (
+        {has_read ? null : (
           <Tooltip title={t('view_new_message')}>
             <NewMessageIndicator
               style={{ position: 'absolute', top: '-5px', left: '-12px' }}

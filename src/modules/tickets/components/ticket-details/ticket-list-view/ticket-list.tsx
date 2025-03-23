@@ -1,4 +1,4 @@
-import { Avatar, Typography } from '@mui/material';
+import { Avatar, Tooltip, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from 'lib/hooks';
 import { FlexBox, NewMessageIndicator } from 'lib/ui-ux';
 import { chooseRandomColors, isToday, isYesterday } from 'lib/utils';
@@ -107,7 +107,7 @@ const TicketDetails = (props: ITicketDetailsProps) => {
   }, [dispatch, params.ticketId, props, ticketId]);
 
   const onTicketClick = React.useCallback(() => {
-    const mappedData = ticketsList.map((ticket) => {
+    const mappedData = [...ticketsList].map((ticket) => {
       if (ticket.ticketId === ticketId) {
         return { ...ticket, has_read: true };
       }
@@ -181,7 +181,11 @@ const TicketDetails = (props: ITicketDetailsProps) => {
                   ? `${t('yesterday')}, ${time}`
                   : updatedAt}
             </Typography>
-            {has_read ? null : <NewMessageIndicator />}
+            {has_read ? null : (
+              <Tooltip title={t('view_new_message')}>
+                <NewMessageIndicator />
+              </Tooltip>
+            )}
           </FlexBox>
         </FlexBox>
         <StyledTypography variant="body2" title={description}>
@@ -215,16 +219,15 @@ export const TicketList = (props: ITicketListProps) => {
   useTicketsListSocket();
 
   const doesTicketIdExist = useMemo(
-    () =>
-      ticketList.some((item) => item.ticketId.toString() === params.ticketId),
-    [ticketList, params.ticketId]
+    () => data.some((item) => item.ticketId.toString() === params.ticketId),
+    [data, params.ticketId]
   );
 
   useEffect(() => {
     if (!doesTicketIdExist) {
-      if (ticketList[0]) {
+      if (data[0]) {
         return navigate(
-          `/tickets/${match?.params.ticketType}/${ticketList[0].ticketId}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`
+          `/tickets/${match?.params.ticketType}/${data[0].ticketId}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`
         );
       }
       return navigate(
@@ -232,7 +235,7 @@ export const TicketList = (props: ITicketListProps) => {
       );
     }
   }, [
-    ticketList,
+    data,
     doesTicketIdExist,
     match?.params.ticketType,
     navigate,
