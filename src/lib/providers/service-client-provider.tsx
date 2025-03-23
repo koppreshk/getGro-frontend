@@ -71,6 +71,7 @@ const arg: Pick<ServiceClient, 'getData' | 'postData'> = {
 
 const ServiceClientContext = React.createContext(arg);
 
+// eslint-disable-next-line react/display-name
 export const ServiceClientProvider = React.memo(
   (props: { children: React.ReactNode }) => {
     const { user, logout } = useAuth();
