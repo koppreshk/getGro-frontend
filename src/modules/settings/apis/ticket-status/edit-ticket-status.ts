@@ -7,6 +7,7 @@ import { StatusTypeEndPoint, StatusTypeQueryKey } from './api-enums';
 interface IEditStatusArgs {
   id: number;
   name: string;
+  description?: string;
 }
 
 export const useEditTicketStatus = () => {
@@ -18,6 +19,7 @@ export const useEditTicketStatus = () => {
       postData(StatusTypeEndPoint.EDIT_STATUS, {
         id: args.id,
         name: args.name,
+        description: args.description,
       }).then((res) => res.json()),
     [postData]
   );

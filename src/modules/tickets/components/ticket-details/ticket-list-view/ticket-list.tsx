@@ -1,11 +1,11 @@
-import { Avatar, Typography } from '@mui/material';
-import { useAppDispatch } from 'lib/hooks';
-import { FlexBox } from 'lib/ui-ux';
+import { Avatar, Tooltip, Typography } from '@mui/material';
+import { useAppDispatch, useAppSelector } from 'lib/hooks';
+import { FlexBox, NewMessageIndicator } from 'lib/ui-ux';
 import { chooseRandomColors, isToday, isYesterday } from 'lib/utils';
 import { DateTime } from 'luxon';
 import { ITicketDetails } from 'modules/tickets/apis';
 import { useSourceIcon } from 'modules/tickets/hooks';
-import { setTicketDetails } from 'modules/tickets/storage';
+import { setTicketDetails, setTicketsList } from 'modules/tickets/storage';
 import React, { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -15,7 +15,9 @@ import {
   useParams,
   useSearchParams,
 } from 'react-router-dom';
-import styled, { css, useTheme } from 'styled-components';
+import { styled, css, useTheme } from 'styled-components';
+
+import { useTicketsListSocket } from '../../tickets-by-view';
 
 interface ITicketListProps {
   data: ITicketDetails[];
@@ -69,23 +71,12 @@ interface ITicketDetailsProps extends ITicketDetails {}
 
 const TicketDetails = (props: ITicketDetailsProps) => {
   const {
-    createdAt,
+    updatedAt,
     customerName,
     ticketId,
-    source,
-    priority,
-    ticketStatus,
-    assigneeInfo,
-    customerInfo,
-    channelId,
-    resolutionDue,
-    responseDue,
-    statusUpdateString,
-    closedAt,
     description,
-    tags,
-    shopifyCustomerId,
     createdFrom,
+    has_read,
   } = props;
   const params = useParams();
   const navigate = useNavigate();
@@ -101,6 +92,7 @@ const TicketDetails = (props: ITicketDetailsProps) => {
   const dispatch = useAppDispatch();
   const getSourceIcon = useSourceIcon();
   const { pallete } = useTheme();
+  const ticketsList = useAppSelector((state) => state.tickets.ticketsList);
 
   React.useEffect(() => {
     if (params.ticketId === ticketId.toString() && ref.current) {
@@ -108,61 +100,41 @@ const TicketDetails = (props: ITicketDetailsProps) => {
 
       dispatch(
         setTicketDetails({
-          source,
-          ticketId,
-          customerName,
-          ticketStatus,
-          createdAt,
-          priority,
-          assigneeInfo,
-          customerInfo,
-          channelId,
-          responseDue,
-          resolutionDue,
-          statusUpdateString,
-          closedAt,
-          description,
-          tags,
-          shopifyCustomerId,
-          createdFrom,
+          ...props,
         })
       );
     }
-  }, [
-    customerInfo,
-    createdAt,
-    customerName,
-    dispatch,
-    params.ticketId,
-    priority,
-    source,
-    ticketId,
-    ticketStatus,
-    channelId,
-    responseDue,
-    resolutionDue,
-    assigneeInfo,
-    statusUpdateString,
-    closedAt,
-    description,
-    tags,
-    shopifyCustomerId,
-    createdFrom,
-  ]);
+  }, [dispatch, params.ticketId, props, ticketId]);
 
   const onTicketClick = React.useCallback(() => {
+    const mappedData = [...ticketsList].map((ticket) => {
+      if (ticket.ticketId === ticketId) {
+        return { ...ticket, has_read: true };
+      }
+      return ticket;
+    });
+    dispatch(setTicketsList(mappedData));
     navigate(
       `/tickets/${match?.params.ticketType}/${ticketId}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`
     );
-  }, [match?.params.ticketType, navigate, noOfRecords, pageNumber, ticketId]);
+  }, [
+    dispatch,
+    match?.params.ticketType,
+    navigate,
+    noOfRecords,
+    pageNumber,
+    ticketId,
+    ticketsList,
+  ]);
 
-  const isoDate = DateTime.fromFormat(createdAt, 'yyyy-LL-dd hh:mm a').toISO();
+  const isoDate = DateTime.fromFormat(updatedAt, 'yyyy-LL-dd hh:mm a').toISO();
   const time = DateTime.fromISO(isoDate!).toFormat('hh:mm a');
   const { t } = useTranslation();
   const { backgroundColor, textColor } = useMemo(
     () => chooseRandomColors(customerName || ''),
     [customerName]
   );
+
   return (
     <TicketWrapper
       flexDirection="row"
@@ -197,17 +169,24 @@ const TicketDetails = (props: ITicketDetailsProps) => {
           >
             {customerName}
           </Typography>
-          <Typography
-            variant="caption"
-            title="Created At"
-            sx={{ color: pallete.grayNeutral }}
-          >
-            {isToday(isoDate!)
-              ? `${t('today')}, ${time}`
-              : isYesterday(isoDate!)
-                ? `${t('yesterday')}, ${time}`
-                : createdAt}
-          </Typography>
+          <FlexBox gap="8px" alignItems="baseline">
+            <Typography
+              variant="caption"
+              title={t('last_updated')}
+              sx={{ color: pallete.grayNeutral }}
+            >
+              {isToday(isoDate!)
+                ? `${t('today')}, ${time}`
+                : isYesterday(isoDate!)
+                  ? `${t('yesterday')}, ${time}`
+                  : updatedAt}
+            </Typography>
+            {has_read ? null : (
+              <Tooltip title={t('view_new_message')}>
+                <NewMessageIndicator />
+              </Tooltip>
+            )}
+          </FlexBox>
         </FlexBox>
         <StyledTypography variant="body2" title={description}>
           {description}
@@ -225,10 +204,19 @@ export const TicketList = (props: ITicketListProps) => {
   const { data } = props;
   const params = useParams();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const match = useMatch(`/tickets/:ticketType/:ticketId`);
   const [searchParams] = useSearchParams();
   const noOfRecords = searchParams.get('noOfRecords');
   const pageNumber = searchParams.get('pageNumber');
+  const ticketList = useAppSelector((state) => state.tickets.ticketsList);
+
+  useEffect(() => {
+    if (data) {
+      dispatch(setTicketsList(data));
+    }
+  }, [dispatch, data]);
+  useTicketsListSocket();
 
   const doesTicketIdExist = useMemo(
     () => data.some((item) => item.ticketId.toString() === params.ticketId),
@@ -255,7 +243,7 @@ export const TicketList = (props: ITicketListProps) => {
     pageNumber,
   ]);
 
-  const ticketViewDetails = data.map((item) => (
+  const ticketViewDetails = ticketList.map((item) => (
     <TicketDetails key={item.ticketId} {...item} />
   ));
 

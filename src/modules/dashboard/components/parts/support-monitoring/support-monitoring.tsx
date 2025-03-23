@@ -23,7 +23,6 @@ export const SupportMonitoring = (props: ISupportMonitoringProps) => {
     response_overdue,
     email,
     ivr,
-    whatsapp,
   } = props.data;
 
   return (
@@ -49,9 +48,7 @@ export const SupportMonitoring = (props: ISupportMonitoringProps) => {
           pending_tickets={pending_tickets}
         />
         <FlexBox gap={'20px'} width="100%">
-          <TicketsBySource
-            channelsInfo={{ Email: email, Whatsapp: whatsapp, IVR: ivr }}
-          />
+          <TicketsBySource channelsInfo={{ Email: email, IVR: ivr }} />
           <TicketStats dateRange={dateRange} />
         </FlexBox>
       </FlexBox>

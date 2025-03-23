@@ -47,25 +47,25 @@ export default function App() {
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <MUIthemeProvider theme={defaultMUITheme}>
-        <SocketProvider>
-          <QueryClientProvider client={queryClient}>
-            <Provider store={store}>
-              <NotificationProvider>
-                <BrowserRouter>
-                  <ThemeProvider>
-                    <AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <Provider store={store}>
+            <NotificationProvider>
+              <BrowserRouter>
+                <ThemeProvider>
+                  <AuthProvider>
+                    <SocketProvider>
                       <ServiceClientProvider>
                         <ExotelServiceProvider>
                           <CoreLayout />
                         </ExotelServiceProvider>
                       </ServiceClientProvider>
-                    </AuthProvider>
-                  </ThemeProvider>
-                </BrowserRouter>
-              </NotificationProvider>
-            </Provider>
-          </QueryClientProvider>
-        </SocketProvider>
+                    </SocketProvider>
+                  </AuthProvider>
+                </ThemeProvider>
+              </BrowserRouter>
+            </NotificationProvider>
+          </Provider>
+        </QueryClientProvider>
       </MUIthemeProvider>
     </ErrorBoundary>
   );

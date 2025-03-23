@@ -1,4 +1,4 @@
-import { AlertColor, Snackbar, Alert } from '@mui/material';
+import { AlertColor, Snackbar, Alert, Slide, SlideProps } from '@mui/material';
 import React, { useContext } from 'react';
 
 interface INotificationProviderProps {
@@ -19,6 +19,11 @@ const defaultContextValues = {
 
 const NotificationContext = React.createContext(defaultContextValues);
 
+function SlideTransition(props: SlideProps) {
+  return <Slide {...props} direction="up" />;
+}
+
+// eslint-disable-next-line react/display-name
 export const NotificationProvider = React.memo(
   (props: INotificationProviderProps) => {
     const { children } = props;
@@ -54,6 +59,7 @@ export const NotificationProvider = React.memo(
           open={isOpen}
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           autoHideDuration={3000}
+          TransitionComponent={SlideTransition}
           onClose={closeNotifications}
         >
           <Alert severity={messageAndType.type} onClose={closeNotifications}>

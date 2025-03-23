@@ -1,7 +1,7 @@
 import { SouthWest, NorthEast, AttachFile } from '@mui/icons-material';
 import { Typography } from '@mui/material';
 import { useAppDispatch } from 'lib/hooks';
-import { FlexBox } from 'lib/ui-ux';
+import { FlexBox, NewMessageIndicator } from 'lib/ui-ux';
 import { isToday, isYesterday } from 'lib/utils';
 import { DateTime } from 'luxon';
 import { ChatConversation } from 'modules/chats/apis';
@@ -49,13 +49,6 @@ const StyledTypography = styled(Typography)`
     overflow: hidden;
     color: ${(props) => props.theme.pallete.grayNeutral};
   }
-`;
-
-const NewMessageIndicator = styled.div`
-  width: 10px;
-  height: 10px;
-  background-color: ${(props) => props.theme.pallete.primaryPurple};
-  border-radius: 100%;
 `;
 
 export const ChatItem = (

@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 export interface ITicketStatusFormFields {
   ticketStatusName: string;
   ticketStatusId?: number;
+  ticketStatusDescription?: string;
 }
 
 export const CreateTicketStatusContainer = (props: {
@@ -20,9 +21,10 @@ export const CreateTicketStatusContainer = (props: {
   const { t } = useTranslation();
 
   const submitTicketStatus = React.useCallback(
-    (fromValues: ITicketStatusFormFields) => {
+    (formValues: ITicketStatusFormFields) => {
       createTicketStatus({
-        name: fromValues.ticketStatusName,
+        name: formValues.ticketStatusName,
+        description: formValues.ticketStatusDescription,
       })
         .then(() => {
           showNotification({

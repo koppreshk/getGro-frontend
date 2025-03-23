@@ -6,6 +6,7 @@ import { StatusTypeEndPoint, StatusTypeQueryKey } from './api-enums';
 
 interface ICreateStatusArgs {
   name: string;
+  description?: string;
 }
 
 export const useCreateTicketStatus = () => {
@@ -16,6 +17,7 @@ export const useCreateTicketStatus = () => {
     (args: ICreateStatusArgs) =>
       postData(StatusTypeEndPoint.CREATE_STATUS, {
         name: args.name,
+        description: args.description,
       }).then((res) => res.json()),
     [postData]
   );

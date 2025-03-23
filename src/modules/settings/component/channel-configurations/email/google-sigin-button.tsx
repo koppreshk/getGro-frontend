@@ -11,7 +11,8 @@ declare global {
   }
 }
 
-const GoogleSignInButton = () => {
+const GoogleSignInButton = (props: { isDisabled?: boolean }) => {
+  const { isDisabled } = props;
   const { showNotification } = useNotifications();
   const { mutateAsync, isLoading } = useNylasGoogleOAuth();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -109,11 +110,14 @@ const GoogleSignInButton = () => {
 
   return (
     <>
-      {isLoading ? (
-        <PageBlockingLoader loading={isLoading} />
-      ) : (
-        <div ref={buttonRef} />
-      )}
+      <PageBlockingLoader loading={isLoading} />
+      <div
+        ref={buttonRef}
+        style={{
+          pointerEvents: isDisabled ? 'none' : 'auto',
+          opacity: isDisabled ? 0.6 : 1,
+        }}
+      />
     </>
   );
 };

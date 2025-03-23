@@ -87,7 +87,10 @@ export const DownloadAttachments = (
             {attachment.fileName}
           </Typography>
           <FlexBox alignItems="center">
-            <PreviewFileContainer fileUrl={attachment.fileUrl} />
+            <PreviewFileContainer
+              fileUrl={attachment.fileUrl}
+              contentType={attachment.contentType}
+            />
             <DownloadAttachmentsContainer
               attachmentId={attachment.attachmentId}
               messageId={messageId}

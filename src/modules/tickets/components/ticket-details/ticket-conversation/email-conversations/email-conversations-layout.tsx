@@ -1,5 +1,6 @@
 import { UnfoldMore, UnfoldLess, Print } from '@mui/icons-material';
 import { Typography } from '@mui/material';
+import { useNotifications } from 'lib';
 import { useAppSelector } from 'lib/hooks';
 import { SocketEventKeys, useSocket } from 'lib/providers/socket-provider';
 import { CustomIconButton, FlexBox } from 'lib/ui-ux';
@@ -64,25 +65,17 @@ export const EmailConversationLayout = (props: {
   } = useEmailActionHelpers();
   const { showEditor, toggleEditorView } = useEmailActionHelpers();
   const { t } = useTranslation();
-
-  useEffect(() => {
-    if (casedConversation.length !== emailThreads.length) {
-      setEmailThreads(casedConversation);
-    }
-  }, [
-    casedConversation,
-    casedConversation.length,
-    emailThreads.length,
-    fetchNewThreads,
-  ]);
+  const { showNotification } = useNotifications();
 
   useEffect(() => {
     if (!socket) return; // Prevent running if socket is null
 
-    const handleSocketEvent = (_info: any) => {
-      //TODO: need to use this info obj which contains id and has to be consumed
-      console.log('test_email_channel', _info);
-      fetchNewThreads();
+    const handleSocketEvent = (newMessage: Conversations) => {
+      setEmailThreads((prev) => [
+        ...prev,
+        { ...toCamelCasedKeysFromUnderScores(newMessage), isCollapsed: false },
+      ]);
+      showNotification({ message: 'You have a new message', type: 'info' });
     };
     const eventName = getEventName(SocketEventKeys.EMAIL_CONVERSATIONS);
 
@@ -91,7 +84,7 @@ export const EmailConversationLayout = (props: {
     return () => {
       socket.off(eventName, handleSocketEvent);
     };
-  }, [fetchNewThreads, getEventName, socket]);
+  }, [fetchNewThreads, getEventName, showNotification, socket]);
 
   const onPrintHandler = () => {
     window.print();

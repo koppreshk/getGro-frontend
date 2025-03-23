@@ -17,11 +17,6 @@ const useColumns = (statusData: IFetchAllStatuses[]) => {
   const { t } = useTranslation();
 
   const columns = [
-    columnHelper.accessor('id', {
-      id: 'id',
-      header: () => t('status_id'),
-      cell: (info) => info.getValue(),
-    }),
     columnHelper.accessor('name', {
       id: 'name',
       header: () => t('name'),
@@ -33,7 +28,13 @@ const useColumns = (statusData: IFetchAllStatuses[]) => {
           ) : null}
         </FlexBox>
       ),
-      minSize: 300,
+    }),
+    columnHelper.accessor('description', {
+      id: 'description',
+      header: () => t('description'),
+      cell: (info) => info.getValue(),
+      size: 600,
+      maxSize: 600,
     }),
     columnHelper.display({
       id: 'actions',

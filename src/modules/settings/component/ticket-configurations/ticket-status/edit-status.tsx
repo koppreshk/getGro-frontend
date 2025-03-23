@@ -1,13 +1,13 @@
 import { Edit } from '@mui/icons-material';
 import { CustomIconButton, DrawerExtended } from 'lib/ui-ux';
-import { IGenericResponse } from 'modules/settings/apis/canned-response/types';
+import { IFetchAllStatuses } from 'modules/settings/apis/ticket-status';
 import { EditTicketStatusContainer } from 'modules/settings/containers/ticket-status';
 import { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface EditStatusProps {
-  statusData: IGenericResponse[];
-  selectedData: IGenericResponse;
+  statusData: IFetchAllStatuses[];
+  selectedData: IFetchAllStatuses;
 }
 
 export const EditStatus = (props: EditStatusProps) => {

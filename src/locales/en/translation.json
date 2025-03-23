@@ -316,6 +316,7 @@
   "last_modified": "Last Modified",
   "last_modified_at": "Last Modified At",
   "last_modified_by": "Last Modified By",
+  "last_updated": "Last Updated",
   "link_conversation_to_ticket": "Link Conversation To Ticket",
   "link_ticket": "Link Ticket",
   "link_ticket_failure": "Failed to link ticket to this conversation",
@@ -599,5 +600,6 @@
   "whatsapp_phone_number_id": "Whatsapp phone number id",
   "yes_delete": "Yes, Delete",
   "yesterday": "Yesterday",
-  "you": "You"
+  "you": "You",
+  "view_new_message": "View New Message"
 }

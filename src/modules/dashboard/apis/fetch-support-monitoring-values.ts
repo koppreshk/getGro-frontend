@@ -13,7 +13,6 @@ export interface SupportMonitoringValues {
   resolution_overdue: number;
   email: number;
   ivr: number;
-  whatsapp: number;
 }
 
 export const useFetchSupportMonitoringValues = (dateRange: DateRange) => {

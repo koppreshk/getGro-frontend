@@ -7,6 +7,7 @@ import { IGenericResponse } from './types';
 
 export interface IFetchAllStatuses extends IGenericResponse {
   type: string;
+  description?: string;
 }
 
 export const useFetchAllStatuses = (isEnabled = true) => {

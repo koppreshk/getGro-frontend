@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import { ArrowForwardRounded } from '@mui/icons-material';
 import {
   Box,
@@ -84,6 +85,8 @@ const LoginForm = () => {
             rememberMe: data.rememberMe,
             role: res.role,
             name: res.name,
+            clientId: res.clientId,
+            userId: res.userId,
           });
         })
         .catch((err) => {

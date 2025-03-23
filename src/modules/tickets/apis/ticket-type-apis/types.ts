@@ -7,7 +7,9 @@ export interface ITicketDetails {
   ticketStatus: string;
   priority: string;
   createdAt: string;
+  updatedAt: string;
   createdFrom: string;
+  has_read: boolean;
   customerInfo?: {
     email: string;
     name: string;

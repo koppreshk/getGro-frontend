@@ -7,7 +7,9 @@ import { LoginEndPoint, LoginQueryKey } from './api-enums';
 export type LoginResult = {
   authToken: string;
   name: string;
-  role: 'Agent' | 'Admin' | 'Account Owner';
+  clientId: string;
+  userId: string;
+  role: 'Agent' | 'Admin' | 'Account Owner' | string;
 };
 
 export const useLoginUser = () => {

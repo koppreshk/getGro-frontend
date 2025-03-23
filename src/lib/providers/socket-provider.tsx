@@ -1,3 +1,4 @@
+import { useAuth } from 'modules/login';
 import React, { useContext, useEffect, useRef } from 'react';
 import { Socket, io } from 'socket.io-client';
 
@@ -11,16 +12,17 @@ export const SocketContext = React.createContext<ISocketProps | undefined>(
 );
 
 export enum SocketEventKeys {
-  EMAIL_CONVERSATIONS = 'email_channel',
-  CHAT_COVERSATION_LIST = 'conversation_list',
-  CHAT_MESSAGE_LIST = 'message_list',
-  EMAIL_LIST = 'email_list',
+  EMAIL_CONVERSATIONS = 'new_ticket_message',
+  CHAT_COVERSATION_LIST = 'new_conversation',
+  CHAT_MESSAGE_LIST = 'new_conversation_message',
+  EMAIL_LIST = 'new_ticket',
 }
 
 export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const socketRef = useRef<Socket | null>(null);
+  const userAuth = useAuth();
 
   if (!socketRef.current) {
     socketRef.current = io(
@@ -32,17 +34,23 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
   }
 
   useEffect(() => {
+    // if (import.meta.env.VITE_SOCKET_ENV !== 'test') {
     const socket = socketRef.current;
     socket?.connect();
+    socket?.emit('register', {
+      client_id: userAuth.user?.clientId,
+      user_id: userAuth.user?.userId,
+    });
 
     return () => {
       socket?.removeAllListeners();
       socket?.disconnect();
     };
-  }, []);
+    // }
+  }, [userAuth.user?.clientId, userAuth.user?.userId]);
 
   const getEventName = (key: SocketEventKeys) => {
-    return `${import.meta.env.VITE_SOCKET_ENV}_${key}`;
+    return `${key}`;
   };
 
   return (

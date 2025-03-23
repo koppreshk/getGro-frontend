@@ -12,6 +12,11 @@ const ErrorIllustration = lazy(
 
 export const ErrorFallback = (props: FallbackProps) => {
   // Call resetErrorBoundary() to reset the error boundary and retry the render.
+  const isProduction = import.meta.env.PROD;
+
+  if (isProduction) {
+    console.error('Error caught by ErrorBoundary:', props.error);
+  }
 
   return (
     <Suspense fallback={<span>Loading illustration...</span>}>
@@ -27,6 +32,8 @@ export const ErrorFallback = (props: FallbackProps) => {
           <pre>
             {!window.navigator.onLine ? (
               <Typography>You are offline</Typography>
+            ) : isProduction ? (
+              'Something went wrong. Please try again later.'
             ) : (
               props.error.stack
             )}

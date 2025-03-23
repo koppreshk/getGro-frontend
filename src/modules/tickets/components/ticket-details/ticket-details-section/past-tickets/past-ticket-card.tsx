@@ -1,7 +1,7 @@
 import { RadioButtonCheckedOutlined } from '@mui/icons-material';
 import { Chip, Typography } from '@mui/material';
 import { FlexBox } from 'lib/ui-ux';
-import { ITicketDetails } from 'modules/tickets/apis';
+import { PastTickets } from 'modules/tickets/apis/fetch-past-tickets';
 import { useSourceIcon } from 'modules/tickets/hooks';
 import styled, { useTheme } from 'styled-components';
 
@@ -40,7 +40,7 @@ const StyledContainer = styled(FlexBox)`
 `;
 
 export const PastTicketCard = (props: {
-  item: ITicketDetails;
+  item: PastTickets;
   onPastTicketClick: (ticktId: number) => void;
 }) => {
   const { item, onPastTicketClick } = props;

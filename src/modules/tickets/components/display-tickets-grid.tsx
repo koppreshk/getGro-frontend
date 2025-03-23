@@ -10,14 +10,13 @@ import { styled, css } from 'styled-components';
 
 import { ITicketDetails } from '../apis';
 import { useSourceIcon } from '../hooks/ticket-hooks';
-import { setTotalPages } from '../storage';
+import { setTicketsList, setTotalPages } from '../storage';
 import {
   ManageAssignee,
   StyledTicketStatus,
 } from './tickets-card-view/card-view';
 
 interface IDisplayTicketsGridProps {
-  data: ITicketDetails[];
   isLoading?: boolean;
   totalPages: number;
 }
@@ -262,7 +261,6 @@ const useColumns = () => {
 };
 
 export const DisplayTicketsGrid = (props: IDisplayTicketsGridProps) => {
-  const { data } = props;
   const navigate = useNavigate();
   const columns = useColumns();
   const dispatch = useAppDispatch();
@@ -270,15 +268,23 @@ export const DisplayTicketsGrid = (props: IDisplayTicketsGridProps) => {
   const noOfRecords = searchParams.get('noOfRecords');
   const pageNumber = searchParams.get('pageNumber');
   const match = useMatch('/:tickets/:ticketType');
+  const ticketsList = useAppSelector((state) => state.tickets.ticketsList);
 
   const onRowClick = React.useCallback(
     (row: Row<ITicketDetails>) => {
+      const modifiedData = ticketsList.map((ticket) => {
+        if (ticket.ticketId === row.original.ticketId) {
+          return { ...ticket, has_read: true };
+        }
+        return ticket;
+      });
+      dispatch(setTicketsList(modifiedData));
       navigate(
         `${match?.pathname}/${row.original.ticketId}?noOfRecords=${noOfRecords}&pageNumber=${pageNumber}`,
         { replace: true }
       );
     },
-    [match?.pathname, navigate, noOfRecords, pageNumber]
+    [dispatch, match?.pathname, navigate, noOfRecords, pageNumber, ticketsList]
   );
 
   React.useEffect(() => {
@@ -287,11 +293,13 @@ export const DisplayTicketsGrid = (props: IDisplayTicketsGridProps) => {
 
   const { totalPages } = useAppSelector((state) => state.tickets);
   const { t } = useTranslation();
+
   return (
     <React.Fragment>
-      {data.length > 0 || props.isLoading ? (
+      {ticketsList.length > 0 || props.isLoading ? (
         <DataGrid
           {...props}
+          data={ticketsList}
           columns={columns}
           onRowClick={onRowClick}
           totalPages={totalPages}

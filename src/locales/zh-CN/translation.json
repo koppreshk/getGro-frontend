@@ -317,6 +317,7 @@
   "last_modified": "最后修改时间",
   "last_modified_at": "上次修改时间",
   "last_modified_by": "最后修改者",
+  "last_updated": "最后更新",
   "link_conversation_to_ticket": "将对话链接到票证",
   "link_ticket": "链接票",
   "link_ticket_failure": "无法将票证链接到此对话",

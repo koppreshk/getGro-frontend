@@ -1,13 +1,14 @@
 import { AccessTime, CalendarToday, SupportAgent } from '@mui/icons-material';
 import { Avatar, Tooltip, Typography, SxProps, Chip } from '@mui/material';
 import { t } from 'i18next';
-import { useFeature } from 'lib/hooks';
+import { useAppDispatch, useAppSelector, useFeature } from 'lib/hooks';
 import {
   CircularSeparator,
   FlexBox,
   TicketInfoContent,
   VerticalSeparator,
   StyledEllipsisTypography,
+  NewMessageIndicator,
 } from 'lib/ui-ux';
 import {
   chooseRandomColors,
@@ -18,6 +19,7 @@ import { DateTime } from 'luxon';
 import { ChatType } from 'modules/chats/apis';
 import { ManageAssigneeContainer } from 'modules/tickets/containers/overview/manage-assignee-container';
 import { useSourceIcon } from 'modules/tickets/hooks';
+import { setTicketsList } from 'modules/tickets/storage';
 import React, { useCallback, useMemo } from 'react';
 import { useMatch, useNavigate, useSearchParams } from 'react-router-dom';
 import { styled, css } from 'styled-components';
@@ -256,6 +258,7 @@ export const CardView = (props: ITicketDetails) => {
     assigneeInfo,
     createdFrom,
     responseDue,
+    has_read,
   } = props;
   const getSourceIcon = useSourceIcon();
   const navigate = useNavigate();
@@ -264,15 +267,32 @@ export const CardView = (props: ITicketDetails) => {
   const noOfRecords = searchParams.get('noOfRecords');
   const pageNumber = searchParams.get('pageNumber');
   const searchText = searchParams.get('searchText');
+  const ticketReduxData = useAppSelector((state) => state.tickets.ticketsList);
+  const dispatch = useAppDispatch();
 
   const isFeatureAccessible = useFeature<undefined>();
 
   const onRowClick = React.useCallback(() => {
+    const modifiedData = ticketReduxData.map((ticket) => {
+      if (ticket.ticketId === ticketId) {
+        return { ...ticket, has_read: true };
+      }
+      return ticket;
+    });
+    dispatch(setTicketsList(modifiedData));
     navigate(
       `${match?.pathname}/${ticketId}?noOfRecords=${noOfRecords}&pageNumber=${pageNumber}`,
       { replace: true }
     );
-  }, [match?.pathname, navigate, noOfRecords, pageNumber, ticketId]);
+  }, [
+    dispatch,
+    match?.pathname,
+    navigate,
+    noOfRecords,
+    pageNumber,
+    ticketId,
+    ticketReduxData,
+  ]);
 
   const highlightText = (text: string, query?: string | null) => {
     if (!query) return text;
@@ -296,9 +316,20 @@ export const CardView = (props: ITicketDetails) => {
       justifyContent="space-between"
       width="calc(100% - 40px)"
     >
-      <FlexBox alignItems="center" gap="18px" width="calc(100% - 350px)">
+      <FlexBox
+        alignItems="center"
+        gap="18px"
+        width="calc(100% - 350px)"
+        style={{ position: 'relative' }}
+      >
+        {has_read ? null : (
+          <Tooltip title={t('view_new_message')}>
+            <NewMessageIndicator
+              style={{ position: 'absolute', top: '-5px', left: '-12px' }}
+            />
+          </Tooltip>
+        )}
         <CustomerName customerName={customerName} />
-
         <FlexBox flexDirection="column" gap="14px" width="100%">
           <FlexBox flexDirection="column" width="calc(100% - 70px)">
             <Tooltip title={'Subject: ' + description} placement="bottom-start">
