@@ -31,6 +31,7 @@ export const FileUpload = React.memo((props: IFileUploadProps) => {
     initialSelectedFiles,
     readMode = 'readAsText',
     onChange,
+    onRenderButton,
   } = props;
   const id = React.useId();
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -87,15 +88,21 @@ export const FileUpload = React.memo((props: IFileUploadProps) => {
 
   return hidden ? null : (
     <>
-      <CustomIconButton
-        onClick={onButtonClick}
-        tooltipProps={{
-          title: t('upload_attachments'),
-          arrow: true,
-          placement: 'top',
-        }}
-        iconComponent={<AttachFileOutlined />}
-      />
+      {onRenderButton ? (
+        onRenderButton({
+          onClick: onButtonClick,
+        })
+      ) : (
+        <CustomIconButton
+          onClick={onButtonClick}
+          tooltipProps={{
+            title: t('upload_attachments'),
+            arrow: true,
+            placement: 'top',
+          }}
+          iconComponent={<AttachFileOutlined />}
+        />
+      )}
       <DefaultFileInput
         id={id}
         type="file"
