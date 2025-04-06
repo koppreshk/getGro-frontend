@@ -1,27 +1,45 @@
-import { Button } from '@mui/material';
 import { t } from 'i18next';
 import { TextboxFieldWithLabel } from 'lib/form-fields';
-import { CancelButton, FlexBox } from 'lib/ui-ux';
+import { CancelButton, FlexBox, IChangeArgs, LoadingButton } from 'lib/ui-ux';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import LogoUploader from './logo-section';
 
-type FormValues = {
+export type GeneralContentFormValues = {
   portalName: string;
-  logo: string;
+  logo: IChangeArgs;
 };
 
-export const GeneralContent = () => {
-  const form = useForm<FormValues>();
+interface GeneralContentProps {
+  onSubmit: (formData: GeneralContentFormValues) => Promise<any>;
+  isLoading: boolean;
+}
+
+export const GeneralContent = (props: GeneralContentProps) => {
+  const { isLoading, onSubmit } = props;
+  const form = useForm<GeneralContentFormValues>({
+    mode: 'onBlur',
+    defaultValues: {
+      portalName: '',
+      logo: {
+        selectedFiles: [],
+      },
+    },
+  });
   const navigation = useNavigate();
   const onCancel = () => {
     form.reset();
     navigation(-1);
   };
 
-  const onSubmitForm = async (formData: FormValues) => {
-    console.log('Form submitted:', formData);
+  const onSubmitForm = async (formData: GeneralContentFormValues) => {
+    onSubmit({
+      logo: formData.logo,
+      portalName: formData.portalName,
+    }).then(() => {
+      navigation(-1);
+    });
   };
 
   return (
@@ -34,13 +52,14 @@ export const GeneralContent = () => {
         />
         <LogoUploader />
         <FlexBox gap={'20px'}>
-          <Button
+          <LoadingButton
             variant="contained"
             color="primary"
             onClick={form.handleSubmit(onSubmitForm)}
+            isLoading={isLoading}
           >
             {t('submit')}
-          </Button>
+          </LoadingButton>
           <CancelButton onClick={onCancel} />
         </FlexBox>
       </FlexBox>

@@ -1,9 +1,11 @@
 import { Button, Typography } from '@mui/material';
 import { FileUploadField } from 'lib/form-fields';
-import { FlexBox } from 'lib/ui-ux';
+import { FlexBox, IChangeArgs } from 'lib/ui-ux';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
+
+import GetGroLogoImg from '../../../../../assets/svg/favicon.svg?react';
 
 const Container = styled(FlexBox)`
   border: 1px solid ${(props) => props.theme.pallete.formFieldBorderColor};
@@ -30,16 +32,32 @@ const Info = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  }
 `;
 
 const LogoUploader: React.FC = () => {
   const { watch, resetField } = useFormContext();
 
+  const validate = (value: IChangeArgs): boolean | string => {
+    console.log('Validate value:', value);
+    if (!value) {
+      return 'Logo is required';
+    }
+    if (value.selectedFiles[0].size > 2 * 1024 * 1024) {
+      return 'File size exceeds 2MB';
+    }
+    return true;
+  };
   return (
     <Container>
       <LogoBox justifyContent="center" alignItems="center">
-        <img src={watch('logo')?.selectedFiles[0].content} alt="Company Logo" />
+        {watch('logo')?.selectedFiles[0]?.content ? (
+          <img
+            src={watch('logo')?.selectedFiles[0].content}
+            alt="Company Logo"
+          />
+        ) : (
+          <GetGroLogoImg />
+        )}
       </LogoBox>
       <Info>
         <Typography variant="h4">Logo</Typography>
@@ -50,6 +68,7 @@ const LogoUploader: React.FC = () => {
             name="logo"
             accept="image/*"
             readMode="readAsDataURL"
+            rules={{ validate: validate }}
             onRenderButton={(args) => (
               <Button {...args} size="small" variant="outlined">
                 Change Logo
