@@ -27,7 +27,7 @@ export const EditInstagramConfigurationContainer = (props: {
     mutateAsync({
       queue_id: formData.queueId,
       comment_configuration: formData.commentsConfiguration,
-      specific_keywords: formData.keywords.map((item) => item.name),
+      specific_keywords: formData?.keywords?.map((item) => item.name),
       send_auto_reply: formData.sendAutoReply,
       auto_reply_message: formData.autoReplyMessage,
       id: data.id,
