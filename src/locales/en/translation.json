@@ -601,5 +601,10 @@
   "yes_delete": "Yes, Delete",
   "yesterday": "Yesterday",
   "you": "You",
-  "view_new_message": "View New Message"
+  "view_new_message": "View New Message",
+  "agent_portal": "Agent Portal",
+  "agent_portal_short_description": "Set up agent portal general settings",
+  "portal_name": "Portal Name",
+  "portal_logo_failed": "Failed to upload the details",
+  "portal_logo_updated": "Agent Portal details updated successfully"
 }

@@ -22,6 +22,11 @@ const SatisfactionSurveyLayout = lazy(
   () =>
     import('../component/general/satifaction-survey/satisfaction-survey-layout')
 );
+
+const AgentPortalLayout = lazy(
+  () => import('../component/general/agent-portal/agent-portal-layout')
+);
+
 const MarketplaceRoutes = lazy(
   () => import('../component/apps/marketplace/marketplace-layout')
 );
@@ -150,6 +155,11 @@ export default function ConfigurationsPage() {
               element={<AuditLogsContainer />}
             />
 
+            <Route
+              key="agent-portal"
+              path="agent-portal"
+              element={<AgentPortalLayout />}
+            />
             <Route
               key="marketplace"
               path="marketplace/*"

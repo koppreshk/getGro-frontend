@@ -202,6 +202,13 @@ const useConfigurations = () => {
           hidden: !isFeatureAccessible('manage_audit_logs'),
           catOptionIcon: () => <PendingActions />,
         },
+        {
+          route: 'agent-portal',
+          label: t('agent_portal'),
+          uniqueKey: 'agent_portal',
+          description: t('agent_portal_short_description'),
+          catOptionIcon: () => <SupportAgentRounded />,
+        },
       ],
     },
     {

@@ -33,5 +33,6 @@ export interface IFileUploadProps
   multiple?: boolean;
   placeholder?: string;
   readMode?: ReadMode;
+  onRenderButton?: (args: { onClick: () => void }) => React.ReactNode;
   onChange(args: IChangeArgs): void;
 }
