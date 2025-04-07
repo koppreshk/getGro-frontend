@@ -1,8 +1,9 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 
 import { AgentPortalEndPoint, AgentPortalQueryKey } from './api-enums';
+import { AgentsQueryKey } from '../users-and-permissions/agents/api-enums';
 
 interface ISaveClientDetailsArgs {
   portal_name: string;
@@ -11,6 +12,7 @@ interface ISaveClientDetailsArgs {
 
 export const useSaveClientDetails = () => {
   const { postData } = useServiceClient();
+  const queryClient = useQueryClient();
 
   const createticketStatus = React.useCallback(
     (args: ISaveClientDetailsArgs) =>
@@ -23,5 +25,8 @@ export const useSaveClientDetails = () => {
   return useMutation({
     mutationKey: AgentPortalQueryKey.SAVE_CLIENT_DETAILS,
     mutationFn: createticketStatus,
+    onSuccess: () => {
+      queryClient.invalidateQueries(AgentsQueryKey.FETCH_USER_CONFIG);
+    },
   });
 };
