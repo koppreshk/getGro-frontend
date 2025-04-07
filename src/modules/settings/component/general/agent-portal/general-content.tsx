@@ -1,4 +1,5 @@
 import { t } from 'i18next';
+import { useNotifications } from 'lib';
 import { TextboxFieldWithLabel } from 'lib/form-fields';
 import { CancelButton, FlexBox, IChangeArgs, LoadingButton } from 'lib/ui-ux';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -28,6 +29,7 @@ export const GeneralContent = (props: GeneralContentProps) => {
     },
   });
   const navigation = useNavigate();
+  const { showNotification } = useNotifications();
   const onCancel = () => {
     form.reset();
     navigation(-1);
@@ -37,9 +39,17 @@ export const GeneralContent = (props: GeneralContentProps) => {
     onSubmit({
       logo: formData.logo,
       portalName: formData.portalName,
-    }).then(() => {
-      navigation(-1);
-    });
+    })
+      .then(() => {
+        showNotification({
+          type: 'success',
+          message: t('portal_logo_updated'),
+        });
+        navigation(-1);
+      })
+      .catch(() => {
+        showNotification({ message: t('portal_logo_failed'), type: 'error' });
+      });
   };
 
   return (

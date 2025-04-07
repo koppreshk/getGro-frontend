@@ -38,7 +38,6 @@ const LogoUploader: React.FC = () => {
   const { watch, resetField } = useFormContext();
 
   const validate = (value: IChangeArgs): boolean | string => {
-    console.log('Validate value:', value);
     if (!value) {
       return 'Logo is required';
     }

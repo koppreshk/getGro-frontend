@@ -34,6 +34,10 @@ export interface IConfig {
     phone_number: string;
     image_url?: string;
   };
+  agent_portal: {
+    portal_name: string;
+    logo: string;
+  };
 }
 
 export const useFetchUserConfig = (user: object | null) => {

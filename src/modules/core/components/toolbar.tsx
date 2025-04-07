@@ -1,5 +1,6 @@
 /// <reference types="vite-plugin-svgr/client" />
 
+import { useAppSelector } from 'lib/hooks';
 import { FlexBox } from 'lib/ui-ux';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
@@ -19,6 +20,7 @@ const TopBar = styled(FlexBox)`
 
 export const Toolbar = () => {
   const navigate = useNavigate();
+  const config = useAppSelector((state) => state.core.config);
 
   return (
     <TopBarWrapper>
@@ -28,7 +30,17 @@ export const Toolbar = () => {
           onClick={() => navigate('/')}
           style={{ cursor: 'pointer' }}
         >
-          <GetGroLogoImg />
+          {config?.agent_portal?.logo ? (
+            <img
+              src={config?.agent_portal?.logo}
+              alt="Company Logo"
+              width={32}
+              height={32}
+              title={config?.agent_portal?.portal_name}
+            />
+          ) : (
+            <GetGroLogoImg />
+          )}
         </FlexBox>
         <FlexBox justifyContent="flex-end" gap="12px" alignItems="center">
           {/* <AgentStatistics /> */}
