@@ -1,6 +1,7 @@
 import { t } from 'i18next';
 import { useNotifications } from 'lib';
 import { TextboxFieldWithLabel } from 'lib/form-fields';
+import { useAppSelector } from 'lib/hooks';
 import { CancelButton, FlexBox, IChangeArgs, LoadingButton } from 'lib/ui-ux';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -19,12 +20,22 @@ interface GeneralContentProps {
 
 export const GeneralContent = (props: GeneralContentProps) => {
   const { isLoading, onSubmit } = props;
+  const config = useAppSelector((state) => state.core.config);
   const form = useForm<GeneralContentFormValues>({
     mode: 'onBlur',
     defaultValues: {
-      portalName: '',
+      portalName: config?.agent_portal.portal_name,
       logo: {
-        selectedFiles: [],
+        selectedFiles: [
+          {
+            name: 'logo',
+            content: config?.agent_portal.logo,
+            size: 0,
+            type: 'image/png',
+          },
+        ],
+        action: 'add',
+        changedFileIds: [],
       },
     },
   });
