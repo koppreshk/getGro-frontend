@@ -9,7 +9,7 @@ export const AgentPortalContainer = () => {
 
   const onSubmit = (formData: GeneralContentFormValues) => {
     return mutateAsync({
-      logo: (formData.logo.selectedFiles[0].content as string) ?? '',
+      logo: (formData?.logo?.selectedFiles[0]?.content as string) ?? null,
       portal_name: formData.portalName,
     });
   };

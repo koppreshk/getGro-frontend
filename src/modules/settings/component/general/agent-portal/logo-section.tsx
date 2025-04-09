@@ -35,13 +35,10 @@ const Info = styled.div`
 `;
 
 const LogoUploader: React.FC = () => {
-  const { watch, resetField } = useFormContext();
+  const { watch, setValue } = useFormContext();
 
   const validate = (value: IChangeArgs): boolean | string => {
-    if (!value) {
-      return 'Logo is required';
-    }
-    if (value.selectedFiles[0].size > 2 * 1024 * 1024) {
+    if (value && value.selectedFiles[0].size > 2 * 1024 * 1024) {
       return 'File size exceeds 2MB';
     }
     return true;
@@ -74,7 +71,7 @@ const LogoUploader: React.FC = () => {
               </Button>
             )}
           />
-          <Button variant="outlined" onClick={() => resetField('logo')}>
+          <Button variant="outlined" onClick={() => setValue('logo', null)}>
             Remove Icon
           </Button>
         </FlexBox>
