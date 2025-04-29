@@ -267,6 +267,7 @@ export const CardView = (props: ITicketDetails) => {
   const noOfRecords = searchParams.get('noOfRecords');
   const pageNumber = searchParams.get('pageNumber');
   const searchText = searchParams.get('searchText');
+  const searchParam = searchText ? `&searchText=${searchText}` : '';
   const ticketReduxData = useAppSelector((state) => state.tickets.ticketsList);
   const dispatch = useAppDispatch();
 
@@ -281,7 +282,7 @@ export const CardView = (props: ITicketDetails) => {
     });
     dispatch(setTicketsList(modifiedData));
     navigate(
-      `${match?.pathname}/${ticketId}?noOfRecords=${noOfRecords}&pageNumber=${pageNumber}`,
+      `${match?.pathname}/${ticketId}?noOfRecords=${noOfRecords}&pageNumber=${pageNumber}${searchParam}`,
       { replace: true }
     );
   }, [
@@ -290,6 +291,7 @@ export const CardView = (props: ITicketDetails) => {
     navigate,
     noOfRecords,
     pageNumber,
+    searchParam,
     ticketId,
     ticketReduxData,
   ]);

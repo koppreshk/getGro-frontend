@@ -267,6 +267,9 @@ export const DisplayTicketsGrid = (props: IDisplayTicketsGridProps) => {
   const [searchParams] = useSearchParams();
   const noOfRecords = searchParams.get('noOfRecords');
   const pageNumber = searchParams.get('pageNumber');
+  const searchText = searchParams.get('searchText');
+  const searchParam = searchText ? `&searchText=${searchText}` : '';
+
   const match = useMatch('/:tickets/:ticketType');
   const ticketsList = useAppSelector((state) => state.tickets.ticketsList);
 
@@ -280,11 +283,19 @@ export const DisplayTicketsGrid = (props: IDisplayTicketsGridProps) => {
       });
       dispatch(setTicketsList(modifiedData));
       navigate(
-        `${match?.pathname}/${row.original.ticketId}?noOfRecords=${noOfRecords}&pageNumber=${pageNumber}`,
+        `${match?.pathname}/${row.original.ticketId}?noOfRecords=${noOfRecords}&pageNumber=${pageNumber}${searchParam}`,
         { replace: true }
       );
     },
-    [dispatch, match?.pathname, navigate, noOfRecords, pageNumber, ticketsList]
+    [
+      dispatch,
+      match?.pathname,
+      navigate,
+      noOfRecords,
+      pageNumber,
+      searchParam,
+      ticketsList,
+    ]
   );
 
   React.useEffect(() => {

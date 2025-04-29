@@ -209,6 +209,8 @@ export const TicketList = (props: ITicketListProps) => {
   const [searchParams] = useSearchParams();
   const noOfRecords = searchParams.get('noOfRecords');
   const pageNumber = searchParams.get('pageNumber');
+  const searchText = searchParams.get('searchText');
+
   const ticketList = useAppSelector((state) => state.tickets.ticketsList);
 
   useEffect(() => {
@@ -227,11 +229,11 @@ export const TicketList = (props: ITicketListProps) => {
     if (!doesTicketIdExist) {
       if (data[0]) {
         return navigate(
-          `/tickets/${match?.params.ticketType}/${data[0].ticketId}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`
+          `/tickets/${match?.params.ticketType}/${data[0].ticketId}?${searchText ? createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber!, searchText: searchText }) : createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`
         );
       }
       return navigate(
-        `/tickets/${match?.params.ticketType}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`
+        `/tickets/${match?.params.ticketType}?${searchText ? createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber!, searchText: searchText }) : createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`
       );
     }
   }, [
@@ -241,6 +243,7 @@ export const TicketList = (props: ITicketListProps) => {
     navigate,
     noOfRecords,
     pageNumber,
+    searchText,
   ]);
 
   const ticketViewDetails = ticketList.map((item) => (
