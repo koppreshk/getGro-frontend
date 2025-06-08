@@ -1,0 +1,117 @@
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Typography,
+} from '@mui/material';
+import { useNotifications } from 'lib';
+import { TagInputField } from 'lib/form-fields';
+import { CancelButton, FlexBox, ITagInput, LoadingButton } from 'lib/ui-ux';
+import { useCreateDepartment } from 'modules/settings/apis/department';
+import { ITag } from 'modules/settings/apis/tags';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { styled } from 'styled-components';
+
+interface ICreateDepartmentProps {
+  open: boolean;
+  createdTags?: ITag[];
+  handleClose: () => void;
+}
+
+interface IFormFields {
+  createdTags: ITagInput[];
+}
+
+const StyledTags = styled(TagInputField)`
+  padding: 8px;
+  border-radius: ${({ theme }) => theme.semantics.borderRadius.xs};
+  border: ${({ theme }) => theme.semantics.standardBorder};
+  width: 100%;
+`;
+
+export const CreateDepartment = (props: ICreateDepartmentProps) => {
+  const { open, createdTags, handleClose } = props;
+  const { mutateAsync, isLoading } = useCreateDepartment();
+  const { showNotification } = useNotifications();
+  const form = useForm<IFormFields>({
+    mode: 'onChange',
+    shouldUnregister: true,
+  });
+  const { t } = useTranslation();
+
+  const onCreateDepartmentSubmit = (formData: IFormFields) => {
+    mutateAsync({
+      tags: formData.createdTags.map((item) => item.name),
+    })
+      .then(() =>
+        showNotification({
+          message: 'Successfully created Department',
+          type: 'success',
+        })
+      )
+      .catch(() =>
+        showNotification({
+          message: 'Successfully created Department',
+          type: 'error',
+        })
+      )
+      .finally(() => handleClose());
+  };
+
+  const validateInput = (values: string[]) => {
+    const someTagExists = createdTags?.some((item) =>
+      values.includes(item.name)
+    );
+    if (someTagExists) {
+      return 'One or more department already exists, please remove and continue';
+    } else if (values === undefined || values.length === 0) {
+      return 'Please add at least one department before saving';
+    }
+  };
+
+  return (
+    <FormProvider {...form}>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        fullWidth
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          <Typography variant="h5">Create Department</Typography>
+        </DialogTitle>
+        <DialogContent>
+          <FlexBox gap={'15px'} flexDirection="column">
+            <div>
+              <StyledTags
+                gap={'15px'}
+                autoFocus
+                name="createdTags"
+                dontShowDashes
+                placeholder="Add your departments here..."
+                rules={{ validate: validateInput }}
+              />
+            </div>
+            <Typography variant="body3">
+              <b>Note:</b> Add Department by pressing enter key and then save
+            </Typography>
+          </FlexBox>
+        </DialogContent>
+        <DialogActions>
+          <CancelButton onClick={handleClose} />
+          <LoadingButton
+            isLoading={isLoading}
+            autoFocus
+            variant="contained"
+            onClick={form.handleSubmit(onCreateDepartmentSubmit)}
+          >
+            {t('save')}
+          </LoadingButton>
+        </DialogActions>
+      </Dialog>
+    </FormProvider>
+  );
+};
