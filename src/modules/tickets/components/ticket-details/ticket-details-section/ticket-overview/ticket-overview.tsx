@@ -15,6 +15,7 @@ import {
   TicketStatusContainer,
   ManageTagsContainer,
 } from 'modules/tickets/containers';
+import { ManageDepartmentContainer } from 'modules/tickets/containers/overview/manage-department-container';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
@@ -133,7 +134,9 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
     statusUpdateString,
     closedAt,
     tags,
+    departmentId,
   } = ticketDetails;
+  console.log('departmentId', departmentId);
   const customerInfo = useAppSelector(
     (state) => state.tickets.ticketDetails?.customerInfo
   );
@@ -198,13 +201,6 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
           customerName={customerName}
         />
         <FlexBox flexDirection="column" gap="10px">
-          {isFeatureAccessible('edit_status') ? (
-            <TicketStatusContainer
-              ticketStatus={ticketStatus}
-              ticketId={ticketId}
-              statusUpdateString={statusUpdateString}
-            />
-          ) : null}
           {isFeatureAccessible('edit_assignee') ? (
             <ManageAssigneeContainer
               ticketId={ticketId}
@@ -216,6 +212,17 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
           ) : null}
           {isFeatureAccessible('edit_tags') ? (
             <ManageTagsContainer ticketId={ticketId} tags={tags} />
+          ) : null}
+          <ManageDepartmentContainer
+            ticketId={ticketId}
+            departmentId={departmentId}
+          />
+          {isFeatureAccessible('edit_status') ? (
+            <TicketStatusContainer
+              ticketStatus={ticketStatus}
+              ticketId={ticketId}
+              statusUpdateString={statusUpdateString}
+            />
           ) : null}
           <HorizontalSeparator $margin="10px 0px 0px 0px" />
         </FlexBox>

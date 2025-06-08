@@ -69,6 +69,14 @@ const useConfigurations = () => {
           description: t('tags_short_description'),
         },
         {
+          route: 'department',
+          label: 'Department',
+          uniqueKey: 'department',
+          catOptionIcon: () => <SellOutlined />,
+          hidden: !isFeatureAccessible('manage_tags'),
+          description: 'Add departments to categorize tickets',
+        },
+        {
           route: 'canned-responses',
           label: t('canned_response'),
           uniqueKey: 'canned_response',

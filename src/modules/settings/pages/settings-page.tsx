@@ -68,6 +68,10 @@ const WebFormsLayout = lazy(
   () => import('../component/channel-configurations/web-forms/web-forms-layout')
 );
 
+const DepartmentContainer = lazy(
+  () => import('../containers/department/department-container')
+);
+
 export default function ConfigurationsPage() {
   return (
     <Suspense fallback={<div>Loading Configurations Page...</div>}>
@@ -89,6 +93,12 @@ export default function ConfigurationsPage() {
               key="ticket-tags"
               path="tags"
               element={<TicketTagsContainer />}
+            />
+
+            <Route
+              key="department"
+              path="department/*"
+              element={<DepartmentContainer />}
             />
 
             <Route
