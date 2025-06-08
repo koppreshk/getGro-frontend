@@ -26,5 +26,6 @@ export interface ITicketDetails {
     email: string;
   };
   tags: number[];
+  departmentId?: number;
   shopifyCustomerId: null | string;
 }
