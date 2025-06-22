@@ -6,6 +6,7 @@ import {
   AgentPerformanceDashContainer,
   SupportMonitoringDashContainer,
   SLADashboardContainer,
+  ServiceStandardContainer,
 } from 'modules/dashboard/container';
 import React, { useEffect } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -32,9 +33,9 @@ const useDashboardCategories = () => {
   const isFeatureAccessible = useFeature<undefined>();
   const dashboardCategories: IDashboardCategories[] = [
     // {
-    //     id: 1,
-    //     name: "Tickets Monitor",
-    //     component: <TicketMonitoringDashContainer />,
+    //   id: 1,
+    //   name: 'Tickets Monitor',
+    //   component: <TicketMonitoringDashContainer />,
     // },
     {
       id: 2,
@@ -54,16 +55,11 @@ const useDashboardCategories = () => {
       component: <SLADashboardContainer />,
       hidden: !isFeatureAccessible('sla_dashboard'),
     },
-    // {
-    //     id: 5,
-    //     name: "CSR Dashboard",
-    //     component: <AgentPerformanceDashContainer />,
-    // },
-    // {
-    //     id: 6,
-    //     name: "Ticket Conversation Report",
-    //     component: <AgentPerformanceDashContainer />,
-    // },
+    {
+      id: 5,
+      name: 'Service Standard Report',
+      component: <ServiceStandardContainer />,
+    },
   ];
 
   return dashboardCategories;
