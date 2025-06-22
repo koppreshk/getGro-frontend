@@ -136,7 +136,6 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
     tags,
     departmentId,
   } = ticketDetails;
-  console.log('departmentId', departmentId);
   const customerInfo = useAppSelector(
     (state) => state.tickets.ticketDetails?.customerInfo
   );

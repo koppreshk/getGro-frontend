@@ -64,8 +64,6 @@ export const ServiceStdReportChart = (props: ServiceStdReportChartProps) => {
           },
         };
 
-        console.log('Chart series:', series);
-
         return (
           <ChartContainer
             flexDirection="column"
