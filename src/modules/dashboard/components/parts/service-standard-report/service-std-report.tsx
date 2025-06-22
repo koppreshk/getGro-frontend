@@ -3,6 +3,7 @@ import { DownloadForOfflineOutlined } from '@mui/icons-material';
 import { CircularProgress } from '@mui/material';
 import { useNotifications } from 'lib';
 import { CustomIconButton, FlexBox } from 'lib/ui-ux';
+import { DateTime } from 'luxon';
 import {
   ServiceStdReportValues,
   useDownloadServiceStdReport,
@@ -25,8 +26,12 @@ export const ServiceStandardReport = (props: IServiceStandardReportProps) => {
   const { mutateAsync, isLoading } = useDownloadServiceStdReport();
 
   const handleDownload = () => {
-    const parsedFromDate = dateRange.startDate!.toISOString();
-    const parsedToDate = dateRange.endDate!.toISOString();
+    const parsedFromDate = DateTime.fromISO(
+      dateRange.startDate!.toISOString()
+    ).toFormat('yyyy-MM-dd');
+    const parsedToDate = DateTime.fromISO(
+      dateRange.endDate!.toISOString()
+    ).toFormat('yyyy-MM-dd');
 
     mutateAsync({
       from: parsedFromDate,
