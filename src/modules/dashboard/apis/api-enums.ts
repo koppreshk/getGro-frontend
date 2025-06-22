@@ -7,6 +7,8 @@ export enum DashboardEndPoint {
   SUPPORT_MONITORING = 'dashboard/support_monitoring',
   FETCH_SM_TICKET_STATISTICS = 'dashboard/fetch_sm_ticket_statistics',
   FETCH_SM_TICKETS_CREATED = 'dashboard/fetch_sm_tickets_created',
+  SERVICE_STANDARD_REPORT = 'dashboard/service_standard_report',
+  DOWNLOAD_STANDARD_REPORT = 'dashboard/download_service_standard_report',
 }
 
 export enum DashboardQueryKeys {
@@ -18,4 +20,6 @@ export enum DashboardQueryKeys {
   SUPPORT_MONITORING = 'SUPPORT_MONITORING',
   FETCH_SM_TICKET_STATISTICS = 'FETCH_SM_TICKET_STATISTICS',
   FETCH_SM_TICKETS_CREATED = 'FETCH_SM_TICKETS_CREATED',
+  SERVICE_STANDARD_REPORT = 'SERVICE_STANDARD_REPORT',
+  DOWNLOAD_STANDARD_REPORT = 'DOWNLOAD_STANDARD_REPORT',
 }

@@ -5,3 +5,5 @@ export * from './fetch-sla-comparision-values';
 export * from './fetch-support-monitoring-values';
 export * from './fetch-sm-stats';
 export * from './fetch-sm-tickets-created';
+export * from './fetch-service-std-report';
+export * from './download-service-std-report';
