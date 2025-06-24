@@ -8,8 +8,10 @@ import {
   ServiceStdReportValues,
   useDownloadServiceStdReport,
 } from 'modules/dashboard/apis';
+import { useState } from 'react';
 
 import { DashboardDateRangePicker } from '../dashboard-date-range-picker';
+import { ChartTypeToggle } from './chart-type-toggle';
 import { ServiceStdReportChart } from './service-std-report-chart';
 import { TopMetrics } from './top-metrics';
 
@@ -22,6 +24,9 @@ interface IServiceStandardReportProps {
 export const ServiceStandardReport = (props: IServiceStandardReportProps) => {
   const { dateRange, setDateRange } = props;
   const { showNotification } = useNotifications();
+  const [selectedChartType, setSelectedChartType] = useState<'pie' | 'bar'>(
+    'pie'
+  );
 
   const { mutateAsync, isLoading } = useDownloadServiceStdReport();
 
@@ -85,6 +90,10 @@ export const ServiceStandardReport = (props: IServiceStandardReportProps) => {
             dateRange={dateRange}
             setDateRange={setDateRange}
           />
+          <ChartTypeToggle
+            value={selectedChartType}
+            onChange={(val) => setSelectedChartType(val)}
+          />
           <CustomIconButton
             iconComponent={
               isLoading ? (
@@ -99,7 +108,10 @@ export const ServiceStandardReport = (props: IServiceStandardReportProps) => {
         </FlexBox>
         <TopMetrics metricsData={props.data} />
         {/* <FlexBox gap={'20px'} width="100%"> */}
-        <ServiceStdReportChart data={props.data} />
+        <ServiceStdReportChart
+          data={props.data}
+          selectedChartType={selectedChartType}
+        />
         {/* </FlexBox> */}
       </FlexBox>
     </>
