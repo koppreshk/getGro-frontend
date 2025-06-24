@@ -47,7 +47,7 @@ export const ServiceStdReportChart = (props: ServiceStdReportChartProps) => {
           },
           labels,
           legend: {
-            position: 'bottom',
+            position: 'right',
           },
           tooltip: {
             y: {
@@ -83,7 +83,7 @@ export const ServiceStdReportChart = (props: ServiceStdReportChartProps) => {
                   options={options}
                   series={series}
                   type="pie"
-                  width="100%"
+                  width={500}
                 />
               )}
             </FlexBox>

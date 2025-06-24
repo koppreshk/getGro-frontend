@@ -1,5 +1,6 @@
 import { DateRange } from '@matharumanpreet00/react-daterange-picker';
 import { useServiceClient } from 'lib';
+import { DateTime } from 'luxon';
 import React from 'react';
 import { useQuery } from 'react-query';
 
@@ -19,8 +20,12 @@ export interface ServiceStdReportValues {
 
 export const useFetchServerStdReport = (dateRange: DateRange) => {
   const { getData } = useServiceClient();
-  const parsedFromDate = dateRange.startDate!.toISOString();
-  const parsedToDate = dateRange.endDate!.toISOString();
+  const parsedFromDate = DateTime.fromISO(
+    dateRange.startDate!.toISOString()
+  ).toFormat('yyyy-MM-dd');
+  const parsedToDate = DateTime.fromISO(
+    dateRange.endDate!.toISOString()
+  ).toFormat('yyyy-MM-dd');
 
   const fetchServiceStdReportData = React.useCallback(
     () =>
