@@ -11,16 +11,19 @@ interface ChartConfig {
 
 interface ServiceStdReportChartProps {
   data: ServiceStdReportValues;
+  selectedChartType: 'pie' | 'bar';
 }
 
 const ChartContainer = styled(FlexBox)`
   background: ${({ theme }) => theme.pallete.white};
   padding: 20px;
   border-radius: ${({ theme }) => theme.semantics.borderRadius.md};
+  width: 100%;
 `;
 
 export const ServiceStdReportChart = (props: ServiceStdReportChartProps) => {
-  const { data: sampleData } = props;
+  const { data: sampleData, selectedChartType } = props;
+
   const chartSections: ChartConfig[] = [
     { title: 'Queries by Store', data: sampleData.store },
     { title: 'Queries by Source', data: sampleData.source },
@@ -35,34 +38,67 @@ export const ServiceStdReportChart = (props: ServiceStdReportChartProps) => {
         gridTemplateColumns: 'repeat(2, 1fr)',
         gap: '2rem',
         padding: '1rem',
+        width: '100%',
       }}
     >
       {chartSections.map((section, index) => {
         const labels = section.data.map((item) => item.name);
-        const series = section.data.map((item) => item.queries);
+        const seriesData = section.data.map((item) => item.queries);
 
-        const options: ApexCharts.ApexOptions = {
+        const baseOptions: ApexCharts.ApexOptions = {
           chart: {
-            type: 'pie',
+            type: selectedChartType,
+            toolbar: { show: false },
           },
-          labels,
           legend: {
-            position: 'right',
+            position: selectedChartType === 'pie' ? 'right' : 'bottom',
           },
           tooltip: {
             y: {
               formatter: (val: number) => `${val} queries`,
             },
           },
+        };
+
+        const pieOptions: ApexCharts.ApexOptions = {
+          ...baseOptions,
+          labels,
           dataLabels: {
             enabled: true,
             formatter: function (val: number, opts: any) {
-              return `${opts.w.globals.labels[opts.seriesIndex]}: ${val.toFixed(
-                1
-              )}%`;
+              return `${opts.w.globals.labels[opts.seriesIndex]}: ${val.toFixed(1)}%`;
             },
           },
         };
+
+        const barOptions: ApexCharts.ApexOptions = {
+          ...baseOptions,
+          plotOptions: {
+            bar: {
+              borderRadius: 4,
+              horizontal: false,
+              columnWidth: '70%',
+            },
+          },
+          xaxis: {
+            categories: labels,
+            labels: {
+              rotate: -45,
+            },
+          },
+          dataLabels: {
+            enabled: true,
+            formatter: function (val: number) {
+              return `${val}`;
+            },
+          },
+        };
+
+        const options = selectedChartType === 'pie' ? pieOptions : barOptions;
+        const series =
+          selectedChartType === 'pie'
+            ? seriesData
+            : [{ name: 'Queries', data: seriesData }];
 
         return (
           <ChartContainer
@@ -70,11 +106,22 @@ export const ServiceStdReportChart = (props: ServiceStdReportChartProps) => {
             justifyContent="space-between"
             key={index}
           >
-            <FlexBox justifyContent="space-between" alignItems="center">
+            <FlexBox
+              justifyContent="space-between"
+              alignItems="center"
+              width="100%"
+            >
               <Typography variant="h5">{section.title}</Typography>
             </FlexBox>
-            <FlexBox alignItems="center" justifyContent="center" height="100%">
-              {series.length === 0 ? (
+
+            <FlexBox
+              alignItems="center"
+              justifyContent="center"
+              height="100%"
+              width="100%"
+              style={{ marginTop: '1rem' }}
+            >
+              {seriesData.length === 0 ? (
                 <Typography variant="body1" color="textSecondary">
                   No data available
                 </Typography>
@@ -82,8 +129,9 @@ export const ServiceStdReportChart = (props: ServiceStdReportChartProps) => {
                 <Chart
                   options={options}
                   series={series}
-                  type="pie"
-                  width={500}
+                  type={selectedChartType}
+                  width="500"
+                  height={300}
                 />
               )}
             </FlexBox>
