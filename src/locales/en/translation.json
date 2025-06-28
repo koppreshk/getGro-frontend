@@ -608,5 +608,9 @@
   "portal_name": "Portal Name",
   "portal_logo_failed": "Failed to upload the details",
   "portal_logo_updated": "Agent Portal details updated successfully",
-  "ticket_type": "Ticket Type"
+  "ticket_type": "Ticket Type",
+  "restore_ticket": "Restore Ticket",
+  "ticket_restore_success": "Ticket restored successfully",
+  "ticket_restore_eroor": "Failed to restore ticket",
+  "yes_restore": "Yes, Restore"
 }

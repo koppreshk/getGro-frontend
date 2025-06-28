@@ -120,6 +120,11 @@ export default function TicketsPage() {
               path="/my_closed/:ticketId"
               element={<TicketDetailsLayout />}
             />
+            <Route
+              key="deleted-ticket-details"
+              path="/deleted_tickets/:ticketId"
+              element={<TicketDetailsLayout />}
+            />
           </Routes>
         </div>
       </FlexBox>
