@@ -18,11 +18,13 @@ import {
 import { ManageDepartmentContainer } from 'modules/tickets/containers/overview/manage-department-container';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 
 import { ContactInfo, TypographyName } from './contact-info';
 import { Platform } from '../../ticket-conversation/ticket-conversation-header';
 import { DeleteTicket } from './more-actions/delete-ticket/delete-ticket';
 import { MergeTicket } from './more-actions/merge-ticket/merge-ticket';
+import { RestoreTicket } from './more-actions/restore-ticket/restore-ticket';
 import { SpamTicket } from './more-actions/spam-ticket/spam-ticket';
 
 interface ITicketOverviewProps {
@@ -55,6 +57,14 @@ const MenuRenderer = (props: MenuRendererProps) => {
           ticketId={ticketId}
         />
       );
+    case 'restoreTicket':
+      return (
+        <RestoreTicket
+          showDialog={showDrawer.restoreTicket}
+          onCloseDrawer={() => toggleDrawerDisplay('restoreTicket')}
+          ticketId={ticketId}
+        />
+      );
     case 'spamTicket':
       return (
         <SpamTicket
@@ -71,6 +81,7 @@ enum MoreActionsEnum {
   mergeTicket = 'mergeTicket',
   deleteTicket = 'deleteTicket',
   spamTicket = 'spamTicket',
+  restoreTicket = 'restoreTicket',
 }
 
 type DrawerDisplayTypes = {
@@ -79,7 +90,25 @@ type DrawerDisplayTypes = {
 
 const useMenuItems = () => {
   const isFeatureAccessible = useFeature<undefined>();
+  const location = useLocation();
+  const isDeletedTicketsPage =
+    location.pathname.split('/')[2] === 'deleted_tickets';
   const { t } = useTranslation();
+
+  const menuOptionInCaseOfDeletedTickets = isDeletedTicketsPage
+    ? {
+        key: MoreActionsEnum.restoreTicket as string,
+        label: t('restore_ticket'),
+        icon: <ReportOutlined />,
+        hidden: false,
+      }
+    : {
+        key: MoreActionsEnum.deleteTicket as string,
+        label: t('delete_ticket'),
+        icon: <DeleteOutlined />,
+        hidden: false,
+      };
+
   return [
     {
       key: MoreActionsEnum.mergeTicket as string,
@@ -87,12 +116,7 @@ const useMenuItems = () => {
       icon: <MergeOutlined />,
       hidden: !isFeatureAccessible('merge_ticket'),
     },
-    {
-      key: MoreActionsEnum.deleteTicket as string,
-      label: t('delete_ticket'),
-      icon: <DeleteOutlined />,
-      hidden: false,
-    },
+    { ...menuOptionInCaseOfDeletedTickets },
     {
       key: MoreActionsEnum.spamTicket as string,
       label: t('mark_as_spam'),
@@ -144,6 +168,7 @@ export const TicketOverview = (props: ITicketOverviewProps) => {
     mergeTicket: false,
     deleteTicket: false,
     spamTicket: false,
+    restoreTicket: false,
   });
 
   const toggleDrawerDisplay = (key: string) => {

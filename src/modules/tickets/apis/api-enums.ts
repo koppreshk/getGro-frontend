@@ -27,6 +27,7 @@ export enum TicketsEndPoint {
   MERGE_TICKETS = 'merge_tickets',
   SEARCH_TICKETS = 'search_ticket',
   DELETE_TICKET = 'delete_ticket',
+  RESTORE_TICKET = 'restore_ticket',
 
   LINKED_TICKETS = 'linked_tickets',
   TICKET_HISTORY = 'history',
@@ -70,6 +71,7 @@ export enum TicketsQueryKey {
   LINKED_TICKETS = 'LINKED_TICKETS',
   TICKET_HISTORY = 'TICKET_HISTORY',
   DELETE_TICKET = 'DELETE_TICKET',
+  RESTORE_TICKET = 'RESTORE_TICKET',
   PAST_TICKETS = 'PAST_TICKETS',
   SPLIT_TICKET = 'SPLIT_TICKET',
 
