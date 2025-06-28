@@ -1,10 +1,10 @@
 import { ErrorMessage } from 'lib/ui-ux';
-import { useFetchMyClosedTickets } from 'modules/tickets/apis';
+import { useFetchDeletedTickets } from 'modules/tickets/apis/ticket-type-apis/fetch-deleted-tickets';
 import { TicketsByView } from 'modules/tickets/components';
 import React from 'react';
 
-export const MyClosedTicketsContainer = React.memo(() => {
-  const { data, isLoading, isFetching, error } = useFetchMyClosedTickets();
+export const DeletedTicketsContainer = React.memo(() => {
+  const { data, isLoading, isFetching, error } = useFetchDeletedTickets();
 
   if (data || isLoading) {
     const ticketsData = data?.data ?? [];
@@ -22,4 +22,4 @@ export const MyClosedTicketsContainer = React.memo(() => {
   return <ErrorMessage statusCode={error?.message} />;
 });
 
-MyClosedTicketsContainer.displayName = 'MyClosedTicketsContainer';
+DeletedTicketsContainer.displayName = 'DeletedTicketsContainer';
