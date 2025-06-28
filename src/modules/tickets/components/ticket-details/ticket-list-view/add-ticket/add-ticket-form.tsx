@@ -93,6 +93,22 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
           maxHeight="calc(100% - 57px)"
           padding="0 10px 0px 0px"
         >
+          <Grid item xs={12}>
+            <Typography variant="h6" sx={{ mb: '5px' }}>
+              {t('ticket_type')}
+            </Typography>
+            <SelectField
+              name="ticketType"
+              sx={{ width: '100%' }}
+              menuOptions={[
+                { id: 'email', name: 'Email' },
+                { id: 'ivr', name: 'IVR' },
+              ].map((item) => ({
+                key: item.id.toString(),
+                value: item.name,
+              }))}
+            />
+          </Grid>
           <TextboxFieldWithLabel
             name="requesterEmail"
             type="email"

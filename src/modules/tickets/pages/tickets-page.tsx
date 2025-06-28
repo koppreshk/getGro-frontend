@@ -12,6 +12,7 @@ import {
   AllClosedTicketsContainer,
   MyClosedTicketsContainer,
   AllTicketsContainer,
+  DeletedTicketsContainer,
 } from '../containers';
 
 export default function TicketsPage() {
@@ -77,6 +78,11 @@ export default function TicketsPage() {
               key="my-closed"
               path="/my_closed"
               element={<MyClosedTicketsContainer />}
+            />
+            <Route
+              key="deleted-tickets"
+              path="/deleted_tickets"
+              element={<DeletedTicketsContainer />}
             />
 
             <Route

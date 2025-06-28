@@ -1,3 +1,4 @@
+import { DeleteOutlined } from '@mui/icons-material';
 import { Typography } from '@mui/material';
 import { useAppDispatch } from 'lib/hooks';
 import { FlexBox, HorizontalSeparator } from 'lib/ui-ux';
@@ -72,6 +73,7 @@ export enum TicketViewRoutes {
   MyPending = 'my_pending',
   MyResolved = 'my_resolved',
   MyClosed = 'my_closed',
+  DeletedTickets = 'deleted_tickets',
 }
 export const usePrimaryViewOptions = () => {
   const { t } = useTranslation();
@@ -115,26 +117,25 @@ export const usePrimaryViewOptions = () => {
 };
 
 const useViewOptions = () => {
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
   const primaryOptions = usePrimaryViewOptions();
   const res = {
     primaryOptions,
-    // secondaryOptions: [
-    //     {
-    //         name: t('deleted_tickets'),
-    //         primaryKey: 'deleted-tickets',
-    //         route: 'deleted-tickets',
-    //         disabled: true,
-    //         renderIcon: () => <DeleteOutlined />
-    //     },
-    //     {
-    //         name: t('spam_tickets'),
-    //         primaryKey: 'spam-tickets',
-    //         route: 'spam-tickets',
-    //         disabled: true,
-    //         renderIcon: () => <ReportOutlined />
-    //     },
-    // ]
+    secondaryOptions: [
+      {
+        name: t('deleted_tickets'),
+        primaryKey: 'deleted-tickets',
+        route: TicketViewRoutes.DeletedTickets,
+        renderIcon: () => <DeleteOutlined />,
+      },
+      // {
+      //   name: t('spam_tickets'),
+      //   primaryKey: 'spam-tickets',
+      //   route: 'spam-tickets',
+      //   disabled: true,
+      //   renderIcon: () => <ReportOutlined />,
+      // },
+    ],
   };
 
   return res;
@@ -180,7 +181,7 @@ const TicketViewOptions = (props: ITicketViewOptionsProps) => {
 };
 
 export const TicketViews = () => {
-  const { primaryOptions } = useViewOptions();
+  const { primaryOptions, secondaryOptions } = useViewOptions();
   return (
     <ViewsWrapper flexDirection="column">
       <HeaderWrapper width="100%">
@@ -192,13 +193,11 @@ export const TicketViews = () => {
         </React.Fragment>
       ))}
       <HorizontalSeparator />
-      {/* {
-                secondaryOptions.map((item) => (
-                    <React.Fragment key={item.primaryKey}>
-                        <TicketViewOptions {...item} />
-                    </React.Fragment>
-                ))
-            } */}
+      {secondaryOptions.map((item) => (
+        <React.Fragment key={item.primaryKey}>
+          <TicketViewOptions {...item} />
+        </React.Fragment>
+      ))}
     </ViewsWrapper>
   );
 };
