@@ -10,7 +10,10 @@ import {
 import { useAppDispatch } from 'lib/hooks';
 import { FlexBox } from 'lib/ui-ux/flexbox/flexbox';
 import { GridLayout } from 'lib/ui-ux/grid-layout';
-import { setAdvanceFiltersState } from 'modules/tickets/storage';
+import {
+  resetAdvanceFilters,
+  setAdvanceFiltersState,
+} from 'modules/tickets/storage';
 import { useFormContext } from 'react-hook-form';
 import { useSearchParams } from 'react-router-dom';
 
@@ -23,7 +26,7 @@ interface IAdvanceSearchPopupContentProps extends IAdvanceSearchProps {
 export const AdvanceSearchPopupContent = (
   props: IAdvanceSearchPopupContentProps
 ) => {
-  const { combinedData, fetchAllTicketsWithSearchQuery, handleClose } = props;
+  const { combinedData, handleClose } = props;
   const { agents, channels, priorities, statuses, tags } = combinedData;
   const dispatch = useAppDispatch();
   const { reset, handleSubmit } = useFormContext<ISearchTickets>();
@@ -47,41 +50,32 @@ export const AdvanceSearchPopupContent = (
       source: formData.source.map((item) => Number(item.key)).join(','),
       email: formData.requesterEmail ? formData.requesterEmail : '',
     };
-    if (fetchAllTicketsWithSearchQuery) {
-      const finalArgs = Object.keys(formObject).reduce(
-        (acc, key) => {
-          const typedKey = key as keyof typeof formObject;
-          if (
-            formObject[typedKey] !== undefined &&
-            formObject[typedKey] !== ''
-          ) {
-            acc[typedKey] = formObject[typedKey];
-          }
-          return acc;
-        },
-        {} as Record<string, string>
-      );
+    const finalArgs = Object.keys(formObject).reduce(
+      (acc, key) => {
+        const typedKey = key as keyof typeof formObject;
+        if (formObject[typedKey] !== undefined && formObject[typedKey] !== '') {
+          acc[typedKey] = formObject[typedKey];
+        }
+        return acc;
+      },
+      {} as Record<string, string>
+    );
 
-      // Add itemsPerPage and pageNumber to finalArgs
-      if (itemsPerPage) {
-        finalArgs.items_per_page = itemsPerPage;
-      }
-      if (pageNumber) {
-        finalArgs.page = pageNumber;
-      }
-      fetchAllTicketsWithSearchQuery(finalArgs);
-      dispatch(setAdvanceFiltersState(true));
-      handleClose();
+    // Add itemsPerPage and pageNumber to finalArgs
+    if (itemsPerPage) {
+      finalArgs.items_per_page = itemsPerPage;
     }
+    if (pageNumber) {
+      finalArgs.page = pageNumber;
+    }
+    dispatch(setAdvanceFiltersState(finalArgs));
+    handleClose();
   };
 
   const onClearFilter = () => {
     reset();
     handleClose();
-    if (fetchAllTicketsWithSearchQuery) {
-      fetchAllTicketsWithSearchQuery({});
-      dispatch(setAdvanceFiltersState(false));
-    }
+    dispatch(resetAdvanceFilters());
   };
 
   const renderAgentOption: AutoCompleteRenderOptionProps = (
@@ -167,7 +161,7 @@ export const AdvanceSearchPopupContent = (
           }
         />
         <DateTimePickerFieldWithLabel
-          label="Crated date"
+          label="Created date"
           name="createdDate"
           size="small"
           views={['year', 'day']}

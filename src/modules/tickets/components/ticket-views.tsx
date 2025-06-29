@@ -8,7 +8,7 @@ import { useMatch, useNavigate } from 'react-router-dom';
 import { styled, css } from 'styled-components';
 // import { DeleteOutlined, ReportOutlined } from '@mui/icons-material/';
 
-import { setAdvanceFiltersState } from '../storage';
+import { resetAdvanceFilters } from '../storage';
 import { TicketViewActionButtons } from './ticket-details/ticket-list-view';
 
 const ViewsWrapper = styled(FlexBox)`
@@ -161,7 +161,7 @@ const TicketViewOptions = (props: ITicketViewOptionsProps) => {
 
   const onLinkClick = React.useCallback(() => {
     navigate(route);
-    dispatch(setAdvanceFiltersState(false));
+    dispatch(resetAdvanceFilters());
   }, [dispatch, navigate, route]);
 
   return (

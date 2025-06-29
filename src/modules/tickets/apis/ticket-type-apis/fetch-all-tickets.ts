@@ -1,4 +1,5 @@
 import { useServiceClient } from 'lib';
+import { useAppSelector } from 'lib/hooks';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useSearchParams } from 'react-router-dom';
@@ -7,32 +8,61 @@ import { TicketsEndPoint, TicketsQueryKey } from '../api-enums';
 import { ITicketDetails } from './types';
 
 export const useFetchAllTickets = () => {
-  const [searchParams] = useSearchParams();
-  const itemsPerPage = searchParams.get('noOfRecords');
-  const pageNumber = searchParams.get('pageNumber');
-  const search = searchParams.get('searchText');
   const { getData } = useServiceClient();
-  const _pageNumber =
-    pageNumber === undefined ? '' : `page=${pageNumber ?? '1'}&`;
-  const _search = search ? `&search=${search}` : '';
+  const reduxFilters = useAppSelector((state) => state.tickets.filters);
+  const [searchParams] = useSearchParams();
+
+  // extract from URL
+  const urlFilters = React.useMemo(() => {
+    const apiURLMappedKeys = {
+      pageNumber: 'page',
+      noOfRecords: 'items_per_page',
+      searchText: 'search',
+    };
+    const filters: Record<string, string> = {};
+    const keys: (keyof typeof apiURLMappedKeys)[] = [
+      'pageNumber',
+      'noOfRecords',
+      'searchText',
+    ];
+    keys.forEach((key) => {
+      const val = searchParams.get(key);
+      if (val) {
+        filters[apiURLMappedKeys[key]] = val;
+      }
+    });
+    return filters;
+  }, [searchParams]);
+
+  // merge redux + url
+  const finalFilters = React.useMemo(
+    () => ({
+      ...urlFilters, // these stay in the URL
+      ...reduxFilters, // from filter popup (Redux)
+    }),
+    [urlFilters, reduxFilters]
+  );
+
+  // build query string
+  const queryString = React.useMemo(() => {
+    return Object.entries(finalFilters)
+      .map(([key, value]) => `${key}=${encodeURIComponent(value as string)}`)
+      .join('&');
+  }, [finalFilters]);
 
   const fetchAllData = React.useCallback(
     () =>
-      getData(
-        `${TicketsEndPoint.FETCH_ALL_TICKETS}?${_pageNumber}items_per_page=${itemsPerPage ?? '10'}${_search}`
-      ).then((res) => res.json()),
-    [_pageNumber, _search, getData, itemsPerPage]
+      getData(`${TicketsEndPoint.FETCH_ALL_TICKETS}?${queryString}`).then(
+        (res) => res.json()
+      ),
+    [getData, queryString]
   );
+
   return useQuery<
     { data: ITicketDetails[]; total_pages: number },
     { message: string }
   >({
-    queryKey: [
-      TicketsQueryKey.FETCH_ALL_TICKETS,
-      pageNumber,
-      itemsPerPage,
-      search,
-    ],
+    queryKey: [TicketsQueryKey.FETCH_ALL_TICKETS, finalFilters],
     queryFn: fetchAllData,
     keepPreviousData: true,
   });

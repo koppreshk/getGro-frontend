@@ -4,7 +4,7 @@ import { ITicketDetails } from 'modules/tickets/apis';
 import { TicketList, TicketListViewHeader } from '.';
 
 interface ITicketListViewsProps {
-  data: ITicketDetails[];
+  data?: ITicketDetails[];
   isLoading?: boolean;
 }
 
@@ -18,7 +18,7 @@ export const TicketListView = (props: ITicketListViewsProps) => {
       style={{ backgroundColor: '#fff' }}
     >
       <TicketListViewHeader />
-      <TicketList data={data} />
+      <TicketList data={data || []} />
     </FlexBox>
   );
 };

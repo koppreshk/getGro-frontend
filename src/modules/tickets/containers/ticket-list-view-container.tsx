@@ -1,4 +1,4 @@
-import { FlexBox } from 'lib/ui-ux';
+import { ErrorMessage, FlexBox } from 'lib/ui-ux';
 import { TicketListViewLoader } from 'lib/ui-ux/loader-components';
 import { useLocation } from 'react-router-dom';
 
@@ -36,7 +36,7 @@ export const useGetQueryEndPoint = () => {
 
 export const TicketListViewContainer = () => {
   const queryEndPoint = useGetQueryEndPoint();
-  const { data, isLoading, isRefetching } = useGetTicketsDataByKey(
+  const { data, isLoading, isRefetching, error } = useGetTicketsDataByKey(
     queryEndPoint,
     queryEndPoint
   );
@@ -53,5 +53,5 @@ export const TicketListViewContainer = () => {
     return <TicketListView data={data.data} />;
   }
 
-  return <h6>error</h6>;
+  return <ErrorMessage statusCode={(error as any)?.message} />;
 };
