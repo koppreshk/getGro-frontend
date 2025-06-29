@@ -20,7 +20,6 @@ export interface IAdvanceSearchProps {
     agents: IQueueMetadata | undefined;
     channels: IChannels[] | undefined;
   };
-  fetchAllTicketsWithSearchQuery?: (args?: Record<string, string>) => void;
 }
 
 interface IKeyValue {
@@ -108,11 +107,7 @@ export const AdvanceSearch = (props: IAdvanceSearchProps) => {
           },
         }}
       >
-        <AdvanceSearchPopupContent
-          {...props}
-          fetchAllTicketsWithSearchQuery={props.fetchAllTicketsWithSearchQuery}
-          handleClose={handleClose}
-        />
+        <AdvanceSearchPopupContent {...props} handleClose={handleClose} />
       </Popover>
     </FormProvider>
   );

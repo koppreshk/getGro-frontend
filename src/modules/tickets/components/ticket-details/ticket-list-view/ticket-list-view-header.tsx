@@ -2,8 +2,9 @@ import { ArrowBack } from '@mui/icons-material/';
 import { Typography } from '@mui/material';
 import { CustomIconButton, FlexBox, RefreshButton } from 'lib/ui-ux';
 import { convertToUnderscore } from 'lib/utils';
+import { AdvanceSearchContainer } from 'modules/tickets/containers';
 import { Trans, useTranslation } from 'react-i18next';
-import { useMatch, useNavigate } from 'react-router-dom';
+import { useMatch, useNavigate, useLocation } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 import { TicketViewActionButtons } from '.';
@@ -17,28 +18,25 @@ export const HeaderWrapper = styled(FlexBox)`
 export const TicketListViewHeader = () => {
   const match = useMatch('/tickets/:ticketType/:ticketId');
   const header = convertToUnderscore(match?.params.ticketType || '');
+  const ticketType = match?.params.ticketType;
   const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useTranslation();
 
-  // const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
-
-  // const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-  //     setAnchorEl(event.currentTarget);
-  // };
-
-  // const handleClose = () => {
-  //     setAnchorEl(null);
-  // };
-
-  // const open = Boolean(anchorEl);
+  const handleBackClick = () => {
+    const search = location.search;
+    if (ticketType) {
+      navigate(`/tickets/${ticketType}${search}`);
+    } else {
+      navigate('/tickets' + search);
+    }
+  };
 
   return (
     <HeaderWrapper width="100%" justifyContent="space-between">
       <FlexBox>
         <CustomIconButton
-          onClick={() => {
-            navigate(-1);
-          }}
+          onClick={handleBackClick}
           iconComponent={<ArrowBack />}
           tooltipProps={{ title: t('back') }}
         />
@@ -48,13 +46,8 @@ export const TicketListViewHeader = () => {
           </Typography>
           <FlexBox>
             <RefreshButton />
-            {/* <CustomIconButton tooltipProps={{ title: 'Sort' }} iconComponent={<SortIcon />} onClick={handleClick} /> */}
+            <AdvanceSearchContainer />
           </FlexBox>
-          {/* <Menu open={open} anchorEl={anchorEl} onClose={handleClose} >
-                        <MenuItem>Status</MenuItem>
-                        <MenuItem>Due Date</MenuItem>
-                        <MenuItem>Source</MenuItem>
-                    </Menu> */}
         </FlexBox>
       </FlexBox>
       <TicketViewActionButtons />

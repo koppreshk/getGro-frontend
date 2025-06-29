@@ -45,7 +45,6 @@ interface ITableControlProps {
   onDownloadBtnClick?: () => void;
   searchPlaceholder?: string;
   searchLabel?: string;
-  fetchAllTicketsWithSearchQuery?: (args?: Record<string, string>) => void;
 }
 
 const TableActions = () => {
@@ -150,7 +149,6 @@ export const TableControls = (props: ITableControlProps) => {
     isContentViewModeVisible,
     searchLabel = i18n.t('search_tickets'),
     searchPlaceholder = i18n.t('search_by_ticket_id_subject'),
-    fetchAllTicketsWithSearchQuery,
   } = props;
   const config = useAppSelector((state) => state.core.config);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -268,9 +266,7 @@ export const TableControls = (props: ITableControlProps) => {
         {viewFilter && (
           <>
             <VerticalSeparator />
-            <AdvanceSearchContainer
-              fetchAllTicketsWithSearchQuery={fetchAllTicketsWithSearchQuery}
-            />
+            <AdvanceSearchContainer />
           </>
         )}
         <VerticalSeparator />

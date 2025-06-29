@@ -16,7 +16,6 @@ interface TicketsByViewProps {
   data: ITicketDetails[];
   isLoading?: boolean;
   totalPages: number;
-  fetchAllTicketsWithSearchQuery?: (args?: Record<string, string>) => void;
 }
 
 const ContentContainer = styled.div`
@@ -110,7 +109,6 @@ export const TicketsByView = (props: TicketsByViewProps) => {
           enableSerchField
           isContentViewModeVisible
           onDownloadBtnClick={onDownloadBtnClick}
-          fetchAllTicketsWithSearchQuery={props.fetchAllTicketsWithSearchQuery}
         />
       </div>
       <ContentContainer>
