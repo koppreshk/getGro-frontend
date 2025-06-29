@@ -1,5 +1,5 @@
 import { Avatar, Typography } from '@mui/material';
-import { FlexBox } from 'lib/ui-ux';
+import { FlexBox, NoDataIllustration } from 'lib/ui-ux';
 import { chooseRandomColors, getInitialsByName, getTimeAgo } from 'lib/utils';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -62,30 +62,39 @@ export const ChatHistory = (props: ChatHistoryProps) => {
       width="100%"
       height="100%"
     >
-      {historyData.map((item, index) => (
-        <FlexBox flexDirection="row" key={item.created_at + index}>
-          <FlexBox flexDirection="column" alignItems="center">
-            <UserAvatar userName={item.user} />
-            {index < historyData.length - 1 && <TimeLine />}
-          </FlexBox>
-
-          <FlexBox
-            flexDirection="column"
-            gap="6px"
-            padding="0 10px 15px"
-            width="90%"
-          >
-            <FlexBox flexDirection="column">
-              <Typography variant="h6">{item.user}</Typography>
-              <Typography variant="caption" sx={{ color: pallete.grayNeutral }}>
-                {t('made_changes')} -{' '}
-                {useTimeAgoDate ? getTimeAgo(item.created_at) : item.created_at}
-              </Typography>
+      {historyData.length ? (
+        historyData.map((item, index) => (
+          <FlexBox flexDirection="row" key={item.created_at + index}>
+            <FlexBox flexDirection="column" alignItems="center">
+              <UserAvatar userName={item.user} />
+              {index < historyData.length - 1 && <TimeLine />}
             </FlexBox>
-            <Typography variant="caption">{item.history}</Typography>
+
+            <FlexBox
+              flexDirection="column"
+              gap="6px"
+              padding="0 10px 15px"
+              width="90%"
+            >
+              <FlexBox flexDirection="column">
+                <Typography variant="h6">{item.user}</Typography>
+                <Typography
+                  variant="caption"
+                  sx={{ color: pallete.grayNeutral }}
+                >
+                  {t('made_changes')} -{' '}
+                  {useTimeAgoDate
+                    ? getTimeAgo(item.created_at)
+                    : item.created_at}
+                </Typography>
+              </FlexBox>
+              <Typography variant="caption">{item.history}</Typography>
+            </FlexBox>
           </FlexBox>
-        </FlexBox>
-      ))}
+        ))
+      ) : (
+        <NoDataIllustration message="No data to display" />
+      )}
     </FlexContainer>
   );
 };
