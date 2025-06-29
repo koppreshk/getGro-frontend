@@ -1,6 +1,6 @@
 import { CallMade, CallMissed, CallReceived } from '@mui/icons-material';
 import { Tooltip, Typography } from '@mui/material';
-import { FlexBox } from 'lib/ui-ux';
+import { FlexBox, NoDataIllustration } from 'lib/ui-ux';
 import { capitalizeFirstLetter } from 'lib/utils';
 import { Call, ICallsByTicketId } from 'modules/tickets/apis';
 import styled, { useTheme } from 'styled-components';
@@ -90,9 +90,13 @@ export const TelephonicConversationsLayout = (props: {
   const { data } = props;
   return (
     <FlexBox flexDirection="column" width="100%" overflowY="auto">
-      {data.calls.map((data, index) => (
-        <TelephonicConversationCard data={data} key={index} />
-      ))}
+      {data.calls.length ? (
+        data.calls.map((call, index) => (
+          <TelephonicConversationCard data={call} key={index} />
+        ))
+      ) : (
+        <NoDataIllustration message="No data to display" />
+      )}
     </FlexBox>
   );
 };
