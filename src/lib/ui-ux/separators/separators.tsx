@@ -17,7 +17,9 @@ export const HorizontalSeparator = styled.div<{
   $backgroundColor?: string;
 }>`
   width: 100%;
+  min-height: 1px;
   height: 1px;
+  display: block;
   box-sizing: border-box;
   margin: ${({ $margin }) => ($margin ? $margin : 'unset')};
   background-color: ${({ theme, $backgroundColor }) =>

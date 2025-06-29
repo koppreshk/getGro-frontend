@@ -20,6 +20,10 @@ interface ICreateManualTicketArgs {
    * For chats only, send the below id so that ticket is created and linked
    */
   conversation_id?: string | number;
+  ticket_type: 'ivr' | 'email';
+  phone_number?: string;
+  customer_name?: string;
+  department_id?: string;
 }
 
 export const useCreateManualTicket = () => {
