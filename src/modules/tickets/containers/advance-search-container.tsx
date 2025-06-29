@@ -6,11 +6,7 @@ import { useFetchAllStatuses } from 'modules/settings/apis/ticket-status';
 
 import { useFetchPriorities, useFetchAllTags } from '../apis';
 
-interface IAdvanceSearchContainerProps {
-  fetchAllTicketsWithSearchQuery?: (args?: Record<string, string>) => void;
-}
-
-export const AdvanceSearchContainer = (props: IAdvanceSearchContainerProps) => {
+export const AdvanceSearchContainer = () => {
   const {
     data: prioritiesData,
     isLoading: isPrioritiesLoading,
@@ -72,10 +68,5 @@ export const AdvanceSearchContainer = (props: IAdvanceSearchContainerProps) => {
     return <div>Error loading data</div>;
   }
 
-  return (
-    <AdvanceSearch
-      combinedData={combinedData}
-      fetchAllTicketsWithSearchQuery={props.fetchAllTicketsWithSearchQuery}
-    />
-  );
+  return <AdvanceSearch combinedData={combinedData} />;
 };

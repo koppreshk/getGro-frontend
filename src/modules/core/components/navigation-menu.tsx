@@ -9,7 +9,7 @@ import {
 import { Tooltip } from '@mui/material';
 import { useAppDispatch, useModule } from 'lib/hooks';
 import { FlexBox } from 'lib/ui-ux';
-import { setAdvanceFiltersState } from 'modules/tickets/storage';
+import { resetAdvanceFilters } from 'modules/tickets/storage';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useMatch } from 'react-router-dom';
@@ -211,7 +211,7 @@ export const NavigationMenu = React.memo(() => {
   useEffect(() => {
     if (match?.params.module) {
       if (matchAllTickets?.params.view === 'all_tickets') {
-        dispatch(setAdvanceFiltersState(false));
+        dispatch(resetAdvanceFilters());
       }
       setMenu(match?.params.module);
     }

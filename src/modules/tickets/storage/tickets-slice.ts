@@ -5,6 +5,7 @@ import { ITicketDetails } from '../apis';
 interface TicketsState {
   totalPages: number;
   showHideTicketDetails: boolean;
+  filters: Record<string, string>;
   isAdvanceFiltersEnabled: boolean;
   ticketDetails?: ITicketDetails;
   ticketsList: ITicketDetails[];
@@ -13,6 +14,7 @@ interface TicketsState {
 const initialState: TicketsState = {
   totalPages: 0,
   showHideTicketDetails: true,
+  filters: {},
   isAdvanceFiltersEnabled: false,
   ticketDetails: undefined,
   ticketsList: [],
@@ -34,8 +36,16 @@ export const ticketsSlice = createSlice({
     setTicketsList: (state, action: PayloadAction<ITicketDetails[]>) => {
       state.ticketsList = action.payload;
     },
-    setAdvanceFiltersState: (state, action: PayloadAction<boolean>) => {
-      state.isAdvanceFiltersEnabled = action.payload;
+    setAdvanceFiltersState: (
+      state,
+      action: PayloadAction<Record<string, string>>
+    ) => {
+      state.filters = action.payload;
+      state.isAdvanceFiltersEnabled = true;
+    },
+    resetAdvanceFilters: (state) => {
+      state.filters = {};
+      state.isAdvanceFiltersEnabled = false;
     },
   },
 });
@@ -47,6 +57,7 @@ export const {
   setTicketDetails,
   setTicketsList,
   setAdvanceFiltersState,
+  resetAdvanceFilters,
 } = ticketsSlice.actions;
 
 export default ticketsSlice.reducer;
