@@ -28,7 +28,7 @@ import {
 } from 'lib/ui-ux';
 import { AdvanceSearchContainer } from 'modules/tickets/containers';
 import React, { useCallback, useState } from 'react';
-import { useMatch, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 import { ContentViewMode } from './content-view-mode';
@@ -152,7 +152,6 @@ export const TableControls = (props: ITableControlProps) => {
   } = props;
   const config = useAppSelector((state) => state.core.config);
   const [searchParams, setSearchParams] = useSearchParams();
-  const viewFilter = useMatch('tickets/all_tickets');
   const pageNumber = Number(searchParams.get('pageNumber')) || 1;
   const noOfRecords = searchParams.get('noOfRecords')
     ? searchParams.get('noOfRecords')!
@@ -263,12 +262,12 @@ export const TableControls = (props: ITableControlProps) => {
           noOfRows={noOfRows as Rows}
           onFilterChangeHandler={onFilterChangeHandler}
         />
-        {viewFilter && (
+        {
           <>
             <VerticalSeparator />
             <AdvanceSearchContainer />
           </>
-        )}
+        }
         <VerticalSeparator />
         <FlexBox>
           <IconButton
