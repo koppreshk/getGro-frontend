@@ -7,8 +7,7 @@ import { useSearchParams } from 'react-router-dom';
 import { TicketsEndPoint, TicketsQueryKey } from '../api-enums';
 import { ITicketDetails } from './types';
 
-export const useFetchAllTickets = () => {
-  const { getData } = useServiceClient();
+export const useAPIFilters = () => {
   const reduxFilters = useAppSelector((state) => state.tickets.filters);
   const [searchParams] = useSearchParams();
 
@@ -37,8 +36,8 @@ export const useFetchAllTickets = () => {
   // merge redux + url
   const finalFilters = React.useMemo(
     () => ({
-      ...urlFilters, // these stay in the URL
       ...reduxFilters, // from filter popup (Redux)
+      ...urlFilters, // these stay in the URL
     }),
     [urlFilters, reduxFilters]
   );
@@ -49,6 +48,13 @@ export const useFetchAllTickets = () => {
       .map(([key, value]) => `${key}=${encodeURIComponent(value as string)}`)
       .join('&');
   }, [finalFilters]);
+
+  return { queryString, finalFilters };
+};
+
+export const useFetchAllTickets = () => {
+  const { getData } = useServiceClient();
+  const { queryString, finalFilters } = useAPIFilters();
 
   const fetchAllData = React.useCallback(
     () =>

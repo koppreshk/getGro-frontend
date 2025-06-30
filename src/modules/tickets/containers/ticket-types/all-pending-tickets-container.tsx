@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import { ErrorMessage } from 'lib/ui-ux';
 import { useFetchAllPendingTickets } from 'modules/tickets/apis';
 import { TicketsByView } from 'modules/tickets/components';
