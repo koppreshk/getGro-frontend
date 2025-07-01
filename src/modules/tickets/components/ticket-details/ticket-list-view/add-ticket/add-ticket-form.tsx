@@ -198,6 +198,18 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
               name="phoneNumber"
               label={t('phone_number')}
             />
+            <Grid item xs={12}>
+              <SelectFieldWithLabel
+                label={t('queue')}
+                name="queue"
+                menuOptions={
+                  allQueues?.map((item) => ({
+                    key: item.id.toString(),
+                    value: item.name,
+                  })) || []
+                }
+              />
+            </Grid>
             {tagsField}
             {descriptionField}
             <Grid item xs={12}>
@@ -207,18 +219,6 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
                 sx={{ width: '100%' }}
                 menuOptions={
                   allDepartment?.map((item) => ({
-                    key: item.id.toString(),
-                    value: item.name,
-                  })) || []
-                }
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <SelectFieldWithLabel
-                label={t('queue')}
-                name="queue"
-                menuOptions={
-                  allQueues?.map((item) => ({
                     key: item.id.toString(),
                     value: item.name,
                   })) || []
