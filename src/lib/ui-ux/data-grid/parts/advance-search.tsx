@@ -7,7 +7,7 @@ import { IQueueMetadata } from 'modules/settings/apis';
 import { IChannels } from 'modules/settings/apis/tags';
 import { IGenericResponse } from 'modules/settings/apis/ticket-status/types';
 import { IPriorities, ITag } from 'modules/tickets/apis';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { AdvanceSearchPopupContent } from './advance-search-popup-content';
@@ -38,11 +38,65 @@ export interface ISearchTickets {
 }
 
 export const AdvanceSearch = (props: IAdvanceSearchProps) => {
+  const { agents, channels, priorities, statuses, tags } = props.combinedData;
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
   const isFilterApplied = useAppSelector(
     (state) => state.tickets.isAdvanceFiltersEnabled
   );
+
+  const filters = useAppSelector((state) => state.tickets.filters);
+
+  const defaultValues: ISearchTickets | undefined = useMemo(() => {
+    if (Object.keys(filters).length) {
+      return {
+        requesterEmail: filters.requesterEmail || '',
+        priority:
+          priorities
+            ?.filter((item) =>
+              filters.priority?.split(',').includes(item.id.toString())
+            )
+            .map((item) => ({ key: item.id.toString(), value: item.name })) ||
+          [],
+        assignee:
+          agents?.employees
+            .filter((item) =>
+              filters.assignee?.split(',').includes(item.id.toString())
+            )
+            .map((item) => ({
+              key: item.id.toString(),
+              value: item.firstName || '',
+            })) || [],
+        status:
+          statuses
+            ?.filter((item) =>
+              filters.status?.split(',').includes(item.id.toString())
+            )
+            .map((item) => ({ key: item.id.toString(), value: item.name })) ||
+          [],
+        tags:
+          tags
+            ?.filter((item) =>
+              filters.tags?.split(',').includes(item.id.toString())
+            )
+            .map((item) => ({ key: item.id.toString(), value: item.name })) ||
+          [],
+        source:
+          channels
+            ?.filter((item) =>
+              filters.source?.split(',').includes(item.channel_id.toString())
+            )
+            .map((item) => ({
+              key: item.channel_id.toString(),
+              value: item.name,
+            })) || [],
+        createdDate: filters?.createdDate
+          ? DateTime.fromFormat(filters.createdDate, 'yyyy-MM-dd HH:mm:ss')
+          : null,
+      };
+    }
+    return undefined;
+  }, [agents?.employees, channels, filters, priorities, statuses, tags]);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -55,7 +109,7 @@ export const AdvanceSearch = (props: IAdvanceSearchProps) => {
   const open = Boolean(anchorEl);
 
   const formMethods = useForm<ISearchTickets>({
-    defaultValues: {
+    defaultValues: defaultValues ?? {
       requesterEmail: '',
       priority: [],
       assignee: [],
@@ -65,6 +119,8 @@ export const AdvanceSearch = (props: IAdvanceSearchProps) => {
       createdDate: null,
     },
   });
+
+  console.log('form:', formMethods.watch());
 
   return (
     <FormProvider {...formMethods}>

@@ -197,7 +197,7 @@ export const AdvanceSearchPopupContent = (
         </Button>
         <FlexBox gap={'15px'}>
           <Button variant="text" onClick={onClearFilter}>
-            Clear Filter
+            {t('clear_filter')}
           </Button>
           <Button variant="contained" onClick={handleSubmit(onSubmit)}>
             {t('apply')}
