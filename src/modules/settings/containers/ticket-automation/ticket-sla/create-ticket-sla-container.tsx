@@ -28,8 +28,6 @@ export const CreateTicketSLAContainer = (props: {
       conditionsArray,
     } = formData;
 
-    console.log(formData.addReminders.ftrGroup);
-
     return mutateAsync({
       name: chooseCondition.name,
       description: chooseCondition.description,

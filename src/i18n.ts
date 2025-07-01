@@ -11,7 +11,6 @@ import hiTranslations from './locales/hi/translation.json';
 import zhCNTranslations from './locales/zh-CN/translation.json';
 
 const subdomain = getSubdomain(); // 'demo'
-console.log('Subdomain:', subdomain);
 
 // Initialize i18next
 i18n.use(initReactI18next).init({
