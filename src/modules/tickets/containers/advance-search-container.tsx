@@ -68,5 +68,13 @@ export const AdvanceSearchContainer = () => {
     return <div>Error loading data</div>;
   }
 
-  return <AdvanceSearch combinedData={combinedData} />;
+  if (
+    combinedData.priorities &&
+    combinedData.statuses &&
+    combinedData.tags &&
+    combinedData.agents &&
+    combinedData.channels
+  ) {
+    return <AdvanceSearch combinedData={combinedData} />;
+  }
 };
