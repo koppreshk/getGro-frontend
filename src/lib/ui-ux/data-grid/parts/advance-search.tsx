@@ -120,8 +120,6 @@ export const AdvanceSearch = (props: IAdvanceSearchProps) => {
     },
   });
 
-  console.log('form:', formMethods.watch());
-
   return (
     <FormProvider {...formMethods}>
       <Badge
