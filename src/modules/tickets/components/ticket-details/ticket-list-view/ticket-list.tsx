@@ -78,6 +78,7 @@ const TicketDetails = (props: ITicketDetailsProps) => {
     createdFrom,
     has_read,
   } = props;
+
   const params = useParams();
   const navigate = useNavigate();
   const match = useMatch(`/tickets/:ticketType/:ticketId`);
@@ -85,6 +86,7 @@ const TicketDetails = (props: ITicketDetailsProps) => {
     () => params.ticketId === ticketId.toString(),
     [params.ticketId, ticketId]
   );
+
   const ref = React.useRef<HTMLDivElement>(null);
   const [searchParams] = useSearchParams();
   const noOfRecords = searchParams.get('noOfRecords');
@@ -94,46 +96,38 @@ const TicketDetails = (props: ITicketDetailsProps) => {
   const { pallete } = useTheme();
   const ticketsList = useAppSelector((state) => state.tickets.ticketsList);
 
-  React.useEffect(() => {
-    if (params.ticketId === ticketId.toString() && ref.current) {
-      ref.current.scrollIntoView({ behavior: 'smooth' });
-
-      dispatch(
-        setTicketDetails({
-          ...props,
-        })
-      );
-    }
-  }, [dispatch, params.ticketId, props, ticketId]);
-
-  const onTicketClick = React.useCallback(() => {
-    const mappedData = [...ticketsList].map((ticket) => {
-      if (ticket.ticketId === ticketId) {
-        return { ...ticket, has_read: true };
-      }
-      return ticket;
-    });
-    dispatch(setTicketsList(mappedData));
-    navigate(
-      `/tickets/${match?.params.ticketType}/${ticketId}?${createSearchParams({ noOfRecords: noOfRecords!, pageNumber: pageNumber! })}`
-    );
-  }, [
-    dispatch,
-    match?.params.ticketType,
-    navigate,
-    noOfRecords,
-    pageNumber,
-    ticketId,
-    ticketsList,
-  ]);
-
+  const { t } = useTranslation();
   const isoDate = DateTime.fromFormat(updatedAt, 'yyyy-LL-dd hh:mm a').toISO();
   const time = DateTime.fromISO(isoDate!).toFormat('hh:mm a');
-  const { t } = useTranslation();
   const { backgroundColor, textColor } = useMemo(
     () => chooseRandomColors(customerName || ''),
     [customerName]
   );
+
+  useEffect(() => {
+    const isActive = params.ticketId === ticketId.toString();
+
+    if (isActive && ref.current) {
+      ref.current.scrollIntoView({ behavior: 'smooth' });
+      dispatch(setTicketDetails({ ...props }));
+
+      if (!has_read) {
+        const updatedTickets = ticketsList.map((ticket) =>
+          ticket.ticketId === ticketId ? { ...ticket, has_read: true } : ticket
+        );
+        dispatch(setTicketsList(updatedTickets));
+      }
+    }
+  }, [dispatch, has_read, params.ticketId, props, ticketId, ticketsList]);
+
+  const onTicketClick = React.useCallback(() => {
+    navigate(
+      `/tickets/${match?.params.ticketType}/${ticketId}?${createSearchParams({
+        noOfRecords: noOfRecords!,
+        pageNumber: pageNumber!,
+      })}`
+    );
+  }, [match?.params.ticketType, navigate, noOfRecords, pageNumber, ticketId]);
 
   return (
     <TicketWrapper
@@ -181,7 +175,7 @@ const TicketDetails = (props: ITicketDetailsProps) => {
                   ? `${t('yesterday')}, ${time}`
                   : updatedAt}
             </Typography>
-            {has_read ? null : (
+            {!has_read && (
               <Tooltip title={t('view_new_message')}>
                 <NewMessageIndicator />
               </Tooltip>
