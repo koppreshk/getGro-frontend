@@ -198,6 +198,11 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
               name="phoneNumber"
               label={t('phone_number')}
             />
+            <TextboxFieldWithLabel
+              name="subject"
+              label={t('subject')}
+              rules={{ required: t('subject_validation') }}
+            />
             <Grid item xs={12}>
               <SelectFieldWithLabel
                 label={t('queue')}
