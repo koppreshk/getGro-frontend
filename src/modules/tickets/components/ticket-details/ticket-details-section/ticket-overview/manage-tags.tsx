@@ -1,7 +1,8 @@
 import { FlexBox } from 'lib/ui-ux';
 import { ITagInput, TagInput } from 'lib/ui-ux/tag-input/tag-input';
+import { isEqual } from 'lodash';
 import { ITag } from 'modules/settings/apis/tags';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Trans } from 'react-i18next';
 import { styled } from 'styled-components';
 
@@ -22,14 +23,18 @@ interface IManageTagsProps {
 
 export const ManageTags = (props: IManageTagsProps) => {
   const { associatedTags, allTags, onTagsChange } = props;
-  const mappedTags = associatedTags.map((item) => ({
-    name: item.name,
-    id: item.id,
-  }));
+  const mappedTags = useMemo(
+    () =>
+      associatedTags.map((item) => ({
+        name: item.name,
+        id: item.id,
+      })),
+    [associatedTags]
+  );
   const [tagItems, setTagItems] = useState(mappedTags);
 
   useEffect(() => {
-    if (mappedTags.length !== tagItems.length) {
+    if (!isEqual(mappedTags, tagItems)) {
       setTagItems(mappedTags);
     }
   }, [mappedTags, tagItems]);
