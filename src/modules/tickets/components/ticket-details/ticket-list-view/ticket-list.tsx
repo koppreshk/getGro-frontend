@@ -183,7 +183,11 @@ const TicketDetails = (props: ITicketDetailsProps) => {
           </FlexBox>
         </FlexBox>
         <StyledTypography variant="body2" title={description}>
-          {description}
+          <div
+            dangerouslySetInnerHTML={{
+              __html: description ?? '',
+            }}
+          />
         </StyledTypography>
         <FlexBox flexDirection="row" gap="10px" alignItems="center">
           <>{getSourceIcon(createdFrom)}</>

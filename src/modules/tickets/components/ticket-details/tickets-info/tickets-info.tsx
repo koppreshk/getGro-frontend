@@ -4,13 +4,14 @@ import {
   Clear,
   ConfirmationNumberOutlined,
 } from '@mui/icons-material';
-import { IconButton, TextField, Typography } from '@mui/material';
+import { IconButton, Typography } from '@mui/material';
 import { t } from 'i18next';
 import { useNotifications } from 'lib';
 import { useAppSelector } from 'lib/hooks';
 import { FlexBox } from 'lib/ui-ux';
 import { useUpdateTicketInfo } from 'modules/tickets/apis/update-ticket-info';
 import React from 'react';
+import ReactQuill from 'react-quill';
 import styled from 'styled-components';
 
 interface TicketsInfoTabContentProps {
@@ -28,6 +29,16 @@ const StyledContainer = styled(FlexBox)`
   align-items: center;
 `;
 
+const EditorContainer = styled.div`
+  width: 100%;
+
+  .ql-container {
+    height: 180px;
+    max-height: 200px;
+    overflow: auto;
+  }
+`;
+
 const TicketsInfoTabContent = ({
   content,
   label,
@@ -39,6 +50,7 @@ const TicketsInfoTabContent = ({
   const { showNotification } = useNotifications();
   const onEdit = () => {
     setIsEditMode((prev) => !prev);
+    setText(content || '');
   };
 
   const onSave = () => {
@@ -82,13 +94,22 @@ const TicketsInfoTabContent = ({
         <FlexBox flexDirection="column">
           <FlexBox padding="20px" gap={'10px'}>
             {isInEditMode ? (
-              <TextField
-                fullWidth
-                onChange={(ev) => setText(ev.target.value)}
-              />
+              <EditorContainer>
+                <ReactQuill
+                  theme="snow"
+                  value={value}
+                  placeholder={t('type_in_here')}
+                  preserveWhitespace
+                  onChange={(text) => setText(text)}
+                />
+              </EditorContainer>
             ) : (
               <Typography variant="body2" sx={{ width: 'calc(100% - 90px)' }}>
-                {content}
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: content ?? '',
+                  }}
+                />
               </Typography>
             )}
           </FlexBox>
