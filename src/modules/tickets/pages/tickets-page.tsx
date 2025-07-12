@@ -5,7 +5,7 @@ import { Navigate, Route, Routes, useMatch } from 'react-router-dom';
 import { TicketViews } from '../components';
 import { TicketDetailsLayout } from '../components/ticket-details';
 import {
-  AllResolvedTicketsContainer,
+  // AllResolvedTicketsContainer,
   MyResolvedTicketsContainer,
   AllPendingTicketsContainer,
   MyPendingTicketsContainer,
@@ -54,11 +54,11 @@ export default function TicketsPage() {
               path="/all_pending"
               element={<AllPendingTicketsContainer />}
             />
-            <Route
+            {/* <Route
               key="all-resolved"
               path="/all_resolved"
               element={<AllResolvedTicketsContainer />}
-            />
+            /> */}
             <Route
               key="all-closed"
               path="/all_closed"
@@ -95,11 +95,11 @@ export default function TicketsPage() {
               path="/all_pending/:ticketId"
               element={<TicketDetailsLayout />}
             />
-            <Route
+            {/* <Route
               key="all-resolved-details"
               path="/all_resolved/:ticketId"
               element={<TicketDetailsLayout />}
-            />
+            /> */}
             <Route
               key="all-closed-details"
               path="/all_closed/:ticketId"

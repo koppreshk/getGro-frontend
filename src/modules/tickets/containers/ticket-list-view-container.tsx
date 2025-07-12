@@ -16,8 +16,8 @@ export const useGetQueryEndPoint = () => {
         return 'FETCH_ALL_CLOSED_TICKETS';
       case TicketViewRoutes.AllPending:
         return 'FETCH_ALL_PENDING_TICKETS';
-      case TicketViewRoutes.AllResolved:
-        return 'FETCH_ALL_RESOLVED_TICKETS';
+      // case TicketViewRoutes.AllResolved:
+      //   return 'FETCH_ALL_RESOLVED_TICKETS';
       case TicketViewRoutes.MyClosed:
         return 'FETCH_MY_CLOSED';
       case TicketViewRoutes.MyPending:

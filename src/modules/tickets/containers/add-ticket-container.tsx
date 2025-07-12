@@ -37,6 +37,7 @@ export const AddTicketContainer = (props: {
       phoneNumber,
       department,
       queue,
+      resolution,
     } = formData;
     const assigneeOptionValue =
       assignee === 'manual'
@@ -56,6 +57,7 @@ export const AddTicketContainer = (props: {
       customer_name: customerName,
       department_id: department,
       queue_id: queue,
+      resolution: resolution,
     })
       .then((res) => {
         if (res.status) {

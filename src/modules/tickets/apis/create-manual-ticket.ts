@@ -24,6 +24,7 @@ interface ICreateManualTicketArgs {
   phone_number?: string;
   customer_name?: string;
   department_id?: string;
+  resolution?: string;
 }
 
 export const useCreateManualTicket = () => {

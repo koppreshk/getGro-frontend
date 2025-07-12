@@ -62,6 +62,7 @@ export interface IAddTIcketFormFields {
   phoneNumber?: string;
   department?: string;
   queue?: string;
+  resolution?: string;
 }
 
 export const AddTicketForm = (props: IAddTicketFormProps) => {
@@ -198,10 +199,12 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
               name="phoneNumber"
               label={t('phone_number')}
             />
+            <TextboxFieldWithLabel name="subject" label={t('subject')} />
             <TextboxFieldWithLabel
-              name="subject"
-              label={t('subject')}
-              rules={{ required: t('subject_validation') }}
+              name="resolution"
+              label={t('resolution')}
+              multiline
+              rows={4}
             />
             <Grid item xs={12}>
               <SelectFieldWithLabel
