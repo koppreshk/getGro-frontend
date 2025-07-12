@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { styled } from 'styled-components';
 
 import { TicketConversationHeader } from './ticket-conversation-header';
+import { TicketsInfoTab } from '../tickets-info/tickets-info';
 
 export interface ITicketConversationLayoutProps {}
 
@@ -68,6 +69,10 @@ export const TicketConversationLayout = () => {
     return <TicketLinksContainer />;
   }, []);
 
+  const renderTicketInfo = useCallback(() => {
+    return <TicketsInfoTab />;
+  }, []);
+
   const renderHistory = useCallback(() => {
     return <TicketHistoryContainer />;
   }, []);
@@ -102,6 +107,7 @@ export const TicketConversationLayout = () => {
         />
         <StyledTab label={t('links_label')} />
         <StyledTab label={t('history_label')} />
+        <StyledTab label={t('ticket_info')} />
       </StyledTabs>
       {/* <Tabs value={value} onChange={handleChange} variant="fullWidth" aria-label="ticket-tabs" sx={{ minHeight: 'unset' }}>
                 <StyledTab label="Conversations" />
@@ -117,6 +123,9 @@ export const TicketConversationLayout = () => {
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2} height="100%">
           {renderHistory()}
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={3} height="100%">
+          {renderTicketInfo()}
         </CustomTabPanel>
       </div>
     </LayoutWrapper>

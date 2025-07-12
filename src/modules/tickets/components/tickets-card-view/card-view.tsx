@@ -253,12 +253,13 @@ export const CardView = (props: ITicketDetails) => {
     createdAt,
     ticketStatus,
     priority,
-    description,
     resolutionDue,
     assigneeInfo,
     createdFrom,
     responseDue,
     has_read,
+    customerNumber,
+    subject,
   } = props;
   const getSourceIcon = useSourceIcon();
   const navigate = useNavigate();
@@ -334,9 +335,9 @@ export const CardView = (props: ITicketDetails) => {
         <CustomerName customerName={customerName} />
         <FlexBox flexDirection="column" gap="14px" width="100%">
           <FlexBox flexDirection="column" width="calc(100% - 70px)">
-            <Tooltip title={'Subject: ' + description} placement="bottom-start">
+            <Tooltip title={'Subject: ' + subject} placement="bottom-start">
               <StyledEllipsisTypography variant="h5">
-                {highlightText(description, searchText)}
+                {highlightText(subject, searchText)}
               </StyledEllipsisTypography>
             </Tooltip>
 
@@ -349,14 +350,15 @@ export const CardView = (props: ITicketDetails) => {
                 <Tooltip title={'Customer Name'}>
                   <Typography variant="body2">{customerName}</Typography>
                 </Tooltip>
+                <Tooltip title={'Phone Number'}>
+                  <Typography variant="body2">{customerNumber}</Typography>
+                </Tooltip>
+
                 <FlexBox gap={'5px'} alignItems="center">
                   <TicketInfoContent variant="subheading1">
                     {t('via')}
                   </TicketInfoContent>
                   {getSourceIcon(createdFrom)}
-                  <TicketInfoContent variant="body2">
-                    {getParsedChatType(createdFrom)}
-                  </TicketInfoContent>
                 </FlexBox>
               </NameAndSourceContent>
               {responseDue ? (

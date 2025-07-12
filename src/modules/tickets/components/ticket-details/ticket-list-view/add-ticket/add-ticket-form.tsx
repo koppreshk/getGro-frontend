@@ -94,6 +94,7 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
       phoneNumber: '',
       customerName: '',
       queue: '',
+      resolution: '',
     },
   });
 
