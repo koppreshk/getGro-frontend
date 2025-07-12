@@ -1,9 +1,12 @@
 export interface ITicketDetails {
   customerName?: string;
+  customerNumber?: string;
   ticketId: number;
   source: string;
   channelId: number;
   description: string;
+  subject: string;
+  resolution: string;
   ticketStatus: string;
   priority: string;
   createdAt: string;

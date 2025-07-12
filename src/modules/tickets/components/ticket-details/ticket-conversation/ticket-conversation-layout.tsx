@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { styled } from 'styled-components';
 
 import { TicketConversationHeader } from './ticket-conversation-header';
+import { TicketsInfoTab } from '../tickets-info/tickets-info';
 
 export interface ITicketConversationLayoutProps {}
 
@@ -45,7 +46,9 @@ export const TicketConversationLayout = () => {
   );
   const ticketSource =
     ticketDetailsById && ticketDetailsById.source?.toLocaleLowerCase();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(() =>
+    ticketSource === 'email' ? 0 : 3
+  );
   const { t } = useTranslation();
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -66,6 +69,10 @@ export const TicketConversationLayout = () => {
 
   const renderLinks = useCallback(() => {
     return <TicketLinksContainer />;
+  }, []);
+
+  const renderTicketInfo = useCallback(() => {
+    return <TicketsInfoTab />;
   }, []);
 
   const renderHistory = useCallback(() => {
@@ -102,6 +109,7 @@ export const TicketConversationLayout = () => {
         />
         <StyledTab label={t('links_label')} />
         <StyledTab label={t('history_label')} />
+        <StyledTab label={t('ticket_info')} />
       </StyledTabs>
       {/* <Tabs value={value} onChange={handleChange} variant="fullWidth" aria-label="ticket-tabs" sx={{ minHeight: 'unset' }}>
                 <StyledTab label="Conversations" />
@@ -117,6 +125,9 @@ export const TicketConversationLayout = () => {
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2} height="100%">
           {renderHistory()}
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={3} height="100%">
+          {renderTicketInfo()}
         </CustomTabPanel>
       </div>
     </LayoutWrapper>

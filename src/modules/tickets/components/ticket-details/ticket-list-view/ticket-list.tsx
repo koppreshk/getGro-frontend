@@ -74,7 +74,8 @@ const TicketDetails = (props: ITicketDetailsProps) => {
     updatedAt,
     customerName,
     ticketId,
-    description,
+    subject,
+    customerNumber,
     createdFrom,
     has_read,
   } = props;
@@ -182,11 +183,23 @@ const TicketDetails = (props: ITicketDetailsProps) => {
             )}
           </FlexBox>
         </FlexBox>
-        <StyledTypography variant="body2" title={description}>
-          {description}
+        <StyledTypography variant="body2" title={subject}>
+          {subject}
         </StyledTypography>
-        <FlexBox flexDirection="row" gap="10px" alignItems="center">
-          <>{getSourceIcon(createdFrom)}</>
+        <FlexBox
+          flexDirection="row"
+          gap="10px"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <FlexBox gap={'4px'}>
+            {getSourceIcon(createdFrom)}
+            {customerNumber && (
+              <StyledTypography variant="body2">
+                {customerNumber}
+              </StyledTypography>
+            )}
+          </FlexBox>
           <StyledTypography variant="body2">Id: {ticketId}</StyledTypography>
         </FlexBox>
       </TicketDetailsSectionRight>

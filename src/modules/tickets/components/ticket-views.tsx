@@ -68,7 +68,7 @@ export const HeaderWrapper = styled(FlexBox)`
 export enum TicketViewRoutes {
   AllTickets = 'all_tickets',
   AllPending = 'all_pending',
-  AllResolved = 'all_resolved',
+  // AllResolved = 'all_resolved',
   AllClosed = 'all_closed',
   MyPending = 'my_pending',
   MyResolved = 'my_resolved',
@@ -88,11 +88,11 @@ export const usePrimaryViewOptions = () => {
       primaryKey: 'all-pending',
       route: TicketViewRoutes.AllPending,
     },
-    {
-      name: t('all_resolved'),
-      primaryKey: 'all-resolved',
-      route: TicketViewRoutes.AllResolved,
-    },
+    // {
+    //   name: t('all_resolved'),
+    //   primaryKey: 'all-resolved',
+    //   route: TicketViewRoutes.AllResolved,
+    // },
     {
       name: t('all_closed'),
       primaryKey: 'all-closed',
