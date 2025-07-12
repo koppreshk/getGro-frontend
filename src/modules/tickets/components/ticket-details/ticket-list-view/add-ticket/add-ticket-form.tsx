@@ -15,12 +15,15 @@ import {
 import { useFetchAllDepartment } from 'modules/settings/apis/department';
 import { ITag } from 'modules/settings/apis/tags';
 import { useFetchAllQueues } from 'modules/settings/apis/ticket-automation';
+import { useFetchAllStatuses } from 'modules/settings/apis/ticket-status';
 import { StyledRichTextEditor } from 'modules/settings/component/ticket-configurations/canned-response/add-canned-response-form';
 import { IPriorities } from 'modules/tickets/apis';
+import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { styled } from 'styled-components';
 
+import { ManualTicketStatus } from './manual-ticket-status';
 import { StyledRadioGroupFields } from '../../ticket-conversation/email-conversations/more-actions/split-ticket';
 import { QueueOptions } from '../../ticket-conversation/email-conversations/more-actions/split-ticket/queue-options';
 
@@ -63,6 +66,7 @@ export interface IAddTIcketFormFields {
   department?: string;
   queue?: string;
   resolution?: string;
+  status?: string | number;
 }
 
 export const AddTicketForm = (props: IAddTicketFormProps) => {
@@ -101,7 +105,19 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
 
   const ticketTypeValue = formMethods.watch('ticketType');
   const { data: allDepartment } = useFetchAllDepartment();
+  const { data: statuses } = useFetchAllStatuses();
   const { data: allQueues } = useFetchAllQueues();
+
+  const [selectedStatus, setSelectedStatus] = useState<number | undefined>(
+    () => (statuses && statuses[0] ? statuses[0].id : undefined)
+  );
+
+  const handleFormSubmit = (formData: IAddTIcketFormFields) => {
+    return onSubmit({
+      ...formData,
+      status: selectedStatus || '',
+    } as IAddTIcketFormFields);
+  };
 
   const descriptionField = (
     <Grid item xs={12}>
@@ -220,18 +236,33 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
             </Grid>
             {tagsField}
             {descriptionField}
-            <Grid item xs={12}>
-              <SelectFieldWithLabel
-                name="department"
-                label={t('department')}
-                sx={{ width: '100%' }}
-                menuOptions={
-                  allDepartment?.map((item) => ({
-                    key: item.id.toString(),
-                    value: item.name,
-                  })) || []
-                }
-              />
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <SelectFieldWithLabel
+                  name="department"
+                  label={t('department')}
+                  sx={{ width: '100%' }}
+                  size="small"
+                  menuOptions={
+                    allDepartment?.map((item) => ({
+                      key: item.id.toString(),
+                      value: item.name,
+                    })) || []
+                  }
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <ManualTicketStatus
+                  ticketStatus={
+                    statuses?.find((item) => item.id === selectedStatus)
+                      ?.name || ''
+                  }
+                  menuOptions={statuses || []}
+                  onStatusChange={(statusId: number) =>
+                    setSelectedStatus(statusId)
+                  }
+                />
+              </Grid>
             </Grid>
           </>
         );
@@ -281,7 +312,7 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
           <LoadingButton
             isLoading={mutationLoading}
             variant="contained"
-            onClick={formMethods.handleSubmit(onSubmit)}
+            onClick={formMethods.handleSubmit(handleFormSubmit)}
           >
             {t('submit')}
           </LoadingButton>
