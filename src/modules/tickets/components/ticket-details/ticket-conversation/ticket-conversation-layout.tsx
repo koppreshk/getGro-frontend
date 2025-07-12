@@ -46,7 +46,9 @@ export const TicketConversationLayout = () => {
   );
   const ticketSource =
     ticketDetailsById && ticketDetailsById.source?.toLocaleLowerCase();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(() =>
+    ticketSource === 'email' ? 0 : 3
+  );
   const { t } = useTranslation();
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);

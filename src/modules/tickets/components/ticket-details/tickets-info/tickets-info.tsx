@@ -6,6 +6,7 @@ import {
 } from '@mui/icons-material';
 import { IconButton, TextField, Typography } from '@mui/material';
 import { t } from 'i18next';
+import { useNotifications } from 'lib';
 import { useAppSelector } from 'lib/hooks';
 import { FlexBox } from 'lib/ui-ux';
 import { useUpdateTicketInfo } from 'modules/tickets/apis/update-ticket-info';
@@ -35,15 +36,21 @@ const TicketsInfoTabContent = ({
 }: TicketsInfoTabContentProps) => {
   const [isInEditMode, setIsEditMode] = React.useState(false);
   const [value, setText] = React.useState(content || '');
+  const { showNotification } = useNotifications();
   const onEdit = () => {
     setIsEditMode((prev) => !prev);
   };
 
   const onSave = () => {
-    onUpdateTicketInfo({ text: value, type: type }).then(() => {
-      setText('');
-      setIsEditMode(false);
-    });
+    onUpdateTicketInfo({ text: value, type: type })
+      .then(() => {
+        setText('');
+        setIsEditMode(false);
+        showNotification({ message: 'Successfully updated!', type: 'success' });
+      })
+      .catch(() => {
+        showNotification({ message: 'Failed to update!', type: 'error' });
+      });
   };
   return (
     <>
@@ -112,7 +119,7 @@ export const TicketsInfoTab = () => {
         onSave={onSave}
       />
       <TicketsInfoTabContent
-        content={ticketDetails?.description}
+        content={ticketDetails?.resolution}
         label={t('resolution')}
         type="resolution"
         onSave={onSave}

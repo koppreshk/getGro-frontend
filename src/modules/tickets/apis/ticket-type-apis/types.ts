@@ -6,6 +6,7 @@ export interface ITicketDetails {
   channelId: number;
   description: string;
   subject: string;
+  resolution: string;
   ticketStatus: string;
   priority: string;
   createdAt: string;
