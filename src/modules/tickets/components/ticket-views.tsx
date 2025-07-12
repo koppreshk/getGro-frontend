@@ -71,7 +71,7 @@ export enum TicketViewRoutes {
   // AllResolved = 'all_resolved',
   AllClosed = 'all_closed',
   MyPending = 'my_pending',
-  MyResolved = 'my_resolved',
+  // MyResolved = 'my_resolved',
   MyClosed = 'my_closed',
   DeletedTickets = 'deleted_tickets',
 }
@@ -103,11 +103,11 @@ export const usePrimaryViewOptions = () => {
       primaryKey: 'my-pending',
       route: TicketViewRoutes.MyPending,
     },
-    {
-      name: t('my_resolved'),
-      primaryKey: 'my-resolved',
-      route: TicketViewRoutes.MyResolved,
-    },
+    // {
+    //   name: t('my_resolved'),
+    //   primaryKey: 'my-resolved',
+    //   route: TicketViewRoutes.MyResolved,
+    // },
     {
       name: t('my_closed'),
       primaryKey: 'my-closed',

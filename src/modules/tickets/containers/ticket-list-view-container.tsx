@@ -22,8 +22,8 @@ export const useGetQueryEndPoint = () => {
         return 'FETCH_MY_CLOSED';
       case TicketViewRoutes.MyPending:
         return 'FETCH_MY_PENDING';
-      case TicketViewRoutes.MyResolved:
-        return 'FETCH_MY_RESOLVED';
+      // case TicketViewRoutes.MyResolved:
+      //   return 'FETCH_MY_RESOLVED';
       case TicketViewRoutes.DeletedTickets:
         return 'FETCH_DELETED_TICKETS';
       default:

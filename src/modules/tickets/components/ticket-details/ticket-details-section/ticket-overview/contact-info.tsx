@@ -149,7 +149,13 @@ const ContactInfoData = (props: {
           >
             {renderIcons()}
             <TypographyName variant="subheading1">
-              {t(name.toLocaleLowerCase().split(' ').join('_'))}
+              {t(
+                name
+                  ?.toLocaleLowerCase()
+                  .split(' ')
+                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                  .join(' ')
+              )}
             </TypographyName>
           </FlexBox>
           {typeof value === 'function' ? (
@@ -166,14 +172,19 @@ const ContactInfoData = (props: {
 };
 
 export const ContactInfo = (props: IContactInfoProps) => {
-  const { customerInfo, createdAt, ticketId, closedAt } = props;
+  const { customerInfo, createdAt, ticketId, closedAt, customerName } = props;
   const { email, name, phoneNumber } = useMemo(() => {
     return {
       email: customerInfo?.email,
-      name: customerInfo?.name,
+      name: customerInfo?.name || customerName,
       phoneNumber: customerInfo?.phone_number,
     };
-  }, [customerInfo]);
+  }, [
+    customerInfo?.email,
+    customerInfo?.name,
+    customerInfo?.phone_number,
+    customerName,
+  ]);
 
   const [openCallPopUp, setOpenCallPopUp] = React.useState(false);
 

@@ -337,7 +337,7 @@ export const CardView = (props: ITicketDetails) => {
           <FlexBox flexDirection="column" width="calc(100% - 70px)">
             <Tooltip title={'Subject: ' + subject} placement="bottom-start">
               <StyledEllipsisTypography variant="h5">
-                {highlightText(subject, searchText)}
+                {subject ? highlightText(subject, searchText) : null}
               </StyledEllipsisTypography>
             </Tooltip>
 
