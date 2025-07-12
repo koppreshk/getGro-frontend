@@ -216,13 +216,6 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
               name="phoneNumber"
               label={t('phone_number')}
             />
-            <TextboxFieldWithLabel name="subject" label={t('subject')} />
-            <TextboxFieldWithLabel
-              name="resolution"
-              label={t('resolution')}
-              multiline
-              rows={4}
-            />
             <Grid item xs={12}>
               <SelectFieldWithLabel
                 label={t('queue')}
@@ -235,35 +228,40 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
                 }
               />
             </Grid>
+            <TextboxFieldWithLabel name="subject" label={t('subject')} />
             {tagsField}
+            <Grid item xs={6}>
+              <SelectFieldWithLabel
+                name="department"
+                label={t('department')}
+                sx={{ width: '100%' }}
+                size="small"
+                menuOptions={
+                  allDepartment?.map((item) => ({
+                    key: item.id.toString(),
+                    value: item.name,
+                  })) || []
+                }
+              />
+            </Grid>
             {descriptionField}
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <SelectFieldWithLabel
-                  name="department"
-                  label={t('department')}
-                  sx={{ width: '100%' }}
-                  size="small"
-                  menuOptions={
-                    allDepartment?.map((item) => ({
-                      key: item.id.toString(),
-                      value: item.name,
-                    })) || []
-                  }
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <ManualTicketStatus
-                  ticketStatus={
-                    statuses?.find((item) => item.id === selectedStatus)
-                      ?.name || ''
-                  }
-                  menuOptions={statuses || []}
-                  onStatusChange={(statusId: number) =>
-                    setSelectedStatus(statusId)
-                  }
-                />
-              </Grid>
+            <TextboxFieldWithLabel
+              name="resolution"
+              label={t('resolution')}
+              multiline
+              rows={4}
+            />
+            <Grid item xs={12}>
+              <ManualTicketStatus
+                ticketStatus={
+                  statuses?.find((item) => item.id === selectedStatus)?.name ||
+                  ''
+                }
+                menuOptions={statuses || []}
+                onStatusChange={(statusId: number) =>
+                  setSelectedStatus(statusId)
+                }
+              />
             </Grid>
           </>
         );
