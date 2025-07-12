@@ -6,7 +6,7 @@ import { TicketViews } from '../components';
 import { TicketDetailsLayout } from '../components/ticket-details';
 import {
   // AllResolvedTicketsContainer,
-  MyResolvedTicketsContainer,
+  // MyResolvedTicketsContainer,
   AllPendingTicketsContainer,
   MyPendingTicketsContainer,
   AllClosedTicketsContainer,
@@ -69,11 +69,11 @@ export default function TicketsPage() {
               path="/my_pending"
               element={<MyPendingTicketsContainer />}
             />
-            <Route
+            {/* <Route
               key="my-resolved"
               path="/my_resolved"
               element={<MyResolvedTicketsContainer />}
-            />
+            /> */}
             <Route
               key="my-closed"
               path="/my_closed"
@@ -110,11 +110,11 @@ export default function TicketsPage() {
               path="/my_pending/:ticketId"
               element={<TicketDetailsLayout />}
             />
-            <Route
+            {/* <Route
               key="my-resolved-details"
               path="/my_resolved/:ticketId"
               element={<TicketDetailsLayout />}
-            />
+            /> */}
             <Route
               key="my-closed-details"
               path="/my_closed/:ticketId"
