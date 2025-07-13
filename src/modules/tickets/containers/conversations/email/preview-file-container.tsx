@@ -1,17 +1,45 @@
-import { Close, Panorama } from '@mui/icons-material';
+import {
+  Close,
+  NavigateBefore,
+  NavigateNext,
+  Panorama,
+} from '@mui/icons-material';
 import { Dialog, DialogTitle, IconButton } from '@mui/material';
 import { CustomIconButton, FlexBox } from 'lib/ui-ux';
 import { isImageMimeType } from 'modules/chats/components/chat-conversations/conversations/preview-file-content';
-import { useState } from 'react';
-import styled from 'styled-components';
+import { useMemo, useState } from 'react';
+import styledComponents from 'styled-components';
 
 import { IAttachments } from '../../../apis';
 
-const StyledCloseBtn = styled(IconButton)`
+const StyledCloseBtn = styledComponents(IconButton)`
   && {
-    :&hover {
+    :hover {
       background-color: rgb(229 222 222 / 40%);
     }
+  }
+`;
+
+const NavButton = styledComponents(IconButton)`
+  && {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    width: fit-content;
+    z-index: 20;
+  }
+`;
+
+const PrevButton = styledComponents(NavButton)`
+  && {
+    left: 10px;
+  }
+`;
+
+const NextButton = styledComponents(NavButton)`
+  && {
+    right: 10px;
   }
 `;
 
@@ -20,32 +48,35 @@ const PreviewFile = (props: {
   onClose: () => void;
   fileUrl: string;
   contentType: string;
+  attachments: IAttachments[];
+  currentIndex: number;
+  setCurrentIndex: (index: number) => void;
 }) => {
-  const { onClose, open, fileUrl, contentType } = props;
+  const {
+    onClose,
+    open,
+    fileUrl,
+    contentType,
+    attachments,
+    currentIndex,
+    setCurrentIndex,
+  } = props;
 
-  const renderBasedOnFileType = () => {
-    if (isImageMimeType(contentType)) {
-      return (
-        <FlexBox
-          style={{ overflow: 'auto', textAlign: 'center' }}
-          alignItems="center"
-          justifyContent="center"
-          width="100%"
-          height="100%"
-        >
-          <img
-            src={fileUrl}
-            alt="Description"
-            style={{ display: 'block', maxWidth: '100%', maxHeight: '100%' }}
-          />
-        </FlexBox>
-      );
+  const imageAttachments = useMemo(
+    () => attachments.filter((a) => isImageMimeType(a.contentType)),
+    [attachments]
+  );
+
+  const handleNext = () => {
+    if (currentIndex < imageAttachments.length - 1) {
+      setCurrentIndex(currentIndex + 1);
     }
-    return (
-      <object data={fileUrl} style={{ height: '100%' }}>
-        <p>Alternative text</p>
-      </object>
-    );
+  };
+
+  const handlePrev = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    }
   };
 
   return (
@@ -54,11 +85,14 @@ const PreviewFile = (props: {
       onClose={onClose}
       aria-labelledby="alert-dialog-title"
       fullWidth
-      maxWidth={'lg'}
+      maxWidth="lg"
       PaperProps={{
-        sx: { height: '-webkit-fill-available', background: '#2f2f2fba' },
+        sx: {
+          height: '-webkit-fill-available',
+          background: '#2f2f2fba',
+          position: 'absolute',
+        },
       }}
-      aria-describedby="alert-dialog-description"
     >
       <DialogTitle
         sx={{
@@ -75,20 +109,75 @@ const PreviewFile = (props: {
           <Close />
         </StyledCloseBtn>
       </DialogTitle>
-      {renderBasedOnFileType()}
+
+      {isImageMimeType(contentType) && (
+        <>
+          <PrevButton
+            onClick={handlePrev}
+            disabled={currentIndex === 0}
+            aria-label="previous image"
+          >
+            <NavigateBefore fontSize="large" />
+          </PrevButton>
+
+          <NextButton
+            onClick={handleNext}
+            disabled={currentIndex === imageAttachments.length - 1}
+            aria-label="next image"
+          >
+            <NavigateNext fontSize="large" />
+          </NextButton>
+        </>
+      )}
+
+      <FlexBox
+        style={{
+          overflow: 'auto',
+          textAlign: 'center',
+          position: 'relative', // ✅ Add this
+        }}
+        alignItems="center"
+        justifyContent="center"
+        width="100%"
+        height="100%"
+      >
+        {isImageMimeType(contentType) ? (
+          <img
+            src={fileUrl}
+            alt="Preview"
+            style={{ display: 'block', maxWidth: '100%', maxHeight: '100%' }}
+          />
+        ) : (
+          <object data={fileUrl} style={{ height: '100%' }}>
+            <p>Cannot preview file</p>
+          </object>
+        )}
+      </FlexBox>
     </Dialog>
   );
 };
 
 export const PreviewFileContainer = (
-  props: Pick<IAttachments, 'fileUrl' | 'contentType'>
+  props: Pick<IAttachments, 'fileUrl' | 'contentType'> & {
+    attachments: IAttachments[];
+  }
 ) => {
-  const { fileUrl, contentType } = props;
+  const { fileUrl, attachments } = props;
   const [showFilePreview, setFilePreviewDisplay] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  const toggleViewer = () => setFilePreviewDisplay((prevValue) => !prevValue);
+  const imageAttachments = useMemo(
+    () => attachments.filter((a) => isImageMimeType(a.contentType)),
+    [attachments]
+  );
+
+  const toggleViewer = () => setFilePreviewDisplay((prev) => !prev);
 
   const onPreviewClick = () => {
+    const initialIndex = imageAttachments.findIndex(
+      (a) => a.fileUrl === fileUrl
+    );
+    setCurrentIndex(initialIndex >= 0 ? initialIndex : 0);
     toggleViewer();
   };
 
@@ -97,8 +186,11 @@ export const PreviewFileContainer = (
       <PreviewFile
         open={showFilePreview}
         onClose={toggleViewer}
-        fileUrl={fileUrl}
-        contentType={contentType}
+        fileUrl={imageAttachments[currentIndex]?.fileUrl || ''}
+        contentType={imageAttachments[currentIndex]?.contentType || ''}
+        attachments={attachments}
+        currentIndex={currentIndex}
+        setCurrentIndex={setCurrentIndex}
       />
       <CustomIconButton
         onClick={onPreviewClick}

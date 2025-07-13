@@ -90,6 +90,7 @@ export const DownloadAttachments = (
             <PreviewFileContainer
               fileUrl={attachment.fileUrl}
               contentType={attachment.contentType}
+              attachments={attachments}
             />
             <DownloadAttachmentsContainer
               attachmentId={attachment.attachmentId}
