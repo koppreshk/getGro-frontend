@@ -1,5 +1,6 @@
+/* eslint-disable react/display-name */
 import { Property } from 'csstype';
-import React, { Children, ForwardedRef } from 'react';
+import React, { ForwardedRef, useMemo } from 'react';
 import styled, { css } from 'styled-components';
 
 export type IFlex = {
@@ -32,79 +33,96 @@ const StyledFlexBox = styled.div<CSSFlexProperties>`
   flex-shrink: 0;
   flex-grow: 0;
   box-sizing: border-box;
+
   ${({ $flexDirection }) =>
     $flexDirection &&
     css`
       flex-direction: ${$flexDirection};
     `}
+
   ${({ $flexFlow }) =>
     $flexFlow &&
     css`
       flex-flow: ${$flexFlow};
     `}
-    ${({ $flexWrap }) =>
+
+  ${({ $flexWrap }) =>
     $flexWrap &&
     css`
       flex-wrap: ${$flexWrap};
     `}
-    ${({ $gap }) =>
+
+  ${({ $gap }) =>
     $gap &&
     css`
       gap: ${$gap};
     `}
-    ${({ $alignContent }) =>
+
+  ${({ $alignContent }) =>
     $alignContent &&
     css`
       align-content: ${$alignContent};
     `}
-    align-items: ${({ $alignItems }) => $alignItems};
+
+  align-items: ${({ $alignItems }) => $alignItems};
+
   ${({ $alignSelf }) =>
     $alignSelf &&
     css`
       align-self: ${$alignSelf};
     `}
+
   justify-content: ${({ $justifyContent }) => $justifyContent};
+
   ${({ $justifyItems }) =>
     $justifyItems &&
     css`
       justify-items: ${$justifyItems};
     `}
+
   ${({ $justifySelf }) =>
     $justifySelf &&
     css`
       justify-self: ${$justifySelf};
     `}
-    ${({ $height }) =>
+
+  ${({ $height }) =>
     $height &&
     css`
       height: ${$height};
     `}
-    ${({ $width }) =>
+
+  ${({ $width }) =>
     $width &&
     css`
       width: ${$width};
     `}
-    ${({ $padding }) =>
+
+  ${({ $padding }) =>
     $padding &&
     css`
       padding: ${$padding};
     `}
-    ${({ $maxHeight }) =>
+
+  ${({ $maxHeight }) =>
     $maxHeight &&
     css`
       max-height: ${$maxHeight};
     `}
-    ${({ $maxWidth }) =>
+
+  ${({ $maxWidth }) =>
     $maxWidth &&
     css`
       max-width: ${$maxWidth};
     `}
-    ${({ $overflowX }) =>
+
+  ${({ $overflowX }) =>
     $overflowX &&
     css`
       overflow-x: ${$overflowX};
     `}
-    ${({ $overflowY }) =>
+
+  ${({ $overflowY }) =>
     $overflowY &&
     css`
       overflow-y: ${$overflowY};
@@ -145,7 +163,17 @@ export const FlexBox = React.forwardRef(
       ...rest
     } = props;
 
-    const totalChildrenCount = Children.count(children);
+    // Filter out null, undefined, false children
+    const filteredChildren = useMemo(
+      () =>
+        React.Children.toArray(children).filter(
+          (child) =>
+            React.isValidElement(child) ||
+            typeof child === 'string' ||
+            typeof child === 'number'
+        ),
+      [children]
+    );
 
     return (
       <StyledFlexBox
@@ -171,15 +199,13 @@ export const FlexBox = React.forwardRef(
         $width={width}
         className={className}
       >
-        {Children.map(children, (child, idx) => (
-          <>
+        {filteredChildren.map((child, idx) => (
+          <React.Fragment key={idx}>
             {child}
-            {renderSeparator
-              ? totalChildrenCount !== idx + 1
-                ? renderSeparator()
-                : null
-              : null}
-          </>
+            {renderSeparator &&
+              idx < filteredChildren.length - 1 &&
+              renderSeparator()}
+          </React.Fragment>
         ))}
       </StyledFlexBox>
     );

@@ -117,6 +117,7 @@
   "chat_details": "Chat Details",
   "choose_a_queue": "Choose a queue that is eligible for auto-assignment",
   "choose_condition": "Choose Condition",
+  "clear_filter": "Clear Filter",
   "closed_at": "Closed At",
   "collapse_all": "Collapse All",
   "color": "Color",
@@ -543,6 +544,7 @@
   "ticket_escalation_short_description": "Simplify ticket handling: Use custom rules to automatically categorize and route tickets.",
   "ticket_fields": "Ticket Fields",
   "ticket_id": "Ticket Id",
+  "ticket_info": "Ticket Info",
   "ticket_layout_view": "Ticket Layout View",
   "ticket_notes": "Ticket Notes",
   "ticket_page_count": "Ticket Page Count",
@@ -614,7 +616,5 @@
   "yes_delete": "Yes, Delete",
   "yes_restore": "Yes, Restore",
   "yesterday": "Yesterday",
-  "you": "You",
-  "clear_filter": "Clear Filter",
-  "ticket_info": "Ticket Info"
+  "you": "You"
 }

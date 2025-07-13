@@ -350,10 +350,11 @@ export const CardView = (props: ITicketDetails) => {
                 <Tooltip title={'Customer Name'}>
                   <Typography variant="body2">{customerName}</Typography>
                 </Tooltip>
-                <Tooltip title={'Phone Number'}>
-                  <Typography variant="body2">{customerNumber}</Typography>
-                </Tooltip>
-
+                {customerNumber ? (
+                  <Tooltip title={'Phone Number'}>
+                    <Typography variant="body2">{customerNumber}</Typography>
+                  </Tooltip>
+                ) : null}
                 <FlexBox gap={'5px'} alignItems="center">
                   <TicketInfoContent variant="subheading1">
                     {t('via')}

@@ -4,11 +4,11 @@ import {
   Clear,
   ConfirmationNumberOutlined,
 } from '@mui/icons-material';
-import { IconButton, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { t } from 'i18next';
 import { useNotifications } from 'lib';
 import { useAppSelector } from 'lib/hooks';
-import { FlexBox } from 'lib/ui-ux';
+import { CustomIconButton, FlexBox } from 'lib/ui-ux';
 import { useUpdateTicketInfo } from 'modules/tickets/apis/update-ticket-info';
 import React from 'react';
 import ReactQuill from 'react-quill';
@@ -78,17 +78,23 @@ const TicketsInfoTabContent = ({
           </FlexBox>
           {isInEditMode ? (
             <FlexBox>
-              <IconButton onClick={onSave}>
-                <Save fontSize="small" />
-              </IconButton>
-              <IconButton onClick={onEdit}>
-                <Clear fontSize="small" />
-              </IconButton>
+              <CustomIconButton
+                onClick={onSave}
+                tooltipProps={{ title: t('save') }}
+                iconComponent={<Save fontSize="small" />}
+              />
+              <CustomIconButton
+                onClick={onEdit}
+                tooltipProps={{ title: t('clear') }}
+                iconComponent={<Clear fontSize="small" />}
+              />
             </FlexBox>
           ) : (
-            <IconButton onClick={onEdit}>
-              {<Edit fontSize="small" />}
-            </IconButton>
+            <CustomIconButton
+              onClick={onEdit}
+              tooltipProps={{ title: t('edit') }}
+              iconComponent={<Edit fontSize="small" />}
+            />
           )}
         </StyledContainer>
         <FlexBox flexDirection="column">
