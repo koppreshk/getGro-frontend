@@ -183,9 +183,9 @@ const useColumns = () => {
       cell: (info) => info.getValue(),
       minSize: 200,
     }),
-    columnHelper.accessor('description', {
-      header: t('description'),
-      id: 'description',
+    columnHelper.accessor('subject', {
+      header: t('subject'),
+      id: 'subject',
       cell: (info) => info.getValue(),
       minSize: 200,
     }),
