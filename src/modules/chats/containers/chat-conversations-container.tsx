@@ -7,12 +7,22 @@ import { useMatch } from 'react-router-dom';
 import { ChatConversationById, useFetchConversationById } from '../apis';
 import { ChatConversationsLayout } from '../components/chat-conversations';
 
-export const ChatConversationsContainer = () => {
+interface ChatConversationsContainerProps {
+  isLoading: boolean;
+}
+
+export const ChatConversationsContainer = ({
+  isLoading: isParentAPILoading,
+}: ChatConversationsContainerProps) => {
   const match = useMatch('/chat/:conversationId');
   const id = match?.params.conversationId;
   const { socket, getEventName } = useSocket();
 
-  const { data, isLoading, error } = useFetchConversationById(id);
+  const {
+    data,
+    isLoading: isPending,
+    error,
+  } = useFetchConversationById({ id, isParentAPILoading });
 
   const [conversationById, setConversationById] =
     useState<ChatConversationById | null>(null);
@@ -43,7 +53,7 @@ export const ChatConversationsContainer = () => {
     };
   }, [getEventName, id, socket]);
 
-  if (isLoading) {
+  if (isPending || isParentAPILoading) {
     return (
       <FlexBox width="100%" height="100%" flexDirection="column" padding="10px">
         <ChatConversationLoader />

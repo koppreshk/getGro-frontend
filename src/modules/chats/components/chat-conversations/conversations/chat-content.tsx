@@ -102,6 +102,27 @@ const Wrapper = styled(FlexBox)<{ $isIncomingMessage: boolean }>`
     $isIncomingMessage ? animateClient : animateAgent};
 `;
 
+const MessageDeliveryStatuses = (props: { agtMsgDeliveryStatus: string }) => {
+  const { agtMsgDeliveryStatus } = props;
+  const chatDetails = useAppSelector((state) => state.chat.chatDetails);
+
+  const IconComponent = agtMsgDeliveryStatus === 'sent' ? Done : DoneAll;
+  return (
+    <IconComponent
+      sx={{
+        color:
+          agtMsgDeliveryStatus === 'read'
+            ? '#53bdeb'
+            : chatDetails!.chat_source === 'whatsapp'
+              ? '#8696a0'
+              : '#f7f7f7',
+        width: '16px',
+        height: '16px',
+      }}
+    />
+  );
+};
+
 interface IChatContentProps {
   content: Message;
   customerName: string;
@@ -131,6 +152,7 @@ export const ChatContent = (props: IChatContentProps) => {
   const chatDetails = useAppSelector((state) => state.chat.chatDetails);
 
   React.useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     containerRef?.current &&
       containerRef?.current.scrollIntoView({
         behavior: 'smooth',
@@ -200,26 +222,5 @@ export const ChatContent = (props: IChatContentProps) => {
         )}
       </Content>
     </Wrapper>
-  );
-};
-
-const MessageDeliveryStatuses = (props: { agtMsgDeliveryStatus: string }) => {
-  const { agtMsgDeliveryStatus } = props;
-  const chatDetails = useAppSelector((state) => state.chat.chatDetails);
-
-  const IconComponent = agtMsgDeliveryStatus === 'sent' ? Done : DoneAll;
-  return (
-    <IconComponent
-      sx={{
-        color:
-          agtMsgDeliveryStatus === 'read'
-            ? '#53bdeb'
-            : chatDetails!.chat_source === 'whatsapp'
-              ? '#8696a0'
-              : '#f7f7f7',
-        width: '16px',
-        height: '16px',
-      }}
-    />
   );
 };

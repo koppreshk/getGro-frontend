@@ -1,10 +1,5 @@
 import { SocketEventKeys, useSocket } from 'lib/providers/socket-provider';
-import {
-  CenteredCircularProgress,
-  ErrorMessage,
-  FlexBox,
-  NoDataIllustration,
-} from 'lib/ui-ux';
+import { ErrorMessage, FlexBox, NoDataIllustration } from 'lib/ui-ux';
 import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 
@@ -30,19 +25,17 @@ export default function ChatLayoutPage() {
   const [conversationList, setConversationList] =
     useState<AllChatConversations | null>(null);
 
-  // Update state when API data is initially loaded
   useEffect(() => {
     if (data) {
       setConversationList(data);
     }
-  }, [data]); // Only runs when `data` changes (i.e., API call success)
+  }, [data]);
 
-  // Listen for real-time updates from the socket
   useEffect(() => {
-    if (!socket) return; // Prevent running if socket is null
+    if (!socket) return;
 
     const handleSocketEvent = (newData: string) => {
-      setConversationList(JSON.parse(newData) as AllChatConversations); // Replace entire list with new socket data
+      setConversationList(JSON.parse(newData) as AllChatConversations);
     };
 
     const eventName = getEventName(SocketEventKeys.CHAT_COVERSATION_LIST);
@@ -69,34 +62,33 @@ export default function ChatLayoutPage() {
     });
   };
 
-  if (isLoading || isFetching) {
-    return <CenteredCircularProgress />;
+  if (error) {
+    return <ErrorMessage statusCode={error?.message} />;
   }
 
-  if (conversationList) {
-    return (
-      <>
-        {conversationList.conversations.length ? (
-          <StyledLayoutWrapper height={'100%'} gap={'20px'}>
-            <StyledLayouts width="calc(25% - 20px)">
-              <ChatList
-                data={conversationList}
-                onChatItemClick={onChatItemClick}
-              />
-            </StyledLayouts>
-            <StyledLayouts width="calc(50% - 20px)">
-              <ChatConversationsContainer />
-            </StyledLayouts>
-            <StyledLayouts width="25%">
-              <ChatDetailsLayoutContainer />
-            </StyledLayouts>
-          </StyledLayoutWrapper>
-        ) : (
-          <NoDataIllustration message="No conversations to display" />
-        )}
-      </>
-    );
+  if (conversationList?.conversations.length === 0) {
+    return <NoDataIllustration message="No conversations to display" />;
   }
 
-  return <ErrorMessage statusCode={error?.message} />;
+  return (
+    <>
+      {
+        <StyledLayoutWrapper height={'100%'} gap={'20px'}>
+          <StyledLayouts width="calc(25% - 20px)">
+            <ChatList
+              isLoading={isFetching || isLoading}
+              data={conversationList}
+              onChatItemClick={onChatItemClick}
+            />
+          </StyledLayouts>
+          <StyledLayouts width="calc(50% - 20px)">
+            <ChatConversationsContainer isLoading={isFetching || isLoading} />
+          </StyledLayouts>
+          <StyledLayouts width="25%">
+            <ChatDetailsLayoutContainer isLoading={isFetching || isLoading} />
+          </StyledLayouts>
+        </StyledLayoutWrapper>
+      }
+    </>
+  );
 }

@@ -1,6 +1,7 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
 import { useQuery } from 'react-query';
+import { useSearchParams } from 'react-router-dom';
 
 import { ChatEndPoint, ChatQueryKeys } from './api-enums';
 
@@ -50,17 +51,44 @@ export interface LinkedTicket {
 
 export const useFetchAllConversations = () => {
   const { getData } = useServiceClient();
+  const [searchParams] = useSearchParams();
+
+  const urlFilters = React.useMemo(() => {
+    const apiURLMappedKeys = {
+      pageNumber: 'page',
+      noOfRecords: 'items_per_page',
+    };
+    const filters: Record<string, string> = {};
+    const keys: (keyof typeof apiURLMappedKeys)[] = [
+      'pageNumber',
+      'noOfRecords',
+    ];
+    keys.forEach((key) => {
+      const val = searchParams.get(key);
+      if (val) {
+        filters[apiURLMappedKeys[key]] = val;
+      }
+    });
+    return filters;
+  }, [searchParams]);
+
+  const queryString = React.useMemo(() => {
+    return Object.entries(urlFilters)
+      .map(([key, value]) => `${key}=${encodeURIComponent(value as string)}`)
+      .join('&');
+  }, [urlFilters]);
 
   const fetchAllDashboardData = React.useCallback(
     () =>
-      getData(`${ChatEndPoint.FETCH_ALL_CONVERSATIONS}`).then((res) =>
-        res.json()
+      getData(`${ChatEndPoint.FETCH_ALL_CONVERSATIONS}?${queryString}`).then(
+        (res) => res.json()
       ),
-    [getData]
+    [getData, queryString]
   );
 
   return useQuery<AllChatConversations, { message: string }>({
-    queryKey: [ChatQueryKeys.FETCH_ALL_CONVERSATIONS],
+    queryKey: [ChatQueryKeys.FETCH_ALL_CONVERSATIONS, queryString],
     queryFn: fetchAllDashboardData,
+    enabled: queryString.length > 0,
   });
 };

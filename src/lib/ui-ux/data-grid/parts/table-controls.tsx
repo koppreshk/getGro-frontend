@@ -119,7 +119,7 @@ const Text = styled(Typography)<{ $isSelected?: boolean }>`
   }
 `;
 
-const NoOfPages = (props: INoOfRowsProps) => {
+export const NoOfPages = (props: INoOfRowsProps) => {
   const { noOfRows, onFilterChangeHandler } = props;
   return (
     <>

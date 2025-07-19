@@ -28,7 +28,11 @@ export interface Message {
   filename?: string;
 }
 
-export const useFetchConversationById = (id?: string) => {
+export const useFetchConversationById = (args: {
+  id?: string;
+  isParentAPILoading: boolean;
+}) => {
+  const { id, isParentAPILoading } = args;
   const { getData } = useServiceClient();
 
   const fetchAllDashboardData = React.useCallback(
@@ -42,6 +46,6 @@ export const useFetchConversationById = (id?: string) => {
   return useQuery<ChatConversationById, { message: string }>({
     queryKey: [ChatQueryKeys.FETCH_CONVERSATION_BY_ID, id],
     queryFn: fetchAllDashboardData,
-    enabled: !!id,
+    enabled: !!id && !isParentAPILoading,
   });
 };
