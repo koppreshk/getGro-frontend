@@ -6,9 +6,14 @@ import {
   NoDataIllustration,
 } from 'lib/ui-ux';
 import { useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 import { styled } from 'styled-components';
 
-import { AllChatConversations, useFetchAllConversations } from '../apis';
+import {
+  AllChatConversations,
+  ChatConversation,
+  useInfiniteConversations,
+} from '../apis';
 import { ChatList } from '../components';
 import {
   ChatConversationsContainer,
@@ -25,78 +30,92 @@ const StyledLayouts = styled(FlexBox)`
 `;
 
 export default function ChatLayoutPage() {
-  const { data, isLoading, error, isFetching } = useFetchAllConversations();
-  const { socket, getEventName } = useSocket();
-  const [conversationList, setConversationList] =
-    useState<AllChatConversations | null>(null);
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    error,
+  } = useInfiniteConversations();
 
-  // Update state when API data is initially loaded
+  const { socket, getEventName } = useSocket();
+  const { ref, inView } = useInView({ threshold: 0 });
+
+  const [conversationList, setConversationList] = useState<ChatConversation[]>(
+    []
+  );
+
+  // Merge all conversations from all pages
   useEffect(() => {
     if (data) {
-      setConversationList(data);
+      const allChats = data.pages.flatMap((page) => page.conversations);
+      setConversationList(allChats);
     }
-  }, [data]); // Only runs when `data` changes (i.e., API call success)
+  }, [data]);
 
-  // Listen for real-time updates from the socket
+  // Auto fetch next page when scroll hits bottom
   useEffect(() => {
-    if (!socket) return; // Prevent running if socket is null
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, fetchNextPage]);
 
+  // Socket updates
+  useEffect(() => {
+    if (!socket) return;
     const handleSocketEvent = (newData: string) => {
-      setConversationList(JSON.parse(newData) as AllChatConversations); // Replace entire list with new socket data
+      const updatedData = JSON.parse(newData) as AllChatConversations;
+      const updatedChats = updatedData.conversations;
+      setConversationList((prev) => {
+        const seen = new Set(prev.map((c) => c.id));
+        return [...updatedChats, ...prev.filter((c) => !seen.has(c.id))];
+      });
     };
 
     const eventName = getEventName(SocketEventKeys.CHAT_COVERSATION_LIST);
     socket.on(eventName, handleSocketEvent);
-
     return () => {
       socket.off(eventName, handleSocketEvent);
     };
-  }, [getEventName, socket]);
+  }, [socket, getEventName]);
 
-  const onChatItemClick = (conversationId: number) => {
-    const res = conversationList?.conversations.map((conversation) => {
-      if (conversation.id === conversationId && !conversation.has_seen) {
-        conversation.has_seen = true;
-      }
-      return conversation;
-    });
-    setConversationList((prevValues) => {
-      if (!prevValues) return null;
-      return {
-        ...prevValues,
-        conversations: res || [],
-      };
-    });
+  const onChatItemClick = (id: number) => {
+    setConversationList((prev) =>
+      prev.map((c) =>
+        c.id === id && !c.has_seen ? { ...c, has_seen: true } : c
+      )
+    );
   };
 
-  if (isLoading || isFetching) {
-    return <CenteredCircularProgress />;
-  }
-
-  if (conversationList) {
-    return (
-      <>
-        {conversationList.conversations.length ? (
-          <StyledLayoutWrapper height={'100%'} gap={'20px'}>
-            <StyledLayouts width="calc(25% - 20px)">
-              <ChatList
-                data={conversationList}
-                onChatItemClick={onChatItemClick}
-              />
-            </StyledLayouts>
-            <StyledLayouts width="calc(50% - 20px)">
-              <ChatConversationsContainer />
-            </StyledLayouts>
-            <StyledLayouts width="25%">
-              <ChatDetailsLayoutContainer />
-            </StyledLayouts>
-          </StyledLayoutWrapper>
-        ) : (
-          <NoDataIllustration message="No conversations to display" />
-        )}
-      </>
-    );
-  }
-
-  return <ErrorMessage statusCode={error?.message} />;
+  if (isLoading) return <CenteredCircularProgress />;
+  if (error) return <ErrorMessage statusCode={error.message} />;
+  return (
+    <>
+      {conversationList.length ? (
+        <StyledLayoutWrapper height="100%" gap="20px">
+          <StyledLayouts width="calc(25% - 20px)">
+            <ChatList
+              ref={ref}
+              isFetchingNextPage={isFetchingNextPage}
+              data={{
+                conversations: conversationList,
+                page: 1,
+                total_pages: data?.pages?.[0]?.total_pages || 1,
+              }}
+              onChatItemClick={onChatItemClick}
+            />
+          </StyledLayouts>
+          <StyledLayouts width="calc(50% - 20px)">
+            <ChatConversationsContainer />
+          </StyledLayouts>
+          <StyledLayouts width="25%">
+            <ChatDetailsLayoutContainer />
+          </StyledLayouts>
+        </StyledLayoutWrapper>
+      ) : (
+        <NoDataIllustration message="No conversations to display" />
+      )}
+    </>
+  );
 }

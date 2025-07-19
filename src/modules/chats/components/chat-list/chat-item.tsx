@@ -77,7 +77,7 @@ export const ChatItem = (
 
   React.useEffect(() => {
     if (convId === id.toString() && ref.current) {
-      ref.current.scrollIntoView({ behavior: 'smooth' });
+      // ref.current.scrollIntoView({ behavior: 'smooth' });
 
       dispatch(
         setChatDetails({
