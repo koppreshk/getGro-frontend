@@ -1,4 +1,5 @@
 import {
+  CircularProgress,
   FormControl,
   InputLabel,
   MenuItem,
@@ -8,7 +9,7 @@ import {
 import { t } from 'i18next';
 import { FlexBox, RefreshButton } from 'lib/ui-ux';
 import { AllChatConversations } from 'modules/chats/apis';
-import { useEffect, useMemo, useState } from 'react';
+import { forwardRef, useEffect, useMemo, useState } from 'react';
 import { Trans } from 'react-i18next';
 import { useMatch, useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
@@ -16,17 +17,17 @@ import { styled } from 'styled-components';
 import { ChatItem } from './chat-item';
 import { FilterChat } from './filter-chat';
 
-const ChatListWrapper = styled(FlexBox)`
-  height: calc(100% - 70px);
-`;
+const ChatListWrapper = styled(FlexBox)``;
 
 interface ChatListProps {
   data: AllChatConversations;
+  isFetchingNextPage: boolean;
   onChatItemClick: (conversationId: number) => void;
 }
 
-export const ChatList = (props: ChatListProps) => {
-  const { data, onChatItemClick } = props;
+// eslint-disable-next-line react/display-name
+export const ChatList = forwardRef((props: ChatListProps, ref) => {
+  const { data, onChatItemClick, isFetchingNextPage } = props;
   const navigate = useNavigate();
   const match = useMatch('/chat/:conversationId');
   const [selectedView, setSelectedView] = useState('all-conversations');
@@ -101,23 +102,33 @@ export const ChatList = (props: ChatListProps) => {
             setSelectedOption={setSelectedOption}
           />
         </FlexBox>
-        <RefreshButton />
+        {isFetchingNextPage ? <CircularProgress /> : <RefreshButton />}
       </FlexBox>
-      <ChatListWrapper flexDirection="column" width="100%" overflowY="auto">
-        {filteredConversations.length ? (
-          filteredConversations.map((item) => (
-            <ChatItem
-              key={item.id}
-              {...item}
-              onChatItemClick={onChatItemClick}
-            />
-          ))
-        ) : (
-          <FlexBox justifyContent="center" alignItems="center" height="100%">
-            <Trans i18nKey={'no_conversations_cound'} />
-          </FlexBox>
-        )}
-      </ChatListWrapper>
+      <FlexBox
+        flexDirection="column"
+        overflowY="auto"
+        height="calc(100% - 70px);"
+      >
+        <ChatListWrapper flexDirection="column" width="100%">
+          {filteredConversations.length ? (
+            filteredConversations.map((item) => (
+              <ChatItem
+                key={item.id}
+                {...item}
+                onChatItemClick={onChatItemClick}
+              />
+            ))
+          ) : (
+            <FlexBox justifyContent="center" alignItems="center" height="100%">
+              <Trans i18nKey={'no_conversations_cound'} />
+            </FlexBox>
+          )}
+        </ChatListWrapper>
+        <div
+          ref={ref as React.Ref<HTMLDivElement>}
+          style={{ minHeight: '1px' }}
+        />
+      </FlexBox>
     </FlexBox>
   );
-};
+});

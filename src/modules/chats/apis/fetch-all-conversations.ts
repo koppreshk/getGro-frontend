@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { useInfiniteQuery, useQuery } from 'react-query';
 
 import { ChatEndPoint, ChatQueryKeys } from './api-enums';
 
@@ -63,4 +63,26 @@ export const useFetchAllConversations = () => {
     queryKey: [ChatQueryKeys.FETCH_ALL_CONVERSATIONS],
     queryFn: fetchAllDashboardData,
   });
+};
+
+const ITEMS_PER_PAGE = 10;
+
+export const useInfiniteConversations = () => {
+  const { getData } = useServiceClient();
+
+  const fetchChats = async ({ pageParam = 1 }) => {
+    const res = await getData(
+      `${ChatEndPoint.FETCH_ALL_CONVERSATIONS}?page=${pageParam}&items_per_page=${ITEMS_PER_PAGE}`
+    );
+    return res.json();
+  };
+
+  return useInfiniteQuery<AllChatConversations, { message: string }>(
+    [ChatQueryKeys.FETCH_ALL_CONVERSATIONS],
+    fetchChats,
+    {
+      getNextPageParam: (lastPage) =>
+        lastPage.page < lastPage.total_pages ? lastPage.page + 1 : undefined,
+    }
+  );
 };
