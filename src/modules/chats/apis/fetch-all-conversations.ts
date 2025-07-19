@@ -90,5 +90,9 @@ export const useFetchAllConversations = () => {
     queryKey: [ChatQueryKeys.FETCH_ALL_CONVERSATIONS, queryString],
     queryFn: fetchAllDashboardData,
     enabled: queryString.length > 0,
+    staleTime: 5 * 60 * 1000, // keep data fresh for 5 minutes
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
   });
 };

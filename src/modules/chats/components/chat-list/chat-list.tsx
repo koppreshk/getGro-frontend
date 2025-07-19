@@ -1,6 +1,6 @@
 import { CenteredCircularProgress, FlexBox } from 'lib/ui-ux';
 import { AllChatConversations } from 'modules/chats/apis';
-import { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Trans } from 'react-i18next';
 import { useMatch, useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
@@ -19,7 +19,7 @@ interface ChatListProps {
   onChatItemClick: (conversationId: number) => void;
 }
 
-export const ChatList = (props: ChatListProps) => {
+export const ChatList = React.memo((props: ChatListProps) => {
   const { data, isLoading, onChatItemClick } = props;
   const navigate = useNavigate();
   const match = useMatch('/chat/:conversationId');
@@ -85,4 +85,6 @@ export const ChatList = (props: ChatListProps) => {
       />
     </FlexBox>
   );
-};
+});
+
+ChatList.displayName = 'ChatList';
