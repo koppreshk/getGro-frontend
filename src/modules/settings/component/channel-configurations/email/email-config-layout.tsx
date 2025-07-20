@@ -1,5 +1,5 @@
-import { ArrowBack } from '@mui/icons-material';
-import { Typography } from '@mui/material';
+import { Add, ArrowBack } from '@mui/icons-material';
+import { Button, Typography } from '@mui/material';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import {
   BreadCrumbs,
@@ -10,7 +10,9 @@ import {
 import { FetchAllEmailsContainer } from 'modules/settings/containers/channel-configurations';
 import {
   AddEmailConfigContainer,
+  AddImapConfigContainer,
   EditEmailConfigContainer,
+  EditImapConfigContainer,
 } from 'modules/settings/containers/channel-configurations/email';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -22,9 +24,9 @@ const EmailConfigContent = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [isBtnDisabled, setBtnStatus] = useState(false);
-  // const toggleAddEscalationDrawer = useCallback(() => {
-  //   navigate('add-email');
-  // }, [navigate]);
+  const toggleAddImapDrawer = useCallback(() => {
+    navigate('add-imap');
+  }, [navigate]);
 
   const toggleBtnStatus = useCallback((status: boolean) => {
     setBtnStatus(status);
@@ -50,13 +52,13 @@ const EmailConfigContent = () => {
         </FlexBox>
         <FlexBox gap={'10px'}>
           <GoogleSignInButton isDisabled={isBtnDisabled} />
-          {/* <Button
+          <Button
             variant="contained"
-            onClick={toggleAddEscalationDrawer}
+            onClick={toggleAddImapDrawer}
             startIcon={<Add />}
           >
-            {t('add_email')}
-          </Button> */}
+            {t('add_imap')}
+          </Button>
         </FlexBox>
       </FlexBox>
       <FetchAllEmailsContainer toggleBtnStatus={toggleBtnStatus} />
@@ -99,6 +101,16 @@ export default function EmailConfigLayout() {
             key="edit-email-route"
             path="/edit-email"
             element={<EditEmailConfigContainer />}
+          />
+          <Route
+            key="add-imap-route"
+            path="/add-imap"
+            element={<AddImapConfigContainer />}
+          />
+          <Route
+            key="edit-imap-route"
+            path="/edit-imap"
+            element={<EditImapConfigContainer />}
           />
         </Routes>
       </div>

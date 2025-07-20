@@ -5,6 +5,7 @@ export enum ConfigurationsEmailEndPoint {
   FETCH_ALL_EMAILS = 'configuration/fetch_all_emails',
   DELETE_EMAIL = 'configuration/delete_email',
   EDIT_EMAIL = 'configuration/edit_email',
+  CONNECT_IMAP_ACCOUNT = 'configuration/connect_imap_account',
 }
 
 export enum ConfigurationsEmailQueryKey {
@@ -14,4 +15,5 @@ export enum ConfigurationsEmailQueryKey {
   FETCH_ALL_EMAILS = 'FETCH_ALL_EMAILS',
   DELETE_EMAIL = 'DELETE_EMAIL',
   EDIT_EMAIL = 'EDIT_EMAIL',
+  CONNECT_IMAP_ACCOUNT = 'CONNECT_IMAP_ACCOUNT',
 }
