@@ -616,5 +616,15 @@
   "yes_delete": "Yes, Delete",
   "yes_restore": "Yes, Restore",
   "yesterday": "Yesterday",
-  "you": "You"
+  "you": "You",
+  "add_imap": "Add IMAP",
+  "imap_configuration": "IMAP Configuration",
+  "imap_username": "IMAP Username",
+  "imap_password": "IMAP Password",
+  "imap_host": "IMAP Host",
+  "imap_port": "IMAP Port",
+  "smtp_host": "SMTP Host",
+  "smtp_port": "SMTP Port",
+  "imap_add_config_success": "IMAP configuration added successfully",
+  "imap_add_config_error": "Failed to add IMAP configuration"
 }
