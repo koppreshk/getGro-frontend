@@ -10,7 +10,7 @@ import {
   TicketLinksContainer,
   TicketHistoryContainer,
 } from 'modules/tickets/containers';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { styled } from 'styled-components';
 
@@ -46,10 +46,18 @@ export const TicketConversationLayout = () => {
   );
   const ticketSource =
     ticketDetailsById && ticketDetailsById.source?.toLocaleLowerCase();
-  const [value, setValue] = React.useState(
-    ticketSource?.toLocaleLowerCase() === 'email' ? 0 : 3
-  );
+  const [value, setValue] = React.useState(ticketSource === 'email' ? 0 : 3);
+
   const { t } = useTranslation();
+
+  useEffect(() => {
+    if (ticketSource === 'email') {
+      setValue(0); // Conversations tab for email
+    } else {
+      setValue(3); // Ticket Info tab for other sources
+    }
+  }, [ticketSource, ticketDetailsById?.ticketId]);
+
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
