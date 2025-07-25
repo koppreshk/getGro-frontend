@@ -1,5 +1,4 @@
-import { ErrorMessage, FlexBox } from 'lib/ui-ux';
-import { TicketListViewLoader } from 'lib/ui-ux/loader-components';
+import { ErrorMessage } from 'lib/ui-ux';
 import { useLocation } from 'react-router-dom';
 
 import { useGetTicketsDataByKey } from '../apis';
@@ -41,17 +40,15 @@ export const TicketListViewContainer = () => {
     queryEndPoint
   );
 
-  if (isLoading || isRefetching) {
-    return (
-      <FlexBox flexDirection="column" width="100%">
-        <TicketListViewLoader />
-      </FlexBox>
-    );
-  }
+  const loading = isLoading || isRefetching;
 
-  if (data) {
-    return <TicketListView data={data.data} />;
-  }
+  if (error) return <ErrorMessage statusCode={(error as any)?.message} />;
 
-  return <ErrorMessage statusCode={(error as any)?.message} />;
+  return (
+    <TicketListView
+      data={data?.data}
+      totalPages={data?.total_pages}
+      isLoading={loading}
+    />
+  );
 };
