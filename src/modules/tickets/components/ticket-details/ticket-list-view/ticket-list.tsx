@@ -24,11 +24,6 @@ interface ITicketListProps {
   isLoading?: boolean;
 }
 
-const TickListWrapper = styled(FlexBox)`
-  height: calc(100% - 65px);
-  overflow: auto;
-`;
-
 const TicketWrapper = styled(FlexBox)<{ $isTicketActive: boolean }>`
   padding: 15px 10px 15px 15px;
   border-bottom: ${({ theme }) => theme.semantics.standardBorder};
@@ -69,7 +64,7 @@ const StyledTypography = styled(Typography)`
 
 interface ITicketDetailsProps extends ITicketDetails {}
 
-const TicketDetails = (props: ITicketDetailsProps) => {
+const Ticket = (props: ITicketDetailsProps) => {
   const {
     updatedAt,
     customerName,
@@ -253,13 +248,9 @@ export const TicketList = (props: ITicketListProps) => {
     searchText,
   ]);
 
-  const ticketViewDetails = ticketList.map((item) => (
-    <TicketDetails key={item.ticketId} {...item} />
+  const tickets = ticketList.map((item) => (
+    <Ticket key={item.ticketId} {...item} />
   ));
 
-  return (
-    <TickListWrapper flexDirection="column">
-      {ticketViewDetails}
-    </TickListWrapper>
-  );
+  return <>{tickets}</>;
 };
