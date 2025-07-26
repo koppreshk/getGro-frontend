@@ -9,31 +9,38 @@ import { styled } from 'styled-components';
 
 import { TypographyName } from './contact-info';
 
-const StyledButton = styled(Button)`
+interface StyledButtonProps {
+  $isClosed?: boolean;
+}
+
+const StyledButton = styled(Button)<StyledButtonProps>`
   && {
     width: fit-content;
     box-sizing: border-box;
-    background: ${({ theme }) => theme.pallete.toolbarBgColor};
+    background: ${({ theme, $isClosed }) =>
+      $isClosed
+        ? 'linear-gradient(to right top, #2e7d32, #388e3c)' // green gradient for closed
+        : theme.pallete.toolbarBgColor};
 
     @property --myColor1 {
       syntax: '<color>';
-      initial-value: #323452;
+      initial-value: ${({ $isClosed }) => ($isClosed ? '#2e7d32' : '#323452')};
       inherits: false;
     }
 
     @property --myColor2 {
       syntax: '<color>';
-      initial-value: #3d4279;
+      initial-value: ${({ $isClosed }) => ($isClosed ? '#388e3c' : '#3d4279')};
       inherits: false;
     }
-    background: linear-gradient(to right top, var(--myColor1), var(--myColor2));
+
     transition:
       --myColor1 0.35s,
       --myColor2 0.35s;
 
     &:hover {
-      --myColor1: #323452;
-      --myColor2: #6a69f6;
+      --myColor1: ${({ $isClosed }) => ($isClosed ? '#388e3c' : '#323452')};
+      --myColor2: ${({ $isClosed }) => ($isClosed ? '#4caf50' : '#6a69f6')};
     }
   }
 `;
@@ -129,6 +136,7 @@ export const TicketStatus = (props: ITicketStatusProps) => {
           variant="contained"
           onClick={handleClick}
           size="small"
+          $isClosed={ticketStatus.toLowerCase() === 'closed'}
           endIcon={<ExpandMore sx={{ width: 16, height: 16 }} />}
           sx={{
             textTransform: 'unset',
