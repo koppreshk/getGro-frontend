@@ -60,7 +60,7 @@ export interface IAddTIcketFormFields {
   assignee: 'auto' | 'manual';
   queueId: string;
   employeeId: string;
-  ticketType: 'email' | 'ivr';
+  ticketType: 'email' | 'ivr' | 'google_review';
   customerName?: string;
   phoneNumber?: string;
   department?: string;
@@ -206,6 +206,7 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
           </>
         );
       case 'ivr':
+      case 'google_review':
         return (
           <>
             <TextboxFieldWithLabel
@@ -295,6 +296,7 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
               menuOptions={[
                 { id: 'email', name: 'Email' },
                 { id: 'ivr', name: 'IVR' },
+                { id: 'google_review', name: 'Google Review' },
               ].map((item) => ({
                 key: item.id.toString(),
                 value: item.name,
