@@ -10,6 +10,7 @@ import {
   Instagram,
   Sms,
   Web,
+  Google,
 } from '@mui/icons-material';
 import { SvgIcon } from '@mui/material';
 import { SxProps } from '@mui/system';
@@ -87,6 +88,8 @@ export const useSourceIcon = () => {
         return <Sms sx={{ fill: theme.channelSpecific.sms + '!important' }} />;
       case 'web_form':
         return <Web />;
+      case 'google_review':
+        return <Google />;
       default:
         return <></>;
     }

@@ -51,6 +51,7 @@ const defaultTheme: DefaultTheme = {
     twitter: '#00acee',
     telephonic: '#00b7ef',
     sms: '#ffb800s',
+    googleReview: '#4285F4',
   },
   others: {
     scrollContainerColor: '#E4E4E4',

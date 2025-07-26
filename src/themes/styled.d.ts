@@ -60,6 +60,7 @@ declare module 'styled-components' {
       twitter: string;
       telephonic: string;
       sms: string;
+      googleReview: string;
     };
     others: {
       scrollHandleColor: string;
