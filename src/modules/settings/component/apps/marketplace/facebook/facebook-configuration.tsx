@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Login } from '@mui/icons-material';
 import { LoadingButton } from 'lib/ui-ux';
 import { useFacebookConfiguration } from 'modules/settings/apis/marketplace/facebook';
@@ -14,11 +13,9 @@ interface FacebookResponse {
   status: string;
 }
 
-// Define Facebook SDK types for TypeScript
 declare global {
   interface Window {
     FB: any;
-    fbAsyncInit: () => void;
   }
 }
 
@@ -33,7 +30,11 @@ export const FacebookConfiguration = (props: {
   const [fbSdkReady, setFbSdkReady] = useState(false);
 
   useEffect(() => {
-    window.fbAsyncInit = function () {
+    const initializeFB = () => {
+      if (!window.FB) {
+        console.error('FB SDK not loaded properly.');
+        return;
+      }
       window.FB.init({
         appId: import.meta.env.VITE_FB_APP_ID,
         cookie: true,
@@ -41,23 +42,27 @@ export const FacebookConfiguration = (props: {
         version: 'v21.0',
       });
       window.FB.AppEvents.logPageView();
-      setFbSdkReady(true); // Mark SDK as ready here
+      setFbSdkReady(true);
     };
 
-    // Dynamically load FB SDK script only once
     if (!document.getElementById('facebook-jssdk')) {
       const fjs = document.getElementsByTagName('script')[0];
-      const js: any = document.createElement('script');
+      const js = document.createElement('script');
       js.id = 'facebook-jssdk';
       js.src = 'https://connect.facebook.net/en_US/sdk.js';
+
+      js.onload = initializeFB;
+
       fjs.parentNode?.insertBefore(js, fjs);
+    } else if (window.FB) {
+      initializeFB();
     }
   }, []);
 
   const handleFBLogin = () => {
-    if (!fbSdkReady) {
+    if (!fbSdkReady || !window.FB) {
       console.warn('Facebook SDK is not initialized yet.');
-      return; // Prevent calling FB.login before init
+      return;
     }
 
     window.FB.login(
@@ -86,7 +91,7 @@ export const FacebookConfiguration = (props: {
       isLoading={isLoading}
       onClick={handleFBLogin}
       endIcon={<Login />}
-      disabled={!fbSdkReady} // disable until SDK is ready
+      disabled={!fbSdkReady}
     >
       {mode === 'authenticate' ? t('authenticate') : t('re_authenticate')}
     </LoadingButton>
