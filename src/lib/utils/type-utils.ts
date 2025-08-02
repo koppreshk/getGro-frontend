@@ -19,3 +19,8 @@ type CamelizeString<T extends PropertyKey> = T extends string
 export type ToCamelCasedKeysFromUnderscores<T> = {
   [K in keyof T as CamelizeString<K>]: T[K];
 };
+
+export enum AllClients {
+  Demo = 'demo',
+  Ramachandran = 'ramachandran',
+}

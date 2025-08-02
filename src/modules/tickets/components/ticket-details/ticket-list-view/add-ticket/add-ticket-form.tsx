@@ -12,13 +12,15 @@ import {
   ITagInput,
   LoadingButton,
 } from 'lib/ui-ux';
+import { AllClients, getSubdomain } from 'lib/utils';
 import { useFetchAllDepartment } from 'modules/settings/apis/department';
 import { ITag } from 'modules/settings/apis/tags';
 import { useFetchAllQueues } from 'modules/settings/apis/ticket-automation';
 import { useFetchAllStatuses } from 'modules/settings/apis/ticket-status';
 import { StyledRichTextEditor } from 'modules/settings/component/ticket-configurations/canned-response/add-canned-response-form';
 import { IPriorities } from 'modules/tickets/apis';
-import { useState } from 'react';
+import { useSourceIcon } from 'modules/tickets/hooks';
+import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { styled } from 'styled-components';
@@ -268,6 +270,40 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
         );
     }
   };
+  const getSourceIcon = useSourceIcon();
+
+  const munuOptions = useMemo(() => {
+    const baseOptions = [
+      {
+        id: 'email',
+        name: 'Email',
+        iconComponent: getSourceIcon('email', {
+          marginRight: '8px',
+          verticalAlign: 'middle',
+        }),
+      },
+      {
+        id: 'ivr',
+        name: 'IVR',
+        iconComponent: getSourceIcon('ivr', {
+          marginRight: '8px',
+          verticalAlign: 'middle',
+        }),
+      },
+    ];
+    const subdomain = getSubdomain();
+    if (subdomain === AllClients.Ramachandran) {
+      baseOptions.push({
+        id: 'google_review',
+        name: 'Google Review',
+        iconComponent: getSourceIcon('google_review', {
+          marginRight: '8px',
+          verticalAlign: 'middle',
+        }),
+      });
+    }
+    return baseOptions;
+  }, [getSourceIcon]);
 
   return (
     <FormProvider {...formMethods}>
@@ -293,13 +329,10 @@ export const AddTicketForm = (props: IAddTicketFormProps) => {
             <SelectField
               name="ticketType"
               sx={{ width: '100%' }}
-              menuOptions={[
-                { id: 'email', name: 'Email' },
-                { id: 'ivr', name: 'IVR' },
-                { id: 'google_review', name: 'Google Review' },
-              ].map((item) => ({
+              menuOptions={munuOptions.map((item) => ({
                 key: item.id.toString(),
                 value: item.name,
+                iconComponent: item.iconComponent,
               }))}
             />
           </Grid>
