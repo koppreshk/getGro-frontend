@@ -83,7 +83,7 @@ export const TicketQueueList = (props: ITicketQueueListProps) => {
   };
 
   return (
-    <>
+    <div style={{ overflow: 'auto', height: 'calc(100% - 179px)' }}>
       <ConfigDataGrid
         columns={colums}
         isLoading={isLoading}
@@ -105,6 +105,6 @@ export const TicketQueueList = (props: ITicketQueueListProps) => {
         )}
         onClose={toggleQueueDrawer}
       />
-    </>
+    </div>
   );
 };
