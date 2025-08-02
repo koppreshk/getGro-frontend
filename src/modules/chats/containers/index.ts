@@ -6,3 +6,4 @@ export * from './manage-priority-container';
 export * from './manage-assignee-container';
 export * from './manage-tags-container';
 export * from './chat-history-container';
+export * from './whatsapp-chat-template-container';

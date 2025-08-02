@@ -13,3 +13,4 @@ export * from './update-chat-tags';
 export * from './link-ticket';
 export * from './fetch-chat-history';
 export * from './delete-conversation';
+export * from './waba';

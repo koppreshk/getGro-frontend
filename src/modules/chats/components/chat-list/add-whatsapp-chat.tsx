@@ -30,7 +30,7 @@ export const AddWhatsappChat = () => {
         size="small"
         color="primary"
         onClick={toggleAddTicketDrawer}
-        tooltipProps={{ title: 'Add Whatsapp Chat' }}
+        tooltipProps={{ title: 'Whatsapp Template Form' }}
       />
       <AddWhatsappChatForm
         openAddWhatsappChatFormDrawer={openAddTicketDrawer}

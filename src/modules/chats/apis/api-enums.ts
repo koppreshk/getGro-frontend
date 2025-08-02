@@ -15,6 +15,8 @@ export enum ChatEndPoint {
   UNLINK_TICKET = 'chat/unlink_ticket',
   FETCH_CHAT_HISTORY = 'chat/history',
   DELETE_CONVERSATION = 'chat/delete',
+  FETCH_WABA_NUMBERS = 'chat/fetch_waba_numbers',
+  FETCH_WABA_TEMPLATES = 'chat/fetch_templates',
 }
 
 export enum ChatQueryKeys {
@@ -35,4 +37,6 @@ export enum ChatQueryKeys {
   UNLINK_TICKET = 'UNLINK_TICKET',
   FETCH_CHAT_HISTORY = 'FETCH_CHAT_HISTORY',
   DELETE_CONVERSATION = 'DELETE_CONVERSATION',
+  FETCH_WABA_NUMBERS = 'FETCH_WABA_NUMBERS',
+  FETCH_WABA_TEMPLATES = 'FETCH_WABA_TEMPLATES',
 }

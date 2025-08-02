@@ -1,16 +1,28 @@
 import { Button, Typography } from '@mui/material';
 import { t } from 'i18next';
-import { SelectFieldWithLabel, TagInputField } from 'lib/form-fields';
+import {
+  AutoCompleteFieldWithLabel,
+  SelectFieldWithLabel,
+  TagInputField,
+} from 'lib/form-fields';
 import { DrawerExtended, FlexBox } from 'lib/ui-ux';
+import { PhoneChannelList, useFetchTemplates } from 'modules/chats/apis';
+import { WhatsappChatTemplateContainer } from 'modules/chats/containers';
 import { FormProvider, useForm } from 'react-hook-form';
-import styled from 'styled-components';
+import styledComponents from 'styled-components';
 
 interface IAddWhatsappChatFormProps {
   openAddWhatsappChatFormDrawer: boolean;
   toggleAddWhatsappChatFormDrawer: () => void;
 }
 
-const StyledTagInputField = styled(TagInputField)`
+interface WhatsappTemplateFormFields {
+  waba_no: string;
+  templates: string;
+  add_phone_no: string;
+}
+
+const StyledTagInputField = styledComponents(TagInputField)`
   padding: 16.5px 14px;
   border-radius: ${({ theme }) => theme.semantics.borderRadius.xs};
   border: 1px solid ${({ theme }) => theme.pallete.formFieldBorderColor};
@@ -23,11 +35,16 @@ const StyledTagInputField = styled(TagInputField)`
   }
 `;
 
-const WhatsappTemplateForm = (
-  props: Pick<IAddWhatsappChatFormProps, 'toggleAddWhatsappChatFormDrawer'>
+export const WhatsappTemplateForm = (
+  props: Pick<IAddWhatsappChatFormProps, 'toggleAddWhatsappChatFormDrawer'> & {
+    data: PhoneChannelList;
+  }
 ) => {
-  const { toggleAddWhatsappChatFormDrawer } = props;
-  const form = useForm();
+  const { toggleAddWhatsappChatFormDrawer, data } = props;
+  const form = useForm<WhatsappTemplateFormFields>();
+  const { data: templates, isLoading } = useFetchTemplates(
+    form.watch('waba_no')
+  );
   return (
     <FormProvider {...form}>
       <FlexBox
@@ -38,14 +55,27 @@ const WhatsappTemplateForm = (
       >
         <FlexBox gap={'16px'} flexDirection="column">
           <SelectFieldWithLabel
-            menuOptions={[]}
-            name="select_phone_no"
-            label="Select Phone Number"
+            menuOptions={data.map((item) => ({
+              key: item.channel,
+              label: item.number,
+              value: item.number,
+            }))}
+            name="waba_no"
+            label="WABA Number"
+            rules={{ required: 'WABA Number is required' }}
           />
-          <SelectFieldWithLabel
-            menuOptions={[]}
+          <AutoCompleteFieldWithLabel
+            options={(templates?.templates || []).map((item) => ({
+              key: item,
+              label: item,
+              value: item,
+            }))}
             name="templates"
             label="Templates"
+            multiple={false}
+            placeholder={''}
+            isLoading={isLoading}
+            // rules={{ required: 'Please choose a template' }}
           />
           <FlexBox flexDirection="column" gap={'8px'}>
             <Typography
@@ -75,11 +105,11 @@ export const AddWhatsappChatForm = (props: IAddWhatsappChatFormProps) => {
   return (
     <DrawerExtended
       anchor="right"
-      header={t('add_whatsapp_chat')}
+      header={t('Whatsapp Template Form')}
       width="600px"
       open={openAddWhatsappChatFormDrawer}
       onRenderContent={() => (
-        <WhatsappTemplateForm
+        <WhatsappChatTemplateContainer
           toggleAddWhatsappChatFormDrawer={toggleAddWhatsappChatFormDrawer}
         />
       )}

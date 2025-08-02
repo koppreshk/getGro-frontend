@@ -1,14 +1,12 @@
-import { CircularProgress } from '@mui/material';
-import { FlexBox, RefreshButton } from 'lib/ui-ux';
+import { FlexBox } from 'lib/ui-ux';
 import { AllChatConversations } from 'modules/chats/apis';
 import { forwardRef, useEffect, useMemo, useState } from 'react';
 import { Trans } from 'react-i18next';
 import { useMatch, useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 
-import { AddWhatsappChat } from './add-whatsapp-chat';
 import { ChatItem } from './chat-item';
-import { FilterChat } from './filter-chat';
+import { ChatListHeader } from './chat-list-header';
 
 const ChatListWrapper = styled(FlexBox)``;
 
@@ -56,20 +54,11 @@ export const ChatList = forwardRef((props: ChatListProps, ref) => {
 
   return (
     <FlexBox flexDirection="column" height="100%" width="100%">
-      <FlexBox
-        justifyContent="space-between"
-        width="100%"
-        padding="15px 0px 15px 15px"
-      >
-        <FlexBox gap={'10px'}>
-          <AddWhatsappChat />
-          <FilterChat
-            selectedOption={selectedOption}
-            setSelectedOption={setSelectedOption}
-          />
-        </FlexBox>
-        {isFetchingNextPage ? <CircularProgress /> : <RefreshButton />}
-      </FlexBox>
+      <ChatListHeader
+        selectedOption={selectedOption}
+        isFetchingNextPage={isFetchingNextPage}
+        setSelectedOption={setSelectedOption}
+      />
       <FlexBox
         flexDirection="column"
         overflowY="auto"
