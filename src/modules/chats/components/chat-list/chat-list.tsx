@@ -1,12 +1,4 @@
-import {
-  CircularProgress,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Typography,
-} from '@mui/material';
-import { t } from 'i18next';
+import { CircularProgress } from '@mui/material';
 import { FlexBox, RefreshButton } from 'lib/ui-ux';
 import { AllChatConversations } from 'modules/chats/apis';
 import { forwardRef, useEffect, useMemo, useState } from 'react';
@@ -14,6 +6,7 @@ import { Trans } from 'react-i18next';
 import { useMatch, useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 
+import { AddWhatsappChat } from './add-whatsapp-chat';
 import { ChatItem } from './chat-item';
 import { FilterChat } from './filter-chat';
 
@@ -30,7 +23,6 @@ export const ChatList = forwardRef((props: ChatListProps, ref) => {
   const { data, onChatItemClick, isFetchingNextPage } = props;
   const navigate = useNavigate();
   const match = useMatch('/chat/:conversationId');
-  const [selectedView, setSelectedView] = useState('all-conversations');
   const [selectedOption, setSelectedOption] = useState('all-conversations');
 
   const filteredConversations = useMemo(() => {
@@ -62,15 +54,6 @@ export const ChatList = forwardRef((props: ChatListProps, ref) => {
     navigate,
   ]);
 
-  const filters = [
-    { key: 'all-conversations' },
-    { key: 'my-pending' },
-    { key: 'my-unsolved' },
-    { key: 'my-conversations' },
-    { key: 'all-unassigned' },
-    { key: 'all-unsolved' },
-  ];
-
   return (
     <FlexBox flexDirection="column" height="100%" width="100%">
       <FlexBox
@@ -79,24 +62,7 @@ export const ChatList = forwardRef((props: ChatListProps, ref) => {
         padding="15px 0px 15px 15px"
       >
         <FlexBox gap={'10px'}>
-          <FormControl size="small">
-            <InputLabel id="demo-select-small-label">{t('view')}</InputLabel>
-            <Select
-              labelId="demo-select-small-label"
-              id="demo-select-small-label"
-              value={selectedView}
-              label="Views"
-              onChange={(ev) => setSelectedView(ev.target.value)}
-            >
-              {filters.map((item) => (
-                <MenuItem key={item.key} value={item.key}>
-                  <Typography variant="h5">
-                    <Trans i18nKey={item.key.split('-').join('_')} />
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <AddWhatsappChat />
           <FilterChat
             selectedOption={selectedOption}
             setSelectedOption={setSelectedOption}
