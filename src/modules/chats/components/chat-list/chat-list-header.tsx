@@ -1,4 +1,5 @@
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Typography } from '@mui/material';
+import { t } from 'i18next';
 import { FlexBox, RefreshButton } from 'lib/ui-ux';
 import { Dispatch, SetStateAction } from 'react';
 
@@ -14,12 +15,15 @@ export const ChatListHeader = (props: {
   return (
     <>
       <FlexBox justifyContent="space-between" width="100%" padding="15px">
-        <FilterChat
-          selectedOption={selectedOption}
-          setSelectedOption={setSelectedOption}
-        />
-        <FlexBox gap={'10px'}>
+        <FlexBox alignItems="center" gap={'4px'}>
+          <Typography variant="h5">{t('chat')}</Typography>
           {isFetchingNextPage ? <CircularProgress /> : <RefreshButton />}
+          <FilterChat
+            selectedOption={selectedOption}
+            setSelectedOption={setSelectedOption}
+          />
+        </FlexBox>
+        <FlexBox gap={'10px'}>
           <AddWhatsappChat />
         </FlexBox>
       </FlexBox>
