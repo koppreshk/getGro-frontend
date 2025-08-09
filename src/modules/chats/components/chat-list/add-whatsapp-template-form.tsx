@@ -19,10 +19,22 @@ interface IAddWhatsappChatFormProps {
   toggleAddWhatsappChatFormDrawer: () => void;
 }
 
-interface WhatsappTemplateFormFields {
+export interface WhatsappTemplateFormFields {
   waba_no: string;
-  templates: string;
-  add_phone_no: string;
+  templateName: {
+    key: string;
+    label: string;
+    value: string;
+  };
+  add_phone_no: {
+    id: string;
+    name: string;
+  }[];
+  existingImages?: {
+    key: string;
+    label: string;
+    value: string;
+  };
   templateImage: IChangeArgs;
 }
 
@@ -76,9 +88,10 @@ const PreviewImg = styled.img`
 export const WhatsappTemplateForm = (
   props: Pick<IAddWhatsappChatFormProps, 'toggleAddWhatsappChatFormDrawer'> & {
     data: PhoneChannelList;
+    onSend: (args: WhatsappTemplateFormFields) => void;
   }
 ) => {
-  const { toggleAddWhatsappChatFormDrawer, data } = props;
+  const { toggleAddWhatsappChatFormDrawer, data, onSend } = props;
   const form = useForm<WhatsappTemplateFormFields>();
   const { data: templates, isLoading } = useFetchTemplates(
     form.watch('waba_no')
@@ -118,12 +131,12 @@ export const WhatsappTemplateForm = (
             rules={{ required: 'WABA Number is required' }}
           />
           <AutoCompleteFieldWithLabel
-            options={(templates?.templates || []).map((item) => ({
+            options={(templates?.templates.templates || []).map((item) => ({
               key: item,
               label: item,
               value: item,
             }))}
-            name="templates"
+            name="templateName"
             label="Templates"
             multiple={false}
             placeholder={'Please choose a template'}
@@ -134,9 +147,17 @@ export const WhatsappTemplateForm = (
               Add Phone Number
             </Typography>
             <StyledTagInputField name="add_phone_no" dontShowDashes />
+            <Typography variant="body3">
+              <b>Note:</b> You can add multiple phone numbers by pressing
+              enter/return key
+            </Typography>
           </FlexBox>
           <FlexBox gap={'8px'} flexDirection="column">
-            <Typography variant="h6" className="select-field-header-label">
+            <Typography
+              variant="h6"
+              className="select-field-header-label"
+              sx={{ mt: '8px' }}
+            >
               Upload an image or choose from the list
             </Typography>
             <FlexBox gap={'30px'} alignItems="center">
@@ -158,11 +179,13 @@ export const WhatsappTemplateForm = (
                 )}
               />
               <AutocompleteField
-                options={(templates?.templates || []).map((item) => ({
-                  key: item,
-                  label: item,
-                  value: item,
-                }))}
+                options={(templates?.templates.image_urls || []).map(
+                  (item) => ({
+                    key: item,
+                    label: item,
+                    value: item,
+                  })
+                )}
                 size="small"
                 name="existingImages"
                 multiple={false}
@@ -191,7 +214,12 @@ export const WhatsappTemplateForm = (
           >
             {t('cancel')}
           </Button>
-          <Button variant="contained" size="large" endIcon={<Send />}>
+          <Button
+            variant="contained"
+            size="large"
+            endIcon={<Send />}
+            onClick={form.handleSubmit(onSend)}
+          >
             {t('send')}
           </Button>
         </FlexBox>

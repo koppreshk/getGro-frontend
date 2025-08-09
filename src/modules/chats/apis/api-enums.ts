@@ -17,6 +17,7 @@ export enum ChatEndPoint {
   DELETE_CONVERSATION = 'chat/delete',
   FETCH_WABA_NUMBERS = 'chat/fetch_waba_numbers',
   FETCH_WABA_TEMPLATES = 'chat/fetch_templates',
+  SEND_TEMPLATE = '/chat/send_template_message',
 }
 
 export enum ChatQueryKeys {
@@ -39,4 +40,5 @@ export enum ChatQueryKeys {
   DELETE_CONVERSATION = 'DELETE_CONVERSATION',
   FETCH_WABA_NUMBERS = 'FETCH_WABA_NUMBERS',
   FETCH_WABA_TEMPLATES = 'FETCH_WABA_TEMPLATES',
+  SEND_TEMPLATE = 'SEND_TEMPLATE',
 }
