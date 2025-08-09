@@ -1,7 +1,7 @@
 import { CenteredCircularProgress, ErrorMessage } from 'lib/ui-ux';
 
 import { useFetchWABANumbers } from '../apis';
-import { WhatsappTemplateForm } from '../components/chat-list/add-whatsapp-chat-form';
+import { WhatsappTemplateForm } from '../components/chat-list/add-whatsapp-template-form';
 
 export const WhatsappChatTemplateContainer = (props: {
   toggleAddWhatsappChatFormDrawer: () => void;

@@ -3,7 +3,7 @@ import { CustomIconButton } from 'lib/ui-ux';
 import React, { useCallback } from 'react';
 import { styled } from 'styled-components';
 
-import { AddWhatsappChatForm } from './add-whatsapp-chat-form';
+import { AddWhatsappTemplateForm } from './add-whatsapp-template-form';
 
 const StyledIconButtons = styled(CustomIconButton)`
   && {
@@ -16,7 +16,7 @@ const StyledIconButtons = styled(CustomIconButton)`
   }
 `;
 
-export const AddWhatsappChat = () => {
+export const AddWhatsappTemplate = () => {
   const [openAddTicketDrawer, setOpenAddTicketDrawer] = React.useState(false);
 
   const toggleAddTicketDrawer = useCallback(() => {
@@ -32,7 +32,7 @@ export const AddWhatsappChat = () => {
         onClick={toggleAddTicketDrawer}
         tooltipProps={{ title: 'Whatsapp Template Form' }}
       />
-      <AddWhatsappChatForm
+      <AddWhatsappTemplateForm
         openAddWhatsappChatFormDrawer={openAddTicketDrawer}
         toggleAddWhatsappChatFormDrawer={toggleAddTicketDrawer}
       />

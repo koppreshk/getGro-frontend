@@ -62,6 +62,7 @@ export const WhatsappTemplateForm = (
             }))}
             name="waba_no"
             label="WABA Number"
+            placeholder="Please choose a WABA Number"
             rules={{ required: 'WABA Number is required' }}
           />
           <AutoCompleteFieldWithLabel
@@ -73,9 +74,8 @@ export const WhatsappTemplateForm = (
             name="templates"
             label="Templates"
             multiple={false}
-            placeholder={''}
+            placeholder={'Please choose a template'}
             isLoading={isLoading}
-            // rules={{ required: 'Please choose a template' }}
           />
           <FlexBox flexDirection="column" gap={'8px'}>
             <Typography
@@ -99,7 +99,7 @@ export const WhatsappTemplateForm = (
   );
 };
 
-export const AddWhatsappChatForm = (props: IAddWhatsappChatFormProps) => {
+export const AddWhatsappTemplateForm = (props: IAddWhatsappChatFormProps) => {
   const { openAddWhatsappChatFormDrawer, toggleAddWhatsappChatFormDrawer } =
     props;
   return (

@@ -3,7 +3,7 @@ import { t } from 'i18next';
 import { FlexBox, RefreshButton } from 'lib/ui-ux';
 import { Dispatch, SetStateAction } from 'react';
 
-import { AddWhatsappChat } from './add-whatsapp-chat';
+import { AddWhatsappTemplate } from './add-whatsapp-template';
 import { FilterChat } from './filter-chat';
 
 export const ChatListHeader = (props: {
@@ -24,7 +24,7 @@ export const ChatListHeader = (props: {
           />
         </FlexBox>
         <FlexBox gap={'10px'}>
-          <AddWhatsappChat />
+          <AddWhatsappTemplate />
         </FlexBox>
       </FlexBox>
     </>
