@@ -1,16 +1,18 @@
-import { Send } from '@mui/icons-material';
+import { Send, Upload } from '@mui/icons-material';
 import { Button, Typography } from '@mui/material';
 import { t } from 'i18next';
 import {
+  AutocompleteField,
   AutoCompleteFieldWithLabel,
+  FileUploadField,
   SelectFieldWithLabel,
   TagInputField,
 } from 'lib/form-fields';
-import { DrawerExtended, FlexBox } from 'lib/ui-ux';
+import { DrawerExtended, FlexBox, IChangeArgs } from 'lib/ui-ux';
 import { PhoneChannelList, useFetchTemplates } from 'modules/chats/apis';
 import { WhatsappChatTemplateContainer } from 'modules/chats/containers';
 import { FormProvider, useForm } from 'react-hook-form';
-import styledComponents from 'styled-components';
+import styled from 'styled-components';
 
 interface IAddWhatsappChatFormProps {
   openAddWhatsappChatFormDrawer: boolean;
@@ -21,9 +23,10 @@ interface WhatsappTemplateFormFields {
   waba_no: string;
   templates: string;
   add_phone_no: string;
+  templateImage: IChangeArgs;
 }
 
-const StyledTagInputField = styledComponents(TagInputField)`
+const StyledTagInputField = styled(TagInputField)`
   padding: 16.5px 14px;
   border-radius: ${({ theme }) => theme.semantics.borderRadius.xs};
   border: 1px solid ${({ theme }) => theme.pallete.formFieldBorderColor};
@@ -33,6 +36,40 @@ const StyledTagInputField = styledComponents(TagInputField)`
   }
   input {
     min-width: 155px;
+  }
+`;
+
+const ImagePreviewCard = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fafbfc; /* softer than pure white but lighter than gray */
+  border-radius: 10px;
+  border: 1px solid #e3e6eb;
+  padding: 16px;
+  margin: 16px 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &:hover {
+    border-color: #ccd5e0;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
+  }
+`;
+
+const PreviewImg = styled.img`
+  max-height: 260px;
+  max-width: 100%;
+  border-radius: 6px;
+  border: 1px solid #e0e6f0;
+  object-fit: contain;
+  background: #fff;
+  transition: transform 0.15s ease;
+
+  &:hover {
+    transform: scale(1.015);
   }
 `;
 
@@ -46,15 +83,29 @@ export const WhatsappTemplateForm = (
   const { data: templates, isLoading } = useFetchTemplates(
     form.watch('waba_no')
   );
+
+  const validate = (value: IChangeArgs): boolean | string => {
+    if (value && value.selectedFiles[0].size > 5 * 1024 * 1024) {
+      return 'File size exceeds 5MB';
+    }
+    return true;
+  };
+
   return (
     <FormProvider {...form}>
       <FlexBox
         flexDirection="column"
         padding="16px"
-        height="calc(100% - 85px)"
+        gap={'20px'}
+        height="calc(100% -   77px)"
         justifyContent="space-between"
       >
-        <FlexBox gap={'16px'} flexDirection="column">
+        <FlexBox
+          gap={'16px'}
+          flexDirection="column"
+          height="calc(100% - 62px)"
+          overflowY="auto"
+        >
           <SelectFieldWithLabel
             menuOptions={data.map((item) => ({
               key: item.channel,
@@ -79,15 +130,58 @@ export const WhatsappTemplateForm = (
             isLoading={isLoading}
           />
           <FlexBox flexDirection="column" gap={'8px'}>
-            <Typography
-              variant="h6"
-              className="select-field-header-label"
-              sx={{ color: '#3b4455' }}
-            >
+            <Typography variant="h6" className="select-field-header-label">
               Add Phone Number
             </Typography>
             <StyledTagInputField name="add_phone_no" dontShowDashes />
           </FlexBox>
+          <FlexBox gap={'8px'} flexDirection="column">
+            <Typography variant="h6" className="select-field-header-label">
+              Upload an image or choose from the list
+            </Typography>
+            <FlexBox gap={'30px'} alignItems="center">
+              <FileUploadField
+                name="templateImage"
+                accept="image/*"
+                readMode="readAsDataURL"
+                rules={{ validate: validate }}
+                onRenderButton={(args) => (
+                  <Button
+                    {...args}
+                    size="medium"
+                    style={{ width: '50%' }}
+                    startIcon={<Upload />}
+                    variant="contained"
+                  >
+                    Upload Image
+                  </Button>
+                )}
+              />
+              <AutocompleteField
+                options={(templates?.templates || []).map((item) => ({
+                  key: item,
+                  label: item,
+                  value: item,
+                }))}
+                size="small"
+                name="existingImages"
+                multiple={false}
+                placeholder={'Select existing image'}
+                sx={{ width: '50%' }}
+              />
+            </FlexBox>
+          </FlexBox>
+          {form.watch('templateImage')?.selectedFiles[0]?.content && (
+            <ImagePreviewCard>
+              <PreviewImg
+                src={
+                  form.watch('templateImage')?.selectedFiles[0]
+                    .content as string
+                }
+                alt="Template Image"
+              />
+            </ImagePreviewCard>
+          )}
         </FlexBox>
         <FlexBox gap={'16px'} justifyContent="flex-end">
           <Button

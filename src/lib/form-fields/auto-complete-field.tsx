@@ -41,6 +41,7 @@ interface IAutocompleteFieldProps {
   }[];
   multiple?: boolean;
   isLoading?: boolean;
+  sx?: any;
 }
 
 export const AutocompleteField = (props: IAutocompleteFieldProps) => {
