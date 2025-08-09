@@ -8,7 +8,12 @@ import {
   SelectFieldWithLabel,
   TagInputField,
 } from 'lib/form-fields';
-import { DrawerExtended, FlexBox, IChangeArgs } from 'lib/ui-ux';
+import {
+  DrawerExtended,
+  FlexBox,
+  IChangeArgs,
+  VerticalSeparator,
+} from 'lib/ui-ux';
 import { PhoneChannelList, useFetchTemplates } from 'modules/chats/apis';
 import { WhatsappChatTemplateContainer } from 'modules/chats/containers';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -104,6 +109,8 @@ export const WhatsappTemplateForm = (
     return true;
   };
 
+  const uploadedImage = form.watch('templateImage')?.selectedFiles[0]?.content;
+
   return (
     <FormProvider {...form}>
       <FlexBox
@@ -160,7 +167,11 @@ export const WhatsappTemplateForm = (
             >
               Upload an image or choose from the list
             </Typography>
-            <FlexBox gap={'30px'} alignItems="center">
+            <FlexBox
+              gap={'20px'}
+              alignItems="center"
+              renderSeparator={() => <VerticalSeparator />}
+            >
               <FileUploadField
                 name="templateImage"
                 accept="image/*"
@@ -190,16 +201,16 @@ export const WhatsappTemplateForm = (
                 name="existingImages"
                 multiple={false}
                 placeholder={'Select existing image'}
-                sx={{ width: '50%' }}
+                sx={{ minWidth: '50%' }}
               />
             </FlexBox>
           </FlexBox>
-          {form.watch('templateImage')?.selectedFiles[0]?.content && (
+          {(uploadedImage || form.watch('existingImages')?.key) && (
             <ImagePreviewCard>
               <PreviewImg
                 src={
-                  form.watch('templateImage')?.selectedFiles[0]
-                    .content as string
+                  (uploadedImage as string) ||
+                  (form.watch('existingImages')?.key as string)
                 }
                 alt="Template Image"
               />
