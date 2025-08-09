@@ -1,3 +1,4 @@
+import { Send } from '@mui/icons-material';
 import { Button, Typography } from '@mui/material';
 import { t } from 'i18next';
 import {
@@ -89,10 +90,16 @@ export const WhatsappTemplateForm = (
           </FlexBox>
         </FlexBox>
         <FlexBox gap={'16px'} justifyContent="flex-end">
-          <Button variant="outlined" onClick={toggleAddWhatsappChatFormDrawer}>
+          <Button
+            variant="outlined"
+            size="large"
+            onClick={toggleAddWhatsappChatFormDrawer}
+          >
             {t('cancel')}
           </Button>
-          <Button variant="contained">{t('submit')}</Button>
+          <Button variant="contained" size="large" endIcon={<Send />}>
+            {t('send')}
+          </Button>
         </FlexBox>
       </FlexBox>
     </FormProvider>
