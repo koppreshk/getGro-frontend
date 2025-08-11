@@ -54,13 +54,13 @@ export const useFetchTemplates = (channelId: string) => {
   });
 };
 
-interface ISendChatReplyArgs {
-  to_numbers: string[];
+export interface ISendChatReplyArgs {
   template_name: string;
   template_id: string;
   mime_type?: string;
   channel: string;
   image_url?: string;
+  phone_number?: string;
 }
 
 export const useSendTemplate = () => {

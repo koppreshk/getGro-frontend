@@ -20,12 +20,12 @@ class ServiceClient {
 
   private fetchData = (
     endPoint: string,
-    init?: Pick<RequestInit, 'body' | 'method'>,
+    init?: Pick<RequestInit, 'body' | 'method' | 'headers'>,
     _headers?: HeadersInit
   ) => {
     const combinedHeaders = new Headers(this.headers);
 
-    // Merge the headers
+    // Merge extra headers
     if (_headers) {
       Object.entries(_headers).forEach(([key, value]) => {
         combinedHeaders.set(key, value as string);
@@ -40,7 +40,7 @@ class ServiceClient {
       .then((res) => {
         if (res.status === 401) {
           this.logout();
-        } else if (res.status === 200) {
+        } else if (res.ok) {
           return res;
         }
         throw new Error(`StatusCode: ${res.status}`);
@@ -60,12 +60,32 @@ class ServiceClient {
       },
       headers
     );
-}
 
-const arg: Pick<ServiceClient, 'getData' | 'postData'> = {
+  // NEW: post method for raw FormData, Blob, string, etc.
+  public post = (endPoint: string, body: BodyInit, headers?: HeadersInit) => {
+    // We intentionally skip setting Content-Type here for FormData
+    const nonJsonHeaders = new Headers(this.headers);
+    if (body instanceof FormData) {
+      nonJsonHeaders.delete('Content-Type');
+    }
+
+    return this.fetchData(
+      endPoint,
+      {
+        method: 'POST',
+        body,
+        headers: nonJsonHeaders,
+      },
+      headers
+    );
+  };
+}
+const arg: Pick<ServiceClient, 'getData' | 'postData' | 'post'> = {
   getData: (_endPoint: string, _headers?: HeadersInit) =>
     new Promise((res) => res),
   postData: (_endPoint: string, _body?: object, _headers?: HeadersInit) =>
+    new Promise((res) => res),
+  post: (_endPoint: string, _body: BodyInit, _headers?: HeadersInit) =>
     new Promise((res) => res),
 };
 

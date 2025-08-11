@@ -16,7 +16,7 @@ export const WhatsappChatTemplateContainer = (props: {
 
   const onSend = (args: WhatsappTemplateFormFields) => {
     mutateAsync({
-      to_numbers: args.add_phone_no.map((item) => item.name),
+      // to_numbers: args.add_phone_no.map((item) => item.name),
       template_name: args.templateName.label,
       template_id: args.templateName.key,
       channel: args.waba_no,
@@ -24,8 +24,9 @@ export const WhatsappChatTemplateContainer = (props: {
         ? args.templateImage.selectedFiles[0].type
         : undefined,
       image_url: args.templateImage
-        ? (args.templateImage.selectedFiles[0].content as string)
-        : args.existingImages?.key,
+        ? (args.templateImage?.selectedFiles[0].content as string)
+        : undefined,
+      phone_number: args.phoneNumbers?.selectedFiles[0].content as string,
     })
       .then(() => {
         props.toggleAddWhatsappChatFormDrawer();

@@ -2,22 +2,17 @@ import { Send, Upload } from '@mui/icons-material';
 import { Button, Typography } from '@mui/material';
 import { t } from 'i18next';
 import {
-  AutocompleteField,
   AutoCompleteFieldWithLabel,
   FileUploadField,
   SelectFieldWithLabel,
-  TagInputField,
 } from 'lib/form-fields';
-import {
-  DrawerExtended,
-  FlexBox,
-  IChangeArgs,
-  VerticalSeparator,
-} from 'lib/ui-ux';
+import { DrawerExtended, FlexBox, IChangeArgs } from 'lib/ui-ux';
 import { PhoneChannelList, useFetchTemplates } from 'modules/chats/apis';
 import { WhatsappChatTemplateContainer } from 'modules/chats/containers';
 import { FormProvider, useForm } from 'react-hook-form';
 import styled from 'styled-components';
+
+import { UploadedFiles } from './uploaded-files';
 
 interface IAddWhatsappChatFormProps {
   openAddWhatsappChatFormDrawer: boolean;
@@ -31,30 +26,9 @@ export interface WhatsappTemplateFormFields {
     label: string;
     value: string;
   };
-  add_phone_no: {
-    id: string;
-    name: string;
-  }[];
-  existingImages?: {
-    key: string;
-    label: string;
-    value: string;
-  };
+  phoneNumbers: IChangeArgs;
   templateImage: IChangeArgs;
 }
-
-const StyledTagInputField = styled(TagInputField)`
-  padding: 16.5px 14px;
-  border-radius: ${({ theme }) => theme.semantics.borderRadius.xs};
-  border: 1px solid ${({ theme }) => theme.pallete.formFieldBorderColor};
-  width: 100%;
-  &:hover {
-    border-color: ${({ theme }) => theme.pallete.onHoverFormFieldBorderColor};
-  }
-  input {
-    min-width: 155px;
-  }
-`;
 
 const ImagePreviewCard = styled.div`
   display: flex;
@@ -108,7 +82,6 @@ export const WhatsappTemplateForm = (
     }
     return true;
   };
-
   const uploadedImage = form.watch('templateImage')?.selectedFiles[0]?.content;
 
   return (
@@ -149,29 +122,9 @@ export const WhatsappTemplateForm = (
             placeholder={'Please choose a template'}
             isLoading={isLoading}
           />
-          <FlexBox flexDirection="column" gap={'8px'}>
-            <Typography variant="h6" className="select-field-header-label">
-              Add Phone Number
-            </Typography>
-            <StyledTagInputField name="add_phone_no" dontShowDashes />
-            <Typography variant="body3">
-              <b>Note:</b> You can add multiple phone numbers by pressing
-              enter/return key
-            </Typography>
-          </FlexBox>
           <FlexBox gap={'8px'} flexDirection="column">
-            <Typography
-              variant="h6"
-              className="select-field-header-label"
-              sx={{ mt: '8px' }}
-            >
-              Upload an image or choose from the list
-            </Typography>
-            <FlexBox
-              gap={'20px'}
-              alignItems="center"
-              renderSeparator={() => <VerticalSeparator />}
-            >
+            <Typography variant="h6">Upload Template Image</Typography>
+            <FlexBox gap={'20px'} alignItems="center" flexDirection="column">
               <FileUploadField
                 name="templateImage"
                 accept="image/*"
@@ -181,7 +134,7 @@ export const WhatsappTemplateForm = (
                   <Button
                     {...args}
                     size="medium"
-                    style={{ width: '50%' }}
+                    style={{ width: '100%' }}
                     startIcon={<Upload />}
                     variant="contained"
                   >
@@ -189,33 +142,55 @@ export const WhatsappTemplateForm = (
                   </Button>
                 )}
               />
-              <AutocompleteField
-                options={(templates?.templates.image_urls || []).map(
-                  (item) => ({
-                    key: item,
-                    label: item,
-                    value: item,
-                  })
-                )}
-                size="small"
-                name="existingImages"
-                multiple={false}
-                placeholder={'Select existing image'}
-                sx={{ minWidth: '50%' }}
-              />
+              {uploadedImage && (
+                <ImagePreviewCard>
+                  <PreviewImg
+                    src={uploadedImage as string}
+                    alt="Template Image"
+                  />
+                </ImagePreviewCard>
+              )}
             </FlexBox>
           </FlexBox>
-          {(uploadedImage || form.watch('existingImages')?.key) && (
-            <ImagePreviewCard>
-              <PreviewImg
-                src={
-                  (uploadedImage as string) ||
-                  (form.watch('existingImages')?.key as string)
-                }
-                alt="Template Image"
+          <FlexBox flexDirection="column" gap={'8px'}>
+            <Typography variant="h6">Upload Phone Numbers</Typography>
+            <FileUploadField
+              name="phoneNumbers"
+              accept="text/csv"
+              readMode="readAsDataURL"
+              rules={{ validate: validate }}
+              onRenderButton={(args) => (
+                <Button
+                  {...args}
+                  size="medium"
+                  style={{ width: '100%' }}
+                  startIcon={<Upload />}
+                  variant="contained"
+                >
+                  Upload Phone Numbers
+                </Button>
+              )}
+            />
+            {form.watch('phoneNumbers')?.selectedFiles.length ? (
+              <UploadedFiles
+                files={form.watch('phoneNumbers').selectedFiles.map((item) => ({
+                  name: item.name,
+                  id: item.id,
+                }))}
+                onDeleteClick={(id: string) => {
+                  const currentFiles =
+                    form.getValues('phoneNumbers').selectedFiles;
+                  const updatedFiles = currentFiles.filter(
+                    (file) => file.id !== id
+                  );
+                  form.setValue('phoneNumbers', {
+                    ...form.getValues('phoneNumbers'),
+                    selectedFiles: updatedFiles,
+                  });
+                }}
               />
-            </ImagePreviewCard>
-          )}
+            ) : null}
+          </FlexBox>
         </FlexBox>
         <FlexBox gap={'16px'} justifyContent="flex-end">
           <Button
