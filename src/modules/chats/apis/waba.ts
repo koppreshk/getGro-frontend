@@ -15,7 +15,10 @@ export interface TemplatesResponse {
   status: boolean;
   templates: {
     image_urls: string[];
-    templates: string[];
+    templates: {
+      name: string;
+      template_id: string;
+    }[];
   };
 }
 

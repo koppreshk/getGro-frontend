@@ -139,9 +139,9 @@ export const WhatsappTemplateForm = (
           />
           <AutoCompleteFieldWithLabel
             options={(templates?.templates.templates || []).map((item) => ({
-              key: item,
-              label: item,
-              value: item,
+              key: item.template_id,
+              label: item.name,
+              value: item.name,
             }))}
             name="templateName"
             label="Templates"
