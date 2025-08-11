@@ -25,6 +25,11 @@ const AttachmentPreviewContainer = styled(FlexBox)<{
   width: fit-content;
 `;
 
+const ImagePreview = styled.img`
+  border-radius: 6px;
+  object-fit: cover;
+`;
+
 const fileTypes = {
   'audio/mpeg': 'audio',
   'application/pdf': 'pdf',
@@ -45,8 +50,10 @@ const fileTypes = {
 };
 
 const getFileExtension = (contentType: string): string | undefined => {
-  return fileTypes[contentType.toLocaleLowerCase() as keyof typeof fileTypes];
+  return fileTypes[contentType.toLowerCase() as keyof typeof fileTypes];
 };
+
+const isImageType = (mimeType: string) => mimeType.startsWith('image/');
 
 export const AttachmentContent = (
   props: Pick<Message, 'media_url' | 'mime_type' | 'caption' | 'filename'> & {
@@ -61,51 +68,70 @@ export const AttachmentContent = (
     filename,
   } = props;
 
+  if (!mime_type || !media_url) {
+    return (
+      <StyledErrorMessage
+        style={{ display: 'flex', gap: '10px', alignItems: 'center' }}
+      >
+        <WarningAmberIcon />
+        Media URL or MIME type unavailable
+      </StyledErrorMessage>
+    );
+  }
+
   return (
-    <FlexBox flexDirection="column" gap={'5px'}>
-      <AttachmentPreviewContainer
-        gap="8px"
-        alignItems="center"
-        $isIncomingMessage={isIncomingMessage}
-      >
-        <FileType alignItems="center" justifyContent="center">
-          <Typography variant="caption" sx={{ color: 'inherit' }}>
-            {mime_type
-              ? getFileExtension(mime_type)?.toLocaleUpperCase()
-              : 'NA'}
-          </Typography>
-        </FileType>
-        <Typography
-          variant="body3"
-          title={'File'}
-          sx={{
-            maxWidth: '120px',
-            minWidth: '80px',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-          }}
-        >
-          {filename ?? 'File'}
-        </Typography>
-        <FlexBox alignItems="center">
-          <PreviewFileContent media_url={media_url} mime_type={mime_type} />
-        </FlexBox>
-      </AttachmentPreviewContainer>
-      <Typography
-        variant="body2"
-        sx={{ whiteSpace: 'pre-wrap', marginRight: '21px' }}
-      >
-        {caption}
-      </Typography>
-      {!mime_type || !media_url ? (
-        <StyledErrorMessage
-          style={{ display: 'flex', gap: '10px', alignItems: 'center' }}
-        >
-          <WarningAmberIcon />
-          Media URL or MIME type unavailable
-        </StyledErrorMessage>
-      ) : null}
+    <FlexBox flexDirection="column" gap="5px">
+      {isImageType(mime_type) ? (
+        <>
+          <ImagePreview src={media_url} alt={filename || 'image'} />
+          {caption && (
+            <Typography
+              variant="body2"
+              sx={{ whiteSpace: 'pre-wrap', marginTop: '4px' }}
+            >
+              {caption}
+            </Typography>
+          )}
+        </>
+      ) : (
+        <>
+          <AttachmentPreviewContainer
+            gap="8px"
+            alignItems="center"
+            $isIncomingMessage={isIncomingMessage}
+          >
+            <FileType alignItems="center" justifyContent="center">
+              <Typography variant="caption" sx={{ color: 'inherit' }}>
+                {getFileExtension(mime_type)?.toUpperCase() || 'NA'}
+              </Typography>
+            </FileType>
+            <Typography
+              variant="body3"
+              title={filename || 'File'}
+              sx={{
+                maxWidth: '120px',
+                minWidth: '80px',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+              }}
+            >
+              {filename ?? 'File'}
+            </Typography>
+            <FlexBox alignItems="center">
+              <PreviewFileContent media_url={media_url} mime_type={mime_type} />
+            </FlexBox>
+          </AttachmentPreviewContainer>
+          {caption && (
+            <Typography
+              variant="body2"
+              sx={{ whiteSpace: 'pre-wrap', marginRight: '21px' }}
+            >
+              {caption}
+            </Typography>
+          )}
+        </>
+      )}
     </FlexBox>
   );
 };
