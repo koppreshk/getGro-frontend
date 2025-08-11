@@ -57,6 +57,7 @@ export const useFetchTemplates = (channelId: string) => {
 interface ISendChatReplyArgs {
   to_numbers: string[];
   template_name: string;
+  template_id: string;
   mime_type?: string;
   channel: string;
   image_url?: string;

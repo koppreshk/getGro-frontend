@@ -17,7 +17,8 @@ export const WhatsappChatTemplateContainer = (props: {
   const onSend = (args: WhatsappTemplateFormFields) => {
     mutateAsync({
       to_numbers: args.add_phone_no.map((item) => item.name),
-      template_name: args.templateName.key,
+      template_name: args.templateName.label,
+      template_id: args.templateName.key,
       channel: args.waba_no,
       mime_type: args.templateImage
         ? args.templateImage.selectedFiles[0].type
