@@ -1,12 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CheckBoxOutlineBlank, CheckBox } from '@mui/icons-material';
-import { ChipTypeMap, TextField, Typography } from '@mui/material';
+import {
+  ChipTypeMap,
+  CircularProgress,
+  TextField,
+  Typography,
+} from '@mui/material';
 import Autocomplete, {
   AutocompleteOwnerState,
   AutocompleteRenderOptionState,
 } from '@mui/material/Autocomplete/Autocomplete';
 import Checkbox from '@mui/material/Checkbox/Checkbox';
 import { FlexBox } from 'lib/ui-ux';
+import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 export type AutoCompleteRenderOptionProps = (
@@ -34,6 +40,8 @@ interface IAutocompleteFieldProps {
     value: string;
   }[];
   multiple?: boolean;
+  isLoading?: boolean;
+  sx?: any;
 }
 
 export const AutocompleteField = (props: IAutocompleteFieldProps) => {
@@ -46,6 +54,7 @@ export const AutocompleteField = (props: IAutocompleteFieldProps) => {
     getOptionLabel,
     renderOption,
     multiple = true,
+    isLoading = false,
   } = props;
   const { control } = useFormContext();
 
@@ -102,6 +111,17 @@ export const AutocompleteField = (props: IAutocompleteFieldProps) => {
               placeholder={placeholder}
               name={name}
               fullWidth
+              InputProps={{
+                ...params.InputProps,
+                endAdornment: (
+                  <React.Fragment>
+                    {isLoading ? (
+                      <CircularProgress color="inherit" size={20} />
+                    ) : null}
+                    {params.InputProps.endAdornment}
+                  </React.Fragment>
+                ),
+              }}
             />
           )}
         />

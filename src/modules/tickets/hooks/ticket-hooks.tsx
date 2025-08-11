@@ -89,7 +89,7 @@ export const useSourceIcon = () => {
       case 'web_form':
         return <Web />;
       case 'google_review':
-        return <Google />;
+        return <Google sx={sx} />;
       default:
         return <></>;
     }

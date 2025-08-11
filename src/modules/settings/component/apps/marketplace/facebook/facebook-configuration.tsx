@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Login } from '@mui/icons-material';
 import { LoadingButton } from 'lib/ui-ux';
 import { useFacebookConfiguration } from 'modules/settings/apis/marketplace/facebook';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface FacebookResponse {
@@ -14,11 +13,9 @@ interface FacebookResponse {
   status: string;
 }
 
-// Define Facebook SDK types for TypeScript
 declare global {
   interface Window {
     FB: any;
-    fbAsyncInit: () => void;
   }
 }
 
@@ -30,47 +27,50 @@ export const FacebookConfiguration = (props: {
   const { t } = useTranslation();
   const { mutateAsync, isLoading } = useFacebookConfiguration();
 
+  const [fbSdkReady, setFbSdkReady] = useState(false);
+
   useEffect(() => {
-    // Initialize the Facebook SDK
-    window.fbAsyncInit = function () {
+    const initializeFB = () => {
+      if (!window.FB) {
+        console.error('FB SDK not loaded properly.');
+        return;
+      }
       window.FB.init({
-        appId: import.meta.env.VITE_FB_APP_ID, // Replace with your Facebook App ID
+        appId: import.meta.env.VITE_FB_APP_ID,
         cookie: true,
         xfbml: true,
-        version: 'v21.0', // Use the latest version
+        version: 'v21.0',
       });
       window.FB.AppEvents.logPageView();
+      setFbSdkReady(true);
     };
 
-    // Load the Facebook SDK script dynamically
-    (function (d, s, id) {
-      const fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      const js: any = d.createElement(s);
-      js.id = id;
+    if (!document.getElementById('facebook-jssdk')) {
+      const fjs = document.getElementsByTagName('script')[0];
+      const js = document.createElement('script');
+      js.id = 'facebook-jssdk';
       js.src = 'https://connect.facebook.net/en_US/sdk.js';
-      fjs?.parentNode?.insertBefore(js, fjs);
-    })(document, 'script', 'facebook-jssdk');
+
+      js.onload = initializeFB;
+
+      fjs.parentNode?.insertBefore(js, fjs);
+    } else if (window.FB) {
+      initializeFB();
+    }
   }, []);
-  console.log(
-    'redirect_uri',
-    `${import.meta.env.VITE_SUB_DOMAIN}configurations/marketplace/facebook`
-  );
-  // Facebook login handler
+
   const handleFBLogin = () => {
+    if (!fbSdkReady || !window.FB) {
+      console.warn('Facebook SDK is not initialized yet.');
+      return;
+    }
+
     window.FB.login(
       (response: FacebookResponse) => {
         if (response.authResponse) {
-          mutateAsync({
-            code: response.authResponse.code,
-          }).then(() => {
+          mutateAsync({ code: response.authResponse.code }).then(() => {
             props.updateInstallation();
           });
-
-          // Fetch user details like name and email
-          // window.FB.api('/me', { fields: 'name, email' }, (userInfo: any) => {
-
-          // });
         } else {
           console.error('User cancelled login or did not fully authorize.');
         }
@@ -91,6 +91,7 @@ export const FacebookConfiguration = (props: {
       isLoading={isLoading}
       onClick={handleFBLogin}
       endIcon={<Login />}
+      disabled={!fbSdkReady}
     >
       {mode === 'authenticate' ? t('authenticate') : t('re_authenticate')}
     </LoadingButton>
