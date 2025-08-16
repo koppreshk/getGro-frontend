@@ -19,6 +19,7 @@ import {
   PendingActions,
   Feed,
   AddCommentOutlined,
+  WhatsApp,
 } from '@mui/icons-material';
 import { Typography } from '@mui/material';
 import { useFeature } from 'lib/hooks';
@@ -104,6 +105,14 @@ const useConfigurations = () => {
           catOptionIcon: () => <Feed />,
           hidden: false,
           description: t('web_forms_short_description'),
+        },
+        {
+          label: t('whatsapp_templates'),
+          route: 'whatsapp-templates',
+          uniqueKey: 'whatsapp_templates',
+          catOptionIcon: () => <WhatsApp />,
+          hidden: false,
+          description: t('whatsapp_templates_short_description'),
         },
       ],
     },
