@@ -1,12 +1,16 @@
 import { useNotifications } from 'lib';
 import { TextboxFieldWithLabel } from 'lib/form-fields';
-import { CancelButton, FlexBox, LoadingButton } from 'lib/ui-ux';
+import {
+  CancelButton,
+  FileUploadDND,
+  FlexBox,
+  IFile,
+  LoadingButton,
+} from 'lib/ui-ux';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-
-import { FileUploadDND } from './file-upload-dnd';
 
 interface CreateArticleProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -16,11 +20,6 @@ interface CreateArticleProps {
 
 interface FormFieldData {
   title: string;
-}
-
-export interface IFile {
-  file: File;
-  id: string;
 }
 
 export const CreateArticle = (props: CreateArticleProps) => {

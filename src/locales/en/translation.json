@@ -626,5 +626,8 @@
   "smtp_host": "SMTP Host",
   "smtp_port": "SMTP Port",
   "imap_add_config_success": "IMAP configuration added successfully",
-  "imap_add_config_error": "Failed to add IMAP configuration"
+  "imap_add_config_error": "Failed to add IMAP configuration",
+  "whatsapp_templates": "WhatsApp Templates",
+  "whatsapp_templates_short_description": "Upload templates images for WhatsApp templates.",
+  "whatsapp_template_more_info": "Upload templates images for WhatsApp templates. These images will be used in the WhatsApp messages sent to customers."
 }

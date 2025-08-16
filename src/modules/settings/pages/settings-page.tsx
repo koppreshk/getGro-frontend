@@ -3,6 +3,12 @@ import { Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { Configurations } from '../component';
+const WhatsappTemplateLayout = lazy(
+  () =>
+    import(
+      '../component/channel-configurations/whatsapp-templates/whatsapp-template-layout'
+    )
+);
 const TicketTagsContainer = lazy(
   () => import('../containers/ticket-tags/ticket-tags-container')
 );
@@ -111,7 +117,11 @@ export default function ConfigurationsPage() {
               path="web-forms/*"
               element={<WebFormsLayout />}
             />
-
+            <Route
+              key="whatsapp-templates"
+              path="whatsapp-templates/*"
+              element={<WhatsappTemplateLayout />}
+            />
             <Route
               key="ticket-escalation"
               path="ticket-escalation/*"
