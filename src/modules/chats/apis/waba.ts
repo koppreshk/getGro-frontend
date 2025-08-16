@@ -61,6 +61,7 @@ export interface ISendChatReplyArgs {
   channel: string;
   image_url?: string;
   phone_number?: string;
+  to_numbers: string[];
 }
 
 export const useSendTemplate = () => {

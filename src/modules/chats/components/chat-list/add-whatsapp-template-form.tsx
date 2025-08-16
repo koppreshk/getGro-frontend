@@ -6,9 +6,10 @@ import {
   FileUploadField,
   SelectFieldWithLabel,
 } from 'lib/form-fields';
-import { DrawerExtended, FlexBox, IChangeArgs } from 'lib/ui-ux';
+import { DrawerExtended, FlexBox, IChangeArgs, OrDivider } from 'lib/ui-ux';
 import { PhoneChannelList, useFetchTemplates } from 'modules/chats/apis';
 import { WhatsappChatTemplateContainer } from 'modules/chats/containers';
+import { StyledTagInputField } from 'modules/tickets/components/ticket-details/ticket-list-view/add-ticket/add-ticket-form';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
@@ -27,6 +28,7 @@ export interface WhatsappTemplateFormFields {
     label: string;
     value: string;
   };
+  addPhoneNo: { name: string; id: string }[];
   phoneNumbers: IChangeArgs;
 }
 
@@ -37,14 +39,22 @@ export const WhatsappTemplateForm = (
   }
 ) => {
   const { toggleAddWhatsappChatFormDrawer, data, onSend } = props;
-  const form = useForm<WhatsappTemplateFormFields>();
+  const form = useForm<WhatsappTemplateFormFields>({
+    defaultValues: {
+      waba_no: '',
+      templateName: { key: '', label: '', value: '' },
+      phoneNumbers: { selectedFiles: [] },
+    },
+    mode: 'onChange',
+  });
   const { data: templates, isLoading } = useFetchTemplates(
     form.watch('waba_no')
   );
+  console.log(form.watch());
   const [selected, setSelected] = useState<string | null>(null);
 
   const validate = (value: IChangeArgs): boolean | string => {
-    if (value && value.selectedFiles[0].size > 5 * 1024 * 1024) {
+    if (value && value.selectedFiles[0]?.size > 5 * 1024 * 1024) {
       return 'File size exceeds 5MB';
     }
     return true;
@@ -97,6 +107,15 @@ export const WhatsappTemplateForm = (
             selected={selected}
             onChange={setSelected}
           />
+          <Typography variant="h6" className="select-field-header-label">
+            Add Phone Number
+          </Typography>
+          <StyledTagInputField name="addPhoneNo" dontShowDashes />
+          <Typography variant="body3">
+            <b>Note:</b> You can add multiple phone numbers by pressing
+            enter/return key
+          </Typography>
+          <OrDivider />
           <FlexBox flexDirection="column" gap={'8px'}>
             <Typography variant="h6">Upload Phone Numbers</Typography>
             <FileUploadField

@@ -16,14 +16,17 @@ export const WhatsappChatTemplateContainer = (props: {
 
   const onSend = (args: WhatsappTemplateFormFields & { imageURL: string }) => {
     mutateAsync({
-      // to_numbers: args.add_phone_no.map((item) => item.name),
+      to_numbers: args.addPhoneNo.map((item) => item.name),
       template_name: args.templateName.label,
       template_id: args.templateName.key,
       channel: args.waba_no,
       image_url: args.imageURL,
-      phone_number: args.phoneNumbers?.selectedFiles[0].content as string,
+      phone_number: args.phoneNumbers?.selectedFiles[0]?.content as string,
     })
-      .then(() => {
+      .then((res) => {
+        if (!res.status) {
+          throw new Error('Failed to send template');
+        }
         props.toggleAddWhatsappChatFormDrawer();
         showNotification({
           message: 'Template sent successfully',
