@@ -9,9 +9,10 @@ import {
 import { DrawerExtended, FlexBox, IChangeArgs } from 'lib/ui-ux';
 import { PhoneChannelList, useFetchTemplates } from 'modules/chats/apis';
 import { WhatsappChatTemplateContainer } from 'modules/chats/containers';
+import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import styled from 'styled-components';
 
+import { ImageGallery } from './image-gallery';
 import { UploadedFiles } from './uploaded-files';
 
 interface IAddWhatsappChatFormProps {
@@ -27,47 +28,12 @@ export interface WhatsappTemplateFormFields {
     value: string;
   };
   phoneNumbers: IChangeArgs;
-  templateImage: IChangeArgs;
 }
-
-const ImagePreviewCard = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #fafbfc; /* softer than pure white but lighter than gray */
-  border-radius: 10px;
-  border: 1px solid #e3e6eb;
-  padding: 16px;
-  margin: 16px 0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-  transition:
-    border-color 0.15s ease,
-    box-shadow 0.15s ease;
-
-  &:hover {
-    border-color: #ccd5e0;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
-  }
-`;
-
-const PreviewImg = styled.img`
-  max-height: 260px;
-  max-width: 100%;
-  border-radius: 6px;
-  border: 1px solid #e0e6f0;
-  object-fit: contain;
-  background: #fff;
-  transition: transform 0.15s ease;
-
-  &:hover {
-    transform: scale(1.015);
-  }
-`;
 
 export const WhatsappTemplateForm = (
   props: Pick<IAddWhatsappChatFormProps, 'toggleAddWhatsappChatFormDrawer'> & {
     data: PhoneChannelList;
-    onSend: (args: WhatsappTemplateFormFields) => void;
+    onSend: (args: WhatsappTemplateFormFields & { imageURL: string }) => void;
   }
 ) => {
   const { toggleAddWhatsappChatFormDrawer, data, onSend } = props;
@@ -75,6 +41,7 @@ export const WhatsappTemplateForm = (
   const { data: templates, isLoading } = useFetchTemplates(
     form.watch('waba_no')
   );
+  const [selected, setSelected] = useState<string | null>(null);
 
   const validate = (value: IChangeArgs): boolean | string => {
     if (value && value.selectedFiles[0].size > 5 * 1024 * 1024) {
@@ -82,7 +49,10 @@ export const WhatsappTemplateForm = (
     }
     return true;
   };
-  const uploadedImage = form.watch('templateImage')?.selectedFiles[0]?.content;
+
+  const onSendTemplate = (formData: WhatsappTemplateFormFields) => {
+    onSend({ ...formData, imageURL: selected || '' });
+  };
 
   return (
     <FormProvider {...form}>
@@ -122,36 +92,11 @@ export const WhatsappTemplateForm = (
             placeholder={'Please choose a template'}
             isLoading={isLoading}
           />
-          <FlexBox gap={'8px'} flexDirection="column">
-            <Typography variant="h6">Upload Template Image</Typography>
-            <FlexBox gap={'20px'} alignItems="center" flexDirection="column">
-              <FileUploadField
-                name="templateImage"
-                accept="image/*"
-                readMode="readAsDataURL"
-                rules={{ validate: validate }}
-                onRenderButton={(args) => (
-                  <Button
-                    {...args}
-                    size="medium"
-                    style={{ width: '100%' }}
-                    startIcon={<Upload />}
-                    variant="contained"
-                  >
-                    Upload Image
-                  </Button>
-                )}
-              />
-              {uploadedImage && (
-                <ImagePreviewCard>
-                  <PreviewImg
-                    src={uploadedImage as string}
-                    alt="Template Image"
-                  />
-                </ImagePreviewCard>
-              )}
-            </FlexBox>
-          </FlexBox>
+          <ImageGallery
+            urls={templates?.templates.image_urls || []}
+            selected={selected}
+            onChange={setSelected}
+          />
           <FlexBox flexDirection="column" gap={'8px'}>
             <Typography variant="h6">Upload Phone Numbers</Typography>
             <FileUploadField
@@ -204,7 +149,7 @@ export const WhatsappTemplateForm = (
             variant="contained"
             size="large"
             endIcon={<Send />}
-            onClick={form.handleSubmit(onSend)}
+            onClick={form.handleSubmit(onSendTemplate)}
           >
             {t('send')}
           </Button>

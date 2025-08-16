@@ -14,18 +14,13 @@ export const WhatsappChatTemplateContainer = (props: {
   const { mutateAsync } = useSendTemplate();
   const { showNotification } = useNotifications();
 
-  const onSend = (args: WhatsappTemplateFormFields) => {
+  const onSend = (args: WhatsappTemplateFormFields & { imageURL: string }) => {
     mutateAsync({
       // to_numbers: args.add_phone_no.map((item) => item.name),
       template_name: args.templateName.label,
       template_id: args.templateName.key,
       channel: args.waba_no,
-      mime_type: args.templateImage
-        ? args.templateImage.selectedFiles[0].type
-        : undefined,
-      image_url: args.templateImage
-        ? (args.templateImage?.selectedFiles[0].content as string)
-        : undefined,
+      image_url: args.imageURL,
       phone_number: args.phoneNumbers?.selectedFiles[0].content as string,
     })
       .then(() => {
