@@ -1,3 +1,4 @@
+import { Divider, Typography } from '@mui/material';
 import { styled } from 'styled-components';
 
 export const VerticalSeparator = styled.div<{
@@ -36,3 +37,13 @@ export const CircularSeparator = styled.div`
   margin-top: 2px;
   min-width: 4px !important;
 `;
+
+export function OrDivider() {
+  return (
+    <Divider sx={{ my: 1.5 }} role="separator" aria-label="or">
+      <Typography variant="body2" color="text.secondary">
+        Or
+      </Typography>
+    </Divider>
+  );
+}

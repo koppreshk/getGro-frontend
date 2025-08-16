@@ -120,10 +120,10 @@ const LoginForm = () => {
           <Grid item md={12}>
             <TextboxField
               name="email"
-              label="Email"
+              label="Email/Phone Number"
               type="text"
               fullWidth
-              rules={{ required: 'Email input required' }}
+              rules={{ required: 'Email/Phone Number input required' }}
             />
           </Grid>
           <Grid item md={12}>

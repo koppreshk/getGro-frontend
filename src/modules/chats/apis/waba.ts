@@ -61,6 +61,7 @@ export interface ISendChatReplyArgs {
   channel: string;
   image_url?: string;
   phone_number?: string;
+  to_numbers: string[];
 }
 
 export const useSendTemplate = () => {
@@ -77,7 +78,7 @@ export const useSendTemplate = () => {
     mutationKey: [ChatQueryKeys.SEND_TEMPLATE],
     mutationFn: sendChatReply,
     onSuccess: () => {
-      queryClient.invalidateQueries(ChatQueryKeys.FETCH_CONVERSATION_BY_ID);
+      queryClient.invalidateQueries(ChatQueryKeys.FETCH_ALL_CONVERSATIONS);
     },
   });
 };
