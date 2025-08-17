@@ -22,6 +22,16 @@ export interface TemplatesResponse {
   };
 }
 
+export interface ISendChatReplyArgs {
+  template_name: string;
+  template_id: string;
+  mime_type?: string;
+  channel: string;
+  image_url?: string;
+  phone_number?: string;
+  to_numbers: string[];
+}
+
 export const useFetchWABANumbers = () => {
   const { getData } = useServiceClient();
 
@@ -54,16 +64,6 @@ export const useFetchTemplates = (channelId: string) => {
   });
 };
 
-export interface ISendChatReplyArgs {
-  template_name: string;
-  template_id: string;
-  mime_type?: string;
-  channel: string;
-  image_url?: string;
-  phone_number?: string;
-  to_numbers: string[];
-}
-
 export const useSendTemplate = () => {
   const { postData } = useServiceClient();
   const queryClient = useQueryClient();
@@ -80,5 +80,23 @@ export const useSendTemplate = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(ChatQueryKeys.FETCH_ALL_CONVERSATIONS);
     },
+  });
+};
+
+export const useFetchTemplateById = (templateId: string) => {
+  const { getData } = useServiceClient();
+
+  const fetchTemplateById = useCallback(
+    () =>
+      getData(
+        `${ChatEndPoint.FETCH_WABA_TEMPLATE_BY_ID}?template_id=${templateId}`
+      ).then((res) => res.json()),
+    [templateId, getData]
+  );
+
+  return useQuery({
+    queryKey: [ChatQueryKeys.FETCH_WABA_TEMPLATE_BY_ID, templateId],
+    queryFn: fetchTemplateById,
+    enabled: !!templateId,
   });
 };

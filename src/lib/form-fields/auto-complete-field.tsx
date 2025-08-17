@@ -42,6 +42,7 @@ interface IAutocompleteFieldProps {
   multiple?: boolean;
   isLoading?: boolean;
   sx?: any;
+  className?: string;
 }
 
 export const AutocompleteField = (props: IAutocompleteFieldProps) => {
@@ -133,10 +134,10 @@ export const AutocompleteField = (props: IAutocompleteFieldProps) => {
 };
 
 export const AutoCompleteFieldWithLabel = (props: IAutocompleteFieldProps) => {
-  const { label, ...rest } = props;
+  const { label, className, ...rest } = props;
 
   return (
-    <FlexBox flexDirection={'column'} gap={'5px'}>
+    <FlexBox flexDirection={'column'} gap={'5px'} className={className}>
       <Typography variant="h6" className="select-field-header-label">
         {label}
       </Typography>
