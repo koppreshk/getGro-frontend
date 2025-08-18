@@ -83,19 +83,25 @@ export const useSendTemplate = () => {
   });
 };
 
-export const useFetchTemplateById = (templateId: string) => {
+export interface CampaignMessage {
+  has_image: boolean;
+  body: string;
+  buttons: string[];
+}
+
+export const useFetchTemplateById = (templateId: string, channel: string) => {
   const { getData } = useServiceClient();
 
   const fetchTemplateById = useCallback(
     () =>
       getData(
-        `${ChatEndPoint.FETCH_WABA_TEMPLATE_BY_ID}?template_id=${templateId}`
+        `${ChatEndPoint.FETCH_WABA_TEMPLATE_BY_ID}?template_id=${templateId}&channel=${channel}`
       ).then((res) => res.json()),
-    [templateId, getData]
+    [getData, templateId, channel]
   );
 
-  return useQuery({
-    queryKey: [ChatQueryKeys.FETCH_WABA_TEMPLATE_BY_ID, templateId],
+  return useQuery<CampaignMessage>({
+    queryKey: [ChatQueryKeys.FETCH_WABA_TEMPLATE_BY_ID, templateId, channel],
     queryFn: fetchTemplateById,
     enabled: !!templateId,
   });

@@ -6,7 +6,6 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
-  IconButton,
   Typography,
 } from '@mui/material';
 import { t } from 'i18next';
@@ -15,7 +14,7 @@ import {
   FileUploadField,
   SelectFieldWithLabel,
 } from 'lib/form-fields';
-import { FlexBox, IChangeArgs, OrDivider } from 'lib/ui-ux';
+import { CustomIconButton, FlexBox, IChangeArgs, OrDivider } from 'lib/ui-ux';
 import { PhoneChannelList, useFetchTemplates } from 'modules/chats/apis';
 import { WhatsappChatTemplateContainer } from 'modules/chats/containers';
 import { StyledTagInputField } from 'modules/tickets/components/ticket-details/ticket-list-view/add-ticket/add-ticket-form';
@@ -87,7 +86,7 @@ export const WhatsappTemplateForm = (
   return (
     <FormProvider {...form}>
       <FlexBox padding="16px" gap={'20px'} flexDirection="column">
-        <FlexBox gap={'20px'}>
+        <FlexBox gap={'40px'}>
           <FlexBox
             flexDirection="column"
             gap={'20px'}
@@ -132,16 +131,19 @@ export const WhatsappTemplateForm = (
                   placeholder={'Please choose a template'}
                   isLoading={isLoading}
                 />
-                <IconButton
-                  title={selected ? 'Image Selected' : 'Please Select image'}
+                <CustomIconButton
                   onClick={onIconClick}
-                >
-                  {selected ? (
-                    <CollectionsIcon color="primary" />
-                  ) : (
-                    <CollectionsBookmarkOutlinedIcon />
-                  )}
-                </IconButton>
+                  tooltipProps={{
+                    title: selected ? 'Image Selected' : 'Please Select image',
+                  }}
+                  iconComponent={
+                    selected ? (
+                      <CollectionsIcon color="primary" />
+                    ) : (
+                      <CollectionsBookmarkOutlinedIcon />
+                    )
+                  }
+                />
                 <Dialog open={isImageDialogOpen}>
                   <DialogTitle>Select Image</DialogTitle>
                   <DialogContent>
@@ -216,7 +218,11 @@ export const WhatsappTemplateForm = (
               </FlexBox>
             </FlexBox>
           </FlexBox>
-          <TemplatePreview templateId={form.watch('templateName').key} />
+          <TemplatePreview
+            selectedImage={selected}
+            templateId={form.watch('templateName').key}
+            channel={form.watch('waba_no')}
+          />
         </FlexBox>
         <FlexBox gap={'16px'} justifyContent="flex-end">
           <Button
