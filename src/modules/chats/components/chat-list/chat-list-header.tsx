@@ -3,8 +3,8 @@ import { t } from 'i18next';
 import { FlexBox, RefreshButton } from 'lib/ui-ux';
 import { Dispatch, SetStateAction } from 'react';
 
-import { AddWhatsappTemplate } from './add-whatsapp-template';
 import { FilterChat } from './filter-chat';
+import { AddWhatsappTemplate } from './whatsapp-template/add-whatsapp-template';
 
 export const ChatListHeader = (props: {
   selectedOption: string;
