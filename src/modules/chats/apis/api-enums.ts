@@ -19,6 +19,7 @@ export enum ChatEndPoint {
   FETCH_WABA_TEMPLATES = 'chat/fetch_templates',
   SEND_TEMPLATE = 'chat/send_template_message',
   UPLOAD_TEMPLATE_IMAGE = 'chat/upload_template_images',
+  FETCH_WABA_TEMPLATE_BY_ID = 'chat/fetch_wobox_template',
 }
 
 export enum ChatQueryKeys {
@@ -43,4 +44,5 @@ export enum ChatQueryKeys {
   FETCH_WABA_TEMPLATES = 'FETCH_WABA_TEMPLATES',
   SEND_TEMPLATE = 'SEND_TEMPLATE',
   UPLOAD_TEMPLATE_IMAGE = 'UPLOAD_TEMPLATE_IMAGE',
+  FETCH_WABA_TEMPLATE_BY_ID = 'FETCH_WABA_TEMPLATE_BY_ID',
 }

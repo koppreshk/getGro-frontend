@@ -28,7 +28,7 @@ const WhatsappTemplateLayout = () => {
 
     const formData = new FormData();
     files.forEach((file) => {
-      formData.append('file', file.file);
+      formData.append('files[]', file.file);
     });
 
     mutateAsync(formData)

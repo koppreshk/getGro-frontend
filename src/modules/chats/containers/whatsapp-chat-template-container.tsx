@@ -5,7 +5,7 @@ import { useFetchWABANumbers, useSendTemplate } from '../apis';
 import {
   WhatsappTemplateForm,
   WhatsappTemplateFormFields,
-} from '../components/chat-list/add-whatsapp-template-form';
+} from '../components/chat-list/whatsapp-template/add-whatsapp-template-form';
 
 export const WhatsappChatTemplateContainer = (props: {
   toggleAddWhatsappChatFormDrawer: () => void;
@@ -16,7 +16,7 @@ export const WhatsappChatTemplateContainer = (props: {
 
   const onSend = (args: WhatsappTemplateFormFields & { imageURL: string }) => {
     mutateAsync({
-      to_numbers: args.addPhoneNo.map((item) => item.name),
+      to_numbers: args.addPhoneNo?.map((item) => item.name),
       template_name: args.templateName.label,
       template_id: args.templateName.key,
       channel: args.waba_no,
