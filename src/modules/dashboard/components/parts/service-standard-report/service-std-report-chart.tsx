@@ -25,10 +25,10 @@ export const ServiceStdReportChart = (props: ServiceStdReportChartProps) => {
   const { data: sampleData, selectedChartType } = props;
 
   const chartSections: ChartConfig[] = [
-    { title: 'Queries by Store', data: sampleData.store },
-    { title: 'Queries by Source', data: sampleData.source },
-    { title: 'Queries by Department', data: sampleData.department },
-    { title: 'Queries by Issue Category', data: sampleData.issue_category },
+    { title: 'Overall Interactions store wise', data: sampleData.store },
+    { title: 'Source', data: sampleData.source },
+    { title: 'Department', data: sampleData.department },
+    { title: 'Issue Category', data: sampleData.issue_category },
   ];
 
   return (
