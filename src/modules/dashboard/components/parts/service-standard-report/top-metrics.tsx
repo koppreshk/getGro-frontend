@@ -61,19 +61,19 @@ export const TopMetrics = ({ metricsData }: ITopMetricsProps) => {
   };
   const data = [
     {
-      name: 'Source generating max queries',
+      name: 'Source generating max queries/Reviews',
       value: getHighest(source),
     },
     {
-      name: 'Store having max queries',
+      name: 'Store having max queries/Reviews',
       value: getHighest(store),
     },
     {
-      name: 'Category generating summary queries',
+      name: 'Category generating max queries/Reviews',
       value: getHighest(issue_category),
     },
     {
-      name: 'Department generating summary queries',
+      name: 'Department generating max queries/Reviews',
       value: getHighest(department),
     },
   ] as ITopMetricProps[];
