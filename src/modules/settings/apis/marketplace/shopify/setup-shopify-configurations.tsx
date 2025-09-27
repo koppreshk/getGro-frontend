@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import {
   ShopifyConfigurationEndPoint,
   ShopifyConfigurationQueryKey,
-} from './api-enums';
+} from './apis';
 
 export interface IShopifyConfigDetails {
   store_name: string;

@@ -3,7 +3,7 @@ import React from 'react';
 import { useMutation } from 'react-query';
 
 import { AutoMationType } from '.';
-import { AutoAssignmentQueryKey, AutoAssignmentEndPoint } from './api-enums';
+import { AutoAssignmentQueryKey, AutoAssignmentEndPoint } from './apis';
 
 export const useSetAssignmentStatus = (automationType: AutoMationType) => {
   const { postData } = useServiceClient();

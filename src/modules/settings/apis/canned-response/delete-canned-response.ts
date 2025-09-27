@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import React from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 
-import { CannedResponseEndPoint, CannedResponseQueryKey } from './api-enums';
+import { CannedResponseEndPoint, CannedResponseQueryKey } from './apis';
 
 interface IDeleteStatusArgs {
   id: number;

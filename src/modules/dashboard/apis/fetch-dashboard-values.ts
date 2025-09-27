@@ -3,7 +3,7 @@ import { useServiceClient } from 'lib';
 import React from 'react';
 import { useQuery } from 'react-query';
 
-import { DashboardEndPoint, DashboardQueryKeys } from './api-enums';
+import { DashboardEndPoint, DashboardQueryKeys } from './apis';
 
 export interface IDashboardData {
   total_tickets: number;

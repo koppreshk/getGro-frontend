@@ -5,7 +5,7 @@ import { useMutation } from 'react-query';
 import {
   ExotelConfigurationEndPoint,
   ExotelConfigurationQueryKey,
-} from './api-enums';
+} from './apis';
 
 export interface IExotelConfigDetails {
   exotel_subdomain: string;

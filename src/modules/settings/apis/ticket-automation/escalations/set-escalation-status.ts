@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import React from 'react';
 import { useMutation } from 'react-query';
 
-import { EscalationQueryKey, EscalationEndPoint } from './api-enums';
+import { EscalationQueryKey, EscalationEndPoint } from './apis';
 
 export const useSetEscalationStatus = () => {
   const { postData } = useServiceClient();

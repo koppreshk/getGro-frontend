@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import React from 'react';
 import { useQuery } from 'react-query';
 
-import { DepartmentEndPoint, DepartmentQueryKey } from './api-enums';
+import { DepartmentEndPoint, DepartmentQueryKey } from './apis';
 
 export interface ITag {
   id: number;

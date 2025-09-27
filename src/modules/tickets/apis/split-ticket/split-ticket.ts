@@ -3,7 +3,7 @@ import { useGetQueryEndPoint } from 'modules/tickets/containers';
 import React from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 
-import { TicketsEndPoint, TicketsQueryKey } from '../api-enums';
+import { TicketsEndPoint, TicketsQueryKey } from '../apis';
 
 interface ISplitTicketArgs {
   ticket_id: number;

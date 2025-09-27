@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import {
   ConfigurationsWebFormsEndPoint,
   ConfigurationsWebFormsQueryKey,
-} from './api-enums';
+} from './apis';
 
 interface IDeleteWebFormsArgs {
   form_id: string | number;

@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import React from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 
-import { ConfigurationsEndPoint, ConfigurationsQueryKey } from './api-enums';
+import { ConfigurationsEndPoint, ConfigurationsQueryKey } from './apis';
 
 interface IAssignedEmployees {
   firstName: string;

@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import {
   InstagramConfigurationEndPoint,
   InstagramConfigurationQueryKey,
-} from './api-enum';
+} from './apis';
 
 export const useDeleteInstagramConfiguration = () => {
   const { postData } = useServiceClient();

@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useMatch } from 'react-router-dom';
 
-import { TicketsEndPoint, TicketsQueryKey } from './api-enums';
+import { TicketsEndPoint, TicketsQueryKey } from './apis';
 import { useGetQueryEndPoint } from '../containers';
 
 interface ICreateManualTicketArgs {

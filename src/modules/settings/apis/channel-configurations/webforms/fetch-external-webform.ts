@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import {
   ConfigurationsWebFormsEndPoint,
   ConfigurationsWebFormsQueryKey,
-} from './api-enums';
+} from './apis';
 
 interface ExternalWebform {
   status: boolean;

@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import React, { useCallback } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
-import { ChatEndPoint, ChatQueryKeys } from './api-enums';
+import { ChatEndPoint, ChatQueryKeys } from './apis';
 
 interface PhoneChannelItem {
   number: string;

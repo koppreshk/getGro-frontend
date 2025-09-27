@@ -3,7 +3,7 @@ import { AllPermissionKeys } from 'lib/enums';
 import React from 'react';
 import { useQuery } from 'react-query';
 
-import { AgentsEndPoint, AgentsQueryKey } from './api-enums';
+import { AgentsEndPoint, AgentsQueryKey } from './apis';
 
 export interface IRoles {
   id: number;

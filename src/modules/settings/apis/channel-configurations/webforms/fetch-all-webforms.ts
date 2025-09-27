@@ -5,7 +5,7 @@ import { useQuery } from 'react-query';
 import {
   ConfigurationsWebFormsEndPoint,
   ConfigurationsWebFormsQueryKey,
-} from './api-enums';
+} from './apis';
 
 export interface IWebForms {
   form_id: number;

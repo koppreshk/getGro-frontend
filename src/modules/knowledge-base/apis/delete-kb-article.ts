@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import React from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 
-import { KnowledgeBaseEndPoint, KnowledgeBaseQueryKeys } from './api-enums';
+import { KnowledgeBaseEndPoint, KnowledgeBaseQueryKeys } from './apis';
 
 export const useDeleteKbArticle = () => {
   const { postData } = useServiceClient();

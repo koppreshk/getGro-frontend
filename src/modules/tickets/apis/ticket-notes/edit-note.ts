@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import { useCallback } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 
-import { TicketNotesEndPoint, TicketNotesQueryKey } from './api-enums';
+import { TicketNotesEndPoint, TicketNotesQueryKey } from './apis';
 
 interface IEditNoteArgs {
   note_id: number;

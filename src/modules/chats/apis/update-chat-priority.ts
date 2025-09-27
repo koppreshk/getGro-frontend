@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import { useCallback } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 
-import { ChatQueryKeys, ChatEndPoint } from './api-enums';
+import { ChatQueryKeys, ChatEndPoint } from './apis';
 
 interface IUpdatePriorityArgs {
   conversationId: number | string;

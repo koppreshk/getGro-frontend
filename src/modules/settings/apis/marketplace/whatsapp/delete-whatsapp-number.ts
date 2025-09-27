@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import {
   WhatsAppConfigurationQueryKey,
   WhatsAppConfigurationEndPoint,
-} from './api-enums';
+} from './apis';
 
 export interface IDeleteWhatsAppNumber {
   id: number;

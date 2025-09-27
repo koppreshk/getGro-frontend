@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import { useCallback } from 'react';
 import { useMutation } from 'react-query';
 
-import { TicketsEndPoint, TicketsQueryKey } from '../api-enums';
+import { TicketsEndPoint, TicketsQueryKey } from '../apis';
 
 interface IOutboundCallArgs {
   exophone: string;
