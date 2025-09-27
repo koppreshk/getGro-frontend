@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import React from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 
-import { AgentPortalEndPoint, AgentPortalQueryKey } from './api-enums';
+import { AgentPortalEndPoint, AgentPortalQueryKey } from './apis';
 import { AgentsQueryKey } from '../users-and-permissions/agents/apis';
 
 interface ISaveClientDetailsArgs {

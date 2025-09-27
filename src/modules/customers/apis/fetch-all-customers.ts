@@ -3,7 +3,7 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import { useSearchParams } from 'react-router-dom';
 
-import { CustomersEndPoint, CustomersQueryKeys } from './api-enums';
+import { CustomersEndPoint, CustomersQueryKeys } from './apis';
 
 export interface ICustomerData {
   id: number;

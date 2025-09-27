@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import {
   FacebookConfigurationEndPoint,
   FacebookConfigurationQueryKey,
-} from './api-enum';
+} from './apis';
 
 export interface IAddFacebookPageArgs {
   page_id: string;

@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import React from 'react';
 import { useQuery } from 'react-query';
 
-import { AuditLogEndPoint, AuditLogsQueryKey } from './api-enums';
+import { AuditLogEndPoint, AuditLogsQueryKey } from './apis';
 
 export interface AuditLog {
   event_type: string;
