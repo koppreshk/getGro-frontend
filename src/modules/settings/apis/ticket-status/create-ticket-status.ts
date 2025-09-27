@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import React from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 
-import { StatusTypeEndPoint, StatusTypeQueryKey } from './api-enums';
+import { StatusTypeEndPoint, StatusTypeQueryKey } from './apis';
 
 interface ICreateStatusArgs {
   name: string;

@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import { useSearchParams } from 'react-router-dom';
 
 import { AutoMationType } from '.';
-import { AutoAssignmentEndPoint, AutoAssignmentQueryKey } from './api-enums';
+import { AutoAssignmentEndPoint, AutoAssignmentQueryKey } from './apis';
 
 export interface IAssignment {
   id: number;

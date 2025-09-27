@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import React from 'react';
 import { useQuery } from 'react-query';
 
-import { StatusTypeEndPoint, StatusTypeQueryKey } from './api-enums';
+import { StatusTypeEndPoint, StatusTypeQueryKey } from './apis';
 import { IGenericResponse } from './types';
 
 export interface IFetchAllStatuses extends IGenericResponse {

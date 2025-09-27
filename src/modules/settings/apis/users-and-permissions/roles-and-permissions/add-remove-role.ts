@@ -3,7 +3,7 @@ import { AllPermissionKeys } from 'lib/enums';
 import React from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 
-import { RolesEndPoint, RolesQueryKey } from './api-enums';
+import { RolesEndPoint, RolesQueryKey } from './apis';
 import { AgentsQueryKey } from '../agents/apis';
 
 export interface IAddRemoveRoleArgs {

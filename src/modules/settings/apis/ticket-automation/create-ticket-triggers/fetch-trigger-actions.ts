@@ -5,7 +5,7 @@ import { useQuery } from 'react-query';
 import {
   CreateTicketTriggersEndPoint,
   CreateTicketTriggersQueryKey,
-} from './api-enums';
+} from './apis';
 
 export interface TriggerActions {
   fieldTriggerActionId: number;

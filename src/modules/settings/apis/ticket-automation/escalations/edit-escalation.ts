@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import React from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 
-import { EscalationEndPoint, EscalationQueryKey } from './api-enums';
+import { EscalationEndPoint, EscalationQueryKey } from './apis';
 import { ICreateEscalationPayload } from './create-escalation';
 
 export const useEditEscalationNew = () => {
