@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import React from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 
-import { AgentsQueryKey, AgentsEndPoint } from './api-enums';
+import { AgentsQueryKey, AgentsEndPoint } from './apis';
 
 export const useActivateUser = () => {
   const { postData } = useServiceClient();

@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import React from 'react';
 import { useQuery } from 'react-query';
 
-import { ConfigurationsEndPoint, ConfigurationsQueryKey } from './api-enums';
+import { ConfigurationsEndPoint, ConfigurationsQueryKey } from './apis';
 
 export interface IChannels {
   channel_id: number;

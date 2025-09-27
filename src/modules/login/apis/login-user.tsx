@@ -2,7 +2,7 @@ import { toCamelCasedKeysFromUnderScores } from 'lib/utils';
 import React from 'react';
 import { useMutation } from 'react-query';
 
-import { LoginEndPoint, LoginQueryKey } from './api-enums';
+import { LoginEndPoint, LoginQueryKey } from './apis';
 
 export type LoginResult = {
   authToken: string;

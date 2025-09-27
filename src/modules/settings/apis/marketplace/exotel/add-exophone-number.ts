@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import {
   ExotelConfigurationEndPoint,
   ExotelConfigurationQueryKey,
-} from './api-enums';
+} from './apis';
 
 export interface IAddExophoneNumber {
   phone_number: string;

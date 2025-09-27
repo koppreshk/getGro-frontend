@@ -3,7 +3,7 @@ import { useServiceClient } from 'lib';
 import React from 'react';
 import { useQuery } from 'react-query';
 
-import { ChatEndPoint, ChatQueryKeys } from './api-enums';
+import { ChatEndPoint, ChatQueryKeys } from './apis';
 
 export interface ChatConversationById {
   is_expired: boolean;

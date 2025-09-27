@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import React from 'react';
 import { useMutation } from 'react-query';
 
-import { LoginEndPoint, LoginQueryKey } from './api-enums';
+import { LoginEndPoint, LoginQueryKey } from './apis';
 
 interface IResetPassowordArgs {
   email: string;

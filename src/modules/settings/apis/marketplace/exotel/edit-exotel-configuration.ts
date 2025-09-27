@@ -5,7 +5,7 @@ import { useMutation } from 'react-query';
 import {
   ExotelConfigurationEndPoint,
   ExotelConfigurationQueryKey,
-} from './api-enums';
+} from './apis';
 import { IExotelConfigDetails } from './setup-exotel-configurations';
 
 export const useEditExotelConfigurations = () => {

@@ -5,7 +5,7 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useQuery } from 'react-query';
 
-import { DashboardEndPoint, DashboardQueryKeys } from './api-enums';
+import { DashboardEndPoint, DashboardQueryKeys } from './apis';
 import { IAgentPerformanceFormFields } from '../components/parts/agent-performnace/agent-performance';
 
 export interface IAgentPerformance {

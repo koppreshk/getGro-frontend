@@ -11,7 +11,7 @@ import {
 import {
   AgentsEndPoint,
   AgentsQueryKey,
-} from 'modules/settings/apis/users-and-permissions/agents/api-enums';
+} from 'modules/settings/apis/users-and-permissions/agents/apis';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useDispatch } from 'react-redux';

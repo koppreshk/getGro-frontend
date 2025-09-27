@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useMutation } from 'react-query';
 
-import { ChatQueryKeys } from './api-enums';
+import { ChatQueryKeys } from './apis';
 
 export const useUploadFileToS3 = () => {
   const uploadFile = useCallback(

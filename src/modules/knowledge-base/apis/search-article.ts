@@ -3,7 +3,7 @@ import React from 'react';
 import { useMutation } from 'react-query';
 
 import { IKnowledgeBase } from '.';
-import { KnowledgeBaseEndPoint, KnowledgeBaseQueryKeys } from './api-enums';
+import { KnowledgeBaseEndPoint, KnowledgeBaseQueryKeys } from './apis';
 
 interface ISearchArticleArgs {
   title: string;

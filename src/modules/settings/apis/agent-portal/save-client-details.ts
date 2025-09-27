@@ -3,7 +3,7 @@ import React from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 
 import { AgentPortalEndPoint, AgentPortalQueryKey } from './api-enums';
-import { AgentsQueryKey } from '../users-and-permissions/agents/api-enums';
+import { AgentsQueryKey } from '../users-and-permissions/agents/apis';
 
 interface ISaveClientDetailsArgs {
   portal_name: string;

@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import React from 'react';
 import { useMutation } from 'react-query';
 
-import { SurveyEndPoint, SurveyQueryKey } from './api-enums';
+import { SurveyEndPoint, SurveyQueryKey } from './apis';
 
 interface IRateConversation {
   ticket_id: number;

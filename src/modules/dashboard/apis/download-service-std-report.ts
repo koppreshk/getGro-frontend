@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import React from 'react';
 import { useMutation } from 'react-query';
 
-import { DashboardEndPoint } from './api-enums';
+import { DashboardEndPoint } from './apis';
 
 export interface IDownloadServiceStdReportArgs {
   from: string;

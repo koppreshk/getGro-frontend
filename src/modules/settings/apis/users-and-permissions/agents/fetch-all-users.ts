@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import React from 'react';
 import { useQuery } from 'react-query';
 
-import { AgentsEndPoint, AgentsQueryKey } from './api-enums';
+import { AgentsEndPoint, AgentsQueryKey } from './apis';
 
 export interface IUsers {
   id: number;

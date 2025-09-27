@@ -4,7 +4,7 @@ import { t } from 'i18next';
 import { CustomIconButton } from 'lib/ui-ux';
 import { saveAsCSV } from 'lib/utils';
 import { SupportMonitoringValues } from 'modules/dashboard/apis';
-import { DashboardQueryKeys } from 'modules/dashboard/apis/api-enums';
+import { DashboardQueryKeys } from 'modules/dashboard/apis/apis';
 import { useQueryClient } from 'react-query';
 
 interface DownloadSMDataProps {

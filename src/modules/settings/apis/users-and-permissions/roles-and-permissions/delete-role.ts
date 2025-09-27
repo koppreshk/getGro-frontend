@@ -3,7 +3,7 @@ import React from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 
 import { RolesEndPoint, RolesQueryKey } from './api-enums';
-import { AgentsQueryKey } from '../agents/api-enums';
+import { AgentsQueryKey } from '../agents/apis';
 
 export interface IDeleteRoleArgs {
   role_id: number | string;

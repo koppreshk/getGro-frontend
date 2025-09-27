@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import { useCallback } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 
-import { ChatEndPoint, ChatQueryKeys } from './api-enums';
+import { ChatEndPoint, ChatQueryKeys } from './apis';
 
 interface IUpdateTagsArgs {
   conversation_id: number;

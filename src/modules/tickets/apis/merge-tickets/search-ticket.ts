@@ -3,7 +3,7 @@ import React from 'react';
 import { useMutation } from 'react-query';
 
 import { ITicketDetails } from '..';
-import { TicketsEndPoint, TicketsQueryKey } from '../api-enums';
+import { TicketsEndPoint, TicketsQueryKey } from '../apis';
 
 export interface ISearchTickets {
   data: Pick<

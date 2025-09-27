@@ -2,7 +2,7 @@ import { ErrorMessage } from 'lib/ui-ux';
 import { useLocation } from 'react-router-dom';
 
 import { useGetTicketsDataByKey } from '../apis';
-import { TicketsEndPoint } from '../apis/api-enums';
+import { TicketsEndPoint } from '../apis/apis';
 import { TicketViewRoutes } from '../components';
 import { TicketListView } from '../components/ticket-details/ticket-list-view';
 

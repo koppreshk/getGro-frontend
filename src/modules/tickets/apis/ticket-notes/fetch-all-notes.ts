@@ -3,7 +3,7 @@ import { ToCamelCasedKeysFromUnderscores } from 'lib/utils';
 import React from 'react';
 import { useQuery } from 'react-query';
 
-import { TicketNotesEndPoint, TicketNotesQueryKey } from './api-enums';
+import { TicketNotesEndPoint, TicketNotesQueryKey } from './apis';
 
 export interface Notes {
   id: number;

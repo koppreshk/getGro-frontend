@@ -5,7 +5,7 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import { useSearchParams } from 'react-router-dom';
 
-import { TicketsEndPoint, TicketsQueryKey } from './api-enums';
+import { TicketsEndPoint, TicketsQueryKey } from './apis';
 import { ITicketDetails } from './ticket-type-apis/types';
 
 export const useGetTicketsDataByKey = (
