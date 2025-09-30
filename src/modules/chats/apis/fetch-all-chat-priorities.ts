@@ -1,7 +1,7 @@
 import { useServiceClient } from 'lib';
 import { IGenericResponse } from 'modules/settings/apis/ticket-status/types';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { ChatEndPoint, ChatQueryKeys } from './apis';
 
@@ -9,8 +9,10 @@ export const useFetchAllChatPriorities = (isEnabled = true) => {
   const { getData } = useServiceClient();
 
   const fetchAllPriorities = React.useCallback(
-    () =>
-      getData(ChatEndPoint.FETCH_ALL_CHAT_PRIORITIES).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData(ChatEndPoint.FETCH_ALL_CHAT_PRIORITIES, undefined, {
+        signal,
+      }).then((res) => res.json()),
     [getData]
   );
 

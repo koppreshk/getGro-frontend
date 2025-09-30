@@ -20,7 +20,9 @@ class ServiceClient {
 
   private fetchData = (
     endPoint: string,
-    init?: Pick<RequestInit, 'body' | 'method' | 'headers'>,
+    init?: Pick<RequestInit, 'body' | 'method' | 'headers'> & {
+      signal?: AbortSignal;
+    },
     _headers?: HeadersInit
   ) => {
     const combinedHeaders = new Headers(this.headers);
@@ -36,6 +38,7 @@ class ServiceClient {
       headers: combinedHeaders,
       body: init?.body,
       method: init?.method,
+      signal: init?.signal,
     })
       .then((res) => {
         if (res.status === 401) {
@@ -48,8 +51,12 @@ class ServiceClient {
       .catch((err) => Promise.reject(err));
   };
 
-  public getData = (endPoint: string, headers?: HeadersInit) =>
-    this.fetchData(endPoint, { method: 'GET' }, headers);
+  public getData = (
+    endPoint: string,
+    headers?: HeadersInit,
+    extra?: { signal: AbortSignal | undefined }
+  ) =>
+    this.fetchData(endPoint, { method: 'GET', signal: extra?.signal }, headers);
 
   public postData = (endPoint: string, body?: object, headers?: HeadersInit) =>
     this.fetchData(
@@ -81,8 +88,11 @@ class ServiceClient {
   };
 }
 const arg: Pick<ServiceClient, 'getData' | 'postData' | 'post'> = {
-  getData: (_endPoint: string, _headers?: HeadersInit) =>
-    new Promise((res) => res),
+  getData: (
+    _endPoint: string,
+    _headers?: HeadersInit,
+    _extra?: { signal?: AbortSignal }
+  ) => new Promise((res) => res),
   postData: (_endPoint: string, _body?: object, _headers?: HeadersInit) =>
     new Promise((res) => res),
   post: (_endPoint: string, _body: BodyInit, _headers?: HeadersInit) =>
