@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import React from 'react';
 import { useQuery } from 'react-query';
 
-import { KnowledgeBaseEndPoint, KnowledgeBaseQueryKeys } from './api-enums';
+import { KnowledgeBaseEndPoint, KnowledgeBaseQueryKeys } from './apis';
 
 export interface IKnowledgeBase {
   id: number;

@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import React from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
-import { AgentsEndPoint, AgentsQueryKey } from './api-enums';
+import { AgentsEndPoint, AgentsQueryKey } from './apis';
 
 export interface AvailabilityStatuses {
   availability_status_id: number;

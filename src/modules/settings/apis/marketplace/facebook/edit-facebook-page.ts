@@ -6,7 +6,7 @@ import { IAddFacebookPageArgs } from './add-facebook-page';
 import {
   FacebookConfigurationEndPoint,
   FacebookConfigurationQueryKey,
-} from './api-enum';
+} from './apis';
 
 export const useEditFacebookPage = () => {
   const { postData } = useServiceClient();

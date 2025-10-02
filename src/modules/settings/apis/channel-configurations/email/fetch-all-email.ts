@@ -5,7 +5,7 @@ import { useQuery } from 'react-query';
 import {
   ConfigurationsEmailQueryKey,
   ConfigurationsEmailEndPoint,
-} from './api-enums';
+} from './apis';
 
 export interface IEmails {
   id: number;

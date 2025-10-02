@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import React from 'react';
 import { useInfiniteQuery, useQuery } from 'react-query';
 
-import { ChatEndPoint, ChatQueryKeys } from './api-enums';
+import { ChatEndPoint, ChatQueryKeys } from './apis';
 
 export interface AllChatConversations {
   page: number;

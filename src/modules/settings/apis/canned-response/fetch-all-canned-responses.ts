@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import React from 'react';
 import { useQuery } from 'react-query';
 
-import { CannedResponseEndPoint, CannedResponseQueryKey } from './api-enums';
+import { CannedResponseEndPoint, CannedResponseQueryKey } from './apis';
 
 export interface CannedResponse {
   id: number; // Unique identifier for the template

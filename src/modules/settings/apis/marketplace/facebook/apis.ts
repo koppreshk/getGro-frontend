@@ -1,0 +1,21 @@
+export const FacebookConfigurationEndPoint = {
+  CREATE_FACEBOOK_CONFIGURATION: 'meta/facebook/create',
+  FETCH_FACEBOOK_CONFIGURATION: 'meta/facebook/account',
+  DELETE_FACEBOOK_CONFIGURATION: 'meta/facebook/delete',
+  FETCH_CONFIGURED_PAGES: 'meta/facebook/fetch_configured_pages',
+  FETCH_ASSOICATED_PAGES: 'meta/facebook/associated_pages',
+  ADD_FACEBOOK_PAGE: 'meta/facebook/configure_fb_page',
+  EDIT_FACEBOOK_PAGE: 'meta/facebook/edit_page',
+  DELETE_FACEBOOK_PAGE: 'meta/facebook/delete_page',
+} as const;
+
+export const FacebookConfigurationQueryKey = {
+  CREATE_FACEBOOK_CONFIGURATION: 'CREATE_FACEBOOK_CONFIGURATION',
+  FETCH_FACEBOOK_CONFIGURATION: 'FETCH_FACEBOOK_CONFIGURATION',
+  DELETE_FACEBOOK_CONFIGURATION: 'DELETE_FACEBOOK_CONFIGURATION',
+  FETCH_CONFIGURED_PAGES: 'FETCH_CONFIGURED_PAGES',
+  FETCH_ASSOICATED_PAGES: 'FETCH_ASSOICATED_PAGES',
+  ADD_FACEBOOK_PAGE: 'ADD_FACEBOOK_PAGE',
+  EDIT_FACEBOOK_PAGE: 'EDIT_FACEBOOK_PAGE',
+  DELETE_FACEBOOK_PAGE: 'DELETE_FACEBOOK_PAGE',
+} as const;

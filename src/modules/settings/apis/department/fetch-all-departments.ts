@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import React from 'react';
 import { useQuery } from 'react-query';
 
-import { DepartmentEndPoint, DepartmentQueryKey } from './api-enums';
+import { DepartmentEndPoint, DepartmentQueryKey } from './apis';
 import { ITag } from './fetch-departments-by-id';
 
 export const useFetchAllDepartment = (isEnabled = true) => {

@@ -5,7 +5,7 @@ import { useQuery } from 'react-query';
 import {
   FacebookConfigurationEndPoint,
   FacebookConfigurationQueryKey,
-} from './api-enum';
+} from './apis';
 
 export interface IFacebookConfigDetails {
   user_id: string;

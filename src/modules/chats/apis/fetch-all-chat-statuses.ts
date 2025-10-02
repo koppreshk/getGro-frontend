@@ -3,7 +3,7 @@ import { IGenericResponse } from 'modules/settings/apis/ticket-status/types';
 import React from 'react';
 import { useQuery } from 'react-query';
 
-import { ChatEndPoint, ChatQueryKeys } from './api-enums';
+import { ChatEndPoint, ChatQueryKeys } from './apis';
 
 export const useFetchAllChatStatuses = (isEnabled = true) => {
   const { getData } = useServiceClient();

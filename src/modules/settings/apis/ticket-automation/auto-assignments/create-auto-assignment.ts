@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import React from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 
-import { AutoAssignmentEndPoint, AutoAssignmentQueryKey } from './api-enums';
+import { AutoAssignmentEndPoint, AutoAssignmentQueryKey } from './apis';
 
 export type AutoMationType =
   | 'auto_assignment'

@@ -3,7 +3,7 @@ import React from 'react';
 import { useQuery } from 'react-query';
 
 import { AutoMationType } from '.';
-import { AutoAssignmentEndPoint, AutoAssignmentQueryKey } from './api-enums';
+import { AutoAssignmentEndPoint, AutoAssignmentQueryKey } from './apis';
 
 export interface IAllAssignments {
   id: number;

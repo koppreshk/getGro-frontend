@@ -4,7 +4,7 @@ import { useGetQueryEndPoint } from 'modules/tickets/containers';
 import { useCallback } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 
-import { TicketsEndPoint, TicketsQueryKey } from '../api-enums';
+import { TicketsEndPoint, TicketsQueryKey } from '../apis';
 
 interface IUpdateStatusArgs {
   ticketId: number;

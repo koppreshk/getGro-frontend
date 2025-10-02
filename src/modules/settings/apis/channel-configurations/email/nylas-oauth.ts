@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import {
   ConfigurationsEmailEndPoint,
   ConfigurationsEmailQueryKey,
-} from './api-enums';
+} from './apis';
 
 export interface INylasOAuthArgs {
   code: string;

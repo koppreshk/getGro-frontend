@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import React from 'react';
 import { useQuery } from 'react-query';
 
-import { ChatEndPoint, ChatQueryKeys } from './api-enums';
+import { ChatEndPoint, ChatQueryKeys } from './apis';
 
 interface ChatHistoryResponse {
   created_at: string;

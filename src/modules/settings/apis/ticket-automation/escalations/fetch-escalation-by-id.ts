@@ -2,7 +2,7 @@ import { useServiceClient } from 'lib';
 import React from 'react';
 import { useQuery } from 'react-query';
 
-import { EscalationEndPoint, EscalationQueryKey } from './api-enums';
+import { EscalationEndPoint, EscalationQueryKey } from './apis';
 
 export interface IEscalationById {
   id: number;

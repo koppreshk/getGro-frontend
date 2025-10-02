@@ -1,0 +1,17 @@
+export const DepartmentEndPoint = {
+  CREATE_TICKET_DEPARTMENT: 'department/create',
+  FETCH_DEPARTMENT_BY_ID: 'department',
+  DELETE_DEPARTMENT: 'department/delete',
+  EDIT_DEPARTMENT: 'department/edit',
+  FETCH_ALL_DEPARTMENT: 'department/all',
+  FETCH_ALL_CHANNELS: 'channels',
+} as const;
+
+export const DepartmentQueryKey = {
+  CREATE_TICKET_DEPARTMENT: 'CREATE_TICKET_DEPARTMENT',
+  FETCH_DEPARTMENT_BY_ID: 'FETCH_DEPARTMENT_BY_ID',
+  DELETE_DEPARTMENT: 'DELETE_DEPARTMENT',
+  EDIT_DEPARTMENT: 'EDIT_DEPARTMENT',
+  FETCH_ALL_DEPARTMENT: 'FETCH_ALL_DEPARTMENT',
+  FETCH_ALL_CHANNELS: 'FETCH_ALL_CHANNELS',
+} as const;

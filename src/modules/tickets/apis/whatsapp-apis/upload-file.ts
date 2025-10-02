@@ -2,7 +2,7 @@ import { useAuth } from 'modules/login';
 import { useCallback } from 'react';
 import { useMutation } from 'react-query';
 
-import { TicketsEndPoint, TicketsQueryKey } from '../api-enums';
+import { TicketsEndPoint, TicketsQueryKey } from '../apis';
 
 export const useUploadFile = () => {
   const { user } = useAuth();

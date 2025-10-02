@@ -5,7 +5,7 @@ import { useQuery } from 'react-query';
 import {
   InstagramConfigurationEndPoint,
   InstagramConfigurationQueryKey,
-} from './api-enum';
+} from './apis';
 
 type CommentConfiguration = 'all_posts' | 'specific_keywords'; // Adjust as needed
 export interface IInstagramConfigDetails {

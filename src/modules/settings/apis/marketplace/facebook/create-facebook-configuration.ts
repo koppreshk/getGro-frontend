@@ -5,7 +5,7 @@ import { useMutation } from 'react-query';
 import {
   FacebookConfigurationEndPoint,
   FacebookConfigurationQueryKey,
-} from './api-enum';
+} from './apis';
 
 export interface IFacebookConfigurationArgs {
   code: string;

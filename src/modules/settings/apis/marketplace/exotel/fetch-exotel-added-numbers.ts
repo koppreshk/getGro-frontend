@@ -5,7 +5,7 @@ import { useQuery } from 'react-query';
 import {
   ExotelConfigurationEndPoint,
   ExotelConfigurationQueryKey,
-} from './api-enums';
+} from './apis';
 
 export interface IUser {
   firstName: string;

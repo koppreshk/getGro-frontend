@@ -1,6 +1,6 @@
 import useLazyQuery from 'lib/hooks/react-query-utils';
 
-import { TicketsEndPoint } from '../api-enums';
+import { TicketsEndPoint } from '../apis';
 import { ITicketDetails } from './types';
 
 export interface ITicketDetailsWithSearchQuey {

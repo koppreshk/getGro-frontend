@@ -4,7 +4,7 @@ import { DateTime } from 'luxon';
 import React from 'react';
 import { useQuery } from 'react-query';
 
-import { DashboardEndPoint, DashboardQueryKeys } from './api-enums';
+import { DashboardEndPoint, DashboardQueryKeys } from './apis';
 
 export interface SupportMonitoringStatistics {
   tickets_created: number;

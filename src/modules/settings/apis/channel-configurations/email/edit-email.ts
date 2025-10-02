@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import {
   ConfigurationsEmailQueryKey,
   ConfigurationsEmailEndPoint,
-} from './api-enums';
+} from './apis';
 
 export interface IEditEmailArgs {
   id: number;
