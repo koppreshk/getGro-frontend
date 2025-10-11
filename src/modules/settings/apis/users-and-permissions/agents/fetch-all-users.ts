@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { AgentsEndPoint, AgentsQueryKey } from './apis';
 
@@ -26,10 +26,11 @@ export const useFetchAllUsers = (type: UserType) => {
   const { getData } = useServiceClient();
 
   const fetchAllUsers = React.useCallback(
-    () =>
-      getData(`${AgentsEndPoint.FETCH_ALL_USERS}?type=${type}`).then((res) =>
-        res.json()
-      ),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${AgentsEndPoint.FETCH_ALL_USERS}?type=${type}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData, type]
   );
 

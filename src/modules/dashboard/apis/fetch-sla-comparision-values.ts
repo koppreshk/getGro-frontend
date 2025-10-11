@@ -2,7 +2,7 @@ import { DateRange } from '@matharumanpreet00/react-daterange-picker';
 import { useServiceClient } from 'lib';
 import { DateTime } from 'luxon';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { DashboardEndPoint, DashboardQueryKeys } from './apis';
 
@@ -35,10 +35,11 @@ export const useFetchSLAComparisionValues = (
     .join('_');
 
   const fetchAllSLAComparisionValues = React.useCallback(
-    () =>
-      getData(
-        `${DashboardEndPoint.SLA_COMPARISION}?from=${parsedFromDate}&to=${parsedToDate}&sla_metrics=${slaMetrics}&group_by=priority`
-      ).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${DashboardEndPoint.SLA_COMPARISION}?from=${parsedFromDate}&to=${parsedToDate}&sla_metrics=${slaMetrics}&group_by=priority`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData, parsedFromDate, parsedToDate, slaMetrics]
   );
 

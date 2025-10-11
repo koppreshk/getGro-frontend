@@ -2,7 +2,7 @@ import { DateRange } from '@matharumanpreet00/react-daterange-picker';
 import { useServiceClient } from 'lib';
 import { DateTime } from 'luxon';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { DashboardEndPoint, DashboardQueryKeys } from './apis';
 
@@ -28,10 +28,11 @@ export const useFetchServerStdReport = (dateRange: DateRange) => {
   ).toFormat('yyyy-MM-dd');
 
   const fetchServiceStdReportData = React.useCallback(
-    () =>
-      getData(
-        `${DashboardEndPoint.SERVICE_STANDARD_REPORT}?from=${parsedFromDate}&to=${parsedToDate}`
-      ).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${DashboardEndPoint.SERVICE_STANDARD_REPORT}?from=${parsedFromDate}&to=${parsedToDate}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData, parsedFromDate, parsedToDate]
   );
 

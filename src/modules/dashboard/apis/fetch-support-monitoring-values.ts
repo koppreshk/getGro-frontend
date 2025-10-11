@@ -2,7 +2,7 @@ import { DateRange } from '@matharumanpreet00/react-daterange-picker';
 import { useServiceClient } from 'lib';
 import { DateTime } from 'luxon';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { DashboardEndPoint, DashboardQueryKeys } from './apis';
 
@@ -25,10 +25,11 @@ export const useFetchSupportMonitoringValues = (dateRange: DateRange) => {
   ).toFormat('yyyy-MM-dd');
 
   const fetchSupportMonitoringData = React.useCallback(
-    () =>
-      getData(
-        `${DashboardEndPoint.SUPPORT_MONITORING}?from=${parsedFromDate}&to=${parsedToDate}`
-      ).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${DashboardEndPoint.SUPPORT_MONITORING}?from=${parsedFromDate}&to=${parsedToDate}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData, parsedFromDate, parsedToDate]
   );
 

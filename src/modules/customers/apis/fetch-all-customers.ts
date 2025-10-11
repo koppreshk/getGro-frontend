@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 import { useSearchParams } from 'react-router-dom';
 
 import { CustomersEndPoint, CustomersQueryKeys } from './apis';
@@ -23,10 +23,11 @@ export const useFetchAllCustomers = () => {
   const searchParsed = search ? `&search=${search}` : '';
 
   const fetchAllPriorities = React.useCallback(
-    () =>
-      getData(
-        `${CustomersEndPoint.FETCH_ALL_CUSTOMERS}?${pageNumberParsed}items_per_page=${itemsPerPage ?? '10'}${searchParsed}`
-      ).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${CustomersEndPoint.FETCH_ALL_CUSTOMERS}?${pageNumberParsed}items_per_page=${itemsPerPage ?? '10'}${searchParsed}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData, itemsPerPage, pageNumberParsed, searchParsed]
   );
 

@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import {
   ConfigurationsWebFormsEndPoint,
@@ -25,10 +25,11 @@ export const useFetchAllWebForms = () => {
   const { getData } = useServiceClient();
 
   const fetchAllWebForms = React.useCallback(
-    () =>
-      getData(`${ConfigurationsWebFormsEndPoint.FETCH_ALL_WEBFORMS}`).then(
-        (res) => res.json()
-      ),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${ConfigurationsWebFormsEndPoint.FETCH_ALL_WEBFORMS}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData]
   );
 

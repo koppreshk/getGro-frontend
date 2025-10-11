@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import {
   ConfigurationsEmailQueryKey,
@@ -19,10 +19,11 @@ export const useFetchAllEmails = () => {
   const { getData } = useServiceClient();
 
   const fetchAllEmails = React.useCallback(
-    () =>
-      getData(`${ConfigurationsEmailEndPoint.FETCH_ALL_EMAILS}`).then((res) =>
-        res.json()
-      ),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${ConfigurationsEmailEndPoint.FETCH_ALL_EMAILS}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData]
   );
 

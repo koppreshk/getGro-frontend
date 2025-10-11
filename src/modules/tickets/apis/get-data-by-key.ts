@@ -2,7 +2,7 @@
 import { useServiceClient } from 'lib';
 import { useAppSelector } from 'lib/hooks'; // assuming you have this
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 import { useSearchParams } from 'react-router-dom';
 
 import { TicketsEndPoint, TicketsQueryKey } from './apis';
@@ -32,10 +32,11 @@ export const useGetTicketsDataByKey = (
   const queryString = new URLSearchParams(finalParams).toString();
 
   const getTicketsData = React.useCallback(
-    () =>
-      getData(`${TicketsEndPoint[queryEndPoint]}?${queryString}`).then((res) =>
-        res.json()
-      ),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${TicketsEndPoint[queryEndPoint]}?${queryString}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [queryString, getData, queryEndPoint]
   );
 

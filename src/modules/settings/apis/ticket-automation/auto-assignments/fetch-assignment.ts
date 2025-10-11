@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 import { useSearchParams } from 'react-router-dom';
 
 import { AutoMationType } from '.';
@@ -43,10 +43,11 @@ export const useFetchAssignment = (automationType: AutoMationType) => {
   const id = searchParams.get('id') || '';
 
   const fetchAssignment = React.useCallback(
-    () =>
-      getData(
-        `${AutoAssignmentEndPoint.FETCH_ASSIGNMENT}?id=${id}&automation_type=${automationType}`
-      ).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${AutoAssignmentEndPoint.FETCH_ASSIGNMENT}?id=${id}&automation_type=${automationType}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [automationType, getData, id]
   );
 

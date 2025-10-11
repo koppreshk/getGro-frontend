@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { AgentsEndPoint, AgentsQueryKey } from './apis';
 
@@ -18,10 +18,11 @@ export const useFetchUserById = (id: number | string) => {
   const { getData } = useServiceClient();
 
   const fetchUserById = React.useCallback(
-    () =>
-      getData(`${AgentsEndPoint.FETCH_USER_BY_ID}?id=${id}`).then((res) =>
-        res.json()
-      ),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${AgentsEndPoint.FETCH_USER_BY_ID}?id=${id}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData, id]
   );
 

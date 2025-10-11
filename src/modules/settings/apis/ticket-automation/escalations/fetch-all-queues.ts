@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { EscalationQueryKey, EscalationEndPoint } from './apis';
 
@@ -14,10 +14,11 @@ export const useFetchAllQueues = (isEnabled = true) => {
   const { getData } = useServiceClient();
 
   const fetchAllQueues = React.useCallback(
-    () =>
-      getData(`${EscalationEndPoint.FETCH_ALL_QUEUES}`).then((res) =>
-        res.json()
-      ),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${EscalationEndPoint.FETCH_ALL_QUEUES}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData]
   );
 

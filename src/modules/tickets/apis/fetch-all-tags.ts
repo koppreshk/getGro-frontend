@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { TicketsEndPoint, TicketsQueryKey } from './apis';
 
@@ -15,8 +15,11 @@ export const useFetchAllTags = (isEnabled = true) => {
   const { getData } = useServiceClient();
 
   const fetchAllTags = React.useCallback(
-    () =>
-      getData(`${TicketsEndPoint.FETCH_ALL_TAGS}`).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${TicketsEndPoint.FETCH_ALL_TAGS}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData]
   );
 

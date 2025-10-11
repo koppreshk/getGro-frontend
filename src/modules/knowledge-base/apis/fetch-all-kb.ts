@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { KnowledgeBaseEndPoint, KnowledgeBaseQueryKeys } from './apis';
 
@@ -16,7 +16,11 @@ export const useFetchAllKB = () => {
   const { getData } = useServiceClient();
 
   const allKb = React.useCallback(
-    () => getData(KnowledgeBaseEndPoint.FETCH_ALL_KB).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: KnowledgeBaseEndPoint.FETCH_ALL_KB,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData]
   );
 

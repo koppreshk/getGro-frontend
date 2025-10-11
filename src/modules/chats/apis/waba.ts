@@ -1,6 +1,11 @@
 import { useServiceClient } from 'lib';
 import React, { useCallback } from 'react';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import {
+  QueryFunctionContext,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from 'react-query';
 
 import { ChatEndPoint, ChatQueryKeys } from './apis';
 
@@ -36,7 +41,11 @@ export const useFetchWABANumbers = () => {
   const { getData } = useServiceClient();
 
   const fetchAllPriorities = React.useCallback(
-    () => getData(ChatEndPoint.FETCH_WABA_NUMBERS).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: ChatEndPoint.FETCH_WABA_NUMBERS,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData]
   );
 
@@ -50,10 +59,11 @@ export const useFetchTemplates = (channelId: string) => {
   const { getData } = useServiceClient();
 
   const fetchAllPriorities = React.useCallback(
-    () =>
-      getData(`${ChatEndPoint.FETCH_WABA_TEMPLATES}?channel=${channelId}`).then(
-        (res) => res.json()
-      ),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${ChatEndPoint.FETCH_WABA_TEMPLATES}?channel=${channelId}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [channelId, getData]
   );
 
@@ -93,10 +103,11 @@ export const useFetchTemplateById = (templateId: string, channel: string) => {
   const { getData } = useServiceClient();
 
   const fetchTemplateById = useCallback(
-    () =>
-      getData(
-        `${ChatEndPoint.FETCH_WABA_TEMPLATE_BY_ID}?template_id=${templateId}&channel=${channel}`
-      ).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${ChatEndPoint.FETCH_WABA_TEMPLATE_BY_ID}?template_id=${templateId}&channel=${channel}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData, templateId, channel]
   );
 

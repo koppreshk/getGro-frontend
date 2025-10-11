@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { TicketsEndPoint, TicketsQueryKey } from '../apis';
 import { useAPIFilters } from './fetch-all-tickets';
@@ -11,10 +11,11 @@ export const useFetchAllResolvedTickets = () => {
   const { finalFilters, queryString } = useAPIFilters();
 
   const fetchAllResolvedData = React.useCallback(
-    () =>
-      getData(
-        `${TicketsEndPoint.FETCH_ALL_RESOLVED_TICKETS}?${queryString}`
-      ).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${TicketsEndPoint.FETCH_ALL_RESOLVED_TICKETS}?${queryString}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData, queryString]
   );
   return useQuery<

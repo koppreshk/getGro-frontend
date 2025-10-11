@@ -1,6 +1,7 @@
 import { useServiceClient } from 'lib';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
+  QueryFunctionContext,
   QueryKey,
   useQuery,
   UseQueryOptions,
@@ -33,7 +34,11 @@ export default function useLazyQuery<TData>(args: {
     [apiParams]
   );
   const executeGetAPICall = useCallback(
-    () => getData(`${apiEndPoint}?${finalParams}`).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${apiEndPoint}?${finalParams}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [apiEndPoint, finalParams, getData]
   );
 

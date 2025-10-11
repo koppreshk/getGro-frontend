@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import {
   CreateTicketTriggersEndPoint,
@@ -29,10 +29,11 @@ export const useFetchTriggerActions = () => {
   const { getData } = useServiceClient();
 
   const fetchTriggerActions = React.useCallback(
-    () =>
-      getData(CreateTicketTriggersEndPoint.TRIGGER_ACTIONS).then((res) =>
-        res.json()
-      ),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: CreateTicketTriggersEndPoint.TRIGGER_ACTIONS,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData]
   );
 

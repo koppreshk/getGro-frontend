@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { ConfigurationsEndPoint, ConfigurationsQueryKey } from './apis';
 
@@ -14,10 +14,11 @@ export const useFetchUsersInQueue = (queueId: string) => {
   const { getData } = useServiceClient();
 
   const fetchTicketMetadata = React.useCallback(
-    () =>
-      getData(
-        `${ConfigurationsEndPoint.FETCH_USERS_IN_QUEUE}?queue_id=${queueId}`
-      ).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${ConfigurationsEndPoint.FETCH_USERS_IN_QUEUE}?queue_id=${queueId}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData, queueId]
   );
 

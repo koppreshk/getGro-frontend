@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { DepartmentEndPoint, DepartmentQueryKey } from './apis';
 
@@ -15,10 +15,11 @@ export const useFetchTagsById = (id: number) => {
   const { getData } = useServiceClient();
 
   const fetchTagsById = React.useCallback(
-    () =>
-      getData(`${DepartmentEndPoint.FETCH_DEPARTMENT_BY_ID}?id=${id}`).then(
-        (res) => res.json()
-      ),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${DepartmentEndPoint.FETCH_DEPARTMENT_BY_ID}?id=${id}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData, id]
   );
 

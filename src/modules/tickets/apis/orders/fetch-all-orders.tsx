@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { TicketsEndPoint, TicketsQueryKey } from '../apis';
 
@@ -223,10 +223,11 @@ export const useFetchAllOrders = (
   const { getData } = useServiceClient();
 
   const fetchALLOrders = React.useCallback(
-    () =>
-      getData(
-        `${TicketsEndPoint.FETCH_ALL_ORDERS}?store_id=${storeId}&customer_id=${customerId}`
-      ).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${TicketsEndPoint.FETCH_ALL_ORDERS}?store_id=${storeId}&customer_id=${customerId}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [customerId, getData, storeId]
   );
 

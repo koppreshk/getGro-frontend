@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useInfiniteQuery, useQuery } from 'react-query';
+import { QueryFunctionContext, useInfiniteQuery, useQuery } from 'react-query';
 
 import { ChatEndPoint, ChatQueryKeys } from './apis';
 
@@ -52,10 +52,11 @@ export const useFetchAllConversations = () => {
   const { getData } = useServiceClient();
 
   const fetchAllDashboardData = React.useCallback(
-    () =>
-      getData(`${ChatEndPoint.FETCH_ALL_CONVERSATIONS}`).then((res) =>
-        res.json()
-      ),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${ChatEndPoint.FETCH_ALL_CONVERSATIONS}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData]
   );
 
@@ -70,10 +71,14 @@ const ITEMS_PER_PAGE = 10;
 export const useInfiniteConversations = () => {
   const { getData } = useServiceClient();
 
-  const fetchChats = async ({ pageParam = 1 }) => {
-    const res = await getData(
-      `${ChatEndPoint.FETCH_ALL_CONVERSATIONS}?page=${pageParam}&items_per_page=${ITEMS_PER_PAGE}`
-    );
+  const fetchChats = async ({
+    pageParam = 1,
+    signal,
+  }: QueryFunctionContext) => {
+    const res = await getData({
+      endPoint: `${ChatEndPoint.FETCH_ALL_CONVERSATIONS}?page=${pageParam}&items_per_page=${ITEMS_PER_PAGE}`,
+      extra: { signal },
+    });
     return res.json();
   };
 

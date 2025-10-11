@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { AutoAssignmentEndPoint, AutoAssignmentQueryKey } from './apis';
 
@@ -25,10 +25,11 @@ export const useFetchFieldsAndConditions = () => {
   const { getData } = useServiceClient();
 
   const fetchFieldsAndConditions = React.useCallback(
-    () =>
-      getData(AutoAssignmentEndPoint.FIELDS_AND_CONDITIONS).then((res) =>
-        res.json()
-      ),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: AutoAssignmentEndPoint.FIELDS_AND_CONDITIONS,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData]
   );
 

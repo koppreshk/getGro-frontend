@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 
 import { TicketsEndPoint, TicketsQueryKey } from '../apis';
@@ -28,10 +28,11 @@ export const useFetchWhatsAppMessages = () => {
   const { getData } = useServiceClient();
 
   const getOrderDetailsData = React.useCallback(
-    () =>
-      getData(
-        `${TicketsEndPoint.FETCH_ALL_WHATSAPP_MESSAGES}?ticket_id=${ticketId}`
-      )
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${TicketsEndPoint.FETCH_ALL_WHATSAPP_MESSAGES}?ticket_id=${ticketId}`,
+        extra: { signal },
+      })
         .then((res) => res.json())
         .catch((err) => err),
     [getData, ticketId]

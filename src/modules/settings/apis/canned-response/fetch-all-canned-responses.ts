@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { CannedResponseEndPoint, CannedResponseQueryKey } from './apis';
 
@@ -20,10 +20,11 @@ export const useFetchAllCannedResponses = (isEnabled = true) => {
   const { getData } = useServiceClient();
 
   const fetchAllCannedResponse = React.useCallback(
-    () =>
-      getData(CannedResponseEndPoint.FETCH_ALL_CANNED_RESPONSES).then((res) =>
-        res.json()
-      ),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: CannedResponseEndPoint.FETCH_ALL_CANNED_RESPONSES,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData]
   );
 

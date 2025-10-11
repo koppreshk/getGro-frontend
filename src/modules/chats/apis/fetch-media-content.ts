@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { ChatEndPoint, ChatQueryKeys } from './apis';
 
@@ -10,10 +10,11 @@ export const useFetchMediaContent = (mediaId: string) => {
   const { getData } = useServiceClient();
 
   const fetchMediaContent = React.useCallback(
-    () =>
-      getData(`${ChatEndPoint.FETCH_MEDIA_CONTENT}?media_id=${mediaId}`).then(
-        (res) => res.json()
-      ),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${ChatEndPoint.FETCH_MEDIA_CONTENT}?media_id=${mediaId}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData, mediaId]
   );
 
