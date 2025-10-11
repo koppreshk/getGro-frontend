@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { AuditLogEndPoint, AuditLogsQueryKey } from './apis';
 
@@ -23,10 +23,11 @@ export const useFetchAllAuditLogs = (
   const { getData } = useServiceClient();
 
   const auditLogs = React.useCallback(
-    () =>
-      getData(
-        `${AuditLogEndPoint.AUDIT_LOGS}?page=${pageNumber}&items_per_page=${itemsPerPage}`
-      ).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${AuditLogEndPoint.AUDIT_LOGS}?page=${pageNumber}&items_per_page=${itemsPerPage}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData, pageNumber, itemsPerPage]
   );
 

@@ -1,7 +1,7 @@
 import { useServiceClient } from 'lib';
 import { AllPermissionKeys } from 'lib/enums';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { AgentsEndPoint, AgentsQueryKey } from './apis';
 
@@ -20,7 +20,11 @@ export const useFetchAllRoles = () => {
   const { getData } = useServiceClient();
 
   const fetchAllRoles = React.useCallback(
-    () => getData(AgentsEndPoint.FETCH_ALL_ROLES).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: AgentsEndPoint.FETCH_ALL_ROLES,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData]
   );
 

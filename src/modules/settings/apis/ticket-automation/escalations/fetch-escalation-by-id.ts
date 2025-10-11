@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { EscalationEndPoint, EscalationQueryKey } from './apis';
 
@@ -69,10 +69,11 @@ export const useFetchEscalationById = (id: number) => {
   const { getData } = useServiceClient();
 
   const fetchEscalationById = React.useCallback(
-    () =>
-      getData(`${EscalationEndPoint.FETCH_ESCALATION_BY_ID}?id=${id}`).then(
-        (res) => res.json()
-      ),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${EscalationEndPoint.FETCH_ESCALATION_BY_ID}?id=${id}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData, id]
   );
 

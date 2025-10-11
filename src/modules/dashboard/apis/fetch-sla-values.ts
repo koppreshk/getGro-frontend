@@ -2,7 +2,7 @@ import { DateRange } from '@matharumanpreet00/react-daterange-picker';
 import { useServiceClient } from 'lib';
 import { DateTime } from 'luxon';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { DashboardEndPoint, DashboardQueryKeys } from './apis';
 
@@ -37,10 +37,11 @@ export const useFetchSLAValues = (dateRange: DateRange) => {
   ).toFormat('yyyy-MM-dd');
 
   const fetchAllSLAValues = React.useCallback(
-    () =>
-      getData(
-        `${DashboardEndPoint.FETCH_SLA_VALUES}?from=${parsedFromDate}&to=${parsedToDate}`
-      ).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${DashboardEndPoint.FETCH_SLA_VALUES}?from=${parsedFromDate}&to=${parsedToDate}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData, parsedFromDate, parsedToDate]
   );
 

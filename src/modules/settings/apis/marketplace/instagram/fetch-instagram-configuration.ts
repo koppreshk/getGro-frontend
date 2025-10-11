@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import {
   InstagramConfigurationEndPoint,
@@ -24,10 +24,11 @@ export const useFetchInstagramConfiguration = () => {
   const { getData } = useServiceClient();
 
   const fetchInstagramConfigurations = React.useCallback(
-    () =>
-      getData(
-        InstagramConfigurationEndPoint.FETCH_INSTAGRAM_CONFIGURATION
-      ).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: InstagramConfigurationEndPoint.FETCH_INSTAGRAM_CONFIGURATION,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData]
   );
 

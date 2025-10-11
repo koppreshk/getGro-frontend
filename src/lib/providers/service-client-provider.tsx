@@ -51,12 +51,18 @@ class ServiceClient {
       .catch((err) => Promise.reject(err));
   };
 
-  public getData = (
-    endPoint: string,
-    headers?: HeadersInit,
-    extra?: { signal: AbortSignal | undefined }
-  ) =>
-    this.fetchData(endPoint, { method: 'GET', signal: extra?.signal }, headers);
+  public getData = (args: {
+    endPoint: string;
+    headers?: HeadersInit;
+    extra?: { signal: AbortSignal | undefined };
+  }) => {
+    const { endPoint, extra, headers } = args;
+    return this.fetchData(
+      endPoint,
+      { method: 'GET', signal: extra?.signal },
+      headers
+    );
+  };
 
   public postData = (endPoint: string, body?: object, headers?: HeadersInit) =>
     this.fetchData(
@@ -88,11 +94,11 @@ class ServiceClient {
   };
 }
 const arg: Pick<ServiceClient, 'getData' | 'postData' | 'post'> = {
-  getData: (
-    _endPoint: string,
-    _headers?: HeadersInit,
-    _extra?: { signal?: AbortSignal }
-  ) => new Promise((res) => res),
+  getData: (_args: {
+    endPoint: string;
+    _headers?: HeadersInit;
+    _extra?: { signal?: AbortSignal };
+  }) => new Promise((res) => res),
   postData: (_endPoint: string, _body?: object, _headers?: HeadersInit) =>
     new Promise((res) => res),
   post: (_endPoint: string, _body: BodyInit, _headers?: HeadersInit) =>

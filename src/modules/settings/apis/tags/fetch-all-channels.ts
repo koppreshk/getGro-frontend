@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { ConfigurationsEndPoint, ConfigurationsQueryKey } from './apis';
 
@@ -13,10 +13,11 @@ export const useFetchAllChannels = (isEnabled = true) => {
   const { getData } = useServiceClient();
 
   const fetchAllChannels = React.useCallback(
-    () =>
-      getData(`${ConfigurationsEndPoint.FETCH_ALL_CHANNELS}`).then((res) =>
-        res.json()
-      ),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${ConfigurationsEndPoint.FETCH_ALL_CHANNELS}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData]
   );
 

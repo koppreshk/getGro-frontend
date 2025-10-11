@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import {
   ExotelConfigurationEndPoint,
@@ -26,10 +26,11 @@ export const useFetchExotelAddedNumbers = () => {
   const { getData } = useServiceClient();
 
   const fetchExotelConfigurations = React.useCallback(
-    () =>
-      getData(ExotelConfigurationEndPoint.FETCH_EXOTEL_ADDED_NUMBERS).then(
-        (res) => res.json()
-      ),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: ExotelConfigurationEndPoint.FETCH_EXOTEL_ADDED_NUMBERS,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData]
   );
 

@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 
 import { TicketsEndPoint, TicketsQueryKey } from '../apis';
@@ -34,10 +34,11 @@ export const useFetchEmailConversations = () => {
   const { getData } = useServiceClient();
 
   const getOrderDetailsData = React.useCallback(
-    () =>
-      getData(
-        `${TicketsEndPoint.FETCH_EMAIL_CONVERSATIONS}?ticket_id=${ticketId}`
-      ).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${TicketsEndPoint.FETCH_EMAIL_CONVERSATIONS}?ticket_id=${ticketId}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData, ticketId]
   );
   return useQuery<ITicketById, { message: string }>({

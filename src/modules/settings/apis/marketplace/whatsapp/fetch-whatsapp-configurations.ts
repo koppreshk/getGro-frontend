@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import {
   WhatsAppConfigurationEndPoint,
@@ -21,10 +21,11 @@ export const useFetchWhatsAppConfiguration = () => {
   const { getData } = useServiceClient();
 
   const fetchWhatsappConfigurations = React.useCallback(
-    () =>
-      getData(WhatsAppConfigurationEndPoint.FETCH_WHATSAPP_CONFIG).then((res) =>
-        res.json()
-      ),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: WhatsAppConfigurationEndPoint.FETCH_WHATSAPP_CONFIG,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData]
   );
 

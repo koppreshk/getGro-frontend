@@ -1,7 +1,7 @@
 import { DateRange } from '@matharumanpreet00/react-daterange-picker';
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { DashboardEndPoint, DashboardQueryKeys } from './apis';
 
@@ -33,10 +33,11 @@ export const useFetchDashboardData = (dateRange: DateRange) => {
   const parsedToDate = dateRange.endDate!.toISOString();
 
   const fetchAllDashboardData = React.useCallback(
-    () =>
-      getData(
-        `${DashboardEndPoint.FETCH_DASHBOARD_DATA}?from=${parsedFromDate}&to=${parsedToDate}`
-      ).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${DashboardEndPoint.FETCH_DASHBOARD_DATA}?from=${parsedFromDate}&to=${parsedToDate}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData, parsedFromDate, parsedToDate]
   );
 

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 import { useSearchParams } from 'react-router-dom';
 
 import { TicketsEndPoint, TicketsQueryKey } from '../apis';
@@ -18,10 +18,11 @@ export const useFetchDeletedTickets = () => {
   const _search = search ? `&search=${search}` : '';
 
   const fetchMyPendingData = React.useCallback(
-    () =>
-      getData(
-        `${TicketsEndPoint.FETCH_DELETED_TICKETS}?${_pageNumber}items_per_page=${itemsPerPage ?? '10'}${_search}`
-      ).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${TicketsEndPoint.FETCH_DELETED_TICKETS}?${_pageNumber}items_per_page=${itemsPerPage ?? '10'}${_search}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [_pageNumber, _search, getData, itemsPerPage]
   );
   return useQuery<

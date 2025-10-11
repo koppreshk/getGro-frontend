@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { ConfigurationsEndPoint, ConfigurationsQueryKey } from './apis';
 
@@ -15,10 +15,11 @@ export const useFetchTagsById = (id: number) => {
   const { getData } = useServiceClient();
 
   const fetchTagsById = React.useCallback(
-    () =>
-      getData(`${ConfigurationsEndPoint.FETCH_TAGS_BY_ID}?id=${id}`).then(
-        (res) => res.json()
-      ),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${ConfigurationsEndPoint.FETCH_TAGS_BY_ID}?id=${id}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData, id]
   );
 

@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import {
   ExotelConfigurationEndPoint,
@@ -15,10 +15,11 @@ export const useFetchSDKToken = (isEnabled: boolean, email?: string) => {
   const { getData } = useServiceClient();
 
   const fetchSDKToken = React.useCallback(
-    () =>
-      getData(ExotelConfigurationEndPoint.FETCH_SDK_ACCESS_TOKEN).then((res) =>
-        res.json()
-      ),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: ExotelConfigurationEndPoint.FETCH_SDK_ACCESS_TOKEN,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData]
   );
 

@@ -1,6 +1,11 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import {
+  QueryFunctionContext,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from 'react-query';
 
 import { AgentsEndPoint, AgentsQueryKey } from './apis';
 
@@ -16,10 +21,11 @@ export const useFetchAvailabilityStatuses = () => {
   const { getData } = useServiceClient();
 
   const fetchAvailabilityStatuses = React.useCallback(
-    () =>
-      getData(`${AgentsEndPoint.AVAILABILITY_STATUSES}`).then((res) =>
-        res.json()
-      ),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${AgentsEndPoint.AVAILABILITY_STATUSES}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData]
   );
 
@@ -33,7 +39,11 @@ export const useFetchCurrentStatus = () => {
   const { getData } = useServiceClient();
 
   const fetchCurrentStatus = React.useCallback(
-    () => getData(`${AgentsEndPoint.CURRENT_STATUS}`).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${AgentsEndPoint.CURRENT_STATUS}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData]
   );
 

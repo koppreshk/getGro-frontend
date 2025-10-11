@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import {
   IShopifyStore,
@@ -12,10 +12,11 @@ export const useFetchShopifyStoreConfig = (storeId: number) => {
   const { getData } = useServiceClient();
 
   const fetchShopifyConfigurations = React.useCallback(
-    () =>
-      getData(
-        `${ShopifyConfigurationEndPoint.FETCH_STORE}?store_id=${storeId}`
-      ).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${ShopifyConfigurationEndPoint.FETCH_STORE}?store_id=${storeId}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData, storeId]
   );
 

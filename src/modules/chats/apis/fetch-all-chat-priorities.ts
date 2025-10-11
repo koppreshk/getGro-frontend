@@ -10,8 +10,11 @@ export const useFetchAllChatPriorities = (isEnabled = true) => {
 
   const fetchAllPriorities = React.useCallback(
     ({ signal }: QueryFunctionContext) =>
-      getData(ChatEndPoint.FETCH_ALL_CHAT_PRIORITIES, undefined, {
-        signal,
+      getData({
+        endPoint: ChatEndPoint.FETCH_ALL_CHAT_PRIORITIES,
+        extra: {
+          signal,
+        },
       }).then((res) => res.json()),
     [getData]
   );

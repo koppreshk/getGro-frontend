@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import {
   FacebookConfigurationEndPoint,
@@ -26,10 +26,11 @@ export const useFetchConfiguredPages = () => {
   const { getData } = useServiceClient();
 
   const fetchFacebookConfigurations = React.useCallback(
-    () =>
-      getData(FacebookConfigurationEndPoint.FETCH_CONFIGURED_PAGES).then(
-        (res) => res.json()
-      ),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: FacebookConfigurationEndPoint.FETCH_CONFIGURED_PAGES,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData]
   );
 

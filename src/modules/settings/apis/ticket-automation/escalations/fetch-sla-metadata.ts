@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { EscalationEndPoint, EscalationQueryKey } from './apis';
 
@@ -55,8 +55,11 @@ export const useFetchSLAmetaData = () => {
   const { getData } = useServiceClient();
 
   const getSLAmetadata = React.useCallback(
-    () =>
-      getData(EscalationEndPoint.FETCH_SLA_METADATA).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: EscalationEndPoint.FETCH_SLA_METADATA,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData]
   );
 

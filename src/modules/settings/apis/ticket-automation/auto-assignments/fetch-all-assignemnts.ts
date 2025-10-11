@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { AutoMationType } from '.';
 import { AutoAssignmentEndPoint, AutoAssignmentQueryKey } from './apis';
@@ -17,10 +17,11 @@ export const useFetchAllAssignments = (automationType: AutoMationType) => {
   const { getData } = useServiceClient();
 
   const fetchAllAssignments = React.useCallback(
-    () =>
-      getData(
-        `${AutoAssignmentEndPoint.FETCH_ALL_ASSIGNMENTS}?automation_type=${automationType}`
-      ).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${AutoAssignmentEndPoint.FETCH_ALL_ASSIGNMENTS}?automation_type=${automationType}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [automationType, getData]
   );
 

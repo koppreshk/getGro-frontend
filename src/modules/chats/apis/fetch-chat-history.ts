@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { ChatEndPoint, ChatQueryKeys } from './apis';
 
@@ -14,10 +14,11 @@ export const useFetchChatHistory = (conversationId: string) => {
   const { getData } = useServiceClient();
 
   const fetchChatHistory = React.useCallback(
-    () =>
-      getData(
-        `${ChatEndPoint.FETCH_CHAT_HISTORY}?conversation_id=${conversationId}`
-      ).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${ChatEndPoint.FETCH_CHAT_HISTORY}?conversation_id=${conversationId}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [conversationId, getData]
   );
 

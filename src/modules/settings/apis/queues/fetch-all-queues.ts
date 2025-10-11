@@ -1,6 +1,6 @@
 import { useServiceClient } from 'lib';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { ConfigurationsEndPoint, ConfigurationsQueryKey } from './apis';
 
@@ -28,10 +28,11 @@ export const useFetchAllTicketQueues = () => {
   const { getData } = useServiceClient();
 
   const fetchAllTicketsQueue = React.useCallback(
-    () =>
-      getData(
-        `${ConfigurationsEndPoint.FETCH_ALL_TICKETS_QUEUE}?page=1&items_per_page=10`
-      ).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${ConfigurationsEndPoint.FETCH_ALL_TICKETS_QUEUE}?page=1&items_per_page=10`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData]
   );
 

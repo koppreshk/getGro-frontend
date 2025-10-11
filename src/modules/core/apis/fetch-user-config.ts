@@ -13,7 +13,7 @@ import {
   AgentsQueryKey,
 } from 'modules/settings/apis/users-and-permissions/agents/apis';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 import { useDispatch } from 'react-redux';
 
 import { setCoreData } from '../storage/core-slice';
@@ -46,8 +46,11 @@ export const useFetchUserConfig = (user: object | null) => {
   const { getData } = useServiceClient();
 
   const getConfig = React.useCallback(
-    () =>
-      getData(`${AgentsEndPoint.FETCH_USER_CONFIG}`).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${AgentsEndPoint.FETCH_USER_CONFIG}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData]
   );
 

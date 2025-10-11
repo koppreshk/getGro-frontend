@@ -3,7 +3,7 @@ import { useServiceClient } from 'lib';
 import { DateTime } from 'luxon';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery } from 'react-query';
 
 import { DashboardEndPoint, DashboardQueryKeys } from './apis';
 import { IAgentPerformanceFormFields } from '../components/parts/agent-performnace/agent-performance';
@@ -103,10 +103,11 @@ export const useFetchAgentPerformanceData = (dateRange: DateRange) => {
         ? `user_id=${filterValue}`
         : '';
   const fetchAllAgentPerformanceData = React.useCallback(
-    () =>
-      getData(
-        `${DashboardEndPoint.AGENT_PERFORMANCE}?from=${parsedFromDate}&to=${parsedToDate}&type=${filterType}&${finalParam}`
-      ).then((res) => res.json()),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${DashboardEndPoint.AGENT_PERFORMANCE}?from=${parsedFromDate}&to=${parsedToDate}&type=${filterType}&${finalParam}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [filterType, finalParam, getData, parsedFromDate, parsedToDate]
   );
 
@@ -125,10 +126,11 @@ export const useFetchAgentPerformanceData = (dateRange: DateRange) => {
 export const useFetchDropdownValues = () => {
   const { getData } = useServiceClient();
   const fetchAllAgentPerformanceData = React.useCallback(
-    () =>
-      getData(`${DashboardEndPoint.FETCH_DROPDOWN_VALUES}`).then((res) =>
-        res.json()
-      ),
+    ({ signal }: QueryFunctionContext) =>
+      getData({
+        endPoint: `${DashboardEndPoint.FETCH_DROPDOWN_VALUES}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData]
   );
 

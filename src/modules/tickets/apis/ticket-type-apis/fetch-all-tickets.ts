@@ -58,11 +58,10 @@ export const useFetchAllTickets = () => {
 
   const fetchAllData = React.useCallback(
     ({ signal }: QueryFunctionContext) =>
-      getData(
-        `${TicketsEndPoint.FETCH_ALL_TICKETS}?${queryString}`,
-        undefined,
-        { signal }
-      ).then((res) => res.json()),
+      getData({
+        endPoint: `${TicketsEndPoint.FETCH_ALL_TICKETS}?${queryString}`,
+        extra: { signal },
+      }).then((res) => res.json()),
     [getData, queryString]
   );
 
