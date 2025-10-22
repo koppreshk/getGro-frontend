@@ -30,7 +30,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "@tanstack/react-table": "^8.10.1",
     "apexcharts": "^3.46.0",
-    "exotel-ip-calling-crm-websdk": "git+https://github.com/exotel/exotel-ip-calling-crm-websdk#v1.1.1",
+    "exotel-ip-calling-crm-websdk": "git+https://github.com/exotel/exotel-ip-calling-crm-websdk#1.1.5",
     "i18next": "^23.14.0",
     "lodash": "^4.17.21",
     "luxon": "^3.5.0",

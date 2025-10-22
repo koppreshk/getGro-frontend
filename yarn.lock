@@ -1475,17 +1475,17 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.57.1.tgz#de633db3ec2ef6a3c89e2f19038063e8a122e2c2"
   integrity sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==
 
-"@exotel-npm-dev/webrtc-client-sdk@^1.0.11":
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/@exotel-npm-dev/webrtc-client-sdk/-/webrtc-client-sdk-1.0.11.tgz#01f7b9e5376208db78b7cac7b7eb8f80c3abe243"
-  integrity sha512-Eu//Pgr8l+h6rLnqJh+QrSs1H7A9YJeHhkGPCEVGMnA3q0YrTcWHJY9ZqODCLogdRlfZI3gWJsHTCx5/DhpoBA==
+"@exotel-npm-dev/webrtc-client-sdk@^1.0.16":
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/@exotel-npm-dev/webrtc-client-sdk/-/webrtc-client-sdk-1.0.19.tgz#f1298d8e3feb6ea540961a27ba6a2b90148e871d"
+  integrity sha512-9rf8ZpRZS+0Nz70u3+inZmmdbnlx30X/cy27H/rBdCc9fhNhhpWIp4TNQZ4zRREKo8JrL1Um892Gu71xLtOtIg==
   dependencies:
-    "@exotel-npm-dev/webrtc-core-sdk" "^1.0.11"
+    "@exotel-npm-dev/webrtc-core-sdk" "^1.0.17"
 
-"@exotel-npm-dev/webrtc-core-sdk@^1.0.11":
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/@exotel-npm-dev/webrtc-core-sdk/-/webrtc-core-sdk-1.0.11.tgz#3f1ac43984faddad4c4010ef3450f1d4a28c90fb"
-  integrity sha512-fN+vQWW8nhiobmAcAFBjCOEHXWqRmpjDCsUIS6aGIyxPFHHzqzSmwPVcBhxPCEXI5ZQogIKR2HWOjOINhdW2Jg==
+"@exotel-npm-dev/webrtc-core-sdk@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@exotel-npm-dev/webrtc-core-sdk/-/webrtc-core-sdk-1.0.17.tgz#b88501e3d6b93fb03148baf3a285ab90b804556d"
+  integrity sha512-BZseaJFAKFiCYlnTTHib2uGnzA3IrElNeDQcRGyUwSBF1D18bV2N48TfgMEPHtXU9JAGoAZIWaAKN5+haJ7JHQ==
 
 "@floating-ui/core@^1.4.2":
   version "1.5.0"
@@ -3535,11 +3535,12 @@ execa@~8.0.1:
     signal-exit "^4.1.0"
     strip-final-newline "^3.0.0"
 
-"exotel-ip-calling-crm-websdk@git+https://github.com/exotel/exotel-ip-calling-crm-websdk#v1.1.1":
-  version "1.1.1"
-  resolved "git+https://github.com/exotel/exotel-ip-calling-crm-websdk#d4541ad2a91ffd1290adc38c7bb0c97bbaee12c1"
+"exotel-ip-calling-crm-websdk@git+https://github.com/exotel/exotel-ip-calling-crm-websdk#1.1.5":
+  version "1.1.5"
+  uid "35dfd3d2fb7041db8c9827d26fe2bbfa0c4544a9"
+  resolved "git+https://github.com/exotel/exotel-ip-calling-crm-websdk#35dfd3d2fb7041db8c9827d26fe2bbfa0c4544a9"
   dependencies:
-    "@exotel-npm-dev/webrtc-client-sdk" "^1.0.11"
+    "@exotel-npm-dev/webrtc-client-sdk" "^1.0.16"
     crypto-js "^4.1.1"
     uuid "^10.0.0"
 
